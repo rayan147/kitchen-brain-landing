@@ -38,5 +38,35 @@ const { title = site.name, description = site.description } = Astro.props;
 			<slot />
 		</main>
 		<SiteFooter />
+
+		<script>
+			// Scroll reveals. Hidden state is applied here, at runtime, and only
+			// to elements still below the fold — so no-JS visitors and users
+			// with reduced motion always see everything.
+			const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+			const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (els.length > 0 && !reduced && 'IntersectionObserver' in window) {
+				const io = new IntersectionObserver(
+					(entries) => {
+						for (const entry of entries) {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('revealed');
+								io.unobserve(entry.target);
+							}
+						}
+					},
+					{ rootMargin: '0px 0px -8% 0px', threshold: 0.1 }
+				);
+				for (const el of els) {
+					// >= innerHeight: anything even partially painted must never
+					// be hidden (reviewers: a visible sliver in the 0.9–1.0 band
+					// would blink out and, outside the -8% root, stay hidden).
+					if (el.getBoundingClientRect().top >= window.innerHeight) {
+						el.classList.add('reveal-pending');
+						io.observe(el);
+					}
+				}
+			}
+		</script>
 	</body>
 </html>

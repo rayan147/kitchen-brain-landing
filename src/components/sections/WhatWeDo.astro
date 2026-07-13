@@ -27,17 +27,23 @@ const items = [
 
 <section id="what" class="bg-softgreen">
 	<div class="container-page py-section-tight">
-		<p class="eyebrow">What it does</p>
-		<h2 class="mt-4 max-w-xl text-h2 font-semibold">
-			Everything between the order and the van.
-		</h2>
+		<div data-reveal>
+			<p class="eyebrow">What it does</p>
+			<h2 class="mt-4 max-w-xl text-h2 font-semibold">
+				Everything between the order and the van.
+			</h2>
+		</div>
 
 		<!-- role="list": Tailwind preflight's list-style:none makes VoiceOver
 		     drop list semantics without it. -->
 		<ul role="list" class="mt-12 grid gap-y-10 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-12">
 			{
-				items.map((item) => (
-					<li class="border-t border-hairline-strong pt-6">
+				items.map((item, i) => (
+					<li
+						class="border-t border-hairline-strong pt-6"
+						data-reveal
+						style={`--reveal-delay: ${(i % 2) * 90}ms`}
+					>
 						<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
 							{item.tag}
 						</p>

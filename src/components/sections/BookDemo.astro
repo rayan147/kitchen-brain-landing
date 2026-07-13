@@ -8,6 +8,8 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 ---
 
 <section id="book" class="container-page py-section">
+	<!-- No reveal here: by the conversion section the page should be still
+	     and certain — and the CTA below renders instantly regardless. -->
 	<div class="max-w-2xl">
 		<p class="eyebrow">Book a demo</p>
 		<h2 class="mt-4 text-h2 font-semibold">See it with your own order.</h2>
@@ -37,8 +39,9 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 
 	<!-- Calendly inline embed, lazily initialized on approach (see script).
 	     Taller below sm: Calendly's stacked mobile flow exceeds 700px. -->
-	<div id="calendly-slot" data-url={embedUrl} class="mt-9 hidden h-[760px] min-w-[320px] sm:h-[700px]">
-	</div>
+	<!-- No min-width: Calendly's snippet default would force horizontal
+	     scroll at 320px viewport inside our padded container. -->
+	<div id="calendly-slot" data-url={embedUrl} class="mt-9 hidden h-[760px] sm:h-[700px]"></div>
 
 	<!-- Always-rendered live region: content is INSERTED on booking, which
 	     screen readers announce reliably (unhiding a display:none region
