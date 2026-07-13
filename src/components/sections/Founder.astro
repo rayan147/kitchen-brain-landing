@@ -1,42 +1,51 @@
 ---
 import { site } from '../../lib/site';
 
-// TODO(owner): personalize if you like — one war-story clause max; the
-// reviewers' guidance is to keep the letter at two short paragraphs.
-// Copy deliberately sticks to the brief's facts: 12 years in professional
-// kitchens, now a software engineer. The spreadsheet imagery lives in
-// WhyUs (pinned copy); the letter stays off it to avoid the repeat.
+// Letter facts stay within the brief: 12 years in professional kitchens,
+// now a software engineer. Photo is owner-supplied (public/founder.jpg).
 ---
 
 <section id="chef" class="bg-cream">
 	<!-- Inner max-width instead of on container-page: both set max-width and
 	     the winner would depend on stylesheet order. Letter sits left, air right. -->
 	<div class="container-page py-section-tight">
-		<div class="max-w-3xl" data-reveal>
+		<div class="max-w-4xl" data-reveal>
 			<p class="eyebrow">From the chef</p>
 			<h2 class="mt-4 text-h2 font-semibold">Built by a chef.</h2>
 
-			<div class="mt-8 max-w-2xl space-y-5 text-lede text-ink-soft">
-				<p>
-					I spent twelve years cooking professionally. The orders changed every week; the
-					math never got easier — scale it, shop it, prep it, cost it, again and again,
-					usually after midnight.
-				</p>
-				<p>
-					I&rsquo;m a software engineer now. Kitchen Brain is the tool I always wished
-					I&rsquo;d had on the line: the production math handled, so the kitchen can just
-					cook.
-				</p>
+			<div class="mt-8 flex flex-col gap-8 sm:flex-row sm:items-start sm:gap-10">
+				<!-- Paper-matted, counter-tilted to the hero ticket: a photo
+				     taped up in the kitchen, cut from the same visual world. -->
+				<img
+					src="/founder.jpg"
+					alt={`${site.founderName}, the chef who built Kitchen Brain`}
+					width="384"
+					height="384"
+					loading="lazy"
+					class="w-36 shrink-0 -rotate-[1.5deg] self-start bg-paper p-1.5 shadow-ticket sm:order-last sm:w-44"
+				/>
+				<div class="max-w-2xl space-y-5 text-lede text-ink-soft">
+					<p>
+						I cooked professionally for twelve years. The orders changed every week, and
+						every week meant the same night of math: scale the recipes, write the
+						shopping list, write the prep list, figure out what any of it cost. Usually
+						after midnight, when I should have been asleep.
+					</p>
+					<p>
+						I&rsquo;m a software engineer now. Kitchen Brain is the thing I kept wishing
+						somebody would hand me back then. It does the math. The kitchen cooks.
+					</p>
+				</div>
 			</div>
 
-			<p class="mt-8 font-display text-xl font-medium text-ink">— {site.founderName}</p>
+			<p class="mt-8 font-display text-xl font-medium text-ink">
+				— {site.founderName}
+				<span
+					class="ml-1.5 inline-block size-2.5 rotate-45 bg-offwhite shadow-[inset_0_1px_1.5px_rgb(31_36_33/0.18)]"
+					aria-hidden="true"></span>
+			</p>
 
-			<!-- The ticket's punch mark, cut from this paper too. -->
-			<div
-				class="mt-6 size-3.5 rotate-45 bg-offwhite shadow-[inset_0_1px_2px_rgb(31_36_33/0.18)]"
-				aria-hidden="true"
-			>
-			</div>
+			<a href="#book" class="btn-quiet mt-8">Book 15 minutes</a>
 		</div>
 	</div>
 </section>

@@ -1,5 +1,5 @@
 ---
-import { calendlyUrl } from '../../lib/site';
+import { calendlyUrl, site } from '../../lib/site';
 
 // Brand-tint the widget so the third-party rectangle dissolves into the
 // page (hex values without '#'). Applied to the embed only — the direct
@@ -14,17 +14,24 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 		<p class="eyebrow">Book a demo</p>
 		<h2 class="mt-4 text-h2 font-semibold">See it with your own order.</h2>
 		<p class="mt-5 text-lede text-ink-soft">
-			Bring one real order — fifteen minutes, and I&rsquo;ll turn it into shopping, prep,
-			and pack lists, costed to the plate, live on the call.
+			Bring a real order, whatever&rsquo;s on the books for next weekend. In fifteen minutes
+			I&rsquo;ll turn it into your shopping list, prep list, and plate cost while you watch.
+			Worst case, you&rsquo;re out a coffee break.
 		</p>
 		<p class="mt-5 text-sm text-ink-soft">
-			Currently onboarding a small group of New Jersey caterers as design partners.
+			Straight up: this is early. I&rsquo;m working with a handful of New Jersey caterers
+			right now, building it around their kitchens. Get in now and you get my cell number
+			and a real say in what it becomes.
+		</p>
+		<p class="mt-3 text-sm text-ink-soft">
+			If it&rsquo;s not for you, you&rsquo;ll know by minute ten and I won&rsquo;t chase you.
 		</p>
 	</div>
 
 	<!-- Direct link works with no JS, blocked embeds, or before lazy-load.
-	     Hidden only after the embed provably boots (first Calendly
-	     postMessage) — script onload alone can't guarantee the iframe loads. -->
+	     Never hidden: once the embed provably boots (first Calendly
+	     postMessage) it restyles to the quiet variant so nothing vanishes
+	     under the visitor's thumb. -->
 	<a
 		id="book-direct"
 		href={calendlyUrl}
@@ -36,6 +43,9 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 		<span class="sr-only">(opens in a new tab)</span>
 		<span aria-hidden="true">↗</span>
 	</a>
+	<p class="mt-4 text-sm text-ink-soft">
+		Rather talk or text? <a href={site.phoneHref} class="font-medium text-green-deep underline decoration-current underline-offset-4">{site.phone}</a>. I answer between services.
+	</p>
 
 	<!-- Calendly inline embed, lazily initialized on approach (see script).
 	     Taller below sm: Calendly's stacked mobile flow exceeds 700px. -->
@@ -99,12 +109,10 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 				.querySelector('iframe')
 				?.setAttribute('title', 'Schedule a demo — Calendly booking calendar');
 			slot.classList.remove('hidden');
-			// Never strand keyboard focus when the direct link disappears.
-			if (document.activeElement === direct) {
-				slot.setAttribute('tabindex', '-1');
-				slot.focus();
-			}
-			direct.classList.add('hidden');
+			// Demote rather than hide: the calendar below becomes the primary
+			// action, but the link never vanishes mid-reach.
+			direct.classList.remove('btn-primary');
+			direct.classList.add('btn-quiet');
 		}
 
 		if (eventName === 'calendly.event_scheduled' && confirmed) {

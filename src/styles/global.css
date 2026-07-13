@@ -40,7 +40,8 @@
 	/* Fluid modular scale (minor third-ish, stretched at the top — the brief
 	   asks for big confident type. 4.5rem is what a full-container H1 line
 	   can carry at 2–3 lines; bigger stacks the long headline into a shaft). */
-	--text-display: clamp(2.625rem, 1.35rem + 4vw, 4.5rem);
+	/* Mobile floor 2.375rem: the long H1 must not eat half a 390px fold. */
+	--text-display: clamp(2.375rem, 1.2rem + 4.2vw, 4.5rem);
 	--text-display--line-height: 1.05;
 	--text-display--letter-spacing: -0.01em;
 	--text-h2: clamp(1.75rem, 1.35rem + 1.8vw, 2.625rem);
@@ -142,6 +143,15 @@
 	.anim-enter:has(:focus-visible),
 	.anim-enter-settle:has(:focus-visible) {
 		animation: none;
+	}
+
+	/* Same escape hatch for the scroll-reveal register — reveal blocks now
+	   contain focusable links (tel:, #book). */
+	.reveal-pending:focus-visible,
+	.reveal-pending:has(:focus-visible) {
+		opacity: 1;
+		transform: none;
+		transition: none;
 	}
 
 	.reveal-pending {
