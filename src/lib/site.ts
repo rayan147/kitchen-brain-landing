@@ -9,6 +9,8 @@ export const site = {
 	url: 'https://kitchen-brain-landing.vercel.app',
 	// TODO(owner): replace with the real contact address.
 	email: 'hello@kitchenbrain.example',
+	// TODO(owner): confirm the signature name (from repo/account context).
+	founderName: 'Rayan',
 	// Calendly URL comes from PUBLIC_CALENDLY_URL (see the booking section).
 	description:
 		'Turn any catering order into exact shopping lists, prep sheets, and food cost in one click. Built by a chef with 12 years on the line.'
@@ -21,9 +23,9 @@ export const cta = { label: 'Book a 15-min demo', href: '#book' } as const;
  * Section links. Each item ships in the SAME issue as its section, so no
  * dead anchors ever reach production. The footer derives from this array
  * too — it must keep mirroring it, since header links hide below `sm`.
- * Pending: #chef (issue 6).
  */
 export const nav: readonly { label: string; href: string }[] = [
 	{ label: 'What it does', href: '#what' },
-	{ label: 'Why us', href: '#why' }
+	{ label: 'Why us', href: '#why' },
+	{ label: 'From the chef', href: '#chef' }
 ];

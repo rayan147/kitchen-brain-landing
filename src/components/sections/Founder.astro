@@ -1,0 +1,42 @@
+---
+import { site } from '../../lib/site';
+
+// TODO(owner): personalize if you like — one war-story clause max; the
+// reviewers' guidance is to keep the letter at two short paragraphs.
+// Copy deliberately sticks to the brief's facts: 12 years in professional
+// kitchens, now a software engineer. The spreadsheet imagery lives in
+// WhyUs (pinned copy); the letter stays off it to avoid the repeat.
+---
+
+<section id="chef" class="bg-cream">
+	<!-- Inner max-width instead of on container-page: both set max-width and
+	     the winner would depend on stylesheet order. Letter sits left, air right. -->
+	<div class="container-page py-section-tight">
+		<div class="max-w-3xl">
+			<p class="eyebrow">From the chef</p>
+			<h2 class="mt-4 text-h2 font-semibold">Built by a chef.</h2>
+
+			<div class="mt-8 max-w-2xl space-y-5 text-lede text-ink-soft">
+				<p>
+					I spent twelve years cooking professionally. The orders changed every week; the
+					math never got easier — scale it, shop it, prep it, cost it, again and again,
+					usually after midnight.
+				</p>
+				<p>
+					I&rsquo;m a software engineer now. Kitchen Brain is the tool I always wished
+					I&rsquo;d had on the line: the production math handled, so the kitchen can just
+					cook.
+				</p>
+			</div>
+
+			<p class="mt-8 font-display text-xl font-medium text-ink">— {site.founderName}</p>
+
+			<!-- The ticket's punch mark, cut from this paper too. -->
+			<div
+				class="mt-6 size-3.5 rotate-45 bg-offwhite shadow-[inset_0_1px_2px_rgb(31_36_33/0.18)]"
+				aria-hidden="true"
+			>
+			</div>
+		</div>
+	</div>
+</section>
