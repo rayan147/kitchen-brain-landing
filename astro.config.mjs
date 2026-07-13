@@ -1,10 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 // Fully static one-pager — no adapter; Vercel serves the dist/ output.
 export default defineConfig({
 	site: 'https://kitchen-brain-landing.vercel.app',
+	integrations: [sitemap()],
 	vite: {
 		plugins: [tailwindcss()],
 		build: {

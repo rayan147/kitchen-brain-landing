@@ -5,12 +5,15 @@
  */
 export const site = {
 	name: 'Kitchen Brain',
-	// TODO(owner): swap for the custom domain before launch (also in astro.config.mjs).
+	// TODO(owner): swap for the custom domain before launch — also in
+	// astro.config.mjs (site) and public/robots.txt (Sitemap URL).
 	url: 'https://kitchen-brain-landing.vercel.app',
 	// TODO(owner): replace with the real contact address.
 	email: 'hello@kitchenbrain.example',
 	// TODO(owner): confirm the signature name (from repo/account context).
 	founderName: 'Rayan',
+	// ≤60 chars so Google doesn't truncate the audience qualifier.
+	title: 'Kitchen Brain — shopping, prep & food cost for caterers',
 	description:
 		'Turn any catering order into exact shopping lists, prep sheets, and food cost in one click. Built by a chef with 12 years on the line.'
 } as const;
