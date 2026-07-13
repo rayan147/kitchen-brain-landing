@@ -21,6 +21,8 @@ export const cta = { label: 'Book a 15-min demo', href: '#book' } as const;
  * Section links. Each item ships in the SAME issue as its section, so no
  * dead anchors ever reach production. The footer derives from this array
  * too — it must keep mirroring it, since header links hide below `sm`.
- * Pending: #what (issue 4), #why (issue 5), #chef (issue 6).
+ * Pending: #why (issue 5), #chef (issue 6).
  */
-export const nav: readonly { label: string; href: string }[] = [];
+export const nav: readonly { label: string; href: string }[] = [
+	{ label: 'What it does', href: '#what' }
+];

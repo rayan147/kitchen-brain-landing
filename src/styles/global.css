@@ -21,6 +21,8 @@
 	--color-offwhite: #f4f6f4;
 	--color-softgreen: #e5f1ea;
 	--color-hairline: #d3ddd6;
+	/* Rules on the softgreen band — plain hairline is ~1.2:1 there. */
+	--color-hairline-strong: #c2cfc6;
 	--color-paper: #fdfefd;
 	/* Warm surfaces for the kitchen-ticket motif. */
 	--color-cream: #faf5ea;
