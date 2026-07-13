@@ -1,0 +1,32 @@
+---
+import { cta, nav, site } from '../lib/site';
+---
+
+<header class="container-page flex items-baseline justify-between pt-6 pb-4 sm:pt-8">
+	<a href="/" class="group font-display text-xl font-semibold tracking-tight">
+		{site.name}
+		<!-- Ticket-punch mark: the hero's kitchen ticket echoes this device. -->
+		<span
+			class="ml-0.5 inline-block size-[0.38em] rotate-45 bg-amber transition-transform duration-150 group-hover:rotate-[135deg]"
+			aria-hidden="true"></span>
+	</a>
+	<nav aria-label="Main">
+		<ul class="flex items-baseline gap-5 sm:gap-8">
+			{
+				nav.map((item) => (
+					<li class="hidden sm:block">
+						<a
+							href={item.href}
+							class="text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink"
+						>
+							{item.label}
+						</a>
+					</li>
+				))
+			}
+			<li>
+				<a href={cta.href} class="btn-primary px-4 py-2 text-sm">{cta.label}</a>
+			</li>
+		</ul>
+	</nav>
+</header>

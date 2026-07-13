@@ -1,0 +1,40 @@
+---
+import { cta, nav, site } from '../lib/site';
+
+// Static site: computing the year at build time would freeze at the last
+// deploy anyway, so own it explicitly. Bump with the copyright.
+const year = 2026;
+---
+
+<footer class="border-t border-hairline">
+	<div
+		class="container-page flex flex-col gap-6 py-10 sm:flex-row sm:items-baseline sm:justify-between"
+	>
+		<div>
+			<p class="font-display text-lg font-semibold">{site.name}</p>
+			<a
+				href={`mailto:${site.email}`}
+				class="mt-1 inline-block text-sm text-ink-soft underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:text-ink"
+			>
+				{site.email}
+			</a>
+		</div>
+		<nav aria-label="Footer">
+			<ul class="flex flex-wrap gap-x-6 gap-y-2">
+				{
+					[...nav, { label: 'Book a demo', href: cta.href }].map((item) => (
+						<li>
+							<a
+								href={item.href}
+								class="text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
+							>
+								{item.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+		<p class="text-sm text-ink-soft">© {year} {site.name}</p>
+	</div>
+</footer>

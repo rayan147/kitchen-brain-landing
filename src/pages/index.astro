@@ -1,22 +1,22 @@
 ---
-import '../styles/global.css';
+import Base from '../layouts/Base.astro';
+import { cta } from '../lib/site';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="robots" content="noindex" />
-		<!-- noindex until the real page ships (removed in the SEO issue) -->
-		<title>Kitchen Brain</title>
-	</head>
-	<body class="bg-offwhite text-ink">
-		<main class="mx-auto flex min-h-svh max-w-xl items-center px-6">
-			<p class="text-lg">
-				<strong>Kitchen Brain</strong> — the kitchen brain for caterers. Full site under
-				construction.
-			</p>
-		</main>
-	</body>
-</html>
+<Base>
+	<!-- Sections land one issue at a time: hero (#3), what (#4), why (#5),
+	     chef (#6), book (#7–#8). This stub proves the layout shell. -->
+	<section class="container-page py-section">
+		<p class="eyebrow">Coming soon</p>
+		<h1 class="mt-4 max-w-3xl text-display font-semibold">
+			The kitchen brain for caterers.
+		</h1>
+		<p class="mt-6 max-w-xl text-lede text-ink-soft">
+			Full site under construction — sections arrive with each merged issue.
+		</p>
+		<a href={cta.href} class="btn-primary mt-8">{cta.label}</a>
+	</section>
+	<section id="book" class="container-page pb-section">
+		<p class="text-sm text-ink-soft">Booking arrives with issue #7.</p>
+	</section>
+</Base>
