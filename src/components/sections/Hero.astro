@@ -21,25 +21,26 @@ const ticket = {
 ---
 
 <section class="container-page pt-14 pb-section lg:pt-24">
-	<p class="eyebrow">Back-of-house software</p>
-	<h1 class="mt-5 max-w-[21ch] text-display font-semibold">
+	<p class="anim-enter eyebrow">Back-of-house software</p>
+	<h1 class="anim-enter mt-5 max-w-[21ch] text-display font-semibold" style="--enter-delay: 80ms">
 		The kitchen brain for caterers — built by a chef, not a software company.
 	</h1>
 
 	<div class="mt-10 grid items-start gap-14 lg:grid-cols-[7fr_5fr] lg:gap-10">
 		<div>
-			<p class="max-w-xl text-lede text-ink-soft">
+			<p class="anim-enter max-w-xl text-lede text-ink-soft" style="--enter-delay: 180ms">
 				Turn any order into exact shopping lists, prep sheets, and food cost in one click.
 				Keep the tools you already use.
 			</p>
-			<a href={cta.href} class="btn-primary mt-9">{cta.label}</a>
+			<a href={cta.href} class="anim-enter btn-primary mt-9" style="--enter-delay: 260ms">{cta.label}</a>
 		</div>
 
 		<!-- The signature element: one order becoming production lists, set as the
 		     kitchen ticket it would print on. Mono is the ticket's native voice. -->
 		<figure
 			aria-label="Example: one order turned into a shopping list, prep list, and plate cost"
-			class="justify-self-center lg:-mt-6 lg:justify-self-end"
+			class="anim-enter-settle justify-self-center lg:-mt-6 lg:justify-self-end"
+			style="--enter-delay: 360ms"
 		>
 			<div
 				class="w-full max-w-[19.5rem] rotate-[1.5deg] bg-cream px-5 py-5 font-mono text-[0.8125rem] leading-normal text-ink shadow-ticket sm:max-w-[21rem]"
