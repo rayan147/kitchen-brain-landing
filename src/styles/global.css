@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+/* Brand tokens land in full with issue #2; the scaffold only proves the
+   Tailwind v4 pipeline compiles. */
+@theme {
+	--color-ink: #1f2421;
+	--color-offwhite: #f4f6f4;
+}
