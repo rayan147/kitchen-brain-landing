@@ -25,15 +25,20 @@
 	/* Warm surfaces for the kitchen-ticket motif. */
 	--color-cream: #faf5ea;
 	--color-softamber: #f3e7d3;
+	/* Rule lines ON cream — softamber is invisible there (~1.1:1). Decorative. */
+	--color-ticket-rule: #e4d3b4;
 
 	--shadow-lift: 0 1px 2px rgb(31 36 33 / 0.06), 0 10px 28px rgb(31 36 33 / 0.08);
+	/* Tighter than lift: the ticket sits on the page, it doesn't hover. */
+	--shadow-ticket: 0 1px 2px rgb(31 36 33 / 0.08), 0 6px 14px rgb(31 36 33 / 0.1);
 
 	--font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
 	--font-body: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
 
-	/* Fluid modular scale (minor third-ish, stretched hard at the top —
-	   the brief asks for big confident type). */
-	--text-display: clamp(2.625rem, 1.35rem + 5.2vw, 5.5rem);
+	/* Fluid modular scale (minor third-ish, stretched at the top — the brief
+	   asks for big confident type. 4.5rem is what a full-container H1 line
+	   can carry at 2–3 lines; bigger stacks the long headline into a shaft). */
+	--text-display: clamp(2.625rem, 1.35rem + 4vw, 4.5rem);
 	--text-display--line-height: 1.05;
 	--text-display--letter-spacing: -0.01em;
 	--text-h2: clamp(1.75rem, 1.35rem + 1.8vw, 2.625rem);

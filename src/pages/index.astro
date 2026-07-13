@@ -1,21 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { cta } from '../lib/site';
+import Hero from '../components/sections/Hero.astro';
 ---
 
 <Base>
-	<!-- Sections land one issue at a time: hero (#3), what (#4), why (#5),
-	     chef (#6), book (#7–#8). This stub proves the layout shell. -->
-	<section class="container-page py-section">
-		<p class="eyebrow">Coming soon</p>
-		<h1 class="mt-4 max-w-3xl text-display font-semibold">
-			The kitchen brain for caterers.
-		</h1>
-		<p class="mt-6 max-w-xl text-lede text-ink-soft">
-			Full site under construction — sections arrive with each merged issue.
-		</p>
-		<a href={cta.href} class="btn-primary mt-8">{cta.label}</a>
-	</section>
+	<Hero />
+	<!-- Remaining sections land one issue at a time: what (#4), why (#5),
+	     chef (#6), book (#7–#8). -->
 	<section id="book" class="container-page pb-section">
 		<p class="text-sm text-ink-soft">Booking arrives with issue #7.</p>
 	</section>

@@ -1,0 +1,104 @@
+---
+import { cta } from '../../lib/site';
+
+// Every number on the ticket is real, hand-checkable production math:
+// 200 × 6 oz = 1,200 oz = 75 lb · 200 ÷ 4 = 50 lemons · 200 × 0.25 oz = 3 lb 2 oz
+// 200 × 0.5 oz = 100 oz = 6 lb 4 oz butter. Compound butter reconciles too:
+// ~3.1 qt butter + ~1.5 qt capers + lemon juice ≈ 5 qt. Plate $3.41 at 31%
+// food cost implies an ~$11 menu price — a healthy caterer's number.
+const ticket = {
+	shop: [
+		{ item: 'Chicken breast', qty: '75 lb' },
+		{ item: 'Lemons', qty: '50 ea' },
+		{ item: 'Capers', qty: '3 lb 2 oz' },
+		{ item: 'Butter, unsalted', qty: '6 lb 4 oz' }
+	],
+	prep: [
+		{ item: 'Pound + portion 6 oz', qty: '200 ct' },
+		{ item: 'Caper-lemon butter', qty: '5 qt' }
+	]
+};
+---
+
+<section class="container-page pt-14 pb-section lg:pt-24">
+	<p class="eyebrow">Back-of-house software</p>
+	<h1 class="mt-5 max-w-[21ch] text-display font-semibold">
+		The kitchen brain for caterers — built by a chef, not a software company.
+	</h1>
+
+	<div class="mt-10 grid items-start gap-14 lg:grid-cols-[7fr_5fr] lg:gap-10">
+		<div>
+			<p class="max-w-xl text-lede text-ink-soft">
+				Turn any order into exact shopping lists, prep sheets, and food cost in one click.
+				Keep the tools you already use.
+			</p>
+			<a href={cta.href} class="btn-primary mt-9">{cta.label}</a>
+		</div>
+
+		<!-- The signature element: one order becoming production lists, set as the
+		     kitchen ticket it would print on. Mono is the ticket's native voice. -->
+		<figure
+			aria-label="Example: one order turned into a shopping list, prep list, and plate cost"
+			class="justify-self-center lg:-mt-6 lg:justify-self-end"
+		>
+			<div
+				class="w-full max-w-[19.5rem] rotate-[1.5deg] bg-cream px-5 py-5 font-mono text-[0.8125rem] leading-normal text-ink shadow-ticket sm:max-w-[21rem]"
+			>
+				<!-- Punched hole — the wordmark's diamond, cut out of the ticket.
+				     Shows page off-white through the hole; inset shadow makes it
+				     read as depth rather than nothing. -->
+				<div
+					class="mx-auto mb-4 size-3.5 rotate-45 bg-offwhite shadow-[inset_0_1px_2px_rgb(31_36_33/0.18)]"
+				>
+				</div>
+
+				<div class="flex justify-between gap-4 font-semibold">
+					<span>ORDER #117</span>
+					<span>SAT · 6 PM</span>
+				</div>
+				<p class="mt-1">Chicken piccata · 200 guests</p>
+
+				<hr class="my-4 border-t border-dashed border-ticket-rule" aria-hidden="true" />
+
+				<p class="font-semibold text-amber-deep">SHOP</p>
+				<ul class="mt-1.5">
+					{
+						ticket.shop.map((row) => (
+							<li class="flex justify-between gap-4">
+								<span>{row.item}</span>
+								<span class="sr-only">: </span>
+								<span class="whitespace-nowrap">{row.qty}</span>
+							</li>
+						))
+					}
+				</ul>
+
+				<hr class="my-4 border-t border-dashed border-ticket-rule" aria-hidden="true" />
+
+				<p class="font-semibold text-amber-deep">PREP · FRI</p>
+				<ul class="mt-1.5">
+					{
+						ticket.prep.map((row) => (
+							<li class="flex justify-between gap-4">
+								<span>{row.item}</span>
+								<span class="sr-only">: </span>
+								<span class="whitespace-nowrap">{row.qty}</span>
+							</li>
+						))
+					}
+				</ul>
+
+				<hr class="my-4 border-t border-dashed border-ticket-rule" aria-hidden="true" />
+
+				<div class="flex justify-between gap-4 font-semibold">
+					<span>PLATE $3.41</span>
+					<span class="sr-only">· </span>
+					<span>FOOD COST 31%</span>
+				</div>
+			</div>
+			<figcaption class="mt-4 text-center text-sm text-ink-soft lg:text-right">
+				One order in. Every list out.
+			</figcaption>
+		</figure>
+	</div>
+</section>
