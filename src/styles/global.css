@@ -70,6 +70,8 @@
 	body {
 		@apply bg-offwhite font-body text-ink antialiased;
 		font-optical-sizing: auto;
+		/* Loaded faces have no italic; fail visibly rather than fake-slant. */
+		font-synthesis-style: none;
 	}
 
 	::selection {
