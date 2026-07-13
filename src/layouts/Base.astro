@@ -13,7 +13,10 @@ type Props = {
 	description?: string;
 };
 
-const { title = site.name, description = site.description } = Astro.props;
+const { title = site.title, description = site.description } = Astro.props;
+// Slash form so canonical/og:url agree byte-for-byte with the sitemap.
+const canonical = new URL('/', site.url).href;
+const ogImage = new URL('/og.png', site.url).href;
 ---
 
 <!doctype html>
@@ -21,10 +24,29 @@ const { title = site.name, description = site.description } = Astro.props;
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="robots" content="noindex" />
-		<!-- noindex until launch — removed by the SEO issue -->
 		<meta name="description" content={description} />
 		<title>{title}</title>
+		<link rel="canonical" href={canonical} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<meta name="theme-color" content="#F4F6F4" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={site.name} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Kitchen Brain — back-of-house software for caterers" />
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<!-- Vercel Web Analytics (cookieless). TODO(owner): flip on
+		     Analytics in the Vercel dashboard — until then this script 404s
+		     harmlessly. Same-origin, so the CSP needs no new hosts. -->
+		<script defer src="/_vercel/insights/script.js" is:inline></script>
 	</head>
 	<body>
 		<a

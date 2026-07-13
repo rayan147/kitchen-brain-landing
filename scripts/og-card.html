@@ -1,0 +1,84 @@
+<!doctype html>
+<!-- Source for public/og.png — regenerate with scripts/make-og.sh after edits. -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			@font-face {
+				font-family: 'Fraunces Variable';
+				src: url('../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2')
+					format('woff2-variations');
+				font-weight: 100 900;
+			}
+			@font-face {
+				font-family: 'Instrument Sans Variable';
+				src: url('../node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2')
+					format('woff2-variations');
+				font-weight: 400 700;
+			}
+			* {
+				margin: 0;
+				box-sizing: border-box;
+			}
+			body {
+				width: 1200px;
+				height: 630px;
+				background: #f4f6f4;
+				color: #1f2421;
+				font-family: 'Instrument Sans Variable', sans-serif;
+				padding: 72px 80px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				font-optical-sizing: auto;
+			}
+			.eyebrow {
+				font-size: 22px;
+				font-weight: 600;
+				letter-spacing: 0.14em;
+				color: #8f5716;
+			}
+			h1 {
+				font-family: 'Fraunces Variable', serif;
+				font-size: 118px;
+				font-weight: 600;
+				letter-spacing: -0.01em;
+				display: flex;
+				align-items: center;
+				gap: 22px;
+			}
+			.punch {
+				width: 26px;
+				height: 26px;
+				background: #b9762a;
+				transform: rotate(45deg);
+				display: inline-block;
+			}
+			.tag {
+				font-size: 34px;
+				color: #49524c;
+				max-width: 850px;
+				line-height: 1.4;
+			}
+			.rule {
+				border-top: 3px dashed #e4d3b4;
+				padding-top: 28px;
+				font-family: ui-monospace, monospace;
+				font-size: 24px;
+				font-weight: 600;
+				color: #2f7d5b;
+				letter-spacing: 0.06em;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<p class="eyebrow">BACK-OF-HOUSE SOFTWARE FOR CATERERS</p>
+			<h1>Kitchen Brain <span class="punch"></span></h1>
+			<p class="tag" style="margin-top: 20px">
+				Any order in — exact shopping lists, prep sheets, and food cost out.
+			</p>
+		</div>
+		<p class="rule">SHOP · PREP · PACK · $ PER PLATE</p>
+	</body>
+</html>
