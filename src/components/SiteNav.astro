@@ -25,7 +25,9 @@ import { cta, nav, site } from '../lib/site';
 				))
 			}
 			<li>
-				<a href={cta.href} class="btn-primary px-4 py-2 text-sm">{cta.label}</a>
+				<!-- py-3 makes the pill a true 44px tap target (12+20+12) — it's
+				     the page's most important persistent control. -->
+				<a href={cta.href} class="btn-primary px-5 py-3 text-sm">{cta.label}</a>
 			</li>
 		</ul>
 	</nav>

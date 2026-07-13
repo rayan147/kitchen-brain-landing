@@ -14,9 +14,15 @@ const year = 2026;
 			<p class="font-display text-lg font-semibold">{site.name}</p>
 			<a
 				href={`mailto:${site.email}`}
-				class="mt-1 inline-block text-sm text-ink-soft underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:text-ink"
+				class="mt-1 inline-block py-1 text-sm text-ink-soft underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:text-ink"
 			>
 				{site.email}
+			</a>
+			<a
+				href={site.phoneHref}
+				class="block py-1 text-sm text-ink-soft underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:text-ink"
+			>
+				{site.phone}
 			</a>
 		</div>
 		<nav aria-label="Footer">
@@ -26,7 +32,7 @@ const year = 2026;
 						<li>
 							<a
 								href={item.href}
-								class="text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
+								class="inline-block py-1 text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
 							>
 								{item.label}
 							</a>

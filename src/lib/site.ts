@@ -8,9 +8,11 @@ export const site = {
 	// TODO(owner): swap for the custom domain before launch — also in
 	// astro.config.mjs (site) and public/robots.txt (Sitemap URL).
 	url: 'https://kitchen-brain-landing.vercel.app',
-	// TODO(owner): replace with the real contact address.
-	email: 'hello@kitchenbrain.example',
-	// TODO(owner): confirm the signature name (from repo/account context).
+	// Temporary personal address — swap for the business email (issue #23).
+	email: 'rayan361@gmail.com',
+	phone: '973-870-6309',
+	phoneHref: 'tel:+19738706309',
+	// TODO(owner): add your last name to the signature.
 	founderName: 'Rayan',
 	// ≤60 chars so Google doesn't truncate the audience qualifier.
 	title: 'Kitchen Brain — shopping, prep & food cost for caterers',
