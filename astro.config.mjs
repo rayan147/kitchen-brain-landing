@@ -6,6 +6,11 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
 	site: 'https://kitchen-brain-landing.vercel.app',
 	vite: {
-		plugins: [tailwindcss()]
+		plugins: [tailwindcss()],
+		build: {
+			// Never inline the hoisted script bundle: the CSP in vercel.json
+			// allows script-src 'self' with no 'unsafe-inline'.
+			assetsInlineLimit: 0
+		}
 	}
 });
