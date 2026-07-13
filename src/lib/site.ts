@@ -11,13 +11,26 @@ export const site = {
 	email: 'hello@kitchenbrain.example',
 	// TODO(owner): confirm the signature name (from repo/account context).
 	founderName: 'Rayan',
-	// Calendly URL comes from PUBLIC_CALENDLY_URL (see the booking section).
 	description:
 		'Turn any catering order into exact shopping lists, prep sheets, and food cost in one click. Built by a chef with 12 years on the line.'
 } as const;
 
 /** The one CTA, referenced everywhere it appears — copy must never drift. */
 export const cta = { label: 'Book a 15-min demo', href: '#book' } as const;
+
+/**
+ * TODO(owner): set PUBLIC_CALENDLY_URL (Vercel env + .env locally) to your
+ * real 15-minute event link. `||` not `??`: empty-string env values must
+ * fall through to the placeholder.
+ */
+const rawCalendlyUrl =
+	import.meta.env.PUBLIC_CALENDLY_URL || 'https://calendly.com/your-handle/15min';
+// Build-time guard: this value becomes an href AND an iframe src, and the
+// postMessage handler trusts the https://calendly.com origin to match it.
+if (!rawCalendlyUrl.startsWith('https://calendly.com/')) {
+	throw new Error(`PUBLIC_CALENDLY_URL must be an https://calendly.com/ link, got: ${rawCalendlyUrl}`);
+}
+export const calendlyUrl = rawCalendlyUrl;
 
 /**
  * Section links. Each item ships in the SAME issue as its section, so no
