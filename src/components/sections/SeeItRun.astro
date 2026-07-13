@@ -1,0 +1,43 @@
+---
+// Screen recording of the actual build (public/demo.mp4, 448K H.264,
+// silent). preload="none" + poster: zero video bytes move until play, so
+// Lighthouse is untouched. Regenerate via the recording rig described in
+// the repo history (PR #25) whenever the app UI changes meaningfully.
+---
+
+<section id="demo" class="container-page py-section-tight">
+	<div class="max-w-4xl" data-reveal>
+		<p class="eyebrow">See it run</p>
+		<h2 class="mt-4 text-h2 font-semibold">Half a minute of the real thing.</h2>
+		<p class="mt-5 max-w-2xl text-lede text-ink-soft">
+			No mockups. A wedding for 200 goes in. The shopping list, the prep list, and the
+			pack list come out, priced.
+		</p>
+		<p id="demo-transcript" class="sr-only">
+			The video is a silent screen recording of Kitchen Brain: signing in, a chicken
+			piccata recipe showing plate cost and food-cost percentage, creating an order for
+			200 guests, then the generated shopping list with case quantities and supplier
+			totals, the prep list including sub-recipe batches, and the pack list.
+		</p>
+
+		<!-- Not styled as a ticket: real product footage should read as real,
+		     not as another branded artifact. -->
+		<video
+			controls
+			playsinline
+			preload="none"
+			poster="/demo-poster.jpg"
+			width="1280"
+			height="800"
+			class="mt-8 w-full border border-hairline bg-paper shadow-ticket"
+			aria-label="Screen recording: Kitchen Brain turns a 200-guest order into shopping, prep, and pack lists"
+			aria-describedby="demo-transcript"
+		>
+			<source src="/demo.mp4" type="video/mp4" />
+			<p>
+				Your browser can&rsquo;t play this video.
+				<a href="/demo.mp4" class="btn-quiet">Download it instead</a>
+			</p>
+		</video>
+	</div>
+</section>
