@@ -33,7 +33,7 @@ Open Graph image: edit `scripts/og-card.html`, then `./scripts/make-og.sh`
 Everything below ships as a clearly-marked placeholder. Each also carries a
 `TODO(owner)` comment at the exact spot in the code.
 
-- [ ] **Calendly link** — set `PUBLIC_CALENDLY_URL` to your real 15-minute event
+- [x] **Calendly link** — set to https://calendly.com/rayan361/30min (2026-07-13) — set `PUBLIC_CALENDLY_URL` to your real 15-minute event
       link in the Vercel project's env vars (all environments) and in local `.env`,
       then redeploy (the value is baked in at build time). Placeholder lives in
       `src/lib/site.ts`. Must be an `https://calendly.com/...` URL (build enforces it).
