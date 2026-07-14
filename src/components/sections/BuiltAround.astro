@@ -1,0 +1,24 @@
+---
+import { site } from '../../lib/site';
+
+// The page's core promise lives only here: I build around each customer.
+// WhyUs keeps the phone line, BookDemo keeps the early-access hook — the
+// claims must not repeat across the three. Deliberately absent: a #book
+// CTA (WhyUs and Founder already close with one on either side) and a nav
+// entry (it's a persuasion beat, not a destination).
+---
+
+<section id="built" class="container-page border-t border-hairline py-section">
+	<div class="max-w-2xl" data-reveal>
+		<p class="eyebrow">How it gets built</p>
+		<h2 class="mt-4 text-h2 font-semibold">Built around your kitchen.</h2>
+		<p class="mt-5 text-lede text-ink-soft">
+			One chef is building this with a handful of New Jersey caterers. The roadmap is whatever
+			their kitchens need next.
+		</p>
+		<p class="mt-5 text-lede text-ink-soft">
+			Tell me what slows your kitchen down and I&rsquo;ll build it. When you <a href={`mailto:${site.email}`} class="font-medium text-green-deep underline decoration-current underline-offset-4">email me</a>, the person who wrote the code reads it, and if the fix makes sense it can
+			ship the same week. Good luck getting that from a company with ten thousand customers.
+		</p>
+	</div>
+</section>

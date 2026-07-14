@@ -4,7 +4,8 @@ import { site } from '../../lib/site';
 // carries a live tel: link — the page's one checkable promise.
 ---
 
-<!-- The hairline breaks the page's only same-background adjacency (demo → why). -->
+<!-- The hairline breaks the same-background adjacency with the demo above;
+     BuiltAround below carries its own for the why → built seam. -->
 <section id="why" class="container-page grid gap-12 border-t border-hairline py-section lg:grid-cols-[5fr_7fr] lg:gap-20">
 	<div data-reveal>
 		<p class="eyebrow">Why us</p>
@@ -30,8 +31,7 @@ import { site } from '../../lib/site';
 				<h3 class="text-h3 font-semibold">You get me</h3>
 				<p class="mt-2 max-w-lg text-ink-soft">
 					Call <a href={site.phoneHref} class="font-medium text-green-deep underline decoration-current underline-offset-4">{site.phone}</a>
-					and I pick up. We do setup together on the phone, and what I build next is
-					whatever the kitchens using it ask for.
+					and I pick up. No ticket queue, no support tiers.
 				</p>
 			</li>
 			<li class="border-t border-hairline py-6 lg:py-7" data-reveal style="--reveal-delay: 220ms">
