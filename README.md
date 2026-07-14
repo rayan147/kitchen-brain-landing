@@ -37,7 +37,7 @@ Everything below ships as a clearly-marked placeholder. Each also carries a
       link in the Vercel project's env vars (all environments) and in local `.env`,
       then redeploy (the value is baked in at build time). Placeholder lives in
       `src/lib/site.ts`. Must be an `https://calendly.com/...` URL (build enforces it).
-- [ ] **Contact email** — `email` in `src/lib/site.ts` (footer mailto).
+- [x] **Contact email** — rayan@costcook.io (2026-07-14).
 - [ ] **Founder signature** — `founderName` in `src/lib/site.ts` (currently "Rayan"; confirm).
 - [ ] **Analytics** — enable Web Analytics for the `kitchen-brain-landing` project in
       the Vercel dashboard (Project → Analytics → Enable). Until then the analytics

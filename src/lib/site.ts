@@ -6,8 +6,7 @@
 export const site = {
 	name: 'Kitchen Brain',
 	url: 'https://costcook.io',
-	// Temporary personal address — swap for the business email (issue #23).
-	email: 'rayan361@gmail.com',
+	email: 'rayan@costcook.io',
 	phone: '973-870-6309',
 	phoneHref: 'tel:+19738706309',
 	// TODO(owner): add your last name to the signature.
