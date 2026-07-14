@@ -1,15 +1,10 @@
 ---
-import { cta, nav, site } from '../lib/site';
+import { cta, nav } from '../lib/site';
+import BrandLockup from './BrandLockup.astro';
 ---
 
 <header class="container-page flex items-baseline justify-between pt-6 pb-4 sm:pt-8">
-	<a href="/" class="group font-display text-xl font-semibold tracking-tight">
-		{site.name}
-		<!-- Ticket-punch mark: the hero's kitchen ticket echoes this device. -->
-		<span
-			class="ml-0.5 inline-block size-[0.38em] rotate-45 bg-amber transition-transform duration-150 group-hover:rotate-[135deg]"
-			aria-hidden="true"></span>
-	</a>
+	<BrandLockup href="/" />
 	<nav aria-label="Main">
 		<ul role="list" class="flex items-baseline gap-5 sm:gap-8">
 			{

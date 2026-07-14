@@ -1,4 +1,4 @@
-// Records a walkthrough of the real Kitchen Brain app (dev server on :5199)
+// Records a walkthrough of the real CostCook app (dev server on :5199)
 // as WebM video. Storyboard: login → recipe w/ live plate cost → create a
 // 200-guest order → shopping list → prep → pack.
 import { chromium } from 'playwright-core';
@@ -25,7 +25,7 @@ for (const p of ['/login', '/']) await page.goto(BASE + p, { waitUntil: 'network
 // --- Take starts here ---
 await page.goto(BASE + '/login', { waitUntil: 'networkidle' });
 await pause(900);
-await page.locator('#email').pressSequentially('demo@kitchenbrain.demo', { delay: 28 });
+await page.locator('#email').pressSequentially('demo@costcook.demo', { delay: 28 });
 await page.locator('#password').pressSequentially('demo-passw0rd!', { delay: 28 });
 await pause(400);
 await page.getByRole('button').first().click();

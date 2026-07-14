@@ -1,5 +1,6 @@
 ---
 import { cta, nav, site } from '../lib/site';
+import BrandLockup from './BrandLockup.astro';
 
 // Static site: computing the year at build time would freeze at the last
 // deploy anyway, so own it explicitly. Bump with the copyright.
@@ -11,7 +12,7 @@ const year = 2026;
 		class="container-page flex flex-col gap-6 py-10 sm:flex-row sm:items-baseline sm:justify-between"
 	>
 		<div>
-			<p class="font-display text-lg font-semibold">{site.name}</p>
+			<BrandLockup />
 			<a
 				href={`mailto:${site.email}`}
 				class="mt-1 inline-block py-1 text-sm text-ink-soft underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:text-ink"
