@@ -1,6 +1,6 @@
 # Kitchen Brain — Landing
 
-Marketing one-pager for [Kitchen Brain](https://kitchen-brain-two.vercel.app): back-of-house
+Marketing one-pager for [Kitchen Brain](https://app.costcook.io): back-of-house
 software for small caterers and meal-prep businesses. Single goal: book 15-minute demos.
 
 **Production:** https://costcook.io (the vercel.app hostname redirects)
