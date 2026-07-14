@@ -48,9 +48,9 @@ Everything below ships as a clearly-marked placeholder. Each also carries a
 - [ ] **OG image (optional)** — `public/og.png` is a real branded card, not a stub;
       swap only if you want photography instead. Regenerate via `scripts/make-og.sh`.
 
-## QA snapshot (2026-07-13, production)
+## QA snapshot (2026-07-14, production)
 
-- Lighthouse mobile: **99 performance / 100 accessibility** / 96 best-practices / 100 SEO
+- Landing mobile: **99 perf / 100 a11y**; app login mobile: **100 perf / 100 a11y**
 - Lighthouse desktop: **100 performance / 100 accessibility** / 96 best-practices / 100 SEO
   (best-practices ding = the expected analytics 404 above)
 - All anchor targets present (`#what` `#why` `#chef` `#book`); assets, sitemap,
