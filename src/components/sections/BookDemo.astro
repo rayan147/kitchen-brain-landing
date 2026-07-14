@@ -106,7 +106,7 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 			revealed = true;
 			slot
 				.querySelector('iframe')
-				?.setAttribute('title', 'Schedule a demo — Calendly booking calendar');
+				?.setAttribute('title', 'Schedule a demo: Calendly booking calendar');
 			slot.classList.remove('hidden');
 			// Demote rather than hide: the calendar below becomes the primary
 			// action, but the link never vanishes mid-reach.
@@ -117,7 +117,7 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 		if (eventName === 'calendly.event_scheduled' && confirmed) {
 			confirmed.classList.add('mt-6');
 			confirmed.textContent =
-				'You’re booked — talk soon. A calendar invite is on its way to your inbox.';
+				'You’re booked. Talk soon. A calendar invite is on its way to your inbox.';
 		}
 	});
 </script>

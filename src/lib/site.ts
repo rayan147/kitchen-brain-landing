@@ -12,7 +12,7 @@ export const site = {
 	// TODO(owner): add your last name to the signature.
 	founderName: 'Rayan',
 	// ≤60 chars so Google doesn't truncate the audience qualifier.
-	title: 'CostCook — shopping, prep & food cost for caterers',
+	title: 'CostCook: shopping, prep & food cost for caterers',
 	description:
 		'Turn any catering order into exact shopping lists, prep sheets, and food cost in one click. Built by a chef with 12 years on the line.'
 } as const;
