@@ -5,9 +5,7 @@
  */
 export const site = {
 	name: 'Kitchen Brain',
-	// TODO(owner): swap for the custom domain before launch — also in
-	// astro.config.mjs (site) and public/robots.txt (Sitemap URL).
-	url: 'https://kitchen-brain-landing.vercel.app',
+	url: 'https://costcook.io',
 	// Temporary personal address — swap for the business email (issue #23).
 	email: 'rayan361@gmail.com',
 	phone: '973-870-6309',

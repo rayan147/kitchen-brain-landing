@@ -3,7 +3,7 @@
 Marketing one-pager for [Kitchen Brain](https://kitchen-brain-two.vercel.app): back-of-house
 software for small caterers and meal-prep businesses. Single goal: book 15-minute demos.
 
-**Production:** https://kitchen-brain-landing.vercel.app
+**Production:** https://costcook.io (the vercel.app hostname redirects)
 
 ## Stack
 
@@ -42,10 +42,9 @@ Everything below ships as a clearly-marked placeholder. Each also carries a
 - [ ] **Analytics** — enable Web Analytics for the `kitchen-brain-landing` project in
       the Vercel dashboard (Project → Analytics → Enable). Until then the analytics
       script 404s harmlessly (it's the only console error on the page).
-- [ ] **Custom domain (when ready)** — update `url` in `src/lib/site.ts`, `site` in
-      `astro.config.mjs`, and the `Sitemap:` line in `public/robots.txt`; re-add
-      Organization JSON-LD then if desired (deliberately skipped while values are
-      placeholders).
+- [x] **Custom domain** — costcook.io live (2026-07-14); site.ts/astro.config/robots.txt
+      updated. Optional follow-up: add Organization JSON-LD now that the domain and
+      contact details are real.
 - [ ] **OG image (optional)** — `public/og.png` is a real branded card, not a stub;
       swap only if you want photography instead. Regenerate via `scripts/make-og.sh`.
 

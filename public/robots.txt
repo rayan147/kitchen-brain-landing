@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kitchen-brain-landing.vercel.app/sitemap-index.xml
+Sitemap: https://costcook.io/sitemap-index.xml

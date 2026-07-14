@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // Fully static one-pager — no adapter; Vercel serves the dist/ output.
 export default defineConfig({
-	site: 'https://kitchen-brain-landing.vercel.app',
+	site: 'https://costcook.io',
 	integrations: [sitemap()],
 	vite: {
 		plugins: [tailwindcss()],
