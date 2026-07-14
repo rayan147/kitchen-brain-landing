@@ -4,7 +4,7 @@
  * README checklist mirrors this list.
  */
 export const site = {
-	name: 'Kitchen Brain',
+	name: 'CostCook',
 	url: 'https://costcook.io',
 	email: 'rayan@costcook.io',
 	phone: '973-870-6309',
@@ -12,7 +12,7 @@ export const site = {
 	// TODO(owner): add your last name to the signature.
 	founderName: 'Rayan',
 	// ≤60 chars so Google doesn't truncate the audience qualifier.
-	title: 'Kitchen Brain — shopping, prep & food cost for caterers',
+	title: 'CostCook — shopping, prep & food cost for caterers',
 	description:
 		'Turn any catering order into exact shopping lists, prep sheets, and food cost in one click. Built by a chef with 12 years on the line.'
 } as const;

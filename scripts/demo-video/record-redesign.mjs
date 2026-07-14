@@ -1,4 +1,4 @@
-// Records the redesigned Kitchen Brain walkthrough (~50s, calm pace).
+// Records the redesigned CostCook app walkthrough (~50s, calm pace).
 // Flow: login → Rodriguez order shopping → prep → pack → recipes food cost.
 import { chromium } from 'playwright-core';
 

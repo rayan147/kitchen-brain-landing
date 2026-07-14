@@ -1,6 +1,6 @@
 # Regenerating public/demo.mp4
 
-The landing page embeds a real screen recording of the Kitchen Brain app.
+The landing page embeds a real screen recording of the CostCook app.
 To re-record after app UI changes (paths below assume the app worktree):
 
 1. Scratch DB + seed (never touch a real database):
@@ -9,7 +9,7 @@ To re-record after app UI changes (paths below assume the app worktree):
    chicken-piccata world: ingredients, purchases, sub-recipe, two dishes, menu).
 2. Run the app: `DATABASE_URL=file:$SCRATCH/demo.db npm run dev -- --port 5199 --strictPort`
 3. Bootstrap the demo account:
-   `curl -X POST localhost:5199/api/auth/sign-up/email -H 'Content-Type: application/json' -d '{"email":"demo@kitchenbrain.demo","password":"demo-passw0rd!","name":"Rayan"}'`
+   `curl -X POST localhost:5199/api/auth/sign-up/email -H 'Content-Type: application/json' -d '{"email":"demo@costcook.demo","password":"demo-passw0rd!","name":"Rayan"}'`
 4. `npm i playwright-core` somewhere scratch, edit paths in record-demo.mjs,
    `node record-demo.mjs` → WebM.
 5. Transcode + poster (ffmpeg-static):
