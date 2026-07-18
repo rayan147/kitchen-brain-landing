@@ -22,25 +22,54 @@
 		</p>
 
 		<!-- Not styled as a ticket: real product footage should read as real,
-		     not as another branded artifact. -->
-		<video
-			controls
-			playsinline
-			preload="none"
-			poster="/demo-poster.jpg"
-			width="1280"
-			height="800"
-			class="mt-8 w-full border border-hairline bg-paper shadow-ticket"
-			aria-label="Screen recording: CostCook turns a 200-guest order into shopping, prep, and pack lists"
-			aria-describedby="demo-transcript"
-			muted
-		>
-			<source src="/demo.webm" type="video/webm" />
-			<source src="/demo.mp4" type="video/mp4" />
-			<p>
-				Your browser can&rsquo;t play this video.
-				<a href="/demo.mp4" class="btn-quiet">Download it instead</a>
-			</p>
-		</video>
+		     not as another branded artifact. Poster is the shopping-list beat
+		     (order header + supplier groups), per the rig README's "money shot". -->
+		<div class="relative mt-8">
+			<video
+				controls
+				playsinline
+				preload="none"
+				poster="/demo-poster.jpg"
+				width="1280"
+				height="800"
+				class="w-full border border-hairline bg-paper shadow-ticket"
+				aria-label="Screen recording: CostCook turns a 200-guest order into shopping, prep, and pack lists"
+				aria-describedby="demo-transcript"
+				muted
+			>
+				<source src="/demo.webm" type="video/webm" />
+				<source src="/demo.mp4" type="video/mp4" />
+				<p>
+					Your browser can&rsquo;t play this video.
+					<a href="/demo.mp4" class="btn-quiet">Download it instead</a>
+				</p>
+			</video>
+			<!-- Play affordance: the poster alone reads as a static screenshot.
+			     Dark chip echoes the footage's own caption chips. Decorative
+			     (the video carries the labels), lets taps fall through to the
+			     video, removed on first play; shown only when scripting can
+			     remove it, so no-JS playback is never covered. -->
+			<span
+				id="demo-play-badge"
+				class="pointer-events-none absolute top-3 left-3 hidden items-center gap-2 rounded-full bg-ink/85 px-3.5 py-1.5 text-sm font-medium text-offwhite shadow-ticket [@media(scripting:enabled)]:inline-flex"
+				aria-hidden="true"
+			>
+				<svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true">
+					<path d="M0 0l10 6-10 6z"></path>
+				</svg>
+				Watch · 48 sec
+			</span>
+		</div>
+
+		<a href="#book" class="btn-quiet mt-8">Book 15 minutes</a>
 	</div>
 </section>
+
+<script>
+	// One job: clear the play chip once the footage is rolling.
+	const video = document.querySelector<HTMLVideoElement>('#demo video');
+	const badge = document.getElementById('demo-play-badge');
+	if (video && badge) {
+		video.addEventListener('play', () => badge.remove(), { once: true });
+	}
+</script>
