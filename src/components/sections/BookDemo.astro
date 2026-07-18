@@ -7,7 +7,7 @@ import { calendlyUrl, site } from '../../lib/site';
 const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdpr_banner=1&background_color=f4f6f4&text_color=1f2421&primary_color=2f7d5b`;
 ---
 
-<section id="book" class="container-page py-section">
+<section id="book" class="relative container-page py-section">
 	<!-- No reveal here: by the conversion section the page should be still
 	     and certain — and the CTA below renders instantly regardless. -->
 	<div class="max-w-2xl">
@@ -54,7 +54,18 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 	     Taller below sm: Calendly's stacked mobile flow exceeds 700px. -->
 	<!-- No min-width: Calendly's snippet default would force horizontal
 	     scroll at 320px viewport inside our padded container. -->
-	<div id="calendly-slot" data-url={embedUrl} class="mt-9 hidden h-[760px] sm:h-[700px]"></div>
+	<!-- invisible+absolute, NOT display:none: the widget only posts its
+	     boot signal once the iframe has a real layout box, so a display:none
+	     slot never reveals. Off-flow and invisible until proven booted. -->
+	<!-- inset-x-0, not w-full: the absolute box's static position already
+	     starts inside the container padding, so w-full would poke 20px past
+	     the viewport at 390px. Pinning both edges keeps it contained. -->
+	<div
+		id="calendly-slot"
+		data-url={embedUrl}
+		class="invisible absolute inset-x-0 mt-9 h-[760px] sm:h-[700px]"
+	>
+	</div>
 
 	<!-- Always-rendered live region: content is INSERTED on booking, which
 	     screen readers announce reliably (unhiding a display:none region
@@ -73,8 +84,8 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 		if (!slot || slot.classList.contains('calendly-inline-widget')) return;
 		// widget.js scans .calendly-inline-widget[data-url] as it executes,
 		// so the class must be in place before the script is appended. The
-		// iframe boots while the slot is still display:none; reveal happens
-		// on its first postMessage below.
+		// iframe boots while the slot is still invisible (it keeps a layout
+		// box off-flow); reveal happens on its first postMessage below.
 		slot.classList.add('calendly-inline-widget');
 		const script = document.createElement('script');
 		script.src = 'https://assets.calendly.com/assets/external/widget.js';
@@ -111,7 +122,7 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 			slot
 				.querySelector('iframe')
 				?.setAttribute('title', 'Schedule a demo: Calendly booking calendar');
-			slot.classList.remove('hidden');
+			slot.classList.remove('invisible', 'absolute', 'inset-x-0');
 			// Demote rather than hide: the calendar below becomes the primary
 			// action, but the link never vanishes mid-reach.
 			direct.classList.remove('btn-primary');
