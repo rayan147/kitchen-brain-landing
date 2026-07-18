@@ -1,5 +1,5 @@
 ---
-import { site } from '../../lib/site';
+import { cta, site } from '../../lib/site';
 
 // Letter facts stay within the brief: 12 years in professional kitchens,
 // now a software engineer. Photo is owner-supplied (public/founder.jpg).
@@ -38,6 +38,9 @@ import { site } from '../../lib/site';
 				</div>
 			</div>
 
+			<!-- Deliberate exception to the no-em-dash copy rule (#49): a leading
+			     attribution dash on a signature is standard letter typography,
+			     not a prose em-dash. Leave it. -->
 			<p class="mt-8 font-display text-xl font-medium text-ink">
 				— {site.founderName}
 				<span
@@ -45,7 +48,7 @@ import { site } from '../../lib/site';
 					aria-hidden="true"></span>
 			</p>
 
-			<a href="#book" class="btn-quiet mt-8">Book 15 minutes</a>
+			<a href={cta.href} class="btn-quiet mt-8">Book 15 minutes</a>
 		</div>
 	</div>
 </section>

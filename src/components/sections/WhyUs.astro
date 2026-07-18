@@ -1,5 +1,5 @@
 ---
-import { site } from '../../lib/site';
+import { cta, site } from '../../lib/site';
 // Rows are hand-written (not a mapped array) because the founder row
 // carries a live tel: link — the page's one checkable promise.
 ---
@@ -55,6 +55,6 @@ import { site } from '../../lib/site';
 				</p>
 			</li>
 		</ul>
-		<a href="#book" class="btn-quiet mt-2">Book 15 minutes with your own order</a>
+		<a href={cta.href} class="btn-quiet mt-2">Book 15 minutes with your own order</a>
 	</div>
 </section>
