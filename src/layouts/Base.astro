@@ -3,6 +3,11 @@
 // wght-only and would silently flatten Fraunces' display character.
 import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource-variable/instrument-sans/index.css';
+// Preload just the two latin subsets first paint uses: discovery is
+// otherwise chained HTML → CSS → woff2, so the Fraunces H1 (the LCP)
+// swaps in late. ?url resolves to the same hashed asset the CSS uses.
+import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
+import instrumentLatin from '@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -30,6 +35,8 @@ const ogImage = new URL('/og.png', site.url).href;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href={instrumentLatin} as="font" type="font/woff2" crossorigin />
 		<meta name="theme-color" content="#F4F6F4" />
 
 		<meta property="og:type" content="website" />
@@ -56,7 +63,9 @@ const ogImage = new URL('/og.png', site.url).href;
 			Skip to content
 		</a>
 		<SiteNav />
-		<main id="main">
+		<!-- tabindex="-1": the skip link must move AT/keyboard focus here,
+		     not just scroll (WCAG 2.4.1). No ring: arrival is the feedback. -->
+		<main id="main" tabindex="-1" class="focus-visible:outline-none">
 			<slot />
 		</main>
 		<SiteFooter />

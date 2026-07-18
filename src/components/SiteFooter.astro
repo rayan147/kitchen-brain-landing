@@ -13,6 +13,10 @@ const year = 2026;
 	>
 		<div>
 			<BrandLockup />
+			<!-- These two stack flush (8px apart), so any hit-box bleed would
+			     overlap the neighbor: they stay at 28px, which clears the
+			     WCAG 2.5.8 24px floor. The nav links below have room and get
+			     py-2/-my-1 for a 36px target with the layout unmoved. -->
 			<a
 				href={`mailto:${site.email}`}
 				class="mt-1 inline-block py-1 text-sm text-ink-soft underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:text-ink"
@@ -33,7 +37,7 @@ const year = 2026;
 						<li>
 							<a
 								href={item.href}
-								class="inline-block py-1 text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
+								class="inline-block py-2 -my-1 text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
 							>
 								{item.label}
 							</a>
