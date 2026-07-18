@@ -51,6 +51,8 @@ screenshots in perspective frames, dark "developer tool" landing pages.
 4. **AA is the floor.** Contrast notes live next to the tokens; amber is
    decoration/large-text only (`amber-deep` for small text). Focus rings
    follow element radius. The sr-only demo transcript must match the footage.
-5. **One slot, one claim.** Each section owns one promise; the single CTA
-   ("book a demo") is defined once in `src/lib/site.ts` and referenced
-   everywhere — copy must never drift between instances.
+5. **One slot, one claim.** Each section owns one promise, and every path
+   to conversion points at one place: the primary CTA's label and target
+   (`cta`) live in `src/lib/site.ts`, and quiet mid-page links reference
+   `cta.href` with shorter contextual labels ("Book 15 minutes"). New
+   booking links must not hardcode the anchor or invent new labels.

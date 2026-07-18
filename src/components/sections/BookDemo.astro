@@ -54,24 +54,27 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 	     Taller below sm: Calendly's stacked mobile flow exceeds 700px. -->
 	<!-- No min-width: Calendly's snippet default would force horizontal
 	     scroll at 320px viewport inside our padded container. -->
-	<!-- invisible+absolute, NOT display:none: the widget only posts its
-	     boot signal once the iframe has a real layout box, so a display:none
-	     slot never reveals. Off-flow and invisible until proven booted. -->
-	<!-- inset-x-0, not w-full: the absolute box's static position already
-	     starts inside the container padding, so w-full would poke 20px past
-	     the viewport at 390px. Pinning both edges keeps it contained. -->
-	<div
-		id="calendly-slot"
-		data-url={embedUrl}
-		class="invisible absolute inset-x-0 mt-9 h-[760px] sm:h-[700px]"
-	>
-	</div>
+	<div id="calendly-slot" data-url={embedUrl} class="mt-9 h-[760px] sm:h-[700px]"></div>
 
 	<!-- Always-rendered live region: content is INSERTED on booking, which
 	     screen readers announce reliably (unhiding a display:none region
 	     is not announced). Margin arrives with the text. -->
 	<p id="book-confirmed" class="text-lede font-medium text-green-deep" role="status"></p>
 </section>
+
+<style>
+	/* Pre-boot gate, one state bit: the widget only posts its boot signal
+	   once the iframe has a real layout box, so a display:none slot would
+	   never reveal. Off-flow, invisible, pinned to the container's edges
+	   (the box's static position already starts inside the padding, so any
+	   set width would poke past the viewport at 390px). The script flips
+	   data-booted on Calendly's first postMessage. */
+	#calendly-slot:not([data-booted]) {
+		visibility: hidden;
+		position: absolute;
+		inset-inline: 0;
+	}
+</style>
 
 <script>
 	const section = document.getElementById('book');
@@ -122,7 +125,7 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 			slot
 				.querySelector('iframe')
 				?.setAttribute('title', 'Schedule a demo: Calendly booking calendar');
-			slot.classList.remove('invisible', 'absolute', 'inset-x-0');
+			slot.setAttribute('data-booted', '');
 			// Demote rather than hide: the calendar below becomes the primary
 			// action, but the link never vanishes mid-reach.
 			direct.classList.remove('btn-primary');

@@ -1,5 +1,5 @@
 ---
-import { site } from '../../lib/site';
+import { cta, site } from '../../lib/site';
 
 // Letter facts stay within the brief: 12 years in professional kitchens,
 // now a software engineer. Photo is owner-supplied (public/founder.jpg).
@@ -48,7 +48,7 @@ import { site } from '../../lib/site';
 					aria-hidden="true"></span>
 			</p>
 
-			<a href="#book" class="btn-quiet mt-8">Book 15 minutes</a>
+			<a href={cta.href} class="btn-quiet mt-8">Book 15 minutes</a>
 		</div>
 	</div>
 </section>

@@ -1,8 +1,12 @@
 ---
+import { cta } from '../../lib/site';
+
 // Screen tour of the actual build (public/demo.mp4, H.264,
 // silent). preload="none" + poster: zero video bytes move until play, so
 // Lighthouse is untouched. Regenerate via the recording rig described in
-// the repo history (PR #25) whenever the app UI changes meaningfully.
+// the repo history (PR #25) whenever the app UI changes meaningfully —
+// and update the chip's "48 sec" plus the sr-only transcript to match
+// the new footage.
 ---
 
 <section id="demo" class="container-page py-section-tight">
@@ -61,7 +65,7 @@
 			</span>
 		</div>
 
-		<a href="#book" class="btn-quiet mt-8">Book 15 minutes</a>
+		<a href={cta.href} class="btn-quiet mt-8">Book 15 minutes</a>
 	</div>
 </section>
 

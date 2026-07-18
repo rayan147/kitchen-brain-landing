@@ -218,8 +218,10 @@
 	text-underline-offset: 4px;
 	text-decoration-color: var(--color-hairline);
 	transition: text-decoration-color 150ms ease-out;
-	/* Same 44px touch-target rule as btn-primary, but padding is cancelled
-	   by negative margin so the quiet link still sits flush in text flow. */
+	/* 44px touch target: padding grows the hit box and the negative margin
+	   cancels it in layout, so the link sits flush in text flow. A stacked
+	   mt-* on the same element still wins the top margin on purpose —
+	   plain utilities sort after @utility blocks. */
 	padding-block: 0.625rem;
 	margin-block: -0.625rem;
 	&:hover {
