@@ -15,7 +15,10 @@ const Tag = href ? 'a' : 'p';
 ---
 
 <Tag {href} class="flex items-center gap-1.5 font-display text-lg font-semibold whitespace-nowrap">
-	<svg viewBox="0 0 64 64" fill="none" class={iconClass} aria-hidden="true">
+	<!-- width/height: intrinsic fallback (1.375em at text-lg ≈ 25px) so the
+	     icon can never paint at container width before the stylesheet
+	     applies (issue #54). The class overrides them once CSS is live. -->
+	<svg viewBox="0 0 64 64" width="25" height="25" fill="none" class={iconClass} aria-hidden="true">
 		<path
 			d="M 44.77 42.89 A 20 20 0 1 1 44.77 21.11"
 			stroke="#2F7D5B"
