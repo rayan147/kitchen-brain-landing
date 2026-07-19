@@ -1,0 +1,331 @@
+{
+	"b1": {
+		"duration": 6.98,
+		"min_hold": 5,
+		"screen": "title card",
+		"captions": [
+			{
+				"text": "CostCook turns a catering order",
+				"start": 0.109,
+				"end": 2.052
+			},
+			{
+				"text": "into your shopping list, prep, and food cost.",
+				"start": 2.052,
+				"end": 5.666
+			},
+			{
+				"text": "Here's a real order.",
+				"start": 5.666,
+				"end": 6.98
+			}
+		]
+	},
+	"b2": {
+		"duration": 16.614,
+		"min_hold": 14,
+		"screen": "home, then order header",
+		"captions": [
+			{
+				"text": "An order comes in.",
+				"start": 0.109,
+				"end": 1.318
+			},
+			{
+				"text": "A backyard wedding, 200 guests, Aug 15.",
+				"start": 1.318,
+				"end": 6.236
+			},
+			{
+				"text": "I type in the menu, the guest count,",
+				"start": 6.236,
+				"end": 8.533
+			},
+			{
+				"text": "and what I'm charging a head. $13.",
+				"start": 8.533,
+				"end": 11.576
+			},
+			{
+				"text": "That's all CostCook needs.",
+				"start": 11.576,
+				"end": 13.492
+			},
+			{
+				"text": "Everything you'll see comes from this page.",
+				"start": 13.492,
+				"end": 16.614
+			}
+		]
+	},
+	"b3": {
+		"duration": 47.13,
+		"min_hold": 34,
+		"screen": "shopping list roll-up",
+		"captions": [
+			{
+				"text": "First, the shopping list.",
+				"start": 0.163,
+				"end": 2.962
+			},
+			{
+				"text": "Every dish's ingredients, rolled up",
+				"start": 2.962,
+				"end": 7.31
+			},
+			{
+				"text": "into one list, scaled to 200.",
+				"start": 7.31,
+				"end": 10.38
+			},
+			{
+				"text": "Red onion is in the pilaf and the salad.",
+				"start": 10.38,
+				"end": 13.533
+			},
+			{
+				"text": "Here it's one line.",
+				"start": 13.533,
+				"end": 14.742
+			},
+			{
+				"text": "15.4 lb. One bag, 25 lb.",
+				"start": 14.742,
+				"end": 19.226
+			},
+			{
+				"text": "Grouped by supplier,",
+				"start": 19.226,
+				"end": 21.291
+			},
+			{
+				"text": "in packs you can actually buy.",
+				"start": 21.291,
+				"end": 23.179
+			},
+			{
+				"text": "3 cases of chicken thigh from Sysco.",
+				"start": 23.179,
+				"end": 25.747
+			},
+			{
+				"text": "5 cases of pita from the bakery.",
+				"start": 25.747,
+				"end": 28.111
+			},
+			{
+				"text": "Each stop gets its own subtotal.",
+				"start": 28.111,
+				"end": 32.894
+			},
+			{
+				"text": "And down here, the honest number.",
+				"start": 32.894,
+				"end": 35.217
+			},
+			{
+				"text": "About $900 out the door,",
+				"start": 35.217,
+				"end": 37.405
+			},
+			{
+				"text": "$785 in what the food itself costs.",
+				"start": 37.405,
+				"end": 40.72
+			},
+			{
+				"text": "The gap is pack round-up.",
+				"start": 40.72,
+				"end": 42.527
+			},
+			{
+				"text": "This list used to be my whole evening.",
+				"start": 42.527,
+				"end": 44.823
+			},
+			{
+				"text": "Now it's done before the coffee's poured.",
+				"start": 44.823,
+				"end": 47.13
+			}
+		]
+	},
+	"b4": {
+		"duration": 18.421,
+		"min_hold": 14,
+		"screen": "prep list",
+		"captions": [
+			{
+				"text": "Then the prep list.",
+				"start": 0.122,
+				"end": 1.495
+			},
+			{
+				"text": "What the line actually cooks, after trim.",
+				"start": 1.495,
+				"end": 4.701
+			},
+			{
+				"text": "You buy almost 80 lb of chicken thigh.",
+				"start": 4.701,
+				"end": 7.473
+			},
+			{
+				"text": "59.5 lb goes in the pot.",
+				"start": 7.473,
+				"end": 10.448
+			},
+			{
+				"text": "The loss is already in the math.",
+				"start": 10.448,
+				"end": 12.595
+			},
+			{
+				"text": "The marinade? Six whole batches.",
+				"start": 12.595,
+				"end": 15.652
+			},
+			{
+				"text": "Nobody's doing that arithmetic at 5 a.m.",
+				"start": 15.652,
+				"end": 18.421
+			}
+		]
+	},
+	"b5": {
+		"duration": 15.758,
+		"min_hold": 12,
+		"screen": "pack list",
+		"captions": [
+			{
+				"text": "The pack list is the van check.",
+				"start": 0.122,
+				"end": 2.364
+			},
+			{
+				"text": "Every dish, with its portion count.",
+				"start": 2.364,
+				"end": 5.0
+			},
+			{
+				"text": "Check each one off as it's loaded.",
+				"start": 5.0,
+				"end": 7.269
+			},
+			{
+				"text": "Equipment can ride along here too.",
+				"start": 7.269,
+				"end": 10.231
+			},
+			{
+				"text": "Chafers, sternos, whatever the job needs.",
+				"start": 10.231,
+				"end": 13.709
+			},
+			{
+				"text": "Nothing off-site gets forgotten.",
+				"start": 13.709,
+				"end": 15.758
+			}
+		]
+	},
+	"b6": {
+		"duration": 35.065,
+		"min_hold": 24,
+		"screen": "recipe food cost, then event money",
+		"captions": [
+			{
+				"text": "Now the part that protects you.",
+				"start": 0.109,
+				"end": 2.201
+			},
+			{
+				"text": "Every dish knows its plate cost.",
+				"start": 2.201,
+				"end": 4.497
+			},
+			{
+				"text": "These skewers: $1.74 on the plate,",
+				"start": 4.497,
+				"end": 7.812
+			},
+			{
+				"text": "yield loss included.",
+				"start": 7.812,
+				"end": 9.484
+			},
+			{
+				"text": "At $5.50 they run 31.6%.",
+				"start": 9.484,
+				"end": 13.057
+			},
+			{
+				"text": "Over my 28% target, so it's flagged.",
+				"start": 13.057,
+				"end": 17.84
+			},
+			{
+				"text": "The fix: charge $6.22 or better.",
+				"start": 17.84,
+				"end": 20.299
+			},
+			{
+				"text": "Same math for the whole event.",
+				"start": 20.299,
+				"end": 22.201
+			},
+			{
+				"text": "$2,600 in, $785 food, 30.2%.",
+				"start": 22.201,
+				"end": 28.37
+			},
+			{
+				"text": "A dime more a guest hits the target.",
+				"start": 28.37,
+				"end": 31.114
+			},
+			{
+				"text": "I used to find out after the party.",
+				"start": 31.114,
+				"end": 33.288
+			},
+			{
+				"text": "Now I see it before I quote.",
+				"start": 33.288,
+				"end": 35.065
+			}
+		]
+	},
+	"b7": {
+		"duration": 10.934,
+		"min_hold": 8,
+		"screen": "end card",
+		"captions": [
+			{
+				"text": "That's CostCook.",
+				"start": 0.122,
+				"end": 1.345
+			},
+			{
+				"text": "The order goes in, the lists come out,",
+				"start": 1.345,
+				"end": 3.94
+			},
+			{
+				"text": "and you know your numbers.",
+				"start": 3.94,
+				"end": 5.489
+			},
+			{
+				"text": "costcook.io \u00b7 Book a demo.",
+				"start": 5.489,
+				"end": 7.867
+			},
+			{
+				"text": "Bring a real order. I'll run it live.",
+				"start": 7.867,
+				"end": 10.934
+			}
+		]
+	}
+}

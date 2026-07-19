@@ -180,8 +180,8 @@ CAPTIONS:
 - That's CostCook.
 - The order goes in, the lists come out,
 - and you know your numbers.
-- Bring a real order. I'll run it live.
 - costcook.io · Book a demo.
+- Bring a real order. I'll run it live.
 
 ---
 
