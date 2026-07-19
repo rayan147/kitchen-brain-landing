@@ -1,0 +1,224 @@
+1
+00:00:00,109 --> 00:00:02,052
+CostCook turns a catering order
+
+2
+00:00:02,052 --> 00:00:05,666
+into your shopping list, prep, and food cost.
+
+3
+00:00:05,666 --> 00:00:06,980
+Here's a real order.
+
+4
+00:00:07,689 --> 00:00:08,898
+An order comes in.
+
+5
+00:00:08,898 --> 00:00:13,816
+A backyard wedding, 200 guests, Aug 15.
+
+6
+00:00:13,816 --> 00:00:16,113
+I type in the menu, the guest count,
+
+7
+00:00:16,113 --> 00:00:19,156
+and what I'm charging a head. $13.
+
+8
+00:00:19,156 --> 00:00:21,072
+That's all CostCook needs.
+
+9
+00:00:21,072 --> 00:00:24,194
+Everything you'll see comes from this page.
+
+10
+00:00:24,957 --> 00:00:27,756
+First, the shopping list.
+
+11
+00:00:27,756 --> 00:00:32,104
+Every dish's ingredients, rolled up
+
+12
+00:00:32,104 --> 00:00:35,174
+into one list, scaled to 200.
+
+13
+00:00:35,174 --> 00:00:38,327
+Red onion is in the pilaf and the salad.
+
+14
+00:00:38,327 --> 00:00:39,536
+Here it's one line.
+
+15
+00:00:39,536 --> 00:00:44,020
+15.4 lb. One bag, 25 lb.
+
+16
+00:00:44,020 --> 00:00:46,085
+Grouped by supplier,
+
+17
+00:00:46,085 --> 00:00:47,973
+in packs you can actually buy.
+
+18
+00:00:47,973 --> 00:00:50,541
+3 cases of chicken thigh from Sysco.
+
+19
+00:00:50,541 --> 00:00:52,905
+5 cases of pita from the bakery.
+
+20
+00:00:52,905 --> 00:00:57,688
+Each stop gets its own subtotal.
+
+21
+00:00:57,688 --> 00:01:00,011
+And down here, the honest number.
+
+22
+00:01:00,011 --> 00:01:02,199
+About $900 out the door,
+
+23
+00:01:02,199 --> 00:01:05,514
+$785 in what the food itself costs.
+
+24
+00:01:05,514 --> 00:01:07,321
+The gap is pack round-up.
+
+25
+00:01:07,321 --> 00:01:09,617
+This list used to be my whole evening.
+
+26
+00:01:09,617 --> 00:01:11,924
+Now it's done before the coffee's poured.
+
+27
+00:01:12,646 --> 00:01:14,019
+Then the prep list.
+
+28
+00:01:14,019 --> 00:01:17,225
+What the line actually cooks, after trim.
+
+29
+00:01:17,225 --> 00:01:19,997
+You buy almost 80 lb of chicken thigh.
+
+30
+00:01:19,997 --> 00:01:22,972
+59.5 lb goes in the pot.
+
+31
+00:01:22,972 --> 00:01:25,119
+The loss is already in the math.
+
+32
+00:01:25,119 --> 00:01:28,176
+The marinade? Six whole batches.
+
+33
+00:01:28,176 --> 00:01:30,945
+Nobody's doing that arithmetic at 5 a.m.
+
+34
+00:01:31,667 --> 00:01:33,909
+The pack list is the van check.
+
+35
+00:01:33,909 --> 00:01:36,545
+Every dish, with its portion count.
+
+36
+00:01:36,545 --> 00:01:38,814
+Check each one off as it's loaded.
+
+37
+00:01:38,814 --> 00:01:41,776
+Equipment can ride along here too.
+
+38
+00:01:41,776 --> 00:01:45,254
+Chafers, sternos, whatever the job needs.
+
+39
+00:01:45,254 --> 00:01:47,303
+Nothing off-site gets forgotten.
+
+40
+00:01:48,012 --> 00:01:50,104
+Now the part that protects you.
+
+41
+00:01:50,104 --> 00:01:52,400
+Every dish knows its plate cost.
+
+42
+00:01:52,400 --> 00:01:55,715
+These skewers: $1.74 on the plate,
+
+43
+00:01:55,715 --> 00:01:57,387
+yield loss included.
+
+44
+00:01:57,387 --> 00:02:00,960
+At $5.50 they run 31.6%.
+
+45
+00:02:00,960 --> 00:02:05,743
+Over my 28% target, so it's flagged.
+
+46
+00:02:05,743 --> 00:02:08,202
+The fix: charge $6.22 or better.
+
+47
+00:02:08,202 --> 00:02:10,104
+Same math for the whole event.
+
+48
+00:02:10,104 --> 00:02:16,273
+$2,600 in, $785 food, 30.2%.
+
+49
+00:02:16,273 --> 00:02:19,017
+A dime more a guest hits the target.
+
+50
+00:02:19,017 --> 00:02:21,191
+I used to find out after the party.
+
+51
+00:02:21,191 --> 00:02:22,968
+Now I see it before I quote.
+
+52
+00:02:23,690 --> 00:02:24,913
+That's CostCook.
+
+53
+00:02:24,913 --> 00:02:27,508
+The order goes in, the lists come out,
+
+54
+00:02:27,508 --> 00:02:29,057
+and you know your numbers.
+
+55
+00:02:29,057 --> 00:02:31,435
+costcook.io · Book a demo.
+
+56
+00:02:31,435 --> 00:02:34,502
+Bring a real order. I'll run it live.
+

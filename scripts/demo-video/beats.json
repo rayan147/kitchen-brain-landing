@@ -1,0 +1,119 @@
+{
+	"comment": "Source of truth for the narrated demo timeline. Each beat: narration (spoken verbatim), captions as [caption text, narration span it covers]. Spans concatenate to exactly the narration (the build asserts it), so caption timings come from TTS word boundaries deterministically. min_hold is the floor for the beat's footage seconds.",
+	"voice": "en-US-AndrewNeural",
+	"rate": "-8%",
+	"beats": [
+		{
+			"id": "b1",
+			"screen": "title card",
+			"min_hold": 5,
+			"narration": "CostCook turns a catering order into your shopping list, prep, and food cost. Here's a real order.",
+			"captions": [
+				["CostCook turns a catering order", "CostCook turns a catering order"],
+				["into your shopping list, prep, and food cost.", "into your shopping list, prep, and food cost."],
+				["Here's a real order.", "Here's a real order."]
+			]
+		},
+		{
+			"id": "b2",
+			"screen": "home, then order header",
+			"min_hold": 14,
+			"narration": "An order comes in. A backyard wedding, two hundred guests, Saturday August fifteenth. I type in the menu, the guest count, and what I'm charging a head. Thirteen dollars. That's all CostCook needs. Everything you're about to see comes from this one page.",
+			"captions": [
+				["An order comes in.", "An order comes in."],
+				["A backyard wedding, 200 guests, Aug 15.", "A backyard wedding, two hundred guests, Saturday August fifteenth."],
+				["I type in the menu, the guest count,", "I type in the menu, the guest count,"],
+				["and what I'm charging a head. $13.", "and what I'm charging a head. Thirteen dollars."],
+				["That's all CostCook needs.", "That's all CostCook needs."],
+				["Everything you'll see comes from this page.", "Everything you're about to see comes from this one page."]
+			]
+		},
+		{
+			"id": "b3",
+			"screen": "shopping list roll-up",
+			"min_hold": 34,
+			"narration": "First thing it hands you is the shopping list. Every dish has its own ingredients, and CostCook rolls them all up into one list, scaled to two hundred. Red onion is in the pilaf and in the salad. Here it's one line. Just over fifteen pounds. One bag, twenty-five pounds. The list is grouped by supplier, in packs you can actually buy. Three cases of chicken thigh from Sysco. Five cases of pita from the bakery. Each stop gets its own subtotal, so you know what you're spending before you walk in. And down here, the honest number. About nine hundred dollars out the door, seven eighty-five in what the food itself costs. The gap is pack round-up. This list used to be my whole evening. Now it's done before the coffee's poured.",
+			"captions": [
+				["First, the shopping list.", "First thing it hands you is the shopping list."],
+				["Every dish's ingredients, rolled up", "Every dish has its own ingredients, and CostCook rolls them all up"],
+				["into one list, scaled to 200.", "into one list, scaled to two hundred."],
+				["Red onion is in the pilaf and the salad.", "Red onion is in the pilaf and in the salad."],
+				["Here it's one line.", "Here it's one line."],
+				["15.4 lb. One bag, 25 lb.", "Just over fifteen pounds. One bag, twenty-five pounds."],
+				["Grouped by supplier,", "The list is grouped by supplier,"],
+				["in packs you can actually buy.", "in packs you can actually buy."],
+				["3 cases of chicken thigh from Sysco.", "Three cases of chicken thigh from Sysco."],
+				["5 cases of pita from the bakery.", "Five cases of pita from the bakery."],
+				["Each stop gets its own subtotal.", "Each stop gets its own subtotal, so you know what you're spending before you walk in."],
+				["And down here, the honest number.", "And down here, the honest number."],
+				["About $900 out the door,", "About nine hundred dollars out the door,"],
+				["$785 in what the food itself costs.", "seven eighty-five in what the food itself costs."],
+				["The gap is pack round-up.", "The gap is pack round-up."],
+				["This list used to be my whole evening.", "This list used to be my whole evening."],
+				["Now it's done before the coffee's poured.", "Now it's done before the coffee's poured."]
+			]
+		},
+		{
+			"id": "b4",
+			"screen": "prep list",
+			"min_hold": 14,
+			"narration": "Then the prep list. This is what the line actually cooks, after trim. You buy almost eighty pounds of chicken thigh. Only fifty-nine and a half goes in the pot. The loss is already in the math. And the marinade comes out as six whole batches. Nobody's doing that arithmetic at five a.m.",
+			"captions": [
+				["Then the prep list.", "Then the prep list."],
+				["What the line actually cooks, after trim.", "This is what the line actually cooks, after trim."],
+				["You buy almost 80 lb of chicken thigh.", "You buy almost eighty pounds of chicken thigh."],
+				["59.5 lb goes in the pot.", "Only fifty-nine and a half goes in the pot."],
+				["The loss is already in the math.", "The loss is already in the math."],
+				["The marinade? Six whole batches.", "And the marinade comes out as six whole batches."],
+				["Nobody's doing that arithmetic at 5 a.m.", "Nobody's doing that arithmetic at five a.m."]
+			]
+		},
+		{
+			"id": "b5",
+			"screen": "pack list",
+			"min_hold": 12,
+			"narration": "The pack list is the van check. Every dish, with its portion count. You check each one off as it's loaded. And the menu's equipment can ride along here too. Chafers, sternos, whatever the job needs. Nothing off-site gets forgotten.",
+			"captions": [
+				["The pack list is the van check.", "The pack list is the van check."],
+				["Every dish, with its portion count.", "Every dish, with its portion count."],
+				["Check each one off as it's loaded.", "You check each one off as it's loaded."],
+				["Equipment can ride along here too.", "And the menu's equipment can ride along here too."],
+				["Chafers, sternos, whatever the job needs.", "Chafers, sternos, whatever the job needs."],
+				["Nothing off-site gets forgotten.", "Nothing off-site gets forgotten."]
+			]
+		},
+		{
+			"id": "b6",
+			"screen": "recipe food cost, then event money",
+			"min_hold": 24,
+			"narration": "And here's the part that protects you. Every dish knows its plate cost. These skewers cost a dollar seventy-four on the plate, yield loss included. At five fifty they run thirty-one point six percent, over my twenty-eight target, so CostCook flags it and gives me the fix. Charge six twenty-two or better. Same math for the whole event. Twenty-six hundred in revenue, seven eighty-five in food, that's thirty point two percent. A dime more a guest puts it back on target. I used to find that out after the party. Now I see it before I quote.",
+			"captions": [
+				["Now the part that protects you.", "And here's the part that protects you."],
+				["Every dish knows its plate cost.", "Every dish knows its plate cost."],
+				["These skewers: $1.74 on the plate,", "These skewers cost a dollar seventy-four on the plate,"],
+				["yield loss included.", "yield loss included."],
+				["At $5.50 they run 31.6%.", "At five fifty they run thirty-one point six percent,"],
+				["Over my 28% target, so it's flagged.", "over my twenty-eight target, so CostCook flags it and gives me the fix."],
+				["The fix: charge $6.22 or better.", "Charge six twenty-two or better."],
+				["Same math for the whole event.", "Same math for the whole event."],
+				["$2,600 in, $785 food, 30.2%.", "Twenty-six hundred in revenue, seven eighty-five in food, that's thirty point two percent."],
+				["A dime more a guest hits the target.", "A dime more a guest puts it back on target."],
+				["I used to find out after the party.", "I used to find that out after the party."],
+				["Now I see it before I quote.", "Now I see it before I quote."]
+			]
+		},
+		{
+			"id": "b7",
+			"screen": "end card",
+			"min_hold": 8,
+			"narration": "That's CostCook. The order goes in, the lists come out, and you know your numbers. costcook dot io. Book a demo, bring a real order, and I'll run it for you live.",
+			"captions": [
+				["That's CostCook.", "That's CostCook."],
+				["The order goes in, the lists come out,", "The order goes in, the lists come out,"],
+				["and you know your numbers.", "and you know your numbers."],
+				["costcook.io · Book a demo.", "costcook dot io. Book a demo,"],
+				["Bring a real order. I'll run it live.", "bring a real order, and I'll run it for you live."]
+			]
+		}
+	]
+}
