@@ -7,3 +7,20 @@ dist/
 !.env.example
 npm-debug.log*
 scripts/demo-video/vo/*.raw.mp3
+
+# Demo-video rig working files. The venv is ~900MB of Python, the voice is a
+# 63MB ONNX checkpoint, and cut/ is raw footage: all reproducible from
+# speak.py and capture-silent.mjs, none of it belongs in the repo.
+scripts/demo-video/venv/
+scripts/demo-video/voices/
+scripts/demo-video/cut/
+scripts/demo-video/vo-silent/*.wav
+
+# Verification screenshots from e2e/.scratch/shot-landing.mjs. Regenerated on
+# demand, 32MB a run, and never read by the build.
+docs/landing-capture/
+
+# Dead voiceover output. The cut has no narration; the pipeline no longer reads
+# this directory. Kept on disk so it can be inspected, out of the repo because
+# nothing produces or consumes it any more.
+scripts/demo-video/vo-silent/

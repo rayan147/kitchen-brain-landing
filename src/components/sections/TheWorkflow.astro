@@ -1,0 +1,181 @@
+---
+// The whole job, once, in order. Replaces ProofShots (which stopped at plate
+// cost) and TheLoop (which restated the same chain in prose and hung a second
+// gallery off the bottom). See src/lib/workflow.ts for why those three tellings
+// became one and what the order is arguing.
+//
+// This file is a renderer. Copy, figures, alt text and the order itself live in
+// the data module — a step that has to move moves as one thing, and nobody has
+// to read Astro to fix a caption.
+import { STEPS, ALSO_IN_THERE } from '../../lib/workflow';
+
+/**
+ * Narrowest a wide shot may render, in CSS px. Below this the money columns
+ * stop being readable and the screenshot stops being evidence. A phone column
+ * is ~358px, so these overflow and scroll there by design.
+ */
+const LEGIBLE_MIN = 720;
+
+/** 1:1 CSS width for a 2x capture. */
+const oneToOne = (w: number) => Math.round(w / 2);
+
+/**
+ * Steps whose screen is a wide table stack instead of sitting beside their
+ * text, because a 1328px crop squeezed into a 7fr column renders at about a
+ * quarter scale — the money columns the screenshot exists to show become an
+ * unreadable ribbon, which is worse than no screenshot. Stacked, the same crop
+ * gets the full container and lands near 1:1.
+ */
+const isStacked = (step: (typeof STEPS)[number]) => Boolean(step.shot?.wide);
+---
+
+<section id="loop" class="bg-softgreen">
+	<div class="container-page py-section-tight">
+		<div class="max-w-2xl" data-reveal>
+			<p class="eyebrow">How it works</p>
+			<h2 class="mt-4 text-h2 font-semibold">Price sheet in. Purchase order out. Invoice in.</h2>
+			<p class="mt-5 text-lede text-ink-soft">
+				The price your vendor sent you Tuesday is in Saturday&rsquo;s shopping list, in the
+				order you send back to that vendor, in what you tick off the truck, and in what the
+				month says it should have cost. Nobody types it twice.
+			</p>
+		</div>
+
+		<!-- One ordered list, numbered once. The dashed rule is the page's one
+		     repeated accent device; here it doubles as the link between steps. -->
+		<ol role="list" class="mt-14">
+			{
+				STEPS.map((step, i) => (
+					<li
+						class="border-t border-dashed border-ticket-rule py-10"
+						data-reveal
+						style={`--reveal-delay: ${Math.min(i, 2) * 70}ms`}
+					>
+						<div
+							class={`grid gap-x-12 gap-y-6 ${isStacked(step) ? '' : 'lg:grid-cols-[5fr_7fr]'}`}
+						>
+							<div
+								class={
+									isStacked(step) ? 'max-w-2xl' : 'max-w-md lg:sticky lg:top-8 lg:self-start'
+								}
+							>
+								<div class="flex items-baseline gap-3">
+									<span
+										class="font-mono text-eyebrow font-semibold tabular-nums text-ink-soft"
+										aria-hidden="true"
+									>
+										{String(i + 1).padStart(2, '0')}
+									</span>
+									<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+										{step.tag}
+									</p>
+								</div>
+								<h3 class="mt-3 text-h3 font-semibold">{step.title}</h3>
+								<p class="mt-3 text-ink-soft">{step.body}</p>
+							</div>
+
+							{/* min-w-0: a grid track is min-width:auto by default, so the wide
+							    shots' 720px legibility floor sizes the COLUMN rather than
+							    overflowing inside it, and the whole page scrolls sideways on a
+							    phone (measured 740px against a 390px viewport). The
+							    overflow-x-auto wrapper below cannot do its job without this. */}
+							{step.shot && (
+								<div class="min-w-0 space-y-6">
+									{[step.shot, step.also].filter(Boolean).map((shot, si) => (
+										/* An `also` shot is a desktop-only supplement — the sub-recipe
+										   batches panel does not exist on the phone at all, because the
+										   order page switches to kitchen mode there. Rendered at 390 it
+										   was a shrunk desktop panel under a phone screenshot, carrying
+										   alt text describing a screen that layout does not have. The
+										   primary shot above it already carries the step on a phone. */
+										<figure class={si === 1 ? 'hidden sm:block' : ''}>
+											{/* A phone capture where one exists, otherwise the desktop
+											    crop in a scroll container. Two <img> rather than one
+											    <picture> because the phone asset is a different screen
+											    with different figures on it, so it needs its own alt —
+											    one alt serving both breakpoints described numbers that
+											    appear in only one of them (WCAG 1.1.1). The hidden one
+											    is never fetched: display:none plus lazy. */}
+											{shot!.mobile && (
+												<img
+													src={shot!.mobile}
+													alt={shot!.altMobile}
+													width={shot!.mw}
+													height={shot!.mh}
+													loading="lazy"
+													decoding="async"
+													class="h-auto w-full border border-hairline bg-paper shadow-ticket sm:hidden"
+												/>
+											)}
+											<div
+												class={[
+													shot!.wide ? 'overflow-x-auto' : '',
+													shot!.mobile ? 'hidden sm:block' : ''
+												]
+													.filter(Boolean)
+													.join(' ')}
+											>
+												{/* Wide shots: fill the column, never exceed 1:1, and
+												    never go below a legibility floor. Those three rules do
+												    the responsive work between them — on a desktop column
+												    the shot lands a little under 1:1 and is fully visible,
+												    and on a phone the floor forces overflow so the reader
+												    swipes instead of squinting at 29 percent.
+
+												    Two things this replaced, both wrong. A bare 1:1 width
+												    clipped the right-hand column off every table on a 1440
+												    screen, with a scrollbar as the only hint.
+												    max-width:100% alone shrank the image back to the
+												    scroll container and left the wrapper with nothing to
+												    scroll, which is the bug the wrapper exists to stop. */}
+												<img
+													src={shot!.src}
+													alt={shot!.alt}
+													width={shot!.w}
+													height={shot!.h}
+													loading="lazy"
+													decoding="async"
+													style={
+														shot!.wide
+															? `width: 100%; min-width: ${LEGIBLE_MIN}px; max-width: ${oneToOne(shot!.w)}px`
+															: `width: ${oneToOne(shot!.w)}px; max-width: 100%`
+													}
+													class="h-auto border border-hairline bg-paper shadow-ticket"
+												/>
+											</div>
+										</figure>
+									))}
+								</div>
+							)}
+						</div>
+
+						{step.closes && (
+							<p class="mt-8 flex items-baseline gap-3 border-t border-hairline pt-6 font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+								<span aria-hidden="true">&#8624;</span>
+								<span>BACK TO 01. AND THAT IS THE LOOP</span>
+							</p>
+						)}
+					</li>
+				))
+			}
+		</ol>
+
+		<!-- Two columns of plain lines, not cards: these are checklist items a
+		     reader scans for one word, and giving each an h3 would double the
+		     block's height to say less. role="list" survives preflight's
+		     list-style:none, which VoiceOver otherwise reads as prose. -->
+		<div class="mt-16 border-t border-hairline pt-10" data-reveal>
+			<h3 class="text-h3 font-semibold">Also in there</h3>
+			<ul role="list" class="mt-5 grid gap-x-16 gap-y-3 text-ink-soft lg:grid-cols-2">
+				{
+					ALSO_IN_THERE.map((item) => (
+						<li class="flex gap-3">
+							<span class="mt-2.5 size-1.5 shrink-0 rotate-45 bg-amber-deep" aria-hidden="true" />
+							<span>{item}</span>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</div>
+</section>

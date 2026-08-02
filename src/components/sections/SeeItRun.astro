@@ -1,45 +1,71 @@
 ---
 import { cta } from '../../lib/site';
 
-// Screen tour of the actual build (public/demo.mp4, H.264,
-// silent). preload="none" + poster: zero video bytes move until play, so
-// Lighthouse is untouched. Regenerate via the recording rig described in
-// the repo history (PR #25) whenever the app UI changes meaningfully —
-// and update the chip's "48 sec" plus the sr-only transcript to match
-// the new footage.
+// Screen tour of the actual build (public/demo.mp4, H.264 + AAC).
+//
+// The captions are burned into the frames by the capture step; the narration is
+// a separate audio track muxed at assemble time. They are written together in
+// scripts/demo-video/beats.mjs and carry the same facts in different words, so
+// the on-screen text works as open captions and there is no subtitle file to
+// drift. preload="none" + poster: zero video bytes move until play, so
+// Lighthouse is untouched.
+//
+// FOUR THINGS HERE MOVE WITH THE FOOTAGE, EVERY TIME: the chip's duration, the
+// sr-only transcript, the video's aria-label, and the headline if the length
+// crosses a minute. They have drifted twice — commit 3e8d136 left the chip
+// reading 48 sec over a 39.5s cut and a transcript claiming captions the
+// footage did not have, and the cut before this one narrated a different menu
+// than the order it quoted. docs/demo-video-and-screenshots-prompt.md lists
+// every value in lockstep. Regenerate with:
+//   COQUI_TOS_AGREED=1 ENGINE=xtts scripts/demo-video/venv/bin/python \
+//     scripts/demo-video/speak.py                  (host, writes the timings)
+//   node scripts/demo-video/capture-silent.mjs     (host, needs the app up)
+//   docker compose exec site node scripts/demo-video/assemble-silent.mjs
 ---
 
 <section id="demo" class="container-page py-section-tight">
-	<div class="max-w-4xl" data-reveal>
+	<div data-reveal>
 		<p class="eyebrow">See it run</p>
-		<h2 class="mt-4 text-h2 font-semibold">Under a minute of the real thing.</h2>
+		<h2 class="mt-4 max-w-2xl text-h2 font-semibold">One order, all the way through.</h2>
 		<p class="mt-5 max-w-2xl text-lede text-ink-soft">
-			No mockups. A wedding for 200 goes in. The shopping list, the prep list, and the
-			pack list come out, priced.
+			No mockups. A wedding for 200 gets priced, quoted, and turned into the
+			shopping list and the prep sheet, the same numbers the whole way.
 		</p>
 		<p id="demo-transcript" class="sr-only">
-			The video is a silent, captioned screen tour of CostCook: the orders list, a
-			200-guest wedding order, its generated shopping list with case quantities and
-			supplier subtotals, the prep list with hand-check boxes, the pack list, and a
-			recipe&rsquo;s food-cost view flagging a dish priced over target. It ends with
-			costcook.io and an invitation to book a 15-minute demo.
+			A silent, captioned screen recording of CostCook following one job from the books
+			to the plate. There is no narration; a music bed plays and every claim is written
+			on screen, so nothing is carried by audio alone. Three orders on the books, the largest a backyard wedding for 200
+			guests two weeks out. The menu it is built on, Summer BBQ, five dishes, each one a
+			recipe. That menu costs itself: $6.96 to feed a guest against a $16.50 selling
+			price, which reads 42.2 percent food cost and names $23.20 as the price that would
+			meet the 30 percent target. The Rodriguez backyard wedding at 200 guests and
+			$16.50 a head: $3,300.00 revenue, $1,354.04 of food, flagged at 41 percent food
+			cost and 11 points over target; and, because it is confirmed, a panel comparing
+			the $6.77 a guest it was quoted at against $6.96 at today&rsquo;s prices, a 2.8
+			percent rise. The same order as a shopping list grouped by vendor, with Restaurant
+			Depot totalling $354.30 in whole packs. The prep sheet scaled to 200 portions with
+			its instructions frozen at confirmation. Finally the Greek Salad&rsquo;s plate cost
+			broken into ingredient lines and miscellaneous, $1.73 against a $4.10 selling
+			price, flagged in red at 42.2 percent.
 		</p>
 
 		<!-- Not styled as a ticket: real product footage should read as real,
-		     not as another branded artifact. Poster is the shopping-list beat
-		     (order header + supplier groups), per the rig README's "money shot". -->
-		<div class="relative mt-8">
+		     not as another branded artifact. Poster is the order header with its
+		     money bar: guests, price per guest, revenue, and the food-cost
+		     percent all legible in one frame. -->
+		<!-- Centred and capped at the capture width: the footage is 1600x1000, and
+		     stretching it past that only blurs it. -->
+		<div class="relative mt-8 mx-auto max-w-[1600px]">
 			<video
 				controls
 				playsinline
 				preload="none"
 				poster="/demo-poster.jpg"
-				width="1280"
-				height="800"
+				width="1600"
+				height="1000"
 				class="w-full border border-hairline bg-paper shadow-ticket"
-				aria-label="Screen recording: CostCook turns a 200-guest order into shopping, prep, and pack lists"
+				aria-label="Screen recording with narration and on-screen text: CostCook prices a menu, quotes a 200-guest wedding, and turns it into a shopping list and a prep sheet"
 				aria-describedby="demo-transcript"
-				muted
 			>
 				<source src="/demo.webm" type="video/webm" />
 				<source src="/demo.mp4" type="video/mp4" />
@@ -61,7 +87,7 @@ import { cta } from '../../lib/site';
 				<svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true">
 					<path d="M0 0l10 6-10 6z"></path>
 				</svg>
-				Watch · 48 sec
+				Watch · 1 min 43 sec
 			</span>
 		</div>
 

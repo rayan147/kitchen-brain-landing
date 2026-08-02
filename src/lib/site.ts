@@ -42,6 +42,8 @@ export const calendlyUrl = rawCalendlyUrl;
 export const nav: readonly { label: string; href: string }[] = [
 	{ label: 'What it does', href: '#what' },
 	{ label: 'See it run', href: '#demo' },
+	{ label: 'How it works', href: '#loop' },
+	{ label: 'The hard part', href: '#yield' },
 	{ label: 'Why us', href: '#why' },
 	{ label: 'From the chef', href: '#chef' }
 ];

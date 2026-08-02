@@ -1,0 +1,39 @@
+# Dev-only local environment for the landing page. One command —
+# `docker compose up` — takes a clean checkout to a running site at
+# http://localhost:4321: install → astro dev. Deps live in a named volume so the
+# host working tree stays clean; `down -v` wipes them for a fresh slate.
+#
+# No `name:` on purpose — Compose scopes containers and volumes by the
+# checkout's directory basename, which keeps parallel clones isolated. The port
+# is overridable so this can run alongside the app container:
+# `SITE_PORT=5901 docker compose up`.
+
+services:
+  site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      # Defaults to loopback. This page is static and carries no auth or kitchen
+      # data, so exposing it for review from another device is safe:
+      # `SITE_BIND=0.0.0.0 docker compose up -d`. Never do that for the app
+      # container, which serves a real database behind a session cookie.
+      - '${SITE_BIND:-127.0.0.1}:${SITE_PORT:-4321}:4321'
+    environment:
+      # site.ts throws at build time on anything that is not an
+      # https://calendly.com/ link, so this must stay a real-shaped URL. The
+      # placeholder is fine for local screenshots; the real link lives in Vercel.
+      PUBLIC_CALENDLY_URL: '${PUBLIC_CALENDLY_URL:-https://calendly.com/your-handle/15min}'
+      # Astro's HMR uses native inotify (repo on the WSL2 Linux fs). Set
+      # CHOKIDAR_USEPOLLING=true only if edits stop hot-reloading.
+      CHOKIDAR_USEPOLLING: '${CHOKIDAR_USEPOLLING:-false}'
+    env_file:
+      # Optional — loaded only if present. `environment` above still wins.
+      - path: .env
+        required: false
+    volumes:
+      - .:/site # source, bind-mounted for HMR
+      - node_modules:/site/node_modules # container-native deps mask the host bind mount
+
+volumes:
+  node_modules:

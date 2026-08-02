@@ -1,5 +1,14 @@
 {
 	"extends": "astro/tsconfigs/strict",
-	"include": [".astro/types.d.ts", "**/*"],
-	"exclude": ["dist"]
+	"include": [
+		".astro/types.d.ts",
+		"**/*"
+	],
+	"exclude": [
+		"dist",
+		"scripts/demo-video/venv",
+		"scripts/demo-video/voices",
+		"scripts/demo-video/cut",
+		"scripts/demo-video/vo-silent"
+	]
 }
