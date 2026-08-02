@@ -117,11 +117,17 @@ const refusals = [
 	     make the argument faster than the paragraph above can, and a reader who
 	     stops here has still got the point. -->
 	<figure class="mt-10" data-reveal>
+		{/* The phone crop stops after PREP on purpose. At 390 the table is wider
+		    than its scroll container, so a full-width capture shears the cost
+		    column into "$0.3" and the word "cost" running down the side — a
+		    picture of a scrollbar position rather than of a table. The three
+		    columns this section is about are the first three, so nothing the
+		    argument needs is lost. See e2e/.scratch/shot-yield.mjs in the app repo. */}
 		<img
 			src="/proof/yield-lines-mobile.png"
-			alt="A recipe lines table on a phone. Roma tomato uses 110 grams, has a 91 percent yield, and 121 grams are bought. Red onion uses 25 grams at 88 percent yield and buys 28 grams. Cucumber sits at 90 percent. Feta, olive oil and oregano are at 100 percent, so what is used and what is bought match."
-			width={780}
-			height={1688}
+			alt="A recipe lines table on a phone, cropped to its first five columns: ingredient, used (EP), yield, to buy (AP) and prep. Roma tomato uses 110 grams at 91 percent yield, so 121 grams are bought, cored and wedged. Cucumber uses 0.4 each at 90 percent, peeled into half-moons. Red onion uses 25 grams at 88 percent, so 28 grams are bought, shaved thin. Feta uses 45 grams at 100 percent, so used and bought match."
+			width={664}
+			height={1036}
 			loading="lazy"
 			decoding="async"
 			class="h-auto w-full border border-hairline bg-paper shadow-ticket sm:hidden"

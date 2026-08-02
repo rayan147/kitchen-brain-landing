@@ -67,6 +67,17 @@
  * proof of anything, so those ship as the desktop crop in a scroll container
  * and the reader swipes. That is a real bug in the app's phone layout and it
  * should be fixed there rather than cropped around here.
+ *
+ * EVERY PHONE SHOT IS A CROP, AND `mw`/`mh` ARE READ OFF THE FILE
+ * They used to be whole 390x844 screens, spread from one shared constant. Twelve
+ * of them meant twelve copies of the app's own header, each the boldest thing in
+ * its frame, sitting above the figure the caption points at; edges that landed
+ * mid-word because the scroll stopped there; and twelve identically-shaped grey
+ * slabs regardless of content. They are now cropped to the panel exactly as the
+ * desktop shots always were, so no two are the same shape and the declared size
+ * has to come from the file. Do not reintroduce a shared size constant: the
+ * width and height attributes reserve the space before the image loads, and one
+ * wrong pair is a squashed screenshot with nothing to catch it.
  */
 export interface Shot {
 	src: string;
@@ -91,8 +102,6 @@ export interface Step {
 	closes?: boolean;
 }
 
-const PHONE = { mw: 780, mh: 1688 };
-
 export const STEPS: Step[] = [
 	{
 		tag: 'PRICE IN',
@@ -103,10 +112,11 @@ export const STEPS: Step[] = [
 			w: 720,
 			h: 548,
 			mobile: '/proof/loop-price-in-mobile.png',
-			...PHONE,
+			mw: 700,
+			mh: 548,
 			alt: 'An import screen. A drop zone reads “Drop files here”, listing PDF, photo, CSV, or DOCX, with a Choose files button and a “Paste text instead” link. Below it, a note offers to map a spreadsheet’s columns for recipes or for supplier prices.',
 			altMobile:
-				'The same import screen on a phone: a drop zone reading “Drop files here”, listing PDF, photo, CSV, or DOCX, a Choose files button, a “Paste text instead” link, and a note offering to map a spreadsheet’s columns for recipes or for supplier prices.'
+				'The same drop zone on a phone: “Drop files here”, listing PDF, photo, CSV, or DOCX, with a Choose files button and a “Paste text instead” link.'
 		}
 	},
 	{
@@ -127,10 +137,11 @@ export const STEPS: Step[] = [
 			w: 1400,
 			h: 1044,
 			mobile: '/proof/setup-target-mobile.png',
-			...PHONE,
+			mw: 780,
+			mh: 1210,
 			alt: 'A costing settings screen. Target food cost is set to 30 percent, with a stepper and a slider, described as the percentage above which menus and orders are flagged, and a note that individual dish targets continue to override the setting. Below it, miscellaneous cost is set to 8 percent, described as adding a percentage for salt, oil, garnish and other unlisted costs, with the example that at 4 percent a $10.00 dish cost becomes $10.40.',
 			altMobile:
-				'The same costing settings on a phone: target food cost 30 percent, flagged above that, with individual dish targets still overriding it; miscellaneous cost 8 percent for salt, oil, garnish and other unlisted costs.'
+				'The same two costing settings on a phone. Target food cost is 30 percent, with a stepper and a slider, described as the percentage above which menus and orders are flagged, and a note that individual dish targets continue to override it. Miscellaneous cost is 8 percent, described as adding a percentage for salt, oil, garnish and other unlisted costs, with the example that at 4 percent a $10.00 dish cost becomes $10.40.'
 		}
 	},
 	{
@@ -158,10 +169,11 @@ export const STEPS: Step[] = [
 			w: 744,
 			h: 956,
 			mobile: '/proof/menu-mobile.png',
-			...PHONE,
+			mw: 780,
+			mh: 956,
 			alt: 'A cost-per-guest panel on a menu. Dish cost is $6.44, miscellaneous cost at 8 percent adds $0.52, and the total cost per guest is $6.96. The selling price is $16.50 per guest, which reads 42.2 percent food cost, marked critical and 12.2 percentage points over target, with a note that meeting the 30 percent target means charging at least $23.20 per guest.',
 			altMobile:
-				'The same cost-per-guest panel on a phone: dish cost $6.44, miscellaneous at 8 percent $0.52, total cost per guest $6.96, selling price $16.50, reading 42.2 percent food cost, critical, 12.2 percentage points over target, and charge at least $23.20 to meet the 30 percent target. Below it the dish list begins with Greek Salad at $1.60 a portion, 25 percent of the menu cost.'
+				'The same cost-per-guest panel on a phone, noting that it updates as you change dishes, portions and price. Dish cost $6.44, miscellaneous cost at 8 percent $0.52, total cost per guest $6.96. Selling price per guest is $16.50, which reads 42.2 percent food cost, marked critical, 12.2 percentage points over target, with a note that meeting the 30 percent target means charging at least $23.20 per guest.'
 		}
 	},
 	{
@@ -174,10 +186,11 @@ export const STEPS: Step[] = [
 			h: 1198,
 			wide: true,
 			mobile: '/proof/setup-order-mobile.png',
-			...PHONE,
+			mw: 776,
+			mh: 1460,
 			alt: 'A new order form. Event information asks for a client or event name, an event date, and a guest count. A menu section, noting that selecting a menu fills in its current per-person price, offers two tiles: Mediterranean Mezze at $4.36 cost and $11.75 price, selected, and Summer BBQ at $6.96 cost and $16.50 price. A pricing section shows price per guest at $11.75 and a panel headed “Enter the guest count”, explaining that entering guests compares this price with your food-cost target.',
 			altMobile:
-				'The same new order form on a phone: client or event name, event date and guest count, then two menu tiles carrying their own cost and price, then a price per guest field and a note that entering the guest count compares that price with your food-cost target.'
+				'The same new order form on a phone. Event information asks for a client or event name, an event date, and guests. A menu section, noting that selecting a menu fills in its current per-person price, offers two tiles: Mediterranean Mezze at $4.36 cost and $11.75 price, selected, and Summer BBQ at $6.96 cost and $16.50 price.'
 		}
 	},
 	{
@@ -189,11 +202,21 @@ export const STEPS: Step[] = [
 			w: 2528,
 			h: 430,
 			wide: true,
+			// The phone shows a DIFFERENT PANEL, not a narrow copy of this one. The
+			// order page switches to kitchen mode at 390 and drops the financial
+			// summary entirely, so the phone gets the quoted-versus-today band: the
+			// same order's per-guest cost and food-cost percentage, without the
+			// revenue line or the price that would have worked. The alt text below
+			// says only what is in frame. The body copy's $3,300 and $22.57 are
+			// still true and still on the desktop shot; they are simply not on a
+			// phone, and claiming them under a picture that lacks them is the one
+			// thing this page cannot afford.
 			mobile: '/proof/money-mobile.png',
-			...PHONE,
+			mw: 716,
+			mh: 404,
 			alt: 'An order financial summary. Order inputs show 200 guests at $16.50 per guest. Revenue is $3,300.00, likely food cost is $1,354.04, and cost per guest is $6.77. Target status reads 41 percent food cost, marked critical, 11 percentage points over target, with advice to charge at least $22.57 per guest to meet the target.',
 			altMobile:
-				'The Rodriguez backyard wedding on a phone: Summer BBQ, 200 guests, Saturday 15 August, confirmed with quantities and prices frozen. A panel reads quoted on 2026-08-01 at $6.77 per guest and 41 percent food cost; today at current prices $6.96 per guest and 42.2 percent, a 2.8 percent rise and 1.2 percentage points higher. Tabs for Shop, Prep and Pack sit below, then the shopping list beginning with Downtown Bakery at $83.60. A fixed bar reads 16 items left and $1,532.00.'
+				'The same order on a phone, showing what it was quoted at against what it would cost today. Quoted 2026-08-01 at $6.77 per guest and 41 percent food cost. Today at current prices, $6.96 per guest and 42.2 percent food cost, a 2.8 percent rise, and 1.2 percentage points higher.'
 		}
 	},
 	{
@@ -206,10 +229,11 @@ export const STEPS: Step[] = [
 			h: 764,
 			wide: true,
 			mobile: '/proof/prep-mobile.png',
-			...PHONE,
+			mw: 716,
+			mh: 962,
 			alt: 'A prep sheet section for Warm Pita at 200 portions. Recipe instructions are marked frozen at confirmation. Rows list pita at 200 each and olive oil at 800 millilitres, each with a tick box and no additional prep noted. A shelf-life row offers an FDA Food Code suggestion of 7 days and a button to print a label.',
 			altMobile:
-				'A prep sheet on a phone. Grilled Chicken Skewers at 200 portions, instructions frozen at confirmation. Boneless chicken thigh, 36 kilograms, trimmed into 1 inch cubes, and bell pepper, 100 each, are both ticked off and struck through. Red onion at 8 kilograms and Lemon-Garlic Marinade at 9 litres are still open. A shelf-life row offers an FDA Food Code suggestion of 7 days and a Label button. The Greek Salad section, also 200 portions, begins underneath.'
+				'The same prep sheet section on a phone. Warm Pita at 200 portions, with a “Complete all” tick box. Recipe instructions are marked frozen at confirmation. Pita at 200 each and olive oil at 800 millilitres each carry a tick box and read “No additional prep”. A shelf-life row reads “Not set”, offers an FDA Food Code suggestion of 7 days with a Use link, notes that nothing is written until you tap, and has a Label button.'
 		},
 		// Desktop only: the order page switches to kitchen mode on a phone and
 		// drops this panel entirely, so there is no phone screen to show. The
@@ -231,10 +255,11 @@ export const STEPS: Step[] = [
 			h: 1040,
 			wide: true,
 			mobile: '/proof/shop-mobile.png',
-			...PHONE,
+			mw: 716,
+			mh: 1252,
 			alt: 'A shopping list grouped by vendor. Restaurant Depot totals $354.30, with rows for basmati rice needing 17 kilograms and buying 2 twenty-five-pound bags at $77.80, black pepper 40 grams buying 1 one-pound container at $19.25, cumin 200 grams at $12.35, olive oil 15.3 litres buying 6 three-litre tins at $207.90, oregano 290 grams buying 3 five-ounce containers at $22.35, paprika 300 grams at $10.80, and salt 950 grams with 2 pounds already on hand, buying 1 three-pound box at $3.85.',
 			altMobile:
-				'The same Restaurant Depot group on a phone, totalling $354.30, one ingredient per row: basmati rice, 17 kilograms, buy 2 twenty-five-pound bags, $77.80; black pepper, 40 grams, 1 one-pound container, $19.25; cumin, 200 grams, $12.35; olive oil, 15.3 litres, 6 three-litre tins, $207.90; oregano, 290 grams, 3 five-ounce containers. Each row carries a tick box and an on-hand stepper.'
+				'The same Restaurant Depot group on a phone, totalling $354.30, one ingredient per row: basmati rice, need 17 kilograms, buy 2 twenty-five-pound bags, $77.80; black pepper, need 40 grams, buy 1 one-pound container, $19.25; cumin, need 200 grams, buy 1 one-pound container, $12.35; olive oil, need 15.3 litres, buy 6 three-litre tins, $207.90. Each row carries a tick box and an on-hand stepper.'
 		}
 	},
 	{
@@ -271,10 +296,11 @@ export const STEPS: Step[] = [
 			h: 440,
 			wide: true,
 			mobile: '/proof/loop-ledger-mobile.png',
-			...PHONE,
+			mw: 780,
+			mh: 544,
 			alt: 'A purchases ledger. Saturday 1 August: multiple suppliers, tagged Received, described as receiving for order number 2, 14 items, $421.15. Tuesday 28 July: Green Valley Produce, tagged Invoice import, Invoice GV-4471, 3 items, $86.65.',
 			altMobile:
-				'The same purchases ledger on a phone. Saturday 1 August: multiple suppliers, tagged Received, receiving for order number 2, 14 items, $421.15. Tuesday 28 July: Green Valley Produce, tagged Invoice import, Invoice GV-4471, 3 items, $86.65. A note reads that every entry names its source, an order log, invoice import, receiving checklist, or manual entry, and that every price delta is what moved the ingredient’s current cost.'
+				'The same purchases ledger on a phone. Under Saturday 1 August: multiple suppliers, tagged Received, described as receiving for order number 2, 14 items, $421.15. Under Tuesday 28 July: Green Valley Produce, tagged Invoice import, Invoice GV-4471, 3 items, $86.65.'
 		}
 	},
 	{
@@ -287,10 +313,11 @@ export const STEPS: Step[] = [
 			h: 238,
 			wide: true,
 			mobile: '/proof/loop-onhand-mobile.png',
-			...PHONE,
+			mw: 780,
+			mh: 576,
 			alt: 'An inventory summary. On the shelf, $507.80. To restock, $0.00. Inventory status: 0 to order, 0 below par, 20 need a count. A note explains that need reflects uncompleted confirmed orders from 27 July to 2 August, and that a count older than 2 days no longer reduces a purchase.',
 			altMobile:
-				'The same inventory summary on a phone: on the shelf $507.80, to restock $0.00, and an inventory status reading 0 to order, 0 below par, 20 need a count.'
+				'The same inventory summary on a phone: on the shelf $507.80, to restock $0.00, and an inventory status reading 0 to order, 0 below par, 20 need a count. A note explains that need reflects uncompleted confirmed orders from 27 July to 2 August, and that a count older than 2 days no longer reduces a purchase, so the buy quantity covers the full need until you recount.'
 		}
 	},
 	{
@@ -304,7 +331,8 @@ export const STEPS: Step[] = [
 			h: 816,
 			wide: true,
 			mobile: '/proof/loop-month-mobile.png',
-			...PHONE,
+			mw: 780,
+			mh: 1264,
 			alt: 'A food cost panel for August 2026. Usage cost to date is $1,447.70, described as what the month’s confirmed events should have cost, 37.8 percent of revenue. Actual spend is $421.15, what the month’s invoices came to, 11 percent of revenue. An unaccounted gap of $1,026.55 is explained as less spent than the month cooked, because it drew down food already on the shelf. A Log waste button sits beside it, and a note warns it is still early in the month.',
 			altMobile:
 				'The same food cost panel on a phone. August 2026. Usage cost to date $1,447.70, what the month’s confirmed events should have cost, 37.8 percent of revenue. Actual spend $421.15, what the month’s invoices came to, 11 percent of revenue. An unaccounted gap of $1,026.55, explained as less spent than the month cooked because it drew down food already on the shelf, with a Log waste button. A note warns it is still early in the month.'

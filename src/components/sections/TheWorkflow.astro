@@ -9,15 +9,22 @@
 // to read Astro to fix a caption.
 import { STEPS, ALSO_IN_THERE } from '../../lib/workflow';
 
-/**
- * Narrowest a wide shot may render, in CSS px. Below this the money columns
- * stop being readable and the screenshot stops being evidence. A phone column
- * is ~358px, so these overflow and scroll there by design.
- */
-const LEGIBLE_MIN = 720;
-
 /** 1:1 CSS width for a 2x capture. */
 const oneToOne = (w: number) => Math.round(w / 2);
+
+/**
+ * Narrowest a wide shot may render, in CSS px. Below this the money columns stop
+ * being readable and the screenshot stops being evidence. A phone column is
+ * ~350px, so these overflow and scroll there by design.
+ *
+ * The floor is a FRACTION of the shot's own 1:1 width, not one number for all of
+ * them. A flat 720px is fine for a 900px crop and ruinous for a 1328px one: the
+ * sent-orders and receiving tables were landing at 54 percent on a phone, which
+ * puts the app's 14px body type at 7.5px — measured, not guessed. Those two are
+ * also the only shots with no phone capture at all, so the scroll box is the
+ * whole experience of them on the primary device.
+ */
+const legibleMin = (w: number) => Math.max(720, Math.round(oneToOne(w) * 0.85));
 
 /**
  * Steps whose screen is a wide table stack instead of sitting beside their
@@ -137,12 +144,23 @@ const isStacked = (step: (typeof STEPS)[number]) => Boolean(step.shot?.wide);
 													decoding="async"
 													style={
 														shot!.wide
-															? `width: 100%; min-width: ${LEGIBLE_MIN}px; max-width: ${oneToOne(shot!.w)}px`
+															? `width: 100%; min-width: ${legibleMin(shot!.w)}px; max-width: ${oneToOne(shot!.w)}px`
 															: `width: ${oneToOne(shot!.w)}px; max-width: 100%`
 													}
 													class="h-auto border border-hairline bg-paper shadow-ticket"
 												/>
 											</div>
+											{/* Only where a wide desktop crop is the phone's only option: the
+											    sent-orders and receiving tables are wider than 390 and the app
+											    clips their right-hand columns, so an honest phone capture is
+											    not available and the reader gets the desktop shot in a scroll
+											    box instead. Without this line that box is a table with its
+											    last column sheared off and nothing saying it moves. */}
+											{shot!.wide && !shot!.mobile && (
+												<figcaption class="mt-3 hint-text text-ink-soft sm:hidden">
+													Swipe the table sideways to see the rest.
+												</figcaption>
+											)}
 										</figure>
 									))}
 								</div>
