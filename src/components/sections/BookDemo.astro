@@ -1,10 +1,5 @@
 ---
-import { calendlyUrl, site } from '../../lib/site';
-
-// Brand-tint the widget so the third-party rectangle dissolves into the
-// page (hex values without '#'). Applied to the embed only — the direct
-// link keeps the canonical URL.
-const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdpr_banner=1&background_color=f4f6f4&text_color=1f2421&primary_color=2f7d5b`;
+import { booking, site } from '../../lib/site';
 ---
 
 <section id="book" class="relative container-page py-section">
@@ -23,13 +18,11 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 		</p>
 	</div>
 
-	<!-- Direct link works with no JS, blocked embeds, or before lazy-load.
-	     Never hidden: once the embed provably boots (first Calendly
-	     postMessage) it restyles to the quiet variant so nothing vanishes
-	     under the visitor's thumb. -->
+	<!-- The direct link remains the primary action and works when third-party
+	     frames are blocked or JavaScript is disabled. -->
 	<a
 		id="book-direct"
-		href={calendlyUrl}
+		href={booking.url}
 		target="_blank"
 		rel="noopener noreferrer"
 		class="btn-primary mt-9"
@@ -42,92 +35,15 @@ const embedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_gdp
 		Prefer to talk or text? <a href={site.phoneHref} class="font-medium text-green-deep underline decoration-current underline-offset-4">{site.phone}</a>.
 	</p>
 
-	<!-- Calendly inline embed, lazily initialized on approach (see script).
-	     Taller below sm: Calendly's stacked mobile flow exceeds 700px. -->
-	<!-- No min-width: Calendly's snippet default would force horizontal
-	     scroll at 320px viewport inside our padded container. -->
-	<div id="calendly-slot" data-url={embedUrl} class="mt-9 h-[760px] sm:h-[700px]"></div>
-
-	<!-- Always-rendered live region: content is INSERTED on booking, which
-	     screen readers announce reliably (unhiding a display:none region
-	     is not announced). Margin arrives with the text. -->
-	<p id="book-confirmed" class="text-lede font-medium text-green-deep" role="status"></p>
+	<div class="mt-9 overflow-hidden rounded-2xl border border-hairline bg-paper shadow-ticket">
+		<iframe
+			src={booking.embedUrl}
+			title="Book a CostCook kitchen costing demo with Google Calendar"
+			width="100%"
+			height="600"
+			loading="lazy"
+			referrerpolicy="strict-origin-when-cross-origin"
+			class="block h-[720px] w-full border-0 sm:h-[660px]"
+		></iframe>
+	</div>
 </section>
-
-<style>
-	/* Pre-boot gate, one state bit: the widget only posts its boot signal
-	   once the iframe has a real layout box, so a display:none slot would
-	   never reveal. Off-flow, invisible, pinned to the container's edges
-	   (the box's static position already starts inside the padding, so any
-	   set width would poke past the viewport at 390px). The script flips
-	   data-booted on Calendly's first postMessage. */
-	#calendly-slot:not([data-booted]) {
-		visibility: hidden;
-		position: absolute;
-		inset-inline: 0;
-	}
-</style>
-
-<script>
-	const section = document.getElementById('book');
-	const slot = document.getElementById('calendly-slot');
-	const direct = document.getElementById('book-direct');
-	const confirmed = document.getElementById('book-confirmed');
-	let revealed = false;
-
-	function loadCalendly(): void {
-		if (!slot || slot.classList.contains('calendly-inline-widget')) return;
-		// widget.js scans .calendly-inline-widget[data-url] as it executes,
-		// so the class must be in place before the script is appended. The
-		// iframe boots while the slot is still invisible (it keeps a layout
-		// box off-flow); reveal happens on its first postMessage below.
-		slot.classList.add('calendly-inline-widget');
-		const script = document.createElement('script');
-		script.src = 'https://assets.calendly.com/assets/external/widget.js';
-		script.async = true;
-		document.head.appendChild(script);
-	}
-
-	if (section && slot) {
-		if ('IntersectionObserver' in window) {
-			const io = new IntersectionObserver(
-				(entries) => {
-					if (entries.some((e) => e.isIntersecting)) {
-						io.disconnect();
-						loadCalendly();
-					}
-				},
-				{ rootMargin: '600px 0px' }
-			);
-			io.observe(section);
-		} else {
-			loadCalendly();
-		}
-	}
-
-	// The Calendly iframe app posts events once it actually boots — that,
-	// not script.onload, is the trustworthy "embed works" signal.
-	window.addEventListener('message', (e: MessageEvent) => {
-		if (e.origin !== 'https://calendly.com') return;
-		const eventName = (e.data as { event?: string } | null)?.event;
-		if (typeof eventName !== 'string' || !eventName.startsWith('calendly.')) return;
-
-		if (!revealed && slot && direct) {
-			revealed = true;
-			slot
-				.querySelector('iframe')
-				?.setAttribute('title', 'Schedule a demo: Calendly booking calendar');
-			slot.setAttribute('data-booted', '');
-			// Demote rather than hide: the calendar below becomes the primary
-			// action, but the link never vanishes mid-reach.
-			direct.classList.remove('btn-primary');
-			direct.classList.add('btn-quiet');
-		}
-
-		if (eventName === 'calendly.event_scheduled' && confirmed) {
-			confirmed.classList.add('mt-6');
-			confirmed.textContent =
-				'You’re booked. Talk soon. A calendar invite is on its way to your inbox.';
-		}
-	});
-</script>

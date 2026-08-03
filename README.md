@@ -10,7 +10,7 @@ software for small caterers and meal-prep businesses. Single goal: book 15-minut
 - [Astro](https://astro.build) (fully static output, no adapter)
 - Tailwind CSS v4 (via `@tailwindcss/vite`)
 - Self-hosted fonts via Fontsource: Fraunces (display, with optical sizing) + Instrument Sans (body)
-- Calendly inline embed, lazy-loaded; Vercel Web Analytics (cookieless)
+- Google Calendar appointment-schedule embed, natively lazy-loaded; Vercel Web Analytics (cookieless)
 - Hosted on Vercel — the GitHub repo is connected, so every merge to `main` deploys
   production automatically; PRs get preview deployments. Security headers (CSP etc.)
   live in `vercel.json`.
@@ -19,7 +19,6 @@ software for small caterers and meal-prep businesses. Single goal: book 15-minut
 
 ```sh
 npm install
-cp .env.example .env   # then set PUBLIC_CALENDLY_URL
 npm run dev            # local dev server
 npm run check          # astro check (types)
 npm run build          # production build to dist/
@@ -33,10 +32,8 @@ Open Graph image: edit `scripts/og-card.html`, then `./scripts/make-og.sh`
 Everything below ships as a clearly-marked placeholder. Each also carries a
 `TODO(owner)` comment at the exact spot in the code.
 
-- [x] **Calendly link** — set to https://calendly.com/rayan361/kitchen-brain-demo (2026-07-13) — set `PUBLIC_CALENDLY_URL` to your real 15-minute event
-      link in the Vercel project's env vars (all environments) and in local `.env`,
-      then redeploy (the value is baked in at build time). Placeholder lives in
-      `src/lib/site.ts`. Must be an `https://calendly.com/...` URL (build enforces it).
+- [x] **Google Calendar booking page** — direct link and inline appointment schedule
+      supplied by the owner and stored in `src/lib/site.ts` (2026-08-03).
 - [x] **Contact email** — rayan@costcook.io (2026-07-14).
 - [ ] **Founder signature** — `founderName` in `src/lib/site.ts` (currently "Rayan"; confirm).
 - [ ] **Analytics** — enable Web Analytics for the `kitchen-brain-landing` project in
@@ -48,13 +45,12 @@ Everything below ships as a clearly-marked placeholder. Each also carries a
 - [ ] **OG image (optional)** — `public/og.png` is a real branded card, not a stub;
       swap only if you want photography instead. Regenerate via `scripts/make-og.sh`.
 
-## QA snapshot (2026-07-14, production)
+## QA record
 
-- Landing mobile: **99 perf / 100 a11y**; app login mobile: **100 perf / 100 a11y**
-- Lighthouse desktop: **100 performance / 100 accessibility** / 96 best-practices / 100 SEO
+- 2026-07-14: Landing mobile: **99 perf / 100 a11y**; app login mobile:
+  **100 perf / 100 a11y**. Lighthouse desktop: **100 performance / 100 accessibility** /
+  96 best-practices / 100 SEO
   (best-practices ding = the expected analytics 404 above)
-- All anchor targets present (`#what` `#why` `#chef` `#book`); assets, sitemap,
-  robots 200; Calendly embed verified lazy (no third-party request until the
-  booking section approaches); direct-link fallback works with JS disabled;
-  WCAG 2.2 AA contrast verified across all surface/text token pairs; reduced
-  motion honored for both motion registers; 320px-viewport reflow clean.
+- 2026-08-03: All current anchor targets resolve. Google Calendar&rsquo;s booking frame
+  renders at 390px and 1440px without page overflow; the direct-link fallback remains
+  available with frames blocked or JavaScript disabled.

@@ -20,19 +20,12 @@ export const site = {
 /** The one CTA, referenced everywhere it appears — copy must never drift. */
 export const cta = { label: 'Book a 15-min demo', href: '#book' } as const;
 
-/**
- * TODO(owner): set PUBLIC_CALENDLY_URL (Vercel env + .env locally) to your
- * real 15-minute event link. `||` not `??`: empty-string env values must
- * fall through to the placeholder.
- */
-const rawCalendlyUrl =
-	import.meta.env.PUBLIC_CALENDLY_URL || 'https://calendly.com/your-handle/15min';
-// Build-time guard: this value becomes an href AND an iframe src, and the
-// postMessage handler trusts the https://calendly.com origin to match it.
-if (!rawCalendlyUrl.startsWith('https://calendly.com/')) {
-	throw new Error(`PUBLIC_CALENDLY_URL must be an https://calendly.com/ link, got: ${rawCalendlyUrl}`);
-}
-export const calendlyUrl = rawCalendlyUrl;
+/** Owner-supplied Google Calendar appointment schedule. */
+export const booking = {
+	url: 'https://calendar.app.google/CtvTiAXfbNBB4cXE6',
+	embedUrl:
+		'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0xfUOfjHtWWy-FW4DGE8Ree6p29tr6zrGH3iZ0oYWhLJWqZhtszmFJqGa-JtB3yJ9bmEoT69Ll?gv=true'
+} as const;
 
 /**
  * Section links. Each item ships in the SAME issue as its section, so no
