@@ -23,7 +23,13 @@ export const booking = {
 } as const;
 
 /** The one CTA, referenced everywhere it appears so its label and destination cannot drift. */
-export const cta = { label: 'Book a 15-min demo', href: booking.url } as const;
+export const cta = {
+	label: 'Book a 15-min demo',
+	ariaLabel: 'Book a 15-min demo (opens in a new tab)',
+	href: booking.url,
+	target: '_blank',
+	rel: 'noopener noreferrer'
+} as const;
 
 /**
  * Section links. Each item ships in the SAME issue as its section, so no

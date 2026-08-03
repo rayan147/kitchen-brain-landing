@@ -16,7 +16,15 @@ import { cta } from '../../lib/site';
 				need next.
 			</p>
 			<div class="anim-enter mt-8 flex flex-wrap items-center gap-x-6 gap-y-3" style="--enter-delay: 230ms">
-				<a href={cta.href} class="btn-primary">{cta.label}</a>
+				<a
+					href={cta.href}
+					target={cta.target}
+					rel={cta.rel}
+					aria-label={cta.ariaLabel}
+					class="btn-primary"
+				>
+					{cta.label}
+				</a>
 				<a href="#chain" class="btn-quiet">See the costing chain <span aria-hidden="true">↓</span></a>
 			</div>
 			<p class="anim-enter mt-5 text-sm text-ink-soft" style="--enter-delay: 290ms">

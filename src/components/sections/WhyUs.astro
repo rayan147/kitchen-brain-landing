@@ -55,6 +55,14 @@ import { cta, site } from '../../lib/site';
 				</p>
 			</li>
 		</ul>
-		<a href={cta.href} class="btn-quiet mt-2">Book 15 minutes with your own order</a>
+		<a
+			href={cta.href}
+			target={cta.target}
+			rel={cta.rel}
+			aria-label="Book 15 minutes with your own order (opens in a new tab)"
+			class="btn-quiet mt-2"
+		>
+			Book 15 minutes with your own order
+		</a>
 	</div>
 </section>

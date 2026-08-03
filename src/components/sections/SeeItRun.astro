@@ -92,7 +92,15 @@ import { cta } from '../../lib/site';
 			</span>
 		</div>
 
-		<a href={cta.href} class="btn-quiet mt-8">{cta.label}</a>
+		<a
+			href={cta.href}
+			target={cta.target}
+			rel={cta.rel}
+			aria-label={cta.ariaLabel}
+			class="btn-quiet mt-8"
+		>
+			{cta.label}
+		</a>
 	</div>
 </section>
 

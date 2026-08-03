@@ -29,7 +29,7 @@ const year = 2026;
 		<nav aria-label="Footer">
 			<ul role="list" class="flex flex-wrap gap-x-6 gap-y-2">
 				{
-					[...nav, { label: 'Book a demo', href: cta.href }].map((item) => (
+					nav.map((item) => (
 						<li>
 							<a
 								href={item.href}
@@ -40,6 +40,17 @@ const year = 2026;
 						</li>
 					))
 				}
+				<li>
+					<a
+						href={cta.href}
+						target={cta.target}
+						rel={cta.rel}
+						aria-label={cta.ariaLabel}
+						class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
+					>
+						Book a demo
+					</a>
+				</li>
 			</ul>
 		</nav>
 		<p class="text-sm text-ink-soft">© {year} {site.name}</p>

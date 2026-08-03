@@ -52,4 +52,4 @@ Everything below ships as a clearly-marked placeholder. Each also carries a
   96 best-practices / 100 SEO
   (best-practices ding = the expected analytics 404 above)
 - 2026-08-03: All current anchor targets resolve. Every booking CTA opens the
-  owner-supplied Google Calendar appointment page directly, with no inline scheduler.
+  owner-supplied Google Calendar appointment page in a new tab, with no inline scheduler.

@@ -22,7 +22,13 @@ import BrandLockup from './BrandLockup.astro';
 			<li>
 				<!-- py-3 makes the pill a true 44px tap target (12+20+12) — it's
 				     the page's most important persistent control. -->
-				<a href={cta.href} class="btn-primary whitespace-nowrap px-4 py-3 text-sm sm:px-5">
+				<a
+					href={cta.href}
+					target={cta.target}
+					rel={cta.rel}
+					aria-label={cta.ariaLabel}
+					class="btn-primary whitespace-nowrap px-4 py-3 text-sm sm:px-5"
+				>
 					<span class="sm:hidden">Book demo</span>
 					<span class="hidden sm:inline">{cta.label}</span>
 				</a>
