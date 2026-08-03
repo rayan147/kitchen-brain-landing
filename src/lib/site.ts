@@ -17,15 +17,13 @@ export const site = {
 		'Know what every catering event should cost before you quote it. CostCook connects supplier prices, recipes, menus, orders, shopping, prep, packing, and purchases.'
 } as const;
 
-/** The one CTA, referenced everywhere it appears — copy must never drift. */
-export const cta = { label: 'Book a 15-min demo', href: '#book' } as const;
-
 /** Owner-supplied Google Calendar appointment schedule. */
 export const booking = {
-	url: 'https://calendar.app.google/CtvTiAXfbNBB4cXE6',
-	embedUrl:
-		'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0xfUOfjHtWWy-FW4DGE8Ree6p29tr6zrGH3iZ0oYWhLJWqZhtszmFJqGa-JtB3yJ9bmEoT69Ll?gv=true'
+	url: 'https://calendar.app.google/CtvTiAXfbNBB4cXE6'
 } as const;
+
+/** The one CTA, referenced everywhere it appears so its label and destination cannot drift. */
+export const cta = { label: 'Book a 15-min demo', href: booking.url } as const;
 
 /**
  * Section links. Each item ships in the SAME issue as its section, so no

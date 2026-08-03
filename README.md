@@ -10,7 +10,7 @@ software for small caterers and meal-prep businesses. Single goal: book 15-minut
 - [Astro](https://astro.build) (fully static output, no adapter)
 - Tailwind CSS v4 (via `@tailwindcss/vite`)
 - Self-hosted fonts via Fontsource: Fraunces (display, with optical sizing) + Instrument Sans (body)
-- Google Calendar appointment-schedule embed, natively lazy-loaded; Vercel Web Analytics (cookieless)
+- Google Calendar appointment-schedule link; Vercel Web Analytics (cookieless)
 - Hosted on Vercel — the GitHub repo is connected, so every merge to `main` deploys
   production automatically; PRs get preview deployments. Security headers (CSP etc.)
   live in `vercel.json`.
@@ -32,8 +32,8 @@ Open Graph image: edit `scripts/og-card.html`, then `./scripts/make-og.sh`
 Everything below ships as a clearly-marked placeholder. Each also carries a
 `TODO(owner)` comment at the exact spot in the code.
 
-- [x] **Google Calendar booking page** — direct link and inline appointment schedule
-      supplied by the owner and stored in `src/lib/site.ts` (2026-08-03).
+- [x] **Google Calendar booking page** — owner-supplied link stored once in
+      `src/lib/site.ts` and used by every booking CTA (2026-08-03).
 - [x] **Contact email** — rayan@costcook.io (2026-07-14).
 - [ ] **Founder signature** — `founderName` in `src/lib/site.ts` (currently "Rayan"; confirm).
 - [ ] **Analytics** — enable Web Analytics for the `kitchen-brain-landing` project in
@@ -51,6 +51,5 @@ Everything below ships as a clearly-marked placeholder. Each also carries a
   **100 perf / 100 a11y**. Lighthouse desktop: **100 performance / 100 accessibility** /
   96 best-practices / 100 SEO
   (best-practices ding = the expected analytics 404 above)
-- 2026-08-03: All current anchor targets resolve. Google Calendar&rsquo;s booking frame
-  renders at 390px and 1440px without page overflow; the direct-link fallback remains
-  available with frames blocked or JavaScript disabled.
+- 2026-08-03: All current anchor targets resolve. Every booking CTA opens the
+  owner-supplied Google Calendar appointment page directly, with no inline scheduler.

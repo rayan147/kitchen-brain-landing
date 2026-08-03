@@ -25,6 +25,8 @@ const [index, ledger, ...surfaces] = await Promise.all([
 	...surfaceFiles.map(read)
 ]);
 const publicCopy = surfaces.join('\n');
+const siteSource = surfaces[0];
+const bookDemoSource = surfaces.at(-1);
 
 const failures = [];
 const requireText = (source, value, label) => {
@@ -45,8 +47,16 @@ for (const component of [
 requireText(ledger, '6a29e88e36445b74ba5d057fe0461196e39b5c35', 'release ledger');
 requireText(ledger, 'dfb71efc524da94efc6cec2f354751ce69d424e2', 'release ledger');
 requireText(ledger, '7ceb02dbb67034e507aeb279abb421ddd90df87f', 'release ledger');
+requireText(siteSource, 'href: booking.url', 'booking CTA');
 for (let claim = 1; claim <= 33; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
+}
+
+if (/href:\s*['"]#book['"]/.test(siteSource)) {
+	failures.push('booking CTA still points to the inline booking section');
+}
+if (bookDemoSource && /<iframe\b/i.test(bookDemoSource)) {
+	failures.push('booking section still contains an inline scheduler');
 }
 
 const forbiddenClaims = [

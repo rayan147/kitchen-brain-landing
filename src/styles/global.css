@@ -148,8 +148,8 @@
 		animation: none;
 	}
 
-	/* Same escape hatch for the scroll-reveal register — reveal blocks now
-	   contain focusable links (tel:, #book). */
+	/* Same escape hatch for the scroll-reveal register because reveal blocks
+	   contain focusable links. */
 	.reveal-pending:focus-visible,
 	.reveal-pending:has(:focus-visible) {
 		opacity: 1;

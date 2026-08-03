@@ -1,5 +1,5 @@
 ---
-import { booking, site } from '../../lib/site';
+import { cta, site } from '../../lib/site';
 ---
 
 <section id="book" class="relative container-page py-section">
@@ -18,32 +18,13 @@ import { booking, site } from '../../lib/site';
 		</p>
 	</div>
 
-	<!-- The direct link remains the primary action and works when third-party
-	     frames are blocked or JavaScript is disabled. -->
 	<a
-		id="book-direct"
-		href={booking.url}
-		target="_blank"
-		rel="noopener noreferrer"
+		href={cta.href}
 		class="btn-primary mt-9"
 	>
-		Book a 15-min demo
-		<span class="sr-only">(opens in a new tab)</span>
-		<span aria-hidden="true">↗</span>
+		{cta.label}
 	</a>
 	<p class="mt-4 text-sm text-ink-soft">
 		Prefer to talk or text? <a href={site.phoneHref} class="font-medium text-green-deep underline decoration-current underline-offset-4">{site.phone}</a>.
 	</p>
-
-	<div class="mt-9 overflow-hidden rounded-2xl border border-hairline bg-paper shadow-ticket">
-		<iframe
-			src={booking.embedUrl}
-			title="Book a CostCook kitchen costing demo with Google Calendar"
-			width="100%"
-			height="600"
-			loading="lazy"
-			referrerpolicy="strict-origin-when-cross-origin"
-			class="block h-[720px] w-full border-0 sm:h-[660px]"
-		></iframe>
-	</div>
 </section>
