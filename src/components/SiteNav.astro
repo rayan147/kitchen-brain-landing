@@ -3,16 +3,16 @@ import { cta, nav } from '../lib/site';
 import BrandLockup from './BrandLockup.astro';
 ---
 
-<header class="container-page flex items-baseline justify-between pt-6 pb-4 sm:pt-8">
+<header class="container-page flex items-center justify-between gap-3 pt-5 pb-4 sm:pt-8">
 	<BrandLockup href="/" />
 	<nav aria-label="Main">
-		<ul role="list" class="flex items-baseline gap-5 sm:gap-8">
+		<ul role="list" class="flex items-center gap-5 lg:gap-8">
 			{
 				nav.map((item) => (
-					<li class="hidden sm:block">
+					<li class="hidden md:block">
 						<a
 							href={item.href}
-							class="text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink"
+							class="inline-flex min-h-11 items-center text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink"
 						>
 							{item.label}
 						</a>
@@ -22,7 +22,10 @@ import BrandLockup from './BrandLockup.astro';
 			<li>
 				<!-- py-3 makes the pill a true 44px tap target (12+20+12) — it's
 				     the page's most important persistent control. -->
-				<a href={cta.href} class="btn-primary px-5 py-3 text-sm">{cta.label}</a>
+				<a href={cta.href} class="btn-primary whitespace-nowrap px-4 py-3 text-sm sm:px-5">
+					<span class="sm:hidden">Book demo</span>
+					<span class="hidden sm:inline">{cta.label}</span>
+				</a>
 			</li>
 		</ul>
 	</nav>

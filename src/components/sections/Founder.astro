@@ -5,13 +5,13 @@ import { cta, site } from '../../lib/site';
 // now a software engineer. Photo is owner-supplied (public/founder.jpg).
 ---
 
-<section id="chef" class="bg-cream">
+<section id="chef" class="border-y border-hairline bg-cream">
 	<!-- Inner max-width instead of on container-page: both set max-width and
 	     the winner would depend on stylesheet order. Letter sits left, air right. -->
 	<div class="container-page py-section-tight">
 		<div class="max-w-4xl" data-reveal>
 			<p class="eyebrow">From the chef</p>
-			<h2 class="mt-4 text-h2 font-semibold">Built by a chef.</h2>
+			<h2 class="mt-4 text-h2 font-semibold">Built for the kitchen work around the event.</h2>
 
 			<div class="mt-8 flex flex-col gap-8 sm:flex-row sm:items-start sm:gap-10">
 				<!-- Paper-matted, counter-tilted to the hero ticket: a photo
@@ -26,14 +26,13 @@ import { cta, site } from '../../lib/site';
 				/>
 				<div class="max-w-2xl space-y-5 text-lede text-ink-soft">
 					<p>
-						I cooked professionally for twelve years. The orders changed every week, and
-						every week meant the same night of math: scale the recipes, write the
-						shopping list, write the prep sheet, figure out what any of it cost. Usually
-						after midnight, when I should have been asleep.
+						I spent twelve years cooking professionally before becoming a software engineer.
+						CostCook is the system I wanted when a menu had to become a quote, a shopping
+						list, a prep plan, and a pack list without losing the cost along the way.
 					</p>
 					<p>
-						I&rsquo;m a software engineer now. CostCook is the thing I kept wishing
-						somebody would hand me back then. It does the math. The kitchen cooks.
+						CostCook is still early. A real-order demo is the clearest way to see whether
+						the workflow fits your kitchen.
 					</p>
 				</div>
 			</div>
@@ -48,7 +47,7 @@ import { cta, site } from '../../lib/site';
 					aria-hidden="true"></span>
 			</p>
 
-			<a href={cta.href} class="btn-quiet mt-8">Book 15 minutes</a>
+			<a href={cta.href} class="btn-quiet mt-8">{cta.label}</a>
 		</div>
 	</div>
 </section>

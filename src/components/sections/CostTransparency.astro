@@ -1,0 +1,46 @@
+---
+const readings = [
+	{
+		term: 'Theoretical food cost',
+		description: 'Exact recipe consumption valued from current pack prices, conversions, yield, and miscellaneous cost.'
+	},
+	{
+		term: 'Estimated buy cost',
+		description: 'Whole packs still needed after trusted on-hand quantities. Pack and batch rounding can make it higher.'
+	},
+	{
+		term: 'Actual purchase spend',
+		description: 'Correction-aware purchases recorded in the ledger. It is not the plate, menu, or event food-cost numerator.'
+	}
+];
+---
+
+<section id="math" class="bg-ink text-offwhite" aria-labelledby="math-heading">
+	<div class="container-page py-section">
+		<div class="max-w-3xl" data-reveal>
+			<p class="text-sm font-semibold text-amber-light">See exactly where the number came from</p>
+			<h2 id="math-heading" class="mt-4 text-h2 font-semibold">Food cost, buying, and spend are not the same number.</h2>
+			<p class="mt-5 max-w-[68ch] text-lede text-ink-muted">
+				CostCook keeps them separate so the kitchen can tell what a menu should consume,
+				what it still needs to buy, and what was actually recorded afterward.
+			</p>
+		</div>
+
+		<dl class="mt-10 grid gap-8 md:grid-cols-3 md:gap-10" data-reveal>
+			{
+				readings.map((reading) => (
+					<div class="border-t border-ink-rule pt-5">
+						<dt class="font-display text-h3 font-semibold">{reading.term}</dt>
+						<dd class="mt-3 leading-relaxed text-ink-muted">{reading.description}</dd>
+					</div>
+				))
+			}
+		</dl>
+
+		<p class="mt-10 max-w-[74ch] border-t border-ink-rule pt-6 text-sm leading-relaxed text-ink-muted" data-reveal>
+			Open a calculation to inspect pack price and quantity, purchased and usable unit cost,
+			yield, recipe-line contribution, sub-recipe output, plate cost, menu cost per guest,
+			event cost, and the source and date CostCook can prove. Missing facts stay visible.
+		</p>
+	</div>
+</section>

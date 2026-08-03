@@ -14,7 +14,7 @@ export const site = {
 	// ≤60 chars so Google doesn't truncate the audience qualifier.
 	title: 'CostCook: shopping, prep & food cost for caterers',
 	description:
-		'Type in the menu and the guest count; CostCook hands back the shopping list, prep sheets, and plate cost. Built by a chef with 12 years on the line.'
+		'Know what every catering event should cost before you quote it. CostCook connects supplier prices, recipes, menus, orders, shopping, prep, packing, and purchases.'
 } as const;
 
 /** The one CTA, referenced everywhere it appears — copy must never drift. */
@@ -40,10 +40,9 @@ export const calendlyUrl = rawCalendlyUrl;
  * too — it must keep mirroring it, since header links hide below `sm`.
  */
 export const nav: readonly { label: string; href: string }[] = [
-	{ label: 'What it does', href: '#what' },
-	{ label: 'See it run', href: '#demo' },
-	{ label: 'How it works', href: '#loop' },
-	{ label: 'The hard part', href: '#yield' },
-	{ label: 'Why us', href: '#why' },
-	{ label: 'From the chef', href: '#chef' }
+	{ label: 'How it works', href: '#chain' },
+	{ label: 'Setup', href: '#setup' },
+	{ label: 'Operations', href: '#operations' },
+	{ label: 'The math', href: '#math' },
+	{ label: 'See it run', href: '#demo' }
 ];

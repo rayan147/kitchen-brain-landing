@@ -1,0 +1,61 @@
+---
+const stages = [
+	{
+		title: 'Shop',
+		body: 'Consolidated ingredients by supplier, whole-pack buying, and trusted on-hand quantities.'
+	},
+	{
+		title: 'Prep',
+		body: 'Scaled dishes, whole sub-recipe batches, instructions, labels, and checkoffs.'
+	},
+	{
+		title: 'Pack',
+		body: 'Dishes, quantities, equipment, and completion checks before the order leaves.'
+	}
+];
+---
+
+<section id="operations" class="border-y border-hairline bg-cream" aria-labelledby="operations-heading">
+	<div class="container-page py-section">
+		<div class="max-w-3xl" data-reveal>
+			<p class="eyebrow">Quote it, then run it</p>
+			<h2 id="operations-heading" class="mt-4 text-h2 font-semibold">Change a draft guest count and the kitchen plan changes with it.</h2>
+			<p class="mt-5 max-w-[68ch] text-lede text-ink-soft">
+				Choose a menu, enter the event and guest count, and set the selling price. CostCook
+				compares theoretical food cost with your target and names the selling price that
+				would meet it. Confirm when the plan is ready to freeze.
+			</p>
+		</div>
+
+		<div class="mt-10 grid items-start gap-10 lg:grid-cols-[4fr_7fr] lg:gap-16">
+			<dl class="divide-y divide-ticket-rule border-y border-ticket-rule" data-reveal>
+				{
+					stages.map((stage) => (
+						<div class="py-5">
+							<dt class="font-display text-h3 font-semibold">{stage.title}</dt>
+							<dd class="mt-2 text-ink-soft">{stage.body}</dd>
+						</div>
+					))
+				}
+			</dl>
+
+			<figure data-reveal>
+				<picture>
+					<source media="(max-width: 639px)" srcset="/proof/shop-mobile.png" />
+					<img
+						src="/proof/shop.png"
+						alt="A CostCook shopping list grouped by supplier, showing each ingredient's need, on-hand amount, whole packs to buy, and supplier subtotal."
+						width="1808"
+						height="1040"
+						loading="lazy"
+						decoding="async"
+						class="h-auto w-full bg-paper shadow-ticket"
+					/>
+				</picture>
+				<figcaption class="mt-4 text-sm text-ink-soft">
+					Trusted shelf quantities reduce buying. They do not reduce the theoretical food the event consumes.
+				</figcaption>
+			</figure>
+		</div>
+	</div>
+</section>

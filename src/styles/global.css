@@ -14,10 +14,13 @@
 @theme {
 	--color-ink: #1f2421;
 	--color-ink-soft: #49524c;
+	--color-ink-muted: #d4ddd7;
+	--color-ink-rule: #53615a;
 	--color-green: #2f7d5b;
 	--color-green-deep: #256549;
 	--color-amber: #b9762a;
 	--color-amber-deep: #8f5716;
+	--color-amber-light: #e1b06e;
 	--color-offwhite: #f4f6f4;
 	--color-softgreen: #e5f1ea;
 	--color-hairline: #d3ddd6;

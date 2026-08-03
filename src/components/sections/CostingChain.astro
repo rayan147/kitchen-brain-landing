@@ -1,0 +1,47 @@
+---
+const steps = [
+	{ title: 'Supplier evidence', body: 'A file, photo, invoice, receiving record, or manual price.' },
+	{ title: 'Review and confirm', body: 'CostCook suggests matches. You decide what is saved.' },
+	{ title: 'Ingredients', body: 'Pack price, pack quantity, yield, conversions, and supplier.' },
+	{ title: 'Recipes and menus', body: 'Reusable sub-recipes, dishes, portions, and cost per guest.' },
+	{ title: 'Draft order', body: 'Menu, guests, selling price, live plan, and food-cost target.' },
+	{ title: 'Confirm and run it', body: 'Freeze the event, then work through Shop, Prep, and Pack.' }
+];
+---
+
+<section id="chain" class="container-page py-section" aria-labelledby="chain-heading">
+	<div class="grid gap-10 lg:grid-cols-[4fr_7fr] lg:gap-20">
+		<div data-reveal>
+			<p class="eyebrow">One connected costing chain</p>
+			<h2 id="chain-heading" class="mt-4 text-h2 font-semibold">Change the source. See where the change goes.</h2>
+			<p class="mt-5 max-w-[54ch] text-lede text-ink-soft">
+				Reviewed ingredient prices flow through reusable recipes, menus, and draft orders.
+				Confirm an event when the plan is ready; later prices keep updating future work
+				without rewriting what was approved.
+			</p>
+		</div>
+
+		<ol role="list" class="grid gap-x-8 gap-y-0 sm:grid-cols-2" data-reveal>
+			{
+				steps.map((step, index) => (
+					<li class="relative border-t border-hairline-strong py-5 sm:min-h-32">
+						<div class="flex items-baseline gap-3">
+							<span class="font-mono text-sm font-semibold tabular-nums text-amber-deep" aria-hidden="true">
+								{String(index + 1).padStart(2, '0')}
+							</span>
+							<div>
+								<h3 class="font-body text-base font-semibold">{step.title}</h3>
+								<p class="mt-1.5 text-sm leading-relaxed text-ink-soft">{step.body}</p>
+							</div>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+
+	<div class="mt-10 grid gap-4 border-y border-hairline bg-softgreen px-5 py-6 text-sm sm:grid-cols-2 sm:px-8" data-reveal>
+		<p><strong class="text-ink">Purchases move future costs.</strong> Posted receiving and other confirmed price evidence can update the current ingredient price.</p>
+		<p><strong class="text-ink">Confirmed events stay frozen.</strong> The plan and money approved for an event are not silently restated.</p>
+	</div>
+</section>

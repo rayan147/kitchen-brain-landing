@@ -1,0 +1,49 @@
+---
+const stages = [
+	'Kitchen settings',
+	'Business and suppliers',
+	'Ingredients',
+	'Recipes',
+	'Menu',
+	'First order'
+];
+---
+
+<section id="setup" class="bg-softgreen" aria-labelledby="setup-heading">
+	<div class="container-page py-section-tight">
+		<div class="grid items-start gap-10 lg:grid-cols-[5fr_7fr] lg:gap-16">
+			<div data-reveal>
+				<p class="eyebrow">Guided setup</p>
+				<h2 id="setup-heading" class="mt-4 text-h2 font-semibold">From costing settings to a first costed order.</h2>
+				<p class="mt-5 max-w-[58ch] text-lede text-ink-soft">
+					CostCook walks an owner or manager through the minimum connected kitchen: costing
+					defaults, business and supplier details, ingredients, a dish, a menu, and a first
+					order.
+				</p>
+				<p class="mt-4 max-w-[58ch] text-ink-soft">
+					Save and return at any time. If the kitchen already has data, the guide shows what
+					is complete instead of creating duplicates.
+				</p>
+			</div>
+
+			<div data-reveal>
+				<ol role="list" class="grid gap-x-8 sm:grid-cols-2">
+					{
+						stages.map((stage, index) => (
+							<li class="flex items-center gap-3 border-t border-hairline-strong py-4">
+								<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-green text-sm font-semibold text-white">
+									{index + 1}
+								</span>
+								<span class="font-medium">{stage}</span>
+							</li>
+						))
+					}
+				</ol>
+				<p class="mt-5 border-t border-hairline-strong pt-5 text-sm leading-relaxed text-ink-soft">
+					Open the calculation at each stage to see how pack price, yield, recipe quantities,
+					menu portions, and guest count affect the result.
+				</p>
+			</div>
+		</div>
+	</div>
+</section>

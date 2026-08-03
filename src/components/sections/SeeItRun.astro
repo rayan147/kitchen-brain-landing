@@ -23,13 +23,14 @@ import { cta } from '../../lib/site';
 //   docker compose exec site node scripts/demo-video/assemble-silent.mjs
 ---
 
-<section id="demo" class="container-page py-section-tight">
-	<div data-reveal>
-		<p class="eyebrow">See it run</p>
-		<h2 class="mt-4 max-w-2xl text-h2 font-semibold">One order, all the way through.</h2>
-		<p class="mt-5 max-w-2xl text-lede text-ink-soft">
-			No mockups. A wedding for 200 gets priced, quoted, and turned into the
-			shopping list and the prep sheet, the same numbers the whole way.
+	<section id="demo" class="container-page py-section-tight">
+		<div data-reveal>
+			<p class="eyebrow">The product, not a mockup</p>
+			<h2 class="mt-4 max-w-2xl text-h2 font-semibold">Follow one order from quote to kitchen plan.</h2>
+			<p class="mt-5 max-w-2xl text-lede text-ink-soft">
+				See a costed menu become a confirmed order, a supplier-grouped shopping list,
+				and a scaled prep plan. The walkthrough uses the real CostCook interface and
+				keeps each kind of cost labeled for what it means.
 		</p>
 		<p id="demo-transcript" class="sr-only">
 			A silent, captioned screen recording of CostCook following one job from the books
@@ -64,7 +65,7 @@ import { cta } from '../../lib/site';
 				width="1600"
 				height="1000"
 				class="w-full border border-hairline bg-paper shadow-ticket"
-				aria-label="Screen recording with narration and on-screen text: CostCook prices a menu, quotes a 200-guest wedding, and turns it into a shopping list and a prep sheet"
+				aria-label="Silent, captioned screen recording: CostCook prices a menu, quotes a 200-guest wedding, and turns it into a shopping list and a prep sheet"
 				aria-describedby="demo-transcript"
 			>
 				<source src="/demo.webm" type="video/webm" />
@@ -91,7 +92,7 @@ import { cta } from '../../lib/site';
 			</span>
 		</div>
 
-		<a href={cta.href} class="btn-quiet mt-8">Book 15 minutes</a>
+		<a href={cta.href} class="btn-quiet mt-8">{cta.label}</a>
 	</div>
 </section>
 

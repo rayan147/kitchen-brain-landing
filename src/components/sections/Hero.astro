@@ -1,142 +1,45 @@
 ---
-import { cta, site } from '../../lib/site';
-
-// Every number on the ticket is real, hand-checkable production math:
-// 200 × 6 oz = 1,200 oz = 75 lb · 200 ÷ 4 = 50 lemons · 200 × 0.25 oz = 3 lb 2 oz
-// 200 × 0.5 oz = 100 oz = 6 lb 4 oz butter. Compound butter reconciles too:
-// ~3.1 qt butter + ~1.5 qt capers + lemon juice ≈ 5 qt. Plate $3.41 at 31%
-// food cost implies an ~$11 menu price — a healthy caterer's number.
-const ticket = {
-	shop: [
-		{ item: 'Chicken breast', qty: '75 lb' },
-		{ item: 'Lemons', qty: '50 ea' },
-		{ item: 'Capers', qty: '3 lb 2 oz' },
-		{ item: 'Butter, unsalted', qty: '6 lb 4 oz' }
-	],
-	prep: [
-		{ item: 'Pound + portion 6 oz', qty: '200 ct' },
-		{ item: 'Caper-lemon butter', qty: '5 qt' }
-	]
-};
+import { cta } from '../../lib/site';
 ---
 
-<section class="container-page pt-14 pb-section lg:pt-24">
-	<!-- The largest type on the page states a bad moment, not a category and not a
-	     credential. Three things moved here, all measured rather than guessed:
-
-	     1. The old h1 ("The kitchen brain for caterers. Built by a chef, not a
-	        software company.") spent half the page's biggest type on who built it.
-	        The CTA arrived at 539px; the page did not name a problem until 1319px.
-	        A reader was asked to book 780px before anything was shown to be wrong.
-	     2. "Kitchen brain" is the repo's own name for the project — it is in
-	        CLAUDE.md and in the booking URL — and no working caterer says it. Prep
-	        sheet, shopping list, plate cost name things they hold; a kitchen brain
-	        names nothing. It stays the product's internal identity, out of the h1.
-	     3. The bad moment is the quote call, not the Thursday recount. Both are
-	        real, but the recount is the TIME cost and the quote is the MONEY, and
-	        the page already spends its problem section on arithmetic. This claim
-	        also has the property a headline needs: a caterer either recognises the
-	        season that stayed busy and made nothing, or he does not and leaves.
-	        It is on the page today as the third of five features, at 2,950px.
-
-	     The provenance claim is demoted, not lost: it rides in the eyebrow, and
-	     FROM THE CHEF earns it properly further down instead of asserting it here. -->
-	<p class="anim-enter eyebrow">
-		Back-of-house software for small caterers &amp; meal-prep kitchens · built by a chef
-	</p>
-	<h1 class="anim-enter mt-5 max-w-[21ch] text-display font-semibold" style="--enter-delay: 80ms">
-		The money is decided on the phone, months before anybody cooks.
-	</h1>
-
-	<div class="mt-10 grid items-start gap-14 lg:grid-cols-[7fr_5fr] lg:gap-10">
+<section class="container-page pt-14 pb-section-tight lg:pt-24">
+	<p class="anim-enter eyebrow">For independent caterers and small kitchen teams</p>
+	<div class="mt-5 grid items-center gap-10 lg:grid-cols-[7fr_5fr] lg:gap-16">
 		<div>
-			<p class="anim-enter max-w-xl text-lede text-ink-soft" style="--enter-delay: 180ms">
-				Somebody asks what you would do 180 head for, and you say a number that sounds
-				about right. Type in the menu and the guest count instead: it hands you the plate
-				cost, the shopping list and the prep sheet, so you know the food cost before you
-				say the number. Keep everything else you already use.
+			<h1 class="anim-enter max-w-[19ch] text-[clamp(2.375rem,1.5rem+3vw,4rem)] leading-[1.04] font-semibold" style="--enter-delay: 70ms">
+				Know what every event should cost before you quote it.
+			</h1>
+			<p class="anim-enter mt-6 max-w-[62ch] text-lede text-ink-soft" style="--enter-delay: 150ms">
+				CostCook connects the prices you pay to ingredients, recipes, menus, and orders.
+				Choose a costed menu, enter the guest count and selling price, and see the event&rsquo;s
+				theoretical food cost, what still needs to be bought, and what Shop, Prep, and Pack
+				need next.
 			</p>
-			<a href={cta.href} class="anim-enter btn-primary mt-9" style="--enter-delay: 260ms">{cta.label}</a>
-			<!-- "Free while I build it out" is the strongest risk-reducer on the page
-			     and it used to live in BOOK A DEMO at 91% scroll depth, where almost
-			     nobody reached it. It belongs beside the button being asked for. -->
-			<p class="anim-enter mt-3 text-sm text-ink-soft" style="--enter-delay: 300ms">
-				15 minutes · bring one real order · nothing to install · free while I build it out
-			</p>
-			<!-- One of exactly two things here that a funded competitor cannot copy,
-			     and it was buried in WHY US at two-thirds scroll depth. It costs a
-			     line to say and it is checkable on the spot, which is the point. -->
-			<p class="anim-enter mt-2 text-sm text-ink-soft" style="--enter-delay: 320ms">
-				Rather talk? Call <a
-					href={site.phoneHref}
-					class="font-medium text-green-deep underline decoration-current underline-offset-4"
-					>{site.phone}</a
-				>. I pick up.
+			<div class="anim-enter mt-8 flex flex-wrap items-center gap-x-6 gap-y-3" style="--enter-delay: 230ms">
+				<a href={cta.href} class="btn-primary">{cta.label}</a>
+				<a href="#chain" class="btn-quiet">See the costing chain <span aria-hidden="true">↓</span></a>
+			</div>
+			<p class="anim-enter mt-5 text-sm text-ink-soft" style="--enter-delay: 290ms">
+				Bring one real menu or order. Nothing to install.
 			</p>
 		</div>
 
-		<!-- The signature element: one order becoming production lists, set as the
-		     kitchen ticket it would print on. Mono is the ticket's native voice. -->
-		<figure
-			aria-label="Sample: one order turned into a shopping list, prep sheet, and plate cost"
-			class="anim-enter-settle justify-self-center lg:-mt-6 lg:justify-self-end"
-			style="--enter-delay: 360ms"
-		>
-			<div
-				class="w-full max-w-[19.5rem] rotate-[1.5deg] bg-cream px-5 py-5 font-mono text-[0.8125rem] leading-normal text-ink shadow-ticket sm:max-w-[21rem]"
-			>
-				<!-- Punched hole — the wordmark's diamond, cut out of the ticket. -->
-				<div
-					class="mx-auto mb-4 size-3.5 rotate-45 bg-offwhite shadow-[inset_0_1px_2px_rgb(31_36_33/0.18)]"
-				>
-				</div>
-
-				<div class="flex justify-between gap-4 font-semibold">
-					<span>ORDER #117</span>
-					<span>SAT · 6 PM</span>
-				</div>
-				<p class="mt-1">Chicken piccata · 200 guests</p>
-
-				<hr class="my-4 border-t border-dashed border-ticket-rule" aria-hidden="true" />
-
-				<p class="font-semibold text-amber-deep">SHOP</p>
-				<ul role="list" class="mt-1.5">
-					{
-						ticket.shop.map((row) => (
-							<li class="flex justify-between gap-4">
-								<span>{row.item}</span>
-								<span class="sr-only">: </span>
-								<span class="whitespace-nowrap">{row.qty}</span>
-							</li>
-						))
-					}
-				</ul>
-
-				<hr class="my-4 border-t border-dashed border-ticket-rule" aria-hidden="true" />
-
-				<p class="font-semibold text-amber-deep">PREP</p>
-				<ul role="list" class="mt-1.5">
-					{
-						ticket.prep.map((row) => (
-							<li class="flex justify-between gap-4">
-								<span>{row.item}</span>
-								<span class="sr-only">: </span>
-								<span class="whitespace-nowrap">{row.qty}</span>
-							</li>
-						))
-					}
-				</ul>
-
-				<hr class="my-4 border-t border-dashed border-ticket-rule" aria-hidden="true" />
-
-				<div class="flex justify-between gap-4 font-semibold">
-					<span>PLATE $3.41</span>
-					<span class="sr-only">· </span>
-					<span>FOOD COST 31%</span>
-				</div>
-			</div>
-			<figcaption class="mt-4 text-center text-sm text-ink-soft lg:text-right">
-				A sample order. One in, every list out.
+		<figure class="anim-enter-settle" style="--enter-delay: 260ms">
+			<picture>
+				<source media="(max-width: 639px)" srcset="/proof/money-mobile.png" />
+				<img
+					src="/proof/money.png"
+					alt="A CostCook order comparison showing the frozen quoted food cost beside the same order at current ingredient prices."
+					width="2528"
+					height="430"
+					fetchpriority="high"
+					decoding="async"
+					class="h-auto w-full bg-paper shadow-ticket"
+				/>
+			</picture>
+			<figcaption class="mt-4 max-w-md text-sm text-ink-soft">
+				A confirmed order keeps the numbers that were quoted while current prices continue
+				moving future work.
 			</figcaption>
 		</figure>
 	</div>

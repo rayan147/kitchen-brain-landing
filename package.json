@@ -8,7 +8,8 @@
 		"build": "astro build",
 		"postbuild": "node scripts/check-dist.mjs",
 		"preview": "astro preview",
-		"check": "astro check"
+		"check": "astro check && node scripts/check-landing-claims.mjs",
+		"check:claims": "node scripts/check-landing-claims.mjs"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.9",
