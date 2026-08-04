@@ -1,6 +1,6 @@
 # CostCook landing-page release claim ledger
 
-Last reviewed: 2026-08-03
+Last reviewed: 2026-08-04
 
 ## Marketed release
 
@@ -85,9 +85,9 @@ Do not add these without a new ledger review:
 | --- | --- |
 | Hero | RC-01–RC-08 |
 | Connected chain | RC-02, RC-06–RC-09, RC-26, RC-28 |
+| Product walkthrough | RC-33 |
 | Guided setup | RC-10–RC-15 |
 | Catalog | RC-16–RC-21 |
 | Operations | RC-03–RC-08, RC-22–RC-25 |
 | Purchases | RC-09, RC-26–RC-29 |
 | Calculation trust | RC-04, RC-20, RC-23, RC-30–RC-32 |
-| Product walkthrough | RC-33 |

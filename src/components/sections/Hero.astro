@@ -9,11 +9,10 @@ import { cta } from '../../lib/site';
 			<h1 class="anim-enter max-w-[19ch] text-[clamp(2.375rem,1.5rem+3vw,4rem)] leading-[1.04] font-semibold" style="--enter-delay: 70ms">
 				Know what every event should cost before you quote it.
 			</h1>
-			<p class="anim-enter mt-6 max-w-[62ch] text-lede text-ink-soft" style="--enter-delay: 150ms">
-				CostCook connects the prices you pay to ingredients, recipes, menus, and orders.
-				Choose a costed menu, enter the guest count and selling price, and see the event&rsquo;s
-				theoretical food cost, what still needs to be bought, and what Shop, Prep, and Pack
-				need next.
+			<p class="anim-enter mt-6 max-w-[60ch] text-lede text-ink-soft" style="--enter-delay: 150ms">
+				CostCook carries each supplier price you approve through recipes, menus, and draft
+				orders. See expected food cost before you commit, then turn the confirmed event into
+				shopping, prep, and packing work.
 			</p>
 			<div class="anim-enter mt-8 flex flex-wrap items-center gap-x-6 gap-y-3" style="--enter-delay: 230ms">
 				<a
@@ -25,7 +24,7 @@ import { cta } from '../../lib/site';
 				>
 					{cta.label}
 				</a>
-				<a href="#chain" class="btn-quiet">See the costing chain <span aria-hidden="true">↓</span></a>
+				<a href="#demo" class="btn-quiet">Watch the 1:43 product tour <span aria-hidden="true">↓</span></a>
 			</div>
 			<p class="anim-enter mt-5 text-sm text-ink-soft" style="--enter-delay: 290ms">
 				Bring one real menu or order. Nothing to install.
@@ -33,21 +32,18 @@ import { cta } from '../../lib/site';
 		</div>
 
 		<figure class="anim-enter-settle" style="--enter-delay: 260ms">
-			<picture>
-				<source media="(max-width: 639px)" srcset="/proof/money-mobile.png" />
-				<img
-					src="/proof/money.png"
-					alt="A CostCook order comparison showing the frozen quoted food cost beside the same order at current ingredient prices."
-					width="2528"
-					height="430"
-					fetchpriority="high"
-					decoding="async"
-					class="h-auto w-full bg-paper shadow-ticket"
-				/>
-			</picture>
+			<img
+				src="/proof/money-mobile.png"
+				alt="A confirmed CostCook order quoted at $6.77 per guest and 41 percent food cost, compared with $6.96 per guest and 42.2 percent at current prices."
+				width="716"
+				height="404"
+				fetchpriority="high"
+				decoding="async"
+				class="h-auto w-full bg-paper shadow-ticket"
+			/>
 			<figcaption class="mt-4 max-w-md text-sm text-ink-soft">
-				A confirmed order keeps the numbers that were quoted while current prices continue
-				moving future work.
+				<strong class="font-semibold text-ink">Quoted stays quoted.</strong> Current prices keep
+				future work up to date.
 			</figcaption>
 		</figure>
 	</div>

@@ -53,3 +53,7 @@ Everything below ships as a clearly-marked placeholder. Each also carries a
   (best-practices ding = the expected analytics 404 above)
 - 2026-08-03: All current anchor targets resolve. Every booking CTA opens the
   owner-supplied Google Calendar appointment page in a new tab, with no inline scheduler.
+- 2026-08-04: Reordered the one-page visitor workflow so product proof follows the
+  problem and costing chain, simplified the hero, clarified the linear chain, and
+  combined founder trust with the final fit-check CTA. Product claims remain pinned
+  to `docs/release-claim-ledger.md`.

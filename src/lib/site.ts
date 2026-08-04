@@ -38,8 +38,8 @@ export const cta = {
  */
 export const nav: readonly { label: string; href: string }[] = [
 	{ label: 'How it works', href: '#chain' },
+	{ label: 'Product tour', href: '#demo' },
 	{ label: 'Setup', href: '#setup' },
 	{ label: 'Operations', href: '#operations' },
-	{ label: 'The math', href: '#math' },
-	{ label: 'See it run', href: '#demo' }
+	{ label: 'Check the math', href: '#math' }
 ];

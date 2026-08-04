@@ -12,8 +12,7 @@ const steps = [
 <section id="chain" class="container-page py-section" aria-labelledby="chain-heading">
 	<div class="grid gap-10 lg:grid-cols-[4fr_7fr] lg:gap-20">
 		<div data-reveal>
-			<p class="eyebrow">One connected costing chain</p>
-			<h2 id="chain-heading" class="mt-4 text-h2 font-semibold">Change the source. See where the change goes.</h2>
+			<h2 id="chain-heading" class="text-h2 font-semibold">Change the source. See where the change goes.</h2>
 			<p class="mt-5 max-w-[54ch] text-lede text-ink-soft">
 				Reviewed ingredient prices flow through reusable recipes, menus, and draft orders.
 				Confirm an event when the plan is ready; later prices keep updating future work
@@ -21,19 +20,15 @@ const steps = [
 			</p>
 		</div>
 
-		<ol role="list" class="grid gap-x-8 gap-y-0 sm:grid-cols-2" data-reveal>
+		<ol role="list" class="divide-y divide-hairline-strong border-y border-hairline-strong" data-reveal>
 			{
 				steps.map((step, index) => (
-					<li class="relative border-t border-hairline-strong py-5 sm:min-h-32">
-						<div class="flex items-baseline gap-3">
-							<span class="font-mono text-sm font-semibold tabular-nums text-amber-deep" aria-hidden="true">
-								{String(index + 1).padStart(2, '0')}
-							</span>
-							<div>
-								<h3 class="font-body text-base font-semibold">{step.title}</h3>
-								<p class="mt-1.5 text-sm leading-relaxed text-ink-soft">{step.body}</p>
-							</div>
-						</div>
+					<li class="grid grid-cols-[2rem_1fr] gap-x-3 gap-y-1 py-4 sm:grid-cols-[2.5rem_11rem_1fr] sm:items-baseline sm:gap-4">
+						<span class="row-span-2 font-mono text-sm font-semibold tabular-nums text-amber-deep sm:row-auto" aria-hidden="true">
+							{String(index + 1).padStart(2, '0')}
+						</span>
+						<h3 class="font-body text-base font-semibold">{step.title}</h3>
+						<p class="col-start-2 text-sm leading-relaxed text-ink-soft sm:col-start-auto">{step.body}</p>
 					</li>
 				))
 			}
