@@ -15,6 +15,8 @@ const surfaceFiles = [
 	'src/components/sections/PurchaseLoop.astro',
 	'src/components/sections/CostTransparency.astro',
 	'src/components/sections/SeeItRun.astro',
+	'src/components/sections/EveryFeature.astro',
+	'src/lib/features.ts',
 	'src/components/sections/BookDemo.astro'
 ];
 
@@ -39,7 +41,8 @@ for (const component of [
 	'CatalogSystem',
 	'OrderOperations',
 	'PurchaseLoop',
-	'CostTransparency'
+	'CostTransparency',
+	'EveryFeature'
 ]) {
 	requireText(index, `<${component} />`, 'landing composition');
 }
@@ -54,6 +57,7 @@ const expectedSectionOrder = [
 	'<OrderOperations />',
 	'<PurchaseLoop />',
 	'<CostTransparency />',
+	'<EveryFeature />',
 	'<BookDemo />'
 ];
 let previousSectionIndex = -1;
