@@ -41,5 +41,6 @@ export const nav: readonly { label: string; href: string }[] = [
 	{ label: 'Product tour', href: '#demo' },
 	{ label: 'Setup', href: '#setup' },
 	{ label: 'Operations', href: '#operations' },
-	{ label: 'Check the math', href: '#math' }
+	{ label: 'Check the math', href: '#math' },
+	{ label: 'Every feature', href: '#everything' }
 ];
