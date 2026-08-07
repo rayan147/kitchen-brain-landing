@@ -16,11 +16,13 @@ import { site } from '../lib/site';
 type Props = {
 	title?: string;
 	description?: string;
+	/** Root-relative route ('/features') so canonical/og:url stay per-page. */
+	path?: string;
 };
 
-const { title = site.title, description = site.description } = Astro.props;
+const { title = site.title, description = site.description, path = '/' } = Astro.props;
 // Slash form so canonical/og:url agree byte-for-byte with the sitemap.
-const canonical = new URL('/', site.url).href;
+const canonical = new URL(path, site.url).href;
 const ogImage = new URL('/og.png', site.url).href;
 ---
 

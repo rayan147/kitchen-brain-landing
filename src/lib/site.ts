@@ -37,10 +37,11 @@ export const cta = {
  * too — it must keep mirroring it, since header links hide below `sm`.
  */
 export const nav: readonly { label: string; href: string }[] = [
-	{ label: 'How it works', href: '#chain' },
-	{ label: 'Product tour', href: '#demo' },
-	{ label: 'Setup', href: '#setup' },
-	{ label: 'Operations', href: '#operations' },
-	{ label: 'Check the math', href: '#math' },
-	{ label: 'Every feature', href: '#everything' }
+	// Root-relative ('/#chain') so the same links resolve from /features too.
+	{ label: 'How it works', href: '/#chain' },
+	{ label: 'Product tour', href: '/#demo' },
+	{ label: 'Setup', href: '/#setup' },
+	{ label: 'Operations', href: '/#operations' },
+	{ label: 'Check the math', href: '/#math' },
+	{ label: 'Every feature', href: '/features' }
 ];

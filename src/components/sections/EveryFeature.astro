@@ -3,19 +3,21 @@ import { featureGroups, featureCount } from '../../lib/features';
 import { cta } from '../../lib/site';
 
 // The complete shipped-feature list (src/lib/features.ts, written from the
-// code audit). Shape follows the density rule: a low-frequency, high-density
-// read wants information architecture, not disclosure — group headers carry
-// the words a buyer scans for, every item stays visible (no accordions, no
-// JS), and the jump list up top is the scannable entry point to each group.
+// code audit). This is the body of the /features reference page — the home
+// page carries only the one-sentence bridge (FeatureBridge), per Krug's
+// billboard rule. Shape follows the density rule: a low-frequency,
+// high-density read wants information architecture, not disclosure — group
+// headers carry the words a buyer scans for, every item stays visible (no
+// accordions, no JS), and the jump list is the scannable entry point.
 ---
 
 <section id="everything" class="border-y border-hairline bg-cream" aria-labelledby="everything-heading">
 	<div class="container-page py-section">
 		<div class="max-w-3xl" data-reveal>
 			<p class="eyebrow">The complete list</p>
-			<h2 id="everything-heading" class="mt-4 text-h2 font-semibold">
+			<h1 id="everything-heading" class="mt-4 text-h2 font-semibold">
 				Everything CostCook does today. All {featureCount} things.
-			</h2>
+			</h1>
 			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
 				This list is written from the code, not the roadmap. Every line is shipped and
 				working in the app you would see on a demo call. If something is not on this
