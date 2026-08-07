@@ -160,15 +160,15 @@ async function findNamed(listPath, hrefPattern, label) {
 	);
 }
 
-const orderHref = await findNamed('/orders/list', '^/orders/[^/]+$', 'rodriguez');
-const menuHref = await findNamed('/catalog/menus', '^/catalog/menus/[^/]+$', 'summer bbq');
-const recipeHref = await findNamed('/catalog/recipes', '^/catalog/recipes/[^/]+$', 'greek salad');
-if (!orderHref || !menuHref || !recipeHref) {
-	throw new Error(`missing target: order=${orderHref} menu=${menuHref} recipe=${recipeHref}`);
+const orderHref = await findNamed('/orders/list', '^/orders/\\d+$', 'alvarez');
+const recipeHref = await findNamed('/catalog/recipes', '^/catalog/recipes/[^/]+$', 'braised short rib');
+const ingredientHref = await findNamed('/catalog/ingredients', '/ingredients/\\d+', 'baby spinach');
+if (!orderHref || !recipeHref || !ingredientHref) {
+	throw new Error(`missing target: order=${orderHref} recipe=${recipeHref} ingredient=${ingredientHref}`);
 }
 const storageState = await warm.storageState();
 await warm.close();
-console.log(`targets: order=${orderHref} menu=${menuHref} recipe=${recipeHref}`);
+console.log(`targets: order=${orderHref} recipe=${recipeHref} ingredient=${ingredientHref}`);
 
 await rm(CUT_DIR, { recursive: true, force: true });
 await mkdir(CUT_DIR, { recursive: true });
@@ -186,12 +186,19 @@ for (const beat of BEATS) {
 
 	let url = beat.path;
 	if (beat.useOrder) url = orderHref + (beat.suffix ?? '');
-	if (beat.useMenu) url = menuHref;
+	if (beat.useIngredient) url = ingredientHref;
 	if (beat.useRecipe) url = recipeHref;
 
-	await page.goto(APP + url, { waitUntil: 'domcontentloaded', timeout: 180_000 });
+	// Absolute URLs are part of the story too: the Mailpit inbox on :8025 is
+	// where the demo's REAL sends land (never a deliverable address).
+	const destination = /^https?:\/\//.test(url) ? url : APP + url;
+	await page.goto(destination, { waitUntil: 'domcontentloaded', timeout: 180_000 });
 	await ready(page);
 	await hideChrome(page);
+	if (beat.click) {
+		await page.getByText(new RegExp(beat.click)).filter({ visible: true }).first().click({ timeout: 10_000 });
+		await ready(page);
+	}
 	// Two framings, and the difference matters. `scrollTo` only brings a target
 	// into view, which is right when the screen above it is context worth keeping
 	// (b2 wants the menu's own title in frame). `scrollTop` pins the target to the
