@@ -15,13 +15,15 @@ const surfaceFiles = [
 	'src/components/sections/PurchaseLoop.astro',
 	'src/components/sections/CostTransparency.astro',
 	'src/components/sections/SeeItRun.astro',
+	'src/components/sections/FeatureBridge.astro',
 	'src/components/sections/EveryFeature.astro',
 	'src/lib/features.ts',
 	'src/components/sections/BookDemo.astro'
 ];
 
-const [index, ledger, ...surfaces] = await Promise.all([
+const [index, featuresPage, ledger, ...surfaces] = await Promise.all([
 	read('src/pages/index.astro'),
+	read('src/pages/features.astro'),
 	read('docs/release-claim-ledger.md'),
 	...surfaceFiles.map(read)
 ]);
@@ -42,10 +44,14 @@ for (const component of [
 	'OrderOperations',
 	'PurchaseLoop',
 	'CostTransparency',
-	'EveryFeature'
+	'FeatureBridge'
 ]) {
 	requireText(index, `<${component} />`, 'landing composition');
 }
+// The exhaustive list lives on its own page; the home page carries only the
+// bridge. Both halves must exist or the nav link / bridge link goes dead.
+requireText(featuresPage, '<EveryFeature />', 'features page composition');
+requireText(siteSource, "href: '/features'", 'features page nav link');
 
 const expectedSectionOrder = [
 	'<Hero />',
@@ -57,7 +63,7 @@ const expectedSectionOrder = [
 	'<OrderOperations />',
 	'<PurchaseLoop />',
 	'<CostTransparency />',
-	'<EveryFeature />',
+	'<FeatureBridge />',
 	'<BookDemo />'
 ];
 let previousSectionIndex = -1;
