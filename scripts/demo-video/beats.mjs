@@ -73,34 +73,34 @@ export const BEATS = [
 		useRecipe: true,
 		scrollTop: 'Lines per portion',
 		caption:
-			'It starts from recipes that already know their cost. Braised short rib: the brisket is 94% of the plate.',
+			'It starts from recipes that carry their own cost. Braised short rib: the beef is 93% of the plate.',
 	},
 	{
 		id: 'b2',
 		useOrder: true,
 		caption:
-			'180 guests at $68 a head: $12,240 in, $5,702.24 of food. That is 46.6% — and it names the price that fixes it.',
+			'180 guests at $68 a head: $12,240 in, $4,845.61 of food. That is 39.6%, and it names the price that gets you to thirty.',
 	},
 	{
 		id: 'b3',
 		useOrder: true,
 		scrollTop: 'Baldor',
 		caption:
-			'The same order is already a shopping list, by vendor, in whole packs. Baldor: $534.17.',
+			'The same order is already a shopping list, by vendor, in whole packs. What you buy, not what you plate. Baldor: $690.82.',
 	},
 	{
 		// The inbox IS the product claim here: the purchase orders really send.
 		// Mailpit is the demo's capture inbox, standing in for the vendor's.
 		id: 'b4',
 		path: 'http://localhost:8025/',
-		caption: 'Confirming sends the purchase orders. A real inbox: each vendor gets its own PO number.',
+		caption: 'Confirming sends the purchase orders: one per vendor, each with its own number.',
 	},
 	{
 		id: 'b5',
 		path: 'http://localhost:8025/',
 		click: 'PO-00783-002',
 		caption:
-			'What Green Valley receives: PO-00783-002, five items in whole packs, $514.75, terms and dock notes included.',
+			'What Green Valley receives: PO-00783-002, five items in whole packs, $516.08, terms and dock notes included.',
 	},
 	{
 		id: 'b6',
@@ -108,7 +108,7 @@ export const BEATS = [
 		suffix: '/receiving',
 		scrollTop: 'Arugula',
 		caption:
-			'The truck is never perfect. A case short is recorded and saved for follow-up, not discovered at plating.',
+			'The truck is never perfect. A short case is recorded and saved for follow-up, not found at five a.m. with the salad still to build.',
 	},
 	{
 		id: 'b7',
@@ -116,14 +116,14 @@ export const BEATS = [
 		suffix: '/receiving',
 		scrollTop: 'Baby spinach',
 		caption:
-			'And when the invoice runs over the quote, both numbers sit together: $251.53 paid against $205.12 quoted.',
+			'Sixteen cases came where fifteen were quoted. $477.16 paid, $410.40 promised: 9% more per case, on the line.',
 	},
 	{
 		id: 'b8',
 		useIngredient: true,
 		scrollTo: 'Saved price source',
 		caption:
-			'One tap posts it all to inventory — and the paid price becomes the live cost, with its source on record.',
+			'One tap posts it all to inventory, and the paid price becomes the live cost with its source on record.',
 	},
 	{
 		id: 'b9',
@@ -135,7 +135,7 @@ export const BEATS = [
 		useOrder: true,
 		scrollTop: 'Quoted 2026',
 		caption:
-			'Quoted at $31.68 a guest. Today reads $31.78 — a 0.3% rise, caught the morning it happened.',
+			'Quoted at $26.92 a guest. Today reads $27.12. The price moved 0.7%, and the quote still holds.',
 	}
 ];
 
