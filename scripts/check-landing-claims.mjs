@@ -81,7 +81,7 @@ requireText(ledger, '7ceb02dbb67034e507aeb279abb421ddd90df87f', 'release ledger'
 requireText(siteSource, 'href: booking.url', 'booking CTA');
 requireText(siteSource, "target: '_blank'", 'booking CTA');
 requireText(siteSource, "rel: 'noopener noreferrer'", 'booking CTA');
-requireText(publicCopy, 'Watch the 1:43 product tour', 'hero proof link');
+requireText(publicCopy, 'Watch the 1:47 product tour', 'hero proof link');
 for (let claim = 1; claim <= 33; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }

@@ -40,75 +40,102 @@
  * @property {string} id
  * @property {string} caption   Burned into the frame. The only channel there is.
  * @property {string} [path]    Literal route, for beats not tied to a pinned record.
+ *                              Absolute http(s) URLs are visited as-is (the
+ *                              Mailpit inbox is part of the v2 recording).
+ * @property {string} [click]   After load, click the first visible element
+ *                              whose text matches this (opens the PO email).
  * @property {boolean} [useOrder]
- * @property {boolean} [useMenu]
+ * @property {boolean} [useIngredient]
  * @property {boolean} [useRecipe]
  * @property {string} [suffix]  Appended to the resolved record path, e.g. '/prep'.
  * @property {string} [scrollTo]   Bring this text into view, keeping what is above it.
  * @property {string} [scrollTop]  Pin this text to the top of the frame, hiding what is above it.
  */
 
+/**
+ * WALKTHROUGH v2 (2026-08-08): the Maple & Main world from the app repo's
+ * `npm run demo:seed` + `demo:capture` (demo/README.md there). One order,
+ * start to finish: the Alvarez–Whitman wedding, 180 guests on the Wedding
+ * Plated Dinner menu — through the ACTUAL email send (Mailpit on :8025 is
+ * part of the recording), the imperfect delivery, and the shelf. Every figure
+ * below was read off the demo world's own screens; re-verify against the
+ * running app before re-recording.
+ */
 /** @type {Beat[]} */
 export const BEATS = [
 	{
 		id: 'b0',
 		path: '/orders/list',
-		caption: 'Three jobs on the books. The big one: a backyard wedding, 200 guests, two weeks out.',
+		caption: 'A year of jobs on the books. The next big one: a wedding, 180 plates, three days out.',
 	},
 	{
 		id: 'b1',
-		useMenu: true,
-		caption: 'It starts from a menu you already sell. Five dishes, each a real recipe underneath.',
+		useRecipe: true,
+		scrollTop: 'Lines per portion',
+		caption:
+			'It starts from recipes that already know their cost. Braised short rib: the brisket is 94% of the plate.',
 	},
 	{
 		id: 'b2',
-		useMenu: true,
-		scrollTo: 'Cost per guest',
+		useOrder: true,
 		caption:
-			// Recast rather than merely de-dashed: replacing the dash with "That is"
-			// pushed this to 127 characters, over the two-line budget, and a caption
-			// that spills to three lines grows the bar over the rows it points at.
-			'$6.96 a guest against a $16.50 price is 42.2% food cost. Hitting target means charging $23.20.',
+			'180 guests at $68 a head: $12,240 in, $5,702.24 of food. That is 46.6% — and it names the price that fixes it.',
 	},
 	{
-		// The money summary and the quoted-vs-today band are one screen, so they
-		// are one beat. Splitting them gave two consecutive captions over an
-		// identical frame — half a minute of the video with nothing moving — and
-		// scrolling the band to the top to force a difference only filled the rest
-		// of the frame with the Green Valley rows this cut deliberately avoids.
 		id: 'b3',
 		useOrder: true,
+		scrollTop: 'Baldor',
 		caption:
-			// Trimmed to the two-line caption budget (see capture-silent.mjs): the
-			// freeze is what makes the quoted-vs-today band mean anything, so the
-			// band's own figures go and the mechanism stays.
-			'200 guests: $3,300 in, $1,354.04 of food, which is 41%. Prices froze at confirmation, so it flags the 2.8% rise since.',
+			'The same order is already a shopping list, by vendor, in whole packs. Baldor: $534.17.',
 	},
 	{
+		// The inbox IS the product claim here: the purchase orders really send.
+		// Mailpit is the demo's capture inbox, standing in for the vendor's.
 		id: 'b4',
-		useOrder: true,
-		// Restaurant Depot, not the larger Green Valley Produce group: Green Valley
-		// leads with "Bell pepper — need 304.9 each". Nobody needs 304.9 bell
-		// peppers, and a decimal count on a countable item is the exact tell that
-		// software wrote the sheet rather than a cook. Restaurant Depot's rows are
-		// all weight and volume, where a decimal is how a kitchen actually talks.
-		scrollTop: 'Restaurant Depot',
-		caption:
-			'The same order becomes the shopping list, by vendor, in whole cases. Restaurant Depot: $354.30.',
+		path: 'http://localhost:8025/',
+		caption: 'Confirming sends the purchase orders. A real inbox: each vendor gets its own PO number.',
 	},
 	{
 		id: 'b5',
-		useOrder: true,
-		suffix: '/prep',
+		path: 'http://localhost:8025/',
+		click: 'PO-00783-002',
 		caption:
-			'Then the prep sheet, scaled to 200 portions, with instructions frozen at confirmation.',
+			'What Green Valley receives: PO-00783-002, five items in whole packs, $514.75, terms and dock notes included.',
 	},
 	{
 		id: 'b6',
-		useRecipe: true,
-		scrollTop: 'Greek Salad',
+		useOrder: true,
+		suffix: '/receiving',
+		scrollTop: 'Arugula',
 		caption:
-			'Every plate shows its work. Greek Salad: $1.73 a plate against a $4.10 price. Out of line, and it says so in red.',
+			'The truck is never perfect. A case short is recorded and saved for follow-up, not discovered at plating.',
+	},
+	{
+		id: 'b7',
+		useOrder: true,
+		suffix: '/receiving',
+		scrollTop: 'Baby spinach',
+		caption:
+			'And when the invoice runs over the quote, both numbers sit together: $251.53 paid against $205.12 quoted.',
+	},
+	{
+		id: 'b8',
+		useIngredient: true,
+		scrollTo: 'Saved price source',
+		caption:
+			'One tap posts it all to inventory — and the paid price becomes the live cost, with its source on record.',
+	},
+	{
+		id: 'b9',
+		path: '/catalog/inventory',
+		caption: 'The shelf agrees: what arrived is on hand, counted today, valued at what you paid.',
+	},
+	{
+		id: 'b10',
+		useOrder: true,
+		scrollTop: 'Quoted 2026',
+		caption:
+			'Quoted at $31.68 a guest. Today reads $31.78 — a 0.3% rise, caught the morning it happened.',
 	}
 ];
 
