@@ -7,6 +7,7 @@ const read = (path) => readFile(join(root, path), 'utf8');
 const surfaceFiles = [
 	'src/lib/site.ts',
 	'src/components/sections/Hero.astro',
+	'src/components/sections/TheLoop.astro',
 	'src/components/sections/TheProblem.astro',
 	'src/components/sections/CostingChain.astro',
 	'src/components/sections/GuidedSetup.astro',
@@ -55,6 +56,10 @@ requireText(siteSource, "href: '/features'", 'features page nav link');
 
 const expectedSectionOrder = [
 	'<Hero />',
+	// The canonical loop rail sits directly under the hero on purpose: it answers
+	// "what is this" before the page argues about anything. Moving it below
+	// TheProblem turns it back into a seventh overview.
+	'<TheLoop />',
 	'<TheProblem />',
 	'<CostingChain />',
 	'<SeeItRun />',

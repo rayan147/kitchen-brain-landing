@@ -84,6 +84,7 @@ Do not add these without a new ledger review:
 | Surface | Claims used |
 | --- | --- |
 | Hero | RC-01–RC-08 |
+| Core loop rail | RC-02, RC-26 |
 | Connected chain | RC-02, RC-06–RC-09, RC-26, RC-28 |
 | Product walkthrough | RC-33 |
 | Guided setup | RC-10–RC-15 |
