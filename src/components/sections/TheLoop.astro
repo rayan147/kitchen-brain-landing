@@ -1,0 +1,51 @@
+---
+// The one canonical chain, lifted straight from the product's own cheat sheet
+// (kitchen-brain docs/costcook-cheatsheet.md, "The core loop"). It exists so the
+// six later numbered sections read as DETAIL ON A CHAIN THE READER ALREADY HOLDS
+// rather than six competing overviews of the same loop at different zoom levels.
+//
+// Deliberately not a seventh list: no h2, no numbers, no bodies. It is a rail —
+// ticket-motif mono nodes on cream — and it must stay one glance wide. If a node
+// ever needs a sentence of explanation, that sentence belongs in the section
+// that owns it, not here.
+const loop = [
+	'Ingredient',
+	'Sub-recipe',
+	'Dish',
+	'Menu',
+	'Order',
+	'Shop',
+	'Prep',
+	'Pack'
+];
+---
+
+<section class="border-y border-ticket-rule bg-cream" aria-label="How CostCook connects a kitchen">
+	<div class="container-page py-8 sm:py-10">
+		<p class="eyebrow" data-reveal>The core loop</p>
+
+		<!-- An ordered list because the sequence is the meaning. The arrows are
+		 decoration for sighted scanning; list order carries it for everyone else. -->
+		<ol
+			role="list"
+			class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2 font-mono text-[0.8125rem] font-semibold tracking-[0.08em] text-ink uppercase sm:gap-x-3"
+			data-reveal
+			style="--reveal-delay: 70ms"
+		>
+			{
+				loop.map((step, index) => (
+					<li class="flex items-center gap-x-2 sm:gap-x-3">
+						{index > 0 && <span class="text-amber-deep" aria-hidden="true">&rarr;</span>}
+						<span>{step}</span>
+					</li>
+				))
+			}
+		</ol>
+
+		<p class="mt-5 max-w-[62ch] text-sm text-ink-soft" data-reveal style="--reveal-delay: 140ms">
+			<strong class="font-semibold text-ink">And back again.</strong> Purchases and receiving return
+			what you actually paid to the ingredient, so the next order starts from the real price. Every
+			section below is one step of this chain in detail.
+		</p>
+	</div>
+</section>
