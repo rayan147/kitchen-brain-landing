@@ -1,6 +1,6 @@
 # CostCook landing-page release claim ledger
 
-Last reviewed: 2026-08-04
+Last reviewed: 2026-08-19
 
 ## Marketed release
 
@@ -53,7 +53,7 @@ Unless a row says otherwise, shipped evidence is read at the demo-base commit an
 | RC-21 | Menus calculate cost per guest from dish portions and miscellaneous cost. | Shipped calculation | `calculateMenuCost()` | Compare UI with engine fixture. |
 | RC-22 | Shop consolidates ingredient needs by supplier and rounds buying to whole packs. | Shipped operations | Production plan and Shop workspace | Verify supplier subtotal and pack count. |
 | RC-23 | Trusted on-hand quantity reduces estimated buying, not theoretical consumption. | Shipped invariant | Inventory planner and onboarding costing policy | Verify fresh/stale count behavior. |
-| RC-24 | Prep includes scaled dishes, whole sub-recipe batches, instructions, labels, and persistent checks. | Shipped operations | Prep route and check storage | Walk seeded Prep. |
+| RC-24 | Prep includes scaled dishes, whole sub-recipe batches, instructions, and persistent checks. | Shipped operations | Prep route and check storage | Walk seeded Prep. |
 | RC-25 | Pack includes dishes, quantities, equipment, and persistent checks. | Shipped operations | Pack route and equipment reader | Walk seeded Pack. |
 | RC-26 | Purchases can enter through posted receiving, invoice import, or manual entry. | Shipped purchasing | Purchases and import route families | Verify all three source labels. |
 | RC-27 | Receiving supports full, over, short, substitute, missing, and unexpected decisions before posting. | Shipped purchasing | Order receiving workflow | Run mixed receiving scenario. |
@@ -63,6 +63,8 @@ Unless a row says otherwise, shipped evidence is read at the demo-base commit an
 | RC-31 | Physical count resets the inventory baseline; later purchases, waste, and completed Pack consumption move it. | Shipped inventory | `src/lib/core/inventory.ts` | Run movement-series regression. |
 | RC-32 | Calculation disclosures identify the inputs and provenance CostCook can prove. | Setup release | Setup disclosures and price provenance service | Verify fallback wording when provenance is incomplete. |
 | RC-33 | CostCook uses a real, captioned product walkthrough on the landing page. | Landing proof | `public/demo.mp4`, `SeeItRun.astro` | Reconcile video, transcript, duration, and accessible label. |
+| RC-34 | CostCook is sold as one launch subscription per kitchen workspace, managed by the verified owner, with unlimited teammates during launch. | Owner-approved launch model | Subscription launch decision, Better Auth Stripe implementation | Verify pricing, start, checkout, and billing routes against the deployed app. |
+| RC-35 | Label printing and external ordering integrations are in development and are not included in the launch subscription. | Owner-approved release boundary | Release flags and subscription launch decision | Verify both features are absent from included lists and clearly marked in development. |
 
 ## Claims that are intentionally excluded
 
@@ -77,7 +79,7 @@ Do not add these without a new ledger review:
 - Inventory as an infallible live count. Freshness and physical-count state matter.
 - “No data entry” or “nothing is re-keyed.” Manual workflows are supported intentionally.
 - A promise that every new kitchen can reach a completed order in fifteen minutes.
-- Pricing, free access, customer metrics, testimonials, competitor comparisons, or service-response promises without owner-approved evidence.
+- A specific price, free trial, billing interval, customer metrics, testimonials, competitor comparisons, or service-response promise without owner-approved evidence.
 
 ## Landing-page ownership
 
@@ -92,3 +94,4 @@ Do not add these without a new ledger review:
 | Operations | RC-03–RC-08, RC-22–RC-25 |
 | Purchases | RC-09, RC-26–RC-29 |
 | Calculation trust | RC-04, RC-20, RC-23, RC-30–RC-32 |
+| Pricing and start | RC-34, RC-35 |

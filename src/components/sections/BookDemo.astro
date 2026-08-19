@@ -1,5 +1,5 @@
 ---
-import { cta, site } from '../../lib/site';
+import { demoCta, site } from '../../lib/site';
 ---
 
 <section id="book" class="border-y border-ticket-rule bg-cream">
@@ -20,13 +20,13 @@ import { cta, site } from '../../lib/site';
 					does not belong in the product.
 				</p>
 				<a
-					href={cta.href}
-					target={cta.target}
-					rel={cta.rel}
-					aria-label={cta.ariaLabel}
+					href={demoCta.href}
+					target={demoCta.target}
+					rel={demoCta.rel}
+					aria-label={demoCta.ariaLabel}
 					class="btn-primary mt-7"
 				>
-					{cta.label}
+					{demoCta.label}
 				</a>
 				<p class="mt-4 text-sm text-ink-soft">
 					Prefer to talk or text? <a href={site.phoneHref} class="font-medium text-green-deep underline decoration-current underline-offset-4">{site.phone}</a>.

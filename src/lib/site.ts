@@ -24,6 +24,14 @@ export const booking = {
 
 /** The one CTA, referenced everywhere it appears so its label and destination cannot drift. */
 export const cta = {
+	label: 'Start CostCook',
+	ariaLabel: 'Start CostCook',
+	href: 'https://app.costcook.io/start?plan=launch',
+	target: '_self',
+	rel: undefined
+} as const;
+
+export const demoCta = {
 	label: 'Book a 15-min demo',
 	ariaLabel: 'Book a 15-min demo (opens in a new tab)',
 	href: booking.url,
@@ -41,5 +49,6 @@ export const nav: readonly { label: string; href: string }[] = [
 	{ label: 'The problem', href: '/#problem' },
 	{ label: 'What changes', href: '/#outcomes' },
 	{ label: 'Watch it work', href: '/#demo' },
+	{ label: 'Pricing', href: '/pricing' },
 	{ label: 'Every feature', href: '/features' }
 ];

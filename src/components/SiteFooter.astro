@@ -1,5 +1,5 @@
 ---
-import { cta, nav, site } from '../lib/site';
+import { demoCta, nav, site } from '../lib/site';
 import BrandLockup from './BrandLockup.astro';
 
 // Static site: computing the year at build time would freeze at the last
@@ -42,10 +42,10 @@ const year = 2026;
 				}
 				<li>
 					<a
-						href={cta.href}
-						target={cta.target}
-						rel={cta.rel}
-						aria-label={cta.ariaLabel}
+						href={demoCta.href}
+						target={demoCta.target}
+						rel={demoCta.rel}
+						aria-label={demoCta.ariaLabel}
 						class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
 					>
 						Book a demo

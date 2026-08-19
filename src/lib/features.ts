@@ -19,6 +19,7 @@ export type FeatureGroup = {
 	id: string;
 	kicker: string;
 	title: string;
+	status?: 'available' | 'in-development';
 	items: readonly FeatureItem[];
 };
 
@@ -51,7 +52,6 @@ export const featureGroups: readonly FeatureGroup[] = [
 		items: [
 			{ lead: 'Attention first.', detail: 'Orders, guests, and deliveries up top. When nothing needs you, it says all clear.' },
 			{ lead: 'Ranked tasks.', detail: 'Each attention item opens the exact screen that fixes it.' },
-			{ lead: 'Arrived orders announced.', detail: 'Orders posted through the API stay flagged until someone marks them reviewed.' },
 			{ lead: 'Partial failure survives.', detail: 'If one panel breaks, the rest of Today still loads, with a retry on just the broken one.' },
 			{ lead: 'Quiet signals.', detail: 'Purchase pulse, price drift, staged imports, catalog blockers, inventory attention. No digging.' },
 			{ lead: 'Dismissible checklist.', detail: 'The finish-setting-up list goes away when you say so, and stays away.' },
@@ -134,7 +134,6 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Aged plans flagged.', detail: 'An old frozen plan is marked old. It is never silently recomputed.' },
 			{ lead: 'Per-order equipment.', detail: 'Hide a template line or add a one-off for this event. The menu template never changes.' },
 			{ lead: 'Allergens at pack-out.', detail: 'Pack lists carry allergen badges.' },
-			{ lead: 'Customer cards.', detail: 'API-arrived orders show who ordered, with an explicit mark-reviewed step.' },
 			{ lead: 'Orders hub.', detail: 'Filter, search, and read food-cost and status badges across every event.' },
 			{ lead: 'Frozen prep notes.', detail: 'Drafts read live prose. Confirmed orders read only the copy frozen at confirmation.' }
 		]
@@ -215,15 +214,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 	{
 		id: 'labels',
 		kicker: 'Labels & printing',
-		title: 'Stickers a health inspector can read.',
+		title: 'In development',
+		status: 'in-development',
 		items: [
-			{ lead: 'Kitchen labels.', detail: 'A forced storage-state choice, use-by dates with their source stated, allergen lines, container counts.' },
-			{ lead: 'Exact reprints.', detail: 'Every printed label is stored verbatim. A reprint is the same label, not a lookalike.' },
-			{ lead: 'Your stock.', detail: 'Stock profiles include sizes you measure yourself, with a fit warning instead of a silently truncated name.' },
-			{ lead: 'Sourced shelf life.', detail: 'Tap a sourced suggestion to write the fact. Ignoring it writes nothing.' },
-			{ lead: 'Labels off the list.', detail: 'Print straight from prep and pack at the quantities the list computed.' },
-			{ lead: 'Per-kitchen settings.', detail: 'Label defaults belong to your kitchen, not the install.' },
-			{ lead: 'No double prints.', detail: 'Print jobs are idempotent. A double-tap replays, it does not reprint.' }
+			{ lead: 'Not included at launch.', detail: 'Kitchen label workflows and printer-ready output are being prepared for a later release.' }
 		]
 	},
 	{
@@ -269,16 +263,15 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'api',
-		kicker: 'Ordering API',
-		title: 'Your website can place orders. It cannot see your costs.',
+		kicker: 'Ordering integrations',
+		title: 'In development',
+		status: 'in-development',
 		items: [
-			{ lead: 'A keyed door.', detail: 'A versioned API lets your website or an agency post orders that arrive as drafts on Today.' },
-			{ lead: 'Retries are safe.', detail: 'A retried request can never create a second event, and every invalid field comes back in one response.' },
-			{ lead: 'Costs stay home.', detail: 'The API sees menu names, never prices, plate costs, or margins. A test asserts the absence.' },
-			{ lead: 'Honest key handling.', detail: 'A key’s full value is shown exactly once and stored hashed. Suspend is reversible, revoke is not.' },
-			{ lead: 'Nothing to probe.', detail: 'Every bad-key state gets the same uniform answer.' }
+			{ lead: 'Not included at launch.', detail: 'External ordering connections are being developed for a later release.' }
 		]
 	}
 ] as const;
 
-export const featureCount = featureGroups.reduce((sum, group) => sum + group.items.length, 0);
+export const availableFeatureGroups = featureGroups.filter((group) => group.status !== 'in-development');
+export const inDevelopmentFeatureGroups = featureGroups.filter((group) => group.status === 'in-development');
+export const featureCount = availableFeatureGroups.reduce((sum, group) => sum + group.items.length, 0);
