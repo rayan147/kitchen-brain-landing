@@ -14,7 +14,7 @@ export const site = {
 	// ≤60 chars so Google doesn't truncate the audience qualifier.
 	title: 'CostCook: shopping, prep & food cost for caterers',
 	description:
-		'Know what every catering event should cost before you quote it. CostCook connects supplier prices, recipes, menus, orders, shopping, prep, packing, and purchases.'
+		'Enter a catering menu and guest count once. CostCook scales recipes, builds shopping, prep, and pack plans, and shows food cost before you quote.'
 } as const;
 
 /** Owner-supplied Google Calendar appointment schedule. */
@@ -37,11 +37,9 @@ export const cta = {
  * too — it must keep mirroring it, since header links hide below `sm`.
  */
 export const nav: readonly { label: string; href: string }[] = [
-	// Root-relative ('/#chain') so the same links resolve from /features too.
-	{ label: 'How it works', href: '/#chain' },
-	{ label: 'Product tour', href: '/#demo' },
-	{ label: 'Setup', href: '/#setup' },
-	{ label: 'Operations', href: '/#operations' },
-	{ label: 'Check the math', href: '/#math' },
+	// Root-relative so the same links resolve from /features too.
+	{ label: 'The problem', href: '/#problem' },
+	{ label: 'What changes', href: '/#outcomes' },
+	{ label: 'Watch it work', href: '/#demo' },
 	{ label: 'Every feature', href: '/features' }
 ];

@@ -7,16 +7,10 @@ const read = (path) => readFile(join(root, path), 'utf8');
 const surfaceFiles = [
 	'src/lib/site.ts',
 	'src/components/sections/Hero.astro',
-	'src/components/sections/TheLoop.astro',
 	'src/components/sections/TheProblem.astro',
-	'src/components/sections/CostingChain.astro',
-	'src/components/sections/GuidedSetup.astro',
-	'src/components/sections/CatalogSystem.astro',
-	'src/components/sections/OrderOperations.astro',
-	'src/components/sections/PurchaseLoop.astro',
-	'src/components/sections/CostTransparency.astro',
+	'src/components/sections/CustomerOutcomes.astro',
 	'src/components/sections/SeeItRun.astro',
-	'src/components/sections/FeatureBridge.astro',
+	'src/components/sections/BuiltForKitchens.astro',
 	'src/components/sections/EveryFeature.astro',
 	'src/lib/features.ts',
 	'src/components/sections/BookDemo.astro'
@@ -38,37 +32,26 @@ const requireText = (source, value, label) => {
 };
 
 for (const component of [
-	'CostingChain',
+	'TheProblem',
+	'CustomerOutcomes',
 	'SeeItRun',
-	'GuidedSetup',
-	'CatalogSystem',
-	'OrderOperations',
-	'PurchaseLoop',
-	'CostTransparency',
-	'FeatureBridge'
+	'BuiltForKitchens',
+	'BookDemo'
 ]) {
 	requireText(index, `<${component} />`, 'landing composition');
 }
-// The exhaustive list lives on its own page; the home page carries only the
-// bridge. Both halves must exist or the nav link / bridge link goes dead.
+// The exhaustive list lives on its own page. The outcome section links to it,
+// so completeness stays available without making the homepage exhaustive.
 requireText(featuresPage, '<EveryFeature />', 'features page composition');
 requireText(siteSource, "href: '/features'", 'features page nav link');
+requireText(publicCopy, 'See every shipped feature', 'features page homepage link');
 
 const expectedSectionOrder = [
 	'<Hero />',
-	// The canonical loop rail sits directly under the hero on purpose: it answers
-	// "what is this" before the page argues about anything. Moving it below
-	// TheProblem turns it back into a seventh overview.
-	'<TheLoop />',
 	'<TheProblem />',
-	'<CostingChain />',
+	'<CustomerOutcomes />',
 	'<SeeItRun />',
-	'<GuidedSetup />',
-	'<CatalogSystem />',
-	'<OrderOperations />',
-	'<PurchaseLoop />',
-	'<CostTransparency />',
-	'<FeatureBridge />',
+	'<BuiltForKitchens />',
 	'<BookDemo />'
 ];
 let previousSectionIndex = -1;
