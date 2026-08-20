@@ -24,6 +24,7 @@ const [index, featuresPage, ledger, ...surfaces] = await Promise.all([
 ]);
 const publicCopy = surfaces.join('\n');
 const siteSource = surfaces[0];
+const heroSource = surfaces[1];
 const bookDemoSource = surfaces.at(-1);
 
 const failures = [];
@@ -70,6 +71,7 @@ requireText(siteSource, 'href: booking.url', 'booking CTA');
 requireText(siteSource, "target: '_blank'", 'booking CTA');
 requireText(siteSource, "rel: 'noopener noreferrer'", 'booking CTA');
 requireText(publicCopy, 'Watch the 1:51 product tour', 'hero proof link');
+requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 for (let claim = 1; claim <= 33; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }

@@ -39,6 +39,12 @@ export const demoCta = {
 	rel: 'noopener noreferrer'
 } as const;
 
+/** Public launch terms shown wherever a visitor decides whether to start. */
+export const launchPlan = {
+	displayPrice: import.meta.env.PUBLIC_LAUNCH_PRICE_DISPLAY?.trim() || '$49/month',
+	billingNote: 'per kitchen workspace. Billed monthly with no trial.'
+} as const;
+
 /**
  * Section links. Each item ships in the SAME issue as its section, so no
  * dead anchors ever reach production. The footer derives from this array

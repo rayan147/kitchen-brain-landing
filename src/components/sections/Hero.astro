@@ -1,5 +1,5 @@
 ---
-import { cta } from '../../lib/site';
+import { cta, launchPlan } from '../../lib/site';
 ---
 
 <section class="container-page pt-14 pb-section-tight lg:pt-24">
@@ -33,7 +33,7 @@ import { cta } from '../../lib/site';
 				<a href="#demo" class="btn-quiet">Watch the 1:51 product tour <span aria-hidden="true">↓</span></a>
 			</div>
 			<p class="anim-enter mt-5 text-sm text-ink-soft" style="--enter-delay: 290ms">
-				Bring one real menu or order. We&rsquo;ll see whether it fits your kitchen.
+				<strong class="font-semibold text-ink">{launchPlan.displayPrice}</strong> {launchPlan.billingNote}
 			</p>
 		</div>
 
