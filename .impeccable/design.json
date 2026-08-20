@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-20T00:00:00.000Z",
+  "title": "Design System: CostCook",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1f2421" },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#49524c" },
+      "green": { "role": "primary", "displayName": "Working Green", "canonical": "#2f7d5b" },
+      "green-deep": { "role": "primary", "displayName": "Deep Working Green", "canonical": "#256549" },
+      "amber-deep": { "role": "secondary", "displayName": "Deep Amber", "canonical": "#8f5716" },
+      "offwhite": { "role": "neutral", "displayName": "Off-white", "canonical": "#f4f6f4" },
+      "softgreen": { "role": "neutral", "displayName": "Soft Green", "canonical": "#e5f1ea" },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#d3ddd6" },
+      "ticket-rule": { "role": "neutral", "displayName": "Ticket Rule", "canonical": "#e4d3b4" },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#fdfefd" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Primary page identity and hero statements." },
+      "headline": { "displayName": "Headline", "purpose": "Major section headings." },
+      "body": { "displayName": "Body", "purpose": "Workflow explanations, contact guidance, and navigation." },
+      "label": { "displayName": "Label", "purpose": "Compact operational eyebrows and labels." }
+    },
+    "shadows": [
+      {
+        "name": "ticket",
+        "value": "0 1px 2px rgb(31 36 33 / 0.08), 0 6px 14px rgb(31 36 33 / 0.1)",
+        "purpose": "A restrained shadow for physical ticket-like imagery, not contact containers."
+      }
+    ],
+    "motion": [
+      { "name": "button-hover", "value": "150ms ease-out", "purpose": "Primary-button color and quiet-link underline feedback." },
+      { "name": "button-active", "value": "100ms ease-out", "purpose": "One-pixel primary-button press feedback." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The visually primary action for starting CostCook, emailing Rayan, or booking a demo.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Email Rayan</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--color-green, #2f7d5b); color: #fff; font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; font-weight: 600; padding: 1rem 1.75rem; border-radius: 999px; text-decoration: none; transition: background-color 150ms ease-out, transform 100ms ease-out; } .ds-btn-primary:hover { background: var(--color-green-deep, #256549); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; } .ds-btn-primary:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Quiet Action Link",
+      "kind": "button",
+      "description": "A secondary action with an expanded 44px touch target, used for phone, sign-in, and contextual contact links.",
+      "html": "<a class=\"ds-link-quiet\" href=\"#\">Call 973-870-6309</a>",
+      "css": ".ds-link-quiet { display: inline-flex; min-height: 44px; align-items: center; gap: 0.5rem; color: var(--color-green-deep, #256549); font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--color-hairline, #d3ddd6); transition: text-decoration-color 150ms ease-out; } .ds-link-quiet:hover { text-decoration-color: var(--color-green, #2f7d5b); } .ds-link-quiet:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "description": "A compact shared navigation destination with a 44px minimum target.",
+      "html": "<a class=\"ds-nav-link\" href=\"/contact\">Contact</a>",
+      "css": ".ds-nav-link { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-ink-soft, #49524c); font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: color 150ms ease-out; } .ds-nav-link:hover { color: var(--color-ink, #1f2421); } .ds-nav-link:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Contact Guidance",
+      "kind": "card",
+      "description": "A flat, rule-bounded guidance block for useful context and sensitive-data safety copy.",
+      "html": "<aside class=\"ds-contact-guidance\"><h2>What helps me answer</h2><p>Do not include passwords, payment card details, or other sensitive information.</p></aside>",
+      "css": ".ds-contact-guidance { border-block: 1px solid var(--color-ticket-rule, #e4d3b4); padding-block: 1.75rem; color: var(--color-ink-soft, #49524c); font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; } .ds-contact-guidance h2 { margin: 0; color: var(--color-ink, #1f2421); font-family: 'Fraunces Variable', ui-serif, Georgia, serif; font-size: clamp(1.25rem, 1.13rem + 0.55vw, 1.5rem); line-height: 1.25; font-weight: 600; } .ds-contact-guidance p { margin: 1.5rem 0 0; font-size: 0.875rem; line-height: 1.5rem; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Kitchen Ticket",
+    "overview": "CostCook's incumbent marketing identity is practical, warm, and quiet: an off-white ground, restrained green actions, amber operational accents, and fine rules that recall kitchen tickets without turning the site into a theme. Fraunces gives decisions and page identity an editorial voice; Instrument Sans keeps supporting information direct and easy to scan.\n\nContact follows the same founder-direct voice. Public visitors get a dedicated /contact destination with email, phone, and demo actions; existing users are directed to authenticated Contact support inside CostCook, where account context can accompany the message.",
+    "keyCharacteristics": [
+      "Warm off-white, green, and amber palette",
+      "Fraunces display type paired with Instrument Sans body type",
+      "Quiet border rules and sparse, purposeful elevation",
+      "Direct actions with explicit outcomes and accessible touch targets",
+      "Founder-direct contact language without an anonymous form"
+    ],
+    "rules": [
+      { "name": "The Quiet Accent Rule", "body": "Green identifies actions; amber provides small operational emphasis. Neither becomes a broad decorative wash.", "section": "colors" },
+      { "name": "The Founder-Direct Rule", "body": "Contact copy speaks as Rayan and names the outcome—email, call, book a demo, or contact support—without invented service guarantees.", "section": "typography" },
+      { "name": "The Flat-by-Default Rule", "body": "Use elevation for physical ticket-like artifacts, not routine contact information or navigation.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do preserve the existing off-white, green, amber, Fraunces, Instrument Sans, and quiet-rule identity when extending contact surfaces.",
+      "Do keep public email, phone, and demo actions explicit and outcome-labeled.",
+      "Do route existing users to authenticated in-app Contact support.",
+      "Do maintain at least a 44px target for the homepage contact action and shared navigation actions.",
+      "Do retain the warning against sharing sensitive information."
+    ],
+    "donts": [
+      "Don't add an anonymous public contact form without a new product decision.",
+      "Don't invent response-time, availability, or service-level claims.",
+      "Don't turn contact guidance into a floating SaaS card or introduce a new visual identity for the route."
+    ]
+  }
+}

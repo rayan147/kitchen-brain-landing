@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { cta, demoCta, launchPlan } from '../lib/site';
+import { contactCta, cta, demoCta, launchPlan } from '../lib/site';
 ---
 
 <Base
@@ -46,6 +46,9 @@ import { cta, demoCta, launchPlan } from '../lib/site';
 			</article>
 		</div>
 
-		<p class="mt-12 text-ink-soft">Want to see your own menu run first? <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} class="btn-quiet">Book a 15-minute demo</a>.</p>
+		<div class="mt-12 space-y-2 text-ink-soft">
+			<p>Have a question about the plan? <a href={contactCta.href} class="btn-quiet">Contact Rayan</a>.</p>
+			<p>Want to see your own menu run first? <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} class="btn-quiet">Book a 15-minute demo</a>.</p>
+		</div>
 	</section>
 </Base>
