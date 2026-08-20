@@ -1,5 +1,5 @@
 ---
-import { cta, launchPlan } from '../../lib/site';
+import { contactCta, cta, launchPlan } from '../../lib/site';
 ---
 
 <section class="container-page pt-14 pb-section-tight lg:pt-24">
@@ -34,6 +34,7 @@ import { cta, launchPlan } from '../../lib/site';
 			</div>
 			<p class="anim-enter mt-5 text-sm text-ink-soft" style="--enter-delay: 290ms">
 				<strong class="font-semibold text-ink">{launchPlan.displayPrice}</strong> {launchPlan.billingNote}
+				<a href={contactCta.href} class="btn-quiet ml-2 min-h-11">Questions? Contact Rayan.</a>
 			</p>
 		</div>
 

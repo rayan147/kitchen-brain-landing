@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import { demoCta, site } from '../lib/site';
+
+const emailHref = `mailto:${site.email}?subject=${encodeURIComponent('Question about CostCook')}`;
+---
+
+<Base
+	title="Contact CostCook"
+	description="Ask Rayan a question about CostCook, the launch plan, or whether it fits your catering kitchen."
+	path="/contact"
+>
+	<section class="container-page py-section" aria-labelledby="contact-title">
+		<div class="grid items-start gap-12 lg:grid-cols-[7fr_5fr] lg:gap-16">
+			<div class="max-w-3xl">
+				<h1 id="contact-title" class="text-display font-semibold">Questions before you start?</h1>
+				<p class="mt-6 max-w-[60ch] text-lede text-ink-soft">
+					Tell me about your kitchen, the workflow you are trying to fix, or anything you want to
+					understand before starting CostCook.
+				</p>
+				<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+					<a href={emailHref} class="btn-primary">Email Rayan</a>
+					<a href={site.phoneHref} class="btn-quiet">Call {site.phone}</a>
+				</div>
+				<p class="mt-6 max-w-[60ch] text-sm leading-6 text-ink-soft">
+					Already using CostCook? <a
+						href="https://app.costcook.io/login"
+						class="font-medium text-green-deep underline decoration-hairline underline-offset-4 hover:decoration-green"
+						>Sign in to CostCook</a
+					>{' '}and choose <strong class="font-semibold text-ink">Contact support</strong> inside the app so your
+					account email and current screen come with your message.
+				</p>
+			</div>
+
+			<aside class="border-y border-ticket-rule py-7" aria-labelledby="helpful-note-title">
+				<h2 id="helpful-note-title" class="text-h3 font-semibold">What helps me answer</h2>
+				<ul role="list" class="mt-5 space-y-4 text-ink-soft">
+					<li>Your kitchen type and the size of the team</li>
+					<li>The order, costing, purchasing, or inventory step causing trouble</li>
+					<li>Any question about setup or the $49 monthly launch plan</li>
+				</ul>
+				<p class="mt-6 text-sm leading-6 text-ink-soft">
+					Do not include passwords, payment card details, or other sensitive information.
+				</p>
+			</aside>
+		</div>
+	</section>
+
+	<section class="border-y border-hairline bg-softgreen">
+		<div class="container-page py-section-tight">
+			<div class="grid items-start gap-8 lg:grid-cols-[7fr_5fr] lg:gap-16">
+				<div>
+					<h2 class="text-h2 font-semibold">Rather show me the workflow?</h2>
+					<p class="mt-4 max-w-[58ch] text-ink-soft">
+						Bring one menu and guest count. We can walk through how CostCook would turn it into
+						costing, shopping, prep, and pack work.
+					</p>
+				</div>
+				<a
+					href={demoCta.href}
+					target={demoCta.target}
+					rel={demoCta.rel}
+					aria-label={demoCta.ariaLabel}
+					class="btn-primary lg:justify-self-start"
+				>
+					{demoCta.label}
+				</a>
+			</div>
+		</div>
+	</section>
+</Base>

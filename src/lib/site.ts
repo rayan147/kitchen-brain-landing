@@ -39,6 +39,12 @@ export const demoCta = {
 	rel: 'noopener noreferrer'
 } as const;
 
+export const contactCta = {
+	label: 'Contact Rayan',
+	ariaLabel: 'Contact Rayan about CostCook',
+	href: '/contact'
+} as const;
+
 /** Public launch terms shown wherever a visitor decides whether to start. */
 export const launchPlan = {
 	displayPrice: import.meta.env.PUBLIC_LAUNCH_PRICE_DISPLAY?.trim() || '$49/month',
@@ -56,5 +62,6 @@ export const nav: readonly { label: string; href: string }[] = [
 	{ label: 'What changes', href: '/#outcomes' },
 	{ label: 'Watch it work', href: '/#demo' },
 	{ label: 'Pricing', href: '/pricing' },
-	{ label: 'Every feature', href: '/features' }
+	{ label: 'Every feature', href: '/features' },
+	{ label: 'Contact', href: contactCta.href }
 ];
