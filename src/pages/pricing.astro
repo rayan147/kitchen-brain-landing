@@ -19,8 +19,8 @@ import { contactCta, cta, demoCta, launchPlan } from '../lib/site';
 			<div>
 				<p class="text-sm font-semibold text-amber-deep">CostCook Launch</p>
 				<p class="mt-2 text-h2 font-semibold">{launchPlan.displayPrice}</p>
-				<p class="mt-3 max-w-[54ch] text-ink-soft">Billed monthly with no trial. Stripe shows the exact charge before payment.</p>
-				<a href={cta.href} aria-label={cta.ariaLabel} class="btn-primary mt-7">{cta.label}</a>
+				<p class="mt-3 max-w-[54ch] text-ink-soft">Start with {launchPlan.trialDays} days free. Stripe securely collects payment details, charges $0 today, and begins monthly billing after the trial unless you cancel.</p>
+				<a href={cta.href} aria-label={cta.ariaLabel} class="btn-primary mt-7">Start {launchPlan.trialDays}-day free trial</a>
 			</div>
 			<div>
 				<h2 class="text-h3 font-semibold">Included at launch</h2>

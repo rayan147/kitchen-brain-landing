@@ -48,7 +48,8 @@ export const contactCta = {
 /** Public launch terms shown wherever a visitor decides whether to start. */
 export const launchPlan = {
 	displayPrice: import.meta.env.PUBLIC_LAUNCH_PRICE_DISPLAY?.trim() || '$49/month',
-	billingNote: 'per kitchen workspace. Billed monthly with no trial.'
+	trialDays: 15,
+	billingNote: 'per kitchen workspace after a 15-day free trial.'
 } as const;
 
 /**
