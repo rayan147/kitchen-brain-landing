@@ -58,10 +58,14 @@ requireText(publicCopy, 'See every shipped feature', 'features page homepage lin
 // inside the fold. Contact stays reachable from the nav and the footer, both
 // of which render on every page.
 requireText(siteSource, 'contactCta.href', 'contact reachable from nav');
+requireText(siteSource, 'import.meta.env.PUBLIC_APP_URL', 'environment-aware app handoff');
+requireText(siteSource, '/start?plan=launch', 'launch-plan handoff');
+requireText(siteSource, "url.protocol !== 'http:' && url.protocol !== 'https:'", 'app origin protocol guard');
 requireText(contactPage, 'mailto:${site.email}', 'contact email action');
 requireText(contactPage, 'site.phoneHref', 'contact phone action');
 requireText(contactPage, 'demoCta.href', 'contact demo action');
 requireText(contactPage, 'Do not include passwords, payment card details', 'contact safety copy');
+requireText(await read('src/layouts/Base.astro'), 'import.meta.env.PROD', 'deployment-only analytics');
 
 // Seven stops, one claim each. SeeItRun sits ahead of CustomerOutcomes so the
 // cold visitor settles "is this real" before being asked to believe outcomes.

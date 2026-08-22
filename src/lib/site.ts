@@ -26,11 +26,25 @@ export const booking = {
 	url: 'https://calendar.app.google/CtvTiAXfbNBB4cXE6'
 } as const;
 
+const productionAppOrigin = 'https://app.costcook.io';
+
+function appOrigin(configuredOrigin: string | undefined): string {
+	if (!configuredOrigin?.trim()) return productionAppOrigin;
+
+	try {
+		const url = new URL(configuredOrigin.trim());
+		if (url.protocol !== 'http:' && url.protocol !== 'https:') return productionAppOrigin;
+		return url.origin;
+	} catch {
+		return productionAppOrigin;
+	}
+}
+
 /** The one CTA, referenced everywhere it appears so its label and destination cannot drift. */
 export const cta = {
 	label: 'Start CostCook',
 	ariaLabel: 'Start CostCook',
-	href: 'https://app.costcook.io/start?plan=launch',
+	href: `${appOrigin(import.meta.env.PUBLIC_APP_URL)}/start?plan=launch`,
 	target: '_self',
 	rel: undefined
 } as const;

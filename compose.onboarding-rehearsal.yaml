@@ -1,0 +1,4 @@
+services:
+  site:
+    environment:
+      PUBLIC_APP_URL: http://localhost:5298

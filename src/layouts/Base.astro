@@ -52,10 +52,10 @@ const ogImage = new URL('/og.png', site.url).href;
 		<meta property="og:image:alt" content="CostCook: back-of-house software for caterers" />
 		<meta name="twitter:card" content="summary_large_image" />
 
-		<!-- Vercel Web Analytics (cookieless). TODO(owner): flip on
-		     Analytics in the Vercel dashboard — until then this script 404s
-		     harmlessly. Same-origin, so the CSP needs no new hosts. -->
-		<script defer src="/_vercel/insights/script.js" is:inline></script>
+		<!-- Vercel Web Analytics is a deployment boundary. Loading its same-origin
+		     endpoint during local development creates a misleading 404 in every
+		     customer-journey rehearsal. -->
+		{import.meta.env.PROD && <script defer src="/_vercel/insights/script.js" is:inline></script>}
 	</head>
 	<body>
 		<a
