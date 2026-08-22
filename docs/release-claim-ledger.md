@@ -90,7 +90,7 @@ Do not add these without a new ledger review:
 | Hero | RC-01–RC-08 |
 | Core loop rail | RC-02, RC-26 |
 | Connected chain | RC-02, RC-06–RC-09, RC-26, RC-28 |
-| Product walkthrough | RC-33 |
+| Product walkthrough | RC-33, and every claim its cards make: RC-04, RC-05, RC-08, RC-18, RC-23, RC-24, RC-26–RC-28, RC-36, RC-37 |
 | Guided setup | RC-10–RC-15 |
 | Catalog | RC-16–RC-21 |
 | Operations | RC-03–RC-08, RC-22–RC-25 |

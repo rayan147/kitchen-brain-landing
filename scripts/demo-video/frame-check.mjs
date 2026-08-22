@@ -4,14 +4,24 @@
  *
  *   node scripts/demo-video/frame-check.mjs cards      # bar height per card
  *   APP=... node scripts/demo-video/frame-check.mjs boxes   # ring targets per beat
+ *   node scripts/demo-video/frame-check.mjs holds      # every card's real screen time
  *
- * `cards` needs nothing running. `boxes` needs the app up on APP.
+ * `cards` and `holds` need nothing running; `holds` reads the encoded
+ * public/demo.mp4. `boxes` needs the app up on APP.
  */
 import { chromium } from 'playwright-core';
-import { BEATS } from './beats.mjs';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import ffmpegPath from 'ffmpeg-static';
+import { BEATS, LEAD_IN, beatLength } from './beats.mjs';
 
 // Text a beat's frame must not contain, as [label, RegExp]. Declared here rather
 // than in beats.mjs because it is a check, not part of the storyboard.
+// NOTE THE COVERAGE GAP: the loop below skips any beat with `prepare`, which is
+// b04, so b04's entry here does not currently run. Its framing was verified by
+// measuring the live page (see the anchor note in beats.mjs) and by reading the
+// delivered frames. The row stays because the constraint is real and because the
+// day this checker learns to drive a prepare routine, it should already be here.
 const MUST_NOT_SHOW = {
 	b02: [['CONFIRMED badge', /Confirmed/]],
 	b04: [['Estimated margin', /Estimated margin/]]
@@ -29,6 +39,136 @@ const src = await (await import('node:fs/promises')).readFile(
 	'utf8'
 );
 const CSS = src.match(/const INJECT_CSS = `([\s\S]*?)`;/)[1];
+
+// WHY THIS MODE EXISTS. The capture schedule can run perfectly and the delivered
+// video can still be wrong. On 2026-08-22 b01's middle card was scheduled for
+// 2.6s, every step in runSchedule fired on time, no move threw, and the encoded
+// cut showed that card for six tenths of a second: the recorder lost the frames,
+// not the scheduler. Re-running the same beat produced a correct clip, so it is
+// intermittent, which is the worst kind — it ships whenever nobody happens to
+// watch that beat. This checks the artifact that actually goes on the page.
+//
+// The method is deliberately dumb and therefore hard to fool. Clips are trimmed
+// to exactly `hold` and plain-concatenated (assemble-silent.mjs pass 2), so
+// every card's window in the final file is arithmetic: cumulative beat holds,
+// plus LEAD_IN, plus the cards before it. Sample the caption band just after that
+// window opens and just before it closes. If the same card held the whole time,
+// the two frames are near identical. If it flashed, the second frame is a
+// different card and the difference is enormous.
+if (MODE === 'holds') {
+	const run = promisify(execFile);
+	const FILE = process.env.VIDEO ?? 'public/demo.mp4';
+	const FPS = 10;
+	// The caption band only, downsampled to grayscale. 200x29 is far too coarse
+	// to read but keeps each glyph row distinct, and it makes
+	// antialiasing and encoder noise irrelevant. The band is opaque, so within a
+	// beat the ONLY thing that can change these pixels is the card changing —
+	// scrolling, rings, cursors and even a navigation happen above it.
+	const W = 200;
+	const H = 29;
+	const FRAME = W * H;
+	// Two samples of one still card differ by encoder noise only, measured at
+	// 0.0-0.4 on this encode. Two DIFFERENT cards measure 6 and up, and 6 is a
+	// pair of short similar sentences, not a comfortable gap: keep the threshold
+	// nearer the noise than the signal, or a real flash reads as a card change.
+	const SAME = 3;
+
+	const diff = (a, b) => {
+		let sum = 0;
+		for (let i = 0; i < a.length; i += 1) sum += Math.abs(a[i] - b[i]);
+		return sum / a.length;
+	};
+
+	/** Every frame of one beat's window, as grayscale byte arrays. */
+	const framesOf = async (from, seconds) => {
+		const { stdout } = await run(
+			ffmpegPath,
+			['-v', 'error', '-ss', from.toFixed(3), '-t', seconds.toFixed(3), '-i', FILE,
+			 '-vf', `crop=1600:232:0:768,fps=${FPS},scale=${W}:${H},format=gray`,
+			 '-f', 'rawvideo', '-'],
+			{ encoding: 'buffer', maxBuffer: 1 << 24 }
+		);
+		const out = [];
+		for (let i = 0; i + FRAME <= stdout.length; i += FRAME) out.push(stdout.subarray(i, i + FRAME));
+		return out;
+	};
+
+
+	// AN EXPECTED WINDOW IS ENOUGH, A GLOBAL SEGMENTATION IS NOT. Segmenting the
+	// whole band by "is this frame the same as the last one" splits every card in
+	// two, because the 240ms cross-fade is neither the old card nor the new one,
+	// and then every card in the beat is compared against the wrong segment.
+	// Clips are trimmed to exactly `hold` and plain-concatenated, so each card's
+	// window is arithmetic. Take the frame at the middle of the window as that
+	// card's fingerprint and measure the run of frames that match it.
+	// A drifted card can put the arithmetic midpoint inside the 380ms cross-fade,
+	// where the frame matches neither the card before nor the card after and the
+	// run measures a tenth of a second. That is the check crying wolf, not a lost
+	// card, so walk off the fade to the nearest frame that actually holds.
+	const settled = (frames, mid) => {
+		const runLength = (i) => {
+			let lo = i;
+			let hi = i;
+			while (lo > 0 && diff(frames[lo - 1], frames[i]) <= SAME) lo -= 1;
+			while (hi + 1 < frames.length && diff(frames[hi + 1], frames[i]) <= SAME) hi += 1;
+			return hi - lo + 1;
+		};
+		if (runLength(mid) / FPS >= 0.5) return mid;
+		for (let step = 1; step <= FPS; step += 1)
+			for (const i of [mid - step, mid + step])
+				if (i >= 0 && i < frames.length && runLength(i) / FPS >= 0.5) return i;
+		return mid;
+	};
+
+	const runAround = (frames, at) => {
+		const mid = settled(frames, at);
+		const ref = frames[mid];
+		let lo = mid;
+		let hi = mid;
+		while (lo > 0 && diff(frames[lo - 1], ref) <= SAME) lo -= 1;
+		while (hi + 1 < frames.length && diff(frames[hi + 1], ref) <= SAME) hi += 1;
+		return { ref, seconds: (hi - lo + 1) / FPS };
+	};
+
+	let at = 0;
+	let bad = 0;
+	console.log(`${FILE}, caption band 1600x232 at y=768, sampled at ${FPS}fps\n`);
+	for (const beat of BEATS) {
+		const length = beatLength(beat);
+		const beatStart = at;
+		at += length;
+		// Title and end beats carry no caption bar; the card IS the frame, so
+		// there is nothing in this crop to measure.
+		if (beat.card) continue;
+		// A beat whose moves click through a navigation drifts a few tenths late,
+		// so the last card can run past the beat. The margin keeps its run
+		// measurable; it can only ever make a card look longer, never shorter.
+		const frames = await framesOf(beatStart, length + 1.0);
+		console.log(`${beat.id} ${beatStart.toFixed(1)}s..${(beatStart + length).toFixed(1)}s`);
+		let cardAt = LEAD_IN;
+		let previous = null;
+		for (const card of beat.cards) {
+			const mid = Math.round((cardAt + card.hold / 2) * FPS);
+			const { ref, seconds } = runAround(frames, Math.min(mid, frames.length - 1));
+			// Two consecutive cards whose middles look identical is the flash: one
+			// of them never had the screen to itself, whatever the beat sheet says.
+			const same = previous && diff(previous, ref) <= SAME;
+			const short = seconds < card.hold * 0.66;
+			if (same || short) bad += 1;
+			console.log(
+				`    ${seconds.toFixed(1)}s of ${card.hold.toFixed(1)}s` +
+					`${same ? '  <-- SAME FRAME AS THE CARD BEFORE IT' : short ? '  <-- DID NOT HOLD' : ''}` +
+					`  ${JSON.stringify(card.text)}`
+			);
+			previous = ref;
+			cardAt += card.hold;
+		}
+	}
+	console.log(`\n${bad} card(s) did not hold.`);
+	if (bad)
+		console.error('Re-capture those beats (BEATS_ONLY=b01,b04 ...) and re-assemble. This is intermittent: the schedule can be perfect and the recorder still lose the frames.');
+	process.exit(bad ? 1 : 0);
+}
 
 const browser = await chromium.launch({
 	executablePath: CHROME,
@@ -97,17 +237,29 @@ if (MODE === 'boxes') {
 	const named = async (listPath, hrefPattern, label) => {
 		await page.goto(APP + listPath, { waitUntil: 'domcontentloaded' });
 		await page.waitForLoadState('networkidle').catch(() => {});
-		return page.evaluate(
+		const hits = await page.evaluate(
 			({ hrefPattern, label }) => {
 				const re = new RegExp(hrefPattern);
+				const out = new Set();
 				for (const a of document.querySelectorAll('a[href]')) {
 					const href = a.getAttribute('href');
-					if (re.test(href) && a.textContent.includes(label)) return href;
+					if (re.test(href) && a.textContent.includes(label)) out.add(href);
 				}
-				return null;
+				return [...out];
 			},
 			{ hrefPattern, label }
 		);
+		// Same trap as capture-silent.mjs: after b04 has run, the fixture holds a
+		// DRAFT "Alvarez-Whitman Wedding" that sorts ahead of the confirmed one,
+		// and every ring on receiving or the quoted band then reports NOT FOUND
+		// against a page that never had them. That is a dirty fixture, not a
+		// broken beat, and the two must not look alike.
+		if (hits.length > 1)
+			throw new Error(
+				`"${label}" matches ${hits.length} links on ${listPath} (${hits.join(', ')}). ` +
+					'Re-seed the app fixture before checking; b04 leaves drafts behind.'
+			);
+		return hits[0] ?? null;
 	};
 	// The same list paths and labels capture-silent.mjs resolves against, and
 	// they are not guessable: ingredients live under /catalog/ingredients, and

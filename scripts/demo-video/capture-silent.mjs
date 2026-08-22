@@ -142,6 +142,17 @@ const INJECT_CSS = `
 #cc-cap span[data-in] { opacity: 1; transform: none; }
 #cc-cap b { color: #8FD3B0; font-weight: 600; }
 
+/* One pixel, animating forever, so the compositor never runs out of work. See
+   the long note beside #cc-beat in INJECT_DOM for what it is for. It sits at
+   the top-left corner rather than in the caption bar because frame-check's
+   "holds" mode diffs the bar, and this is the check's own subject matter. */
+#cc-beat {
+  position: fixed; top: 0; left: 0; width: 1px; height: 1px;
+  z-index: 2147483647; background: #808080; pointer-events: none;
+  animation: cc-beat 600ms linear infinite alternate;
+}
+@keyframes cc-beat { from { opacity: 0.01; } to { opacity: 0.06; } }
+
 #cc-cursor {
   position: fixed; z-index: 2147483647; width: 26px; height: 26px;
   pointer-events: none; left: 800px; top: 860px; opacity: 0;
@@ -177,6 +188,30 @@ const INJECT_DOM = () => {
 	const cap = document.createElement('div');
 	cap.id = 'cc-cap';
 	document.body.appendChild(cap);
+	// THE HEARTBEAT, AND IT IS NOT DECORATION.
+	//
+	// A card that sits still over a page that sits still gives the compositor
+	// nothing to composite, and the screencast the video recorder is fed only
+	// produces frames when something is composited. The recorder then writes the
+	// clip at a nominal 25fps regardless, so the idle seconds are simply not in
+	// the file: wall-clock time passes, frames do not, and a 2.6s card arrives on
+	// the page having been on screen for six tenths of a second.
+	//
+	// This was hunted the long way round first. The schedule was instrumented and
+	// every step fired on time. The clip's frame timestamps were dumped and were
+	// a clean 25fps with no gaps. The same beat re-recorded correctly, which made
+	// it look like bad luck rather than a mechanism, and it moved to a different
+	// beat on the next full run. What all the losses had in common was a card
+	// with nothing moving under it.
+	//
+	// One pixel in the top-left corner, animating opacity forever, keeps the
+	// compositor producing frames for the whole cut. Opacity is compositor-only,
+	// so it costs nothing. It is deliberately NOT inside the caption bar:
+	// frame-check's `holds` mode diffs that band, and a ticker in there would be
+	// noise in the one measurement that catches this bug coming back.
+	const beat = document.createElement('div');
+	beat.id = 'cc-beat';
+	document.body.appendChild(beat);
 };
 
 /**
@@ -371,14 +406,33 @@ async function showCard(page, text) {
  * build away from being retried.
  */
 async function runSchedule(steps, t0, beatId) {
-	for (const step of steps) {
+	for (const [i, step] of steps.entries()) {
 		const wait = t0 + step.at * 1000 - Date.now();
 		if (wait > 0) await pause(wait);
+		// A STEP THAT OVERRUNS ITS SLOT EATS THE NEXT CARD'S HOLD, AND THE ONLY
+		// SYMPTOM IS THAT THE CARD FLASHES. Every step here is awaited in order,
+		// so if one takes longer than the gap to the next `at`, the next step
+		// fires late and whatever it replaces was on screen for the difference.
+		// A 2.6s card that showed for half a second is what sent this hunt off:
+		// nothing errors, nothing is skipped, and the beat sheet still says 2.6.
+		const startedLate = Date.now() - (t0 + step.at * 1000);
+		if (startedLate > 250)
+			console.warn(
+				`  ! ${beatId} ${step.label} fired ${(startedLate / 1000).toFixed(2)}s late; the step before it overran`
+			);
+		const began = Date.now();
 		try {
 			await step.run();
 		} catch (err) {
 			console.warn(`  ! ${beatId} @${step.at}s ${step.label}: ${err.message.split('\n')[0]}`);
 		}
+		const next = steps[i + 1];
+		const slot = next ? (next.at - step.at) * 1000 : Infinity;
+		const took = Date.now() - began;
+		if (took > slot)
+			console.warn(
+				`  ! ${beatId} ${step.label} took ${(took / 1000).toFixed(2)}s but only has ${(slot / 1000).toFixed(2)}s before ${next.label}`
+			);
 	}
 }
 
@@ -450,19 +504,36 @@ await ready(wp);
 async function findNamed(listPath, hrefPattern, label) {
 	await wp.goto(APP + listPath, { waitUntil: 'domcontentloaded', timeout: 180_000 });
 	await ready(wp);
-	return wp.evaluate(
+	const hits = await wp.evaluate(
 		({ hrefPattern, label }) => {
 			const href = new RegExp(hrefPattern);
 			const name = new RegExp(label, 'i');
-			return (
-				[...document.querySelectorAll('a[href]')]
-					.filter((a) => name.test(a.textContent || ''))
-					.map((a) => a.getAttribute('href'))
-					.find((h) => href.test(h)) ?? null
-			);
+			return [
+				...new Set(
+					[...document.querySelectorAll('a[href]')]
+						.filter((a) => name.test(a.textContent || ''))
+						.map((a) => a.getAttribute('href'))
+						.filter((h) => href.test(h))
+				)
+			];
 		},
 		{ hrefPattern, label }
 	);
+	// AMBIGUITY IS A STOP, NOT A COIN TOSS. b04 submits a real form and leaves
+	// three draft orders behind, one of which is another "Alvarez-Whitman
+	// Wedding" dated a day earlier than the real one — so on a fixture that has
+	// not been re-seeded since the last capture, the marquee order resolves to a
+	// DRAFT that sorts first. A draft has no receiving, no purchase orders and no
+	// quoted-versus-today band, so half the cut would record against a page that
+	// cannot show what its cards claim. Taking "the first match" is what this
+	// function already refuses to do by position; it has to refuse it here too.
+	if (hits.length > 1)
+		throw new Error(
+			`"${label}" matches ${hits.length} links on ${listPath} (${hits.join(', ')}). ` +
+				'The demo fixture is dirty, almost certainly from a previous run of b04. ' +
+				'Re-run `npm run demo:seed` and `npm run demo:capture` in the app repo first.'
+		);
+	return hits[0] ?? null;
 }
 
 const orderHref = await findNamed('/orders/list', '^/orders/\\d+$', 'alvarez');

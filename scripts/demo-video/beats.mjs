@@ -34,6 +34,24 @@
  * to hold up one figure is finished when the figure is up; padding it out to
  * six words to satisfy a rule written for sentences makes it worse.
  *
+ * ONE WORD FOR THE PIECE OF WORK, AND IT IS "JOB". The cut had three nouns for
+ * the same thing — jobs, events, orders — and b04 used two of them four cards
+ * apart. The rule, and the only two exceptions, both of which are the screen
+ * overruling the writer:
+ *
+ *   job    the piece of work. The default, everywhere. It is the word the
+ *          hero uses ("A catering order is one job pretending to be six"),
+ *          the h2 uses and the end card uses, so the page and the footage say
+ *          the same thing.
+ *   event  ONLY in b04 before the submit. The form on screen is labelled
+ *          Event 1 / Event 2 / Event 3 and the totals row the beat rings reads
+ *          "Events 3". A card saying "jobs" over that panel is the exact
+ *          card-contradicts-frame defect RC-37 exists to catch.
+ *   order  ONLY in b04's last card, which lands after the viewer has watched a
+ *          button reading "Create 3 orders" being clicked. The three events
+ *          became three orders on screen; the noun changes because the app
+ *          changed it.
+ *
  * USE THE SCREEN'S OWN NOUNS. Not a synonym, not the word a writer would reach
  * for. The receiving screen says "3 lb clamshell" and two cards said "case",
  * so a viewer who read the card and then looked at the app was told one thing
@@ -145,16 +163,25 @@ export const BEATS = [
 		path: '/orders/list',
 		cards: [
 			{ text: 'A year of jobs on the books.', hold: 2.2 },
-			// READ THIS OFF THE SCREEN EVERY TIME. The marquee order is seeded
-			// three days out from the real clock, NOT from HISTORY_SEED_DATE, so
-			// the weekday moves between capture runs: the shipped cut said Monday
-			// because it was recorded on the 21st, and the very next capture put
-			// the same order on "Tue, Aug 25".
-			{ text: 'The next one is Tuesday.', hold: 2.2 }
+			// THE CUT USED TO POINT AT A JOB IT NEVER NAMED. "The next one is
+			// Tuesday" told the viewer when and never what, and then every beat
+			// after it talked about "this order" as though they had been
+			// introduced. Naming it here is what makes the next ninety seconds
+			// one story instead of eight screenshots.
+			{ text: 'Next up: the Alvarez-Whitman wedding.', hold: 2.6 },
+			// THE WEEKDAY IS GONE ON PURPOSE, and this retires a whole bug class.
+			// The marquee order is seeded three days out from the REAL clock, not
+			// from HISTORY_SEED_DATE, so the weekday moved between capture runs:
+			// the shipped cut said Monday because it was recorded on the 21st and
+			// the very next capture put the same order on "Tue, Aug 25". "Three
+			// days out" is what the row itself says ("in 3 days") and, because the
+			// seed offset is what generates it, it is true on every future capture
+			// without anyone having to remember to look.
+			{ text: '180 guests, three days out.', hold: 2.4 }
 		],
 		moves: [
 			{ at: 1.6, act: 'ring', row: 'Alvarez-Whitman', pad: 4 },
-			{ at: 4.6, act: 'ringOff' }
+			{ at: 7.4, act: 'ringOff' }
 		]
 	},
 	{
@@ -209,12 +236,80 @@ export const BEATS = [
 		cards: [
 			{ text: 'The same order is already a shopping list.', hold: 4.0 },
 			{ text: "It's by vendor, in the packs you actually buy.", hold: 4.0 },
-			{ text: 'Baldor: $690.82.', hold: 3.4 }
+			{ text: 'Baldor: $690.82.', hold: 3.4 },
+			// THE SUB-RECIPE PANEL WAS IN EVERY FRAME OF THIS BEAT AND NO CARD
+			// EVER MENTIONED IT. It sits in the right rail at y=24..594 under this
+			// beat's own anchor, so the cut has been showing a caterer the one
+			// thing on the shop list that a spreadsheet cannot do and saying
+			// nothing about it. Measured, not guessed: with scrollTop "Baldor" the
+			// panel spans y=24..594 against a bar floor of 768.
+			{ text: "Stock and mirepoix aren't shopping. They're batches.", hold: 4.0 },
+			// The screen: "Mirepoix Base · 3 kg per batch · make 8 of 8" and
+			// "House Beef Stock · 8 L per batch · make 6 of 6". The panel's own
+			// description, legible behind the card, carries the part no card has
+			// room for: "Enter completed batches to reduce purchasing."
+			{ text: 'Eight of mirepoix. Six of stock.', hold: 3.6 }
 		],
 		moves: [
 			{ at: 5.4, act: 'ring', text: '^BALDOR$|^Baldor$', up: 1, pad: 8 },
 			{ at: 9.6, act: 'ringOnly', text: '690\\.82', pad: 10 },
-			{ at: 12.6, act: 'ringOff' }
+			// up:3 is the whole rail card, heading and all three sub-recipes:
+			// y=24..594. up:2 stops at the header and frames a claim with no
+			// numbers under it.
+			{ at: 13.4, act: 'ringOnly', text: '^Sub-recipe batches$', up: 3, pad: 8 },
+			// up:2 off the name is the Mirepoix block: its name, "3 kg per batch",
+			// the on-hand entry and "make 8 of 8". y=149..245.
+			{ at: 17.4, act: 'ringOnly', text: '^Mirepoix Base$', up: 2, pad: 8 },
+			{ at: 20.4, act: 'ringOff' }
+		]
+	},
+	{
+		// THE PREP LIST, WHICH THE CUT PROMISED IN ITS OWN TITLE CARD AND THEN
+		// NEVER SHOWED. b00 reads "cost it, buy it, prep it, pack it" and the
+		// footage went cost, buy, three-events, email, receive: the one verb with
+		// a whole route behind it was the one verb with no frame behind it.
+		//
+		// It sits here because that is where the app puts it. OrderStageTabs is
+		// "1 · Shop, 2 · Prep, 3 · Pack" and the beat before this one is Shop, so
+		// the viewer watches the same order move one tab to the right rather than
+		// being taken somewhere new. It also earns b04: a viewer who has seen one
+		// order's prep list understands what "you shop and prep for all three at
+		// once" is actually combining.
+		//
+		// Measured against the live page at 1600x1000 with this anchor, bar floor
+		// y=768: "Prep list" y=24..53, "0 of 34 items complete" y=57..78, the
+		// Braised Short Rib heading y=107..151, and its three rows at y=204..260
+		// (beef), 260..316 (Mirepoix Base), 316..372 (House Beef Stock). Nothing
+		// this beat rings comes near the bar.
+		id: 'b03b',
+		useOrder: true,
+		suffix: '/prep',
+		scrollTop: 'Prep list',
+		// NO SUB-RECIPE CARD HERE, DELIBERATELY. The prep list does carry them as
+		// their own tagged lines (Mirepoix Base 21.6 kg, House Beef Stock 43.2 L),
+		// but b03 already spends two cards on sub-recipes and the two claims are
+		// different jobs: the shop list gives you the batch COUNT so you can say
+		// what you already made and buy less; the prep list gives you the batch
+		// as a line to cook. Saying "sub-recipe" twice in twenty seconds spends
+		// the beat's whole budget on a word the second card cannot advance.
+		cards: [
+			// The dish is the wedding's Braised Short Rib, the same recipe the rest
+			// of the cut chains to, and the quantity is the one on screen: 75.6 kg
+			// of boneless short rib.
+			{ text: 'Thirty-four items, scaled to the job.', hold: 3.6 },
+			{ text: 'Beef short rib: 75.6 kilos.', hold: 3.4 },
+			// RC-24: the checks persist, which is the whole reason this is a screen
+			// and not a printout, though it prints too. The ring stays on the beef
+			// row through this card rather than moving to the 20px checkbox: the
+			// row's own Done box is inside it, which is the picture the card wants.
+			{ text: 'Tick them off as you cook.', hold: 3.4 }
+		],
+		moves: [
+			// up:1 frames the "Prep list" heading and the "0 of 34 items complete"
+			// line together, y=24..78, which is where the card's number is.
+			{ at: 1.4, act: 'ring', text: 'items complete', up: 1, pad: 8 },
+			{ at: 5.0, act: 'ringOnly', row: 'Beef short rib', pad: 6 },
+			{ at: 10.6, act: 'ringOff' }
 		]
 	},
 	{
@@ -280,9 +375,17 @@ export const BEATS = [
 			{ text: 'Pack stays split. One stack per event.', hold: 4.4 },
 			// The scope limit, and it now reads as the design decision it is
 			// rather than as an apology for a shortfall. One button firing POs
-			// across three jobs is how a vendor gets a full order for a wedding
-			// that was postponed this morning. See RC-36.
-			{ text: 'Each job still gets its own confirm and its own PO.', hold: 4.0 }
+			// across three orders is how a vendor gets a full delivery for a
+			// wedding that was postponed this morning. See RC-36.
+			//
+			// "ORDER", NOT "JOB", AND THE FOOTAGE EARNS IT. This beat opened on
+			// "events" because the form says Event 1/2/3, and closed on "job",
+			// which is a third noun for the same three things inside one beat.
+			// This card lands after the viewer has watched a button reading
+			// "Create 3 orders" being clicked, so by the time it is on screen the
+			// three events are three orders and the app changed the noun, not the
+			// writer. It is also what the sr-only transcript already said.
+			{ text: 'Each order still gets its own confirm and its own PO.', hold: 4.0 }
 		],
 		// KNOWN, AND LEFT ALONE: the Live quote panel prices event 1 at $4,883.40
 		// of food, while the money beat above reads $4,847.96 for the same
