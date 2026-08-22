@@ -1,4 +1,17 @@
 ---
+/**
+ * FOUR answers, deliberately one per pain in TheProblem and in the same order.
+ * The pairing is load-bearing: src/pages/index.astro records that promoting
+ * SeeItRun above this section was justified partly BECAUSE the pairing was
+ * never co-visible on a phone anyway, and it names the 1:1 mapping as the
+ * condition that keeps that trade valid. If you add a pain there, add its
+ * answer here, or go and re-measure.
+ *
+ *   old price          -> quote with the food cost in front of you
+ *   rebuild four times -> change the count once
+ *   retype to buy it   -> send the buying without retyping it   (RC-22, RC-26, RC-27)
+ *   margin after       -> bring the real price back
+ */
 const outcomes = [
 	{
 		title: 'Quote with the food cost in front of you',
@@ -9,8 +22,12 @@ const outcomes = [
 		body: 'Recipes scale, shared ingredients roll together, whole packs recalculate, and the Shop, Prep, and Pack lists stay on the same plan.'
 	},
 	{
+		title: 'Send the buying without retyping it',
+		body: 'The shopping list groups by supplier, and receiving records what actually arrived: short, over, substituted, or missing.'
+	},
+	{
 		title: 'Bring the real price back to the next quote',
-		body: 'Receive what arrived and record what you paid. Approved prices update future costing while the confirmed event remains frozen.'
+		body: 'Record what you paid. Approved prices update future costing while the confirmed event remains frozen.'
 	}
 ];
 ---
@@ -27,7 +44,7 @@ const outcomes = [
 			</p>
 		</div>
 
-		<ol role="list" class="mt-12 grid gap-x-12 lg:grid-cols-3">
+		<ol role="list" class="mt-12 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-4">
 			{
 				outcomes.map((outcome, index) => (
 					<li

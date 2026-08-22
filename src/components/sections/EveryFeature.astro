@@ -4,7 +4,7 @@ import { demoCta } from '../../lib/site';
 
 // The complete shipped-feature list (src/lib/features.ts, written from the
 // code audit). This is the body of the /features reference page — the home
-// page carries only the one-sentence bridge (FeatureBridge), per Krug's
+// page carries only a quiet link from CustomerOutcomes, per Krug's
 // billboard rule. Shape follows the density rule: a low-frequency,
 // high-density read wants information architecture, not disclosure — group
 // headers carry the words a buyer scans for, every item stays visible (no
@@ -15,7 +15,7 @@ import { demoCta } from '../../lib/site';
 	<div class="container-page py-section">
 		<div class="max-w-3xl" data-reveal>
 			<p class="eyebrow">The complete list</p>
-			<h1 id="everything-heading" class="mt-4 text-h2 font-semibold">
+			<h1 id="everything-heading" class="mt-4 text-display font-semibold">
 				Everything CostCook does today. All {featureCount} things.
 			</h1>
 			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
@@ -53,7 +53,8 @@ import { demoCta } from '../../lib/site';
 							</span>
 							<p class="eyebrow">{group.kicker}</p>
 						</div>
-						<h3 class="mt-3 max-w-2xl text-h3 font-semibold">{group.title}</h3>
+						<!-- h2, not h3: these groups sit directly under the page h1. -->
+						<h2 class="mt-3 max-w-2xl text-h3 font-semibold">{group.title}</h2>
 						<ul role="list" class="mt-5 gap-x-12 sm:columns-2">
 							{
 								group.items.map((item) => (

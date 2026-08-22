@@ -1,52 +1,78 @@
 ---
-import { cta } from '../../lib/site';
+
 
 // Screen tour of the actual build (public/demo.mp4, H.264 + AAC).
 //
-// WALKTHROUGH v2: the silent, caption-burned cut now follows ONE order —
-// the Alvarez–Whitman wedding in the Maple & Main demo world — through the
-// ACTUAL email send (the Mailpit capture inbox is on camera), the imperfect
-// delivery, the inventory post, and the quoted-vs-today result. Captions are
-// burned into the frames by the capture step; there is no narration track.
+// WALKTHROUGH v3 (2026-08-21): the silent, card-captioned cut follows ONE
+// order — the Alvarez-Whitman wedding in the Maple & Main demo world — from
+// the food cost that lands before the quote goes out, through the ACTUAL
+// email send (the capture inbox is on camera), an imperfect delivery, and the
+// quoted-versus-today result. One inset partway through shows three events
+// planned as a single production run. There is no speech track and there will
+// not be one; a generated music bed plays and every claim is written on
+// screen. The cards are burned into the frames by the capture step.
 //
-// FOUR THINGS HERE MOVE WITH THE FOOTAGE, EVERY TIME: the chip's duration, the
-// sr-only transcript, the video's aria-label, and the hero link's duration
-// (guard-pinned in check-landing-claims.mjs). They have drifted twice —
-// commit 3e8d136 left the chip reading 48 sec over a 39.5s cut, and an
-// earlier cut narrated a different menu than the order it quoted.
-// Regenerate (app repo first: `npm run demo:seed` + `npm run demo:capture`,
-// Mailpit up, preview on :4181 — see the app repo's demo/README.md):
+// SIX THINGS HERE MOVE WITH THE FOOTAGE, EVERY TIME: the chip's duration, the
+// sr-only transcript, the video's aria-label, the poster, the h2, and the hero
+// link's duration (guard-pinned in check-landing-claims.mjs). They have
+// drifted twice — commit 3e8d136 left the chip reading 48 sec over a 39.5s
+// cut, and an earlier cut narrated a different menu than the order it quoted.
+//
+// THE MULTI-EVENT INSET CLAIMS PLANNING ONLY (RC-36). /orders/batch exposes
+// on-hand entry and nothing else: confirming an order, freezing its prices and
+// sending its purchase orders all stay per order. Nothing here, in the
+// transcript or in the footage, may suggest the combined run confirms or buys.
+//
+// Regenerate (app repo first: `npm run demo:seed`, then `npm run demo:capture`,
+// Mailpit up; then `./demo/serve.sh` there to leave a preview on :4181):
 //   APP=http://localhost:4181 node scripts/demo-video/capture-silent.mjs
-//   node scripts/demo-video/assemble-silent.mjs   (ffmpeg-static + playwright-core, npm i --no-save)
+//   node scripts/demo-video/assemble-silent.mjs   (ffmpeg-static + playwright-core)
+// The assembler prints the encoded duration and the three places that have to
+// agree with it. See docs/demo-video-rebuild-2026-08-21.md.
 ---
 
 	<section id="demo" class="container-page py-section-tight">
 		<div data-reveal>
-			<h2 class="max-w-3xl text-h2 font-semibold">Follow one 180-guest wedding from quote to shelf.</h2>
+			<h2 class="max-w-3xl text-h2 font-semibold">
+				Follow one 180-guest wedding from quote to shelf. Then three events in one run.
+			</h2>
 			<p class="mt-5 max-w-[68ch] text-lede text-ink-soft">
-				This is the working product, not a mockup: a costed recipe, the event&rsquo;s food cost,
-				purchase orders sent to vendors, an imperfect delivery, and the price carried back
-				to the next job.
-		</p>
+				This is the working product, not a mockup. Two minutes: the food cost that
+				lands before the quote goes out, purchase orders that really send, a delivery
+				that arrives wrong, and the price carried back to the next job.
+			</p>
+		<!-- WCAG 1.2.1 and CLAUDE.md principle 4: this stands in for the footage
+		     for anyone who cannot watch it, so it describes the cut IN ORDER and
+		     carries every figure the cards carry. It is also a truth-pass
+		     surface, scanned against the forbidden-claims list like everything
+		     else in this file. Rewrite it whenever the cut is re-recorded. -->
 		<p id="demo-transcript" class="sr-only">
-				A silent, captioned screen recording of CostCook following one order start to
-				finish. There is no narration; a music bed plays and every claim is written on
-				screen, so nothing is carried by audio alone. A year of orders on the books, the
-				next big one a wedding of 180 plates three days out. The braised short rib recipe
-				with its costed lines, the beef carrying 93 percent of the plate. The order:
-				180 guests at $68 a head is $12,240.00 of revenue against $4,845.61 of food,
-				39.6 percent food cost, with the price that meets the 30 percent target named
-				on screen. The same order as a shopping list grouped by vendor, in the whole
-				packs you actually buy, Baldor totalling $690.82. A capture inbox showing the
-				purchase orders the confirmation actually emailed, one per vendor, each with its
-				own PO number; then one opened: PO-00783-002 to Green Valley Produce, five
-				items, a $516.08 subtotal, payment terms and dock notes. Receiving: arugula a
-				case short, recorded and saved for follow-up; baby spinach with an extra case,
-				sixteen delivered where fifteen were quoted, $477.16 paid against the $410.40
-				estimate. The ingredient&rsquo;s live cost panel showing the paid price as
-				current cost with its source recorded. The inventory screen with the shelf counted
-				today. Finally the order&rsquo;s comparison band: quoted at $26.92 a guest, $27.12
-				at today&rsquo;s prices, a 0.7 percent move with the quote still holding.
+				A silent, captioned screen recording of CostCook following one catering order
+				from quote to shelf. There is no narration; a music bed plays and every claim
+				is written on screen, so nothing is carried by audio alone. A title card:
+				cost it, buy it, prep it, pack it, enter the numbers once. A year of orders on
+				the books with the next one on Monday, the Alvarez-Whitman wedding. The
+				order&rsquo;s pricing panel: 180 guests at $68 a head is $12,240.00 of revenue
+				against $4,847.96 of food, which is 39.6 percent food cost against a 30
+				percent target, and the panel names $89.78 a guest as the price that would
+				meet it, all before the quote is sent. The same order as a shopping list
+				grouped by vendor in the whole packs you actually buy, Baldor totalling
+				$690.82. An aside: three events in the same week planned as one production
+				run, submitted together as three orders, opening on a combined Shop, Prep and
+				Pack workspace where the pack list keeps a by-event column so each event&rsquo;s
+				trays stay separate. Confirming and buying stay per order; the combined run
+				does not send purchase orders. Back on the wedding: a capture inbox showing
+				the purchase orders the confirmation actually emailed, one per vendor, each
+				with its own number, and one of them opened to Green Valley Produce with five
+				items in whole packs and a $516.08 subtotal. Receiving: arugula three cases of
+				four, the missing case written down and saved for purchasing follow-up; baby
+				spinach delivered sixteen cases where fifteen were quoted, $477.16 paid
+				against the $410.40 estimate. The ingredient&rsquo;s live cost panel showing
+				the paid price as the current cost, $21.91 a kilogram, with the receiving it
+				came from on record. Finally the order&rsquo;s comparison band: quoted at
+				$26.93 a guest, $27.13 at today&rsquo;s prices, a 0.7 percent rise with the
+				quote still holding. An end card: one job, quote to shelf, the same numbers
+				the whole way.
 			</p>
 
 		<!-- Not styled as a ticket: real product footage should read as real,
@@ -64,7 +90,7 @@ import { cta } from '../../lib/site';
 				width="1600"
 				height="1000"
 				class="w-full border border-hairline bg-paper shadow-ticket"
-				aria-label="Silent, captioned screen recording: CostCook prices a 180-guest wedding, emails its purchase orders, receives an imperfect delivery, and posts it to inventory"
+				aria-label="Silent, captioned screen recording: CostCook prices a 180-guest wedding before the quote goes out, plans three events as one production run, emails its purchase orders, and records a delivery that arrived wrong"
 				aria-describedby="demo-transcript"
 			>
 				<source src="/demo.webm" type="video/webm" />
@@ -87,19 +113,13 @@ import { cta } from '../../lib/site';
 				<svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true">
 					<path d="M0 0l10 6-10 6z"></path>
 				</svg>
-				Watch · 1 min 51 sec
+				Watch · 2 min 2 sec
 			</span>
 		</div>
 
-		<a
-			href={cta.href}
-			target={cta.target}
-			rel={cta.rel}
-			aria-label={cta.ariaLabel}
-			class="btn-quiet mt-8"
-		>
-			{cta.label}
-		</a>
+		<!-- No CTA here on purpose. This section sits third now, and a Start link
+		     at this depth was one of six competing next-actions. The reader is
+		     still being shown the thing; the ask belongs at the close. -->
 	</div>
 </section>
 

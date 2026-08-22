@@ -1,4 +1,16 @@
 ---
+/**
+ * Four moments, one per link in the chain the hero band draws. It used to be
+ * three and all three sat in the front half (price, order math, margin), which
+ * made the page read as a quoting tool. The manual work being replaced is not
+ * quoting; it is the whole loop, and the buying half is where most of the
+ * retyping actually happens. The fourth moment is the purchase order and the
+ * short delivery, so the problem statement covers the same ground the product
+ * does.
+ *
+ * Order matters: it walks PRICE IN -> ORDER -> BUY -> THE MONTH, the same
+ * direction as the hero band and src/lib/workflow.ts.
+ */
 const moments = [
 	{
 		title: 'You quote from an old price',
@@ -7,6 +19,10 @@ const moments = [
 	{
 		title: 'You rebuild the same order four times',
 		body: 'A head-count change means new recipe math, a new shopping list, a new prep plan, and another pack check.'
+	},
+	{
+		title: 'You retype the list to buy it',
+		body: 'The shopping list becomes an email to each supplier, then a checklist at the dock, then whatever the truck was short.'
 	},
 	{
 		title: 'You learn the margin after service',
@@ -22,11 +38,12 @@ const moments = [
 			<p class="mt-5 max-w-[68ch] text-lede text-ink-soft">
 				A supplier price moves. The client adds forty guests. A case arrives short. Each
 				change creates another place to retype the math, another sheet that can disagree,
-				and another chance to find the mistake when the kitchen can least afford it.
+				and another chance to find the mistake when the kitchen can least afford it. The
+				quote is only the first of them.
 			</p>
 		</div>
 
-		<ul role="list" class="mt-10 grid gap-8 md:grid-cols-3 md:gap-10">
+		<ul role="list" class="mt-10 grid gap-8 sm:grid-cols-2 md:gap-10 lg:grid-cols-4">
 			{
 				moments.map((moment, index) => (
 					<li class="border-t border-ticket-rule pt-5" data-reveal style={`--reveal-delay: ${index * 70}ms`}>

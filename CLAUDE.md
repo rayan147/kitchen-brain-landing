@@ -1,8 +1,10 @@
 # CostCook Landing
 
 Marketing one-pager for CostCook (back-of-house software for small caterers).
-Single goal: book 15-minute demos. Fully static Astro + Tailwind v4, deployed
-to Vercel on every merge to `main`.
+Single goal: start the 15-day free trial. The booking link (`demoCta`) is the
+one quiet alternative for a visitor who will not start cold, never a second
+primary action. Fully static Astro + Tailwind v4, deployed to Vercel on every
+merge to `main`.
 
 ## Design Context
 
@@ -53,6 +55,9 @@ screenshots in perspective frames, dark "developer tool" landing pages.
    follow element radius. The sr-only demo transcript must match the footage.
 5. **One slot, one claim.** Each section owns one promise, and every path
    to conversion points at one place: the primary CTA's label and target
-   (`cta`) live in `src/lib/site.ts`, and quiet mid-page links reference
-   `cta.href` with shorter contextual labels ("Book 15 minutes"). New
-   booking links must not hardcode the anchor or invent new labels.
+   (`cta`) live in `src/lib/site.ts`, and every `btn-primary` on the homepage
+   renders `cta.label` verbatim. The homepage opens and closes on the same
+   action; `check-landing-claims.mjs` fails the build if either primary drifts
+   or if the close ships the demo link as a second primary. Quiet secondaries
+   are capped at two ("Book 15 minutes", "See every shipped feature"). New
+   links must not hardcode the anchor or invent new labels.

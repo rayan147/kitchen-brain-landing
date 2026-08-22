@@ -9,8 +9,12 @@ export const site = {
 	email: 'rayan@costcook.io',
 	phone: '973-870-6309',
 	phoneHref: 'tel:+19738706309',
-	// TODO(owner): add your last name to the signature.
-	founderName: 'Rayan',
+	/* Full name, because it signs the provenance section: a page whose pitch is
+	   "built by a chef, not a software company" is making an accountability
+	   claim, and half a name is a weaker one. The CTAs stay first-name
+	   ("Contact Rayan") on purpose. That is the chef-to-chef voice, and it is
+	   the register a reader replies in. */
+	founderName: 'Rayan Ramirez',
 	// ≤60 chars so Google doesn't truncate the audience qualifier.
 	title: 'CostCook: shopping, prep & food cost for caterers',
 	description:
@@ -53,16 +57,20 @@ export const launchPlan = {
 } as const;
 
 /**
- * Section links. Each item ships in the SAME issue as its section, so no
- * dead anchors ever reach production. The footer derives from this array
- * too — it must keep mirroring it, since header links hide below `sm`.
+ * Destinations only. The three in-page anchors that used to live here ("The
+ * problem", "What changes", "Watch it work") were removed: a header that
+ * indexes its own scroll is noise on a one-pager, and it competed with the
+ * single primary CTA sitting beside it.
+ *
+ * `earlyVisible` is the mobile-header budget. Below `md` the header can carry
+ * the wordmark, ONE link, and the CTA pill without crowding; pricing wins that
+ * slot because it is the question a cold-email visitor asks first, and it was
+ * previously unreachable from a phone header entirely. The footer renders the
+ * whole array at every width.
  */
-export const nav: readonly { label: string; href: string }[] = [
+export const nav: readonly { label: string; href: string; earlyVisible?: true }[] = [
 	// Root-relative so the same links resolve from /features too.
-	{ label: 'The problem', href: '/#problem' },
-	{ label: 'What changes', href: '/#outcomes' },
-	{ label: 'Watch it work', href: '/#demo' },
-	{ label: 'Pricing', href: '/pricing' },
+	{ label: 'Pricing', href: '/pricing', earlyVisible: true },
 	{ label: 'Every feature', href: '/features' },
 	{ label: 'Contact', href: contactCta.href }
 ];

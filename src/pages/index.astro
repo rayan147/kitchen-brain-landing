@@ -2,17 +2,47 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/sections/Hero.astro';
 import TheProblem from '../components/sections/TheProblem.astro';
-import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
 import SeeItRun from '../components/sections/SeeItRun.astro';
+import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
+import TheYield from '../components/sections/TheYield.astro';
 import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
-import BookDemo from '../components/sections/BookDemo.astro';
+import StartHere from '../components/sections/StartHere.astro';
 ---
 
+<!--
+  Seven scroll stops, one claim each.
+
+  SeeItRun moved from fourth to third on 2026-08-21. SETTLED BY MEASUREMENT at
+  390x844, so nobody has to re-litigate it:
+
+    What it cost. TheProblem's first pain and its answer in CustomerOutcomes
+    sat 942px apart before (1.12 viewports); they now sit 1,546px apart (1.83).
+    The move cost 604px, or 0.72 viewports, of recall distance.
+
+    What it bought. The proof video moved from 3,155px to 1,897px: 3.7 mobile
+    viewports down to 2.2, a gain of 1.5.
+
+  The pairing reads as 1:1 on paper, but at 390px it was never co-visible: at
+  1.12 viewports the reader has already scrolled a full screen past "you quote
+  from an old price" before "bring the real price back" appears. So the move
+  made a non-adjacency somewhat worse rather than destroying an adjacency. A
+  0.72-viewport loss on recall bought a 1.5-viewport gain on the one element
+  that settles "is this real" for a cold-email skeptic. Bigger gain, softer
+  loss.
+
+  If CustomerOutcomes is ever rewritten so its answers stop mirroring
+  TheProblem's pains one for one, this trade is void and the order is worth
+  re-measuring.
+
+  TheYield returns to the page after sitting unimported. It carries the one
+  argument nothing else here makes and no competitor makes either.
+-->
 <Base>
 	<Hero />
 	<TheProblem />
-	<CustomerOutcomes />
 	<SeeItRun />
+	<CustomerOutcomes />
+	<TheYield />
 	<BuiltForKitchens />
-	<BookDemo />
+	<StartHere />
 </Base>

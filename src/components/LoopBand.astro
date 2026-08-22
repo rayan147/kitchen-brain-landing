@@ -1,0 +1,115 @@
+---
+/**
+ * The core loop, drawn rather than screenshotted.
+ *
+ * WHY THIS REPLACED A SCREENSHOT. The hero used to carry a crop of the
+ * quoted-vs-today panel. It proved one narrow claim (a confirmed quote holds
+ * its price) in the largest slot on the page, while the thing a first-time
+ * reader actually cannot work out is what the product IS: that the whole job
+ * is one chain, and the end of it feeds the front. A cropped panel cannot say
+ * that. This can, in one glance, which is what a hero slot is for.
+ *
+ * WHY THESE SIX STOPS AND NOT src/lib/workflow.ts's FOURTEEN. The fourteen are
+ * the work in the order it happens and they are the right grain for the loop
+ * SECTION, where each one gets a screen beside it. Fourteen labels in a hero
+ * band is a bus map. These six are a condensation of that same order, never a
+ * different chain:
+ *
+ *   PRICE IN                    -> workflow.ts steps 1-2  (PRICE IN, THE DIFFS)
+ *   COST IT                     -> steps 3-5  (THE TARGET, THE PLATE, THE MENU)
+ *   ORDER                       -> steps 6-7  (THE ORDER, THE PRICE)
+ *   SHOP                        -> step 9     (SHOP)
+ *   PREP                        -> step 8     (THE PANS)
+ *   PACK                        -> the pack plan
+ *   return: RECEIVE             -> steps 10-13 (PO OUT ... ON HAND)
+ *
+ * If workflow.ts's order ever changes, this changes with it. Two drawings of
+ * one chain that disagree is worse than no drawing.
+ *
+ * SHOP / PREP / PACK are set in the mono micro-label voice on purpose: that
+ * trio is the brand's own repeated device, and these are the words a caterer
+ * already uses for the sheets they hold.
+ *
+ * NOT AUTOMATION, CONNECTION. The return path says what you paid becomes the
+ * next price. It does not say the software buys, keys, or decides anything:
+ * invoices are reviewed, extracted values are proposals, and price changes are
+ * never silently applied. See the forbidden-claims list in
+ * scripts/check-landing-claims.mjs for why that distinction is guarded.
+ */
+const stops = [
+	{ tag: 'PRICE IN', label: 'A vendor price sheet or invoice' },
+	{ tag: 'COST IT', label: 'Recipes and menus cost themselves' },
+	{ tag: 'ORDER', label: 'A menu plus a head count' },
+	{ tag: 'SHOP', label: 'By supplier, in whole packs' },
+	{ tag: 'PREP', label: 'Scaled batches, whole pots' },
+	{ tag: 'PACK', label: 'Portions, equipment, notes' }
+];
+---
+
+<figure class="mt-12 lg:mt-16">
+	<div class="border-y border-ticket-rule bg-cream px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
+		<!-- The diagram is decorative in its arrows only; the chain itself is a
+		     real ordered list, so a screen reader gets the sequence rather than a
+		     wall of disconnected labels. -->
+		<p class="sr-only">
+			The CostCook loop, in order: a vendor price sheet or invoice comes in, recipes and
+			menus cost themselves, a menu plus a head count becomes an order, the order becomes a
+			shopping list by supplier in whole packs, then scaled prep batches, then the pack
+			plan. Receiving what you bought returns to the start, so the price you actually paid
+			becomes the price the next quote is costed from.
+		</p>
+
+		<ol
+			role="list"
+			class="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-7"
+			aria-hidden="true"
+		>
+			{
+				stops.map((stop, i) => (
+					<li class="relative">
+						{/* The connector is drawn on the item that FOLLOWS the gap, so the
+						    last stop never trails an arrow into empty space. It is hidden
+						    wherever the grid wraps (2- and 3-column), because a horizontal
+						    arrow across a line break points at the wrong neighbour.
+
+						    A glyph, not a hairline. The first cut drew a 12px dashed rule
+						    here and at label size it read as a hyphen stuck to the front of
+						    the word: "---COST IT". An arrow cannot be misread as
+						    punctuation. */}
+						{i > 0 && (
+							<span
+								class="pointer-events-none absolute -top-px -left-[1.35rem] hidden text-sm leading-none text-ink-soft/55 lg:block"
+								aria-hidden="true"
+							>
+								&#8594;
+							</span>
+						)}
+						<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+							{stop.tag}
+						</p>
+						<p class="mt-2 text-sm leading-snug text-ink-soft">{stop.label}</p>
+					</li>
+				))
+			}
+		</ol>
+
+		<!-- The return path. On large screens it reads as a line coming back
+		     under the chain; below that the arrow glyph would point across a
+		     wrapped grid, so it degrades to the same sentence without the rule. -->
+		<div class="mt-8 flex items-center gap-4 border-t border-dashed border-ink-rule/45 pt-5">
+			<span
+				class="font-mono text-eyebrow font-semibold tracking-wide whitespace-nowrap text-ink-soft"
+			>
+				<span aria-hidden="true">&#8629;</span> RECEIVE
+			</span>
+			<p class="text-sm leading-snug text-ink-soft">
+				Tick off what actually arrived, and the price you paid becomes the price the next
+				quote is costed from. You approve it; nothing changes behind your back.
+			</p>
+		</div>
+	</div>
+	<figcaption class="mt-4 text-sm text-ink-soft">
+		<strong class="font-semibold text-ink">One chain, and it closes.</strong> Every step is a
+		screen you already work in. The numbers move between them so you do not.
+	</figcaption>
+</figure>

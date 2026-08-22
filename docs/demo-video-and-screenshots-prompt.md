@@ -1,5 +1,10 @@
 # Prompt — re-record the demo video and add a screenshot section
 
+> **Superseded by [`demo-video-rebuild-2026-08-21.md`](./demo-video-rebuild-2026-08-21.md).** Kept for history. Several
+> instructions below are now wrong: the narration fork it asks you to decide has been
+> settled (no speech track, music optional), and the "Under a minute of the real thing"
+> heading it refers to no longer exists on the page.
+
 Paste everything below the line into a fresh session opened at `/home/rayan147/kitchen-brain-landing`.
 Written 2026-08-01 against the rig as it actually exists on `main`. Read the "What is already true" section before doing anything; several obvious-looking moves are already blocked.
 

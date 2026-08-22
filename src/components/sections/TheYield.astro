@@ -1,100 +1,31 @@
 ---
-// The one piece of arithmetic that gets a section to itself.
+// The one piece of arithmetic that gets a section to itself: the trim is
+// charged where it happens, and it moves the QUANTITY as well as the money.
 //
-// It sits after the chain, not inside it: yield is a mechanism the whole loop
-// leans on rather than a step you perform, and folding it in as step 4b made
-// the chain stop moving. Here it reads as "and here is the part that is
-// actually hard", which is what it is.
+// COMPRESSED 2026-08-21 from the 234-line version that sat unimported. That
+// version argued three layers deep (you set it / it offers a USDA reference /
+// it learns from what you buy) plus a five-rule refusals panel. Two reasons
+// only layer one survived:
 //
-// EVERY CLAIM BELOW IS READ OFF THE CODE, not off a feature list. Verified on
-// develop 2026-08-02:
+//   1. One claim per section. The page is a billboard; the depth belongs on
+//      /features, which is what /features is for.
+//   2. TRUTH PASS. docs/release-claim-ledger.md backs the yield-on-the-line
+//      claim at RC-16 (ingredients carry yield and conversions) and RC-19
+//      (recipe lines show used, yield, to-buy, prep and cost contribution).
+//      It does NOT carry a row for the USDA reference chip or for learned
+//      yield. Those claims came off the page rather than onto the ledger.
 //
+// Read off the code, verified on develop 2026-08-02 and unchanged:
 //   core/engine.ts, ingredientLineQty()
 //     `ap = ep / yieldFraction(line.yieldPct, recipeName)`, and its comment
-//     says both expansion and costing call it "so yield/conversion behavior can
-//     never diverge between them". That is the load-bearing claim of this whole
-//     section: the yield moves the QUANTITY, not just the money. A tool that
-//     gets the cost right and the quantity wrong still leaves you short at 5am.
-//
+//     says both expansion and costing call it "so yield/conversion behavior
+//     can never diverge between them". That is the load-bearing claim here:
+//     the yield moves the quantity, not just the money. A tool that gets the
+//     cost right and the quantity wrong still leaves you short at 5am.
 //   server/db/schema.ts:114
 //     `defaultYieldPct: real('default_yield_pct').notNull().default(100)`.
-//     Nothing is assumed. Every yield is 100 percent until a human sets it,
-//     which is why the copy says so rather than implying a stocked database.
-//
-//   components/ui/ReferenceChip.svelte
-//     sourceLabel = 'USDA reference'. A suggestion that names its source and
-//     applies only on tap.
-//
-//   core/learned-recipe-yield.ts
-//     MIN_LEARNED_YIELD_EVENTS = 5, LEARNED_YIELD_DIRECTION_TOLERANCE = 0.05,
-//     LEARNED_YIELD_DIRECTION_AGREEMENT = 0.8, materiality checked through
-//     packsForNeed, and "Price is intentionally absent: a supplier move can
-//     never create this signal." The 5-event floor carries the comment "one
-//     unusual night cannot establish a recipe pattern".
-//
-//   components/recipes/LearnedYieldReview.svelte:108
-//     The limitation sentence, quoted VERBATIM below. It is quoted rather than
-//     paraphrased on purpose: a product that publishes the limits of its own
-//     inference is making the strongest available argument that the rest of its
-//     numbers are honest, and paraphrasing would cost that nothing but soften it.
-//
-// NOT SHOWN, and the section says so: the learned-yield review panel itself.
-// It needs five or more clean events on one recipe and the walkthrough seed has
-// three orders, so there is no honest capture of it. Recipes 1, 2, 3 and 5 were
-// all checked on the running instance. A mocked screen here would undercut the
-// exact claim the section is making.
-
-/**
- * The three layers, shallowest first. Deliberately in this order: the reader
- * has to accept that trim is charged at all before "it also suggests a number"
- * means anything, and both of those before a paragraph about what the software
- * refuses to do on thin evidence can land as restraint rather than as excuses.
- */
-const layers = [
-	{
-		tag: 'YOU SET IT',
-		title: 'The yield lives on the line, and you can always overrule it',
-		body: 'Every ingredient starts at 100 percent, which is to say the software assumes nothing about your kitchen until somebody tells it something. Set a yield on a recipe line and two things move together: what the plate costs, and how much you buy. They are computed by the same function, so they cannot drift apart.'
-	},
-	{
-		tag: 'IT OFFERS',
-		title: 'It suggests a number and names where the number came from',
-		body: 'Where a reference figure exists it is offered beside the field, labelled as what it is, a USDA reference. You tap it or you ignore it. Nothing is ever filled in behind your back, because a yield you did not choose is a number you will not trust at the moment it matters.'
-	},
-	{
-		tag: 'IT LEARNS',
-		title: 'And it watches what you actually buy, quietly',
-		body: 'After five or more clean events on a recipe, if four in five missed the same way and the difference is worth a whole pack, it asks. Your sheet says this batch needs eight pounds; you have been buying nine and a half; update the yield? It shows you the events it counted. It never changes anything on its own.'
-	}
-];
-
-/**
- * What it refuses to do, which is the actual differentiator. Every other tool
- * says it learns. Almost none say what they will not conclude, and the
- * thresholds below are the interesting part of the design.
- */
-const refusals = [
-	{
-		rule: 'Five events, minimum',
-		why: 'One unusual night cannot establish a recipe pattern.'
-	},
-	{
-		rule: 'Four in five agreeing',
-		why: 'A split result is noise, and noise is not evidence of anything.'
-	},
-	{
-		rule: 'Within five percent is nothing',
-		why: 'A line that close to its sheet is neutral, not a direction.'
-	},
-	{
-		rule: 'Worth a whole pack, or silence',
-		why: 'If correcting it would not change what you buy, it is not worth your attention.'
-	},
-	{
-		rule: 'Price is not part of the signal',
-		why: 'A supplier putting their price up can never look like a yield problem.'
-	}
-];
+//     Nothing is assumed until a human sets it, which is why the copy says so
+//     rather than implying a stocked database.
 ---
 
 <section id="yield" class="container-page border-t border-hairline py-section">
@@ -108,127 +39,67 @@ const refusals = [
 		<p class="mt-5 text-ink-soft">
 			Most sheets handle this by adding ten percent for waste at the end. That is about
 			right on average and wrong on every line. Shallots do not behave like a case of
-			romaine, and the two errors do not cancel out. They move your real cost somewhere
-			you cannot see it.
+			romaine, and the two errors do not cancel out. Set the yield on the recipe line
+			instead and two things move together: what the plate costs, and how much you buy.
+			The same function computes both, so they cannot drift apart. Every ingredient
+			starts at 100 percent until somebody tells it otherwise.
 		</p>
 	</div>
 
 	<!-- The screenshot leads rather than illustrates: three columns in one row
 	     make the argument faster than the paragraph above can, and a reader who
-	     stops here has still got the point. -->
+	     stops here has still got the point.
+
+	     RECAPTURED 2026-08-21 from the same demo world and the same capture run
+	     as the homepage video, so a reader who watches the film and then studies
+	     this figure sees one kitchen and one set of numbers. The pair that was
+	     here before came from a seed generation that no longer exists, which is
+	     also why it was three weeks staler than everything else in public/proof:
+	     the app repo's @landing test regenerated every other crop and not this
+	     one. It produces `yield-lines` now. See scripts/demo-video/README.md.
+
+	     ALT TEXT IS A CLAIM, NOT A LABEL. It is read in place of the image, so
+	     it is prospect-facing copy under every rule in CLAUDE.md and a truth-pass
+	     surface. If the capture moves, it is rewritten from the new image, along
+	     with the figcaption and the width/height attributes. -->
 	<figure class="mt-10" data-reveal>
-		{/* The phone crop stops after PREP on purpose. At 390 the table is wider
-		    than its scroll container, so a full-width capture shears the cost
-		    column into "$0.3" and the word "cost" running down the side — a
-		    picture of a scrollbar position rather than of a table. The three
-		    columns this section is about are the first three, so nothing the
-		    argument needs is lost. See e2e/.scratch/shot-yield.mjs in the app repo. */}
+		{/* The phone figure is ONE line, not a crop of the table. Below 960px the
+		    app stops rendering these as a table at all and gives each line its own
+		    card, so there is no cost column to shear (the old failure: at 390 a
+		    full-width capture sheared "$0.33" into "$0.3" with the word "cost"
+		    running down the side). Roma tomato because it is the line where the
+		    argument is plainest: 60 g in the pot, 66 g on the list. */}
 		<img
 			src="/proof/yield-lines-mobile.png"
-			alt="A recipe lines table on a phone, cropped to its first five columns: ingredient, used (EP), yield, to buy (AP) and prep. Roma tomato uses 110 grams at 91 percent yield, so 121 grams are bought, cored and wedged. Cucumber uses 0.4 each at 90 percent, peeled into half-moons. Red onion uses 25 grams at 88 percent, so 28 grams are bought, shaved thin. Feta uses 45 grams at 100 percent, so used and bought match."
-			width={664}
-			height={1036}
+			alt="One recipe line on a phone. Roma tomato, cored and wedged, 17 cents. Used in recipe 60 grams. Trim yield 91 percent. Required to buy 66 grams. Share of plate cost 12 percent."
+			width={1074}
+			height={1074}
 			loading="lazy"
 			decoding="async"
-			class="h-auto w-full border border-hairline bg-paper shadow-ticket sm:hidden"
+			class="mx-auto h-auto w-full max-w-[358px] border border-hairline bg-paper shadow-ticket sm:hidden"
 		/>
-		{/* 982px is 1:1 for a 2x capture. The width/height attributes carry the FILE
-		    size, not the CSS size. Declaring the CSS size there happened to keep the
-		    aspect ratio right, so nothing shifted and the only symptom was the table
-		    rendering at half scale with nothing obviously wrong.
-		    (This comment lives outside the attribute list on purpose: Astro parses a
-		    block comment placed among attributes AS attributes.) */}
+		{/* 1136px is 1:1 for a 2x capture. The width/height attributes carry the FILE
+		    size, not the CSS size. (This comment lives outside the attribute list on
+		    purpose: Astro parses a block comment placed among attributes AS
+		    attributes.) */}
 		<img
 			src="/proof/yield-lines.png"
-			alt="A recipe lines table with columns for ingredient, used (EP), yield, to buy (AP), prep and cost. Roma tomato: 110 grams used, 91 percent yield, 121 grams to buy, cored and wedged, $0.33, 21 percent of plate cost. Cucumber: 0.4 each at 90 percent, peeled into half-moons, $0.49. Red onion: 25 grams used, 88 percent yield, 28 grams to buy, shaved thin, $0.06. Feta at 45 grams, olive oil at 12 millilitres and oregano at 1 gram are all 100 percent, so used and bought match. Base cost is $1.60."
-			width={1964}
-			height={988}
+			alt="A recipe lines table with columns for ingredient, used, yield, to buy, prep and cost. Bell pepper: 0.25 each used at 82 percent yield, seeded and large diced, $0.28, 21 percent of plate cost. Cucumber: 0.3 each at 90 percent, peeled into half-moons, $0.38. Roma tomato: 60 grams used, 91 percent yield, 66 grams to buy, cored and wedged, $0.17. Red onion: 20 grams used, 88 percent yield, 23 grams to buy, shaved thin, $0.03. Feta at 30 grams, olive oil at 15 millilitres and oregano at 1 gram are all 100 percent, so used and bought match. Base cost is $1.36."
+			width={2272}
+			height={1370}
 			loading="lazy"
 			decoding="async"
-			style="width: 982px; max-width: 100%"
+			style="width: 1136px; max-width: 100%"
 			class="hidden h-auto border border-hairline bg-paper shadow-ticket sm:block"
 		/>
+		{/* "Three columns in one row" was the old caption and it is only true of the
+		    desktop figure. Below sm: the figure is one card, and a caption naming
+		    columns that are not there is the kind of small lie a reader on a phone
+		    catches instantly. The line reads correctly under both. */}
 		<figcaption class="mt-4 max-w-2xl text-ink-soft">
-			Used, yield, bought. Three columns in one row: the pot needs 110 grams of tomato,
-			the tomato gives up 91 percent of itself, so 121 grams goes on the list. The
-			difference is small on one plate and it is a case at two hundred.
+			Used, yield, bought. The pot needs 60 grams of tomato, the tomato gives up
+			91 percent of itself, so 66 grams goes on the list. The difference is small on
+			one plate and it is a case at two hundred.
 		</figcaption>
 	</figure>
-
-	<ol role="list" class="mt-14" data-reveal>
-		{
-			layers.map((layer, i) => (
-				<li class="border-t border-hairline-strong py-7 lg:py-8">
-					<div class="grid gap-x-10 gap-y-3 lg:grid-cols-[3fr_5fr]">
-						<div class="flex items-baseline gap-3">
-							<span
-								class="font-mono text-eyebrow font-semibold tabular-nums text-ink-soft"
-								aria-hidden="true"
-							>
-								{String(i + 1).padStart(2, '0')}
-							</span>
-							<div>
-								<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-									{layer.tag}
-								</p>
-								<h3 class="mt-2 text-h3 font-semibold">{layer.title}</h3>
-							</div>
-						</div>
-						<p class="max-w-xl text-ink-soft lg:pt-1">{layer.body}</p>
-					</div>
-				</li>
-			))
-		}
-	</ol>
-
-	<!-- The refusals get the softgreen panel, which is the page's device for "read
-	     this bit". Marketing the restraint rather than the intelligence is the
-	     whole play: every tool claims to learn, and the thresholds are what
-	     separate a suggestion worth reading from a machine that nags. -->
-	<div class="mt-14 bg-softgreen p-8 lg:p-10" data-reveal>
-		<h3 class="text-h3 font-semibold">What it refuses to conclude</h3>
-		<p class="mt-3 max-w-prose text-ink-soft">
-			Five conditions, all of which have to hold before it will say a word. They are the
-			reason a suggestion from this thing is worth reading.
-		</p>
-		<dl class="mt-8 grid gap-x-16 gap-y-6 lg:grid-cols-2">
-			{
-				refusals.map((item) => (
-					<div class="flex gap-3">
-						<span
-							class="mt-2.5 size-1.5 shrink-0 rotate-45 bg-amber-deep"
-							aria-hidden="true"
-						/>
-						<div>
-							<dt class="font-semibold">{item.rule}</dt>
-							<dd class="mt-1 text-ink-soft">{item.why}</dd>
-						</div>
-					</div>
-				))
-			}
-		</dl>
-	</div>
-
-	<div class="mt-14 max-w-prose" data-reveal>
-		<h3 class="text-h3 font-semibold">And it tells you what it cannot know</h3>
-		<p class="mt-4 text-ink-soft">
-			This is the app&rsquo;s own wording, on its own screen, about its own suggestion:
-		</p>
-		<!-- Quoted verbatim from LearnedYieldReview.svelte. If that string ever
-		     changes, this changes with it or it comes off the page. A product
-		     quoting itself inaccurately about its own honesty is worse than not
-		     making the claim. -->
-		<blockquote
-			class="mt-5 border-l-2 border-amber-deep pl-5 text-lede text-ink-soft italic"
-		>
-			This is inferred from buying per planned batch. It can include over-portioning or
-			extra batches that were not recorded; it is not a measurement of what went into one
-			batch.
-		</blockquote>
-		<p class="mt-5 text-ink-soft">
-			It could have said nothing. Anyone sharp enough to spot that limit was going to
-			spot it in the demo anyway, and a number that admits what it is built on is the
-			only kind worth putting a price on.
-		</p>
-	</div>
 </section>

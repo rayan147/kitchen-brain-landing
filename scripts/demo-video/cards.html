@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- Title and end cards for the demo cut. Rendered by capture-silent.mjs at
+     1600x1000 via file://cards.html?card=title | ?card=end, which is the
+     capture size: a 1280x800 card in a 1600x1000 frame letterboxes itself
+     against the encoder's white.
+
+     Same visual world as the landing page on purpose: cream paper, Fraunces
+     display, dashed ticket rule, the SHOP · PREP · PACK micro-label. The
+     footage in between is the app, which looks like an app; these two frames
+     are the only place the film gets to sound like the page.
+
+     THE END CARD'S CTA IS NOT WRITTEN HERE. capture-silent.mjs reads
+     `cta.label` out of src/lib/site.ts and writes it into [data-cta-label]
+     before the frame is taken. The homepage has exactly one primary action and
+     check-landing-claims.mjs fails the build if a second appears; a video that
+     closes on a different ask is the same mistake somewhere no guard can look.
+     This card used to read "Book a 15-min demo", which is the quiet secondary. -->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			* {
+				margin: 0;
+				box-sizing: border-box;
+			}
+			@font-face {
+				font-family: 'Fraunces Variable';
+				src: url('../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2')
+					format('woff2-variations');
+				font-weight: 100 900;
+			}
+			@font-face {
+				font-family: 'Instrument Sans Variable';
+				src: url('../../node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2')
+					format('woff2-variations');
+				font-weight: 400 700;
+			}
+			body {
+				width: 1600px;
+				height: 1000px;
+				background: #faf5ea;
+				position: relative;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				padding: 108px 120px;
+				font-family: 'Instrument Sans Variable', sans-serif;
+				color: #1f2421;
+			}
+			.diamond {
+				position: absolute;
+				right: 110px;
+				top: 150px;
+				width: 380px;
+				height: 380px;
+				background: #b9762a;
+				opacity: 0.07;
+				transform: rotate(45deg);
+				border-radius: 18px;
+			}
+			img.lockup {
+				height: 84px;
+				align-self: flex-start;
+			}
+			h1 {
+				font-family: 'Fraunces Variable', serif;
+				font-weight: 600;
+				font-size: 78px;
+				line-height: 1.06;
+				max-width: 1160px;
+				letter-spacing: -0.012em;
+				text-wrap: balance;
+			}
+			.rule {
+				border-top: 3px dashed #e4d3b4;
+				padding-top: 30px;
+				font-family: ui-monospace, monospace;
+				font-size: 26px;
+				font-weight: 600;
+				color: #2f7d5b;
+				letter-spacing: 0.06em;
+			}
+			.cta-row {
+				display: flex;
+				align-items: center;
+				gap: 34px;
+			}
+			.pill {
+				background: #2f7d5b;
+				color: #fff;
+				font-weight: 600;
+				font-size: 34px;
+				padding: 20px 42px;
+				border-radius: 999px;
+			}
+			.site {
+				font-family: 'Fraunces Variable', serif;
+				font-weight: 600;
+				font-size: 46px;
+				color: #1f2421;
+			}
+			[data-card] {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="diamond"></div>
+
+		<!-- The page's own h1, near enough. The card that shipped before this one
+		     said "A catering order goes in. Your shopping list, prep, and food
+		     cost come out.", which predates the current claim: the page argues
+		     the whole chain and one entry, not an in-and-out box. -->
+		<div data-card="title" style="display: none; flex-direction: column; gap: 46px">
+			<img class="lockup" src="../../public/brand/costcook-lockup.svg" />
+			<h1>Cost it, buy it, prep it, pack it. Enter the numbers once.</h1>
+		</div>
+
+		<div data-card="end" style="display: none; flex-direction: column; gap: 42px">
+			<img class="lockup" src="../../public/brand/costcook-lockup.svg" />
+			<h1>One job, quote to shelf. The same numbers the whole way.</h1>
+			<div class="cta-row">
+				<span class="site">costcook.io</span>
+				<span class="pill" data-cta-label>Start CostCook</span>
+			</div>
+		</div>
+
+		<p class="rule">SHOP · PREP · PACK · $ PER PLATE</p>
+
+		<script>
+			const which = new URLSearchParams(location.search).get('card') || 'title';
+			document.querySelector(`[data-card="${which}"]`).style.display = 'flex';
+		</script>
+	</body>
+</html>
