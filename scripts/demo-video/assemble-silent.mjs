@@ -24,6 +24,7 @@
  * volume; run this inside the site container, or point FFMPEG at a host binary.
  */
 import { readFile, mkdir, rm, writeFile } from 'node:fs/promises';
+import { BEATS } from './beats.mjs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
@@ -79,7 +80,25 @@ async function ffmpeg(args) {
 }
 
 const meta = JSON.parse(await readFile(path.join(CUT, 'meta.json'), 'utf8'));
-const ids = Object.keys(meta).sort();
+
+/**
+ * ASSEMBLY ORDER COMES FROM THE STORYBOARD, NOT FROM THE FILENAMES.
+ *
+ * This used to be `Object.keys(meta).sort()`, which is a lexicographic sort of
+ * b0, b1, ... b10 — and 'b10' sorts before 'b2'. The shipped 1:51 cut therefore
+ * played its closing beat (quoted price versus today) third, and the poster
+ * offset, computed with `ids.indexOf(POSTER_BEAT)` against the same wrong
+ * sequence, was not the frame its comment claimed. Ids are zero padded now,
+ * which would have hidden the bug rather than fixed it, so the order is taken
+ * from BEATS instead and the class of bug is gone.
+ *
+ * It is also load-bearing for the multi-event beat: capture-silent.mjs records
+ * that one LAST because submitting it writes three orders to the demo database,
+ * and it belongs in the middle of the cut.
+ */
+const ids = BEATS.map((beat) => beat.id).filter((id) => meta[id]);
+const missing = BEATS.map((b) => b.id).filter((id) => !meta[id]);
+if (missing.length) console.warn(`  ! no footage for ${missing.join(', ')}; assembling without`);
 await rm(WORK, { recursive: true, force: true });
 await mkdir(WORK, { recursive: true });
 
@@ -100,6 +119,16 @@ for (const id of ids) {
 	// -shortest instead is not safe here: anullsrc is an infinite stream, and on
 	// one beat ffmpeg ran the video out to 103 seconds from an 11-second source
 	// rather than stopping at the shorter input.
+
+	// A short dip to white at each end of every beat. The join below is a plain
+	// concat, so this is where the transition has to live: chained xfade filters
+	// need every offset computed from exact durations and one wrong offset
+	// silently drops a beat. Hard cuts between full screens are most of why the
+	// previous cut read as a slideshow, and 0.18s either side is enough to read
+	// as one continuous session without turning into a flicker across twelve
+	// beats. White because the page and the cards are cream paper; a dip to
+	// black would read as a different film.
+	const dip = Math.min(0.18, meta[id].hold / 8);
 	await ffmpeg([
 		'-y',
 		'-ss',
@@ -111,7 +140,9 @@ for (const id of ids) {
 		'-i',
 		'anullsrc=r=48000:cl=stereo',
 		'-vf',
-		`scale=${SIZE},fps=${FPS},format=yuv420p`,
+		`scale=${SIZE},fps=${FPS},format=yuv420p,` +
+			`fade=t=in:st=0:d=${dip.toFixed(2)}:color=white,` +
+			`fade=t=out:st=${(meta[id].hold - dip).toFixed(2)}:d=${dip.toFixed(2)}:color=white`,
 		'-t',
 		String(meta[id].hold.toFixed(2)),
 		'-map',
@@ -138,10 +169,9 @@ for (const id of ids) {
 	console.log(`  trimmed ${id}`);
 }
 
-// Pass 2 — join. A plain concat demuxer cut is used rather than chained xfade
-// filters: xfade needs every offset computed from exact durations, and one
-// wrong offset silently drops a beat. A hard cut between screens reads fine
-// here because each beat is a different screen, not a continuous motion.
+// Pass 2 — join. A plain concat demuxer cut, because each clip already fades
+// out to white and the next fades in from it (pass 1), so the transition is
+// baked into the segments and the join has no offsets to get wrong.
 const listFile = path.join(WORK, 'list.txt');
 await writeFile(listFile, trimmed.map((f) => `file '${f}'`).join('\n'));
 const joined = path.join(WORK, 'joined.mp4');
@@ -250,7 +280,7 @@ console.log('  encoded demo.webm');
 // hardcoded second, so re-timing a beat cannot silently move the poster
 // onto a transition or a half-drawn screen. Taken partway into the beat, after
 // its caption has appeared.
-const POSTER_BEAT = 'b3';
+const POSTER_BEAT = 'b03';
 const posterAt = Math.min(
 	total - 2,
 	ids.slice(0, ids.indexOf(POSTER_BEAT)).reduce((s, id) => s + meta[id].hold, 0) +
@@ -270,4 +300,9 @@ await ffmpeg([
 ]);
 console.log(`  poster at ${posterAt.toFixed(1)}s`);
 
-console.log(`\ndone. total ${total.toFixed(1)}s`);
+const label = `${Math.floor(Math.round(total) / 60)}:${String(Math.round(total) % 60).padStart(2, '0')}`;
+console.log(`\ndone. total ${total.toFixed(1)}s (${label})`);
+console.log(
+	'The chip in SeeItRun.astro, the hero link in Hero.astro and the guard literal\n' +
+		`in check-landing-claims.mjs all have to say ${label}. They have drifted twice.`
+);

@@ -1,57 +1,73 @@
 ---
-import { contactCta, cta, launchPlan } from '../../lib/site';
+import LoopBand from '../LoopBand.astro';
+import { cta, launchPlan } from '../../lib/site';
 ---
 
-<section class="container-page pt-14 pb-section-tight lg:pt-24">
+<!--
+  LAYOUT. One measured column, then a full-container band. The previous version
+  was `grid items-center lg:grid-cols-[7fr_5fr]` with a cropped screenshot in the
+  narrow column: `items-center` centred a short figure against a much taller text
+  column, so the fold rendered as a tall block of type beside a small panel
+  floating in a dead band of its own. Reviewer's words: too much margin, not
+  centred. There is no side column now, so there is nothing to mis-centre.
+
+  WHAT THE FOLD ARGUES. It used to argue one narrow claim (a confirmed quote
+  keeps its price) in the largest slot on the page. That is a good claim and it
+  is the wrong one to lead with: a reader who cannot yet say what the product
+  IS has no use for a guarantee about its edge case. The fold now names the
+  whole chain and draws it, because the manual work being replaced is the chain,
+  not the quote.
+-->
+<section class="container-page pt-14 pb-section-tight lg:pt-20">
+	<div class="mx-auto max-w-3xl text-center">
 	<p class="anim-enter text-sm font-semibold text-amber-deep">
 		Back-of-house software for independent caterers and meal-prep kitchens
 	</p>
-	<div class="mt-5 grid items-center gap-10 lg:grid-cols-[7fr_5fr] lg:gap-16">
-		<div>
-			<h1 class="anim-enter max-w-[21ch] text-[clamp(2.125rem,1.35rem+2.9vw,3.75rem)] leading-[1.06] font-semibold" style="--enter-delay: 70ms">
-				When the guest count changes, the kitchen plan shouldn&rsquo;t start over.
-			</h1>
-			<p class="anim-enter mt-6 max-w-[60ch] text-lede text-ink-soft" style="--enter-delay: 150ms">
-				Enter the menu and guest count once. CostCook scales every recipe, combines the
-				shopping list by supplier, rounds what you buy to whole packs, and builds the prep
-				and pack checklists.
-			</p>
-			<p class="anim-enter mt-4 max-w-[60ch] text-base text-ink-soft" style="--enter-delay: 190ms">
-				See the food cost before you quote. Approve a new supplier price, and future work
-				updates while confirmed events keep the numbers you agreed to.
-			</p>
-			<div class="anim-enter mt-8 flex flex-wrap items-center gap-x-6 gap-y-3" style="--enter-delay: 230ms">
-				<a
-					href={cta.href}
-					target={cta.target}
-					rel={cta.rel}
-					aria-label={cta.ariaLabel}
-					class="btn-primary"
-				>
-					{cta.label}
-				</a>
-				<a href="#demo" class="btn-quiet">Watch the 1:51 product tour <span aria-hidden="true">↓</span></a>
-			</div>
-			<p class="anim-enter mt-5 text-sm text-ink-soft" style="--enter-delay: 290ms">
-				<strong class="font-semibold text-ink">{launchPlan.displayPrice}</strong> {launchPlan.billingNote}
-				<a href={contactCta.href} class="btn-quiet ml-2 min-h-11">Questions? Contact Rayan.</a>
-			</p>
-		</div>
 
-		<figure class="anim-enter-settle" style="--enter-delay: 260ms">
-			<img
-				src="/proof/v2-hero-money-mobile.png"
-				alt="A confirmed CostCook order quoted at $26.92 per guest and 39.6 percent food cost, compared with $27.12 per guest and 39.9 percent at today's prices, a 0.7 percent rise."
-				width="978"
-				height="510"
-				fetchpriority="high"
-				decoding="async"
-				class="h-auto w-full bg-paper shadow-ticket"
-			/>
-			<figcaption class="mt-4 max-w-md text-sm text-ink-soft">
-				<strong class="font-semibold text-ink">The quote stays frozen.</strong> Today&rsquo;s price
-				stays visible, so you know what changed without rewriting the event.
-			</figcaption>
-		</figure>
+	<h1
+		class="anim-enter mx-auto mt-5 max-w-[22ch] text-display font-semibold"
+		style="--enter-delay: 70ms"
+	>
+		Cost it, buy it, prep it, pack it. Enter the numbers once.
+	</h1>
+
+	<!-- The lede does NOT re-list the chain: the band below draws it, and saying
+	     it twice pushed the drawing under the fold on a phone. It says why the
+	     chain matters instead. -->
+	<p
+		class="anim-enter mx-auto mt-6 max-w-[54ch] text-lede text-ink-soft"
+		style="--enter-delay: 150ms"
+	>
+		A catering order is one job pretending to be six. Enter the menu and the head count
+		once, and the same numbers run all the way to the pack list and back again.
+	</p>
+
+	<div class="anim-enter mt-8" style="--enter-delay: 230ms">
+		<a
+			href={cta.href}
+			target={cta.target}
+			rel={cta.rel}
+			aria-label={cta.ariaLabel}
+			class="btn-primary"
+		>
+			{cta.label}
+		</a>
+		<!-- The interpolations sit inline: a newline before {expr} is collapsed
+		     away by the compiler, which is how this line shipped reading
+		     "then$49/month" for one build. -->
+		<p class="mx-auto mt-4 max-w-[52ch] text-sm text-ink-soft">
+			<strong class="font-semibold text-ink">{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} per kitchen workspace. Nothing to install.
+		</p>
+		<p class="mt-4 text-sm">
+			<a href="#demo" class="btn-quiet"
+				>Watch the 2:02 product tour <span aria-hidden="true">↓</span></a
+			>
+		</p>
+	</div>
+
+	</div>
+
+	<div class="anim-enter" style="--enter-delay: 300ms">
+		<LoopBand />
 	</div>
 </section>

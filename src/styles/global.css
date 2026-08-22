@@ -41,10 +41,13 @@
 	--font-body: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
 
 	/* Fluid modular scale (minor third-ish, stretched at the top — the brief
-	   asks for big confident type. 4.5rem is what a full-container H1 line
-	   can carry at 2–3 lines; bigger stacks the long headline into a shaft). */
-	/* Mobile floor 2.375rem: the long H1 must not eat half a 390px fold. */
-	--text-display: clamp(2.375rem, 1.2rem + 4.2vw, 4.5rem);
+	   asks for big confident type). */
+	/* One treatment for every page H1. The curve is the one the homepage
+	   headline needs: it is the longest H1 on the site, so it sets the safe
+	   ceiling, and a floor of 2.125rem keeps it from eating half a 390px fold.
+	   Previously the hero hand-rolled this clamp inline while /contact used the
+	   token and /pricing used text-h2 — three treatments for one role. */
+	--text-display: clamp(2.125rem, 1.35rem + 2.9vw, 3.75rem);
 	--text-display--line-height: 1.05;
 	--text-display--letter-spacing: -0.01em;
 	--text-h2: clamp(1.75rem, 1.35rem + 1.8vw, 2.625rem);
@@ -206,8 +209,15 @@
 	&:hover {
 		background: var(--color-green-deep);
 	}
-	&:active {
-		transform: translateY(1px);
+	/* The press nudge is motion, so it obeys the same gate every other register
+	   does. Colour feedback on hover/active is not motion and stays. */
+	@media (prefers-reduced-motion: no-preference) {
+		&:active {
+			transform: translateY(1px);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		transition: background-color 150ms ease-out;
 	}
 }
 
@@ -221,12 +231,13 @@
 	text-underline-offset: 4px;
 	text-decoration-color: var(--color-hairline);
 	transition: text-decoration-color 150ms ease-out;
-	/* 44px touch target: padding grows the hit box and the negative margin
-	   cancels it in layout, so the link sits flush in text flow. A stacked
+	/* 44px touch target (12 + 20 line-box + 12): padding grows the hit box and
+	   the negative margin cancels it in layout, so the link sits flush in text
+	   flow. It read 0.625rem and therefore 40px until 2026-08-21. A stacked
 	   mt-* on the same element still wins the top margin on purpose —
 	   plain utilities sort after @utility blocks. */
-	padding-block: 0.625rem;
-	margin-block: -0.625rem;
+	padding-block: 0.75rem;
+	margin-block: -0.75rem;
 	&:hover {
 		text-decoration-color: var(--color-green);
 	}

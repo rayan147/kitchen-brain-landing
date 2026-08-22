@@ -15,7 +15,7 @@ colors:
 typography:
   display:
     fontFamily: "Fraunces Variable, ui-serif, Georgia, serif"
-    fontSize: "clamp(2.375rem, 1.2rem + 4.2vw, 4.5rem)"
+    fontSize: "clamp(2.125rem, 1.35rem + 2.9vw, 3.75rem)"
     fontWeight: 600
     lineHeight: 1.05
     letterSpacing: "-0.01em"

@@ -3,13 +3,13 @@ import { cta, nav } from '../lib/site';
 import BrandLockup from './BrandLockup.astro';
 ---
 
-<header class="container-page flex items-center justify-between gap-3 pt-5 pb-4 sm:pt-8">
+<header class="container-page flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
 	<BrandLockup href="/" />
 	<nav aria-label="Main">
-		<ul role="list" class="flex items-center gap-5 lg:gap-8">
+		<ul role="list" class="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 lg:gap-x-8">
 			{
 				nav.map((item) => (
-					<li class="hidden lg:block">
+					<li class={item.earlyVisible ? 'block' : 'hidden md:block'}>
 						<a
 							href={item.href}
 							class="inline-flex min-h-11 items-center text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink"
