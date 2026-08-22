@@ -89,12 +89,12 @@ requireText(ledger, '7ceb02dbb67034e507aeb279abb421ddd90df87f', 'release ledger'
 requireText(siteSource, 'href: booking.url', 'booking CTA');
 requireText(siteSource, "target: '_blank'", 'booking CTA');
 requireText(siteSource, "rel: 'noopener noreferrer'", 'booking CTA');
-requireText(publicCopy, 'Watch the 2:02 product tour', 'hero proof link');
+requireText(publicCopy, 'Watch the 2:08 product tour', 'hero proof link');
 requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 36; claim += 1) {
+for (let claim = 1; claim <= 37; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 

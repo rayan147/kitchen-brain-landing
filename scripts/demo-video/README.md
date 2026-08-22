@@ -50,6 +50,21 @@ and the guard literal in `check-landing-claims.mjs`. They have drifted twice.
 `ffprobe` is not installed here and `ffmpeg-static` does not ship one, so the
 assembler's own figure is the source of truth.
 
+## Two things that are easy to get wrong
+
+**The caption bar is sized for a phone, not for the capture frame.** The cards
+are burned in at 1600px wide, and `SeeItRun.astro` renders the player inside
+`container-page`, which at a 390px viewport leaves the video **350px** wide. A
+40px card therefore arrived at 8.75 CSS px on the device most of this page's
+readers use, which is not small type, it is unreadable type. The bar is 64px
+now. If you change it, do the arithmetic at 350px, not at 1600px, and re-read
+every card afterwards for a third line.
+
+**Dates move with the real clock, not with `HISTORY_SEED_DATE`.** The marquee
+order is seeded three days out from today, so its weekday changes between
+capture runs. A card naming a weekday has to be read off the run that shipped:
+the 2:02 cut said Monday, and the next capture put the same order on Tuesday.
+
 ## Numbers before prose
 
 Every figure on a card must be legible in the frame behind it, and must come

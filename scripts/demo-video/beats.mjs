@@ -29,6 +29,17 @@
  * "and", it is two cards. Six to ten words. Contractions and plain kitchen
  * English. No em-dashes, ever, in any user-facing text on this project.
  *
+ * THE WORD COUNT IS FOR SENTENCES, NOT FOR NUMBERS. "Baldor: $690.82." is four
+ * words and is one of the strongest cards in the cut. A card whose whole job is
+ * to hold up one figure is finished when the figure is up; padding it out to
+ * six words to satisfy a rule written for sentences makes it worse.
+ *
+ * USE THE SCREEN'S OWN NOUNS. Not a synonym, not the word a writer would reach
+ * for. The receiving screen says "3 lb clamshell" and two cards said "case",
+ * so a viewer who read the card and then looked at the app was told one thing
+ * and shown another, in the two beats whose entire subject is that this
+ * software tells you the truth about what the truck did.
+ *
  * The smell test comes second, not first: would a chef say this standing next
  * to you? That is the check. Writing a spoken sentence and trimming it to fit
  * produces exactly the clipped headline voice this is replacing.
@@ -100,6 +111,12 @@
  * @property {string} [suffix]  Appended to the resolved record path, e.g. '/receiving'.
  * @property {string} [scrollTo]   Bring this text into view, keeping what is above it.
  * @property {string} [scrollTop]  Pin this text to the top of the frame, hiding what is above it.
+ * @property {string} [mailpitTo] Frame the capture inbox's message for this
+ *                              recipient, rendered bare through /view/<id>.html
+ *                              instead of inside the mail tool's own UI.
+ * @property {number} [zoom]    Zoom applied to the page's own <main> after load.
+ *                              NOT to documentElement, which would scale the
+ *                              injected overlay with it.
  * @property {string} [prepare] Named setup routine in capture-silent.mjs, run
  *                              before the first kept frame.
  * @property {boolean} [captureLast] Record after every other beat, whatever
@@ -126,7 +143,15 @@ export const BEATS = [
 		// at stake, and every beat after it reads as a feature rather than a step.
 		id: 'b01',
 		path: '/orders/list',
-		cards: [{ text: 'A year of jobs, and the next one is Monday.', hold: 4.4 }],
+		cards: [
+			{ text: 'A year of jobs on the books.', hold: 2.2 },
+			// READ THIS OFF THE SCREEN EVERY TIME. The marquee order is seeded
+			// three days out from the real clock, NOT from HISTORY_SEED_DATE, so
+			// the weekday moves between capture runs: the shipped cut said Monday
+			// because it was recorded on the 21st, and the very next capture put
+			// the same order on "Tue, Aug 25".
+			{ text: 'The next one is Tuesday.', hold: 2.2 }
+		],
 		moves: [
 			{ at: 1.6, act: 'ring', row: 'Alvarez-Whitman', pad: 4 },
 			{ at: 4.6, act: 'ringOff' }
@@ -142,12 +167,27 @@ export const BEATS = [
 		// minute and very few viewers reach the second.
 		id: 'b02',
 		useOrder: true,
+		// WITHOUT THIS THE CARD IS CONTRADICTED BY ITS OWN FRAME. The marquee
+		// order is confirmed by the app repo's capture spec (the receiving and
+		// purchase-order beats need it to be), so the top of the order page
+		// carries a "Confirmed · quantities frozen" badge at y=140 while the last
+		// card of this beat says "This is before the quote goes out." Anchoring
+		// on the totals panel pushes the badge to y=-83, off the top of the
+		// frame, and every figure this beat rings is still in it.
+		scrollTop: 'Live totals',
 		cards: [
 			{ text: '180 guests at $68 is $12,240 in the door.', hold: 4.4 },
-			{ text: 'The food costs $4,847.96.', hold: 3.8 },
+			{ text: 'Food on that job: $4,847.96.', hold: 3.8 },
 			{ text: '39.6 percent food cost. You wanted 30.', hold: 4.2 },
-			{ text: 'It wants $89.78 a head.', hold: 3.6 },
-			{ text: 'You know that before the quote goes out.', hold: 4.0 }
+			// "It wants $89.78 a head" was the weakest card carrying the strongest
+			// number. "It" is the software, and nobody cares what the software
+			// wants; they care what they have to charge. The screen reads "Charge
+			// at least $89.78 per guest to meet the 30% target" (RC-05).
+			{ text: 'Charge $89.78 a head to hit 30.', hold: 3.6 },
+			// Was "You know that before the quote goes out." — "that" points back
+			// at a card which by then has left the screen, and there is no voice
+			// to carry the reference across.
+			{ text: 'This is before the quote goes out.', hold: 4.0 }
 		],
 		moves: [
 			{ at: 1.2, act: 'ring', text: '^Revenue$', up: 1, pad: 10 },
@@ -168,7 +208,7 @@ export const BEATS = [
 		scrollTop: 'Baldor',
 		cards: [
 			{ text: 'The same order is already a shopping list.', hold: 4.0 },
-			{ text: 'By vendor, in the packs you actually buy.', hold: 4.0 },
+			{ text: "It's by vendor, in the packs you actually buy.", hold: 4.0 },
 			{ text: 'Baldor: $690.82.', hold: 3.4 }
 		],
 		moves: [
@@ -199,11 +239,50 @@ export const BEATS = [
 		path: '/orders/new',
 		prepare: 'threeEvents',
 		captureLast: true,
+		//
+		// WHAT WAS WRONG WITH THE SHIPPED VERSION, because it was three faults at
+		// once and the owner saw all three as "it just flashes":
+		//
+		//   1. The cards went blank for two seconds after the submit. A click
+		//      that navigates destroys the injected overlay and `inject` rebuilt
+		//      it EMPTY, so any card still mid-hold died with the page. Fixed in
+		//      capture-silent.mjs, which now restores the current card.
+		//   2. "Pack stays split by event" played its whole 3.6s over the SHOP
+		//      tab. The Pack click was scheduled at 11.4s and the card ended at
+		//      11.4s, so the one claim that needed a picture never had one.
+		//   3. All three rings were mistargeted: the first onto an element
+		//      clipped by the top of the frame, the second onto a page heading
+		//      while its card talked about a total, the third onto a table header
+		//      row instead of the by-event cells underneath it.
+		//
+		// `scrollTop` is new and load-bearing. The prepare routine finishes by
+		// clicking a date picker inside Event 3, which leaves the form scrolled
+		// to its own bottom, so the beat opened on Event 2 and Event 3 with the
+		// run header and the totals panel out of frame entirely. The cut spends
+		// ninety seconds following one wedding and the single beat claiming
+		// "three events" had no evidence of three anything on screen.
+		//
+		// THE ANCHOR IS THE TOTALS PANEL, NOT THE RUN HEADER, and the two are
+		// mutually exclusive: the header's top and the "280" guest figure are 768
+		// apart, which is exactly the height of the frame above the caption bar,
+		// so no scroll position holds both. The panel wins because it is the only
+		// thing on the page that proves the claim. Measured, not guessed:
+		//   anchor "Production run total" -> Events/Guests row y=711..759 (clear),
+		//   "Estimated margin" y=815..835 (behind the bar, and it must stay there:
+		//   the ledger excludes margin claims and no card here makes one).
+		scrollTop: 'Production run total',
 		cards: [
-			{ text: 'Three events the same week? Plan them as one run.', hold: 4.0 },
-			{ text: 'Shop and prep are totalled together.', hold: 3.8 },
-			{ text: 'Pack stays split by event.', hold: 3.6 },
-			{ text: 'You still confirm and buy each order on its own.', hold: 4.2 }
+			{ text: 'Three events the same week? Plan them as one run.', hold: 4.2 },
+			{ text: 'Three events, 280 guests, one run.', hold: 3.4 },
+			// Was "Shop and prep are totalled together." Totalled is an
+			// accountant's word for a card read by a cook.
+			{ text: 'You shop and prep for all three at once.', hold: 4.4 },
+			{ text: 'Pack stays split. One stack per event.', hold: 4.4 },
+			// The scope limit, and it now reads as the design decision it is
+			// rather than as an apology for a shortfall. One button firing POs
+			// across three jobs is how a vendor gets a full order for a wedding
+			// that was postponed this morning. See RC-36.
+			{ text: 'Each job still gets its own confirm and its own PO.', hold: 4.0 }
 		],
 		// KNOWN, AND LEFT ALONE: the Live quote panel prices event 1 at $4,883.40
 		// of food, while the money beat above reads $4,847.96 for the same
@@ -213,34 +292,79 @@ export const BEATS = [
 		// the quote-panel figure, and the transcript names neither. If a card ever
 		// does, the two have to be reconciled on screen or the beat has to be
 		// framed to keep them apart.
+		// Every ring here lands on data, never on a heading or a header row, and
+		// the submit is now watchable: the button is scrolled into frame, the
+		// cursor travels to it, and only then does it click. Previously the
+		// cursor was parked at the top of the frame from the opening ring and
+		// never moved, so the form simply became another page between two
+		// frames and the creation the beat is about was never shown at all.
+		// Measured against the real page at 1600x1000, not guessed. The submit
+		// button sits ABOVE the run header, so after `scrollTop` it is off the top
+		// of the frame and has to be scrolled back to; the two Pack rings are two
+		// different dishes going to two different events, which is the only way a
+		// still frame can prove "split by event" — one row shows one event, and
+		// the ring sliding between two rows shows the split itself.
+		//
+		// The last card gets no ring on purpose. It is the scope limit, it is
+		// about what the combined run does NOT do, and there is nothing on screen
+		// to point at.
 		moves: [
-			{ at: 1.0, act: 'ring', text: '3 events in this run', up: 1, pad: 8 },
-			{ at: 5.6, act: 'click', role: 'button', name: 'Create 3 orders', reinject: true },
-			{ at: 9.6, act: 'ringOnly', text: 'orders created together', up: 1, pad: 8 },
-			{ at: 11.4, act: 'click', role: 'link', name: '^3 · Pack$|^Pack$', reinject: true },
-			{ at: 14.0, act: 'ringOnly', text: 'By event', up: 2, pad: 8 },
-			{ at: 17.8, act: 'ringOff' }
+			// One ring, held across both opening cards, on the Events/Guests row:
+			// "Events 3, Guests 280" and nothing else. Ringing the whole totals
+			// panel one parent up would frame y=659..951, whose bottom half is
+			// behind the caption bar and whose contents include the margin figure.
+			{ at: 1.2, act: 'ring', text: '^Events$', up: 1, pad: 10 },
+			{ at: 8.0, act: 'scroll', text: 'Create 3 orders', offset: -160, ms: 900 },
+			{ at: 9.0, act: 'cursor', role: 'button', name: 'Create 3 orders' },
+			{ at: 9.8, act: 'click', role: 'button', name: 'Create 3 orders', reinject: true },
+			{ at: 11.4, act: 'ringOnly', text: '^BALDOR$|^Baldor$', up: 1, pad: 8 },
+			{ at: 12.6, act: 'cursor', role: 'link', name: '^3 · Pack$|^Pack$' },
+			{ at: 13.4, act: 'click', role: 'link', name: '^3 · Pack$|^Pack$', reinject: true },
+			{ at: 14.8, act: 'ringOnly', row: 'Braised Short Rib', pad: 6 },
+			{ at: 16.6, act: 'ringOnly', row: 'Breakfast Frittata', pad: 6 },
+			{ at: 19.8, act: 'ringOff' }
 		]
 	},
 	{
 		// The inbox IS the product claim here: the purchase orders really send.
 		// Mailpit is the demo's capture inbox, standing in for the vendor's, and
 		// every seeded vendor address is under the reserved example.com.
+		//
+		// `prepare` deletes the sign-in mails first, and it is not cosmetic. The
+		// capture signs in by magic link, so the inbox held seven messages of
+		// which three were "Your CostCook sign-in link", under a card claiming
+		// one message per vendor. There are four vendors. The audience for this
+		// page arrives skeptical and counts; a claim that does not survive
+		// counting the rows on screen is a claim that fails the truth pass.
 		id: 'b05',
 		path: 'http://localhost:8025/',
-		cards: [{ text: 'Confirming really sends them. One per vendor.', hold: 4.2 }]
+		prepare: 'inboxPOsOnly',
+		cards: [{ text: 'Confirm it, and each vendor gets its own PO.', hold: 3.4 }]
 	},
 	{
+		// Mailpit's own message view, NOT the app and not a customer's mail
+		// client, used to put 60% of the frame on the tool and 40% on the thing
+		// being claimed: a dark developer UI with "Delete all" in the sidebar and
+		// a red "HTML Check 79%" badge beside the tab strip. A red failing-looking
+		// percentage next to the feature you are claiming works.
+		//
+		// `mailpitTo` resolves the message by its recipient and renders it bare
+		// through Mailpit's /view/<id>.html route: the purchase order as the
+		// vendor's mail client would draw it, full frame, no tool around it. That
+		// is a closer picture of the claim than the inbox screenshot was, as well
+		// as a legible one. Matched on the vendor address rather than on the PO
+		// number, which embeds the order id and is insertion order in a fresh
+		// database.
 		id: 'b06',
-		path: 'http://localhost:8025/',
-		click: 'PO-\\d{5}-002',
+		mailpitTo: 'greenvalley',
+		zoom: 1.65,
 		cards: [
-			{ text: "This is what Green Valley's inbox gets.", hold: 4.0 },
-			{ text: 'Five items in whole packs. $516.08.', hold: 4.2 }
+			{ text: "This is what Green Valley's inbox gets.", hold: 3.6 },
+			{ text: 'Five items in whole packs. $516.08.', hold: 4.0 }
 		],
 		moves: [
-			{ at: 5.4, act: 'ring', text: '^Subtotal$', up: 1, pad: 8 },
-			{ at: 9.0, act: 'ringOff' }
+			{ at: 5.0, act: 'ring', text: '^Subtotal$', up: 1, pad: 8 },
+			{ at: 8.2, act: 'ringOff' }
 		]
 	},
 	{
@@ -250,7 +374,9 @@ export const BEATS = [
 		scrollTop: 'Arugula',
 		cards: [
 			{ text: 'The truck is never perfect.', hold: 3.4 },
-			{ text: 'One case of arugula short, and it is written down.', hold: 4.6 }
+			// The screen: "Received 3 of 4 × 3 lb clamshell" and "1 × 3 lb clamshell
+			// saved for purchasing follow-up". The pack is a clamshell, not a case.
+			{ text: "One clamshell of arugula short. It's on the record.", hold: 4.6 }
 		],
 		moves: [
 			{ at: 4.4, act: 'ring', text: 'Received 3 of 4', pad: 8 },
@@ -264,13 +390,29 @@ export const BEATS = [
 		suffix: '/receiving',
 		scrollTop: 'Baby spinach',
 		cards: [
-			{ text: 'Sixteen cases of spinach came. Fifteen were quoted.', hold: 4.4 },
-			{ text: '$477.16 paid against $410.40 promised.', hold: 4.2 }
+			// This beat shipped with three words that are not on the screen behind
+			// it. The app says "Ordered 15 × 3 lb clamshell · $410.40", "Delivered
+			// 16 × 3 lb clamshell; ordered 15" and "$477.16 received value". It
+			// never says quoted, never says promised, and never says case. Nobody
+			// promised a caterer anything, which is the whole reason the beat
+			// lands: you figured a number, and the truck came in different.
+			{ text: 'You ordered fifteen clamshells of spinach.', hold: 3.6 },
+			{ text: 'Sixteen came off the truck.', hold: 3.0 },
+			{ text: '$477.16 received against $410.40 ordered.', hold: 4.2 }
 		],
+		// NEITHER OF THE OLD TARGETS EXISTED. This beat shipped ringing
+		// 'clamshell extra' and 'Frozen estimate', and the receiving screen
+		// contains neither string, so both moves threw, were swallowed by
+		// runSchedule's catch, and the beat played with no ring at all. Every
+		// string below was read off the live page.
 		moves: [
-			{ at: 1.4, act: 'ring', text: 'clamshell extra', pad: 8 },
-			{ at: 5.8, act: 'ringOnly', text: 'Frozen estimate', up: 1, pad: 10 },
-			{ at: 9.4, act: 'ringOff' }
+			{ at: 1.4, act: 'ring', text: 'Ordered 15 ', pad: 8 },
+			{ at: 5.0, act: 'ringOnly', text: 'Delivered 16 ', pad: 8 },
+			// NOT 'received value': that string is on every receiving row, and
+			// getByText().first() takes the topmost match in the document, which
+			// is the arugula row from the beat before, sitting at y=-71.
+			{ at: 8.4, act: 'ringOnly', text: '477\\.16', up: 1, pad: 10 },
+			{ at: 11.4, act: 'ringOff' }
 		]
 	},
 	{
@@ -281,7 +423,7 @@ export const BEATS = [
 		useIngredient: true,
 		scrollTo: 'Saved price source',
 		cards: [
-			{ text: 'What you paid becomes the live cost.', hold: 4.0 },
+			{ text: 'What you actually paid is now the price.', hold: 4.0 },
 			{ text: '$21.91 a kilo, with the receipt behind it.', hold: 4.2 }
 		],
 		moves: [
@@ -295,8 +437,8 @@ export const BEATS = [
 		useOrder: true,
 		scrollTop: 'Quoted 2026',
 		cards: [
-			{ text: 'Back on the order: you quoted $26.93 a guest.', hold: 4.2 },
-			{ text: 'Today it reads $27.13. Up 0.7 percent.', hold: 4.0 },
+			{ text: 'You quoted this job at $26.93 a guest.', hold: 4.2 },
+			{ text: 'Today the same food costs $27.13.', hold: 4.0 },
 			{ text: 'The quote you sent still holds.', hold: 3.6 }
 		],
 		moves: [
