@@ -66,6 +66,7 @@ Unless a row says otherwise, shipped evidence is read at the demo-base commit an
 | RC-34 | CostCook is sold as one launch subscription per kitchen workspace, managed by the verified owner, with unlimited teammates during launch. | Owner-approved launch model | Subscription launch decision, Better Auth Stripe implementation | Verify pricing, start, checkout, and billing routes against the deployed app. |
 | RC-35 | Label printing and external ordering integrations are in development and are not included in the launch subscription. | Owner-approved release boundary | Release flags and subscription launch decision | Verify both features are absent from included lists and clearly marked in development. |
 | RC-36 | Several events can be planned as one production run: two to twelve events create together and open a combined Shop, Prep and Pack workspace, with pack allocation still shown per event. Confirming an order, freezing its prices and sending its purchase orders all remain per order; the combined run offers on-hand entry only. | Shipped operations | `createOrderBatch` in `src/routes/orders/new/+page.server.ts`; `/orders/batch` "Combined production"; `BatchPackList.svelte` by-event column; `orders/batch/+page.server.ts` exposes only `setOnHand` and `setSubOnHand` | Create two events from `/orders/new`, land on `/orders/batch`, check the Pack tab's by-event column, and confirm no confirm or send action exists there. |
+| RC-37 | Receiving records what the delivery actually was against what was ordered: the pack, the count short or over, and the received value against the ordered value. Nothing on the receiving screen is described as quoted or promised, and the pack noun on any caption must be the pack noun the screen uses. | Shipped purchasing | Order receiving screen: "Ordered 15 x 3 lb clamshell - $410.40", "Delivered 16 x 3 lb clamshell; ordered 15", "$477.16 received value"; RC-26, RC-27 | Read the receiving rows for the marquee order and match every caption noun and verb against them, word for word. |
 
 ## Claims that are intentionally excluded
 
@@ -89,7 +90,7 @@ Do not add these without a new ledger review:
 | Hero | RC-01–RC-08 |
 | Core loop rail | RC-02, RC-26 |
 | Connected chain | RC-02, RC-06–RC-09, RC-26, RC-28 |
-| Product walkthrough | RC-33 |
+| Product walkthrough | RC-33, and every claim its cards make: RC-04, RC-05, RC-08, RC-18, RC-23, RC-24, RC-26–RC-28, RC-36, RC-37 |
 | Guided setup | RC-10–RC-15 |
 | Catalog | RC-16–RC-21 |
 | Operations | RC-03–RC-08, RC-22–RC-25 |
@@ -97,3 +98,4 @@ Do not add these without a new ledger review:
 | Calculation trust | RC-04, RC-20, RC-23, RC-30–RC-32 |
 | Pricing and start | RC-34, RC-35 |
 | Combined production | RC-36 |
+| Receiving language | RC-27, RC-37 |

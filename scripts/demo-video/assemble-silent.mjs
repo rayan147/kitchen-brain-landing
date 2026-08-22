@@ -24,7 +24,7 @@
  * volume; run this inside the site container, or point FFMPEG at a host binary.
  */
 import { readFile, mkdir, rm, writeFile } from 'node:fs/promises';
-import { BEATS } from './beats.mjs';
+import { BEATS, LEAD_IN } from './beats.mjs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
@@ -274,17 +274,36 @@ await ffmpeg([
 ]);
 console.log('  encoded demo.webm');
 
-// Poster: the order's money summary — guests, price per guest, revenue and the
-// food-cost percent all legible in one frame, which is the single most
-// persuasive still in the cut. Derived from the beat offsets rather than a
-// hardcoded second, so re-timing a beat cannot silently move the poster
-// onto a transition or a half-drawn screen. Taken partway into the beat, after
-// its caption has appeared.
-const POSTER_BEAT = 'b03';
+// POSTER: THE FRAME THAT HAS TO SELL A TAP.
+//
+// It used to be the middle of b03, the vendor-grouped shopping list, and the
+// comment here described the money summary instead — the constant and the
+// prose had drifted apart. The shop list is a ten-row table with five columns
+// and twenty-odd numbers, none of them large; at the 350 CSS px the landing
+// page actually renders this player at on a phone it is indistinguishable from
+// a screenshot of a spreadsheet, and it is the least emotional frame in the cut.
+//
+// It is now the middle of the card that names the price: the pricing panel,
+// the ring on "Charge at least $89.78 per guest", with $68.00 and $12,240.00
+// flanking it in the biggest type the cut has. One large number, one ring, one
+// visible stake, and a caterer reading it has to wonder whether their own $68
+// is wrong.
+//
+// Addressed by CARD, not by a fraction of the beat, so re-timing any card in
+// b02 moves the poster with it instead of stranding it on a different claim.
+const POSTER_BEAT = 'b02';
+const POSTER_CARD = 'Charge $89.78 a head to hit 30.';
+const posterBeat = BEATS.find((b) => b.id === POSTER_BEAT);
+const posterCard = posterBeat?.cards.findIndex((c) => c.text === POSTER_CARD) ?? -1;
+if (posterCard < 0)
+	throw new Error(`poster card "${POSTER_CARD}" is not in beat ${POSTER_BEAT} any more`);
+const posterInto =
+	LEAD_IN +
+	posterBeat.cards.slice(0, posterCard).reduce((s, c) => s + c.hold, 0) +
+	posterBeat.cards[posterCard].hold / 2;
 const posterAt = Math.min(
 	total - 2,
-	ids.slice(0, ids.indexOf(POSTER_BEAT)).reduce((s, id) => s + meta[id].hold, 0) +
-		(meta[POSTER_BEAT]?.hold ?? 8) * 0.55
+	ids.slice(0, ids.indexOf(POSTER_BEAT)).reduce((s, id) => s + meta[id].hold, 0) + posterInto
 );
 await ffmpeg([
 	'-y',

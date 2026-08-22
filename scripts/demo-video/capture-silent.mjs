@@ -41,6 +41,9 @@ import { fileURLToPath } from 'node:url';
 import { BEATS, beatLength, runtimeLabel, LEAD_IN } from './beats.mjs';
 
 const APP = process.env.APP ?? 'http://localhost:4181';
+// The demo's capture inbox. Loopback only, and every address it ever holds is
+// under the reserved example.com (demo/README.md in the app repo).
+const MAILPIT = process.env.MAILPIT ?? 'http://localhost:8025';
 const CUT_DIR = path.resolve(process.env.CUT_DIR ?? 'scripts/demo-video/cut');
 const CHROME =
 	process.env.CHROME_PATH ??
@@ -102,18 +105,53 @@ const INJECT_CSS = `
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 2147483646;
   background: #1F2421; color: #F4F6F4;
   font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  font-size: 40px; line-height: 1.3; font-weight: 500;
-  padding: 30px 64px; letter-spacing: -0.012em; min-height: 132px;
+  /* box-sizing is NOT decoration here. Without it min-height is a CONTENT
+     height and the padding is added on top, so the shipped bar was 132 + 60 =
+     192px while every note about it, including the comment above, said 132. Set
+     it, then read min-height as the real height of the bar. */
+  box-sizing: border-box;
+  /* 62px in a 1600px frame is ~13.6 CSS px once SeeItRun.astro draws the player
+     at 350px inside container-page on a 390px phone. The shipped 40px card
+     arrived there at 8.75px, which is not small type, it is unreadable type.
+     min-height covers the tallest card the cut has (two lines: 2 x 76.9 + 72 =
+     226). frame-check.mjs in this directory, run with the "cards" argument,
+     measures every card and flags one that wraps to three, which would make
+     the bar jump between beats. */
+  font-size: 62px; line-height: 1.24; font-weight: 500;
+  padding: 36px 72px; letter-spacing: -0.012em; min-height: 232px;
   display: flex; align-items: center; justify-content: center;
   text-align: center; text-wrap: balance;
 }
+/* THE BAR STAYS PAINTED EVEN WHEN EMPTY, and that is deliberate.
+ *
+ * It was briefly made transparent while empty, on the reasonable note that the
+ * cut spends about nine seconds showing a dark slab with nothing in it during
+ * the lead-ins and tails. Two things killed it. At 200px the bar is a fifth of
+ * the frame, so having it blink out between every card means app content
+ * appearing and vanishing at the bottom edge two dozen times, which is worse
+ * than a steady letterbox. And it is load-bearing for framing: on b04 the bar
+ * is what keeps the Live quote panel's "Estimated margin" figure out of shot,
+ * and the ledger excludes margin claims. A bar that uncovers the bottom of the
+ * frame whenever no card is up would have put that figure on screen twice.
+ */
 #cc-cap span {
-  display: block; max-width: 1120px; margin: 0 auto;
+  display: block; max-width: 1360px; margin: 0 auto;
   opacity: 0; transform: translateY(14px);
   transition: opacity 380ms ease-out, transform 380ms cubic-bezier(.2,.7,.3,1);
 }
 #cc-cap span[data-in] { opacity: 1; transform: none; }
 #cc-cap b { color: #8FD3B0; font-weight: 600; }
+
+/* One pixel, animating forever, so the compositor never runs out of work. See
+   the long note beside #cc-beat in INJECT_DOM for what it is for. It sits at
+   the top-left corner rather than in the caption bar because frame-check's
+   "holds" mode diffs the bar, and this is the check's own subject matter. */
+#cc-beat {
+  position: fixed; top: 0; left: 0; width: 1px; height: 1px;
+  z-index: 2147483647; background: #808080; pointer-events: none;
+  animation: cc-beat 600ms linear infinite alternate;
+}
+@keyframes cc-beat { from { opacity: 0.01; } to { opacity: 0.06; } }
 
 #cc-cursor {
   position: fixed; z-index: 2147483647; width: 26px; height: 26px;
@@ -150,11 +188,61 @@ const INJECT_DOM = () => {
 	const cap = document.createElement('div');
 	cap.id = 'cc-cap';
 	document.body.appendChild(cap);
+	// THE HEARTBEAT, AND IT IS NOT DECORATION.
+	//
+	// A card that sits still over a page that sits still gives the compositor
+	// nothing to composite, and the screencast the video recorder is fed only
+	// produces frames when something is composited. The recorder then writes the
+	// clip at a nominal 25fps regardless, so the idle seconds are simply not in
+	// the file: wall-clock time passes, frames do not, and a 2.6s card arrives on
+	// the page having been on screen for six tenths of a second.
+	//
+	// This was hunted the long way round first. The schedule was instrumented and
+	// every step fired on time. The clip's frame timestamps were dumped and were
+	// a clean 25fps with no gaps. The same beat re-recorded correctly, which made
+	// it look like bad luck rather than a mechanism, and it moved to a different
+	// beat on the next full run. What all the losses had in common was a card
+	// with nothing moving under it.
+	//
+	// One pixel in the top-left corner, animating opacity forever, keeps the
+	// compositor producing frames for the whole cut. Opacity is compositor-only,
+	// so it costs nothing. It is deliberately NOT inside the caption bar:
+	// frame-check's `holds` mode diffs that band, and a ticker in there would be
+	// noise in the one measurement that catches this bug coming back.
+	const beat = document.createElement('div');
+	beat.id = 'cc-beat';
+	document.body.appendChild(beat);
 };
+
+/**
+ * The card currently on screen, so `inject` can put it back.
+ *
+ * A click that navigates destroys the injected overlay, and `inject` rebuilds
+ * it EMPTY. Any card still mid-hold across that navigation therefore vanished,
+ * and nothing appeared until the next card came due. b04 is the only beat that
+ * navigates twice and it lost roughly two seconds of caption each time: the
+ * page changed, the narration went with it, and the beat read as a flash.
+ * Reset per beat by `recordBeat`.
+ */
+let currentCard = '';
 
 async function inject(page) {
 	await page.addStyleTag({ content: INJECT_CSS }).catch(() => {});
 	await page.evaluate(INJECT_DOM).catch(() => {});
+	// Restored with `data-in` already set, NOT through showCard: a card that is
+	// halfway through its hold should still be sitting there after the page
+	// changes, not play its entrance again.
+	if (currentCard)
+		await page
+			.evaluate((t) => {
+				const bar = document.getElementById('cc-cap');
+				if (!bar) return;
+				const line = document.createElement('span');
+				line.textContent = t;
+				line.setAttribute('data-in', '');
+				bar.appendChild(line);
+			}, currentCard)
+			.catch(() => {});
 }
 
 async function ready(page) {
@@ -286,6 +374,7 @@ async function scrollToLocator(page, locator, ms, offset) {
  * The outgoing card leaves before the incoming one arrives.
  */
 async function showCard(page, text) {
+	currentCard = text;
 	await page
 		.evaluate(async (t) => {
 			const bar = document.getElementById('cc-cap');
@@ -317,14 +406,33 @@ async function showCard(page, text) {
  * build away from being retried.
  */
 async function runSchedule(steps, t0, beatId) {
-	for (const step of steps) {
+	for (const [i, step] of steps.entries()) {
 		const wait = t0 + step.at * 1000 - Date.now();
 		if (wait > 0) await pause(wait);
+		// A STEP THAT OVERRUNS ITS SLOT EATS THE NEXT CARD'S HOLD, AND THE ONLY
+		// SYMPTOM IS THAT THE CARD FLASHES. Every step here is awaited in order,
+		// so if one takes longer than the gap to the next `at`, the next step
+		// fires late and whatever it replaces was on screen for the difference.
+		// A 2.6s card that showed for half a second is what sent this hunt off:
+		// nothing errors, nothing is skipped, and the beat sheet still says 2.6.
+		const startedLate = Date.now() - (t0 + step.at * 1000);
+		if (startedLate > 250)
+			console.warn(
+				`  ! ${beatId} ${step.label} fired ${(startedLate / 1000).toFixed(2)}s late; the step before it overran`
+			);
+		const began = Date.now();
 		try {
 			await step.run();
 		} catch (err) {
 			console.warn(`  ! ${beatId} @${step.at}s ${step.label}: ${err.message.split('\n')[0]}`);
 		}
+		const next = steps[i + 1];
+		const slot = next ? (next.at - step.at) * 1000 : Infinity;
+		const took = Date.now() - began;
+		if (took > slot)
+			console.warn(
+				`  ! ${beatId} ${step.label} took ${(took / 1000).toFixed(2)}s but only has ${(slot / 1000).toFixed(2)}s before ${next.label}`
+			);
 	}
 }
 
@@ -396,19 +504,36 @@ await ready(wp);
 async function findNamed(listPath, hrefPattern, label) {
 	await wp.goto(APP + listPath, { waitUntil: 'domcontentloaded', timeout: 180_000 });
 	await ready(wp);
-	return wp.evaluate(
+	const hits = await wp.evaluate(
 		({ hrefPattern, label }) => {
 			const href = new RegExp(hrefPattern);
 			const name = new RegExp(label, 'i');
-			return (
-				[...document.querySelectorAll('a[href]')]
-					.filter((a) => name.test(a.textContent || ''))
-					.map((a) => a.getAttribute('href'))
-					.find((h) => href.test(h)) ?? null
-			);
+			return [
+				...new Set(
+					[...document.querySelectorAll('a[href]')]
+						.filter((a) => name.test(a.textContent || ''))
+						.map((a) => a.getAttribute('href'))
+						.filter((h) => href.test(h))
+				)
+			];
 		},
 		{ hrefPattern, label }
 	);
+	// AMBIGUITY IS A STOP, NOT A COIN TOSS. b04 submits a real form and leaves
+	// three draft orders behind, one of which is another "Alvarez-Whitman
+	// Wedding" dated a day earlier than the real one — so on a fixture that has
+	// not been re-seeded since the last capture, the marquee order resolves to a
+	// DRAFT that sorts first. A draft has no receiving, no purchase orders and no
+	// quoted-versus-today band, so half the cut would record against a page that
+	// cannot show what its cards claim. Taking "the first match" is what this
+	// function already refuses to do by position; it has to refuse it here too.
+	if (hits.length > 1)
+		throw new Error(
+			`"${label}" matches ${hits.length} links on ${listPath} (${hits.join(', ')}). ` +
+				'The demo fixture is dirty, almost certainly from a previous run of b04. ' +
+				'Re-run `npm run demo:seed` and `npm run demo:capture` in the app repo first.'
+		);
+	return hits[0] ?? null;
 }
 
 const orderHref = await findNamed('/orders/list', '^/orders/\\d+$', 'alvarez');
@@ -470,7 +595,40 @@ console.log(`end card CTA: ${CTA_LABEL}`);
  * Live quote panel prices each one separately and a run of three identical
  * events would look like a copy button rather than a week of work.
  */
+/**
+ * The id of the message Mailpit holds for a given recipient, so a beat can be
+ * framed on the purchase order itself rather than on the mail tool around it.
+ * Resolved live because ids are per-send and the PO number embeds the order id.
+ */
+async function mailpitViewUrl(match) {
+	const res = await fetch(`${MAILPIT}/api/v1/messages?limit=200`);
+	const { messages } = await res.json();
+	const hit = messages.find((m) => m.To?.some((t) => t.Address.includes(match)));
+	if (!hit) throw new Error(`no message in the capture inbox addressed to "${match}"`);
+	return `${MAILPIT}/view/${hit.ID}.html`;
+}
+
 const PREPARE = {
+	/**
+	 * Drop the magic-link mails so the inbox holds purchase orders and nothing
+	 * else. The capture signs in by link, so every run deposits two or three of
+	 * these next to the four vendor POs the beat is actually about.
+	 */
+	async inboxPOsOnly(page) {
+		const res = await fetch(`${MAILPIT}/api/v1/messages?limit=200`);
+		const { messages } = await res.json();
+		const ids = messages.filter((m) => !/^PO-/.test(m.Subject)).map((m) => m.ID);
+		if (ids.length)
+			await fetch(`${MAILPIT}/api/v1/messages`, {
+				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ IDs: ids })
+			});
+		console.log(`    inbox: dropped ${ids.length}, kept ${messages.length - ids.length} PO(s)`);
+		await page.reload({ waitUntil: 'domcontentloaded' });
+		await ready(page);
+	},
+
 	async threeEvents(page) {
 		const pickMenu = async (menu, scope) => {
 			// Fifteen menus, six previewed (MENU_PREVIEW_LIMIT in
@@ -536,6 +694,9 @@ const PREPARE = {
 
 for (const beat of captureOrder.filter((b) => !ONLY.length || ONLY.includes(b.id))) {
 	const created = Date.now();
+	// Each beat starts with an empty bar. Without this a reinject in the first
+	// beat of a run would restore the last card of the previous one.
+	currentCard = '';
 	const ctx = await browser.newContext({
 		viewport: SIZE,
 		storageState,
@@ -569,6 +730,7 @@ for (const beat of captureOrder.filter((b) => !ONLY.length || ONLY.includes(b.id
 	}
 
 	let url = beat.path;
+	if (beat.mailpitTo) url = await mailpitViewUrl(beat.mailpitTo);
 	if (beat.useOrder) url = orderHref + (beat.suffix ?? '');
 	if (beat.useIngredient) url = ingredientHref;
 	if (beat.useRecipe) url = recipeHref;
@@ -578,6 +740,25 @@ for (const beat of captureOrder.filter((b) => !ONLY.length || ONLY.includes(b.id
 	const destination = /^https?:\/\//.test(url) ? url : APP + url;
 	await page.goto(destination, { waitUntil: 'domcontentloaded', timeout: 180_000 });
 	await ready(page);
+	// A bare email renders at its own 720px max-width in a 1600px frame, and the
+	// landing page draws that frame at 350 CSS px on a phone, so the purchase
+	// order arrives about 130 device px wide. Zoom fixes that.
+	//
+	// ZOOM THE CONTENT ELEMENT, NEVER document.documentElement. Root zoom scales
+	// every descendant including the injected overlay, which is a child of body:
+	// measured, the caption bar came back 383px tall instead of 232, and the
+	// ring's boundingBox coordinates are post-zoom while its left/top are applied
+	// pre-zoom, so it lands nowhere near its target. Zooming the message's own
+	// <main> leaves the overlay alone and keeps every box consistent.
+	if (beat.zoom) {
+		await page.evaluate((z) => {
+			const el = document.querySelector('main') ?? document.body.firstElementChild;
+			if (!el) return;
+			el.style.zoom = String(z);
+			el.style.margin = '0 auto';
+		}, beat.zoom);
+		await page.waitForTimeout(300);
+	}
 	if (!beat.keepChrome) await hideChrome(page);
 	if (beat.prepare) {
 		const prepare = PREPARE[beat.prepare];
