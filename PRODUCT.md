@@ -29,6 +29,7 @@ Users work across prep tables, offices, walk-ins, receiving areas, and event sit
 - Menu management includes menu records, dish portions, a default per-guest price, equipment templates, duplication, and guarded changes where supported by the shipped feature register.
 - Catering quotes connect a menu, event date, guest count, food cost, and per-guest price before confirmation; confirmed events preserve the quoted commitment while later cost movement remains visible where supported by the shipped feature register.
 - Invoice and supplier price-list intake accepts photographs, PDFs, spreadsheets, Word documents, and pasted text into one staging queue; the original stays visible and uncertain facts wait for confirmation. Invoices reconcile purchase facts, while price lists remain row-level offers until applied.
+- Sage is available inside CostCook, including from the setup header. It supports five read-only kitchen checks and one shopping-list proposal that a manager or owner reviews; answers expose their sources and missing evidence.
 - Public marketing claims must stay within the shipped feature register and claim ledger. Work marked in development must not read as available.
 - Public amounts used for demonstration must be real product data or explicitly labeled illustrative.
 - The marketing site is an Astro application and should remain useful without client-side JavaScript.

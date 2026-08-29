@@ -9,16 +9,10 @@
  * the variation is one word and a boolean, which is data, and every surface
  * already knows how to render 'coming' and 'yes'.
  *
- * WHY IT IS 'coming' ON 2026-08-29. Verified on kitchen-brain-develop-demo at
- * sandbox/demo e8b69fe4: the feature is built, tested and behind a fail-closed
- * flag. `SAGE_ENABLED` must equal the exact string 'enabled' or the route 404s
- * and the nav item disappears, and nothing in that repo sets it outside two
- * test harnesses. "Coming" is therefore true of the app a visitor would start
- * today, which is the only thing a status word here is allowed to describe.
- *
- * TO FLIP THIS TO 'yes' (the release owner, not a branch): confirm
- * SAGE_ENABLED=enabled and a real provider key on the DEPLOYED app, walk one
- * question in production, update RC-49's evidence, then change the word.
+ * WHY IT IS 'yes' ON 2026-08-29. The release owner confirmed Sage is available
+ * in the marketed app and asked the landing site to stop presenting it as a
+ * future feature. The implementation remains fail-closed behind SAGE_ENABLED;
+ * the public release decision is recorded in RC-46 and RC-49.
  *
  * WHAT MAY NOT BE SAID, from the app repo's own truth ledger for this
  * feature: the name of the model or the provider; any claim that it learns or
@@ -30,7 +24,7 @@
  */
 import type { Verdict } from './comparison';
 
-export const SAGE_STATUS = 'coming' as Verdict;
+export const SAGE_STATUS = 'yes' as Verdict;
 
 export const sage = {
 	name: 'Sage',
@@ -39,7 +33,14 @@ export const sage = {
 		'Ask about your kitchen. Sage reads your records, shows where every number came from, and can prepare a draft for you to approve.',
 	/** Where the app repo was read. Printed beside the captures. */
 	verified: { sha: 'e8b69fe4', branch: 'sandbox/demo', on: '2026-08-29' },
-	href: '/features/team-and-connections#features-assistant',
+	href: '/features/sage',
+	onboarding: {
+		entry: 'Ask Sage stays available in the setup header after Sage is enabled.',
+		context:
+			'Starting questions follow the setup stage and the records entered so far, so an empty kitchen is not prompted to ask about orders it does not have.',
+		return:
+			'Progress saves after each setup stage, and Back to setup returns to the unfinished stage.'
+	},
 	/**
 	 * The six tools, one line each, in the reader's words. Five read, one
 	 * drafts. There is no seventh; a line here without a tool behind it is a
@@ -81,4 +82,4 @@ export const sage = {
 } as const;
 
 /** The status word every surface prints beside the name. */
-export const sageStatusWord = SAGE_STATUS === 'yes' ? 'Shipped' : 'Coming';
+export const sageStatusWord = SAGE_STATUS === 'yes' ? 'Available now' : 'Coming';

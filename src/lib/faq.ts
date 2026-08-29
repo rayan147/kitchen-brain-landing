@@ -156,7 +156,7 @@ export const faq: readonly FaqGroup[] = [
 				question: 'What is Sage?',
 				answer: [
 					'An assistant inside CostCook that answers questions from the records you already keep: what needs attention for Saturday, the orders on a date, why a dish costs what it costs, which prices moved, what came up short in receiving. Every answer shows where its numbers came from, and the one thing it can prepare, a shopping list draft, waits for you to approve it. It cannot reach another kitchen and it never changes a record on its own.',
-					'It is built and tested on the sandbox and is not in the app you would start today. No date, and not in the launch price. There is a <a href="/#sage">section on the homepage</a> with a capture of it answering.'
+					'Sage is available now and stays within reach during setup. Its starting questions follow the setup stage and the records entered so far, and a Back to setup action returns you to the unfinished stage. See the <a href="/features/sage">Sage feature guide and video</a>.'
 				],
 				claims: ['RC-46', 'RC-49']
 			},

@@ -363,7 +363,7 @@ export const comparison: RowGroup[] = [
 				label: 'An assistant that answers from your numbers',
 				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
 				costcook: SAGE_STATUS,
-				note: 'Sage. Built and tested on the sandbox: reads your records, shows its sources, drafts a shopping list for you to approve. Not in the app you would start today.',
+				note: 'Sage is available now. It reads your records, shows its sources, helps during setup and can prepare a shopping-list draft for you to approve.',
 				parsley: NOT_LISTED,
 				meez: 'Enterprise, custom'
 			},

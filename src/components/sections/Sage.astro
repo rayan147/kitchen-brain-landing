@@ -5,19 +5,16 @@
  * EIGHTH STOP, between PaperIn and TheOtherTools. It sits with the mechanics
  * (yield, intake) rather than with the proof or the ask, because it is a
  * thing the product does, and it sits BEFORE the rival beat so the reader
- * meets it before the give-ups list, which is where "an assistant" appears on
- * /compare as a Coming row. It is not a fifth CustomerOutcomes card: that
+ * meets it before the give-ups list, which is where the assistant appears on
+ * /compare. It is not a fifth CustomerOutcomes card: that
  * pairing has to stay 1:1 with TheProblem.
  *
- * STATUS IS PRINTED, NOT IMPLIED. The eyebrow carries the status word from
- * src/lib/sage.ts, the figure's label says which build it was captured on, and
- * the last line says plainly that it is not in the app you would start today.
- * The owner asked for this section on 2026-08-29 (RC-46 records that as the
- * name's approval); the status is the ledger's, not the owner's, and it flips
- * in one place when the deployed flag is confirmed (RC-49).
+ * STATUS IS PRINTED, NOT IMPLIED. The badge carries the status word from
+ * src/lib/sage.ts and the figure's label keeps the capture provenance honest.
+ * The release owner confirmed availability on 2026-08-29 (RC-46 and RC-49).
  *
  * NO PRIMARY CTA. The page opens, middles and closes on one action. The quiet
- * link goes to the feature area, where the group carries the same Coming badge.
+ * link goes to the dedicated feature guide and video.
  */
 import SectionHandoff from '../SectionHandoff.astro';
 import { sage, sageStatusWord } from '../../lib/sage';
@@ -29,7 +26,7 @@ import { sage, sageStatusWord } from '../../lib/sage';
 			<div class="max-w-3xl" data-reveal>
 				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
 					<p class="eyebrow">{sage.name}, the assistant</p>
-					<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-amber-deep">
+					<span class="inline-flex items-center rounded-full border border-green bg-paper px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-green-deep">
 						{sageStatusWord}
 					</span>
 				</div>
@@ -107,12 +104,10 @@ import { sage, sageStatusWord } from '../../lib/sage';
 					))
 				}
 			</ul>
-			<!-- The status, in a sentence, so nobody has to decode a badge. If
-			     SAGE_STATUS becomes 'yes', this paragraph is replaced, not softened. -->
+			<!-- The status is a sentence as well as a badge, so nobody has to decode it. -->
 			<p class="mt-8 max-w-[66ch] text-ink-soft">
-				<strong class="font-semibold text-ink">{sageStatusWord}.</strong> {sage.name} runs on
-				the sandbox build and is not in the app you would start today. It carries no date, and
-				it is not in the launch price. <a href={sage.href} class="btn-quiet">Where it sits on the feature list</a>.
+				<strong class="font-semibold text-ink">{sageStatusWord}.</strong> Ask from the kitchen
+				records you already keep, including while you are setting them up. <a href={sage.href} class="btn-quiet">Watch Sage at work</a>.
 			</p>
 		</div>
 
