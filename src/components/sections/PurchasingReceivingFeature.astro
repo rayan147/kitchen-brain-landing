@@ -1,14 +1,14 @@
 ---
 import { featureGroups } from '../../lib/features';
-import { cta, demoCta } from '../../lib/site';
+import { cta, demoCta, launchPlan } from '../../lib/site';
 
 const purchasingGroup = featureGroups.find((group) => group.id === 'purchasing');
 if (!purchasingGroup) throw new Error('Missing public feature group: purchasing');
 
 const deliveryLines = [
-	{ item: 'Chicken thigh · 10 kg case', ordered: '10', received: '9', state: 'Short 1', tone: 'short' },
-	{ item: 'Baby spinach · 2 kg case', ordered: '4', received: '4', state: 'Received', tone: 'received' },
-	{ item: 'Olive oil · 5 L tin', ordered: '2', received: '2', state: 'Substituted', tone: 'review' }
+	{ item: 'Chicken thigh · 10 kg case', ordered: '10', received: '9', orderedPrice: '$45.00', receivedPrice: '$47.00', state: 'Short 1', tone: 'short' },
+	{ item: 'Baby spinach · 2 kg case', ordered: '4', received: '4', orderedPrice: '$18.00', receivedPrice: '$18.00', state: 'Received', tone: 'received' },
+	{ item: 'Olive oil · 5 L tin', ordered: '2', received: '2', orderedPrice: '$72.00', receivedPrice: '$75.00', state: 'Substituted', tone: 'review' }
 ] as const;
 
 const recoveryStates = [
@@ -47,19 +47,20 @@ const faqItems = [
 <article class="purchasing-page">
 	<section class="hero" aria-labelledby="purchasing-heading">
 		<div class="container-page hero-grid">
-			<div class="hero-copy anim-enter">
+			<div class="hero-copy">
 				<nav aria-label="Breadcrumb" class="breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Purchasing & receiving</span></nav>
 				<h1 id="purchasing-heading">The order you sent should meet the delivery at the back door.</h1>
 				<p class="hero-lede">Review one purchase order per supplier, receive against the same lines, and post the quantity and price that actually arrived.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
 				</div>
+				<p class="hero-terms">{launchPlan.trialDays} days free, then {launchPlan.displayPrice}. Charged $0 today.</p>
 			</div>
 
 			<figure class="handoff-ticket purchasing-enter">
 				<p class="figure-note">Illustrative purchase record</p>
-				<div class="ticket-top"><span>PO-1048 · Northline Foods</span><span class="status sent">Sent</span></div>
+				<div class="ticket-top"><span>PO-1048 · Northline Foods</span><span class="status sent">PO sent</span></div>
 				<div class="handoff-flow" aria-label="10 cases ordered, 9 cases received, 1 case left to rebuy">
 					<div><small>Ordered</small><strong>10</strong><span>cases</span></div>
 					<svg width="34" height="16" viewBox="0 0 34 16" aria-hidden="true"><path d="M1 8h29M24 2l6 6-6 6" /></svg>
@@ -67,7 +68,7 @@ const faqItems = [
 					<svg width="34" height="16" viewBox="0 0 34 16" aria-hidden="true"><path d="M1 8h29M24 2l6 6-6 6" /></svg>
 					<div class="result"><small>Follow up</small><strong>1</strong><span>case</span></div>
 				</div>
-				<div class="ticket-line"><span>Chicken thigh · 10 kg case</span><b class="status short">Short 1</b></div>
+				<div class="ticket-line"><span>Chicken thigh · 10 kg case</span><b class="status short">Received · short 1</b></div>
 				<figcaption>Illustrative values. The sent quantity, received quantity, and open shortfall stay together.</figcaption>
 			</figure>
 		</div>
@@ -100,7 +101,7 @@ const faqItems = [
 					<div class="po-row"><span>Chicken thigh · 10 kg case</span><b>10 cases</b></div>
 					<div class="po-row"><span>Baby spinach · 2 kg case</span><b>4 cases</b></div>
 				</div>
-				<div class="po-actions"><span>Choose the handoff</span><strong>Email supplier</strong><strong>Print PO</strong><strong>Handled by me</strong></div>
+				<div class="po-actions"><span>Available handoffs</span><ul role="list"><li>Email supplier</li><li>Print PO</li><li>Handled by me</li></ul></div>
 				<figcaption>Illustrative purchase order. The record is written after a successful send; a failed email remains retryable.</figcaption>
 			</figure>
 		</div>
@@ -111,10 +112,10 @@ const faqItems = [
 			<div class="section-intro"><h2 id="receive-heading">Once it is sent, those same lines are ready at the door.</h2><p>A sent purchase order creates the receiving checklist. Change ordered to arrived without building a second record from the delivery slip.</p></div>
 			<figure class="receiving-board">
 				<div class="receiving-head"><span>Receive PO-1048 · Northline Foods</span><span>Illustrative delivery</span></div>
-				<div class="line-head"><span>Ingredient</span><span>Ordered</span><span>Arrived</span><span>State</span></div>
-				{deliveryLines.map((line) => <div class="receiving-line"><strong>{line.item}</strong><span>{line.ordered}</span><span>{line.received}</span><em class:list={['status', line.tone]}>{line.state}</em></div>)}
+				<div class="line-head"><span>Ingredient</span><span>Ordered</span><span>Arrived</span><span>Price / case</span><span>State</span></div>
+				{deliveryLines.map((line) => <div class="receiving-line"><strong>{line.item}</strong><span class="quantity"><small>Ordered</small>{line.ordered}</span><span class="quantity"><small>Arrived</small>{line.received}</span><span class="price"><small>Price / case</small><span class="price-values" aria-hidden="true"><s>{line.orderedPrice}</s><b>→</b>{line.receivedPrice}</span><span class="sr-only">{line.orderedPrice} ordered, {line.receivedPrice} received per case</span></span><em class:list={['status', line.tone]}>{line.state}</em></div>)}
 				<div class="post-bar"><span><strong>Ready to post</strong><small>3 lines · 1 follow-up</small></span><b>Post received delivery</b></div>
-				<figcaption>Illustrative receiving checklist. Posting writes the real purchases and current prices together from what arrived.</figcaption>
+				<figcaption>Illustrative receiving checklist. The arrow runs from the ordered case price to the received case price; posting carries the received value forward.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -135,8 +136,8 @@ const faqItems = [
 
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
-			<div><h2 id="capabilities-heading">The complete Purchasing & receiving list.</h2><p>Everything below is shipped today and remains available for the diligence read.</p><p class="count"><strong>{purchasingGroup.items.length}</strong><span>shipped capabilities</span></p></div>
-			<details id="features-purchasing" open><summary><span>Purchase orders & receiving</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{purchasingGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
+			<div><h2 id="capabilities-heading">The complete Purchasing & receiving list.</h2><p>Open the full shipped list when you want the details.</p><p class="count"><strong>{purchasingGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<details id="features-purchasing"><summary><span>See all {purchasingGroup.items.length} shipped capabilities</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{purchasingGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
 		</div>
 	</section>
 
@@ -145,37 +146,39 @@ const faqItems = [
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">
-		<div class="container-page closing-grid"><div><h2 id="closing-heading">Walk back into prep with one record.</h2><p>Bring one real supplier order. Follow it from the message you send to the quantity, price, and shortfall you receive.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
+		<div class="container-page closing-grid"><div><h2 id="closing-heading">Walk back into prep with one record.</h2><p>Bring one real supplier order. Follow it from the message you send to the quantity, price, and shortfall you receive.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
 		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>
 
 <style>
-	.purchasing-page { overflow: clip; }
+	.purchasing-page { overflow-wrap: anywhere; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
-	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
-	.breadcrumb { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .875rem; color: var(--color-ink-soft); }
-	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
-	.hero h1 { max-width: 13ch; margin-top: 1.5rem; font-size: clamp(2.65rem, 4.6vw, 5.2rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; }
-	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: clamp(1.05rem, .98rem + .35vw, 1.3rem); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero-grid { display: grid; gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-block: clamp(2.5rem, 4vw, 4.75rem); }
+	.hero-copy, .problem-grid > *, .section-intro > *, .posting-grid > *, .recovery-grid > *, .capabilities-grid > *, .faq-grid > *, .closing-grid > * { min-width: 0; }
+	.breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
+	.hero h1 { max-width: 16ch; margin-top: 1.15rem; font-size: var(--text-display); font-weight: 600; line-height: var(--text-display--line-height); letter-spacing: var(--text-display--letter-spacing); }
+	.hero-lede { max-width: 56ch; margin-top: 1.35rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+	.hero-terms { margin-top: .8rem; font-size: var(--text-eyebrow); line-height: 1.5; color: var(--color-ink-soft); }
 	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
 	.btn-outline:hover { background: var(--color-softgreen); }
-	.figure-note { margin-bottom: .7rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.figure-note { margin-bottom: .7rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.handoff-ticket { min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
-	.ticket-top, .panel-bar, .receiving-head, .line-head { display: flex; justify-content: space-between; gap: 1rem; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
-	.status { display: inline-flex; width: fit-content; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: .7rem; font-weight: 700; font-style: normal; letter-spacing: .04em; text-transform: uppercase; }
+	.ticket-top, .panel-bar, .receiving-head, .line-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.status { display: inline-flex; width: fit-content; max-width: 100%; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; font-style: normal; letter-spacing: .04em; text-align: center; text-transform: uppercase; white-space: normal; }
 	.status.sent, .status.received { background: var(--color-softgreen); color: var(--color-green-deep); }
 	.status.short, .status.review { background: var(--color-softamber); color: var(--color-amber-deep); }
 	.handoff-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: .7rem; align-items: center; margin-top: 1.2rem; }
 	.handoff-flow div { padding: .85rem; background: var(--color-cream); }
 	.handoff-flow .result { background: var(--color-softamber); }
-	.handoff-flow small, .supplier small, .email-copy small, .posting-record small { display: block; color: var(--color-ink-soft); font-size: .7rem; }
-	.handoff-flow strong { font-size: 1.55rem; font-variant-numeric: tabular-nums; }
-	.handoff-flow span { margin-left: .2rem; color: var(--color-ink-soft); font-size: .74rem; }
+	.handoff-flow small, .supplier small, .email-copy small, .posting-record small, .receiving-line small { display: block; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); }
+	.handoff-flow strong { display: block; font-size: var(--text-h3); font-variant-numeric: tabular-nums; }
+	.handoff-flow span { color: var(--color-ink-soft); font-size: var(--text-eyebrow); }
 	.handoff-flow svg, .story-nav svg, summary svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; color: var(--color-amber-deep); }
-	.ticket-line { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-ticket-rule); font-size: .82rem; }
-	.handoff-ticket figcaption, .po-sheet figcaption, .receiving-board figcaption { margin-top: .85rem; font-size: .78rem; line-height: 1.45; color: var(--color-ink-soft); }
+	.ticket-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-ticket-rule); }
+	.handoff-ticket figcaption, .po-sheet figcaption, .receiving-board figcaption { margin-top: .85rem; font-size: var(--text-eyebrow); line-height: 1.45; color: var(--color-ink-soft); }
 	.problem { border-bottom: 1px solid var(--color-hairline); background: var(--color-paper); }
 	.problem-grid, .posting-grid, .recovery-grid { display: grid; gap: 3rem; align-items: center; padding-block: var(--spacing-section-tight); }
 	.problem h2, .section-intro h2, .posting-grid h2, .recovery-grid h2, .capabilities h2, .faq h2, .closing h2 { font-size: var(--text-h2); font-weight: 600; line-height: 1.12; }
@@ -183,8 +186,8 @@ const faqItems = [
 	.door-scene { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
 	.door-scene > div:not(.door-mark) { padding: 1.35rem; border-top: 2px solid var(--color-ticket-rule); background: var(--color-cream); }
 	.door-scene small, .door-scene span { display: block; color: var(--color-ink-soft); }
-	.door-scene strong { display: block; margin-block: .4rem; font-size: 1.7rem; font-variant-numeric: tabular-nums; }
-	.door-mark { color: var(--color-amber-deep); font-family: var(--font-display); font-size: 1.7rem; }
+	.door-scene strong { display: block; margin-block: .4rem; font-size: var(--text-h3); font-variant-numeric: tabular-nums; }
+	.door-mark { color: var(--color-amber-deep); font-family: var(--font-display); font-size: var(--text-h3); }
 	.story-nav { display: grid; padding-block: 1.25rem; }
 	.story-nav a { display: grid; min-height: 84px; grid-template-columns: 1fr auto; gap: .25rem 1rem; align-content: center; padding: 1.2rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); }
 	.story-nav a:first-child { border-top: 1px solid var(--color-ticket-rule); }
@@ -207,15 +210,20 @@ const faqItems = [
 	.po-row { display: flex; justify-content: space-between; gap: 1rem; padding-block: .8rem; border-bottom: 1px solid var(--color-hairline); }
 	.po-row b { font-variant-numeric: tabular-nums; }
 	.po-actions { display: grid; align-content: start; gap: .8rem; padding: 1.4rem; }
-	.po-actions span { color: var(--color-ink-soft); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-	.po-actions strong { min-height: 44px; padding: .75rem; border: 1px solid var(--color-hairline); }
+	.po-actions > span { color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+	.po-actions li { padding-block: .75rem; border-top: 1px solid var(--color-hairline); font-weight: 600; }
+	.po-actions li:last-child { border-bottom: 1px solid var(--color-hairline); }
 	.po-sheet figcaption { grid-column: 1 / -1; margin: 0; padding: .85rem 1.2rem; background: var(--color-paper); }
 	.receiving-board { margin-top: clamp(2.5rem, 6vw, 4.5rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.receiving-head { padding: 1rem clamp(1rem, 3vw, 1.75rem); background: var(--color-ink); color: var(--color-paper); }
-	.line-head, .receiving-line { display: grid; grid-template-columns: minmax(0, 1.5fr) .5fr .5fr .75fr; gap: 1rem; align-items: center; padding: .85rem clamp(1rem, 3vw, 1.75rem); }
+	.line-head, .receiving-line { display: grid; grid-template-columns: minmax(0, 1.35fr) .45fr .45fr minmax(0, .9fr) minmax(0, .75fr); gap: 1rem; align-items: center; padding: .85rem clamp(1rem, 3vw, 1.75rem); }
 	.line-head { color: var(--color-ink-soft); border-bottom: 1px solid var(--color-hairline); }
 	.receiving-line { border-bottom: 1px solid var(--color-hairline); }
-	.receiving-line > span { font-variant-numeric: tabular-nums; }
+	.receiving-line > span { min-width: 0; font-variant-numeric: tabular-nums; }
+	.receiving-line small { display: none; }
+	.receiving-line .price-values { display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
+	.receiving-line .price s { color: var(--color-ink-soft); }
+	.receiving-line .price b { color: var(--color-amber-deep); }
 	.post-bar { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
 	.post-bar span small { display: block; color: var(--color-ink-soft); }
 	.post-bar > b { color: var(--color-green-deep); }
@@ -223,8 +231,8 @@ const faqItems = [
 	.posting-proof { background: var(--color-ink); color: var(--color-paper); }
 	.posting-grid > div > p { color: var(--color-ink-muted); }
 	.posting-record { background: var(--color-paper); color: var(--color-ink); box-shadow: var(--shadow-lift); }
-	.posting-record > span { display: block; padding: .8rem 1rem; background: var(--color-softgreen); color: var(--color-green-deep); font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
-	.posting-record > div { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--color-hairline); }
+	.posting-record > span { display: block; padding: .8rem 1rem; background: var(--color-softgreen); color: var(--color-green-deep); font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+	.posting-record > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; padding: 1rem; border-bottom: 1px solid var(--color-hairline); }
 	.posting-record strong { font-variant-numeric: tabular-nums; }
 	.recovery { background: var(--color-paper); }
 	.recovery-list { border-block: 1px solid var(--color-ticket-rule); }
@@ -235,8 +243,8 @@ const faqItems = [
 	.capabilities { padding-block: var(--spacing-section); background: var(--color-offwhite); }
 	.capabilities-grid, .faq-grid { display: grid; gap: 3rem; }
 	.count { display: flex; align-items: baseline; gap: .75rem; }
-	.count strong { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-green-deep); }
-	.count span { font-size: .8rem; color: var(--color-ink-soft); }
+	.count strong { font-family: var(--font-display); font-size: var(--text-h2); color: var(--color-green-deep); }
+	.count span { font-size: var(--text-eyebrow); color: var(--color-ink-soft); }
 	details summary { cursor: pointer; list-style: none; }
 	details summary::-webkit-details-marker { display: none; }
 	.capabilities details { scroll-margin-top: 1rem; border-block: 1px solid var(--color-ticket-rule); }
@@ -257,7 +265,7 @@ const faqItems = [
 	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
 
 	@media (min-width: 720px) {
-		.hero-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+		.hero-grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
 		.problem-grid, .section-intro, .posting-grid, .recovery-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
 		.story-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.story-nav a { padding-inline: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
@@ -269,30 +277,37 @@ const faqItems = [
 	}
 
 	@media (max-width: 719px) {
-		.hero-grid { gap: 1rem; padding-block: 1.25rem 1rem; }
-		.hero h1 { margin-top: .25rem; font-size: clamp(1.95rem, 9.6vw, 2.45rem); }
-		.hero-lede { margin-top: .7rem; font-size: .93rem; line-height: 1.38; }
-		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .8rem; }
-		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .5rem; font-size: .82rem; text-align: center; }
+		.hero-grid { gap: 1rem; padding-block: 1.2rem .9rem; }
+		.hero h1 { margin-top: .25rem; }
+		.hero-lede { margin-top: .65rem; line-height: 1.4; }
+		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .75rem; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .45rem; text-align: center; }
+		.hero-terms { margin-top: .55rem; }
 		.closing-actions > * { width: 100%; justify-content: center; }
-		.figure-note { margin-bottom: .4rem; }
-		.handoff-ticket { padding: .75rem; }
-		.handoff-flow { gap: .35rem; margin-top: .6rem; }
-		.handoff-flow svg { width: 18px; }
-		.handoff-flow div { padding: .55rem; }
-		.handoff-flow strong { font-size: 1.2rem; }
-		.ticket-line { margin-top: .6rem; padding-top: .6rem; }
+		.figure-note { margin-bottom: .35rem; }
+		.handoff-ticket { padding: .7rem; }
+		.handoff-flow { gap: .3rem; margin-top: .5rem; }
+		.handoff-flow svg { width: 16px; }
+		.handoff-flow div { padding: .5rem; }
+		.ticket-line { margin-top: .5rem; padding-top: .5rem; }
+		.handoff-ticket figcaption { margin-top: .45rem; }
 		.door-scene { grid-template-columns: 1fr; }
 		.door-mark { justify-self: center; transform: rotate(90deg); }
+		.supplier { grid-template-columns: 1fr; }
+		.po-row { flex-wrap: wrap; }
 		.line-head { display: none; }
-		.receiving-line { grid-template-columns: 1fr auto auto; gap: .5rem 1rem; }
+		.receiving-line { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem 1rem; }
 		.receiving-line strong { grid-column: 1 / -1; }
-		.receiving-line em { grid-column: 3; grid-row: 2; }
+		.receiving-line small { display: block; margin-bottom: .25rem; }
+		.receiving-line .price, .receiving-line em { grid-column: 1 / -1; }
 		.post-bar { align-items: flex-start; flex-direction: column; }
 		.posting-record > div { align-items: flex-start; flex-direction: column; gap: .3rem; }
+		.recovery-list > div { grid-template-columns: 1fr; }
+		.recovery-list small { grid-column: 1; }
 	}
 
 	@media (max-width: 360px) {
+		.hero-actions { grid-template-columns: 1fr; }
 		.handoff-flow { grid-template-columns: 1fr auto 1fr; }
 		.handoff-flow svg:last-of-type { display: none; }
 		.handoff-flow .result { grid-column: 1 / -1; }
@@ -303,7 +318,7 @@ const faqItems = [
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
-		@keyframes purchasing-handoff-step { from { opacity: .35; filter: blur(2px); transform: translateX(-5px); } }
+		@keyframes purchasing-handoff-step { from { opacity: .55; transform: translateX(-4px); } }
 		.purchasing-enter .handoff-flow > * { animation: purchasing-handoff-step 420ms cubic-bezier(.22, 1, .36, 1) backwards; }
 		.purchasing-enter .handoff-flow > :nth-child(1) { animation-delay: 180ms; }
 		.purchasing-enter .handoff-flow > :nth-child(2) { animation-delay: 300ms; }

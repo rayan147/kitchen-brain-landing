@@ -48,7 +48,7 @@
 | 6 Break into Two — they try the new way | CostCook creates one PO per supplier and shows the exact email before it is sent. |
 | 7 B Story — the person/relationship it's really about | Prep gets the food that was promised because receiving can name the gap while there is still time to act. |
 | 8 Fun and Games — the promise of the premise | The sent PO becomes a receiving checklist; short, over, substituted, missing, and unexpected lines keep distinct handling. |
-| 9 Midpoint — first real win, with a number | An illustrative 10-case order records 9 received and leaves 1 case on the follow-up list. |
+| 9 Midpoint — first real win, with a number | An illustrative 10-case order records 9 received at $47 per case, posts $423, and leaves 1 case on the follow-up list. |
 | 10 Bad Guys Close In — the edge cases, the doubts | A failed send can retry; a substituted line and an unexpected line wait for an explicit receiving decision. |
 | 11 All Is Lost / Dark Night — the risk if nothing changes | If the clean order overwrites the messy delivery, the shortage and the actual price both disappear. |
 | 12 Finale + Final Image — life after; the CTA in their words | The delivery is posted from what arrived, the rebuy gap remains visible, and Elena walks back into prep with one record. |
@@ -60,8 +60,8 @@
 | 1 | Hero: the back-door handoff | 1–2 | split records → one chain |
 | 2 | What was sent | 3, 5–6 | assumed message → reviewed commitment |
 | 3 | Receiving starts from the PO | 7–8 | second round of typing → inherited checklist |
-| 4 | The nine-of-ten delivery | 4, 9 | clean quantity → truthful variance |
-| 5 | Post what arrived | 8–10 | marked paper → purchase and current-price facts |
+| 4 | The nine-of-ten delivery | 4, 9 | clean quantity and quoted price → truthful quantity and received price |
+| 5 | Post what arrived | 8–10 | reviewed delivery → reconciled purchase and current-price facts |
 | 6 | Exceptions keep a next action | 10–11 | loose ends → retry or rebuy path |
 | 7 | Closing handoff | 12 | back-door uncertainty → prep-ready record |
 
@@ -76,8 +76,8 @@
 - Hero: another delivery to reconcile → the sent and received records can meet.
 - What was sent: trust an email from memory → review the exact supplier message and stable PO.
 - Receiving starts: build a second checklist → receive from the sent PO.
-- Nine of ten: a tidy order masks the gap → the short line stays short.
-- Post what arrived: paper note dies at the door → actual purchase and price facts move together.
+- Nine of ten: a tidy order masks the gap and price change → the short line and received price stay visible.
+- Post what arrived: the received price is still a loose fact → 9 cases at $47 reconcile to a $423 purchase.
 - Exceptions: a failed send or missing case becomes a side note → each keeps a retry or follow-up state.
 - Closing: carry uncertainty into prep → return with a posted delivery and visible rebuy gap.
 
@@ -104,8 +104,8 @@
 - **Hand-off lines:**
   - Hero → sent: “Start with the promise the supplier actually received.”
   - Sent → checklist: “Once it is sent, those same lines are ready at the door.”
-  - Checklist → variance: “Then the count changes from ordered to arrived.”
-  - Variance → posting: “That difference belongs in the purchase record, not in the margin.”
+  - Checklist → variance: “Then quantity and price change from ordered to arrived.”
+  - Variance → posting: “Those differences belong in the purchase record, not in the margin.”
   - Posting → recovery: “And anything still open keeps its next action.”
   - Recovery → close: “So prep gets the truth, not the tidy version.”
 
@@ -114,4 +114,6 @@
 - **Word count before → after:** 720 → target under 430 visible words.
 - **Claims removed because they couldn't be shown:** guaranteed supplier delivery accuracy, automatic ordering without review, savings or time claims, and automatic acceptance of substitutions.
 - **Illustrative-data rule:** Every quantity, case price, and delivery variance used in the page evidence is labeled illustrative.
+- **Revision target (2026-08-29):** The receiving scene now shows the ordered-to-received case price before the posted total, distinguishes the sent PO from the received-short outcome, and presents handoff choices as static example rows rather than live controls.
+- **Progressive-disclosure rule:** The nine-item shipped catalogue stays available but closed until the reader asks for the full list.
 - **Final Image (the CTA sentence):** Walk back into prep knowing what arrived, what it cost, and what still needs buying.

@@ -2,8 +2,10 @@ import { readFile } from 'node:fs/promises';
 
 const pagePath = new URL('../dist/features/purchasing-and-receiving/index.html', import.meta.url);
 const homePath = new URL('../dist/index.html', import.meta.url);
+const componentPath = new URL('../src/components/sections/PurchasingReceivingFeature.astro', import.meta.url);
 const html = await readFile(pagePath, 'utf8');
 const homeHtml = await readFile(homePath, 'utf8');
+const component = await readFile(componentPath, 'utf8');
 
 const required = [
 	'id="purchasing-heading"',
@@ -15,6 +17,11 @@ const required = [
 	'id="faq-heading"',
 	'What happens if the supplier email fails?',
 	'Walk back into prep with one record.',
+	'Book a 15-min demo',
+	'days free, then',
+	'$45.00',
+	'$47.00',
+	'PO sent',
 	'purchasing-sent-received-truth',
 	'docs/stories/purchasing-and-receiving.story.md'
 ];
@@ -24,6 +31,22 @@ if (missing.length > 0) throw new Error(`Purchasing & Receiving build is missing
 
 if (!homeHtml.includes('href="/features/purchasing-and-receiving"')) {
 	throw new Error('Features menu is missing its Purchasing & Receiving destination.');
+}
+
+if (/<details id="features-purchasing"\s+open>/.test(html)) {
+	throw new Error('The full capability inventory must use progressive disclosure.');
+}
+
+const forbiddenSourceFragments = ['overflow: clip', 'filter: blur', '>Book 15 minutes<', 'hero-copy anim-enter', '<strong>Email supplier</strong>'];
+const forbidden = forbiddenSourceFragments.filter((fragment) => component.includes(fragment));
+if (forbidden.length > 0) {
+	throw new Error(`Purchasing & Receiving source regressed: ${forbidden.join(', ')}`);
+}
+
+for (const requiredSourceFragment of ['demoCta.label', 'launchPlan', 'var(--text-display)', 'min-height: 44px', 'orderedPrice', 'receivedPrice']) {
+	if (!component.includes(requiredSourceFragment)) {
+		throw new Error(`Purchasing & Receiving source is missing: ${requiredSourceFragment}`);
+	}
 }
 
 // Considered Strategy; not used because this regression guard validates one
