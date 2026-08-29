@@ -55,8 +55,13 @@ try {
 			return;
 		}
 		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
-		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
-			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
+		if (message.method === 'Network.responseReceived') {
+			const { response } = message.params;
+			// Considered Strategy; not used because this is one fixed local-preview
+			// exception shared by the browser verifiers, not a swappable failure policy.
+			if (response.status >= 400 && !response.url.includes('/_vercel/insights/script.js')) {
+				failedRequests.push(`${response.status} ${response.url}`);
+			}
 		}
 	});
 
