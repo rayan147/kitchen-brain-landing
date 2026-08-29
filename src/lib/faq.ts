@@ -203,7 +203,8 @@ export const faq: readonly FaqGroup[] = [
 				id: 'guests',
 				question: 'The client added forty guests. What do I retype?',
 				answer: [
-					'The guest count. Recipes scale from it, shared ingredients roll together, whole packs recalculate, and the Shop, Prep and Pack tabs stay on the same plan.'
+					'The guest count.',
+					'Recipes scale from it, shared ingredients roll together, whole packs recalculate, and the Shop, Prep and Pack tabs stay on the same plan.'
 				],
 				claims: ['RC-03', 'RC-22', 'RC-24', 'RC-25']
 			},
