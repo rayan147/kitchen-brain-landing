@@ -58,16 +58,16 @@ export const nutrition = {
 		panel: {
 			src: '/proof/nutrition-panel.png',
 			width: 2272,
-			height: 2456,
+			height: 2452,
 			alt: 'The Nutrition section of a recipe, Chicken Shawarma, per portion, with a Print nutrition label button. A strip of four: Calories 245, Protein 45.4 g, Carbs 2.7 g, Fat blank. A notice: some label nutrients are unavailable; the source profiles do not provide every Nutrition Facts value, and missing values stay blank instead of being counted as zero. A Nutrition Facts panel: Calories 245, Total Carbohydrate 2.7 g at 1 percent daily value, Protein 45.4 g, every other row blank. Beside it: the ingredient statement in recipe order, an allergen review marked incomplete for six ingredients with no allergen-free claim, dietary characteristics not assessed, and a sources list: chicken breast, coriander, kosher salt and Greek yogurt from USDA FoodData Central records 2646170, 170922, 173468 and 2259794; oregano and chili flake from seeded demo references.'
 		},
 		label: {
 			src: '/proof/nutrition-label.png',
-			width: 768,
-			height: 2072,
-			alt: 'The printable nutrition label sheet for Chicken Shawarma from Maple and Main Catering: calculated estimate, per portion, some values unavailable. A Nutrition Facts panel with Calories 245, Total Carbohydrate 2.7 g, Protein 45.4 g and the other rows blank; the ingredient statement in recipe order; an allergen review incomplete line with no allergen-free claim; the nutrition sources, four USDA FoodData Central records and two seeded demo references; and a footer: live recipe calculation printed 8/29/26, 9:28 AM, this estimate is not a claim of retail-label regulatory compliance.'
+			width: 716,
+			height: 2232,
+			alt: 'The printable nutrition label sheet for Chicken Shawarma from Maple and Main Catering: calculated estimate, per portion, some values unavailable. A Nutrition Facts panel with Calories 245, Total Carbohydrate 2.7 g, Protein 45.4 g and the other rows blank; the ingredient statement in recipe order; an allergen review incomplete line with no allergen-free claim; the nutrition sources, four USDA FoodData Central records and two seeded demo references; and a footer: live recipe calculation printed 8/29/26, 10:20 AM, this estimate is not a claim of retail-label regulatory compliance.'
 		},
 		caption:
-			'Captured in the demo kitchen from the tour, on the sandbox build, 2026-08-29. Four of Chicken Shawarma’s six ingredients were matched to USDA FoodData Central records through the app’s own search; two still carry the demo world’s seeded profiles. Where a source does not carry a value the row is blank, which is the behaviour the section describes.'
+			'Captured from the running app in the tour’s demo kitchen, on the sandbox build, 2026-08-29 (scripts/capture-proof.mjs). Four of Chicken Shawarma’s six ingredients were matched to USDA FoodData Central records through the app’s own search; two still carry the demo world’s seeded profiles. Where a source does not carry a value the row is blank, which is the behaviour the section describes.'
 	}
 } as const;

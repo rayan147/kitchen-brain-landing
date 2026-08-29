@@ -65,14 +65,14 @@ export const sage = {
 	proof: {
 		desktop: {
 			src: '/proof/sage-answer.png',
-			width: 1622,
-			height: 1288,
-			alt: 'A Sage answer. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record. Below, the ask box, placeholder: what needs my attention for Saturday’s order? And a note: Enter sends. Sage reads your records and can prepare a draft; it never changes anything on its own.'
+			width: 1426,
+			height: 670,
+			alt: 'A Sage answer. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record.'
 		},
 		mobile: {
 			src: '/proof/sage-answer-mobile.png',
-			width: 652,
-			height: 866,
+			width: 708,
+			height: 814,
 			alt: 'A Sage answer on a phone. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record.'
 		},
 		caption:
