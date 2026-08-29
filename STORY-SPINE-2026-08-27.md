@@ -22,9 +22,10 @@ against this same hero and this same wall. They are not started here.
 > what a plate costs before the price leaves their mouth — **but** every time the
 > job changes, the number moves and the sheet does not.
 
-- **WHO** the owner-caterer. Books events, quotes per-guest, logs invoices at the
-  register with one hand. Also the 5 a.m. cook, phone in a walk-in, wet hands.
-  One person doing both is the whole audience (RC-01, RC-44).
+- **WHO** the chef-owner planning event-driven work: an independent caterer or a
+  restaurant owner running catering, special dinners, or changing menus. Books
+  events, quotes per-guest, logs invoices at the register with one hand. Also
+  the 5 a.m. cook, phone in a walk-in, wet hands (RC-01, RC-44).
 - **WANT** a price they can say out loud and still make money on.
 - **WALL** the job changes. A supplier price moves, the client adds forty guests,
   a case arrives short. Every change is another place to retype the math.
@@ -88,13 +89,14 @@ Beats 9 and 10 share one section on purpose. They are adjacent in the source
 framework, and on this page they are one thought: here are the tools that look
 like the answer, and here is the honest cost of picking this one instead.
 
-**Why beat 10 was unwritten.** `WhoThisIsFor` carries a "who it is not for" list,
-which looks like All Is Lost but is not — it runs at 30% depth and does Debate
-work, sorting readers out before the demo plays. All Is Lost lands after the
-reader wants the thing. Different beat, different job, and this page's own rule
-is that a claim does not get stronger by being made twice: so the two lists share
-no rows. `WhoThisIsFor` is about **fit** (wrong shape of kitchen).
-`TheOtherTools` is about **capability** (right kitchen, missing feature).
+**Why beat 10 was unwritten.** `WhoThisIsFor` carries a limits list, which looks
+like All Is Lost but is not — it runs at 30% depth and does Debate work before
+the demo plays. All Is Lost lands after the reader wants the thing. Different
+beat, different job, and this page's own rule is that a claim does not get
+stronger by being made twice: so the two lists share no rows. `WhoThisIsFor` is
+about **fit** (the event-driven work, regardless of whether the same owner also
+runs regular restaurant service). `TheOtherTools` is about **capability** (right
+work, missing feature).
 
 ---
 
@@ -148,15 +150,16 @@ signed line. Adds no new specifics, because inventing the founder's own history
 is not available.
 
 **Beats 9 and 10** — `src/components/sections/TheOtherTools.astro`, new, plus a
-drawn figure contrasting the week a restaurant buys for with the dates a caterer
-buys for. Names nobody: RC-40 scopes named competitors to `/compare`, so the
-homepage argues the category and links to the table. Backed by new row **RC-47**.
+drawn figure contrasting a regular service week with a set of special-event
+dates. A restaurant can run both. Names nobody: RC-40 scopes named competitors
+to `/compare`, so the homepage argues the category and links to the table.
+Backed by new row **RC-47**.
 
-**The give-up rows** are four that `WhoThisIsFor` does not use, so nothing is
-said twice: printed nutrition labels (coming), buying that tops up to par (no),
-dietary characteristics (no), English only (no). Three `no` and one `coming`, and
-the framing sentence says so — `/compare`'s legend exists to keep those two apart
-and a heading reading all four as absent would undo it.
+**The give-up rows** are four that do not repeat `WhoThisIsFor`'s three limits,
+so nothing is said twice: printed nutrition labels (coming), buying that tops up
+to par (no), dietary characteristics (no), English only (no). Three `no` and one
+`coming`, and the framing sentence says so — `/compare`'s legend exists to keep
+those two apart and a heading reading all four as absent would undo it.
 
 **Guard** — `expectedSectionOrder` gains the tenth stop, `surfaceFiles` gains the
 new component so its copy and its comments go through the forbidden-claims scan
