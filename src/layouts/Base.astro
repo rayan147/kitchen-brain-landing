@@ -18,9 +18,16 @@ type Props = {
 	description?: string;
 	/** Root-relative route ('/features') so canonical/og:url stay per-page. */
 	path?: string;
+	/** Optional surface contract emitted as the first body child for design review. */
+	directionContract?: string;
 };
 
-const { title = site.title, description = site.description, path = '/' } = Astro.props;
+const {
+	title = site.title,
+	description = site.description,
+	path = '/',
+	directionContract
+} = Astro.props;
 // Slash form so canonical/og:url agree byte-for-byte with the sitemap.
 const canonical = new URL(path, site.url).href;
 const ogImage = new URL('/og.png', site.url).href;
@@ -58,6 +65,7 @@ const ogImage = new URL('/og.png', site.url).href;
 		{import.meta.env.PROD && <script defer src="/_vercel/insights/script.js" is:inline></script>}
 	</head>
 	<body>
+		{directionContract && <Fragment set:html={`<!-- ${directionContract} -->`} />}
 		<a
 			href="#main"
 			class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-paper focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lift"
