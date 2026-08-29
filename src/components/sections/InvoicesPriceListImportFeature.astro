@@ -1,0 +1,443 @@
+---
+import { featureGroups } from '../../lib/features';
+import { cta, demoCta } from '../../lib/site';
+
+const importGroup = featureGroups.find((group) => group.id === 'import');
+const ledgerGroup = featureGroups.find((group) => group.id === 'ledger');
+if (!importGroup || !ledgerGroup) throw new Error('Missing import and purchase-ledger public feature groups.');
+
+// Considered Strategy; not used because these are fixed editorial selections
+// from shipped feature data, not algorithms selected or swapped at runtime.
+const invoiceLeads = new Set([
+	'Any door in.',
+	'Classified, timed, retryable.',
+	'AI on a leash.',
+	'Staging, not writing.',
+	'Invoices that check themselves.',
+	'The original stays visible.',
+	'Receipts, not repeats.',
+	'Unreadable means unread.'
+]);
+const priceListLeads = new Set([
+	'Price sheets, row by row.',
+	'Bulk add with verdicts.',
+	'Foreign CSVs.',
+	'Word documents.',
+	'Semantic matching.',
+	'It learns your names.',
+	'Caterer scale.'
+]);
+const invoiceItems = importGroup.items.filter((item) => invoiceLeads.has(item.lead));
+const priceListItems = importGroup.items.filter((item) => priceListLeads.has(item.lead));
+if (invoiceItems.length !== invoiceLeads.size || priceListItems.length !== priceListLeads.size) {
+	throw new Error('Invoices & price-list capability selection drifted.');
+}
+
+const capabilityGroups = [
+	{ label: 'Invoice import', title: 'Stage the purchase before it changes a price.', items: invoiceItems },
+	{ label: 'Price-list import', title: 'Choose which supplier offers become current.', items: priceListItems }
+] as const;
+const capabilityCount = capabilityGroups.reduce((total, group) => total + group.items.length, 0);
+
+const faqItems = [
+	{
+		question: 'What can I import into CostCook?',
+		answer:
+			'One queue accepts a photograph, PDF, spreadsheet, Word document, or pasted text. CostCook classifies the source and stages what it can read for review; it does not write uncertain information straight into your catalog.'
+	},
+	{
+		question: 'Does an import update ingredient prices automatically?',
+		answer:
+			'No. Imported facts stay in staging until you confirm them. Only a careful exact match can be preselected, and doubtful names, units, pack sizes, or rows remain a human decision.'
+	},
+	{
+		question: 'What is the difference between an invoice and a price list?',
+		answer:
+			'An invoice records a purchase that happened. A supplier price list is an offer, not a purchase. CostCook lets you apply or skip price-list rows individually and will not silently apply a pack-size change.'
+	},
+	{
+		question: 'What happens when CostCook cannot read a line?',
+		answer:
+			'Unreadable text is surfaced beside the staged result instead of being dropped or guessed. You can correct the row, leave it waiting, replace the source, or exclude it before committing.'
+	},
+	{
+		question: 'How are duplicate invoices handled?',
+		answer:
+			'Invoice totals are checked against their lines and duplicate sources are fingerprinted. A repeated commit replays the same receipt rather than creating the purchase rows twice.'
+	},
+	{
+		question: 'Can an older invoice replace a newer ingredient price?',
+		answer:
+			'Current cost follows the newest qualifying purchase date, not the order in which documents were typed or imported. Backlogging an older invoice does not make it the current price.'
+	}
+] as const;
+---
+
+<!-- story: docs/stories/invoices-price-list-import.story.md -->
+<article id="features-import" class="imports-page">
+	<section class="hero" aria-labelledby="imports-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="breadcrumb">
+					<a href="/features">Every feature</a>
+					<span aria-hidden="true">/</span>
+					<span>Invoices and price-list import</span>
+				</nav>
+				<h1 id="imports-heading">Bring in the paperwork. Keep the final say.</h1>
+				<p class="hero-lede">
+					Send an invoice or supplier price list into one review queue. CostCook stages the
+					lines, keeps the source beside them, and waits for you before anything becomes real.
+				</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+				</div>
+			</div>
+
+			<figure class="intake-desk anim-enter" style="--enter-delay: 120ms">
+				<figcaption>Illustrative source-to-review path</figcaption>
+				<div class="source-stack" aria-hidden="true">
+					<div class="source-sheet invoice-sheet"><span>Invoice</span><strong>Purchase</strong><i></i><i></i><i></i></div>
+					<div class="source-sheet price-sheet"><span>Price list</span><strong>Offer</strong><i></i><i></i><i></i></div>
+				</div>
+				<div class="stage-sheet">
+					<div class="sheet-head"><span>Staged records</span><span>Nothing saved</span></div>
+					<div class="stage-row stage-labels"><span>Item</span><span>Source</span><span>State</span></div>
+					<div class="stage-row"><strong>Chicken thigh</strong><span>Invoice</span><em class="ready">Ready to review</em></div>
+					<div class="stage-row"><strong>Roma tomato</strong><span>Price list</span><em class="check">Check pack</em></div>
+					<div class="stage-row"><strong>Unreadable line</strong><span>Invoice</span><em class="check">Needs you</em></div>
+					<div class="confirm-gate"><span>You confirm</span><strong>then prices can move</strong></div>
+				</div>
+				<div class="flow-key" aria-label="Source, then staged facts, then your confirmation">
+					<span>Source</span><i></i><span>Staged</span><i></i><strong>You confirm</strong>
+				</div>
+				<p>Illustrative records. The staging and confirmation behavior is shipped.</p>
+			</figure>
+		</div>
+	</section>
+
+	<section class="paper-wall" aria-labelledby="paper-wall-heading">
+		<div class="container-page wall-grid">
+			<div data-reveal>
+				<h2 id="paper-wall-heading">The price changed on paper first.</h2>
+				<p>
+					The new case price is in a folded invoice. The supplier offer is in a photograph.
+					Tomorrow's quote still reads the number you entered last month.
+				</p>
+			</div>
+			<figure class="delay-line" data-reveal>
+				<div><span>Source arrives</span><strong>today</strong></div>
+				<i aria-hidden="true"></i>
+				<div><span>Price gets keyed</span><strong>later</strong></div>
+				<i aria-hidden="true"></i>
+				<div><span>Quote goes out</span><strong>now</strong></div>
+				<figcaption>That is why reading and committing belong in different moments.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<nav class="product-nav container-page" aria-label="On this page">
+		<a href="#invoice-import"><span>Invoice import</span><small>Check the purchase, its lines, and its total before posting.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#price-list-import"><span>Price-list import</span><small>Apply or skip supplier offers without inventing a purchase.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+	</nav>
+
+	<section class="common-rule" aria-labelledby="common-rule-heading">
+		<div class="container-page common-grid">
+			<div data-reveal><h2 id="common-rule-heading">Five doors. One queue. One gate.</h2><p>A photograph, PDF, spreadsheet, Word document, or pasted text can enter the same workspace. Each stays outside your real catalog until review is complete.</p></div>
+			<ol class="queue-path" data-reveal>
+				<li><span>1</span><strong>Bring in the source</strong><small>Keep the original attached.</small></li>
+				<li><span>2</span><strong>Read and match</strong><small>Stage names, units, and prices.</small></li>
+				<li class="gate"><span>3</span><strong>You confirm</strong><small>Resolve what is uncertain.</small></li>
+				<li><span>4</span><strong>Commit the result</strong><small>Write only accepted facts.</small></li>
+			</ol>
+		</div>
+	</section>
+
+	<section id="invoice-import" class="product-section invoice-import" aria-labelledby="invoice-heading">
+		<div class="container-page">
+			<div class="section-intro" data-reveal>
+				<h2 id="invoice-heading">Invoice import that stops for a proper check.</h2>
+				<p>An invoice says what you bought, when you bought it, and what the supplier charged. Review those facts together before they join the purchase ledger.</p>
+			</div>
+
+			<figure class="invoice-review" data-reveal>
+				<div class="source-preview">
+					<div class="preview-head"><span>Original source</span><strong>Invoice · PDF</strong></div>
+					<div class="supplier-mark">GREEN VALLEY PRODUCE</div>
+					<dl><div><dt>Invoice</dt><dd>GV-4471</dd></div><div><dt>Date</dt><dd>Jul 28, 2026</dd></div></dl>
+					<div class="paper-lines"><i></i><i></i><i></i><i></i><i></i></div>
+					<strong class="paper-total">Stated total <span>$86.65</span></strong>
+				</div>
+				<div class="review-ledger">
+					<div class="preview-head"><span>Staged purchase</span><strong>3 lines</strong></div>
+					<div class="review-row labels"><span>Match</span><span>Pack</span><span>Line total</span></div>
+					<div class="review-row"><strong>Roma tomato</strong><span>25 lb case</span><b>$31.25</b></div>
+					<div class="review-row flagged"><strong>Cucumber</strong><span>Check: 12 ct</span><b>$18.40</b></div>
+					<div class="review-row"><strong>Baby spinach</strong><span>4 × 2.5 lb</span><b>$37.00</b></div>
+					<div class="reconcile"><span>Computed from lines</span><strong>$86.65</strong><em>Matches stated total</em></div>
+				</div>
+				<figcaption>Illustrative values based on the CostCook walkthrough. The total remains visible beside the staged lines.</figcaption>
+			</figure>
+
+			<div class="feature-scenes">
+				<article data-reveal><h3>Keep the source in view.</h3><p>The photo or PDF sits beside the staged rows, so a doubtful unit can be checked against the paper instead of memory.</p></article>
+				<article data-reveal><h3>Reconcile before posting.</h3><p>Stated invoice totals compare with the computed lines, and a duplicate source is fingerprinted before it becomes another purchase.</p></article>
+				<article data-reveal><h3>Post once.</h3><p>Committing twice replays the same receipt rather than adding the purchase rows again. Current cost still follows purchase date.</p></article>
+			</div>
+	</div>
+	</section>
+
+	<section id="price-list-import" class="product-section price-list-import" aria-labelledby="price-list-heading">
+		<div class="container-page">
+			<div class="section-intro" data-reveal>
+				<h2 id="price-list-heading">A supplier price list is an offer, not a purchase.</h2>
+				<p>Read the sheet row by row. Apply the offers you want, skip the ones you do not, and stop when a pack-size change needs a closer look.</p>
+			</div>
+
+			<figure class="offer-review" data-reveal>
+				<div class="offer-head"><div><span>Supplier price list</span><strong>North Coast Foods · Aug 2026</strong></div><em>4 rows staged</em></div>
+				<div class="offer-row labels"><span>Supplier item</span><span>Current</span><span>Offered</span><span>Decision</span></div>
+				<div class="offer-row"><strong>Chicken thigh</strong><span>$54.00 / case</span><b>$57.40 / case</b><em class="apply">Apply</em></div>
+				<div class="offer-row changed"><strong>Heavy cream</strong><span>12 × 1 qt</span><b>6 × 2 qt</b><em class="review">Review pack</em></div>
+				<div class="offer-row"><strong>Lemon</strong><span>$42.00 / case</span><b>$45.00 / case</b><em class="skip">Skip</em></div>
+				<div class="offer-row"><strong>Tomato, Roma</strong><span>Existing match</span><b>$31.25 / case</b><em class="apply">Apply</em></div>
+				<figcaption>Illustrative price-list review. Applying an asking price does not create a purchase.</figcaption>
+			</figure>
+
+			<p class="snap" data-reveal>A price list is an offer. An invoice is what happened. CostCook keeps the difference.</p>
+			<div class="feature-scenes">
+				<article data-reveal><h3>Map the sheet you received.</h3><p>For an unfamiliar CSV, the proposed column mapping is reviewed before a deterministic parser reads every cell. Ignored columns stay disclosed.</p></article>
+				<article data-reveal><h3>Match names without hiding doubt.</h3><p>Duplicate-match scores and ambiguity stay visible. Confirmed supplier names can become aliases for the next review.</p></article>
+				<article data-reveal><h3>Refuse the quiet pack change.</h3><p>A different pack size cannot slide through as if only the price changed. That row stops for a decision.</p></article>
+			</div>
+		</div>
+	</section>
+
+	<section class="exceptions" aria-labelledby="exceptions-heading">
+		<div class="container-page exceptions-grid">
+			<div data-reveal><h2 id="exceptions-heading">The awkward rows stay awkward on screen.</h2><p>Trust is earned at the edge cases. Nothing unreadable, unmatched, duplicated, or structurally changed needs to be guessed into place.</p></div>
+			<ul class="exception-list" role="list" data-reveal>
+				<li><strong>Unreadable</strong><span>The source text is quoted back beside the staged row.</span><em>Correct or leave waiting</em></li>
+				<li><strong>Unmatched</strong><span>Candidate matches and their ambiguity remain visible.</span><em>Choose or add</em></li>
+				<li><strong>Duplicate</strong><span>The source fingerprint and prior receipt stop a second posting.</span><em>Open the existing record</em></li>
+				<li><strong>Pack changed</strong><span>The new pack is not treated as a simple price update.</span><em>Review the unit</em></li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="capabilities" aria-labelledby="capabilities-heading">
+		<div class="container-page">
+			<div class="capability-heading" data-reveal><div><h2 id="capabilities-heading">The import details, kept close.</h2><p>Selected shipped capabilities for invoices and supplier price lists.</p></div><p class="count"><strong>{capabilityCount}</strong><span>capabilities</span></p></div>
+			<div class="disclosures">
+				{capabilityGroups.map((group) => (
+					<details data-reveal data-import-disclosure><summary><span><strong>{group.label}</strong><small>{group.title}</small></span><span class="summary-count">{group.items.length}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul>{group.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="faq" aria-labelledby="faq-heading">
+		<div class="container-page faq-grid">
+			<div class="faq-intro" data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions to settle before supplier paperwork changes a working cost.</p></div>
+			<div class="faq-list">{faqItems.map((item) => <details data-reveal data-import-disclosure><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>)}</div>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid" data-reveal>
+			<div><h2 id="closing-heading">The source filed. The price explained.</h2><p>Bring in the next supplier document with every line still under your eye.</p></div>
+			<div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div>
+		</div>
+		<nav class="container-page onward" aria-label="Related feature guides"><a href="/features/getting-prices-in">Purchases &amp; getting prices in</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
+	</section>
+</article>
+
+<style>
+	.imports-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); overflow: clip; }
+	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.25rem); }
+	.breadcrumb { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.8rem; font-size: 0.875rem; color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
+	.hero h1 { max-width: 12ch; font-family: var(--font-display); font-size: clamp(2.75rem, 5vw, 5.6rem); font-weight: 600; line-height: 0.99; letter-spacing: -0.025em; text-wrap: balance; }
+	.hero-lede { max-width: 39ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
+	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
+	.btn-outline:hover { background: var(--color-green); color: white; }
+	.intake-desk { position: relative; min-width: 0; padding-top: 2.25rem; }
+	.intake-desk > figcaption { position: absolute; top: 0; left: 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.source-stack { position: absolute; top: 3.2rem; left: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(82%, 26rem); }
+	.source-sheet { min-height: 8.5rem; padding: 1rem; background: var(--color-paper); box-shadow: 0 9px 16px color-mix(in srgb, var(--color-ink) 9%, transparent); }
+	.invoice-sheet { transform: rotate(-2deg); }
+	.price-sheet { transform: translate(-0.6rem, -0.5rem) rotate(2deg); }
+	.source-sheet span, .source-sheet strong { display: block; }
+	.source-sheet span { font-family: var(--font-display); font-size: 1rem; }
+	.source-sheet strong { margin-top: 0.1rem; font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.source-sheet i { display: block; width: 76%; height: 1px; margin-top: 0.75rem; background: var(--color-ticket-rule); }
+	.stage-sheet { position: relative; z-index: 1; width: 88%; margin: 6.2rem 0 0 auto; padding: clamp(1rem, 2.8vw, 1.5rem); border-top: 3px solid var(--color-green); background: var(--color-paper); box-shadow: 0 13px 23px color-mix(in srgb, var(--color-ink) 12%, transparent); }
+	.sheet-head, .preview-head, .offer-head { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+	.sheet-head { padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.stage-row { display: grid; grid-template-columns: minmax(0, 1.15fr) 0.7fr auto; gap: 0.75rem; align-items: center; min-width: 0; padding-block: 0.65rem; border-bottom: 1px solid var(--rule); font-size: 0.74rem; }
+	.stage-labels { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.stage-row em, .offer-row em { justify-self: end; padding: 0.28rem 0.48rem; font-size: 0.62rem; font-style: normal; font-weight: 700; white-space: nowrap; }
+	.ready, .apply { background: var(--color-softgreen); color: var(--color-green-deep); }
+	.check, .review { background: var(--color-softamber); color: var(--color-amber-deep); }
+	.confirm-gate { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 0.85rem; border: 1px solid var(--color-amber-deep); color: var(--color-amber-deep); font-size: 0.72rem; }
+	.confirm-gate span { font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+	.flow-key { display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: center; margin-top: 1.1rem; font-size: 0.72rem; color: var(--color-ink-soft); }
+	.flow-key i { width: 1.6rem; height: 1px; background: var(--color-amber-deep); }
+	.flow-key strong { color: var(--color-amber-deep); }
+	.intake-desk > p { margin-top: 0.7rem; font-size: 0.72rem; color: var(--color-ink-soft); }
+
+	.paper-wall, .common-rule { padding-block: var(--spacing-section-tight); background: var(--color-ink); color: var(--color-paper); }
+	.wall-grid, .common-grid { display: grid; gap: 3rem; align-items: center; }
+	.wall-grid h2, .common-grid h2 { max-width: 14ch; }
+	.wall-grid > div p, .common-grid > div p { max-width: 47ch; margin-top: 1rem; color: color-mix(in srgb, var(--color-paper) 72%, transparent); }
+	.delay-line { display: grid; gap: 0.8rem; }
+	.delay-line > div { padding-block: 0.9rem; border-block: 1px solid color-mix(in srgb, var(--color-paper) 23%, transparent); }
+	.delay-line span, .delay-line strong { display: block; }
+	.delay-line span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-amber-light); }
+	.delay-line strong { margin-top: 0.3rem; font-family: var(--font-display); font-size: 1.1rem; }
+	.delay-line i { width: 1px; height: 1.2rem; margin-inline: auto; background: var(--color-amber-light); }
+	.delay-line figcaption { color: color-mix(in srgb, var(--color-paper) 78%, transparent); font-size: 0.82rem; }
+
+	.product-nav { display: grid; padding-inline: var(--spacing-page); }
+	.product-nav a { display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 1rem; min-height: 88px; align-content: center; padding: 1rem clamp(0rem, 2vw, 1.5rem); color: var(--color-ink); }
+	.product-nav a + a { border-top: 1px solid var(--color-ticket-rule); }
+	.product-nav span { font-weight: 700; }
+	.product-nav small { grid-column: 1; color: var(--color-ink-soft); }
+	.product-nav svg { grid-column: 2; grid-row: 1 / 3; align-self: center; fill: none; stroke: var(--color-green-deep); stroke-width: 1.5; }
+	.common-rule { background: var(--color-green-deep); }
+	.queue-path { display: grid; gap: 1px; background: color-mix(in srgb, white 28%, transparent); }
+	.queue-path li { display: grid; grid-template-columns: 1.8rem 1fr; gap: 0.2rem 0.75rem; min-width: 0; padding: 1rem; background: var(--color-green-deep); }
+	.queue-path li.gate { background: var(--color-paper); color: var(--color-ink); }
+	.queue-path li > span { grid-row: 1 / 3; display: grid; width: 1.6rem; height: 1.6rem; place-items: center; border: 1px solid currentColor; border-radius: 50%; font-size: 0.68rem; }
+	.queue-path strong { font-size: 0.82rem; }
+	.queue-path small { color: color-mix(in srgb, currentColor 72%, transparent); }
+
+	.product-section { scroll-margin-top: 1rem; padding-block: var(--spacing-section); }
+	.invoice-import { background: var(--color-offwhite); }
+	.price-list-import { border-top: 1px solid var(--color-hairline); background: var(--color-softgreen); }
+	.section-intro { display: grid; gap: 1.25rem; align-items: end; }
+	.section-intro h2 { max-width: 20ch; }
+	.section-intro > p { max-width: 57ch; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
+	.invoice-review { display: grid; gap: 1.25rem; margin-top: clamp(3rem, 6vw, 5rem); }
+	.source-preview, .review-ledger, .offer-review { min-width: 0; padding: clamp(1.1rem, 3vw, 1.8rem); background: var(--color-paper); box-shadow: 0 10px 18px color-mix(in srgb, var(--color-ink) 9%, transparent); }
+	.source-preview { border-top: 3px solid var(--color-amber-deep); }
+	.review-ledger, .offer-review { border-top: 3px solid var(--color-green); }
+	.preview-head { padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
+	.supplier-mark { margin-top: 1.5rem; font-family: var(--font-display); font-size: 1.18rem; }
+	.source-preview dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+	.source-preview dt { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
+	.source-preview dd { margin-top: 0.2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+	.paper-lines { margin-top: 1.4rem; }
+	.paper-lines i { display: block; width: 100%; height: 1px; margin-top: 0.65rem; background: var(--color-ticket-rule); }
+	.paper-lines i:nth-child(even) { width: 72%; }
+	.paper-total { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 0.9rem; border-top: 2px solid var(--color-ink); font-size: 0.8rem; }
+	.paper-total span { font-variant-numeric: tabular-nums; }
+	.review-row, .offer-row { display: grid; gap: 0.75rem; align-items: center; padding-block: 0.8rem; border-bottom: 1px solid var(--rule); font-size: 0.78rem; }
+	.review-row { grid-template-columns: minmax(0, 1fr) minmax(6rem, 0.75fr) auto; }
+	.review-row.labels, .offer-row.labels { font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
+	.review-row b, .offer-row b { font-variant-numeric: tabular-nums; }
+	.review-row.flagged { background: var(--color-softamber); }
+	.reconcile { display: grid; grid-template-columns: 1fr auto; gap: 0.3rem 1rem; margin-top: 1.3rem; padding: 1rem; background: var(--color-softgreen); }
+	.reconcile strong { font-variant-numeric: tabular-nums; }
+	.reconcile em { grid-column: 1 / -1; color: var(--color-green-deep); font-size: 0.72rem; font-style: normal; font-weight: 700; }
+	.invoice-review > figcaption, .offer-review figcaption { color: var(--color-ink-soft); font-size: 0.78rem; line-height: 1.5; }
+	.invoice-review > figcaption { grid-column: 1 / -1; }
+	.feature-scenes { display: grid; gap: 2rem; margin-top: 3rem; }
+	.feature-scenes article { padding-top: 1.25rem; border-top: 1px solid var(--color-hairline-strong); }
+	.feature-scenes h3 { font-size: 1.05rem; }
+	.feature-scenes p { margin-top: 0.65rem; color: var(--color-ink-soft); line-height: 1.6; }
+	.offer-review { margin-top: clamp(3rem, 6vw, 5rem); }
+	.offer-head > div span, .offer-head > div strong { display: block; }
+	.offer-head span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-green-deep); }
+	.offer-head strong { margin-top: 0.25rem; font-family: var(--font-display); font-size: 1.25rem; }
+	.offer-head > em { font-size: 0.72rem; font-style: normal; color: var(--color-ink-soft); }
+	.offer-row { grid-template-columns: minmax(0, 1.15fr) minmax(6rem, 0.8fr) minmax(6rem, 0.8fr) auto; }
+	.offer-row.changed { background: var(--color-softamber); }
+	.offer-row .skip { border: 1px solid var(--color-hairline-strong); color: var(--color-ink-soft); }
+	.offer-review figcaption { margin-top: 1rem; }
+	.snap { max-width: 26ch; margin: clamp(3rem, 6vw, 5rem) auto 0; font-family: var(--font-display); font-size: clamp(1.75rem, 3.4vw, 3.2rem); line-height: 1.08; text-align: center; text-wrap: balance; color: var(--color-green-deep); }
+
+	.exceptions { padding-block: var(--spacing-section-tight); background: var(--color-cream); }
+	.exceptions-grid { display: grid; gap: 3rem; align-items: start; }
+	.exceptions-grid > div p { max-width: 47ch; margin-top: 1rem; color: var(--color-ink-soft); }
+	.exception-list { border-top: 1px solid var(--color-ticket-rule); }
+	.exception-list li { display: grid; gap: 0.35rem 1rem; padding-block: 1rem; border-bottom: 1px solid var(--color-ticket-rule); }
+	.exception-list span { color: var(--color-ink-soft); }
+	.exception-list em { font-size: 0.75rem; font-style: normal; font-weight: 700; color: var(--color-amber-deep); }
+
+	.capabilities { padding-block: var(--spacing-section); border-top: 1px solid var(--color-hairline); background: var(--color-offwhite); }
+	.capability-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; align-items: end; }
+	.capability-heading > div > p { margin-top: 0.8rem; color: var(--color-ink-soft); }
+	.count { display: flex; align-items: baseline; gap: 0.65rem; color: var(--color-ink-soft); }
+	.count strong { font-family: var(--font-display); font-size: 2.4rem; font-variant-numeric: tabular-nums; color: var(--color-amber-deep); }
+	.count span, .summary-count { font-size: 0.78rem; }
+	.disclosures, .faq-list { margin-top: 3rem; border-top: 1px solid var(--color-ticket-rule); }
+	.disclosures details, .faq-list details { border-bottom: 1px solid var(--color-ticket-rule); }
+	.disclosures summary, .faq-list summary { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; min-height: 72px; padding-block: 1rem; cursor: pointer; list-style: none; }
+	.disclosures summary::-webkit-details-marker, .faq-list summary::-webkit-details-marker { display: none; }
+	.disclosures summary > span:first-child { display: grid; gap: 0.2rem; }
+	.disclosures summary strong, .faq-list summary span { font-size: 1.05rem; font-weight: 650; }
+	.disclosures summary small { font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-soft); }
+	.summary-count { color: var(--color-amber-deep); font-variant-numeric: tabular-nums; }
+	.disclosures summary svg, .faq-list summary svg { fill: none; stroke: var(--color-green-deep); stroke-width: 1.5; transition: transform 180ms ease-out; }
+	.disclosures details[open] summary svg, .faq-list details[open] summary svg { transform: rotate(180deg); }
+	.disclosures ul { padding-bottom: 1.5rem; columns: 1; }
+	.disclosures li { break-inside: avoid; padding-block: 0.65rem; border-top: 1px solid var(--color-hairline); font-size: 0.86rem; line-height: 1.55; }
+	.disclosures li span { color: var(--color-ink-soft); }
+
+	.faq { padding-block: var(--spacing-section-tight); border-top: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.faq-grid { display: grid; gap: clamp(2.5rem, 6vw, 6rem); }
+	.faq-intro p { max-width: 42ch; margin-top: 1rem; color: var(--color-ink-soft); }
+	.faq-list { margin-top: 0; }
+	.faq-list summary { grid-template-columns: minmax(0, 1fr) auto; }
+	.faq-list details > p { max-width: 66ch; padding: 0 3.25rem 1.5rem 0; line-height: 1.65; color: var(--color-ink-soft); }
+
+	.closing { border-top: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
+	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.closing p { max-width: 55ch; margin-top: 1rem; color: var(--color-ink-soft); }
+	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--color-hairline-strong); }
+	.onward a { display: inline-flex; min-height: 44px; align-items: center; }
+
+	@media (min-width: 640px) {
+		.product-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.product-nav a + a { border-top: 0; border-left: 1px solid var(--color-ticket-rule); }
+		.queue-path { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+		.feature-scenes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+		.disclosures ul { columns: 2; column-gap: 3rem; }
+		.exception-list li { grid-template-columns: 0.5fr 1.3fr 0.7fr; align-items: baseline; }
+	}
+
+	@media (min-width: 768px) {
+		.hero-grid { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); }
+		.wall-grid, .common-grid, .exceptions-grid { grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr); }
+		.delay-line { grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; }
+		.delay-line i { width: 1.4rem; height: 1px; }
+		.delay-line figcaption { grid-column: 1 / -1; }
+		.section-intro { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+		.invoice-review { grid-template-columns: minmax(15rem, 0.68fr) minmax(0, 1.32fr); }
+		.faq-grid { grid-template-columns: minmax(15rem, 0.65fr) minmax(0, 1.35fr); align-items: start; }
+		.closing-grid { grid-template-columns: 1fr auto; }
+	}
+
+	@media (max-width: 639px) {
+		.hero-actions > a, .closing-actions > a { width: 100%; }
+		.stage-sheet { width: 95%; }
+		.stage-row { grid-template-columns: minmax(0, 1fr) auto; }
+		.stage-row > :nth-child(2) { grid-column: 1; color: var(--color-ink-soft); }
+		.stage-row > :last-child { grid-column: 2; grid-row: 1 / 3; }
+		.stage-labels { display: none; }
+		.confirm-gate { display: grid; }
+		.review-row, .offer-row { grid-template-columns: minmax(0, 1fr) auto; }
+		.review-row.labels, .offer-row.labels { display: none; }
+		.review-row > :nth-child(2), .offer-row > :nth-child(2), .offer-row > :nth-child(3) { grid-column: 1; color: var(--color-ink-soft); }
+		.review-row > :last-child, .offer-row > :last-child { grid-column: 2; grid-row: 1 / 4; align-self: center; }
+		.offer-head { display: grid; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.btn-outline, .product-nav a, .disclosures summary svg, .faq-list summary svg { transition: none; }
+	}
+</style>

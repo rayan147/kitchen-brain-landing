@@ -36,7 +36,7 @@ const menuTargets = [
 	{ id: 'math', area: 'recipes-and-costing', href: '/features/recipes-and-costing' },
 	{ id: 'menus', area: 'menus-and-quotes', href: '/features/menus-and-quotes' },
 	{ id: 'ingredients', area: 'recipes-and-costing' },
-	{ id: 'import', area: 'getting-prices-in' },
+	{ id: 'import', area: 'invoices-and-price-list-import', href: '/features/invoices-and-price-list-import' },
 	{ id: 'orders', area: 'the-day-itself' },
 	{ id: 'purchasing', area: 'the-day-itself' },
 	{ id: 'inventory', area: 'the-day-itself' },

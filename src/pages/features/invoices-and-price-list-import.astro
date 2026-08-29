@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import InvoicesPriceListImportFeature from '../../components/sections/InvoicesPriceListImportFeature.astro';
+
+// Considered Strategy; not used because this route is one deliberate editorial
+// composition selected at build time, not a runtime-swappable layout family.
+const directionContract = [
+	'THESIS: Supplier documents share an intake queue without becoming the same kind of truth.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber review signals, square records, green actions.',
+	'STORY: The caterer sees the delayed-price wall, stages a source, reviews an invoice or price list by its own rules, resolves exceptions, then starts or books a demo.',
+	'FIRST VIEWPORT: Editorial statement at left; layered supplier documents become a staged ledger and stop at a human confirmation gate at right.',
+	'FORM: Code-led receiving-light-table composition; seed key invoices-price-lists-final-say.',
+	'FINISH: The source is visible, uncertain facts remain staged, and only confirmed changes reach costing; verify route, disclosures, and mobile reflow.'
+].join(' ');
+---
+
+<Base
+	title="Invoice and supplier price-list import software | CostCook"
+	description="Bring invoices and supplier price lists into one staged review, keep the source visible, and confirm every cost change before it reaches your recipes."
+	path="/features/invoices-and-price-list-import"
+	directionContract={directionContract}
+>
+	<InvoicesPriceListImportFeature />
+</Base>

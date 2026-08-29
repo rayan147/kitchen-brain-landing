@@ -34,6 +34,10 @@ const surfaceFiles = [
 	// EveryFeature.astro (one page, 145 items) became these two.
 	'src/components/sections/FeatureIndex.astro',
 	'src/components/sections/FeatureSection.astro',
+	// Specialist import page. Its invoice and price-list explanations can alter
+	// how a reader understands financial writes, so every claim passes the same
+	// forbidden-automation scan as the broader area page.
+	'src/components/sections/InvoicesPriceListImportFeature.astro',
 	// The three drawn area figures. They redraw claims their own pages already
 	// make (RC-16, RC-19, RC-09, RC-38, RC-39, RC-42) and must never outrun them.
 	'src/components/FeatureAreaFigure.astro',
