@@ -21,6 +21,7 @@ export const stops = [
 	{ id: 'outcomes', label: 'What it does instead' },
 	{ id: 'yield', label: 'The hard part' },
 	{ id: 'intake', label: 'Before any of that' },
+	{ id: 'sage', label: 'Sage, the assistant' },
 	{ id: 'alternatives', label: 'The other tools' },
 	{ id: 'trust', label: 'Who made it' },
 	{ id: 'start', label: 'Start here' }

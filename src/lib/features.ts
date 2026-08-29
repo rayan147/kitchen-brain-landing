@@ -1,3 +1,4 @@
+import { SAGE_STATUS } from './sage';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -399,9 +400,13 @@ export const featureGroups: readonly FeatureGroup[] = [
 		section: 'Team, and what it connects to',
 		kicker: 'Sage, the in-app assistant',
 		title: 'Sage, answering from your own numbers.',
-		status: 'in-development',
+		// Status is read from src/lib/sage.ts, the one place it may change (RC-49).
+		status: SAGE_STATUS === 'yes' ? 'available' : 'in-development',
 		items: [
-			{ lead: 'Not included at launch.', detail: 'A chat assistant that answers from your own kitchen’s numbers is being built. It is not in the app you would start today.' }
+			// The area page renders items[0].detail alone for an in-development
+			// group, so this one line is the whole public description there and
+			// on /pricing. It names the six things and the boundary, nothing else.
+			{ lead: 'Not in the app you would start today.', detail: 'Sage answers questions from the records you already keep: what needs attention, the orders on a date, why a dish costs what it costs, which prices moved, what came up short in receiving. It shows where every number came from, and the one thing it can prepare, a shopping list draft, waits for you to approve it. Built and tested on the sandbox; not in the launch price, and it carries no date.' }
 		]
 	},
 	{
@@ -448,6 +453,7 @@ export const inDevelopmentFeatureGroups = featureGroups.filter((group) => group.
 export const featureCount = availableFeatureGroups.reduce((sum, group) => sum + group.items.length, 0);
 
 export type FeatureMenuIcon =
+	| 'assistant'
 	| 'recipe'
 	| 'menu'
 	| 'ingredient'
@@ -462,6 +468,8 @@ export type FeatureMenuItem = {
 	description: string;
 	featureId: string;
 	icon: FeatureMenuIcon;
+	/** Set only for a group that is in development. The menu renders the Coming chip. */
+	coming?: true;
 };
 
 export type FeatureMenuSection = {
@@ -532,6 +540,16 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				description: 'Compare what the month should have cost with what you spent.',
 				featureId: 'ledger',
 				icon: 'ledger'
+			},
+			// Added 2026-08-29 at the owner's request. The chip and the destination
+			// both read the group's status, so this item cannot say Coming after the
+			// area page stops saying it, or the reverse.
+			{
+				label: 'Sage, the assistant',
+				description: 'Ask a question, get an answer from your own records, with its sources.',
+				featureId: 'assistant',
+				icon: 'assistant',
+				...(SAGE_STATUS === 'yes' ? {} : { coming: true })
 			}
 		]
 	}
@@ -543,6 +561,7 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 const shippedFeatureGroupsById = new Map(
 	availableFeatureGroups.map((group) => [group.id, group] as const)
 );
+const featureGroupsById = new Map(featureGroups.map((group) => [group.id, group] as const));
 
 // Considered Strategy; not used because three fixed editorial destinations
 // are static route data, not interchangeable navigation algorithms.
@@ -552,9 +571,15 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['ingredients', '/features/ingredients-and-supplier-prices']
 ]);
 
-export const featureMenuHref = (featureId: string) => {
-	const group = shippedFeatureGroupsById.get(featureId);
+export const featureMenuHref = (featureId: string, coming = false) => {
+	// A shipped item must point at a shipped group. A Coming item may point at
+	// an in-development group, and ONLY at one: the chip is what makes the
+	// destination honest, so the two are checked together.
+	const group = coming ? featureGroupsById.get(featureId) : shippedFeatureGroupsById.get(featureId);
 	if (!group) throw new Error(`Feature menu points to missing or unshipped group: ${featureId}`);
+	if (coming && group.status !== 'in-development') {
+		throw new Error(`Feature menu marks ${featureId} as coming, but the group has shipped. Drop the chip.`);
+	}
 	const dedicatedRoute = dedicatedFeatureRoutes.get(featureId);
 	if (dedicatedRoute) return dedicatedRoute;
 	return `/features/${SECTION_META[group.section].slug}#features-${featureId}`;
@@ -562,6 +587,6 @@ export const featureMenuHref = (featureId: string) => {
 
 for (const section of featureMenuSections) {
 	for (const item of section.items) {
-		featureMenuHref(item.featureId);
+		featureMenuHref(item.featureId, item.coming === true);
 	}
 }

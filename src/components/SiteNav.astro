@@ -42,6 +42,10 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 			<symbol id="feature-menu-inventory" viewBox="0 0 20 20">
 				<path d="M3 4.25h14v11.5H3V4.25ZM3 9.75h14M7.5 4.25v11.5M12.5 4.25v11.5" />
 			</symbol>
+			<symbol id="feature-menu-assistant" viewBox="0 0 20 20">
+				<path d="M3.5 4.75h13v8.5H9.25L5.5 16.5v-3.25h-2v-8.5Z" />
+				<path d="M7 8h6M7 10.5h4" />
+			</symbol>
 			<symbol id="feature-menu-ledger" viewBox="0 0 20 20">
 				<path d="M4.5 2.75h11v14.5l-2-1.25-2 1.25-2-1.25-2 1.25-3-1.75V2.75Z" />
 				<path d="M7 7h6M7 10h6M7 13h3.5" />
@@ -95,7 +99,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 												{section.items.map((item) => (
 													<li>
 														<a
-															href={featureMenuHref(item.featureId)}
+															href={featureMenuHref(item.featureId, item.coming === true)}
 															class="grid min-h-11 grid-cols-[1.25rem_minmax(0,1fr)] gap-3 rounded-md px-3 py-2.5 transition-colors duration-150 hover:bg-cream"
 														>
 															<svg
@@ -113,7 +117,14 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 																<use href={`#feature-menu-${item.icon}`} />
 															</svg>
 															<span class="min-w-0">
-																<span class="block text-sm font-semibold text-ink">{item.label}</span>
+																<span class="flex flex-wrap items-baseline gap-x-2 text-sm font-semibold text-ink">
+																	{item.label}
+																	{item.coming && (
+																		<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2 py-0.5 font-mono text-[0.625rem] font-semibold tracking-wide text-amber-deep">
+																			Coming
+																		</span>
+																	)}
+																</span>
 																<span class="mt-0.5 block text-xs leading-snug text-ink-soft">{item.description}</span>
 															</span>
 														</a>

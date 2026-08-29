@@ -152,10 +152,19 @@ export const faq: readonly FaqGroup[] = [
 				claims: ['RC-47']
 			},
 			{
+				id: 'sage',
+				question: 'What is Sage?',
+				answer: [
+					'An assistant inside CostCook that answers questions from the records you already keep: what needs attention for Saturday, the orders on a date, why a dish costs what it costs, which prices moved, what came up short in receiving. Every answer shows where its numbers came from, and the one thing it can prepare, a shopping list draft, waits for you to approve it. It cannot reach another kitchen and it never changes a record on its own.',
+					'It is built and tested on the sandbox and is not in the app you would start today. No date, and not in the launch price. There is a <a href="/#sage">section on the homepage</a> with a capture of it answering.'
+				],
+				claims: ['RC-46', 'RC-49']
+			},
+			{
 				id: 'integrations',
 				question: 'Does it connect to Square or QuickBooks?',
 				answer: [
-					'Not in the app you would start today. Both connections are in development and carry no date. The same is true of an API and of an assistant that answers from your numbers. Anything marked Coming on the <a href="/compare">comparison page</a> is being built, not planned, and none of it is in the launch price.'
+					'Not in the app you would start today. Both connections are in development and carry no date. The same is true of an API. Anything marked Coming on the <a href="/compare">comparison page</a> is being built, not planned, and none of it is in the launch price.'
 				],
 				claims: ['RC-35', 'RC-45', 'RC-46']
 			},

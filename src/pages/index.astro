@@ -7,6 +7,7 @@ import SeeItRun from '../components/sections/SeeItRun.astro';
 import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
 import TheYield from '../components/sections/TheYield.astro';
 import PaperIn from '../components/sections/PaperIn.astro';
+import Sage from '../components/sections/Sage.astro';
 import TheOtherTools from '../components/sections/TheOtherTools.astro';
 import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
 import StartHere from '../components/sections/StartHere.astro';
@@ -95,6 +96,13 @@ import StickyCta from '../components/StickyCta.astro';
   between the demo and the close (StickyCta), and scroll reveals limited to
   the first three viewports so capture tools stop seeing a blank page.
   Story: docs/stories/homepage-visual-guidance.story.md
+
+  SAGE ADDED 2026-08-29 as the eighth stop, between PaperIn and TheOtherTools,
+  at the owner's request. It is a mechanic, so it sits with the mechanics, and
+  it precedes the rival beat because that beat's /compare link is where "an
+  assistant" appears as a Coming row. It prints its status (src/lib/sage.ts)
+  rather than implying one; RC-46 and RC-49 hold the conditions. Not a
+  CustomerOutcomes card, for the 1:1 reason above. Story: docs/stories/sage.story.md
 -->
 <Base>
 	<Hero />
@@ -104,6 +112,7 @@ import StickyCta from '../components/StickyCta.astro';
 	<CustomerOutcomes />
 	<TheYield />
 	<PaperIn />
+	<Sage />
 	<TheOtherTools />
 	<BuiltForKitchens />
 	<StartHere />
