@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "astro dev",
 		"build": "astro build",
-		"postbuild": "node scripts/check-dist.mjs && node scripts/check-recipes-costing-page.mjs && node scripts/check-menus-quotes-page.mjs && node scripts/check-ingredients-supplier-prices-page.mjs && node scripts/check-invoices-price-list-page.mjs && node scripts/check-inventory-page.mjs && node scripts/check-sage-page.mjs",
+		"postbuild": "node scripts/check-dist.mjs && node scripts/check-recipes-costing-page.mjs && node scripts/check-menus-quotes-page.mjs && node scripts/check-ingredients-supplier-prices-page.mjs && node scripts/check-invoices-price-list-page.mjs && node scripts/check-inventory-page.mjs && node scripts/check-sage-page.mjs && node scripts/check-nutrition-allergens-page.mjs",
 		"preview": "astro preview",
 		"check": "astro check && node scripts/check-landing-claims.mjs",
 		"check:claims": "node scripts/check-landing-claims.mjs",

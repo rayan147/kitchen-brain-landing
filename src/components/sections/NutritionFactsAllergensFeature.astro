@@ -1,0 +1,460 @@
+---
+import { featureGroups } from '../../lib/features';
+import { nutrition } from '../../lib/nutrition';
+import { cta, demoCta } from '../../lib/site';
+
+const nutritionGroup = featureGroups.find((group) => group.id === 'nutrition');
+const ingredientGroup = featureGroups.find((group) => group.id === 'ingredients');
+const orderGroup = featureGroups.find((group) => group.id === 'orders');
+if (!nutritionGroup || !ingredientGroup || !orderGroup) {
+	throw new Error('Missing nutrition or allergen public feature groups.');
+}
+
+// Considered Strategy; not used because these are fixed editorial selections
+// from shipped feature data, not algorithms selected or swapped at runtime.
+const allergenLeads = new Set(['Allergens.', 'Allergens at pack-out.']);
+const allergenItems = [...ingredientGroup.items, ...orderGroup.items].filter((item) =>
+	allergenLeads.has(item.lead)
+);
+if (allergenItems.length !== allergenLeads.size) {
+	throw new Error('Nutrition & allergens capability selection drifted.');
+}
+
+const capabilityGroups = [
+	{
+		label: 'Nutrition facts',
+		title: 'Calculate the panel from the recipe.',
+		items: nutritionGroup.items
+	},
+	{
+		label: 'Allergen management',
+		title: 'Carry reviewed ingredient evidence into the kitchen.',
+		items: allergenItems
+	}
+] as const;
+const capabilityCount = capabilityGroups.reduce((total, group) => total + group.items.length, 0);
+
+const macroFacts = [
+	{ label: 'Calories', value: '245' },
+	{ label: 'Protein', value: '45.4 g' },
+	{ label: 'Carbs', value: '2.7 g' },
+	{ label: 'Fat', value: '—', state: 'Source value missing' }
+] as const;
+
+const evidenceSteps = [
+	{
+		title: 'Evidence enters',
+		detail: 'A supplier record, package label, or kitchen review names what is known.'
+	},
+	{
+		title: 'The ingredient carries it',
+		detail: 'Fourteen allergen tags stay attached to the ingredient rather than its name.'
+	},
+	{
+		title: 'The recipe rolls it up',
+		detail: 'Dishes include their ingredient and sub-recipe allergens, with incomplete review still visible.'
+	},
+	{
+		title: 'The pack list shows it',
+		detail: 'Allergen badges reach pack-out, where the kitchen needs the answer.'
+	}
+] as const;
+
+const printedContents = [
+	'Kitchen name and print time',
+	'Nutrition Facts panel',
+	'Ingredient statement in recipe order',
+	'Allergen line and incomplete-review state',
+	'Nutrient sources and calculated-estimate boundary'
+] as const;
+
+const faqItems = [
+	{
+		question: 'What is nutrition facts software?',
+		answer:
+			'It calculates the nutrients in a recipe from its ingredient quantities and source profiles. CostCook shows four headline macros and the fifteen values carried by a Nutrition Facts panel, per portion or batch, on the recipe you already costed.'
+	},
+	{
+		question: 'Where does CostCook get nutrient values?',
+		answer:
+			'You match each ingredient to a USDA FoodData Central profile, including the raw, cooked, or prepared state that fits. That source stays attached to the ingredient and rolls through sub-recipes into the dish.'
+	},
+	{
+		question: 'What happens when a nutrient value is missing?',
+		answer:
+			'CostCook leaves the value blank and names the missing profile or conversion. It reports a partial or incomplete result instead of counting the missing value as zero or presenting an incomplete dish as complete.'
+	},
+	{
+		question: 'How does CostCook track allergens?',
+		answer:
+			'Fourteen allergen tags live on ingredients and roll up through sub-recipes into recipes and pack lists. The evidence comes from a supplier record, a package label, or a kitchen review. A chef override requires a written reason.'
+	},
+	{
+		question: 'Does CostCook make an allergen-free or compliance claim?',
+		answer:
+			'No. Unreviewed ingredients remain visible, and the recipe does not claim to be allergen-free. The printed nutrition sheet also says it is a calculated estimate, not a retail-label regulatory compliance claim.'
+	},
+	{
+		question: 'Can I print a nutrition label today?',
+		answer:
+			'Yes. Print nutrition label opens a browser-printable sheet from the recipe, ready for label stock. A direct label-printer integration is still in development and carries no release date.'
+	}
+] as const;
+---
+
+<!-- story: docs/stories/nutrition-facts-allergens-feature.story.md -->
+<article id="features-nutrition" class="nutrition-page">
+	<section class="hero" aria-labelledby="nutrition-feature-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="breadcrumb">
+					<a href="/features">Every feature</a>
+					<span aria-hidden="true">/</span>
+					<span>Nutrition facts &amp; allergens</span>
+				</nav>
+				<h1 id="nutrition-feature-heading">One recipe. Two answers you cannot guess at.</h1>
+				<p class="hero-lede">
+					Compute the fifteen Nutrition Facts values per portion, roll evidence-backed
+					allergen tags into the recipe, and keep every missing fact visible before you print.
+				</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+				</div>
+			</div>
+
+			<figure class="hero-proof anim-enter" style="--enter-delay: 120ms">
+				<p class="capture-label">Captured CostCook recipe</p>
+				<div class="hero-crop">
+					<img
+						src={nutrition.proof.panel.src}
+						alt={nutrition.proof.panel.alt}
+						width={nutrition.proof.panel.width}
+						height={nutrition.proof.panel.height}
+						decoding="async"
+					/>
+				</div>
+				<figcaption>Chicken Shawarma, per portion. The missing fat value remains blank.</figcaption>
+			</figure>
+
+			<dl class="macro-rail anim-enter" style="--enter-delay: 220ms" aria-label="Captured Chicken Shawarma nutrition summary">
+				{macroFacts.map((fact) => (
+					<div>
+						<dt>{fact.label}</dt>
+						<dd>{fact.value}</dd>
+						{'state' in fact && <small>{fact.state}</small>}
+					</div>
+				))}
+			</dl>
+		</div>
+	</section>
+
+	<section class="split" aria-labelledby="split-heading">
+		<div class="container-page split-grid">
+			<div class="split-copy" data-reveal>
+				<h2 id="split-heading">Sunday night should not start two new spreadsheets.</h2>
+				<p>
+					A customer asks how much protein is in the bowl and whether it contains milk.
+					When those answers live apart from the recipe, one ingredient change makes both old.
+				</p>
+			</div>
+			<div class="broken-path" data-reveal aria-label="One recipe copied separately into a nutrition sheet and an allergen note">
+				<div class="path-source"><span>Recipe changed</span><strong>Chicken Shawarma</strong></div>
+				<div class="path-branches" aria-hidden="true"><i></i><i></i></div>
+				<div class="path-output"><span>Nutrition sheet</span><strong>Old quantities</strong></div>
+				<div class="path-output warning"><span>Allergen note</span><strong>Review unknown</strong></div>
+			</div>
+		</div>
+		<p class="container-page split-end" data-reveal>
+			The same ingredient line should carry the cost, the nutrient source, and the allergen evidence.
+		</p>
+	</section>
+
+	<nav class="product-nav container-page" aria-label="On this page">
+		<a href="#nutrition-facts"><span>Nutrition facts</span><strong>Per portion, from matched source profiles, with blanks left blank.</strong></a>
+		<a href="#allergen-management"><span>Allergen management</span><strong>Ingredient evidence rolled into recipes and pack lists.</strong></a>
+	</nav>
+
+	<section id="nutrition-facts" class="product-section nutrition-facts" aria-labelledby="nutrition-heading">
+		<div class="container-page product-grid">
+			<div class="product-copy" data-reveal>
+				<h2 id="nutrition-heading">Nutrition facts that stop where the source stops.</h2>
+				<p>
+					Match an ingredient to the USDA profile that fits its state. CostCook carries that
+					source through sub-recipes, quantities, and portions into the dish.
+				</p>
+				<dl class="source-facts">
+					<div><dt>Serving basis</dt><dd>Per portion or per batch</dd></div>
+					<div><dt>Headline values</dt><dd>Calories, protein, carbs, fat</dd></div>
+					<div><dt>Full panel</dt><dd>Fifteen Nutrition Facts nutrients</dd></div>
+					<div><dt>Missing evidence</dt><dd>Partial or incomplete, never zeroed</dd></div>
+				</dl>
+			</div>
+			<figure class="panel-proof" data-reveal>
+				<div class="panel-window" aria-hidden="true">
+					<img src={nutrition.proof.panel.src} alt="" width={nutrition.proof.panel.width} height={nutrition.proof.panel.height} loading="lazy" decoding="async" />
+				</div>
+				<figcaption>
+					The captured recipe names unavailable nutrients, keeps their rows blank, and lists each source record beside the panel.
+				</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section id="allergen-management" class="product-section allergens" aria-labelledby="allergen-heading">
+		<div class="container-page allergen-heading" data-reveal>
+			<h2 id="allergen-heading">An allergen tag needs more than a familiar ingredient name.</h2>
+			<p>
+				CostCook records evidence on the ingredient, rolls reviewed tags through every recipe
+				that uses it, and leaves incomplete review visible all the way to pack-out.
+			</p>
+		</div>
+		<ol class="container-page evidence-chain" aria-label="Allergen evidence path">
+			{evidenceSteps.map((step, index) => (
+				<li data-reveal>
+					<span>{String(index + 1).padStart(2, '0')}</span>
+					<h3>{step.title}</h3>
+					<p>{step.detail}</p>
+				</li>
+			))}
+		</ol>
+		<div class="container-page evidence-note" data-reveal>
+			<strong>Incomplete stays visible.</strong>
+			<p>A curated catalog fact may help, but a name match never invents food-safety data. A chef override needs a written reason, and no screen makes an allergen-free claim.</p>
+		</div>
+	</section>
+
+	<section class="print-proof" aria-labelledby="print-heading">
+		<div class="container-page print-grid">
+			<div class="print-copy" data-reveal>
+				<h2 id="print-heading">The sheet carries the answer and its limits.</h2>
+				<p>
+					Print nutrition label opens a browser-printable sheet from the live recipe. Put it on
+					label stock today; keep the direct label-printer integration marked for later.
+				</p>
+				<ul role="list">
+					{printedContents.map((item) => <li>{item}</li>)}
+				</ul>
+				<p class="snap">A blank row beats a made-up zero.</p>
+			</div>
+			<figure class="label-proof" data-reveal>
+				<img
+					src={nutrition.proof.label.src}
+					alt={nutrition.proof.label.alt}
+					width={nutrition.proof.label.width}
+					height={nutrition.proof.label.height}
+					loading="lazy"
+					decoding="async"
+				/>
+				<figcaption>{nutrition.proof.caption}</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="capabilities" aria-labelledby="capabilities-heading">
+		<div class="container-page capabilities-grid">
+			<div class="capabilities-intro" data-reveal>
+				<h2 id="capabilities-heading">{capabilityCount} shipped details, without the safety claims they cannot carry.</h2>
+				<p>Open either chapter for the exact public feature inventory.</p>
+				<div class="boundary-list">
+					<h3>Four boundaries stay in view</h3>
+					<ul role="list">{nutrition.notClaimed.map((line) => <li>{line}</li>)}</ul>
+				</div>
+			</div>
+			<div class="capability-list">
+				{capabilityGroups.map((group) => (
+					<details data-reveal data-capability-disclosure>
+						<summary><span><small>{group.label}</small><strong>{group.title}</strong></span><b aria-hidden="true">+</b></summary>
+						<ul role="list">
+							{group.items.map((item) => <li><strong>{item.lead}</strong> {item.detail}</li>)}
+						</ul>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="faq" aria-labelledby="faq-heading">
+		<div class="container-page faq-grid">
+			<div class="faq-intro" data-reveal>
+				<h2 id="faq-heading">Frequently asked questions</h2>
+				<p>The source, missing-value, printing, and food-safety questions worth settling first.</p>
+			</div>
+			<div class="faq-list">
+				{faqItems.map((item) => (
+					<details data-reveal data-nutrition-disclosure>
+						<summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary>
+						<p>{item.answer}</p>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid" data-reveal>
+			<div>
+				<h2 id="closing-heading">Print the answer. Keep the evidence.</h2>
+				<p>Bring one real recipe, match the ingredients you know, and leave every missing fact visible until you know it too.</p>
+			</div>
+			<div class="closing-actions">
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+			</div>
+		</div>
+		<nav class="container-page onward" aria-label="Related feature guides">
+			<a href="/features/recipes-and-costing">Recipes &amp; food costing</a>
+			<a href="/features/ingredients-and-supplier-prices">Ingredients &amp; supplier prices</a>
+			<a href="/features">Every CostCook feature</a>
+		</nav>
+	</section>
+</article>
+
+<style>
+	.nutrition-page { --rule: color-mix(in srgb, var(--color-ink) 18%, transparent); overflow: clip; }
+	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.hero-grid { position: relative; display: grid; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; padding-block: clamp(3.5rem, 6vw, 6.5rem) clamp(7rem, 11vw, 10rem); }
+	.breadcrumb { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.6rem; font-size: 0.875rem; color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
+	.hero h1 { max-width: 10ch; font-family: var(--font-display); font-size: clamp(3rem, 5.55vw, 5.9rem); font-weight: 600; line-height: 0.96; letter-spacing: -0.03em; text-wrap: balance; }
+	.hero h1::after { display: block; width: min(6.5ch, 100%); height: 0.28rem; margin-top: 1.2rem; background: var(--color-ink); content: ''; }
+	.hero-lede { max-width: 42ch; margin-top: 1.55rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
+	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
+	.btn-outline:hover { background: var(--color-green); color: white; }
+	.hero-proof { min-width: 0; }
+	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.hero-crop { aspect-ratio: 1 / 1.04; overflow: hidden; border: 1px solid var(--rule); border-top: 0; background: var(--color-paper); box-shadow: 0 20px 38px color-mix(in srgb, var(--color-ink) 14%, transparent); }
+	.hero-crop img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+	.hero-proof figcaption, .panel-proof figcaption, .label-proof figcaption { margin-top: 0.85rem; color: var(--color-ink-soft); font-size: 0.78rem; line-height: 1.5; }
+	.macro-rail { position: absolute; right: var(--page-gutter, 1.25rem); bottom: clamp(2rem, 4vw, 3rem); left: var(--page-gutter, 1.25rem); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 0.28rem solid var(--color-ink); background: var(--color-paper); box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 12%, transparent); }
+	.macro-rail div { min-width: 0; padding: 0.85rem clamp(0.75rem, 2vw, 1.4rem); border-right: 1px solid var(--rule); }
+	.macro-rail div:last-child { border-right: 0; }
+	.macro-rail dt { color: var(--color-ink-soft); font-size: 0.75rem; font-weight: 700; }
+	.macro-rail dd { margin-top: 0.25rem; color: var(--color-green-deep); font-size: clamp(1.35rem, 3vw, 2rem); font-weight: 720; font-variant-numeric: tabular-nums; }
+	.macro-rail small { display: block; margin-top: 0.2rem; color: var(--color-amber-deep); font-size: 0.65rem; line-height: 1.25; }
+
+	.split { background: var(--color-ink); color: var(--color-offwhite); }
+	.split-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--space-section-tight); }
+	.split h2, .product-copy h2, .allergen-heading h2, .print-copy h2, .capabilities-intro h2, .faq-intro h2, .closing h2 { font-family: var(--font-display); font-size: clamp(2.1rem, 3.8vw, 4rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+	.split-copy p { max-width: 44ch; margin-top: 1.25rem; color: color-mix(in srgb, var(--color-offwhite) 76%, transparent); font-size: 1.05rem; line-height: 1.65; }
+	.broken-path { display: grid; grid-template-columns: 1fr 3rem 1fr; grid-template-rows: repeat(2, auto); gap: 0.85rem; align-items: stretch; }
+	.path-source, .path-output { padding: 1.1rem; border: 1px solid color-mix(in srgb, white 24%, transparent); }
+	.path-source { grid-row: 1 / 3; align-content: center; background: color-mix(in srgb, var(--color-green) 24%, transparent); }
+	.path-branches { grid-row: 1 / 3; display: grid; align-items: center; }
+	.path-branches i { display: block; height: 1px; background: color-mix(in srgb, white 35%, transparent); }
+	.path-source span, .path-output span { display: block; color: var(--color-amber-light); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+	.path-source strong, .path-output strong { display: block; margin-top: 0.45rem; line-height: 1.35; }
+	.path-output.warning { border-color: color-mix(in srgb, var(--color-amber-light) 55%, transparent); }
+	.split-end { padding-bottom: var(--space-section-tight); color: var(--color-offwhite); font-family: var(--font-display); font-size: clamp(1.45rem, 2.5vw, 2.2rem); line-height: 1.3; }
+
+	.product-nav { display: grid; padding-block: 1rem; border-bottom: 1px solid var(--color-hairline); }
+	.product-nav a { min-height: 76px; padding: 1rem 0; color: var(--color-ink); text-decoration: none; }
+	.product-nav a + a { border-top: 1px solid var(--color-hairline); }
+	.product-nav span, .product-nav strong { display: block; }
+	.product-nav span { color: var(--color-green-deep); font-size: 0.8rem; font-weight: 750; }
+	.product-nav strong { margin-top: 0.35rem; max-width: 42ch; line-height: 1.4; }
+
+	.product-section { scroll-margin-top: 2rem; }
+	.product-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--space-section); }
+	.product-copy > p, .allergen-heading > p, .print-copy > p, .capabilities-intro > p, .faq-intro > p, .closing p { max-width: 46ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: 1.05rem; line-height: 1.65; }
+	.source-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; border-top: 1px solid var(--rule); }
+	.source-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
+	.source-facts dt { color: var(--color-ink-soft); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+	.source-facts dd { margin-top: 0.35rem; font-weight: 680; line-height: 1.4; }
+	.panel-proof { min-width: 0; }
+	.panel-window { aspect-ratio: 1.15 / 1; overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 11%, transparent); }
+	.panel-window img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 31%; }
+
+	.allergens { background: var(--color-softgreen); }
+	.allergen-heading { display: grid; gap: 2rem; padding-top: var(--space-section); }
+	.evidence-chain { display: grid; margin-top: clamp(3rem, 6vw, 5rem); border-block: 1px solid var(--rule); }
+	.evidence-chain li { position: relative; padding: 1.5rem 1.2rem 1.5rem 0; border-bottom: 1px solid var(--rule); }
+	.evidence-chain li:last-child { border-bottom: 0; }
+	.evidence-chain li > span { color: var(--color-amber-deep); font-size: 0.7rem; font-weight: 750; letter-spacing: 0.07em; }
+	.evidence-chain h3 { margin-top: 0.8rem; font-family: var(--font-display); font-size: 1.45rem; font-weight: 600; line-height: 1.2; }
+	.evidence-chain p { margin-top: 0.6rem; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
+	.evidence-note { display: grid; gap: 0.8rem; padding-block: var(--space-section-tight); }
+	.evidence-note strong { color: var(--color-amber-deep); font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.5rem); }
+	.evidence-note p { max-width: 63ch; color: var(--color-ink-soft); line-height: 1.65; }
+
+	.print-proof, .faq { background: var(--color-offwhite); }
+	.print-grid, .faq-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--space-section); }
+	.print-copy { align-self: center; }
+	.print-copy ul { margin-top: 2rem; border-top: 1px solid var(--rule); }
+	.print-copy li { padding-block: 0.75rem; border-bottom: 1px solid var(--rule); line-height: 1.45; }
+	.snap { margin-top: 2.5rem; color: var(--color-green-deep); font-family: var(--font-display); font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 600; line-height: 1.15; }
+	.label-proof { max-width: 28rem; justify-self: center; }
+	.label-proof img { display: block; width: 100%; height: auto; border-top: 0.3rem solid var(--color-ink); background: white; box-shadow: 0 18px 34px color-mix(in srgb, var(--color-ink) 12%, transparent); }
+
+	.capabilities { background: var(--color-cream); }
+	.capabilities-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--space-section); }
+	.boundary-list { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 0.25rem solid var(--color-ink); }
+	.boundary-list h3 { font-size: 1rem; font-weight: 750; }
+	.boundary-list li { padding-block: 0.7rem; border-bottom: 1px solid var(--rule); color: var(--color-ink-soft); font-size: 0.86rem; line-height: 1.55; }
+	.capability-list { border-top: 1px solid var(--rule); }
+	.capability-list details { border-bottom: 1px solid var(--rule); }
+	.capability-list summary, .faq-list summary { display: flex; min-height: 72px; cursor: pointer; list-style: none; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1rem; }
+	.capability-list summary::-webkit-details-marker, .faq-list summary::-webkit-details-marker { display: none; }
+	.capability-list summary small, .capability-list summary strong { display: block; }
+	.capability-list summary small { color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; }
+	.capability-list summary strong { margin-top: 0.35rem; font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; }
+	.capability-list summary b { color: var(--color-green-deep); font-size: 1.5rem; font-weight: 400; transition: transform 160ms ease-out; }
+	.capability-list details[open] summary b { transform: rotate(45deg); }
+	.capability-list details > ul { padding: 0 0 1.3rem 1.2rem; }
+	.capability-list details li { margin-top: 0.75rem; color: var(--color-ink-soft); line-height: 1.55; }
+	.capability-list details li strong { color: var(--color-ink); }
+
+	.faq-list { border-top: 1px solid var(--rule); }
+	.faq-list details { border-bottom: 1px solid var(--rule); }
+	.faq-list summary { font-weight: 700; }
+	.faq-list summary svg { flex: 0 0 auto; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; transition: transform 160ms ease-out; }
+	.faq-list details[open] summary svg { transform: rotate(180deg); }
+	.faq-list details > p { max-width: 62ch; padding: 0 2.5rem 1.2rem 0; color: var(--color-ink-soft); line-height: 1.65; }
+
+	.closing { background: var(--color-softgreen); }
+	.closing-grid { display: grid; gap: 2rem; align-items: end; padding-block: var(--space-section-tight); }
+	.closing-actions { margin-top: 0; }
+	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.2rem 2rem; border-top: 1px solid var(--rule); font-size: 0.9rem; }
+
+	@media (min-width: 48rem) {
+		.product-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.product-nav a { padding: 1.2rem 2rem 1.2rem 0; }
+		.product-nav a + a { padding-left: 2rem; border-top: 0; border-left: 1px solid var(--color-hairline); }
+		.allergen-heading, .evidence-note { grid-template-columns: 5fr 7fr; align-items: start; }
+		.evidence-chain { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+		.evidence-chain li { border-right: 1px solid var(--rule); border-bottom: 0; }
+		.evidence-chain li:not(:first-child) { padding-left: 1.2rem; }
+		.evidence-chain li:last-child { border-right: 0; }
+		.evidence-chain li:not(:last-child)::after { position: absolute; top: 2rem; right: -0.35rem; z-index: 1; width: 0.65rem; height: 0.65rem; border-top: 1px solid var(--color-ink); border-right: 1px solid var(--color-ink); background: var(--color-softgreen); content: ''; transform: rotate(45deg); }
+	}
+
+	@media (min-width: 64rem) {
+		.hero-grid, .split-grid, .product-grid, .print-grid, .capabilities-grid, .faq-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+		.hero-grid { min-height: 48rem; }
+		.macro-rail { left: calc(var(--page-gutter, 1.25rem) + 1rem); width: min(58rem, calc(100% - var(--page-gutter, 1.25rem) * 2)); }
+		.path-source { min-height: 10rem; }
+		.closing-grid { grid-template-columns: 7fr 5fr; }
+		.closing-actions { justify-content: flex-end; }
+	}
+
+	@media (max-width: 47.999rem) {
+		.hero-grid { padding-bottom: 3.5rem; }
+		.macro-rail { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: -1rem; }
+		.macro-rail div:nth-child(2) { border-right: 0; }
+		.macro-rail div:nth-child(-n + 2) { border-bottom: 1px solid var(--rule); }
+		.hero h1 { font-size: clamp(3rem, 15vw, 4.6rem); }
+		.broken-path { grid-template-columns: 1fr; }
+		.path-source { grid-row: auto; }
+		.path-branches { grid-row: auto; min-height: 2rem; }
+		.path-branches i:first-child { display: none; }
+		.path-branches i:last-child { width: 1px; height: 2rem; margin-inline: auto; }
+		.source-facts { grid-template-columns: 1fr; }
+		.source-facts div { padding-right: 0; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.btn-outline, .capability-list summary b, .faq-list summary svg { transition: none; }
+	}
+</style>
