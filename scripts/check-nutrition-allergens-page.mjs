@@ -2,9 +2,13 @@ import { readFile } from 'node:fs/promises';
 
 const pagePath = new URL('../dist/features/nutrition-facts-and-allergens/index.html', import.meta.url);
 const featureHubPath = new URL('../dist/features/index.html', import.meta.url);
-const [html, featureHubHtml] = await Promise.all([
+const componentPath = new URL('../src/components/sections/NutritionFactsAllergensFeature.astro', import.meta.url);
+const routePath = new URL('../src/pages/features/nutrition-facts-and-allergens.astro', import.meta.url);
+const [html, featureHubHtml, component, route] = await Promise.all([
 	readFile(pagePath, 'utf8'),
-	readFile(featureHubPath, 'utf8')
+	readFile(featureHubPath, 'utf8'),
+	readFile(componentPath, 'utf8'),
+	readFile(routePath, 'utf8')
 ]);
 
 const required = [
@@ -33,7 +37,13 @@ const required = [
 	'id="faq-heading"',
 	'What is nutrition facts software?',
 	'Can I print a nutrition label today?',
-	'Print the answer. Keep the evidence.'
+	'Print the answer. Keep the evidence.',
+	'Book a 15-min demo',
+	'days free, then',
+	'Open full recipe capture',
+	'Open full Nutrition Facts panel',
+	'Open allergen evidence in full capture',
+	'docs/stories/nutrition-facts-allergens-feature.story.md'
 ];
 
 const missing = required.filter((fragment) => !html.includes(fragment));
@@ -49,6 +59,22 @@ if ((html.match(/data-capability-disclosure/g) ?? []).length !== 2) {
 }
 if (!featureHubHtml.includes('href="/features/nutrition-facts-and-allergens"')) {
 	throw new Error('Feature navigation is missing its dedicated Nutrition & allergens destination.');
+}
+
+const forbiddenSourceFragments = ['overflow: clip', '>Book 15 minutes<', 'const macroFacts', 'font-size: clamp(3rem, 5.55vw, 5.9rem)'];
+const forbidden = forbiddenSourceFragments.filter((fragment) => component.includes(fragment));
+if (forbidden.length > 0) {
+	throw new Error(`Nutrition & allergens source regressed: ${forbidden.join(', ')}`);
+}
+
+for (const requiredSourceFragment of ['demoCta.label', 'launchPlan', 'var(--text-display)', 'var(--text-h2)', 'min-height: 44px', 'overflow-wrap: anywhere']) {
+	if (!component.includes(requiredSourceFragment)) {
+		throw new Error(`Nutrition & allergens source is missing: ${requiredSourceFragment}`);
+	}
+}
+
+if (route.includes('Chicken Shawarma')) {
+	throw new Error('Nutrition & allergens direction contract still names the retired Chicken Shawarma proof.');
 }
 
 // Considered Strategy; not used because this guard validates one stable page
