@@ -124,6 +124,9 @@ try {
 		const rect = panel.getBoundingClientRect();
 		return {
 			linkCount: links.length,
+			directTourVisible: Boolean(
+				document.querySelector('nav[aria-label="Main"] > ul > li > a[href="/tour/main"]')?.getClientRects().length
+			),
 			minTarget: Math.min(...links.map((link) => link.getBoundingClientRect().height)),
 			left: rect.left,
 			right: rect.right,
@@ -136,6 +139,7 @@ try {
 	// Considered Strategy; not used because this pins one fixed navigation
 	// contract (eleven curated entries plus tour and all-features actions), not swappable behavior.
 	assert(desktop.linkCount === 13, `desktop: expected 13 links, received ${desktop.linkCount}`);
+	assert(desktop.directTourVisible, 'desktop: direct product-tour link is not visible');
 	assert(desktop.minTarget >= 44, `desktop: smallest link target is ${desktop.minTarget}px`);
 	assert(desktop.left >= 0 && desktop.right <= desktop.innerWidth, 'desktop: panel leaves the viewport');
 	assert(desktop.scrollWidth === desktop.innerWidth, 'desktop: horizontal overflow');
@@ -216,6 +220,12 @@ try {
 		const sections = [...panel.querySelectorAll(':scope > div:first-child > section')];
 		const rect = panel.getBoundingClientRect();
 		return {
+			directTourVisible: Boolean(
+				document.querySelector('nav[aria-label="Main"] > ul > li > a[href="/tour/main"]')?.getClientRects().length
+			),
+			footerTourVisible: Boolean(
+				document.querySelector('nav[aria-label="Footer"] a[href="/tour/main"]')?.getClientRects().length
+			),
 			left: rect.left,
 			right: rect.right,
 			bottom: rect.bottom,
@@ -226,6 +236,8 @@ try {
 		};
 	})()`);
 	assert(mobile.left >= 0 && mobile.right <= mobile.innerWidth, 'mobile: panel leaves the viewport');
+	assert(!mobile.directTourVisible, 'mobile: wide-only product-tour link crowded the header');
+	assert(mobile.footerTourVisible, 'mobile: footer product-tour link is not available');
 	assert(mobile.scrollWidth === mobile.innerWidth, 'mobile: horizontal overflow');
 	assert(mobile.scrollHeight >= mobile.bottom, 'mobile: document cannot scroll to the end of the panel');
 	assert(mobile.sectionTops[1] > mobile.sectionTops[0], 'mobile: menu groups did not stack');

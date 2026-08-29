@@ -104,3 +104,7 @@
 ## Revision — guided product-tour entry (2026-08-29)
 
 The Features disclosure still offers the same ten job-led destinations. Its footer now gives the reader two distinct next actions: inspect those ten destinations as one seeded event in the guided product tour, or open the exhaustive shipped-feature index. This keeps the fast path visible without turning an eleventh capability into a feature-menu item.
+
+## Revision — direct product-tour link (2026-08-29)
+
+The guided tour is now a first-class destination in the shared navigation. On wide screens, “Product tour” sits beside Pricing so a visitor can start the seeded walkthrough without first opening Features. At tighter widths, the established Features disclosure remains the route into the tour and protects the header’s limited space. The footer carries the direct link at every width, preserving a second recovery path without inventing new language or another workflow.

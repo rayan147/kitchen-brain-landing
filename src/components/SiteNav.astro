@@ -170,7 +170,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 				{
 					nav.map((item) => (
-						<li class={item.earlyVisible ? 'block' : 'hidden md:block'}>
+						<li class={item.earlyVisible ? 'block' : item.wideOnly ? 'hidden xl:block' : 'hidden md:block'}>
 							<a
 								href={item.href}
 								aria-current={path === item.href ? 'page' : undefined}
