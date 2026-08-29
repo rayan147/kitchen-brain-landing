@@ -56,6 +56,9 @@ const surfaceFiles = [
 	// Dedicated Orders, Shop, Prep & Pack story. Its frozen-plan, inventory, and
 	// completion-state claims must stay inside the shipped orders feature group.
 	'src/components/sections/OrderShopPrepPackFeature.astro',
+	// Dedicated Purchases & Month Cost story. Month reconciliation and waste
+	// language are financial claims, so the complete explanation is scanned.
+	'src/components/sections/PurchasesMonthCostFeature.astro',
 	// The three drawn area figures. They redraw claims their own pages already
 	// make (RC-16, RC-19, RC-09, RC-38, RC-39, RC-42) and must never outrun them.
 	'src/components/FeatureAreaFigure.astro',

@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import PurchasesMonthCostFeature from '../../components/sections/PurchasesMonthCostFeature.astro';
+
+// Considered Template Method; not used because the dedicated feature pages
+// share a visual system, while their evidence scenes and reading sequences are
+// deliberately different rather than overridable steps in one algorithm.
+const directionContract = [
+	'THESIS: A month-end difference should remain an inspectable question until the records explain it; refuse the generic analytics dashboard, decorative chart wall, and feature-card catalogue.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber variance states, square ledger and month-close sheets, green actions.',
+	'STORY: The chef-owner gathers four purchase sources into one ledger, compares theoretical use with actual spend, separates logged waste from the unaccounted gap, checks dated history and evidence limits, then starts or books a demo.',
+	'FIRST VIEWPORT: Editorial statement at left; an illustrative August close at right shows $18,420 theoretical use, $19,135 actual spend, and a $715 difference with both actions visible.',
+	'FORM: Code-led editorial split extending the approved Recipes & Costing surface; seed key month-close-explain-the-gap.',
+	'FINISH: Sources, reconciliation working, correction history, evidence limits, and recovery remain explicit across desktop, mobile, reduced-motion, and no-JavaScript states.'
+].join(' ');
+---
+
+<Base
+	title="Purchases and monthly food cost for caterers | CostCook"
+	description="Bring every purchase into one sourced ledger, compare theoretical use with actual spend, and keep the unaccounted month-end gap honest."
+	path="/features/purchases-and-month-cost"
+	directionContract={directionContract}
+>
+	<PurchasesMonthCostFeature />
+</Base>

@@ -50,7 +50,7 @@ const menuTargets = [
 		href: '/features/purchasing-and-receiving'
 	},
 	{ id: 'inventory', area: 'inventory', href: '/features/inventory' },
-	{ id: 'ledger', area: 'getting-prices-in' }
+	{ id: 'ledger', area: 'purchases-and-month-cost', href: '/features/purchases-and-month-cost' }
 ];
 
 if (!homeHtml.includes('data-features-menu')) {
