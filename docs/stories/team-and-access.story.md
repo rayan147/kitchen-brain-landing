@@ -55,11 +55,11 @@
 
 | § | Section | Beats | Value turn |
 |---|---------|-------|------------|
-| 1 | Hero and role ticket | 1–2 | role labels → named boundaries |
+| 1 | Hero, constraint and role ticket | 1–2, 5 | role labels → named boundaries and limits before conversion |
 | 2 | Why boundaries matter | 3–4 | one shared login → accountable teammates |
-| 3 | Owner, Manager, Staff | 6–8 | vague hierarchy → exact sensitive jobs |
+| 3 | Owner, Manager, Staff | 6–8 | vague hierarchy → the same three facts for every role |
 | 4 | Shared workspace | 7–9 | fear of separation → one operational record |
-| 5 | What this is not | 5, 10–11 | assumption → explicit limit |
+| 5 | What this is not | 5, 10–11 | assumption → explicit limit and an honest fit check |
 | 6 | Questions | 5, 10 | objection → plain answer |
 | 7 | Closing action | 12 | uncertainty → informed invitation |
 
@@ -70,10 +70,10 @@
 
 ### Step 6 — Dialogue
 
-- Hero: “three roles” as a label → three roles with a finite contract.
-- Roles: hierarchy → practical actions.
+- Hero: “three roles” as a label → three roles with a finite contract, including cost visibility before either conversion path.
+- Roles: hierarchy → workspace access, protected work and boundary in the same order for every role.
 - Shared workspace: restriction → collaboration with accountability.
-- Limits: implied permission grid → a clear no and the current invitation behavior.
+- Limits: implied permission grid → a clear no, the current invitation behavior and a candid next step when that makes the product a poor fit.
 - Close: hesitant invitation → informed next step.
 
 ### Step 7 — Sorkin
@@ -82,6 +82,7 @@
 - **Obstacle:** Role names are easy to overread.
 - **Headline:** Three roles. A short list of real boundaries.
 - **Subhead:** Owner, Manager and Staff keep a few sensitive actions where they belong. The rest stays one working kitchen record, and the limits are stated before you invite anyone.
+- **Constraint before conversion:** Staff can open cost screens, and custom roles are not available.
 
 ### Step 8 — Cool Talk
 
@@ -96,10 +97,10 @@
 ### Step 10 — Connecting Your Scenes
 
 - **POV:** Second person throughout.
-- **Hand-offs:** invite → identify the sensitive work → read each role → see what stays shared → name what is not configurable → settle objections → invite with the boundary understood.
+- **Hand-offs:** invite → see the cost-visibility constraint → inspect the role boundaries → see what stays shared → compare the same three facts for each role → name what is not configurable → check product fit or ask about the setup → settle objections → invite with the boundary understood.
 
 ### Step 11 — Revise and Finish
 
-- **Word count before → after:** Target under 760 words after removing repeated role definitions.
+- **Word count before → after:** 502 → 479 rendered words; the final page remains under the 760-word target.
 - **Claims removed:** full tiered access, custom roles, per-screen permissions, cost hiding, self-service manager assignment, audit-history guarantees.
 - **Final Image:** Invite the crew knowing which work stays with you, which work a manager can carry, and which controls are not there yet.

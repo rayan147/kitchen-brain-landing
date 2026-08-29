@@ -99,8 +99,33 @@ try {
 
 		await send('Emulation.setDeviceMetricsOverride', { width: 320, height: 720, deviceScaleFactor: 1, mobile: true });
 		await evaluate(`document.documentElement.style.fontSize = '200%'`);
-		const zoom = await evaluate(`({ scrollWidth: document.documentElement.scrollWidth, innerWidth })`);
+		const zoom = await evaluate(`(() => {
+			const selectors = ['h1', 'h2', '.hero-actions a', '.closing-actions a'];
+			const offenders = [...document.querySelectorAll(selectors.join(','))].flatMap((node) => {
+				const rect = node.getBoundingClientRect();
+				return rect.left < -1 || rect.right > innerWidth + 1
+					? [node.textContent.trim().replace(/\\s+/g, ' ').slice(0, 60)]
+					: [];
+			});
+			return { scrollWidth: document.documentElement.scrollWidth, innerWidth, offenders };
+		})()`);
 		if (zoom.scrollWidth !== zoom.innerWidth) throw new Error(`${route.slug}: horizontal overflow at 200% text`);
+		if (zoom.offenders.length) throw new Error(`${route.slug}: clipped content at 200% text: ${zoom.offenders.join(', ')}`);
+		if (route.slug === 'team') {
+			const teamSemantics = await evaluate(`(() => ({
+				breadcrumbCurrent: document.querySelector('.feature-breadcrumb [aria-current="page"]')?.textContent.trim(),
+				menuCurrent: document.querySelector('[data-features-menu] a[aria-current="page"]')?.getAttribute('href'),
+				roleFacts: document.querySelectorAll('.role-facts').length,
+				roleLabels: document.querySelectorAll('.role-facts dt').length,
+				boundaryOffset: getComputedStyle(document.querySelector('#role-boundaries')).scrollMarginTop,
+				targets: [...document.querySelectorAll('.feature-breadcrumb a, .feature-onward a')].map((node) => node.getBoundingClientRect().height)
+			}))()`);
+			if (teamSemantics.breadcrumbCurrent !== 'Team & access') throw new Error('team: breadcrumb lost current-page semantics');
+			if (teamSemantics.menuCurrent !== '/features/team-and-access') throw new Error('team: feature menu lost current-page semantics');
+			if (teamSemantics.roleFacts !== 3 || teamSemantics.roleLabels !== 9) throw new Error('team: role comparison lost its semantic fact grid');
+			if (teamSemantics.boundaryOffset === 'auto' || teamSemantics.boundaryOffset === '0px') throw new Error('team: boundary anchor has no sticky-header offset');
+			if (teamSemantics.targets.some((height) => height < 44)) throw new Error('team: breadcrumb or onward target is smaller than 44px');
+		}
 		await evaluate(`document.documentElement.style.fontSize = ''`);
 
 		await send('Emulation.setScriptExecutionDisabled', { value: true });

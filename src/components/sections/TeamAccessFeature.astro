@@ -8,19 +8,25 @@ const roles = [
 		name: 'Owner',
 		mark: 'O',
 		summary: 'Carries the account and the irreversible recipe decisions.',
-		boundaries: ['Manage billing', 'Publish, archive and restore recipes', 'Manage Square when that connection is enabled', 'Everything a Manager can do']
+		workspaceAccess: 'Everything a Manager and Staff member can access.',
+		protectedWork: 'Manage billing; publish, archive and restore recipes; manage Square when that connection is enabled.',
+		boundary: 'Owner-only actions stay with the workspace owner.'
 	},
 	{
 		name: 'Manager',
 		mark: 'M',
 		summary: 'Carries setup, teammates and the Sage checks that expose price or propose work.',
-		boundaries: ['Complete kitchen setup', 'Invite and revoke teammates', 'Ask Sage about price moves', 'Review Sage shopping-list proposals']
+		workspaceAccess: 'Everything a Staff member can access.',
+		protectedWork: 'Complete kitchen setup; invite and revoke teammates; ask Sage about price moves; review Sage shopping-list proposals.',
+		boundary: 'Billing, owner recipe lifecycle work and Square control stay with the Owner.'
 	},
 	{
 		name: 'Staff',
 		mark: 'S',
 		summary: 'Works from the shared kitchen record without the manager-only Sage or owner-only controls.',
-		boundaries: ['Open the shared operational workspace', 'Use the day-to-day kitchen records', 'Ask Sage read checks allowed for Staff', 'No route around higher-role actions']
+		workspaceAccess: 'Open the shared operational workspace, including cost screens.',
+		protectedWork: 'Use day-to-day kitchen records and ask the Sage read checks allowed for Staff.',
+		boundary: 'Manager- and Owner-only actions remain unavailable.'
 	}
 ] as const;
 
@@ -49,14 +55,15 @@ const faqItems = [
 	<section class="hero" aria-labelledby="team-access-heading">
 		<div class="container-page hero-grid">
 			<div class="hero-copy anim-enter">
-				<nav aria-label="Breadcrumb" class="breadcrumb">
-					<a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Team &amp; access</span>
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
+					<a href="/features">Every feature</a><span aria-hidden="true">/</span><span aria-current="page">Team &amp; access</span>
 				</nav>
-				<h1 id="team-access-heading">Three roles. A short list of real boundaries.</h1>
+				<h1 id="team-access-heading" class="feature-display">Three roles. A short list of real boundaries.</h1>
 				<p class="hero-lede">Owner, Manager and Staff keep a few sensitive actions where they belong. The rest stays one working kitchen record, and the limits are stated before you invite anyone.</p>
+				<p class="hero-constraint"><strong>Before you invite:</strong> Staff can open cost screens, and custom roles are not available.</p>
 				<div class="hero-actions">
-					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href="#role-boundaries" class="btn-outline">See the boundaries</a>
+					<a href="#role-boundaries" class="btn-primary">See role boundaries</a>
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-outline">{cta.label}</a>
 				</div>
 			</div>
 
@@ -83,7 +90,7 @@ const faqItems = [
 				<div><dt>Workspace roles</dt><dd>Owner · Manager · Staff</dd></div>
 				<div><dt>New invitations</dt><dd>Join as Staff today</dd></div>
 				<div><dt>Enforcement</dt><dd>Checked on the server</dd></div>
-				<div><dt>Custom permission grid</dt><dd>No</dd></div>
+				<div><dt>Cost screens</dt><dd>Visible to workspace teammates</dd></div>
 			</dl>
 		</div>
 	</section>
@@ -97,19 +104,24 @@ const faqItems = [
 			<div class="role-ledger">
 				{roles.map((role) => (
 					<section data-reveal aria-labelledby={`role-${role.name.toLowerCase()}`}>
-						<header><span aria-hidden="true">{role.mark}</span><div><h3 id={`role-${role.name.toLowerCase()}`}>{role.name}</h3><p>{role.summary}</p></div></header>
-						<ul role="list">{role.boundaries.map((boundary) => <li>{boundary}</li>)}</ul>
+						<header><span aria-hidden="true">{role.mark}</span><h3 id={`role-${role.name.toLowerCase()}`}>{role.name}</h3></header>
+						<dl class="role-facts">
+							<div><dt>Workspace access</dt><dd>{role.workspaceAccess}</dd></div>
+							<div><dt>Protected work</dt><dd>{role.protectedWork}</dd></div>
+							<div><dt>Boundary</dt><dd>{role.boundary}</dd></div>
+						</dl>
 					</section>
 				))}
 			</div>
 		</div>
 	</section>
 
-	<section class="limit" aria-labelledby="limit-heading">
+	<section id="access-limits" class="limit" aria-labelledby="limit-heading">
 		<div class="container-page limit-grid">
 			<div data-reveal>
 				<h2 id="limit-heading">What this is not.</h2>
 				<p>CostCook does not let you hide one screen, expose one field, or assemble a custom role. If a cook must receive a prep list without being able to open costs, that boundary is not available today.</p>
+				<p class="limit-recovery">If hiding costs is essential, CostCook is not the right fit today. If you want to check your setup before deciding, <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel}>book 15 minutes</a>.</p>
 			</div>
 			<div class="limit-ticket" data-reveal>
 				<p>Access check</p>
@@ -123,7 +135,7 @@ const faqItems = [
 		</div>
 	</section>
 
-	<section class="faq" aria-labelledby="faq-heading">
+	<section id="team-questions" class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
 			<div data-reveal><h2 id="faq-heading">Questions to settle first.</h2><p>The useful answer is the one that names both the restriction and the gap.</p></div>
 			<div class="faq-list">
@@ -139,58 +151,63 @@ const faqItems = [
 			<div><h2 id="closing-heading">Invite the crew with the boundary understood.</h2><p>Bring the people who run the week into one workspace, and keep the sensitive work attached to the role that should carry it.</p></div>
 			<div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book 15 minutes</a></div>
 		</div>
-		<nav class="container-page onward" aria-label="Related feature guides"><a href="/features/sage">Sage</a><a href="/features/recipes-and-costing">Recipes &amp; costing</a><a href="/features">Every CostCook feature</a></nav>
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/sage">Sage</a><a href="/features/recipes-and-costing">Recipes &amp; costing</a><a href="/features">Every CostCook feature</a></nav>
 	</section>
 </article>
 
 <style>
-	.team-access-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); overflow: clip; }
+	.team-access-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
 	.hero-grid, .shared-grid, .limit-grid, .faq-grid, .closing-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--space-section); }
-	.breadcrumb { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.6rem; color: var(--color-ink-soft); font-size: .875rem; }
-	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
-	h1 { max-width: 10.5ch; font-family: var(--font-display); font-size: clamp(3rem, 5.6vw, 5.9rem); font-weight: 600; line-height: .98; letter-spacing: -.028em; text-wrap: balance; }
+	.hero-grid > *, .shared-grid > *, .limit-grid > *, .faq-grid > *, .closing-grid > * { min-width: 0; }
+	.feature-breadcrumb { margin-bottom: 1.6rem; }
+	h1 { max-width: 10.5ch; }
 	.hero-lede { max-width: 44ch; margin-top: 1.75rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
+	.hero-constraint { max-width: 48ch; margin-top: 1.25rem; padding-left: 1rem; border-left: 1px solid var(--color-amber); color: var(--color-ink-soft); font-size: var(--text-body); line-height: 1.55; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; }
+	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; text-align: center; }
 	.btn-outline { display: inline-flex; padding-inline: 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; }
 	.btn-outline:hover { background: var(--color-softgreen); }
 	.role-stack { position: relative; min-height: 35rem; }
-	.role-pass { position: absolute; width: min(82%, 25rem); padding: 1.4rem; border-top: 4px solid var(--color-green); background: var(--color-paper); box-shadow: 0 18px 38px color-mix(in srgb, var(--color-ink) 15%, transparent); }
+	.role-pass { position: absolute; width: min(82%, 25rem); padding: 1.4rem; border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.pass-1 { top: 0; right: 0; z-index: 3; }
 	.pass-2 { top: 8.5rem; left: 0; z-index: 2; transform: rotate(-1deg); }
 	.pass-3 { top: 17rem; right: 4%; z-index: 1; transform: rotate(1deg); }
-	.pass-head { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--rule); color: var(--color-ink-soft); font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+	.pass-head { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--rule); color: var(--color-ink-soft); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
 	.pass-head span { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 50%; background: var(--color-softgreen); color: var(--color-green-deep); }
-	.role-pass > strong { display: block; margin-top: 1rem; font-family: var(--font-display); font-size: 2rem; }
+	.role-pass > strong { display: block; margin-top: 1rem; font-family: var(--font-display); font-size: var(--text-record); }
 	.role-pass > p { max-width: 38ch; margin-top: .5rem; color: var(--color-ink-soft); line-height: 1.5; }
-	.role-stack figcaption { position: absolute; right: 0; bottom: 0; font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; }
+	.role-stack figcaption { position: absolute; right: 0; bottom: 0; font-family: var(--font-display); font-size: var(--text-record-sm); font-weight: 600; }
 	.shared-record, .faq { background: var(--color-offwhite); }
-	h2 { font-family: var(--font-display); font-size: clamp(2.1rem, 3.8vw, 4rem); font-weight: 600; line-height: 1.05; letter-spacing: -.02em; text-wrap: balance; }
-	.shared-grid > div > p, .roles-heading > p, .limit-grid > div > p, .faq-grid > div > p, .closing p { max-width: 48ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: 1.05rem; line-height: 1.65; }
+	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: var(--text-h2--line-height); letter-spacing: -.02em; text-wrap: balance; }
+	.shared-grid > div > p, .roles-heading > p, .limit-grid > div > p, .faq-grid > div > p, .closing p { max-width: 48ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: var(--text-body-lg); line-height: 1.65; }
 	.access-facts { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); border-top: 1px solid var(--rule); }
 	.access-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
-	.access-facts dt { color: var(--color-ink-soft); font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+	.access-facts dt { color: var(--color-ink-soft); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
 	.access-facts dd { margin-top: .35rem; font-weight: 700; }
-	.roles { background: var(--color-softgreen); }
+	.roles { scroll-margin-top: 5rem; background: var(--color-softgreen); }
 	.roles > .container-page { padding-block: var(--space-section); }
 	.roles-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem 5rem; align-items: end; }
 	.role-ledger { margin-top: clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--rule); }
 	.role-ledger > section { display: grid; gap: 1.5rem 4rem; padding-block: clamp(1.8rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
-	.role-ledger header { display: grid; grid-template-columns: 3rem minmax(0,1fr); gap: 1rem; }
+	.role-ledger header { display: grid; grid-template-columns: 3rem minmax(0,1fr); gap: 1rem; align-items: center; }
 	.role-ledger header > span { display: grid; width: 3rem; height: 3rem; place-items: center; border: 1px solid var(--color-green); border-radius: 50%; color: var(--color-green-deep); font-weight: 750; }
-	.role-ledger h3 { font-family: var(--font-display); font-size: 2rem; font-weight: 600; }
-	.role-ledger header p { margin-top: .4rem; color: var(--color-ink-soft); line-height: 1.55; }
-	.role-ledger ul { border-top: 1px solid var(--rule); }
-	.role-ledger li { padding-block: .75rem; border-bottom: 1px solid var(--rule); }
+	.role-ledger h3 { font-family: var(--font-display); font-size: var(--text-record); font-weight: 600; }
+	.role-facts { border-top: 1px solid var(--rule); }
+	.role-facts div { display: grid; grid-template-columns: minmax(8rem, 1fr) minmax(0, 2fr); gap: 1rem 2rem; padding-block: .8rem; border-bottom: 1px solid var(--rule); }
+	.role-facts dt { color: var(--color-green-deep); font-size: var(--text-label-sm); font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
+	.role-facts dd { line-height: 1.55; }
 	.limit { background: var(--color-ink); color: var(--color-offwhite); }
 	.limit-grid > div > p { color: color-mix(in srgb, var(--color-offwhite) 75%, transparent); }
-	.limit-ticket { padding: clamp(1.25rem, 3vw, 2rem); border-top: 4px solid var(--color-amber-light); background: var(--color-paper); color: var(--color-ink); box-shadow: 0 18px 38px color-mix(in srgb, black 28%, transparent); }
-	.limit-ticket > p { color: var(--color-amber-deep); font-size: .72rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+	.limit-grid .limit-recovery { color: var(--color-offwhite); font-size: var(--text-body); }
+	.limit-recovery a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-amber-light); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+	.limit-recovery a:hover { color: var(--color-offwhite); }
+	.limit-ticket { padding: clamp(1.25rem, 3vw, 2rem); border-top: 1px solid var(--color-amber-light); background: var(--color-paper); color: var(--color-ink); box-shadow: 0 18px 38px color-mix(in srgb, var(--color-ink) 28%, transparent); }
+	.limit-ticket > p { color: var(--color-amber-deep); font-size: var(--text-label-sm); font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
 	.limit-ticket dl { margin-top: 1.25rem; border-top: 1px solid var(--rule); }
 	.limit-ticket dl div { display: flex; justify-content: space-between; gap: 2rem; padding-block: .8rem; border-bottom: 1px solid var(--rule); }
 	.limit-ticket dd { font-weight: 750; }
-	.limit-ticket > strong { display: block; margin-top: 1.5rem; font-family: var(--font-display); font-size: 1.4rem; line-height: 1.2; }
+	.limit-ticket > strong { display: block; margin-top: 1.5rem; font-family: var(--font-display); font-size: var(--text-record-sm); line-height: 1.2; }
 	.faq-grid { align-items: start; }
 	.faq-list { border-top: 1px solid var(--rule); }
 	.faq-list details { border-bottom: 1px solid var(--rule); }
@@ -202,6 +219,6 @@ const faqItems = [
 	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
 	@media (min-width: 800px) { .hero-grid, .shared-grid, .limit-grid, .faq-grid, .closing-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .role-ledger > section { grid-template-columns: 5fr 6fr; } }
 	@media (max-width: 799px) { .role-stack { min-height: auto; display: grid; gap: 1rem; } .role-pass { position: relative; inset: auto; width: 100%; transform: none; } .role-stack figcaption { position: static; margin-top: .5rem; } }
-	@media (max-width: 520px) { h1 { font-size: clamp(2.55rem, 13vw, 3.7rem); } .access-facts { grid-template-columns: 1fr; } .limit-ticket dl div { display: block; } .limit-ticket dd { margin-top: .25rem; } }
+	@media (max-width: 520px) { h1, h2, h3 { overflow-wrap: anywhere; } .hero-actions, .closing-actions { display: grid; } .hero-actions a, .closing-actions a { width: 100%; max-width: 100%; padding-inline: 1rem; white-space: normal; overflow-wrap: anywhere; } .access-facts { grid-template-columns: 1fr; } .role-facts div { grid-template-columns: 1fr; } .limit-ticket dl div { display: block; } .limit-ticket dd { margin-top: .25rem; } }
 	@media (prefers-reduced-motion: reduce) { .faq-list summary svg { transition: none; } }
 </style>

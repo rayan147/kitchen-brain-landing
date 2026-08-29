@@ -18,6 +18,13 @@ const required = [
 	'Staff',
 	'Role-aware sensitive actions',
 	'Fine-grained screen permissions',
+	'Before you invite:',
+	'Staff can open cost screens',
+	'Workspace access',
+	'Protected work',
+	'If hiding costs is essential, CostCook is not the right fit today.',
+	'aria-current="page"',
+	'class="container-page onward feature-onward"',
 	'Can I hide food costs from a cook?',
 	'Invite the crew with the boundary understood.'
 ];
@@ -26,6 +33,11 @@ const missing = required.filter((fragment) => !html.includes(fragment));
 if (missing.length > 0) throw new Error(`Team & Access build is missing: ${missing.join(', ')}`);
 if ((html.match(/data-team-disclosure/g) ?? []).length !== 4) {
 	throw new Error('Team & Access must render four FAQ disclosures.');
+}
+if ((html.match(/<dt[^>]*>Workspace access<\/dt>/g) ?? []).length !== 3
+	|| (html.match(/<dt[^>]*>Protected work<\/dt>/g) ?? []).length !== 3
+	|| (html.match(/<dt[^>]*>Boundary<\/dt>/g) ?? []).length !== 3) {
+	throw new Error('Team & Access must compare every role with the same three semantic facts.');
 }
 if (!homeHtml.includes('id="access"') || !homeHtml.includes('href="/features/team-and-access"')) {
 	throw new Error('Homepage is missing the Team & Access introduction or destination.');
