@@ -18,6 +18,7 @@ const surfaceFiles = [
 	'src/components/sections/BuiltForKitchens.astro',
 	'src/components/sections/EveryFeature.astro',
 	'src/lib/features.ts',
+	'src/components/SiteNav.astro',
 	'src/components/sections/StartHere.astro'
 ];
 
@@ -31,6 +32,7 @@ const [index, featuresPage, contactPage, ledger, ...surfaces] = await Promise.al
 const publicCopy = surfaces.join('\n');
 const siteSource = surfaces[0];
 const heroSource = surfaces[1];
+const siteNavSource = surfaces.at(-2);
 const startHereSource = surfaces.at(-1);
 
 const failures = [];
@@ -52,6 +54,9 @@ for (const component of [
 // so completeness stays available without making the homepage exhaustive.
 requireText(featuresPage, '<EveryFeature />', 'features page composition');
 requireText(siteSource, "href: '/features'", 'features page nav link');
+requireText(siteNavSource, 'data-features-menu', 'features menu disclosure');
+requireText(siteNavSource, 'featureMenuSections', 'features menu data source');
+requireText(siteNavSource, 'docs/stories/features-navigation.story.md', 'features menu story pointer');
 requireText(siteSource, "href: '/contact'", 'contact page nav link');
 requireText(publicCopy, 'See every shipped feature', 'features page homepage link');
 // The hero no longer carries a contact link: it was a third competing action

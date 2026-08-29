@@ -275,3 +275,104 @@ export const featureGroups: readonly FeatureGroup[] = [
 export const availableFeatureGroups = featureGroups.filter((group) => group.status !== 'in-development');
 export const inDevelopmentFeatureGroups = featureGroups.filter((group) => group.status === 'in-development');
 export const featureCount = availableFeatureGroups.reduce((sum, group) => sum + group.items.length, 0);
+
+export type FeatureMenuIcon =
+	| 'recipe'
+	| 'menu'
+	| 'ingredient'
+	| 'import'
+	| 'orders'
+	| 'purchasing'
+	| 'inventory'
+	| 'ledger';
+
+export type FeatureMenuItem = {
+	label: string;
+	description: string;
+	featureId: string;
+	icon: FeatureMenuIcon;
+};
+
+export type FeatureMenuSection = {
+	label: string;
+	items: readonly FeatureMenuItem[];
+};
+
+/**
+ * The shared header's fast path into the complete feature inventory.
+ *
+ * Considered Composite; not used because this is a fixed two-level data tree
+ * rendered by one navigation component. Recursive part/whole behavior would
+ * add indirection without a second depth or a second rendering algorithm.
+ */
+export const featureMenuSections: readonly FeatureMenuSection[] = [
+	{
+		label: 'Build and price',
+		items: [
+			{
+				label: 'Recipes & food costing',
+				description: 'See yield, portion, and plate-cost math with the work shown.',
+				featureId: 'math',
+				icon: 'recipe'
+			},
+			{
+				label: 'Menus & quotes',
+				description: 'Price a menu before you say the number out loud.',
+				featureId: 'menus',
+				icon: 'menu'
+			},
+			{
+				label: 'Ingredients & supplier prices',
+				description: 'Keep pack costs, yields, and supplier history attached to the food.',
+				featureId: 'ingredients',
+				icon: 'ingredient'
+			},
+			{
+				label: 'Invoices & price-list import',
+				description: 'Bring in paper or spreadsheets, then confirm what changes.',
+				featureId: 'import',
+				icon: 'import'
+			}
+		]
+	},
+	{
+		label: 'Run the event',
+		items: [
+			{
+				label: 'Orders, shop, prep & pack',
+				description: 'Turn one menu and guest count into the plan for the day.',
+				featureId: 'orders',
+				icon: 'orders'
+			},
+			{
+				label: 'Purchasing & receiving',
+				description: 'Send the order, record what arrived, and keep shortfalls visible.',
+				featureId: 'purchasing',
+				icon: 'purchasing'
+			},
+			{
+				label: 'Inventory',
+				description: 'See what is on the shelf before the next shopping list is built.',
+				featureId: 'inventory',
+				icon: 'inventory'
+			},
+			{
+				label: 'Purchases & month cost',
+				description: 'Compare what the month should have cost with what you spent.',
+				featureId: 'ledger',
+				icon: 'ledger'
+			}
+		]
+	}
+];
+
+// A broken mega-menu is worse than no shortcut. Fail the build if its curated
+// destinations drift away from the shipped feature inventory.
+const shippedFeatureIds = new Set(availableFeatureGroups.map((group) => group.id));
+for (const section of featureMenuSections) {
+	for (const item of section.items) {
+		if (!shippedFeatureIds.has(item.featureId)) {
+			throw new Error(`Feature menu points to missing or unshipped group: ${item.featureId}`);
+		}
+	}
+}
