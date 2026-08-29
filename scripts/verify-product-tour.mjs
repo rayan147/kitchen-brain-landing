@@ -75,6 +75,18 @@ try {
 		return result.result.value;
 	};
 	const viewport = (width, height, mobile = false) => send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile });
+	const waitForStop = async (stopId) => {
+		for (let attempt = 0; attempt < 30; attempt += 1) {
+			if (await evaluate(`document.querySelector('[data-tour-scene]:not([hidden])')?.dataset.stopId === ${JSON.stringify(stopId)}`)) return;
+			await delay(50);
+		}
+		throw new Error(`Tour stop did not become active: ${stopId}`);
+	};
+	const waitForSceneTransitions = () => evaluate(`Promise.allSettled(
+		document.getAnimations({ subtree: true })
+			.filter((animation) => animation.effect?.pseudoElement?.includes('tour-scene'))
+			.map((animation) => animation.finished)
+	)`);
 	const navigate = async (path = '/tour/main') => {
 		const url = `${baseUrl}${path}`;
 		const parsedUrl = new URL(url);
@@ -138,7 +150,30 @@ try {
 
 	await viewport(1440, 900);
 	await navigate();
-	await evaluate(`document.querySelectorAll('[data-tour-tab]')[5].click()`);
+	const sceneMotion = await evaluate(`(async () => {
+		const nativeStartViewTransition = document.startViewTransition?.bind(document);
+		if (!nativeStartViewTransition) return { supported: false };
+		let transition;
+		document.startViewTransition = (update) => {
+			transition = nativeStartViewTransition(update);
+			return transition;
+		};
+		document.querySelectorAll('[data-tour-tab]')[5].click();
+		await transition.ready;
+		const result = {
+			supported: true,
+			direction: document.documentElement.dataset.tourDirection,
+			oldAnimation: getComputedStyle(document.documentElement, '::view-transition-old(tour-scene)').animationName,
+			newAnimation: getComputedStyle(document.documentElement, '::view-transition-new(tour-scene)').animationName
+		};
+		await transition.finished;
+		return result;
+	})()`);
+	assert(sceneMotion.supported, 'Chromium did not expose same-document view transitions');
+	assert(sceneMotion.direction === 'forward', 'forward tour selection did not expose its motion direction');
+	assert(sceneMotion.oldAnimation?.includes('tour-scene-out-forward'), 'outgoing tour scene has no authored forward transition');
+	assert(sceneMotion.newAnimation?.includes('tour-scene-in-forward'), 'incoming tour scene has no authored forward transition');
+	await waitForStop('labels-printing');
 	const labelsStop = await evaluate(`(() => ({
 		visibleId: document.querySelector('[data-tour-scene]:not([hidden])')?.dataset.stopId,
 		text: document.querySelector('[data-tour-scene]:not([hidden])')?.textContent
@@ -146,6 +181,8 @@ try {
 	assert(labelsStop.visibleId === 'labels-printing', 'Labels and printing scene did not become visible');
 	assert(labelsStop.text?.includes('Coming'), 'Labels and printing scene does not expose its Coming status');
 	await evaluate(`[...document.querySelectorAll('[data-tour-tab]')].at(-1).click()`);
+	await waitForStop('sage');
+	await waitForSceneTransitions();
 	const finalStop = await evaluate(`(() => ({
 		selected: document.querySelector('[data-tour-tab][aria-selected="true"]')?.dataset.index,
 		visibleId: document.querySelector('[data-tour-scene]:not([hidden])')?.dataset.stopId,
@@ -180,6 +217,8 @@ try {
 		select.value = '4';
 		select.dispatchEvent(new Event('change', { bubbles: true }));
 	})()`);
+	await waitForStop('nutrition-allergens');
+	await waitForSceneTransitions();
 	const mobileStop = await evaluate(`(() => ({
 		selected: document.querySelector('[data-tour-tab][aria-selected="true"]')?.dataset.index,
 		visibleId: document.querySelector('[data-tour-scene]:not([hidden])')?.dataset.stopId,
@@ -205,8 +244,22 @@ try {
 	await viewport(1440, 900);
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 	await navigate();
-	const finishScrollBehavior = await evaluate(`(() => {
+	const reducedSceneMotion = await evaluate(`(async () => {
+		document.querySelectorAll('[data-tour-tab]')[1].click();
+		const transition = document.getAnimations({ subtree: true }).find((animation) => animation.effect?.pseudoElement?.includes('tour-scene'));
+		await new Promise(requestAnimationFrame);
+		const animationName = getComputedStyle(document.documentElement, '::view-transition-new(tour-scene)').animationName;
+		await Promise.allSettled(document.getAnimations({ subtree: true }).map((animation) => animation.finished));
+		return animationName;
+	})()`);
+	assert(reducedSceneMotion?.includes('tour-scene-fade-in'), 'reduced-motion stop change still uses spatial movement');
+	await waitForStop('menus-quotes');
+	const finishScrollBehavior = await evaluate(`(async () => {
 		[...document.querySelectorAll('[data-tour-tab]')].at(-1).click();
+		for (let attempt = 0; attempt < 30; attempt += 1) {
+			if (document.querySelector('[data-tour-scene]:not([hidden])')?.dataset.stopId === 'sage') break;
+			await new Promise(requestAnimationFrame);
+		}
 		const heading = document.querySelector('#tour-close-heading');
 		heading.scrollIntoView = (options) => { window.__tourFinishBehavior = options.behavior; };
 		document.querySelector('[data-tour-next]').click();

@@ -189,8 +189,9 @@ import { cta, demoCta } from '../../lib/site';
 		const progressBar = root.querySelector('[data-tour-progress-bar]');
 		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 		let current = 0;
+		let activeSceneTransition;
 
-		const show = (requestedIndex, moveFocus = false) => {
+		const renderStop = (requestedIndex, moveFocus = false) => {
 			const index = Math.max(0, Math.min(tabs.length - 1, requestedIndex));
 			current = index;
 			tabs.forEach((tab, tabIndex) => {
@@ -205,6 +206,34 @@ import { cta, demoCta } from '../../lib/site';
 			progressBar.style.setProperty('--tour-progress-scale', String((index + 1) / tabs.length));
 			history.replaceState(null, '', `#tour-${stopIds[index]}`);
 			if (moveFocus) tabs[index].focus();
+		};
+
+		// Considered State; not used because every stop follows one stable render
+		// path and differs only by data, so separate state objects would add indirection.
+		const show = (requestedIndex, moveFocus = false) => {
+			const index = Math.max(0, Math.min(tabs.length - 1, requestedIndex));
+			if (index === current) {
+				if (moveFocus) tabs[index].focus();
+				return;
+			}
+
+			const startViewTransition = document.startViewTransition?.bind(document);
+			if (!startViewTransition) {
+				renderStop(index, moveFocus);
+				return;
+			}
+
+			activeSceneTransition?.skipTransition();
+			document.documentElement.dataset.tourDirection = index > current ? 'forward' : 'backward';
+			const transition = startViewTransition(() => renderStop(index, moveFocus));
+			activeSceneTransition = transition;
+			transition.finished
+				.catch(() => {})
+				.finally(() => {
+					if (activeSceneTransition !== transition) return;
+					activeSceneTransition = undefined;
+					delete document.documentElement.dataset.tourDirection;
+				});
 		};
 
 		tabs.forEach((tab, index) => {
@@ -226,7 +255,7 @@ import { cta, demoCta } from '../../lib/site';
 		});
 
 		const hashIndex = stopIds.findIndex((id) => location.hash === `#tour-${id}`);
-		show(hashIndex >= 0 ? hashIndex : 0);
+		renderStop(hashIndex >= 0 ? hashIndex : 0);
 		if (hashIndex >= 0) {
 			const revealDeepLink = () => {
 				document.documentElement.classList.add('tour-deep-link-jump');
@@ -293,6 +322,29 @@ import { cta, demoCta } from '../../lib/site';
 	.tour-progress > div { height: .25rem; flex: 1; overflow: hidden; border-radius: 999px; background: #e3e8e4; }
 	.tour-progress > div span { display: block; width: 100%; height: 100%; border-radius: inherit; background: var(--color-green); transform: scaleX(var(--tour-progress-scale)); transform-origin: left; transition: transform 260ms cubic-bezier(.22,1,.36,1); }
 	[data-tour-scene] { padding: clamp(1rem, 2vw, 1.6rem); }
+	[data-tour-scene]:not([hidden]) { view-transition-name: tour-scene; }
+	:global(::view-transition-group(tour-scene)) { animation-duration: 320ms; animation-timing-function: cubic-bezier(.16,1,.3,1); }
+	:global(::view-transition-old(tour-scene)),
+	:global(::view-transition-new(tour-scene)) { height: 100%; mix-blend-mode: normal; }
+	:global(html[data-tour-direction='forward']::view-transition-old(tour-scene)) { animation: tour-scene-out-forward 180ms ease-in both; }
+	:global(html[data-tour-direction='forward']::view-transition-new(tour-scene)) { animation: tour-scene-in-forward 320ms cubic-bezier(.16,1,.3,1) both; }
+	:global(html[data-tour-direction='backward']::view-transition-old(tour-scene)) { animation: tour-scene-out-backward 180ms ease-in both; }
+	:global(html[data-tour-direction='backward']::view-transition-new(tour-scene)) { animation: tour-scene-in-backward 320ms cubic-bezier(.16,1,.3,1) both; }
+
+	@keyframes tour-scene-out-forward {
+		to { opacity: 0; transform: translateX(-.75rem); filter: blur(2px); }
+	}
+	@keyframes tour-scene-in-forward {
+		from { opacity: 0; transform: translateX(1rem); clip-path: inset(0 0 0 3%); filter: blur(3px); }
+		to { opacity: 1; transform: translateX(0); clip-path: inset(0); filter: blur(0); }
+	}
+	@keyframes tour-scene-out-backward {
+		to { opacity: 0; transform: translateX(.75rem); filter: blur(2px); }
+	}
+	@keyframes tour-scene-in-backward {
+		from { opacity: 0; transform: translateX(-1rem); clip-path: inset(0 3% 0 0); filter: blur(3px); }
+		to { opacity: 1; transform: translateX(0); clip-path: inset(0); filter: blur(0); }
+	}
 	.app-page-head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
 	.app-page-head p { color: #68736b; font-size: var(--text-eyebrow); }
 	.app-page-head h3 { max-width: 28ch; margin-top: .3rem; font-size: clamp(1.25rem, 2vw, 1.7rem); font-weight: 700; line-height: 1.2; letter-spacing: -.02em; }
@@ -374,5 +426,11 @@ import { cta, demoCta } from '../../lib/site';
 
 	@media (prefers-reduced-motion: reduce) {
 		.tour-progress > div span { transition: none; }
+		:global(::view-transition-group(tour-scene)) { animation-duration: 120ms; }
+		:global(::view-transition-old(tour-scene)) { animation: tour-scene-fade-out 120ms ease-out both !important; }
+		:global(::view-transition-new(tour-scene)) { animation: tour-scene-fade-in 120ms ease-out both !important; }
 	}
+
+	@keyframes tour-scene-fade-out { to { opacity: 0; } }
+	@keyframes tour-scene-fade-in { from { opacity: 0; } to { opacity: 1; } }
 </style>
