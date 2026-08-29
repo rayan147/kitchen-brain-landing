@@ -309,6 +309,7 @@ export const comparison: RowGroup[] = [
 			{
 				label: 'Kitchen label printing',
 				costcook: 'coming',
+				note: 'Built in the app behind a release flag and not included at launch: storage condition, a use-by date the cook settles, one numbered label per container, printed through the browser onto sheet or roll stock and frozen for reprints. No direct printer connection.',
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			}
