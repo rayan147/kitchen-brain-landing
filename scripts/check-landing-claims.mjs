@@ -89,6 +89,8 @@ const surfaceFiles = [
 	// section renders it. Both are scanned, and the model-name guard below is
 	// aimed squarely at them.
 	'src/lib/sage.ts',
+	'src/lib/labels.ts',
+	'src/components/sections/LabelsPrintingFeature.astro',
 	'src/components/sections/Sage.astro',
 	// 2026-08-29. Nutrition: the data file and the section, both claim copy.
 	'src/lib/nutrition.ts',
@@ -267,6 +269,19 @@ if (!printedPanel.slice(0, 400).includes("costcook: 'yes'")) {
 }
 if (!/not a retail-label compliance claim/.test(printedPanel.slice(0, 600))) {
 	failures.push('comparison honesty: the printed-labels note must carry the estimate-not-compliance boundary');
+}
+// Kitchen labels: built behind a flag, marked Coming (RC-35, RC-51). The one
+// word lives in src/lib/labels.ts and is pinned here until the ledger changes.
+const labelsSource = surfaces[surfaceFiles.indexOf('src/lib/labels.ts')];
+if (!/LABELS_STATUS = 'coming'/.test(labelsSource)) {
+	failures.push('labels status: RC-35 says not included at launch; LABELS_STATUS must read coming until the ledger row changes');
+}
+requireText(labelsSource, 'browser', 'labels copy names the browser as the only output');
+requireText(labelsSource, 'never guesses', 'labels copy carries the no-guessed-date rule');
+requireText(labelsSource, 'not an all-clear', 'labels copy carries the blank-allergen boundary');
+for (const [name, source] of [['src/lib/labels.ts', labelsSource], ['src/components/sections/LabelsPrintingFeature.astro', surfaces[surfaceFiles.indexOf('src/components/sections/LabelsPrintingFeature.astro')]]]) {
+	if (/Brother|DYMO|Dymo|Zebra|Avery/.test(source)) failures.push(`${name}: no printer or stock brand may be named`);
+	if (/direct(ly)? to (the |a |your )?(label )?printer|sends? (it |them |labels )?to (the |a |your )?printer/i.test(source)) failures.push(`${name}: may not say a label reaches a printer on its own`);
 }
 const printerRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Kitchen label printing'"));
 if (!printerRow.slice(0, 200).includes("costcook: 'coming'")) {
