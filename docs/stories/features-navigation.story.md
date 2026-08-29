@@ -100,3 +100,11 @@
 - **Word count before → after:** 139 words across eight draft descriptions → 103 words.
 - **Claims removed:** No time-saved, revenue, customer, or automation claim added.
 - **Final Image:** Choose the kitchen job or access question and land on the evidence for it.
+
+## Revision — guided product-tour entry (2026-08-29)
+
+The Features disclosure offers twelve job-led destinations. Its footer gives the reader two distinct next actions: inspect those destinations as one seeded event in the guided product tour, or open the exhaustive shipped-feature index. This keeps the fast path visible without turning the tour into another capability item.
+
+## Revision — direct product-tour link (2026-08-29)
+
+The guided tour is now a first-class destination in the shared navigation. On wide screens, “Product tour” sits beside Pricing so a visitor can start the seeded walkthrough without first opening Features. At tighter widths, the established Features disclosure remains the route into the tour and protects the header’s limited space. The footer carries the direct link at every width, preserving a second recovery path without inventing new language or another workflow.

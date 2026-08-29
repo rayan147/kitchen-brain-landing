@@ -1,0 +1,358 @@
+---
+import { tourSeedKey, tourStops } from '../../lib/tour';
+import { cta, demoCta } from '../../lib/site';
+---
+
+<!-- story: docs/stories/product-tour.story.md -->
+<article class="product-tour">
+	<section class="tour-hero" aria-labelledby="tour-heading">
+		<div class="container-page tour-hero-grid">
+			<div class="tour-hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="tour-breadcrumb">
+					<a href="/features">Features</a>
+					<span aria-hidden="true">/</span>
+					<span>Product tour</span>
+				</nav>
+				<h1 id="tour-heading">One event. Every part of the week that gets it out the door.</h1>
+				<p>
+					Follow a fully seeded 180-guest wedding from the working recipe and customer quote
+					through buying, receiving, inventory, labels, month cost, and Sage.
+				</p>
+				<div class="tour-hero-actions">
+					<a href="#guided-tour" class="btn-primary">Start the guided tour</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+				</div>
+			</div>
+			<div class="tour-ticket anim-enter" style="--enter-delay: 120ms" aria-label="Illustrative tour dataset summary">
+				<div class="tour-ticket-head"><span>Tour dataset</span><span>Illustrative</span></div>
+				<strong>Alvarez–Whitman wedding</strong>
+				<dl>
+					<div><dt>Event</dt><dd>Saturday, Aug 29</dd></div>
+					<div><dt>Guests</dt><dd>180</dd></div>
+					<div><dt>Menu</dt><dd>Garden wedding supper</dd></div>
+					<div><dt>Quote</dt><dd>$28.00 per guest</dd></div>
+				</dl>
+				<p>Twelve connected stops. Every destination in the Features dropdown.</p>
+			</div>
+		</div>
+	</section>
+
+	<section id="guided-tour" class="tour-workspace" aria-labelledby="guided-tour-heading" data-tour data-seed-key={tourSeedKey}>
+		<div class="container-page">
+			<div class="tour-heading-row">
+				<div>
+					<h2 id="guided-tour-heading">Take the product tour</h2>
+					<p>Choose any stop or follow the event from recipe to sourced answer.</p>
+				</div>
+				<p class="tour-truth">All values in this guided dataset are illustrative. Each stop follows its public status; Labels & printing is marked Coming.</p>
+			</div>
+
+			<div class="tour-mobile-control">
+				<label for="tour-stop-select">Tour stop</label>
+				<select id="tour-stop-select" data-tour-select>
+					{tourStops.map((stop, index) => <option value={index}>{index + 1}. {stop.label}</option>)}
+				</select>
+			</div>
+
+			<div class="tour-shell">
+				<nav class="tour-rail" aria-label="Product tour stops">
+					<div class="tour-rail-head">
+						<span>Juniper & Stone</span>
+						<small>Guided workspace</small>
+					</div>
+					<div role="tablist" aria-label="Choose a feature to inspect" aria-orientation="vertical">
+						{tourStops.map((stop, index) => (
+							<button
+								type="button"
+								role="tab"
+								id={`tour-tab-${stop.id}`}
+								aria-controls={`tour-panel-${stop.id}`}
+								aria-selected={index === 0 ? 'true' : 'false'}
+								tabindex={index === 0 ? 0 : -1}
+								data-tour-tab
+								data-index={index}
+							>
+								<span>{String(index + 1).padStart(2, '0')}</span>
+								<strong>{stop.label}</strong>
+							</button>
+						))}
+					</div>
+				</nav>
+
+				<div class="tour-stage">
+					<div class="app-topbar">
+						<div class="app-brand"><span>CC</span><strong>Juniper & Stone Catering</strong></div>
+						<div class="app-search" aria-hidden="true">Search CostCook</div>
+						<div class="app-user" aria-label="Signed in as Alex R">AR</div>
+					</div>
+
+					<div class="tour-progress" aria-live="polite" aria-atomic="true">
+						<span data-tour-progress>Stop 1 of {tourStops.length}</span>
+						<div aria-hidden="true"><span data-tour-progress-bar style={`--tour-progress-scale: ${1 / tourStops.length}`}></span></div>
+					</div>
+
+					{tourStops.map((stop, index) => (
+						<section
+							role="tabpanel"
+							id={`tour-panel-${stop.id}`}
+							aria-labelledby={`tour-tab-${stop.id}`}
+							data-tour-scene
+							data-index={index}
+							data-stop-id={stop.id}
+							hidden={index !== 0}
+						>
+							<div class="app-page-head">
+								<div>
+									<p>{stop.appArea}</p>
+									<h3>{stop.title}</h3>
+								</div>
+								<span class="seed-chip">Illustrative tour data</span>
+							</div>
+
+							<div class="metric-strip">
+								{stop.metrics.map((metric) => (
+									<div data-tone={metric.tone || 'plain'}>
+										<span>{metric.label}</span>
+										<strong>{metric.value}</strong>
+										{metric.note && <small>{metric.note}</small>}
+									</div>
+								))}
+							</div>
+
+							<div class="app-content-grid">
+								<div class="app-table-wrap">
+									<table>
+										<thead><tr>{stop.columns.map((column) => <th scope="col">{column}</th>)}</tr></thead>
+										<tbody>{stop.rows.map((row) => <tr>{row.map((cell, cellIndex) => cellIndex === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>)}</tr>)}</tbody>
+									</table>
+								</div>
+
+								<aside class="app-aside" aria-label={stop.aside.title}>
+									<div class="app-aside-head">
+										<h4>{stop.aside.title}</h4>
+										{stop.aside.status && <span>{stop.aside.status}</span>}
+									</div>
+									<dl>
+										{stop.aside.lines.map((line) => <div data-tone={line.tone || 'plain'}><dt>{line.label}</dt><dd>{line.value}</dd></div>)}
+									</dl>
+									<p>{stop.aside.footnote}</p>
+								</aside>
+							</div>
+
+							<div class="tour-coach">
+								<div>
+									<h4>{stop.callout}</h4>
+									<p>{stop.intro}</p>
+								</div>
+								<a href={stop.featureHref}>Explore this feature</a>
+							</div>
+						</section>
+					))}
+
+					<div class="tour-controls">
+						<button type="button" data-tour-prev disabled>Previous stop</button>
+						<button type="button" data-tour-next>Next: {tourStops[1].label}</button>
+					</div>
+				</div>
+			</div>
+
+			<noscript>
+				<p class="tour-noscript">The guided controls need JavaScript. Every feature is still available from <a href="/features">the complete feature index</a>.</p>
+			</noscript>
+		</div>
+	</section>
+
+	<section class="tour-close" aria-labelledby="tour-close-heading">
+		<div class="container-page tour-close-grid">
+			<div>
+				<h2 id="tour-close-heading">Start with one real menu. Keep it intact all the way to the back door.</h2>
+				<p>Bring the recipes and supplier prices you already have. CostCook keeps the working plan and its numbers connected.</p>
+			</div>
+			<div class="tour-close-actions">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+			</div>
+		</div>
+	</section>
+</article>
+
+<script is:inline define:vars={{ stopLabels: tourStops.map((stop) => stop.label), stopIds: tourStops.map((stop) => stop.id) }}>
+	const root = document.querySelector('[data-tour]');
+	if (root) {
+		const tabs = Array.from(root.querySelectorAll('[data-tour-tab]'));
+		const scenes = Array.from(root.querySelectorAll('[data-tour-scene]'));
+		const select = root.querySelector('[data-tour-select]');
+		const previous = root.querySelector('[data-tour-prev]');
+		const next = root.querySelector('[data-tour-next]');
+		const progress = root.querySelector('[data-tour-progress]');
+		const progressBar = root.querySelector('[data-tour-progress-bar]');
+		let current = 0;
+
+		const show = (requestedIndex, moveFocus = false) => {
+			const index = Math.max(0, Math.min(tabs.length - 1, requestedIndex));
+			current = index;
+			tabs.forEach((tab, tabIndex) => {
+				tab.setAttribute('aria-selected', String(tabIndex === index));
+				tab.setAttribute('tabindex', tabIndex === index ? '0' : '-1');
+			});
+			scenes.forEach((scene, sceneIndex) => { scene.hidden = sceneIndex !== index; });
+			if (select) select.value = String(index);
+			previous.disabled = index === 0;
+			next.textContent = index === tabs.length - 1 ? 'Finish the tour' : `Next: ${stopLabels[index + 1]}`;
+			progress.textContent = `Stop ${index + 1} of ${tabs.length}: ${stopLabels[index]}`;
+			progressBar.style.setProperty('--tour-progress-scale', String((index + 1) / tabs.length));
+			history.replaceState(null, '', `#tour-${stopIds[index]}`);
+			if (moveFocus) tabs[index].focus();
+		};
+
+		tabs.forEach((tab, index) => {
+			tab.addEventListener('click', () => show(index));
+			tab.addEventListener('keydown', (event) => {
+				if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+				event.preventDefault();
+				if (event.key === 'Home') show(0, true);
+				else if (event.key === 'End') show(tabs.length - 1, true);
+				else show((index + (event.key === 'ArrowDown' ? 1 : -1) + tabs.length) % tabs.length, true);
+			});
+		});
+
+		select?.addEventListener('change', () => show(Number(select.value)));
+		previous?.addEventListener('click', () => show(current - 1));
+		next?.addEventListener('click', () => {
+			if (current < tabs.length - 1) show(current + 1);
+			else document.querySelector('#tour-close-heading')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		});
+
+		const hashIndex = stopIds.findIndex((id) => location.hash === `#tour-${id}`);
+		show(hashIndex >= 0 ? hashIndex : 0);
+	}
+</script>
+
+<style>
+	.product-tour { color: var(--color-ink); }
+	.tour-hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.tour-hero-grid { display: grid; gap: 3rem; align-items: center; padding-block: clamp(4.5rem, 8vw, 8rem); }
+	.tour-hero-copy { max-width: 43rem; }
+	.tour-breadcrumb { display: flex; align-items: center; gap: .65rem; color: var(--color-ink-soft); font-size: .875rem; }
+	.tour-breadcrumb a { color: var(--color-green-deep); text-decoration: underline; text-decoration-color: var(--color-ticket-rule); text-underline-offset: 4px; }
+	.tour-hero h1 { max-width: 14ch; margin-top: 1.5rem; font-family: var(--font-display); font-size: clamp(2.75rem, 6vw, 5.75rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; text-wrap: balance; }
+	.tour-hero-copy > p { max-width: 62ch; margin-top: 1.5rem; color: var(--color-ink-soft); font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.65; }
+	.tour-hero-actions, .tour-close-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+	.btn-outline { display: inline-flex; min-height: 3.25rem; align-items: center; justify-content: center; border: 1px solid var(--color-green); border-radius: 999px; padding: .9rem 1.5rem; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out, color 150ms ease-out; }
+	.btn-outline:hover { background: var(--color-softgreen); }
+	.tour-ticket { position: relative; width: min(100%, 28rem); justify-self: end; background: var(--color-paper); padding: 1.5rem; box-shadow: 0 20px 50px rgba(31, 36, 33, .13), 0 3px 10px rgba(31, 36, 33, .08); }
+	.tour-ticket::before { position: absolute; inset: .45rem; border: 1px solid var(--color-ticket-rule); content: ''; pointer-events: none; }
+	.tour-ticket-head { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--color-ticket-rule); padding-bottom: .9rem; color: var(--color-amber-deep); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+	.tour-ticket > strong { display: block; margin-top: 1.35rem; font-family: var(--font-display); font-size: 1.55rem; line-height: 1.15; }
+	.tour-ticket dl { margin-top: 1rem; }
+	.tour-ticket dl div { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--color-hairline); padding-block: .72rem; }
+	.tour-ticket dt { color: var(--color-ink-soft); }
+	.tour-ticket dd { font-weight: 650; text-align: right; }
+	.tour-ticket > p { border-top: 1px solid var(--color-ticket-rule); margin-top: .5rem; padding-top: 1rem; color: var(--color-ink-soft); font-size: .9rem; line-height: 1.5; }
+
+	.tour-workspace { scroll-margin-top: 1rem; padding-block: clamp(4rem, 8vw, 7rem); background: #eef1ed; }
+	.tour-heading-row { display: grid; gap: 1.5rem; align-items: end; margin-bottom: 2rem; }
+	.tour-heading-row h2, .tour-close h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.6rem); font-weight: 600; line-height: 1.05; letter-spacing: -.025em; text-wrap: balance; }
+	.tour-heading-row > div > p { margin-top: .75rem; color: var(--color-ink-soft); font-size: 1.05rem; }
+	.tour-truth { max-width: 48ch; color: var(--color-ink-soft); font-size: .85rem; line-height: 1.55; }
+	.tour-mobile-control { display: none; margin-bottom: 1rem; }
+	.tour-mobile-control label { display: block; margin-bottom: .4rem; font-size: .8rem; font-weight: 700; }
+	.tour-mobile-control select { width: 100%; min-height: 3rem; border: 1px solid #bac7bd; border-radius: .6rem; background: var(--color-paper); padding: .65rem 2.4rem .65rem .8rem; color: var(--color-ink); }
+	.tour-shell { overflow: hidden; border: 1px solid #c8d1ca; border-radius: .9rem; background: var(--color-paper); box-shadow: 0 24px 60px rgba(31, 36, 33, .12), 0 4px 12px rgba(31, 36, 33, .08); }
+	.tour-rail { display: none; background: #202823; color: #f8faf8; }
+	.tour-rail-head { padding: 1.35rem 1.25rem 1.1rem; border-bottom: 1px solid rgba(255,255,255,.11); }
+	.tour-rail-head span, .tour-rail-head small { display: block; }
+	.tour-rail-head span { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; }
+	.tour-rail-head small { margin-top: .2rem; color: #aebbb2; }
+	.tour-rail [role='tablist'] { padding: .65rem; }
+	.tour-rail button { display: grid; width: 100%; min-height: 3.15rem; grid-template-columns: 1.6rem 1fr; align-items: center; gap: .55rem; border-radius: .45rem; padding: .55rem .65rem; color: #c9d2cb; text-align: left; transition: background-color 150ms ease-out, color 150ms ease-out; }
+	.tour-rail button:hover { background: rgba(255,255,255,.07); color: #fff; }
+	.tour-rail button[aria-selected='true'] { background: #e5f1ea; color: #1f3b2d; }
+	.tour-rail button span { font-variant-numeric: tabular-nums; font-size: .68rem; letter-spacing: .08em; }
+	.tour-rail button strong { font-size: .77rem; line-height: 1.25; }
+	.tour-stage { min-width: 0; background: #f7f9f7; }
+	.app-topbar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(12rem, 22rem) auto; align-items: center; gap: 1rem; min-height: 4.2rem; border-bottom: 1px solid #dce3dd; background: #fff; padding: .75rem 1.2rem; }
+	.app-brand { display: flex; min-width: 0; align-items: center; gap: .7rem; }
+	.app-brand > span { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: .5rem; background: var(--color-green); color: #fff; font-size: .7rem; font-weight: 800; }
+	.app-brand strong { overflow: hidden; font-size: .83rem; text-overflow: ellipsis; white-space: nowrap; }
+	.app-search { overflow: hidden; border: 1px solid #d9e0da; border-radius: .45rem; padding: .55rem .8rem; color: #87928a; font-size: .78rem; white-space: nowrap; }
+	.app-user { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border-radius: 50%; background: #f0e3c9; color: #654112; font-size: .72rem; font-weight: 800; }
+	.tour-progress { display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #dce3dd; background: #fff; padding: .6rem 1.2rem; color: #4d5951; font-size: .75rem; font-weight: 650; }
+	.tour-progress > div { height: .25rem; flex: 1; overflow: hidden; border-radius: 999px; background: #e3e8e4; }
+	.tour-progress > div span { display: block; width: 100%; height: 100%; border-radius: inherit; background: var(--color-green); transform: scaleX(var(--tour-progress-scale)); transform-origin: left; transition: transform 260ms cubic-bezier(.22,1,.36,1); }
+	[data-tour-scene] { padding: clamp(1rem, 2vw, 1.6rem); }
+	.app-page-head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+	.app-page-head p { color: #68736b; font-size: .72rem; }
+	.app-page-head h3 { max-width: 28ch; margin-top: .3rem; font-size: clamp(1.25rem, 2vw, 1.7rem); font-weight: 700; line-height: 1.2; letter-spacing: -.02em; }
+	.seed-chip { flex: none; border: 1px solid #d7c39e; border-radius: 999px; background: #fff7e7; padding: .35rem .6rem; color: #78501c; font-size: .65rem; font-weight: 750; }
+	.metric-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 1.2rem; border: 1px solid #dce3dd; background: #dce3dd; }
+	.metric-strip > div { min-width: 0; background: #fff; padding: .75rem; }
+	.metric-strip span, .metric-strip strong, .metric-strip small { display: block; }
+	.metric-strip span { overflow: hidden; color: #68736b; font-size: .66rem; text-overflow: ellipsis; white-space: nowrap; }
+	.metric-strip strong { margin-top: .25rem; font-size: clamp(.9rem, 1.5vw, 1.12rem); font-variant-numeric: tabular-nums; }
+	.metric-strip [data-tone='good'] strong { color: #226345; }
+	.metric-strip [data-tone='attention'] strong { color: #8f5716; }
+	.app-content-grid { display: grid; gap: 1rem; margin-top: 1rem; }
+	.app-table-wrap { overflow-x: auto; border: 1px solid #dce3dd; background: #fff; }
+	.app-table-wrap table { width: 100%; min-width: 38rem; border-collapse: collapse; font-size: .75rem; }
+	.app-table-wrap th, .app-table-wrap td { border-bottom: 1px solid #e3e8e4; padding: .7rem .75rem; text-align: left; }
+	.app-table-wrap thead th { background: #f1f4f1; color: #68736b; font-size: .64rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+	.app-table-wrap tbody th { font-weight: 650; }
+	.app-table-wrap tbody td { color: #465149; font-variant-numeric: tabular-nums; }
+	.app-aside { border: 1px solid #cfd9d1; background: #fff; }
+	.app-aside-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; border-bottom: 1px solid #dce3dd; padding: .75rem; }
+	.app-aside h4 { font-size: .85rem; font-weight: 750; }
+	.app-aside-head span { border-radius: 999px; background: #e8f3ec; padding: .3rem .5rem; color: #245c42; font-size: .61rem; font-weight: 750; }
+	.app-aside dl { padding: .25rem .75rem; }
+	.app-aside dl div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid #edf0ed; padding-block: .55rem; font-size: .72rem; }
+	.app-aside dt { color: #68736b; }
+	.app-aside dd { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+	.app-aside [data-tone='good'] dd { color: #226345; }
+	.app-aside [data-tone='attention'] dd { color: #8f5716; }
+	.app-aside > p { padding: .25rem .75rem .8rem; color: #68736b; font-size: .67rem; line-height: 1.45; }
+	.tour-coach { display: grid; gap: 1rem; margin-top: 1rem; background: #253a2e; padding: 1rem; color: #f8faf8; box-shadow: 0 12px 28px rgba(31,36,33,.16), 0 2px 8px rgba(31,36,33,.12); }
+	.tour-coach h4 { max-width: 40ch; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.2; }
+	.tour-coach p { max-width: 68ch; margin-top: .45rem; color: #d7e0da; font-size: .77rem; line-height: 1.5; }
+	.tour-coach a { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; align-self: end; border: 1px solid #769381; border-radius: 999px; padding: .6rem .9rem; color: #fff; font-size: .73rem; font-weight: 700; }
+	.tour-coach a:hover { background: rgba(255,255,255,.08); }
+	.tour-controls { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid #dce3dd; background: #fff; padding: .85rem 1rem; }
+	.tour-controls button { min-height: 2.75rem; border-radius: 999px; padding: .6rem .95rem; font-size: .75rem; font-weight: 700; }
+	.tour-controls [data-tour-prev] { border: 1px solid #bcc8bf; color: #37433b; }
+	.tour-controls [data-tour-next] { background: var(--color-green); color: #fff; }
+	.tour-controls button:disabled { opacity: .42; cursor: not-allowed; }
+	.tour-noscript { margin-top: 1rem; color: var(--color-ink-soft); }
+	.tour-noscript a { color: var(--color-green-deep); text-decoration: underline; }
+	.tour-close { border-top: 1px solid var(--color-hairline); background: var(--color-softgreen); padding-block: clamp(4rem, 8vw, 7rem); }
+	.tour-close-grid { display: grid; gap: 2rem; align-items: end; }
+	.tour-close h2 { max-width: 18ch; }
+	.tour-close p { max-width: 60ch; margin-top: 1rem; color: var(--color-ink-soft); font-size: 1.05rem; line-height: 1.6; }
+	.tour-close-actions { margin-top: 0; }
+
+	@media (min-width: 760px) {
+		.tour-hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(22rem, .85fr); }
+		.tour-heading-row { grid-template-columns: minmax(0, 1fr) minmax(18rem, .55fr); }
+		.tour-shell { display: grid; grid-template-columns: 14.5rem minmax(0, 1fr); }
+		.tour-rail { display: block; }
+		.metric-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+		.app-content-grid { grid-template-columns: minmax(0, 1.75fr) minmax(13rem, .8fr); }
+		.tour-coach { grid-template-columns: minmax(0, 1fr) auto; }
+		.tour-close-grid { grid-template-columns: minmax(0, 1fr) auto; }
+	}
+
+	@media (max-width: 759px) {
+		.tour-ticket { justify-self: start; }
+		.tour-mobile-control { display: block; }
+		.app-topbar { grid-template-columns: minmax(0, 1fr) auto; }
+		.app-search { display: none; }
+		.app-page-head { display: block; }
+		.seed-chip { display: inline-flex; margin-top: .75rem; }
+		.tour-progress { align-items: start; flex-direction: column; gap: .45rem; }
+		.tour-progress > div { width: 100%; flex: none; }
+		.tour-controls { align-items: stretch; flex-direction: column-reverse; }
+		.tour-controls button { width: 100%; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tour-progress > div span { transition: none; }
+	}
+</style>

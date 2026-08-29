@@ -86,6 +86,8 @@ export const launchPlan = {
 	billingNote: 'per kitchen workspace after a 15-day free trial.'
 } as const;
 
+const productTourHref = '/tour/main';
+
 /**
  * Destinations only. The three in-page anchors that used to live here ("The
  * problem", "What changes", "Watch it work") were removed: a header that
@@ -98,9 +100,13 @@ export const launchPlan = {
  * previously unreachable from a phone header entirely. The footer renders the
  * whole array at every width.
  */
-export const nav: readonly { label: string; href: string; earlyVisible?: true }[] = [
+export const nav: readonly { label: string; href: string; earlyVisible?: true; wideOnly?: true }[] = [
 	// Root-relative so the same links resolve from /features too.
 	{ label: 'Pricing', href: '/pricing', earlyVisible: true },
+	// Considered Composite; not used because this remains a flat destination
+	// list rendered by shared header and footer consumers. The direct tour link
+	// joins the wide header only; Features already exposes it at tighter widths.
+	{ label: 'Product tour', href: productTourHref, wideOnly: true },
 	// The fit question is a bookmarkable read, not an ARIA tabs widget. It is
 	// deliberately not earlyVisible: pricing still owns the one phone slot,
 	// while the full footer keeps this destination available at every width.
@@ -131,5 +137,7 @@ export const featuresMenu = {
 	label: 'Features',
 	href: '/features',
 	overviewLabel: 'Explore every shipped feature',
+	tourLabel: 'Take the product tour',
+	tourHref: productTourHref,
 	ariaLabel: 'Features, broken down by kitchen job'
 } as const;

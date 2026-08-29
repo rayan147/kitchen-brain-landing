@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-20T00:00:00.000Z",
+  "generatedAt": "2026-08-29T00:00:00.000Z",
   "title": "Design System: CostCook",
   "extensions": {
     "colorMeta": {
@@ -26,6 +26,11 @@
         "name": "ticket",
         "value": "0 1px 2px rgb(31 36 33 / 0.08), 0 6px 14px rgb(31 36 33 / 0.1)",
         "purpose": "A restrained shadow for physical ticket-like imagery, not contact containers."
+      },
+      {
+        "name": "product-proof-workspace",
+        "value": "0 24px 60px rgb(31 36 33 / 0.12), 0 4px 12px rgb(31 36 33 / 0.08)",
+        "purpose": "A broad two-layer shadow that holds a large interactive product-proof workspace together as one artifact."
       }
     ],
     "motion": [
@@ -41,6 +46,14 @@
       "description": "The visually primary action for starting CostCook, emailing Rayan, or booking a demo.",
       "html": "<a class=\"ds-btn-primary\" href=\"#\">Email Rayan</a>",
       "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--color-green, #2f7d5b); color: #fff; font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; font-weight: 600; padding: 1rem 1.75rem; border-radius: 999px; text-decoration: none; transition: background-color 150ms ease-out, transform 100ms ease-out; } .ds-btn-primary:hover { background: var(--color-green-deep, #256549); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; } .ds-btn-primary:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "A secondary pill action that stays visibly subordinate beside a filled primary action.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">Book 15 minutes</a>",
+      "css": ".ds-btn-outline { display: inline-flex; min-height: 3.25rem; align-items: center; justify-content: center; border: 1px solid var(--color-green, #2f7d5b); border-radius: 999px; background: transparent; padding: 0.9rem 1.5rem; color: var(--color-green-deep, #256549); font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; font-weight: 600; text-decoration: none; transition: background-color 150ms ease-out, color 150ms ease-out; } .ds-btn-outline:hover { background: var(--color-softgreen, #e5f1ea); } .ds-btn-outline:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; }"
     },
     {
       "name": "Quiet Action Link",
@@ -66,30 +79,34 @@
   ],
   "narrative": {
     "northStar": "The Kitchen Ticket",
-    "overview": "CostCook's incumbent marketing identity is practical, warm, and quiet: an off-white ground, restrained green actions, amber operational accents, and fine rules that recall kitchen tickets without turning the site into a theme. Fraunces gives decisions and page identity an editorial voice; Instrument Sans keeps supporting information direct and easy to scan.\n\nContact follows the same founder-direct voice. Public visitors get a dedicated /contact destination with email, phone, and demo actions; existing users are directed to authenticated Contact support inside CostCook, where account context can accompany the message.",
+    "overview": "CostCook's incumbent marketing identity is practical, warm, and quiet: an off-white ground, restrained green actions, amber operational accents, and fine rules that recall kitchen tickets without turning the site into a theme. Fraunces gives decisions and page identity an editorial voice; Instrument Sans keeps supporting information direct and easy to scan.\n\nContact follows the same founder-direct voice. Public visitors get a dedicated /contact destination with email, phone, and demo actions; existing users are directed to authenticated Contact support inside CostCook, where account context can accompany the message.\n\nWhen marketing needs to show connected product evidence, the same visual world can tighten into a calm, seeded workspace. Editorial Fraunces remains outside and at key explanatory handoffs; dense product labels, tables, statuses, and tabular numbers use Instrument Sans inside a bounded paper surface. This is product proof within the marketing system, not a separate dashboard identity.",
     "keyCharacteristics": [
       "Warm off-white, green, and amber palette",
       "Fraunces display type paired with Instrument Sans body type",
       "Quiet border rules and sparse, purposeful elevation",
       "Direct actions with explicit outcomes and accessible touch targets",
-      "Founder-direct contact language without an anonymous form"
+      "Founder-direct contact language without an anonymous form",
+      "Calm, bounded product-proof workspaces with explicit data provenance"
     ],
     "rules": [
       { "name": "The Quiet Accent Rule", "body": "Green identifies actions; amber provides small operational emphasis. Neither becomes a broad decorative wash.", "section": "colors" },
       { "name": "The Founder-Direct Rule", "body": "Contact copy speaks as Rayan and names the outcome—email, call, book a demo, or contact support—without invented service guarantees.", "section": "typography" },
-      { "name": "The Flat-by-Default Rule", "body": "Use elevation for physical ticket-like artifacts, not routine contact information or navigation.", "section": "elevation" }
+      { "name": "The Flat-by-Default Rule", "body": "Use elevation for physical ticket-like artifacts and bounded product proof, not routine contact information, navigation, or every internal panel.", "section": "elevation" }
     ],
     "dos": [
       "Do preserve the existing off-white, green, amber, Fraunces, Instrument Sans, and quiet-rule identity when extending contact surfaces.",
       "Do keep public email, phone, and demo actions explicit and outcome-labeled.",
       "Do route existing users to authenticated in-app Contact support.",
       "Do maintain at least a 44px target for the homepage contact action and shared navigation actions.",
-      "Do retain the warning against sharing sensitive information."
+      "Do retain the warning against sharing sensitive information.",
+      "Do label seeded or constructed product records and amounts as illustrative beside the product proof where the values remain visible.",
+      "Do use tabular numerals and quiet rules when presenting operational amounts for comparison."
     ],
     "donts": [
       "Don't add an anonymous public contact form without a new product decision.",
       "Don't invent response-time, availability, or service-level claims.",
-      "Don't turn contact guidance into a floating SaaS card or introduce a new visual identity for the route."
+      "Don't turn contact guidance into a floating SaaS card or introduce a new visual identity for the route.",
+      "Don't present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence."
     ]
   }
 }
