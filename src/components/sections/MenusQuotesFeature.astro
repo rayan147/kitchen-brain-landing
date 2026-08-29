@@ -1,0 +1,558 @@
+---
+import { featureGroups } from '../../lib/features';
+import { cta, demoCta } from '../../lib/site';
+
+const menuGroup = featureGroups.find((group) => group.id === 'menus');
+const orderGroup = featureGroups.find((group) => group.id === 'orders');
+if (!menuGroup || !orderGroup) throw new Error('Missing Menus & Quotes public feature groups.');
+
+// Considered Strategy; not used because this page selects a fixed, editorially
+// relevant subset of static feature data rather than interchangeable behavior.
+const quoteLeads = new Set([
+	'Costed before commitment.',
+	'Pinned money bar.',
+	'Confirm freezes everything.',
+	'Honest reopen.',
+	'Clean duplication.',
+	'Quoted vs today.',
+	'Aged plans flagged.',
+	'Frozen prep notes.'
+]);
+const quoteItems = orderGroup.items.filter((item) => quoteLeads.has(item.lead));
+if (quoteItems.length !== quoteLeads.size) throw new Error('Menus & Quotes capability selection drifted.');
+
+const capabilityGroups = [
+	{ id: 'menus', label: 'Menu management', title: menuGroup.title, items: menuGroup.items },
+	{ id: 'quotes', label: 'Quote and confirmation', title: 'Price the draft, then protect the commitment.', items: quoteItems }
+] as const;
+const capabilityCount = capabilityGroups.reduce((total, group) => total + group.items.length, 0);
+
+const quoteSteps = [
+	{ label: 'Menu', note: 'Choose what each guest receives.' },
+	{ label: 'Date', note: 'Put the job on the calendar.' },
+	{ label: 'Guests', note: 'Set the count the kitchen must serve.' },
+	{ label: 'Price', note: 'Test the number against food cost.' },
+	{ label: 'Confirm', note: 'Freeze plan, math, and money.' }
+] as const;
+
+const faqItems = [
+	{
+		question: 'What is menu management software?',
+		answer:
+			'Menu management software keeps dishes, portions per guest, the default selling price, and reusable equipment counts together. In CostCook, the menu can then become the starting point for a costed event.'
+	},
+	{
+		question: 'How does CostCook calculate a catering quote?',
+		answer:
+			'A draft combines a menu, date, guest count, and price. CostCook computes the food cost per guest and food-cost percentage, then shows the price that would meet the configured target before you confirm.'
+	},
+	{
+		question: 'Can an event use a different price from the menu default?',
+		answer:
+			'Yes. The menu carries the default per-guest price, and an individual order can override it without changing the reusable menu.'
+	},
+	{
+		question: 'What happens when I confirm a quote?',
+		answer:
+			'Confirmation snapshots the event plan, costing math, and money in one transaction. The quote you gave remains attached to the plan the kitchen will run.'
+	},
+	{
+		question: 'Will later ingredient prices change the quote I already gave?',
+		answer:
+			'No. A confirmed event keeps its frozen prices. CostCook can compare the original quote with current prices later without silently rewriting the commitment.'
+	},
+	{
+		question: 'Can I reopen a confirmed event?',
+		answer:
+			'You can reopen while preserving the frozen prices, and the screen says that clearly. Once purchasing has started, reopening is refused so completed work is not invalidated.'
+	}
+] as const;
+---
+
+<!-- story: docs/stories/menus-and-quotes-redesign.story.md -->
+<article class="menus-quotes">
+	<section class="hero" aria-labelledby="menus-quotes-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="breadcrumb">
+					<a href="/features">Every feature</a>
+					<span aria-hidden="true">/</span>
+					<span>Menus and quotes</span>
+				</nav>
+				<h1 id="menus-quotes-heading">Build the menu once. Quote the job you can actually run.</h1>
+				<p class="hero-lede">
+					Keep dishes, portions, guest count, equipment, food cost, and the price you say out
+					loud on one path from draft to confirmed event.
+				</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
+						{cta.label}
+					</a>
+					<a
+						href={demoCta.href}
+						target={demoCta.target}
+						rel={demoCta.rel}
+						aria-label={demoCta.ariaLabel}
+						class="btn-outline"
+					>
+						Book 15 minutes
+					</a>
+				</div>
+			</div>
+
+			<figure class="commitment-flow anim-enter" style="--enter-delay: 120ms">
+				<figcaption>Illustrative menu-to-quote record</figcaption>
+				<div class="record-pair">
+					<div class="menu-ledger">
+						<div class="record-head"><span>Menu</span><span>180 guests</span></div>
+						<h2>Summer wedding dinner</h2>
+						<div class="ledger-head"><span>Dish</span><span>Per guest</span></div>
+						<ul role="list" class="dish-lines">
+							<li><span>Herb roast chicken</span><strong>1 portion</strong></li>
+							<li><span>Lemon herb potatoes</span><strong>180 g</strong></li>
+							<li><span>Seasonal green salad</span><strong>120 g</strong></li>
+							<li><span>Lemon tart</span><strong>1 slice</strong></li>
+						</ul>
+						<dl class="ledger-summary">
+							<div><dt>Default price</dt><dd>$68.00 / guest</dd></div>
+							<div><dt>Equipment</dt><dd>3 chafers</dd></div>
+						</dl>
+					</div>
+
+					<div class="record-join" aria-hidden="true"><span></span></div>
+
+					<div class="quote-timeline">
+						<div class="record-head"><span>Quote path</span><span>Same menu</span></div>
+						<ol>
+							<li class="done"><span></span><div><small>Draft</small><strong>Menu + 180 guests</strong></div></li>
+							<li class="current"><span></span><div><small>Review the number</small><strong>$26.93 food / guest</strong></div></li>
+							<li><span></span><div><small>Confirm</small><strong>$68.00 quoted</strong></div></li>
+						</ol>
+						<div class="quote-decision">
+							<small>Target price</small>
+							<strong>$89.78 / guest</strong>
+							<span>39.6% food cost at the quoted price</span>
+						</div>
+					</div>
+				</div>
+				<p class="evidence-note">Illustrative record using values from the CostCook product tour.</p>
+			</figure>
+		</div>
+	</section>
+
+	<section class="handoff-problem" aria-labelledby="handoff-heading">
+		<div class="container-page problem-grid">
+			<div data-reveal>
+				<h2 id="handoff-heading">Three files. One customer waiting.</h2>
+				<p>
+					The dishes are in a menu document. The revised count is in an email. The number you
+					plan to send is in a spreadsheet. The copying only looks harmless while all three agree.
+				</p>
+			</div>
+			<figure class="handoff" data-reveal>
+				<div><span>Menu document</span><strong>What they chose</strong></div>
+				<svg width="36" height="18" viewBox="0 0 36 18" aria-hidden="true"><path d="M1 9h28M24 3l6 6-6 6" /></svg>
+				<div><span>Guest-count email</span><strong>What changed</strong></div>
+				<svg width="36" height="18" viewBox="0 0 36 18" aria-hidden="true"><path d="M1 9h28M24 3l6 6-6 6" /></svg>
+				<div><span>Quote sheet</span><strong>What you say</strong></div>
+				<figcaption>One event record should carry what the customer chose and what the kitchen has to run.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<nav class="product-nav container-page" aria-label="On this page">
+		<a href="#menu-management">
+			<span>Menu management</span>
+			<small>Build what each guest gets, priced and ready to reuse.</small>
+			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
+		</a>
+		<a href="#catering-quotes">
+			<span>Catering quotes</span>
+			<small>Test the number, confirm it, and keep the original commitment.</small>
+			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
+		</a>
+	</nav>
+
+	<section id="menu-management" class="product-section menu-management" aria-labelledby="menu-management-heading">
+		<div class="container-page">
+			<div class="section-intro" data-reveal>
+				<h2 id="menu-management-heading">Make the menu runnable before you make it presentable.</h2>
+				<p>
+					Keep dishes, portions per guest, the default price, and the equipment the menu always
+					needs in one workspace.
+				</p>
+			</div>
+
+			<figure class="menu-workspace" data-reveal>
+				<div class="workspace-main">
+					<div class="workspace-bar"><span>Menu workspace</span><span>Illustrative</span></div>
+					<div class="workspace-title">
+						<div><small>Menu</small><strong>Summer wedding dinner</strong></div>
+						<div><small>Default</small><strong>$68 / guest</strong></div>
+					</div>
+					<div class="menu-table" role="table" aria-label="Illustrative menu workspace">
+						<div class="menu-row menu-row-head" role="row">
+							<span role="columnheader">Dish</span><span role="columnheader">Per guest</span><span role="columnheader">Cost</span>
+						</div>
+						<div class="menu-row" role="row"><span role="cell">Herb roast chicken</span><strong role="cell">1 portion</strong><span role="cell">$6.84</span></div>
+						<div class="menu-row active" role="row"><span role="cell">Lemon herb potatoes</span><strong role="cell">180 g</strong><span role="cell">$2.31</span></div>
+						<div class="menu-row" role="row"><span role="cell">Seasonal green salad</span><strong role="cell">120 g</strong><span role="cell">$1.28</span></div>
+						<div class="menu-row" role="row"><span role="cell">Lemon tart</span><strong role="cell">1 slice</strong><span role="cell">$1.57</span></div>
+					</div>
+				</div>
+				<div class="workspace-side">
+					<div class="price-check">
+						<span>Menu pricing</span>
+						<dl>
+							<div><dt>Food cost / guest</dt><dd>$26.93</dd></div>
+							<div><dt>Selling price</dt><dd>$68.00</dd></div>
+							<div><dt>Target price</dt><dd>$89.78</dd></div>
+						</dl>
+					</div>
+					<div class="equipment-sheet">
+						<span>Equipment template</span>
+						<ul role="list"><li><span>Chafers</span><strong>3</strong></li><li><span>Sheet trays</span><strong>6</strong></li><li><span>Service utensils</span><strong>8</strong></li></ul>
+						<small>Counts stay fixed when guest count changes.</small>
+					</div>
+				</div>
+				<figcaption>Illustrative walkthrough of the shipped menu workspace, self-pricing, and equipment-template behavior.</figcaption>
+			</figure>
+
+			<div class="feature-scenes" data-reveal>
+				<article><h3>Build what each guest receives.</h3><p>Dishes and portions per guest stay together, so the menu already carries the quantities an event will need.</p></article>
+				<article><h3>Price the menu from its food.</h3><p>Read cost per guest against the selling price, including the price that would meet your configured target.</p></article>
+				<article><h3>Keep the reusable plan safe.</h3><p>Attach fixed equipment counts, override details on one event, and check where a menu is used before deleting it.</p></article>
+			</div>
+		</div>
+	</section>
+
+	<section id="catering-quotes" class="product-section catering-quotes" aria-labelledby="catering-quotes-heading">
+		<div class="container-page">
+			<div class="section-intro" data-reveal>
+				<h2 id="catering-quotes-heading">Know what the quote is carrying before you confirm it.</h2>
+				<p>
+					A new event starts with a menu, date, guest count, and price. See the food cost while
+					the job is still a draft, then freeze the plan, math, and money together.
+				</p>
+			</div>
+
+			<figure class="quote-path" data-reveal>
+				<ol role="list">
+					{quoteSteps.map((step, index) => (
+						<li><span>{index + 1}</span><strong>{step.label}</strong><p>{step.note}</p></li>
+					))}
+				</ol>
+				<figcaption>Review happens before confirmation, while the number can still be changed deliberately.</figcaption>
+			</figure>
+
+			<div class="pricing-proof">
+				<div class="proof-copy" data-reveal>
+					<h3>Cost before commitment.</h3>
+					<p>
+						For this 180-guest tour event, $68 per guest puts food cost at 39.6%. The same panel
+						names $89.78 as the price that would meet the 30% target.
+					</p>
+					<ul role="list">
+						<li>The order price can override the menu default.</li>
+						<li>Guest-count changes update the draft estimate.</li>
+						<li>Confirmation freezes the agreed plan and money.</li>
+					</ul>
+				</div>
+				<figure class="screenshot-frame" data-reveal>
+					<picture>
+						<source media="(max-width: 639px)" srcset="/proof/hero-pricing-mobile.png" />
+						<img
+							src="/proof/hero-pricing.png"
+							width="750"
+							height="274"
+							loading="lazy"
+							decoding="async"
+							alt="CostCook pricing panel showing $12,240 revenue, $4,847.96 theoretical food cost, $26.93 food cost per guest, 39.6% food cost, and guidance to charge at least $89.78 per guest to meet a 30% target."
+						/>
+					</picture>
+					<figcaption>Real CostCook product-tour frame at 0:29.</figcaption>
+				</figure>
+			</div>
+
+			<div class="confirmed-proof" data-reveal>
+				<figure>
+					<img
+						src="/demo-poster.jpg"
+						width="1600"
+						height="1000"
+						loading="lazy"
+						decoding="async"
+						alt="Confirmed CostCook event showing 180 guests at $68 per guest, quoted food cost of $26.93 per guest, current food cost of $27.13, and Shop, Prep, and Pack tabs below."
+					/>
+				</figure>
+				<div>
+					<h3>Compare without rewriting.</h3>
+					<p>
+						The confirmed quote stays frozen while today's cost remains visible beside it. The
+						original number does not disappear just because a supplier price moved later.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="connected-proof" aria-labelledby="connected-heading">
+		<div class="container-page connected-grid">
+			<div data-reveal>
+				<h2 id="connected-heading">The quote should know what the kitchen has to pack.</h2>
+				<p>
+					Confirmation is not the end of the record. The same frozen event becomes the source
+					for Shop, Prep, and Pack, so the kitchen runs the job that was priced.
+				</p>
+			</div>
+			<figure class="commitment-map" data-reveal>
+				<ol role="list">
+					<li><span>Build menu</span></li><li><span>Set guests</span></li><li><span>Review cost</span></li><li><span>Set price</span></li><li class="confirmed"><span>Confirm</span></li>
+				</ol>
+				<div class="branch-rule" aria-hidden="true"></div>
+				<ul role="list"><li>Shop</li><li>Prep</li><li>Pack</li></ul>
+				<figcaption>One confirmed event feeds three working views without rebuilding the menu or guest count.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="capabilities" aria-labelledby="capabilities-heading">
+		<div class="container-page">
+			<div class="capability-heading" data-reveal>
+				<div><h2 id="capabilities-heading">The complete Menus & Quotes list.</h2><p>Only the shipped capabilities directly involved in building, pricing, and confirming the job.</p></div>
+				<p class="count"><strong>{capabilityCount}</strong><span>relevant capabilities</span></p>
+			</div>
+			<div class="disclosures">
+				{capabilityGroups.map((group) => (
+					<details id={`features-${group.id}`} data-reveal>
+						<summary><span><strong>{group.label}</strong><small>{group.title}</small></span><span class="summary-count">{group.items.length}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary>
+						<ul role="list">{group.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="faq" aria-labelledby="faq-heading">
+		<div class="container-page faq-grid">
+			<div class="faq-intro" data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions to settle before the number leaves your kitchen.</p></div>
+			<div class="faq-list">
+				{faqItems.map((item) => (
+					<details data-reveal><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid" data-reveal>
+			<div><h2 id="closing-heading">Ready for the customer. Ready for the kitchen.</h2><p>Bring one real menu, set the guest count, and follow the number into the plan the kitchen will run.</p></div>
+			<div class="closing-actions">
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+			</div>
+		</div>
+		<nav class="container-page onward" aria-label="Related feature guides"><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
+	</section>
+</article>
+
+<style>
+	.menus-quotes { --rule: color-mix(in srgb, var(--color-ink) 18%, transparent); overflow: clip; }
+	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.25rem); }
+	.hero-copy { min-width: 0; }
+	.breadcrumb { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.8rem; font-size: 0.875rem; color: var(--color-ink-soft); }
+	.breadcrumb a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
+	.hero h1 { max-width: 13ch; font-family: var(--font-display); font-size: clamp(2.75rem, 5vw, 5.6rem); font-weight: 600; line-height: 0.99; letter-spacing: -0.025em; text-wrap: balance; }
+	.hero-lede { max-width: 37ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
+	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
+	.btn-outline:hover { background: var(--color-green); color: white; }
+	.commitment-flow > figcaption { margin-bottom: 0.8rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.record-pair { display: grid; gap: 1rem; align-items: center; }
+	.menu-ledger, .quote-timeline { min-width: 0; padding: clamp(1.1rem, 2.5vw, 1.7rem); background: var(--color-paper); box-shadow: 0 10px 18px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.menu-ledger { border-top: 3px solid var(--color-green); }
+	.quote-timeline { border-top: 3px solid var(--color-amber-deep); }
+	.record-head { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.menu-ledger h2 { margin-top: 1.4rem; font-family: var(--font-display); font-size: 1.55rem; }
+	.ledger-head, .dish-lines li { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; }
+	.ledger-head { margin-top: 1.4rem; padding-block: 0.55rem; border-block: 1px solid var(--rule); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.dish-lines li { padding-block: 0.62rem; border-bottom: 1px solid var(--rule); font-size: 0.82rem; }
+	.dish-lines strong, .ledger-summary dd, .quote-decision strong { font-variant-numeric: tabular-nums; }
+	.ledger-summary { display: grid; gap: 0.55rem; margin-top: 1.3rem; }
+	.ledger-summary div { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.78rem; }
+	.ledger-summary dd { font-weight: 700; }
+	.record-join { display: none; }
+	.quote-timeline ol { position: relative; display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+	.quote-timeline ol::before { position: absolute; top: 0.4rem; bottom: 0.4rem; left: 0.37rem; width: 1px; background: var(--color-ticket-rule); content: ''; }
+	.quote-timeline li { position: relative; display: grid; grid-template-columns: 0.8rem 1fr; gap: 0.8rem; align-items: start; }
+	.quote-timeline li > span { position: relative; z-index: 1; width: 0.8rem; height: 0.8rem; margin-top: 0.2rem; border: 2px solid var(--color-amber-deep); border-radius: 50%; background: var(--color-paper); }
+	.quote-timeline li.done > span { background: var(--color-green); border-color: var(--color-green); }
+	.quote-timeline li.current > span { box-shadow: 0 0 0 3px var(--color-paper), 0 0 0 4px var(--color-amber-deep); background: var(--color-amber-deep); }
+	.quote-timeline small { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.quote-timeline strong { display: block; margin-top: 0.18rem; font-size: 0.8rem; }
+	.quote-decision { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+	.quote-decision small, .quote-decision span { display: block; color: var(--color-ink-soft); }
+	.quote-decision small { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+	.quote-decision strong { display: block; margin-top: 0.25rem; font-family: var(--font-display); font-size: 1.45rem; color: var(--color-amber-deep); }
+	.quote-decision span { margin-top: 0.35rem; font-size: 0.72rem; line-height: 1.45; }
+	.evidence-note { margin-top: 0.85rem; font-size: 0.75rem; color: var(--color-ink-soft); }
+
+	.handoff-problem { padding-block: var(--spacing-section-tight); background: var(--color-ink); color: var(--color-paper); }
+	.problem-grid { display: grid; gap: 3rem; align-items: center; }
+	.problem-grid h2 { max-width: 14ch; }
+	.problem-grid > div p { max-width: 46ch; margin-top: 1rem; color: color-mix(in srgb, var(--color-paper) 72%, transparent); }
+	.handoff { display: grid; gap: 1rem; align-items: center; }
+	.handoff > div { padding-block: 1rem; border-block: 1px solid color-mix(in srgb, var(--color-paper) 24%, transparent); }
+	.handoff span { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #dba45d; }
+	.handoff strong { display: block; margin-top: 0.35rem; font-family: var(--font-display); font-size: 1.1rem; }
+	.handoff svg { justify-self: center; fill: none; stroke: #dba45d; stroke-width: 1.5; }
+	.handoff figcaption { grid-column: 1 / -1; color: color-mix(in srgb, var(--color-paper) 80%, transparent); font-size: 0.85rem; }
+
+	.product-nav { display: grid; padding-inline: var(--spacing-page); }
+	.product-nav a { display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 1rem; min-height: 88px; align-content: center; padding: 1rem clamp(0rem, 2vw, 1.5rem); color: var(--color-ink); }
+	.product-nav a + a { border-top: 1px solid var(--color-ticket-rule); }
+	.product-nav span { font-weight: 700; }
+	.product-nav small { grid-column: 1; color: var(--color-ink-soft); }
+	.product-nav svg { grid-column: 2; grid-row: 1 / 3; align-self: center; fill: none; stroke: var(--color-green-deep); stroke-width: 1.5; }
+
+	.product-section { scroll-margin-top: 1rem; padding-block: var(--spacing-section); }
+	.menu-management { border-top: 1px solid var(--color-hairline); background: var(--color-softgreen); }
+	.catering-quotes { background: var(--color-cream); }
+	.section-intro { display: grid; gap: 1.25rem; align-items: end; }
+	.section-intro h2 { max-width: 20ch; }
+	.section-intro > p { max-width: 57ch; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
+	.menu-workspace { display: grid; gap: 1.25rem; margin-top: clamp(3rem, 6vw, 5rem); }
+	.workspace-main, .price-check, .equipment-sheet { background: var(--color-paper); box-shadow: 0 10px 18px color-mix(in srgb, var(--color-ink) 9%, transparent); }
+	.workspace-main { min-width: 0; padding: clamp(1rem, 3vw, 1.75rem); }
+	.workspace-bar { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--color-hairline); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.workspace-title { display: grid; grid-template-columns: 1fr auto; gap: 2rem; padding-block: 1.5rem; }
+	.workspace-title small { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.workspace-title strong { display: block; margin-top: 0.25rem; font-family: var(--font-display); font-size: 1.35rem; }
+	.menu-row { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(6rem, 0.35fr) minmax(4rem, 0.25fr); gap: 1rem; align-items: center; padding: 0.8rem; border-top: 1px solid var(--color-hairline); font-size: 0.84rem; }
+	.menu-row-head { border-top: 0; background: var(--color-offwhite); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.menu-row.active { background: var(--color-softgreen); }
+	.menu-row strong, .menu-row > :last-child { font-variant-numeric: tabular-nums; }
+	.workspace-side { display: grid; gap: 1.25rem; }
+	.price-check, .equipment-sheet { padding: 1.35rem; }
+	.price-check > span, .equipment-sheet > span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-green-deep); }
+	.price-check dl { margin-top: 1.2rem; }
+	.price-check dl div, .equipment-sheet li { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.55rem; border-top: 1px solid var(--color-hairline); font-size: 0.82rem; }
+	.price-check dd, .equipment-sheet strong { font-weight: 700; font-variant-numeric: tabular-nums; }
+	.equipment-sheet { border-top: 3px solid var(--color-amber-deep); }
+	.equipment-sheet ul { margin-top: 1.2rem; }
+	.equipment-sheet small { display: block; margin-top: 1rem; color: var(--color-ink-soft); line-height: 1.45; }
+	.menu-workspace > figcaption, .screenshot-frame figcaption, .quote-path figcaption, .commitment-map figcaption { color: var(--color-ink-soft); font-size: 0.78rem; line-height: 1.5; }
+	.feature-scenes { display: grid; gap: 2rem; margin-top: 3rem; }
+	.feature-scenes article { padding-top: 1.25rem; border-top: 1px solid var(--color-hairline-strong); }
+	.feature-scenes h3 { font-size: 1.05rem; }
+	.feature-scenes p { margin-top: 0.65rem; color: var(--color-ink-soft); line-height: 1.6; }
+
+	.quote-path { margin-top: clamp(3rem, 6vw, 5rem); padding: clamp(1.25rem, 3vw, 2rem); background: var(--color-ink); color: var(--color-paper); }
+	.quote-path ol { display: grid; gap: 1.5rem; }
+	.quote-path li { position: relative; padding-top: 1rem; border-top: 1px solid color-mix(in srgb, var(--color-paper) 24%, transparent); }
+	.quote-path li > span { display: inline-grid; width: 1.7rem; height: 1.7rem; place-items: center; border: 1px solid #dba45d; border-radius: 50%; color: #f2bd75; font-size: 0.72rem; }
+	.quote-path strong { display: block; margin-top: 0.85rem; font-family: var(--font-display); font-size: 1.15rem; }
+	.quote-path p { margin-top: 0.4rem; font-size: 0.75rem; line-height: 1.45; color: color-mix(in srgb, var(--color-paper) 68%, transparent); }
+	.quote-path figcaption { margin-top: 1.5rem; color: color-mix(in srgb, var(--color-paper) 72%, transparent); }
+	.pricing-proof { display: grid; gap: 2.5rem; align-items: center; margin-top: clamp(3rem, 6vw, 5rem); }
+	.proof-copy h3, .confirmed-proof h3 { font-family: var(--font-display); font-size: 1.55rem; }
+	.proof-copy > p, .confirmed-proof > div > p { margin-top: 1rem; color: var(--color-ink-soft); line-height: 1.65; }
+	.proof-copy ul { margin-top: 1.4rem; }
+	.proof-copy li { padding-block: 0.6rem; border-top: 1px solid var(--color-ticket-rule); color: var(--color-ink-soft); font-size: 0.85rem; }
+	.screenshot-frame img, .confirmed-proof img { display: block; width: 100%; height: auto; }
+	.screenshot-frame img { box-shadow: 0 12px 22px color-mix(in srgb, var(--color-ink) 11%, transparent); }
+	.screenshot-frame figcaption { margin-top: 0.7rem; }
+	.confirmed-proof { display: grid; gap: 2.5rem; align-items: center; margin-top: clamp(3.5rem, 7vw, 6rem); padding-top: clamp(3rem, 5vw, 4rem); border-top: 1px solid var(--color-ticket-rule); }
+	.confirmed-proof figure { overflow: hidden; }
+
+	.connected-proof { padding-block: var(--spacing-section-tight); background: var(--color-paper); }
+	.connected-grid { display: grid; gap: 3rem; align-items: center; }
+	.connected-grid h2 { max-width: 15ch; }
+	.connected-grid > div p { max-width: 47ch; margin-top: 1rem; color: var(--color-ink-soft); line-height: 1.65; }
+	.commitment-map ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--color-ticket-rule); background: var(--color-ticket-rule); }
+	.commitment-map ol li { position: relative; padding: 1rem 0.55rem; background: var(--color-cream); font-size: 0.72rem; font-weight: 700; text-align: center; }
+	.commitment-map ol li.confirmed { background: var(--color-softgreen); color: var(--color-green-deep); }
+	.branch-rule { width: 1px; height: 2rem; margin-inline: auto; background: var(--color-amber-deep); }
+	.commitment-map ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--color-ticket-rule); background: var(--color-ticket-rule); }
+	.commitment-map ul li { padding: 1rem; background: var(--color-cream); font-family: var(--font-display); font-weight: 600; text-align: center; }
+	.commitment-map figcaption { margin-top: 0.75rem; }
+
+	.capabilities { padding-block: var(--spacing-section); border-top: 1px solid var(--color-hairline); background: var(--color-offwhite); }
+	.capability-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; align-items: end; }
+	.capability-heading > div > p { margin-top: 0.8rem; color: var(--color-ink-soft); }
+	.count { display: flex; align-items: baseline; gap: 0.65rem; color: var(--color-ink-soft); }
+	.count strong { font-family: var(--font-display); font-size: 2.4rem; font-variant-numeric: tabular-nums; color: var(--color-amber-deep); }
+	.count span, .summary-count { font-size: 0.78rem; }
+	.disclosures, .faq-list { margin-top: 3rem; border-top: 1px solid var(--color-ticket-rule); }
+	.disclosures details, .faq-list details { border-bottom: 1px solid var(--color-ticket-rule); }
+	.disclosures summary, .faq-list summary { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; min-height: 72px; padding-block: 1rem; cursor: pointer; list-style: none; }
+	.disclosures summary::-webkit-details-marker, .faq-list summary::-webkit-details-marker { display: none; }
+	.disclosures summary > span:first-child { display: grid; gap: 0.2rem; }
+	.disclosures summary strong, .faq-list summary span { font-size: 1.05rem; font-weight: 650; }
+	.disclosures summary small { font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-soft); }
+	.summary-count { color: var(--color-amber-deep); font-variant-numeric: tabular-nums; }
+	.disclosures summary svg, .faq-list summary svg { fill: none; stroke: var(--color-green-deep); stroke-width: 1.5; transition: transform 180ms ease-out; }
+	.disclosures details[open] summary svg, .faq-list details[open] summary svg { transform: rotate(180deg); }
+	.disclosures ul { padding-bottom: 1.5rem; columns: 1; }
+	.disclosures li { break-inside: avoid; padding-block: 0.65rem; border-top: 1px solid var(--color-hairline); font-size: 0.86rem; line-height: 1.55; }
+	.disclosures li span { color: var(--color-ink-soft); }
+
+	.faq { padding-block: var(--spacing-section-tight); border-top: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.faq-grid { display: grid; gap: clamp(2.5rem, 6vw, 6rem); }
+	.faq-intro p { max-width: 42ch; margin-top: 1rem; color: var(--color-ink-soft); }
+	.faq-list { margin-top: 0; }
+	.faq-list summary { grid-template-columns: minmax(0, 1fr) auto; }
+	.faq-list details > p { max-width: 66ch; padding: 0 3.25rem 1.5rem 0; line-height: 1.65; color: var(--color-ink-soft); }
+
+	.closing { border-top: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
+	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.closing p { max-width: 55ch; margin-top: 1rem; color: var(--color-ink-soft); }
+	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--color-hairline-strong); }
+	.onward a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
+
+	@media (min-width: 640px) {
+		.product-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.product-nav a + a { border-top: 0; border-left: 1px solid var(--color-ticket-rule); }
+		.feature-scenes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+		.quote-path ol { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+		.disclosures ul { columns: 2; column-gap: 3rem; }
+	}
+
+	@media (min-width: 768px) {
+		.hero-grid { grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr); }
+		.problem-grid, .connected-grid { grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr); }
+		.handoff { grid-template-columns: 1fr auto 1fr auto 1fr; }
+		.section-intro { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
+		.menu-workspace { grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr); }
+		.menu-workspace > figcaption { grid-column: 1 / -1; }
+		.pricing-proof { grid-template-columns: minmax(15rem, 0.6fr) minmax(0, 1.4fr); }
+		.confirmed-proof { grid-template-columns: minmax(0, 1.4fr) minmax(15rem, 0.6fr); }
+		.faq-grid { grid-template-columns: minmax(15rem, 0.65fr) minmax(0, 1.35fr); align-items: start; }
+		.closing-grid { grid-template-columns: 1fr auto; }
+	}
+
+	@media (min-width: 1120px) {
+		.record-pair { grid-template-columns: minmax(0, 1.45fr) 2.5rem minmax(13.5rem, 0.72fr); gap: 0; }
+		.record-join { display: block; position: relative; height: 2px; background: var(--color-amber-deep); }
+		.record-join::before, .record-join::after { position: absolute; top: 50%; width: 0.65rem; height: 0.65rem; border: 2px solid var(--color-amber-deep); border-radius: 50%; background: var(--color-cream); content: ''; transform: translateY(-50%); }
+		.record-join::before { left: -0.3rem; } .record-join::after { right: -0.3rem; }
+	}
+
+	@media (max-width: 639px) {
+		.hero-actions > a, .closing-actions > a { width: 100%; }
+		.handoff { grid-template-columns: 1fr; }
+		.handoff svg { transform: rotate(90deg); }
+		.workspace-title { grid-template-columns: 1fr; gap: 1rem; }
+		.menu-row { grid-template-columns: minmax(0, 1fr) auto; gap: 0.3rem 1rem; }
+		.menu-row-head { display: none; }
+		.menu-row > :last-child { grid-column: 1 / -1; color: var(--color-ink-soft); font-size: 0.72rem; }
+		.commitment-map ol { grid-template-columns: 1fr; }
+		.capability-heading { align-items: flex-start; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.btn-outline, .product-nav a, .disclosures summary svg, .faq-list summary svg { transition: none; }
+	}
+</style>

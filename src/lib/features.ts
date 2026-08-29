@@ -544,9 +544,18 @@ const shippedFeatureGroupsById = new Map(
 	availableFeatureGroups.map((group) => [group.id, group] as const)
 );
 
+// Considered Strategy; not used because two fixed editorial destinations are
+// static routing data, not interchangeable navigation algorithms.
+const dedicatedFeatureRoutes = new Map([
+	['math', '/features/recipes-and-costing'],
+	['menus', '/features/menus-and-quotes']
+] as const);
+
 export const featureMenuHref = (featureId: string) => {
 	const group = shippedFeatureGroupsById.get(featureId);
 	if (!group) throw new Error(`Feature menu points to missing or unshipped group: ${featureId}`);
+	const dedicatedRoute = dedicatedFeatureRoutes.get(featureId as 'math' | 'menus');
+	if (dedicatedRoute) return dedicatedRoute;
 	return `/features/${SECTION_META[group.section].slug}#features-${featureId}`;
 };
 

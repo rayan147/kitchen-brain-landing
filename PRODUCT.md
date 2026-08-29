@@ -26,6 +26,8 @@ Users work across prep tables, offices, walk-ins, receiving areas, and event sit
 
 - Recipe management includes a one-screen builder, drafts, duplication, dishes and sub-recipes, scaling previews, exports, print sheets, and guarded deletion where supported by the shipped feature register.
 - Recipe costing includes unit conversion, yields, sub-recipe costing, missing-price handling, line reconciliation, food-cost percentages, menu pricing, and inspectable arithmetic where supported by the shipped feature register.
+- Menu management includes menu records, dish portions, a default per-guest price, equipment templates, duplication, and guarded changes where supported by the shipped feature register.
+- Catering quotes connect a menu, event date, guest count, food cost, and per-guest price before confirmation; confirmed events preserve the quoted commitment while later cost movement remains visible where supported by the shipped feature register.
 - Public marketing claims must stay within the shipped feature register and claim ledger. Work marked in development must not read as available.
 - Public amounts used for demonstration must be real product data or explicitly labeled illustrative.
 - The marketing site is an Astro application and should remain useful without client-side JavaScript.
@@ -39,6 +41,7 @@ The product name is CostCook. Its established voice is founder-direct, calm, com
 - `src/lib/features.ts` is the shipped public feature inventory.
 - `src/lib/site.ts` is the source of public CTA labels, destinations, pricing, and owner-supplied contact values.
 - `public/demo-poster.jpg` shows food cost per guest, target-price guidance, and quoted-versus-current context.
+- `public/proof/hero-pricing.png` and `public/proof/hero-pricing-mobile.png` show event pricing facts and the confirmed price path at desktop and mobile sizes.
 - `public/proof/yield-lines.png` and `public/proof/yield-lines-mobile.png` show ingredient quantities, usable yield, purchase quantity, prep state, and line cost.
 - `public/demo.mp4` and `public/demo.webm` provide a working product demonstration.
 - No customer testimonials, ROI figures, usage counts, or competitor claims are approved for invention.

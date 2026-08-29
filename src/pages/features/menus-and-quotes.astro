@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import MenusQuotesFeature from '../../components/sections/MenusQuotesFeature.astro';
+
+// Considered Strategy; not used because this route is one deliberate editorial
+// composition selected at build time, not a runtime-swappable layout family.
+const directionContract = [
+	'THESIS: The menu the customer chooses is the menu the kitchen can cost and run.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber commitment signals, square records, green actions.',
+	'STORY: The caterer sees the copying risk, chooses menu management or catering quotes, tests the number, confirms one plan, then starts or books a demo.',
+	'FIRST VIEWPORT: Editorial statement at left; a broad menu ledger becomes a narrow draft-to-confirmed quote timeline at right.',
+	'FORM: Comp-led asymmetrical ledger-to-timeline composition; seed key menus-quotes-one-commitment.',
+	'FINISH: The customer has the number and the kitchen has the same plan; verify the route, evidence, disclosures, and mobile reflow.'
+].join(' ');
+---
+
+<Base
+	title="Menu management and catering quote software | CostCook"
+	description="Build a costed catering menu, test the per-guest price, and freeze the plan and quote together when the event is confirmed."
+	path="/features/menus-and-quotes"
+	directionContract={directionContract}
+>
+	<MenusQuotesFeature />
+</Base>
