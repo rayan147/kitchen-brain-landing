@@ -134,8 +134,8 @@ try {
 		};
 	})()`);
 	// Considered Strategy; not used because this pins one fixed navigation
-	// contract (ten curated entries plus the all-features action), not swappable behavior.
-	assert(desktop.linkCount === 11, `desktop: expected 11 links, received ${desktop.linkCount}`);
+	// contract (eleven curated entries plus tour and all-features actions), not swappable behavior.
+	assert(desktop.linkCount === 13, `desktop: expected 13 links, received ${desktop.linkCount}`);
 	assert(desktop.minTarget >= 44, `desktop: smallest link target is ${desktop.minTarget}px`);
 	assert(desktop.left >= 0 && desktop.right <= desktop.innerWidth, 'desktop: panel leaves the viewport');
 	assert(desktop.scrollWidth === desktop.innerWidth, 'desktop: horizontal overflow');

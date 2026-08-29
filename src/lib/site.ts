@@ -131,5 +131,7 @@ export const featuresMenu = {
 	label: 'Features',
 	href: '/features',
 	overviewLabel: 'Explore every shipped feature',
+	tourLabel: 'Take the product tour',
+	tourHref: '/tour/main',
 	ariaLabel: 'Features, broken down by kitchen job'
 } as const;

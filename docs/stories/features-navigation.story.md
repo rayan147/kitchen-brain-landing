@@ -100,3 +100,7 @@
 - **Word count before → after:** 139 words across eight draft descriptions → 103 words.
 - **Claims removed:** No time-saved, revenue, customer, or automation claim added.
 - **Final Image:** Choose the kitchen job and land on the evidence for it.
+
+## Revision — guided product-tour entry (2026-08-29)
+
+The Features disclosure still offers the same ten job-led destinations. Its footer now gives the reader two distinct next actions: inspect those ten destinations as one seeded event in the guided product tour, or open the exhaustive shipped-feature index. This keeps the fast path visible without turning an eleventh capability into a feature-menu item.

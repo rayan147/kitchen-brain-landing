@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductTour from '../../components/sections/ProductTour.astro';
+import { tourSeedKey } from '../../lib/tour';
+
+const directionContract = [
+	'THESIS: Let a prospect inspect one connected event across every feature instead of reading another catalogue.',
+	'OWN-WORLD: CostCook Kitchen Ticket palette and typography framing a calm, credible seeded product workspace.',
+	'STORY: A 180-guest wedding travels from recipe and quote to buying, back-door receipt, month review, labels, and sourced Sage answer.',
+	'FIRST VIEWPORT: Editorial invitation and one physical dataset ticket establish the event before the product shell.',
+	`FORM: Seeded connected-event product workspace; seed key ${tourSeedKey}.`,
+	'INTERACTION: One active stop at a time, all eleven always reachable, keyboard-operable tabs, mobile select, and visible progress.',
+	'PROOF: Exact parity with the Features dropdown is validated in code and every amount is persistently labelled illustrative.'
+].join(' ');
+---
+
+<Base
+	title="Take the CostCook product tour"
+	description="Follow one fully seeded catering event through all eleven CostCook feature areas, from recipe costing and quotes to labels, receiving, inventory, month cost, and Sage."
+	path="/tour/main"
+	directionContract={directionContract}
+>
+	<ProductTour />
+</Base>
