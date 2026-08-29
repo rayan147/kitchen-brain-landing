@@ -8,7 +8,9 @@ import { featureSections } from '../../lib/features';
 // not derived from the headings, so a reworded heading cannot silently 404
 // every inbound link to a public URL.
 export function getStaticPaths() {
-	return featureSections.map((entry) => ({
+	// Considered Strategy; not used because one fixed editorial route supersedes
+	// the stable default at build time, with no runtime-swappable rendering.
+	return featureSections.filter((entry) => entry.slug !== 'recipes-and-costing').map((entry) => ({
 		params: { section: entry.slug },
 		props: { entry }
 	}));
