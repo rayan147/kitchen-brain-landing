@@ -52,6 +52,10 @@ const surfaceFiles = [
 	// had never been scanned. Adding it pushed StartHere off the end of this
 	// array, so startHereSource below now resolves by name instead of at(-1).
 	'src/pages/pricing.astro',
+	// 2026-08-29. Both carry public copy (a trial line, the hand-off labels) and
+	// the sticky bar carries a primary, so both go through the scan.
+	'src/components/StickyCta.astro',
+	'src/components/SectionHandoff.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -364,8 +368,42 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 46; claim += 1) {
+for (let claim = 1; claim <= 48; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
+}
+
+// G1: the hand-off lines. Every "NEXT · ..." on the page is looked up from
+// src/lib/stops.ts, so that list must be the composition order above with the
+// same ids, or an arrow points at the wrong neighbour. The sticky bar is a
+// third primary and must render cta.label like the other two.
+const stopsSource = await read('src/lib/stops.ts');
+const stopIds = [...stopsSource.matchAll(/\{ id: '([a-z]+)'/g)].map((m) => m[1]);
+const expectedStopIds = [
+	'problem',
+	'who',
+	'demo',
+	'outcomes',
+	'yield',
+	'intake',
+	'alternatives',
+	'trust',
+	'start',
+];
+if (stopIds.join(',') !== expectedStopIds.join(',')) {
+	failures.push(
+		`hand-offs: src/lib/stops.ts reads [${stopIds.join(', ')}] but the homepage renders ` +
+			`[${expectedStopIds.join(', ')}]. Reorder stops.ts with index.astro, never separately.`,
+	);
+}
+requireText(index, '<StickyCta />', 'phone sticky primary');
+const stickySource = surfaces[surfaceFiles.indexOf('src/components/StickyCta.astro')];
+if (!/class="btn-primary[^"]*"[\s\S]{0,80}\{cta\.label\}/.test(stickySource)) {
+	failures.push('sticky bar primary CTA no longer renders cta.label');
+}
+for (const id of expectedStopIds.slice(0, -1)) {
+	if (!publicCopy.includes(`<SectionHandoff from="${id}" />`)) {
+		failures.push(`hand-offs: section #${id} has no <SectionHandoff from="${id}" /> at its foot`);
+	}
 }
 
 if (/href:\s*['"]#book['"]/.test(siteSource)) {

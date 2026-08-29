@@ -12,31 +12,68 @@
  *   retype to buy it   -> send the buying without retyping it   (RC-22, RC-26, RC-27)
  *   margin after       -> bring the real price back
  *
- * NO IMAGE HERE, CONSIDERED AND DECLINED 2026-08-26. This was one of the two
- * candidates in BRIEF-visual-density-2026-08-26.md. There is no single screen
- * that asserts what this section asserts: the four cards span quoting, scaling,
- * buying and price return, four different surfaces, so any crop would argue a
- * quarter of the claim and would still need its own RC row to do that much. A
- * four-up strip is what the demo poster already failed at 390 once. If a crop
- * is ever wanted here it is one card's claim, captured off the guarded demo
- * seed, and it needs the ledger row before the pixels.
+ * IMAGES, SINCE 2026-08-29. The 2026-08-26 note declined a crop here because
+ * no single screen asserts what the section asserts and a four-up strip had
+ * already failed at 390. Both halves of that are honoured differently now:
+ * there is not one crop, there are FOUR, one per card, each arguing only that
+ * card's quarter, and the grid is 2x2 rather than a strip. Every crop is a
+ * frame of public/demo.mp4, the footage RC-33 already vouches for, cut at the
+ * timestamp printed under it, so a reader who wants the moving version knows
+ * where to scrub to. RC-48 records the frame rule: a homepage crop is a frame
+ * of the shipped footage or a capture from the same demo world, never a
+ * mockup, and its alt text reads off the pixels.
+ *
+ * The crops are shown at their captured size or smaller, never upscaled: the
+ * footage is 1x, and a 1x crop stretched to a card is blur with numbers in it.
+ *
+ * story: docs/stories/homepage-visual-guidance.story.md
  */
+import SectionHandoff from '../SectionHandoff.astro';
+
 const outcomes = [
 	{
 		title: 'Quote with the food cost in front of you',
-		body: 'Pick the menu, enter guests and price per head, and see the job against your food-cost target before you say yes.'
+		body: 'Pick the menu, enter guests and price per head, and see the job against your food-cost target before you say yes.',
+		proof: {
+			src: '/proof/outcome-quote.png',
+			width: 310,
+			height: 140,
+			at: '0:29',
+			alt: 'Food-cost target panel: 39.6 percent food cost, marked critical, 9.6 percentage points over target. Food only: packaging, rentals, staff and anything you cook over the guarantee are outside this number.'
+		}
 	},
 	{
 		title: 'Change the count once',
-		body: 'Recipes scale, shared ingredients roll together, whole packs recalculate, and Shop, Prep and Pack stay on one plan.'
+		body: 'Recipes scale, shared ingredients roll together, whole packs recalculate, and Shop, Prep and Pack stay on one plan.',
+		proof: {
+			src: '/proof/outcome-prep.png',
+			width: 620,
+			height: 150,
+			at: '1:00',
+			alt: 'Prep list for Braised Short Rib at 360 portions. Beef short rib, boneless: 75.6 kilograms.'
+		}
 	},
 	{
 		title: 'Send the buying without retyping it',
-		body: 'The shopping list groups by supplier, and receiving records what actually arrived: short, over, substituted, or missing.'
+		body: 'The shopping list groups by supplier, and receiving records what actually arrived: short, over, substituted, or missing.',
+		proof: {
+			src: '/proof/outcome-po.png',
+			width: 1200,
+			height: 400,
+			at: '1:36',
+			alt: 'Purchase order lines as the vendor receives them. Carrot, 3 by 25 pound bag, $47.31. Celery, 4 by case of 24, $135.68. Lemon, 6 by case of 40, $216.48. Orange, 2 by case of 48, $84.40. Yellow onion, 1 by 50 pound sack, $32.21. Subtotal $516.08.'
+		}
 	},
 	{
 		title: 'Bring the real price back to the next quote',
-		body: 'Record what you paid. Approved prices update future costing; the confirmed event stays frozen.'
+		body: 'Record what you paid. Approved prices update future costing; the confirmed event stays frozen.',
+		proof: {
+			src: '/proof/outcome-price.png',
+			width: 332,
+			height: 250,
+			at: '2:05',
+			alt: 'Live cost panel for baby spinach: pack price $29.82, pack contains 3 pounds, purchased cost $21.91 a kilogram, trim yield 100 percent, usable cost $21.91 a kilogram, highlighted, approximately $2.19 per 100 grams.'
+		}
 	}
 ];
 ---
@@ -58,26 +95,49 @@ const outcomes = [
 			</p>
 		</div>
 
-		<ol role="list" class="mt-12 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-4">
+		<ol role="list" class="mt-12 grid gap-x-10 gap-y-12 sm:grid-cols-2">
 			{
 				outcomes.map((outcome, index) => (
 					<li
-						class="border-t border-hairline-strong py-6"
+						class="border-t border-hairline-strong pt-6"
 						data-reveal
 						style={`--reveal-delay: ${index * 70}ms`}
 					>
-						<p class="font-mono text-sm font-semibold tabular-nums text-amber-deep">
-							{String(index + 1).padStart(2, '0')}
-						</p>
-						<h3 class="mt-3 text-h3 font-semibold">{outcome.title}</h3>
+						<div class="flex items-baseline justify-between gap-4">
+							<p class="font-mono text-sm font-semibold tabular-nums text-amber-deep">
+								{String(index + 1).padStart(2, '0')}
+							</p>
+							<p class="font-mono text-eyebrow tracking-wide text-ink-soft">
+								FROM THE TOUR · {outcome.proof.at}
+							</p>
+						</div>
+						{/* Fixed-height paper box, the crop centred inside at its own size.
+						    overflow-hidden is a guard, not a crop: every image is cut to fit
+						    the box at its intrinsic size, and max-w-full covers the one wide
+						    one (the purchase order) on narrow screens. */}
+						<div class="mt-4 flex h-48 items-center justify-center overflow-hidden border border-hairline bg-paper p-4 shadow-ticket sm:h-52">
+							<img
+								src={outcome.proof.src}
+								alt={outcome.proof.alt}
+								width={outcome.proof.width}
+								height={outcome.proof.height}
+								loading="lazy"
+								decoding="async"
+								style={`width: ${outcome.proof.width}px`}
+								class="h-auto max-w-full"
+							/>
+						</div>
+						<h3 class="mt-5 text-h3 font-semibold">{outcome.title}</h3>
 						<p class="mt-3 text-ink-soft">{outcome.body}</p>
 					</li>
 				))
 			}
 		</ol>
 
-		<p class="mt-8 text-sm text-ink-soft" data-reveal>
+		<p class="mt-10 text-sm text-ink-soft" data-reveal>
 			Need the implementation detail? <a href="/features" class="btn-quiet">See everything it does, area by area</a>.
 		</p>
+
+		<SectionHandoff from="outcomes" />
 	</div>
 </section>

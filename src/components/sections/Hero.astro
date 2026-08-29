@@ -67,6 +67,49 @@ import { cta, launchPlan } from '../../lib/site';
 
 	</div>
 
+	<!-- THE PRODUCT, ON THE FIRST SCREEN. Added 2026-08-29. Until now the first
+	     pixel of the app was 2,600px down at 1440 and 4,500px down on a phone.
+	     The B2B pages that convert put a real interface in the hero, and NN/g's
+	     fold guidance says the first screen has to prove there is something
+	     worth scrolling to. This is one straight-on crop of the pricing panel,
+	     cut from public/demo.mp4 at 0:29 (RC-48), so a reader who scrolls to the
+	     film sees the same order, and it sits low enough to straddle the fold at
+	     both widths, which is the scroll cue.
+
+	     NOT A PERSPECTIVE MOCKUP, NOT A DEVICE FRAME. It is paper: a ticket rule,
+	     a mono label, the panel. Below sm it is the Next step box alone, because
+	     the whole panel at 390px renders its small text at 6px.
+
+	     ALT TEXT IS A CLAIM. Both alts read off the crop word for word; if the
+	     crop moves, they move. story: docs/stories/homepage-visual-guidance.story.md -->
+	<figure class="anim-enter mx-auto mt-10 max-w-3xl" style="--enter-delay: 300ms">
+		<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+			ORDER · 180 GUESTS · $68 A HEAD
+		</p>
+		<div class="mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2">
+			<img
+				src="/proof/hero-pricing-mobile.png"
+				alt="The Next step box on an order's pricing panel: charge at least $89.78 per guest to meet the 30 percent target."
+				width={440}
+				height={160}
+				decoding="async"
+				class="mx-auto h-auto w-full max-w-[440px] sm:hidden"
+			/>
+			<img
+				src="/proof/hero-pricing.png"
+				alt="An order's pricing panel. Live totals: revenue $12,240.00, theoretical food cost $4,847.96, food cost per guest $26.93. Food-cost target: 39.6 percent food cost, marked critical, 9.6 percentage points over target. Next step, highlighted: charge at least $89.78 per guest to meet the 30 percent target."
+				width={750}
+				height={274}
+				decoding="async"
+				class="hidden h-auto w-full sm:block"
+			/>
+		</div>
+		<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
+			The pricing panel from the tour below. Food cost against the target, and the price
+			that would have met it, before the quote goes out.
+		</figcaption>
+	</figure>
+
 	<div class="anim-enter" style="--enter-delay: 300ms">
 		<LoopBand />
 	</div>

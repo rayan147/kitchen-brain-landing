@@ -10,6 +10,7 @@ import PaperIn from '../components/sections/PaperIn.astro';
 import TheOtherTools from '../components/sections/TheOtherTools.astro';
 import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
 import StartHere from '../components/sections/StartHere.astro';
+import StickyCta from '../components/StickyCta.astro';
 ---
 
 <!--
@@ -84,6 +85,16 @@ import StartHere from '../components/sections/StartHere.astro';
   pixels of white space. After: 742px at 390, 682px at 1440 (which now falls in
   TheProblem, not here), isolation down to 2.91 and 5.05, page height up 4.3%
   and 3.3%. The full record is BRIEF-visual-density-2026-08-26.md section 5.
+
+  VISUAL GUIDANCE PASS, 2026-08-29. The page had one picture in ten sections
+  and nothing pointing down. Seven changes, none of them a new claim: the
+  product on the first screen (Hero), the empty right column filled in
+  TheProblem, WhoThisIsFor and TheOtherTools, a looked-up hand-off line at the
+  foot of every stop (SectionHandoff over src/lib/stops.ts), four footage crops
+  in CustomerOutcomes (RC-48), a phone-only bar carrying the one primary
+  between the demo and the close (StickyCta), and scroll reveals limited to
+  the first three viewports so capture tools stop seeing a blank page.
+  Story: docs/stories/homepage-visual-guidance.story.md
 -->
 <Base>
 	<Hero />
@@ -96,4 +107,5 @@ import StartHere from '../components/sections/StartHere.astro';
 	<TheOtherTools />
 	<BuiltForKitchens />
 	<StartHere />
+	<StickyCta />
 </Base>

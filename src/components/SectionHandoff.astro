@@ -1,0 +1,52 @@
+---
+/**
+ * The hand-off line at the foot of a homepage section: "NEXT · SEE IT RUN ↓".
+ *
+ * Considered Template Method (a SectionShell with a fixed footer step); not
+ * used because the nine sections share nothing but this one line. Their
+ * layouts differ on purpose (one-column, two-column, figure-led), and a shell
+ * with a single filled slot is a pattern costume. Plain component reading a
+ * data table (src/lib/stops.ts): the variation here is data, not behaviour.
+ *
+ * WHY THIS EXISTS. Every section on the page ended in a paragraph and nothing
+ * pointed down. NN/g's homepage guidance and the CXL directional-cue studies
+ * both say the same thing: when the next thing matters, draw an arrow at it.
+ * This is the arrow, in the page's own mono micro-label voice rather than a
+ * chevron icon, because that voice (SHOP · PREP · PACK) is the one repeated
+ * device the brand allows itself.
+ *
+ * NOT A QUIET SECONDARY. CLAUDE.md caps btn-quiet links; this is in-page
+ * navigation, styled as a label and never as a CTA, so it neither competes
+ * with the primary nor counts against that cap. It links to a section id,
+ * never to a destination.
+ *
+ * The neighbour is LOOKED UP, never typed, so a reorder in index.astro moves
+ * the arrows with it; the claim check pins stops.ts to that order.
+ */
+import { nextStop, type StopId } from '../lib/stops';
+
+type Props = {
+	/** The id of the section this line sits in. */
+	from: StopId;
+	class?: string;
+};
+
+const { from, class: className } = Astro.props;
+const next = nextStop(from);
+---
+
+{
+	next && (
+		<p class:list={['mt-12 border-t border-dashed border-ticket-rule pt-4', className]} data-reveal>
+			<a
+				href={`#${next.id}`}
+				class="inline-flex min-h-11 items-center gap-2 font-mono text-eyebrow font-semibold tracking-wide uppercase text-ink-soft transition-colors duration-150 hover:text-ink"
+			>
+				<span class="sr-only">Next section: </span>
+				<span aria-hidden="true">Next ·</span>
+				{next.label}
+				<span aria-hidden="true">&#8595;</span>
+			</a>
+		</p>
+	)
+}
