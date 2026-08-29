@@ -111,7 +111,7 @@
 
 ### Step 11 — Revise and Finish
 
-- **Word count before → after:** 760 → target under 450 visible words.
+- **Word count before → after:** 760-word draft → 897 rendered article words, including evidence labels, recovery guidance, FAQs, and onward navigation. The earlier under-450 target is retired because it did not count the supporting copy required to keep the month result inspectable.
 - **Claims removed because they couldn't be shown:** guaranteed waste reduction, automatic blame assignment, universal accounting reconciliation, savings, and time outcomes.
 - **Illustrative-data rule:** Every amount, percentage, date, supplier, item, and monthly variance used in the page evidence is labeled illustrative.
 - **Final Image (the CTA sentence):** Close the month with every known cost named—and every open question still visible.

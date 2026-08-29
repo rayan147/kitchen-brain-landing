@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-20T00:00:00.000Z",
+  "generatedAt": "2026-08-29T16:17:00.000Z",
   "title": "Design System: CostCook",
   "extensions": {
     "colorMeta": {
@@ -19,7 +19,8 @@
       "display": { "displayName": "Display", "purpose": "Primary page identity and hero statements." },
       "headline": { "displayName": "Headline", "purpose": "Major section headings." },
       "body": { "displayName": "Body", "purpose": "Workflow explanations, contact guidance, and navigation." },
-      "label": { "displayName": "Label", "purpose": "Compact operational eyebrows and labels." }
+      "label": { "displayName": "Label", "purpose": "Compact operational eyebrows and labels." },
+      "supporting": { "displayName": "Supporting roles", "purpose": "Shared stops for proof-record micro data, compact labels, captions, body copy, and record titles." }
     },
     "shadows": [
       {

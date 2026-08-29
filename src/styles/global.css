@@ -58,6 +58,17 @@
 	--text-lede--line-height: 1.55;
 	--text-eyebrow: 0.8125rem;
 	--text-eyebrow--line-height: 1.2;
+	/* Supporting roles used inside proof records. These are semantic stops, not
+	   route-local guesses: micro data, compact labels, captions, and record
+	   titles repeat across every feature guide. */
+	--text-micro: 0.6875rem;
+	--text-label-sm: 0.75rem;
+	--text-caption: 0.8125rem;
+	--text-body-sm: 0.875rem;
+	--text-body: 1rem;
+	--text-body-lg: 1.125rem;
+	--text-record-sm: 1.25rem;
+	--text-record: 1.5rem;
 
 	/* Two spacing registers so sections breathe unevenly on purpose. */
 	--spacing-section: clamp(5rem, 3.5rem + 7vw, 9rem);
@@ -180,6 +191,41 @@
 	width: 100%;
 	max-width: 72rem;
 	padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+@layer components {
+	/* Considered Template Method; not used because feature guides share stable
+	   semantic roles, not an algorithm with overridable steps. Plain role
+	   contracts keep each guide's evidence sequence independent. */
+	.feature-display {
+		font-family: var(--font-display);
+		font-size: var(--text-display);
+		font-weight: 600;
+		line-height: var(--text-display--line-height);
+		letter-spacing: var(--text-display--letter-spacing);
+		text-wrap: balance;
+	}
+
+	.feature-breadcrumb {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.4rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+	}
+
+	.feature-breadcrumb a,
+	.feature-onward a {
+		display: inline-flex;
+		min-height: 44px;
+		align-items: center;
+		color: var(--color-green-deep);
+		font-weight: 600;
+		text-decoration: underline;
+		text-decoration-color: var(--color-hairline-strong);
+		text-underline-offset: 4px;
+	}
 }
 
 /* Letter-spaced small-caps label that opens most sections. */

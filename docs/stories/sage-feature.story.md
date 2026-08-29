@@ -56,6 +56,7 @@
 | § | Section | Beats it carries | Value turn (− → +) |
 |---|---------|------------------|--------------------|
 | 1 | Hero and authentic proof | 1–2 | generic assistant → checkable kitchen answer |
+| — | On-this-page orientation | — | long guide → three explicit entry points (not a story scene) |
 | 2 | Video | 3–6 | claim → visible workflow |
 | 3 | During setup | 3–7 | stuck in setup → ask, understand, return |
 | 4 | Six questions | 8 | vague capability → six bounded jobs |
@@ -100,10 +101,10 @@
 ### Step 10 — Connecting Your Scenes
 
 - **POV:** Second person throughout.
-- **Hand-offs:** checkable answer → watch the path → use it during setup → ask one of six jobs → inspect a real answer → understand the boundaries → settle objections → start asking.
+- **Hand-offs:** checkable answer → choose video, jobs, or guardrails from the orientation links → watch the path → use it during setup → ask one of six jobs → inspect a real answer → understand the boundaries → settle objections → start asking.
 
 ### Step 11 — Revise and Finish
 
-- **Word count before → after:** 1,430 planned words → target under 930 words, excluding disclosures.
+- **Word count before → after:** 1,430 planned words → 1,073 rendered article words, including the orientation links, video chapters, FAQs, and onward navigation.
 - **Claims removed because they could not be shown:** perfect answers, learning the business, memory, autonomous actions, time savings, a seventh tool, provider/model identity.
 - **Final Image:** Ask the next kitchen question, check the record underneath it, and keep moving.

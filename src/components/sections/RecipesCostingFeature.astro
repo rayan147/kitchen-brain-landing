@@ -61,12 +61,12 @@ const faqItems = [
 	<section class="hero" aria-labelledby="recipes-costing-heading">
 		<div class="container-page hero-grid">
 			<div class="hero-copy anim-enter">
-				<nav aria-label="Breadcrumb" class="breadcrumb">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
 					<a href="/features">Every feature</a>
 					<span aria-hidden="true">/</span>
 					<span>Recipes and costing</span>
 				</nav>
-				<h1 id="recipes-costing-heading">The recipe has to work on the line and in the quote.</h1>
+				<h1 id="recipes-costing-heading" class="feature-display">The recipe has to work on the line and in the quote.</h1>
 				<p class="hero-lede">
 					When the method lives in one place and the cost in another, one of them goes stale.
 					Keep the working recipe and the number you say out loud connected.
@@ -95,7 +95,7 @@ const faqItems = [
 							<span>Working recipe</span>
 							<span>24 portions</span>
 						</div>
-						<h2>Herb roast chicken</h2>
+						<strong class="record-title">Herb roast chicken</strong>
 						<dl class="record-facts">
 							<div><dt>Yield</dt><dd>6.4 kg</dd></div>
 							<div><dt>Portion</dt><dd>265 g</dd></div>
@@ -118,7 +118,7 @@ const faqItems = [
 							<span>Recipe costing</span>
 							<span>Same recipe</span>
 						</div>
-						<h2>Herb roast chicken</h2>
+						<strong class="record-title">Herb roast chicken</strong>
 						<dl class="cost-facts">
 							<div><dt>Recipe cost</dt><dd>$164.16</dd></div>
 							<div><dt>Per portion</dt><dd>$6.84</dd></div>
@@ -444,7 +444,7 @@ const faqItems = [
 				</a>
 			</div>
 		</div>
-		<nav class="container-page onward" aria-label="Related feature guides">
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides">
 			<a href="/features/menus-and-quotes">Menus &amp; quotes</a>
 			<a href="/features">See every CostCook feature</a>
 		</nav>
@@ -469,35 +469,15 @@ const faqItems = [
 		padding-block: clamp(4rem, 7vw, 7.5rem);
 	}
 
-	.breadcrumb {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		font-size: 0.875rem;
-		color: var(--color-ink-soft);
-	}
-
-	.breadcrumb a {
-		color: var(--color-green-deep);
-		font-weight: 600;
-		text-decoration: underline;
-		text-decoration-color: var(--color-hairline);
-		text-underline-offset: 4px;
-	}
-
 	.hero h1 {
 		max-width: 11.5ch;
 		margin-top: 1.5rem;
-		font-size: clamp(2.65rem, 4.8vw, 5.45rem);
-		font-weight: 600;
-		line-height: 0.98;
-		letter-spacing: -0.03em;
 	}
 
 	.hero-lede {
 		max-width: 55ch;
 		margin-top: 1.75rem;
-		font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.3rem);
+		font-size: var(--text-lede);
 		line-height: 1.55;
 		color: var(--color-ink-soft);
 	}
@@ -533,7 +513,7 @@ const faqItems = [
 
 	.figure-note {
 		margin-bottom: 0.7rem;
-		font-size: 0.75rem;
+		font-size: var(--text-label-sm);
 		font-weight: 600;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
@@ -565,16 +545,18 @@ const faqItems = [
 		display: flex;
 		justify-content: space-between;
 		gap: 1rem;
-		font-size: 0.7rem;
+		font-size: var(--text-micro);
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		color: var(--color-ink-soft);
 	}
 
-	.record h2 {
+	.record .record-title {
+		display: block;
 		margin-top: 0.85rem;
-		font-size: clamp(1.35rem, 2vw, 1.8rem);
+		font-family: var(--font-display);
+		font-size: var(--text-record);
 		font-weight: 600;
 	}
 
@@ -600,7 +582,7 @@ const faqItems = [
 
 	.record dt,
 	.record-label {
-		font-size: 0.68rem;
+		font-size: var(--text-micro);
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
@@ -631,7 +613,7 @@ const faqItems = [
 		gap: 1rem;
 		padding-block: 0.28rem;
 		border-bottom: 1px solid var(--record-rule);
-		font-size: 0.8rem;
+		font-size: var(--text-caption);
 	}
 
 	.ingredient-lines strong,
@@ -642,7 +624,7 @@ const faqItems = [
 
 	.method-line {
 		margin-top: 0.9rem;
-		font-size: 0.78rem;
+		font-size: var(--text-label-sm);
 		line-height: 1.45;
 		color: var(--color-ink-soft);
 	}
@@ -656,7 +638,7 @@ const faqItems = [
 	.screenshot-frame figcaption,
 	.subrecipe-map figcaption {
 		margin-top: 0.85rem;
-		font-size: 0.78rem;
+		font-size: var(--text-label-sm);
 		line-height: 1.5;
 		color: var(--color-ink-soft);
 	}
@@ -704,7 +686,7 @@ const faqItems = [
 
 	.handoff-step span {
 		display: block;
-		font-size: 0.72rem;
+		font-size: var(--text-label-sm);
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: var(--color-amber-light);
@@ -714,7 +696,7 @@ const faqItems = [
 		display: block;
 		margin-top: 0.35rem;
 		font-family: var(--font-display);
-		font-size: 1.15rem;
+		font-size: var(--text-body-lg);
 	}
 
 	.handoff-gap {
@@ -735,7 +717,7 @@ const faqItems = [
 
 	.handoff-gap small {
 		display: block;
-		font-size: 0.65rem;
+		font-size: var(--text-micro);
 		letter-spacing: 0.05em;
 	}
 
@@ -743,7 +725,7 @@ const faqItems = [
 		grid-column: 1 / -1;
 		margin-top: 1rem;
 		font-family: var(--font-display);
-		font-size: 1.2rem;
+		font-size: var(--text-record-sm);
 		color: var(--color-offwhite);
 	}
 
@@ -772,14 +754,14 @@ const faqItems = [
 
 	.product-nav span {
 		font-family: var(--font-display);
-		font-size: 1.35rem;
+		font-size: var(--text-record-sm);
 		font-weight: 600;
 	}
 
 	.product-nav small {
 		grid-column: 1;
 		max-width: 44ch;
-		font-size: 0.84rem;
+		font-size: var(--text-caption);
 		line-height: 1.45;
 		color: var(--color-ink-soft);
 	}
@@ -819,7 +801,7 @@ const faqItems = [
 		display: block;
 		margin-bottom: 0.8rem;
 		font-family: var(--font-body);
-		font-size: 0.85rem;
+		font-size: var(--text-caption);
 		font-weight: 700;
 		line-height: 1.2;
 		letter-spacing: 0.04em;
@@ -861,7 +843,7 @@ const faqItems = [
 		gap: 1rem;
 		padding-bottom: 0.85rem;
 		border-bottom: 1px solid var(--color-hairline);
-		font-size: 0.72rem;
+		font-size: var(--text-label-sm);
 		font-weight: 700;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
@@ -887,7 +869,7 @@ const faqItems = [
 	.builder-title small,
 	.scale-change small {
 		display: block;
-		font-size: 0.68rem;
+		font-size: var(--text-micro);
 		font-weight: 700;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
@@ -898,7 +880,7 @@ const faqItems = [
 		display: block;
 		margin-top: 0.25rem;
 		font-family: var(--font-display);
-		font-size: 1.35rem;
+		font-size: var(--text-record-sm);
 	}
 
 	.builder-row {
@@ -908,14 +890,14 @@ const faqItems = [
 		align-items: center;
 		padding: 0.85rem;
 		border-top: 1px solid var(--color-hairline);
-		font-size: 0.84rem;
+		font-size: var(--text-caption);
 	}
 
 	.builder-head {
 		padding-block: 0.55rem;
 		border-top: 0;
 		background: var(--color-offwhite);
-		font-size: 0.68rem;
+		font-size: var(--text-micro);
 		font-weight: 700;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
@@ -956,13 +938,13 @@ const faqItems = [
 	.scale-change strong {
 		display: block;
 		font-family: var(--font-display);
-		font-size: 2rem;
+		font-size: var(--text-h2);
 		font-variant-numeric: tabular-nums;
 	}
 
 	.scale-change span,
 	.scale-preview p {
-		font-size: 0.78rem;
+		font-size: var(--text-label-sm);
 		color: var(--color-ink-soft);
 	}
 
@@ -980,7 +962,7 @@ const faqItems = [
 	}
 
 	.print-stamp {
-		font-size: 0.68rem;
+		font-size: var(--text-micro);
 		font-weight: 700;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
@@ -991,13 +973,13 @@ const faqItems = [
 		display: block;
 		margin-top: 1rem;
 		font-family: var(--font-display);
-		font-size: 1.45rem;
+		font-size: var(--text-record);
 	}
 
 	.print-preview p,
 	.print-preview small {
 		margin-top: 0.75rem;
-		font-size: 0.82rem;
+		font-size: var(--text-caption);
 		line-height: 1.5;
 		color: var(--color-ink-soft);
 	}
@@ -1053,7 +1035,7 @@ const faqItems = [
 	}
 
 	.cost-index {
-		font-size: 0.72rem;
+		font-size: var(--text-label-sm);
 		font-variant-numeric: tabular-nums;
 		color: var(--color-amber-light);
 	}
@@ -1062,12 +1044,12 @@ const faqItems = [
 		display: block;
 		margin-top: 0.45rem;
 		font-family: var(--font-display);
-		font-size: 1.25rem;
+		font-size: var(--text-record-sm);
 	}
 
 	.cost-path p {
 		margin-top: 0.55rem;
-		font-size: 0.82rem;
+		font-size: var(--text-caption);
 		line-height: 1.5;
 		color: color-mix(in srgb, var(--color-offwhite) 72%, transparent);
 	}
@@ -1076,7 +1058,7 @@ const faqItems = [
 		margin-top: 1.5rem;
 		padding-top: 1rem;
 		border-top: 1px solid color-mix(in srgb, var(--color-offwhite) 30%, transparent);
-		font-size: 0.82rem;
+		font-size: var(--text-caption);
 		color: color-mix(in srgb, var(--color-offwhite) 78%, transparent);
 	}
 
@@ -1095,7 +1077,7 @@ const faqItems = [
 	.evidence-copy li {
 		padding-block: 0.65rem;
 		border-top: 1px solid var(--color-ticket-rule);
-		font-size: 0.9rem;
+		font-size: var(--text-body-sm);
 	}
 
 	.screenshot-frame {
@@ -1169,7 +1151,7 @@ const faqItems = [
 	.source-recipe span,
 	.source-recipe small {
 		display: block;
-		font-size: 0.72rem;
+		font-size: var(--text-label-sm);
 		color: var(--color-ink-soft);
 	}
 
@@ -1177,7 +1159,7 @@ const faqItems = [
 		display: block;
 		margin-block: 0.35rem;
 		font-family: var(--font-display);
-		font-size: 1.4rem;
+		font-size: var(--text-record-sm);
 	}
 
 	.map-rule {
@@ -1198,7 +1180,7 @@ const faqItems = [
 	.subrecipe-map li {
 		padding: 1rem;
 		background: var(--color-cream);
-		font-size: 0.85rem;
+		font-size: var(--text-caption);
 		font-weight: 600;
 		text-align: center;
 	}
@@ -1231,13 +1213,13 @@ const faqItems = [
 
 	.count strong {
 		font-family: var(--font-display);
-		font-size: 2.4rem;
+		font-size: var(--text-h2);
 		font-variant-numeric: tabular-nums;
 		color: var(--color-amber-deep);
 	}
 
 	.count span {
-		font-size: 0.78rem;
+		font-size: var(--text-label-sm);
 	}
 
 	.disclosures {
@@ -1270,17 +1252,17 @@ const faqItems = [
 	}
 
 	.disclosures summary strong {
-		font-size: 1.05rem;
+		font-size: var(--text-body-lg);
 	}
 
 	.disclosures summary small {
-		font-size: 0.78rem;
+		font-size: var(--text-label-sm);
 		line-height: 1.4;
 		color: var(--color-ink-soft);
 	}
 
 	.summary-count {
-		font-size: 0.78rem;
+		font-size: var(--text-label-sm);
 		font-variant-numeric: tabular-nums;
 		color: var(--color-amber-deep);
 	}
@@ -1302,7 +1284,7 @@ const faqItems = [
 		break-inside: avoid;
 		padding-block: 0.65rem;
 		border-top: 1px solid var(--color-hairline);
-		font-size: 0.86rem;
+		font-size: var(--text-caption);
 		line-height: 1.55;
 	}
 
@@ -1483,6 +1465,15 @@ const faqItems = [
 		}
 	}
 
+	@media (min-width: 768px) and (max-width: 1119px) {
+		.hero-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: clamp(2rem, 4vw, 3rem);
+			align-items: start;
+			padding-block: 2rem;
+		}
+	}
+
 	@media (min-width: 1120px) {
 		.record-pair {
 			grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1fr);
@@ -1553,7 +1544,7 @@ const faqItems = [
 
 		.builder-row > :last-child {
 			grid-column: 1 / -1;
-			font-size: 0.72rem;
+			font-size: var(--text-label-sm);
 			color: var(--color-ink-soft);
 		}
 

@@ -78,12 +78,12 @@ const faqItems = [
 	<section class="hero" aria-labelledby="imports-heading">
 		<div class="container-page hero-grid">
 			<div class="hero-copy anim-enter">
-				<nav aria-label="Breadcrumb" class="breadcrumb">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
 					<a href="/features">Every feature</a>
 					<span aria-hidden="true">/</span>
 					<span>Invoices and price-list import</span>
 				</nav>
-				<h1 id="imports-heading">Bring in the paperwork. Keep the final say.</h1>
+				<h1 id="imports-heading" class="feature-display">Bring in the paperwork. Keep the final say.</h1>
 				<p class="hero-lede">
 					Send an invoice or supplier price list into one review queue. CostCook stages the
 					lines, keeps the source beside them, and waits for you before anything becomes real.
@@ -248,7 +248,7 @@ const faqItems = [
 			<div><h2 id="closing-heading">The source filed. The price explained.</h2><p>Bring in the next supplier document with every line still under your eye.</p></div>
 			<div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div>
 		</div>
-		<nav class="container-page onward" aria-label="Related feature guides"><a href="/features/getting-prices-in">Purchases &amp; getting prices in</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/getting-prices-in">Purchases &amp; getting prices in</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
 	</section>
 </article>
 
@@ -256,38 +256,36 @@ const faqItems = [
 	.imports-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); overflow: clip; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
 	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.25rem); }
-	.breadcrumb { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.8rem; font-size: 0.875rem; color: var(--color-ink-soft); }
-	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
-	.hero h1 { max-width: 12ch; font-family: var(--font-display); font-size: clamp(2.75rem, 5vw, 5.6rem); font-weight: 600; line-height: 0.99; letter-spacing: -0.025em; text-wrap: balance; }
+	.hero h1 { max-width: 12ch; }
 	.hero-lede { max-width: 39ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
 	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
 	.btn-outline:hover { background: var(--color-green); color: white; }
 	.intake-desk { position: relative; min-width: 0; padding-top: 2.25rem; }
-	.intake-desk > figcaption { position: absolute; top: 0; left: 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.intake-desk > figcaption { position: absolute; top: 0; left: 0; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.source-stack { position: absolute; top: 3.2rem; left: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(82%, 26rem); }
 	.source-sheet { min-height: 8.5rem; padding: 1rem; background: var(--color-paper); box-shadow: 0 9px 16px color-mix(in srgb, var(--color-ink) 9%, transparent); }
 	.invoice-sheet { transform: rotate(-2deg); }
 	.price-sheet { transform: translate(-0.6rem, -0.5rem) rotate(2deg); }
 	.source-sheet span, .source-sheet strong { display: block; }
-	.source-sheet span { font-family: var(--font-display); font-size: 1rem; }
-	.source-sheet strong { margin-top: 0.1rem; font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.source-sheet span { font-family: var(--font-display); font-size: var(--text-body); }
+	.source-sheet strong { margin-top: 0.1rem; font-size: var(--text-micro); letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-ink-soft); }
 	.source-sheet i { display: block; width: 76%; height: 1px; margin-top: 0.75rem; background: var(--color-ticket-rule); }
 	.stage-sheet { position: relative; z-index: 1; width: 88%; margin: 6.2rem 0 0 auto; padding: clamp(1rem, 2.8vw, 1.5rem); border-top: 3px solid var(--color-green); background: var(--color-paper); box-shadow: 0 13px 23px color-mix(in srgb, var(--color-ink) 12%, transparent); }
 	.sheet-head, .preview-head, .offer-head { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
-	.sheet-head { padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
-	.stage-row { display: grid; grid-template-columns: minmax(0, 1.15fr) 0.7fr auto; gap: 0.75rem; align-items: center; min-width: 0; padding-block: 0.65rem; border-bottom: 1px solid var(--rule); font-size: 0.74rem; }
-	.stage-labels { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-ink-soft); }
-	.stage-row em, .offer-row em { justify-self: end; padding: 0.28rem 0.48rem; font-size: 0.62rem; font-style: normal; font-weight: 700; white-space: nowrap; }
+	.sheet-head { padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.stage-row { display: grid; grid-template-columns: minmax(0, 1.15fr) 0.7fr auto; gap: 0.75rem; align-items: center; min-width: 0; padding-block: 0.65rem; border-bottom: 1px solid var(--rule); font-size: var(--text-label-sm); }
+	.stage-labels { font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.stage-row em, .offer-row em { justify-self: end; padding: 0.28rem 0.48rem; font-size: var(--text-micro); font-style: normal; font-weight: 700; white-space: nowrap; }
 	.ready, .apply { background: var(--color-softgreen); color: var(--color-green-deep); }
 	.check, .review { background: var(--color-softamber); color: var(--color-amber-deep); }
-	.confirm-gate { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 0.85rem; border: 1px solid var(--color-amber-deep); color: var(--color-amber-deep); font-size: 0.72rem; }
+	.confirm-gate { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 0.85rem; border: 1px solid var(--color-amber-deep); color: var(--color-amber-deep); font-size: var(--text-label-sm); }
 	.confirm-gate span { font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
-	.flow-key { display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: center; margin-top: 1.1rem; font-size: 0.72rem; color: var(--color-ink-soft); }
+	.flow-key { display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: center; margin-top: 1.1rem; font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.flow-key i { width: 1.6rem; height: 1px; background: var(--color-amber-deep); }
 	.flow-key strong { color: var(--color-amber-deep); }
-	.intake-desk > p { margin-top: 0.7rem; font-size: 0.72rem; color: var(--color-ink-soft); }
+	.intake-desk > p { margin-top: 0.7rem; font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 
 	.paper-wall, .common-rule { padding-block: var(--spacing-section-tight); background: var(--color-ink); color: var(--color-paper); }
 	.wall-grid, .common-grid { display: grid; gap: 3rem; align-items: center; }
@@ -296,10 +294,10 @@ const faqItems = [
 	.delay-line { display: grid; gap: 0.8rem; }
 	.delay-line > div { padding-block: 0.9rem; border-block: 1px solid color-mix(in srgb, var(--color-paper) 23%, transparent); }
 	.delay-line span, .delay-line strong { display: block; }
-	.delay-line span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-amber-light); }
-	.delay-line strong { margin-top: 0.3rem; font-family: var(--font-display); font-size: 1.1rem; }
+	.delay-line span { font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-amber-light); }
+	.delay-line strong { margin-top: 0.3rem; font-family: var(--font-display); font-size: var(--text-body-lg); }
 	.delay-line i { width: 1px; height: 1.2rem; margin-inline: auto; background: var(--color-amber-light); }
-	.delay-line figcaption { color: color-mix(in srgb, var(--color-paper) 78%, transparent); font-size: 0.82rem; }
+	.delay-line figcaption { color: color-mix(in srgb, var(--color-paper) 78%, transparent); font-size: var(--text-caption); }
 
 	.product-nav { display: grid; padding-inline: var(--spacing-page); }
 	.product-nav a { display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 1rem; min-height: 88px; align-content: center; padding: 1rem clamp(0rem, 2vw, 1.5rem); color: var(--color-ink); }
@@ -311,8 +309,8 @@ const faqItems = [
 	.queue-path { display: grid; gap: 1px; background: color-mix(in srgb, white 28%, transparent); }
 	.queue-path li { display: grid; grid-template-columns: 1.8rem 1fr; gap: 0.2rem 0.75rem; min-width: 0; padding: 1rem; background: var(--color-green-deep); }
 	.queue-path li.gate { background: var(--color-paper); color: var(--color-ink); }
-	.queue-path li > span { grid-row: 1 / 3; display: grid; width: 1.6rem; height: 1.6rem; place-items: center; border: 1px solid currentColor; border-radius: 50%; font-size: 0.68rem; }
-	.queue-path strong { font-size: 0.82rem; }
+	.queue-path li > span { grid-row: 1 / 3; display: grid; width: 1.6rem; height: 1.6rem; place-items: center; border: 1px solid currentColor; border-radius: 50%; font-size: var(--text-micro); }
+	.queue-path strong { font-size: var(--text-caption); }
 	.queue-path small { color: color-mix(in srgb, currentColor 72%, transparent); }
 
 	.product-section { scroll-margin-top: 1rem; padding-block: var(--spacing-section); }
@@ -325,40 +323,40 @@ const faqItems = [
 	.source-preview, .review-ledger, .offer-review { min-width: 0; padding: clamp(1.1rem, 3vw, 1.8rem); background: var(--color-paper); box-shadow: 0 10px 18px color-mix(in srgb, var(--color-ink) 9%, transparent); }
 	.source-preview { border-top: 3px solid var(--color-amber-deep); }
 	.review-ledger, .offer-review { border-top: 3px solid var(--color-green); }
-	.preview-head { padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
-	.supplier-mark { margin-top: 1.5rem; font-family: var(--font-display); font-size: 1.18rem; }
+	.preview-head { padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
+	.supplier-mark { margin-top: 1.5rem; font-family: var(--font-display); font-size: var(--text-body-lg); }
 	.source-preview dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.2rem; }
-	.source-preview dt { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
+	.source-preview dt { font-size: var(--text-micro); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
 	.source-preview dd { margin-top: 0.2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 	.paper-lines { margin-top: 1.4rem; }
 	.paper-lines i { display: block; width: 100%; height: 1px; margin-top: 0.65rem; background: var(--color-ticket-rule); }
 	.paper-lines i:nth-child(even) { width: 72%; }
-	.paper-total { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 0.9rem; border-top: 2px solid var(--color-ink); font-size: 0.8rem; }
+	.paper-total { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 0.9rem; border-top: 2px solid var(--color-ink); font-size: var(--text-caption); }
 	.paper-total span { font-variant-numeric: tabular-nums; }
-	.review-row, .offer-row { display: grid; gap: 0.75rem; align-items: center; padding-block: 0.8rem; border-bottom: 1px solid var(--rule); font-size: 0.78rem; }
+	.review-row, .offer-row { display: grid; gap: 0.75rem; align-items: center; padding-block: 0.8rem; border-bottom: 1px solid var(--rule); font-size: var(--text-label-sm); }
 	.review-row { grid-template-columns: minmax(0, 1fr) minmax(6rem, 0.75fr) auto; }
-	.review-row.labels, .offer-row.labels { font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
+	.review-row.labels, .offer-row.labels { font-size: var(--text-micro); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
 	.review-row b, .offer-row b { font-variant-numeric: tabular-nums; }
 	.review-row.flagged { background: var(--color-softamber); }
 	.reconcile { display: grid; grid-template-columns: 1fr auto; gap: 0.3rem 1rem; margin-top: 1.3rem; padding: 1rem; background: var(--color-softgreen); }
 	.reconcile strong { font-variant-numeric: tabular-nums; }
-	.reconcile em { grid-column: 1 / -1; color: var(--color-green-deep); font-size: 0.72rem; font-style: normal; font-weight: 700; }
-	.invoice-review > figcaption, .offer-review figcaption { color: var(--color-ink-soft); font-size: 0.78rem; line-height: 1.5; }
+	.reconcile em { grid-column: 1 / -1; color: var(--color-green-deep); font-size: var(--text-label-sm); font-style: normal; font-weight: 700; }
+	.invoice-review > figcaption, .offer-review figcaption { color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
 	.invoice-review > figcaption { grid-column: 1 / -1; }
 	.feature-scenes { display: grid; gap: 2rem; margin-top: 3rem; }
 	.feature-scenes article { padding-top: 1.25rem; border-top: 1px solid var(--color-hairline-strong); }
-	.feature-scenes h3 { font-size: 1.05rem; }
+	.feature-scenes h3 { font-size: var(--text-body-lg); }
 	.feature-scenes p { margin-top: 0.65rem; color: var(--color-ink-soft); line-height: 1.6; }
 	.offer-review { margin-top: clamp(3rem, 6vw, 5rem); }
 	.offer-head > div span, .offer-head > div strong { display: block; }
-	.offer-head span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-green-deep); }
-	.offer-head strong { margin-top: 0.25rem; font-family: var(--font-display); font-size: 1.25rem; }
-	.offer-head > em { font-size: 0.72rem; font-style: normal; color: var(--color-ink-soft); }
+	.offer-head span { font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-green-deep); }
+	.offer-head strong { margin-top: 0.25rem; font-family: var(--font-display); font-size: var(--text-record-sm); }
+	.offer-head > em { font-size: var(--text-label-sm); font-style: normal; color: var(--color-ink-soft); }
 	.offer-row { grid-template-columns: minmax(0, 1.15fr) minmax(6rem, 0.8fr) minmax(6rem, 0.8fr) auto; }
 	.offer-row.changed { background: var(--color-softamber); }
 	.offer-row .skip { border: 1px solid var(--color-hairline-strong); color: var(--color-ink-soft); }
 	.offer-review figcaption { margin-top: 1rem; }
-	.snap { max-width: 26ch; margin: clamp(3rem, 6vw, 5rem) auto 0; font-family: var(--font-display); font-size: clamp(1.75rem, 3.4vw, 3.2rem); line-height: 1.08; text-align: center; text-wrap: balance; color: var(--color-green-deep); }
+	.snap { max-width: 26ch; margin: clamp(3rem, 6vw, 5rem) auto 0; font-family: var(--font-display); font-size: var(--text-h2); line-height: 1.08; text-align: center; text-wrap: balance; color: var(--color-green-deep); }
 
 	.exceptions { padding-block: var(--spacing-section-tight); background: var(--color-cream); }
 	.exceptions-grid { display: grid; gap: 3rem; align-items: start; }
@@ -366,26 +364,26 @@ const faqItems = [
 	.exception-list { border-top: 1px solid var(--color-ticket-rule); }
 	.exception-list li { display: grid; gap: 0.35rem 1rem; padding-block: 1rem; border-bottom: 1px solid var(--color-ticket-rule); }
 	.exception-list span { color: var(--color-ink-soft); }
-	.exception-list em { font-size: 0.75rem; font-style: normal; font-weight: 700; color: var(--color-amber-deep); }
+	.exception-list em { font-size: var(--text-label-sm); font-style: normal; font-weight: 700; color: var(--color-amber-deep); }
 
 	.capabilities { padding-block: var(--spacing-section); border-top: 1px solid var(--color-hairline); background: var(--color-offwhite); }
 	.capability-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; align-items: end; }
 	.capability-heading > div > p { margin-top: 0.8rem; color: var(--color-ink-soft); }
 	.count { display: flex; align-items: baseline; gap: 0.65rem; color: var(--color-ink-soft); }
-	.count strong { font-family: var(--font-display); font-size: 2.4rem; font-variant-numeric: tabular-nums; color: var(--color-amber-deep); }
-	.count span, .summary-count { font-size: 0.78rem; }
+	.count strong { font-family: var(--font-display); font-size: var(--text-h2); font-variant-numeric: tabular-nums; color: var(--color-amber-deep); }
+	.count span, .summary-count { font-size: var(--text-label-sm); }
 	.disclosures, .faq-list { margin-top: 3rem; border-top: 1px solid var(--color-ticket-rule); }
 	.disclosures details, .faq-list details { border-bottom: 1px solid var(--color-ticket-rule); }
 	.disclosures summary, .faq-list summary { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; min-height: 72px; padding-block: 1rem; cursor: pointer; list-style: none; }
 	.disclosures summary::-webkit-details-marker, .faq-list summary::-webkit-details-marker { display: none; }
 	.disclosures summary > span:first-child { display: grid; gap: 0.2rem; }
-	.disclosures summary strong, .faq-list summary span { font-size: 1.05rem; font-weight: 650; }
-	.disclosures summary small { font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-soft); }
+	.disclosures summary strong, .faq-list summary span { font-size: var(--text-body-lg); font-weight: 650; }
+	.disclosures summary small { font-size: var(--text-label-sm); line-height: 1.4; color: var(--color-ink-soft); }
 	.summary-count { color: var(--color-amber-deep); font-variant-numeric: tabular-nums; }
 	.disclosures summary svg, .faq-list summary svg { fill: none; stroke: var(--color-green-deep); stroke-width: 1.5; transition: transform 180ms ease-out; }
 	.disclosures details[open] summary svg, .faq-list details[open] summary svg { transform: rotate(180deg); }
 	.disclosures ul { padding-bottom: 1.5rem; columns: 1; }
-	.disclosures li { break-inside: avoid; padding-block: 0.65rem; border-top: 1px solid var(--color-hairline); font-size: 0.86rem; line-height: 1.55; }
+	.disclosures li { break-inside: avoid; padding-block: 0.65rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-caption); line-height: 1.55; }
 	.disclosures li span { color: var(--color-ink-soft); }
 
 	.faq { padding-block: var(--spacing-section-tight); border-top: 1px solid var(--color-hairline); background: var(--color-paper); }
