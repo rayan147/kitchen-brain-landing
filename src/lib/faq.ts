@@ -139,11 +139,12 @@ export const faq: readonly FaqGroup[] = [
 			},
 			{
 				id: 'labels',
-				question: 'Does it print nutrition labels?',
+				question: 'Does it do nutrition labels?',
 				answer: [
-					'Not yet. The fifteen nutrients an FDA panel carries are computed per recipe from USDA profiles, and a recipe says plainly when a profile or a conversion is missing rather than totalling an incomplete dish. The printed panel is being built and carries no date. Dietary characteristics (vegan, gluten-free and the like) are not assessed and nothing is inferred from an ingredient name.'
+					'Yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Print nutrition label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
+					'Sending labels to a label printer is being built and carries no date. Dietary characteristics (vegan, gluten-free and the like) are not assessed and nothing is inferred from an ingredient name.'
 				],
-				claims: ['RC-42', 'RC-47']
+				claims: ['RC-42', 'RC-47', 'RC-50']
 			},
 			{
 				id: 'spanish',

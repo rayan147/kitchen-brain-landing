@@ -24,12 +24,12 @@
  * of the same four twice would be the failure the BuiltForKitchens comment
  * records. Each is a /compare row and may not be softened here:
  *
- *   printed labels  -> "Printed USDA nutrition labels", COMING, and the only one
- *                      of the four that is. The framing sentence says three are
- *                      not planned and one is being built, because /compare's
+ *   label printer   -> "Kitchen label printing", COMING, and the only one of the
+ *                      four that is. The framing sentence says three are not
+ *                      planned and one is being built, because /compare's
  *                      legend exists to keep coming from reading as no and a
- *                      heading that flattens the two undoes it.  RC-42 splits
- *                      the computed facts (ship) from the panel (does not).
+ *                      heading that flattens the two undoes it. Until 2026-08-29
+ *                      this slot was the printed panel; RC-50 moved that to yes.
  *   top up to par   -> "Buying that tops up to par", no.         RC-43.
  *   dietary         -> "Dietary characteristics", no.
  *   Spanish         -> "English and Spanish", no.
@@ -52,8 +52,10 @@
  */
 const giveUps = [
 	{
-		title: 'Printed nutrition labels',
-		body: 'The fifteen nutrients an FDA label carries are computed per recipe, from USDA profiles. The printed panel is still being built.'
+		/* Swapped 2026-08-29 (RC-50): the printed panel ships from the browser, so
+		   the give-up is the label PRINTER, which is the /compare row still coming. */
+		title: 'A label printer',
+		body: 'Nutrition labels print from the recipe through the browser onto label stock. Sending them to a label printer is still being built.'
 	},
 	{
 		title: 'Buying that tops you back up to par',

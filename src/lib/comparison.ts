@@ -282,8 +282,11 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Printed USDA nutrition labels',
-				costcook: 'coming',
-				note: 'The numbers are there. The printed panel is being built.',
+				/* Moved from coming to yes on 2026-08-29 (RC-50): the print page is on
+				   sandbox/demo with no flag. Browser print; the printer integration is
+				   the "Kitchen label printing" row below and stays coming. */
+				costcook: 'yes',
+				note: 'Printed from the recipe through the browser onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
 				parsley: 'Chef Plus, $189',
 				meez: 'Enterprise, custom'
 			},
