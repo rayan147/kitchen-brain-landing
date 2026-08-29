@@ -43,7 +43,11 @@ const menuTargets = [
 	{ id: 'import', area: 'invoices-and-price-list-import', href: '/features/invoices-and-price-list-import' },
 	{ id: 'assistant', area: 'sage', href: '/features/sage' },
 	{ id: 'orders', area: 'the-day-itself' },
-	{ id: 'purchasing', area: 'the-day-itself' },
+	{
+		id: 'purchasing',
+		area: 'purchasing-and-receiving',
+		href: '/features/purchasing-and-receiving'
+	},
 	{ id: 'inventory', area: 'inventory', href: '/features/inventory' },
 	{ id: 'ledger', area: 'getting-prices-in' }
 ];

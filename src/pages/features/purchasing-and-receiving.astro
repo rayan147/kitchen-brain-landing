@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import PurchasingReceivingFeature from '../../components/sections/PurchasingReceivingFeature.astro';
+
+// Considered Template Method; not used because the dedicated feature pages
+// share a visual system, while their evidence scenes and reading sequences are
+// deliberately different rather than overridable steps in one algorithm.
+const directionContract = [
+	'THESIS: The supplier order and the delivery should meet in one inspectable record; refuse the generic procurement dashboard and feature-card catalogue.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber variance rules, square purchase records, green actions.',
+	'STORY: The chef-owner reviews the supplier commitment, receives against the sent lines, records the delivery as it arrived, keeps the follow-up gap visible, then starts or books a demo.',
+	'FIRST VIEWPORT: Editorial statement at left; one purchase order crossing into a receiving record dominates the right, with the illustrative nine-of-ten variance and both actions visible.',
+	'FORM: Code-led editorial split extending the approved Recipes & Costing surface; seed key purchasing-sent-received-truth.',
+	'FINISH: The source order, delivery variance, posting boundary, and recovery path remain explicit across desktop, mobile, reduced-motion, and no-JavaScript states.'
+].join(' ');
+---
+
+<Base
+	title="Purchasing and receiving software for caterers | CostCook"
+	description="Review one purchase order per supplier, receive against the same lines, and post the quantity and price that actually arrived."
+	path="/features/purchasing-and-receiving"
+	directionContract={directionContract}
+>
+	<PurchasingReceivingFeature />
+</Base>
