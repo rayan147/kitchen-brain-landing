@@ -1,0 +1,305 @@
+---
+import { featureGroups } from '../../lib/features';
+import { cta, demoCta } from '../../lib/site';
+
+const ordersGroup = featureGroups.find((group) => group.id === 'orders');
+if (!ordersGroup) throw new Error('Missing public feature group: orders');
+
+const shopLines = [
+	{ item: 'Chicken thigh · 10 kg case', working: '34.6 kg need − 8.2 kg on hand', result: '3 cases' },
+	{ item: 'Baby spinach · 2 kg case', working: '5.1 kg need − 1.4 kg on hand', result: '2 cases' },
+	{ item: 'Olive oil · 5 L tin', working: '6.8 L need − 2.1 L on hand', result: '1 tin' }
+] as const;
+
+const packLines = [
+	{ item: 'Braised chicken · hotel pans', amount: '7 of 8', state: '1 open', tone: 'open' },
+	{ item: 'Spinach salad · chilled crates', amount: '4 of 4', state: 'Packed', tone: 'done' },
+	{ item: 'Chafers · equipment', amount: '6 of 6', state: 'Loaded', tone: 'done' }
+] as const;
+
+const recoveryStates = [
+	{ label: 'Plan changed', action: 'Recheck only stale lines', note: 'Checks cleared by the change do not stay falsely complete.' },
+	{ label: 'Aged plan', action: 'Review before the kitchen runs it', note: 'An old frozen plan is marked old, never silently recomputed.' },
+	{ label: 'Pack still open', action: 'Mark short, packed, or not sure', note: 'The close creates reviewable evidence instead of hiding the gap.' }
+] as const;
+
+// Considered Strategy; not used because the FAQ and evidence rows are static
+// editorial data, not interchangeable behavior selected at runtime.
+const faqItems = [
+	{
+		question: 'Do Shop, Prep, and Pack use the same order?',
+		answer: 'Yes. All three read the computed plan for the event. Confirming the order freezes the plan, math, and money together so the working day keeps the commitment you made.'
+	},
+	{
+		question: 'Can the shopping list use what is already on hand?',
+		answer: 'Each buy line can show need, trusted on hand, pack size, and packs. Order-scoped shelf checks keep the decision attached to this event rather than changing a shared number behind another plan.'
+	},
+	{
+		question: 'What happens when the plan changes?',
+		answer: 'Durable checks stay on the server. A plan change clears exactly the checks it made stale, so completed work is not erased without reason and stale work does not stay checked.'
+	},
+	{
+		question: 'Can the crew print the lists?',
+		answer: 'Yes. Shop, Prep, and Pack print without controls, while useful hints remain and columns align for a clipboard.'
+	},
+	{
+		question: 'What does Pack carry besides food?',
+		answer: 'Pack includes per-order equipment, lets you hide a template line or add a one-off, and carries allergen badges for the dishes leaving the kitchen.'
+	}
+] as const;
+---
+
+<!-- story: docs/stories/order-shop-prep-pack.story.md -->
+<article class="orders-page">
+	<section class="hero" aria-labelledby="orders-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Orders, shop, prep & pack</span></nav>
+				<h1 id="orders-heading">One confirmed order. Three working lists. Nothing important left in somebody's head.</h1>
+				<p class="hero-lede">Turn the same menu and guest count into what to buy, what to prep, and what must reach the van—with the frozen event plan behind every check.</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+				</div>
+			</div>
+
+			<figure class="event-ticket orders-enter">
+				<p class="figure-note">Illustrative event plan</p>
+				<div class="ticket-head"><span>Harvest Table · 80 guests</span><span class="state confirmed">Confirmed</span></div>
+				<div class="stage-flow" aria-label="Shop 12 of 12 complete, Prep 7 of 7 complete, Pack 7 of 8 with one item open">
+					<div><small>Shop</small><strong>12/12</strong><span>Checked</span></div>
+					<svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true"><path d="M1 7h22M18 2l5 5-5 5" /></svg>
+					<div><small>Prep</small><strong>7/7</strong><span>Done</span></div>
+					<svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true"><path d="M1 7h22M18 2l5 5-5 5" /></svg>
+					<div class="result"><small>Pack</small><strong>7/8</strong><span>1 open</span></div>
+				</div>
+				<div class="ticket-line"><span>Braised chicken · hotel pan</span><b class="state open">Not packed</b></div>
+				<figcaption>Illustrative counts. Each stage reads the same frozen event while keeping its own progress.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="problem" aria-labelledby="problem-heading">
+		<div class="container-page problem-grid">
+			<div><h2 id="problem-heading">Eight hotel pans prepped. Seven in the van is still one pan short.</h2><p>Prep can be complete while pack-out is not. The handoff needs its own visible check, tied back to the event everyone agreed to run.</p></div>
+			<div class="pan-scene" role="img" aria-label="Eight illustrative hotel pans prepared, seven packed, and one still open">
+				<div><small>Prep complete</small><strong>8 pans</strong><span>Kitchen sheet</span></div>
+				<div class="pan-mark" aria-hidden="true">→</div>
+				<div><small>In the van</small><strong>7 pans</strong><span class="state open">1 open</span></div>
+			</div>
+		</div>
+	</section>
+
+	<nav class="story-nav container-page" aria-label="On this page">
+		<a href="#shop-the-order"><span>Shop the order</span><small>Keep need, on hand, pack size, and packs on the same line.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#prep-and-pack"><span>Prep, then pack</span><small>Move the frozen plan through two distinct kitchen handoffs.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+	</nav>
+
+	<section class="source" aria-labelledby="source-heading">
+		<div class="container-page source-grid">
+			<div><p class="eyebrow">The source</p><h2 id="source-heading">Freeze the event the crew is actually running.</h2><p>A confirmed order keeps its menu, date, guest count, plan, math, and money together. Later prices can move; the quote and frozen working plan remain visible.</p></div>
+			<div class="source-record"><span>Confirmed event · illustrative</span><div><small>Menu</small><strong>Harvest Table</strong></div><div><small>Guests</small><strong>80</strong></div><div><small>Service</small><strong>30 Aug · 6:00 PM</strong></div></div>
+		</div>
+	</section>
+
+	<section id="shop-the-order" class="product-section shop-section" aria-labelledby="shop-heading">
+		<div class="container-page">
+			<div class="section-intro"><h2 id="shop-heading">Show the buy math before the first aisle.</h2><p>Group the list by supplier or kitchen section. Keep the working on each line, save checks, and carry a left-to-grab count on the phone.</p></div>
+			<figure class="work-sheet">
+				<div class="sheet-head"><span>Shop · Harvest Table</span><span>12 of 12 checked</span></div>
+				<div class="line-head"><span>Ingredient</span><span>Working</span><span>Buy</span></div>
+				{shopLines.map((line) => <div class="work-line"><strong>{line.item}</strong><span>{line.working}</span><b>{line.result}</b></div>)}
+				<div class="sheet-foot"><span><strong>Left to grab</strong><small>Checks saved to this order</small></span><b>0 lines</b></div>
+				<figcaption>Illustrative quantities. Trusted shelf checks may reduce need; the visible arithmetic explains the result.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section id="prep-and-pack" class="product-section pack-section" aria-labelledby="pack-heading">
+		<div class="container-page">
+			<div class="section-intro"><h2 id="pack-heading">What leaves the shelf becomes two different promises.</h2><p>Prep follows the notes frozen at confirmation. Pack carries food, equipment, and allergen context, then keeps the last open line visible at the loading door.</p></div>
+			<figure class="pack-board">
+				<div class="prep-strip"><span><small>Prep</small><strong>7 of 7 tasks complete</strong></span><b class="state done">Ready for pack</b></div>
+				<div class="line-head"><span>Pack line</span><span>Progress</span><span>State</span></div>
+				{packLines.map((line) => <div class="pack-line"><strong>{line.item}</strong><span>{line.amount}</span><em class:list={['state', line.tone]}>{line.state}</em></div>)}
+				<div class="sheet-foot"><span><strong>Pack is still open</strong><small>Resolve the final pan before close</small></span><b>1 line</b></div>
+				<figcaption>Illustrative pack-out. Equipment and allergen context remain attached to their event lines.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="recovery" aria-labelledby="recovery-heading">
+		<div class="container-page recovery-grid">
+			<div><h2 id="recovery-heading">When the plan moves, the checks tell the truth.</h2><p>Changed work, an old frozen plan, and an incomplete pack close keep distinct states. Each one preserves what is safe and names the next action.</p></div>
+			<div class="recovery-list">{recoveryStates.map((item) => <div><span class="state attention">{item.label}</span><strong>{item.action}</strong><small>{item.note}</small></div>)}</div>
+		</div>
+	</section>
+
+	<section class="capabilities" aria-labelledby="capabilities-heading">
+		<div class="container-page capabilities-grid">
+			<div><h2 id="capabilities-heading">The complete Orders, shop, prep & pack list.</h2><p>Everything below is shipped today and remains available for the diligence read.</p><p class="count"><strong>{ordersGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<details id="features-orders" open><summary><span>Orders, the event</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{ordersGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
+		</div>
+	</section>
+
+	<section class="faq" aria-labelledby="faq-heading">
+		<div class="container-page faq-grid"><div><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions behind taking one confirmed event from the first buy line to the last item in the van.</p></div><div class="faq-list">{faqItems.map((item) => <details><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>)}</div></div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the van on the same plan you priced, shopped, and cooked.</h2><p>Bring one real event. Follow it from menu and guest count to the final pack line.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
+		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
+	</section>
+</article>
+
+<style>
+	.orders-page { overflow: clip; }
+	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
+	.breadcrumb { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .875rem; color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
+	.hero h1 { max-width: 14ch; margin-top: 1.5rem; font-size: clamp(2.45rem, 4.4vw, 5rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; }
+	.hero-lede { max-width: 56ch; margin-top: 1.75rem; font-size: clamp(1.05rem, .98rem + .35vw, 1.3rem); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
+	.btn-outline:hover { background: var(--color-softgreen); }
+	.figure-note, .eyebrow { margin-bottom: .7rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.event-ticket { min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
+	.ticket-head, .sheet-head, .line-head { display: flex; justify-content: space-between; gap: 1rem; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.state { display: inline-flex; width: fit-content; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: .7rem; font-weight: 700; font-style: normal; letter-spacing: .04em; text-transform: uppercase; }
+	.state.confirmed, .state.done { background: var(--color-softgreen); color: var(--color-green-deep); }
+	.state.open, .state.attention { background: var(--color-softamber); color: var(--color-amber-deep); }
+	.stage-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: .6rem; align-items: center; margin-top: 1.2rem; }
+	.stage-flow div { padding: .8rem; background: var(--color-cream); }
+	.stage-flow .result { background: var(--color-softamber); }
+	.stage-flow small, .source-record small, .prep-strip small { display: block; color: var(--color-ink-soft); font-size: .7rem; }
+	.stage-flow strong { display: block; font-size: 1.45rem; font-variant-numeric: tabular-nums; }
+	.stage-flow span { color: var(--color-ink-soft); font-size: .72rem; }
+	.stage-flow svg, .story-nav svg, summary svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; color: var(--color-amber-deep); }
+	.ticket-line { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-ticket-rule); font-size: .82rem; }
+	.event-ticket figcaption, .work-sheet figcaption, .pack-board figcaption { margin-top: .85rem; font-size: .78rem; line-height: 1.45; color: var(--color-ink-soft); }
+	.problem { border-bottom: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.problem-grid, .source-grid, .recovery-grid { display: grid; gap: 3rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.problem h2, .source h2, .section-intro h2, .recovery h2, .capabilities h2, .faq h2, .closing h2 { font-size: var(--text-h2); font-weight: 600; line-height: 1.12; }
+	.problem p, .source-grid > div > p, .section-intro p, .recovery-grid > div > p, .capabilities-grid > div > p, .faq-grid > div > p, .closing p { max-width: 60ch; margin-top: 1.1rem; color: var(--color-ink-soft); line-height: 1.65; }
+	.pan-scene { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+	.pan-scene > div:not(.pan-mark) { padding: 1.35rem; border-top: 2px solid var(--color-ticket-rule); background: var(--color-cream); }
+	.pan-scene small, .pan-scene span { display: block; color: var(--color-ink-soft); }
+	.pan-scene strong { display: block; margin-block: .4rem; font-size: 1.7rem; font-variant-numeric: tabular-nums; }
+	.pan-mark { color: var(--color-amber-deep); font-family: var(--font-display); font-size: 1.7rem; }
+	.story-nav { display: grid; padding-block: 1.25rem; }
+	.story-nav a { display: grid; min-height: 84px; grid-template-columns: 1fr auto; gap: .25rem 1rem; align-content: center; padding: 1.2rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); }
+	.story-nav a:first-child { border-top: 1px solid var(--color-ticket-rule); }
+	.story-nav span { font-weight: 700; }
+	.story-nav small { max-width: 48ch; color: var(--color-ink-soft); }
+	.story-nav svg { grid-column: 2; grid-row: 1 / 3; color: var(--color-green-deep); }
+	.source { background: var(--color-ink); color: var(--color-paper); }
+	.source-grid > div > p { color: var(--color-ink-muted); }
+	.source-record { background: var(--color-paper); color: var(--color-ink); box-shadow: var(--shadow-lift); }
+	.source-record > span { display: block; padding: .8rem 1rem; background: var(--color-softgreen); color: var(--color-green-deep); font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+	.source-record > div { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--color-hairline); }
+	.source-record strong { font-variant-numeric: tabular-nums; }
+	.product-section { scroll-margin-top: 1rem; padding-block: var(--spacing-section); }
+	.shop-section { background: var(--color-softgreen); }
+	.pack-section { background: var(--color-cream); }
+	.section-intro { display: grid; gap: 1.5rem 4rem; align-items: end; }
+	.section-intro p { margin-top: 0; }
+	.work-sheet, .pack-board { margin-top: clamp(2.5rem, 6vw, 4.5rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
+	.sheet-head { padding: 1rem clamp(1rem, 3vw, 1.75rem); background: var(--color-ink); color: var(--color-paper); }
+	.line-head, .work-line, .pack-line { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) .45fr; gap: 1rem; align-items: center; padding: .85rem clamp(1rem, 3vw, 1.75rem); }
+	.line-head { border-bottom: 1px solid var(--color-hairline); }
+	.work-line, .pack-line { border-bottom: 1px solid var(--color-hairline); }
+	.work-line span, .pack-line span { color: var(--color-ink-soft); }
+	.work-line b, .pack-line span { font-variant-numeric: tabular-nums; }
+	.sheet-foot, .prep-strip { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
+	.sheet-foot span small { display: block; color: var(--color-ink-soft); }
+	.sheet-foot > b { color: var(--color-green-deep); }
+	.work-sheet figcaption, .pack-board figcaption { padding: 0 clamp(1rem, 3vw, 1.75rem) 1rem; }
+	.prep-strip { border-top: 0; border-bottom: 2px solid var(--color-green); background: var(--color-softgreen); }
+	.prep-strip strong { display: block; margin-top: .2rem; }
+	.recovery { background: var(--color-paper); }
+	.recovery-list { border-block: 1px solid var(--color-ticket-rule); }
+	.recovery-list > div { display: grid; grid-template-columns: auto 1fr; gap: .45rem 1rem; padding: 1rem 0; border-bottom: 1px solid var(--color-ticket-rule); }
+	.recovery-list > div:last-child { border-bottom: 0; }
+	.recovery-list strong { align-self: center; }
+	.recovery-list small { grid-column: 2; color: var(--color-ink-soft); }
+	.capabilities { padding-block: var(--spacing-section); background: var(--color-offwhite); }
+	.capabilities-grid, .faq-grid { display: grid; gap: 3rem; }
+	.count { display: flex; align-items: baseline; gap: .75rem; }
+	.count strong { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-green-deep); }
+	.count span { font-size: .8rem; color: var(--color-ink-soft); }
+	details summary { cursor: pointer; list-style: none; }
+	details summary::-webkit-details-marker { display: none; }
+	.capabilities details { scroll-margin-top: 1rem; border-block: 1px solid var(--color-ticket-rule); }
+	.capabilities summary, .faq summary { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 1rem; font-weight: 700; }
+	.capabilities details[open] summary, .faq details[open] summary { color: var(--color-green-deep); }
+	.capabilities details[open] summary svg, .faq details[open] summary svg { transform: rotate(180deg); }
+	.capabilities summary svg, .faq summary svg { flex: 0 0 auto; transition: transform 150ms ease-out; }
+	.capabilities details ul { padding-bottom: 1.5rem; }
+	.capabilities details li { padding-block: .75rem; border-top: 1px solid var(--color-hairline); line-height: 1.5; }
+	.capabilities details li span { color: var(--color-ink-soft); }
+	.faq { padding-block: var(--spacing-section); border-top: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.faq-list details { border-top: 1px solid var(--color-ticket-rule); }
+	.faq-list details:last-child { border-bottom: 1px solid var(--color-ticket-rule); }
+	.faq-list summary { padding-block: .7rem; }
+	.faq-list details p { max-width: 64ch; padding: 0 2.5rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.6; }
+	.closing { border-top: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
+	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
+
+	@media (min-width: 720px) {
+		.hero-grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
+		.problem-grid, .source-grid, .section-intro, .recovery-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+		.story-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.story-nav a { padding-inline: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
+		.story-nav a + a { border-left: 1px solid var(--color-ticket-rule); }
+		.capabilities-grid { grid-template-columns: minmax(15rem, .55fr) minmax(0, 1.45fr); }
+		.capabilities details ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2rem; }
+		.closing-actions { justify-content: flex-end; margin-top: 0; }
+	}
+
+	@media (max-width: 719px) {
+		.hero-grid { gap: 1rem; padding-block: 1.2rem .9rem; }
+		.hero h1 { margin-top: .25rem; font-size: clamp(1.85rem, 8.8vw, 2.3rem); }
+		.hero-lede { margin-top: .65rem; font-size: .9rem; line-height: 1.35; }
+		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .75rem; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .45rem; font-size: .8rem; text-align: center; }
+		.closing-actions > * { width: 100%; justify-content: center; }
+		.figure-note { margin-bottom: .35rem; }
+		.event-ticket { padding: .7rem; }
+		.stage-flow { gap: .3rem; margin-top: .5rem; }
+		.stage-flow svg { width: 16px; }
+		.stage-flow div { padding: .5rem; }
+		.stage-flow strong { font-size: 1.1rem; }
+		.ticket-line { margin-top: .5rem; padding-top: .5rem; }
+		.event-ticket figcaption { margin-top: .45rem; font-size: .7rem; }
+		.pan-scene { grid-template-columns: 1fr; }
+		.pan-mark { justify-self: center; transform: rotate(90deg); }
+		.line-head { display: none; }
+		.work-line, .pack-line { grid-template-columns: 1fr auto; gap: .4rem 1rem; }
+		.work-line strong, .pack-line strong { grid-column: 1 / -1; }
+		.work-line b, .pack-line em { grid-column: 2; grid-row: 2; }
+		.sheet-foot, .prep-strip { align-items: flex-start; flex-direction: column; }
+		.source-record > div { align-items: flex-start; flex-direction: column; gap: .3rem; }
+	}
+
+	@media (max-width: 360px) {
+		.stage-flow { grid-template-columns: 1fr auto 1fr; }
+		.stage-flow svg:last-of-type { display: none; }
+		.stage-flow .result { grid-column: 1 / -1; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.capabilities summary svg, .faq summary svg { transition: none; }
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		@keyframes orders-handoff-step { from { opacity: .35; filter: blur(2px); transform: translateX(-5px); } }
+		.orders-enter .stage-flow > * { animation: orders-handoff-step 420ms cubic-bezier(.22, 1, .36, 1) backwards; }
+		.orders-enter .stage-flow > :nth-child(1) { animation-delay: 180ms; }
+		.orders-enter .stage-flow > :nth-child(2) { animation-delay: 300ms; }
+		.orders-enter .stage-flow > :nth-child(3) { animation-delay: 420ms; }
+		.orders-enter .stage-flow > :nth-child(4) { animation-delay: 540ms; }
+		.orders-enter .stage-flow > :nth-child(5) { animation-delay: 660ms; }
+	}
+</style>

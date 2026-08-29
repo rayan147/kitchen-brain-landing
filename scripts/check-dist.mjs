@@ -43,7 +43,7 @@ const menuTargets = [
 	{ id: 'import', area: 'invoices-and-price-list-import', href: '/features/invoices-and-price-list-import' },
 	{ id: 'nutrition', area: 'nutrition-facts-and-allergens', href: '/features/nutrition-facts-and-allergens' },
 	{ id: 'assistant', area: 'sage', href: '/features/sage' },
-	{ id: 'orders', area: 'the-day-itself' },
+	{ id: 'orders', area: 'order-shop-prep-pack', href: '/features/order-shop-prep-pack' },
 	{
 		id: 'purchasing',
 		area: 'purchasing-and-receiving',
