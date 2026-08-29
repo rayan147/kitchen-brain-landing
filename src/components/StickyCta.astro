@@ -19,9 +19,9 @@
  * (principle 3 is about content, and this is not content).
  *
  * Considered Observer (a scroll-position store the bar and the header both
- * subscribe to); not used because there is exactly one subscriber and the
- * platform already ships the observer. One IntersectionObserver, two
- * sentinels, no store.
+ * subscribe to); not used because there is exactly one subscriber. One
+ * passive scroll listener, two rect reads, no store. (An IntersectionObserver
+ * was the first cut and is wrong here: see the note in the script.)
  */
 import { cta, launchPlan } from '../lib/site';
 ---
@@ -52,30 +52,26 @@ import { cta, launchPlan } from '../lib/site';
 	const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
 	const demo = document.getElementById('demo');
 	const start = document.getElementById('start');
-	if (bar && demo && start && 'IntersectionObserver' in window) {
-		let pastDemo = false;
-		let reachedClose = false;
+	if (bar && demo && start) {
+		// A scroll listener, not an IntersectionObserver. The observer only fires
+		// on threshold crossings, so an anchor jump from above the demo to below
+		// it (the hand-off links, the tour link, a deep link) skips the crossing
+		// and the bar never shows. Two rect reads per frame is nothing.
+		let queued = false;
 		const update = () => {
+			queued = false;
+			const pastDemo = demo.getBoundingClientRect().bottom < 0;
+			const reachedClose = start.getBoundingClientRect().top < window.innerHeight;
 			bar.hidden = !(pastDemo && !reachedClose);
 		};
-		// Past the demo means its bottom edge is above the viewport, not merely
-		// that it stopped intersecting (it also stops intersecting when the reader
-		// scrolls back UP past it, and the bar must not show there).
-		new IntersectionObserver(
-			([entry]) => {
-				pastDemo = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
-				update();
-			},
-			{ threshold: 0 }
-		).observe(demo);
-		// Reached the close means its top has entered the viewport; once it has,
-		// the bar stays away for the footer too (the close is the last primary).
-		new IntersectionObserver(
-			([entry]) => {
-				reachedClose = entry.boundingClientRect.top < window.innerHeight;
-				update();
-			},
-			{ threshold: 0 }
-		).observe(start);
+		const schedule = () => {
+			if (!queued) {
+				queued = true;
+				requestAnimationFrame(update);
+			}
+		};
+		addEventListener('scroll', schedule, { passive: true });
+		addEventListener('resize', schedule, { passive: true });
+		update();
 	}
 </script>
