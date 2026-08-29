@@ -50,13 +50,13 @@ const videoChapters = [
 	<section class="hero" aria-labelledby="sage-feature-heading">
 		<div class="container-page hero-grid">
 			<div class="hero-copy anim-enter">
-				<nav aria-label="Breadcrumb" class="breadcrumb">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
 					<a href="/features">Every feature</a>
 					<span aria-hidden="true">/</span>
 					<span>Sage</span>
 				</nav>
 				<p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p>
-				<h1 id="sage-feature-heading">Ask your kitchen. Check the answer.</h1>
+				<h1 id="sage-feature-heading" class="feature-display">Ask your kitchen. Check the answer.</h1>
 				<p class="hero-lede">
 					Sage is inside CostCook, including during setup. It reads the records you have,
 					shows where each answer came from, and waits for your approval before prepared work
@@ -91,6 +91,12 @@ const videoChapters = [
 			</figure>
 		</div>
 	</section>
+
+	<nav class="feature-chapters container-page" aria-label="On this page">
+		<a href="#watch-sage"><strong>Watch Sage work</strong><span>Follow setup, source, and approval in 20 seconds.</span></a>
+		<a href="#sage-jobs"><strong>Six kitchen jobs</strong><span>See the exact questions Sage can answer.</span></a>
+		<a href="#sage-guardrails"><strong>Sources and approval</strong><span>See what Sage reads, prepares, and leaves to you.</span></a>
+	</nav>
 
 	<section id="watch-sage" class="video-section" aria-labelledby="video-heading">
 		<div class="container-page video-grid">
@@ -152,7 +158,7 @@ const videoChapters = [
 		</div>
 	</section>
 
-	<section class="questions" aria-labelledby="questions-heading">
+	<section id="sage-jobs" class="questions" aria-labelledby="questions-heading">
 		<div class="container-page questions-grid">
 			<div class="questions-intro" data-reveal>
 				<h2 id="questions-heading">Eleven kitchen checks. One reviewed proposal.</h2>
@@ -200,7 +206,7 @@ const videoChapters = [
 		</div>
 	</section>
 
-	<section class="guardrails" aria-labelledby="guardrails-heading">
+	<section id="sage-guardrails" class="guardrails" aria-labelledby="guardrails-heading">
 		<div class="container-page">
 			<div class="guardrails-heading" data-reveal>
 				<h2 id="guardrails-heading">Useful because the boundaries are visible.</h2>
@@ -249,7 +255,7 @@ const videoChapters = [
 				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book 15 minutes</a>
 			</div>
 		</div>
-		<nav class="container-page onward" aria-label="Related feature guides">
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides">
 			<a href="/features/invoices-and-price-list-import">Invoices &amp; price-list import</a>
 			<a href="/features/recipes-and-costing">Recipes &amp; food costing</a>
 			<a href="/features">Every CostCook feature</a>
@@ -261,31 +267,33 @@ const videoChapters = [
 	.sage-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); overflow: clip; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
 	.hero-grid { display: grid; gap: clamp(3.5rem, 7vw, 7rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
-	.breadcrumb { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.6rem; font-size: 0.875rem; color: var(--color-ink-soft); }
-	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
-	.availability { display: inline-flex; align-items: center; gap: 0.55rem; margin-bottom: 1.25rem; color: var(--color-green-deep); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+	.availability { display: inline-flex; align-items: center; gap: 0.55rem; margin-bottom: 1.25rem; color: var(--color-green-deep); font-size: var(--text-caption); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 	.availability span { width: 0.65rem; height: 0.65rem; border-radius: 999px; background: var(--color-green); box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-green) 13%, transparent); }
-	.hero h1 { max-width: 10ch; font-family: var(--font-display); font-size: clamp(3rem, 5.6vw, 5.9rem); font-weight: 600; line-height: 0.98; letter-spacing: -0.028em; text-wrap: balance; }
+	.hero h1 { max-width: 10ch; }
 	.hero-lede { max-width: 40ch; margin-top: 1.75rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
 	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
 	.btn-outline:hover { background: var(--color-green); color: white; }
 	.hero-evidence { position: relative; min-width: 0; padding: 0 0 clamp(5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem); }
-	.answer-sheet { position: relative; background: var(--color-paper); box-shadow: 0 18px 36px color-mix(in srgb, var(--color-ink) 14%, transparent); }
-	.answer-sheet::before { position: absolute; inset: 0 0 auto; height: 4px; background: var(--color-green); content: ''; }
-	.answer-sheet > p { padding: 0.8rem 1rem; border-bottom: 1px solid var(--rule); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.answer-sheet { position: relative; border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: 0 18px 36px color-mix(in srgb, var(--color-ink) 14%, transparent); }
+	.answer-sheet > p { padding: 0.8rem 1rem; border-bottom: 1px solid var(--rule); color: var(--color-amber-deep); font-size: var(--text-label-sm); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 	.answer-sheet img { display: block; width: 100%; height: auto; }
 	.setup-slip { position: absolute; bottom: 1.1rem; left: 0; width: min(56%, 17rem); padding: 1.2rem; border-top: 3px solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 13px 25px color-mix(in srgb, var(--color-ink) 15%, transparent); transform: rotate(-1.5deg); }
 	.setup-slip span, .setup-slip strong, .setup-slip small { display: block; }
-	.setup-slip span { color: var(--color-amber-deep); font-size: 0.68rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
-	.setup-slip strong { margin-top: 0.55rem; font-family: var(--font-display); font-size: 1.5rem; }
+	.setup-slip span { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.setup-slip strong { margin-top: 0.55rem; font-family: var(--font-display); font-size: var(--text-record); }
 	.setup-slip small { margin-top: 0.55rem; color: var(--color-ink-soft); line-height: 1.45; }
-	.hero-evidence > figcaption { margin: 1rem 0 0 auto; max-width: 56ch; color: var(--color-ink-soft); font-size: 0.76rem; line-height: 1.5; }
+	.hero-evidence > figcaption { margin: 1rem 0 0 auto; max-width: 56ch; color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
+	.feature-chapters { display: grid; gap: 1px; padding-block: 1px; background: var(--color-hairline); }
+	.feature-chapters a { display: flex; min-height: 5.5rem; flex-direction: column; justify-content: center; padding: 1rem clamp(1rem, 2vw, 1.5rem); background: var(--color-paper); color: var(--color-ink); text-decoration: none; }
+	.feature-chapters strong { font-family: var(--font-display); font-size: var(--text-record-sm); font-weight: 600; }
+	.feature-chapters span { margin-top: 0.3rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.4; }
+	.feature-chapters a:hover strong { color: var(--color-green-deep); }
 
 	.video-section { background: var(--color-ink); color: var(--color-offwhite); }
 	.video-grid { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; padding-block: var(--space-section); }
-	.video-copy h2, .setup-copy h2, .questions-intro h2, .proof-copy h2, .guardrails-heading h2, .faq-intro h2, .closing h2 { font-family: var(--font-display); font-size: clamp(2.1rem, 3.8vw, 4rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+	.video-copy h2, .setup-copy h2, .questions-intro h2, .proof-copy h2, .guardrails-heading h2, .faq-intro h2, .closing h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
 	.video-copy > p { max-width: 43ch; margin-top: 1.25rem; color: color-mix(in srgb, var(--color-offwhite) 75%, transparent); line-height: 1.65; }
 	.chapter-list { margin-top: 2rem; border-top: 1px solid color-mix(in srgb, white 20%, transparent); }
 	.chapter-list li { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: 1rem; padding-block: 0.9rem; border-bottom: 1px solid color-mix(in srgb, white 15%, transparent); }
@@ -294,36 +302,36 @@ const videoChapters = [
 	.chapter-list small { margin-top: 0.2rem; color: color-mix(in srgb, var(--color-offwhite) 68%, transparent); line-height: 1.45; }
 	.video-frame { min-width: 0; }
 	.video-frame video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 1px solid color-mix(in srgb, white 25%, transparent); background: black; object-fit: contain; }
-	.video-frame figcaption { margin-top: 0.8rem; color: color-mix(in srgb, var(--color-offwhite) 68%, transparent); font-size: 0.78rem; line-height: 1.5; }
+	.video-frame figcaption { margin-top: 0.8rem; color: color-mix(in srgb, var(--color-offwhite) 68%, transparent); font-size: var(--text-label-sm); line-height: 1.5; }
 
 	.setup-section, .proof-section, .faq { background: var(--color-offwhite); }
 	.setup-grid, .proof-grid, .faq-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--space-section); }
 	.setup-capture { min-width: 0; }
 	.setup-capture img { display: block; width: 100%; height: auto; border-top: 4px solid var(--color-green); box-shadow: 0 15px 28px color-mix(in srgb, var(--color-ink) 10%, transparent); }
-	.setup-capture figcaption, .proof-capture figcaption { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: 0.78rem; line-height: 1.5; }
-	.setup-copy > p, .questions-intro > p, .proof-copy > p:not(.snap), .guardrails-heading > p, .faq-intro > p, .closing p { max-width: 45ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: 1.05rem; line-height: 1.65; }
+	.setup-capture figcaption, .proof-capture figcaption { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
+	.setup-copy > p, .questions-intro > p, .proof-copy > p:not(.snap), .guardrails-heading > p, .faq-intro > p, .closing p { max-width: 45ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: var(--text-body-lg); line-height: 1.65; }
 	.setup-copy dl { margin-top: 2rem; border-top: 1px solid var(--rule); }
 	.setup-copy dl div { padding-block: 1rem; border-bottom: 1px solid var(--rule); }
 	.setup-copy dt { font-weight: 700; }
-	.setup-copy dd { margin-top: 0.35rem; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
+	.setup-copy dd { margin-top: 0.35rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.55; }
 
 	.questions { background: var(--color-softgreen); }
 	.questions-grid { display: grid; gap: clamp(3rem, 6vw, 6rem); align-items: start; padding-block: var(--space-section); }
 	.questions-intro { position: sticky; top: 7rem; }
 	.question-list { border-top: 1px solid var(--rule); }
 	.question-list li { display: grid; grid-template-columns: 2.8rem minmax(0, 1fr); gap: clamp(1rem, 3vw, 2rem); padding-block: clamp(1.25rem, 2.5vw, 2rem); border-bottom: 1px solid var(--rule); }
-	.question-list > li > span { color: var(--color-amber-deep); font-size: 0.76rem; font-weight: 750; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
-	.question-list h3 { font-family: var(--font-display); font-size: clamp(1.3rem, 2vw, 1.75rem); font-weight: 600; line-height: 1.2; }
+	.question-list > li > span { color: var(--color-amber-deep); font-size: var(--text-label-sm); font-weight: 750; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
+	.question-list h3 { font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: 1.2; }
 	.question-list p { max-width: 55ch; margin-top: 0.55rem; color: var(--color-ink-soft); line-height: 1.6; }
 
 	.proof-grid { align-items: start; }
 	.answer-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; border-top: 1px solid var(--rule); }
 	.answer-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
-	.answer-facts dt { color: var(--color-ink-soft); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
-	.answer-facts dd { margin-top: 0.35rem; font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-	.snap { margin-top: 2rem; padding-top: 1.4rem; border-top: 3px solid var(--color-amber-deep); font-family: var(--font-display); font-size: clamp(1.55rem, 2.7vw, 2.25rem); font-weight: 600; line-height: 1.15; }
+	.answer-facts dt { color: var(--color-ink-soft); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+	.answer-facts dd { margin-top: 0.35rem; font-size: var(--text-body-lg); font-weight: 700; font-variant-numeric: tabular-nums; }
+	.snap { margin-top: 2rem; padding-top: 1.4rem; border-top: 3px solid var(--color-amber-deep); font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.15; }
 	.proof-capture { min-width: 0; }
-	.proof-capture > p { padding: 0.8rem 1rem; border-top: 4px solid var(--color-green); background: var(--color-paper); color: var(--color-green-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.proof-capture > p { padding: 0.8rem 1rem; border-top: 4px solid var(--color-green); background: var(--color-paper); color: var(--color-green-deep); font-size: var(--text-label-sm); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 	.proof-capture img { display: block; width: 100%; height: auto; box-shadow: 0 15px 28px color-mix(in srgb, var(--color-ink) 10%, transparent); }
 
 	.guardrails { background: var(--color-cream); }
@@ -332,15 +340,15 @@ const videoChapters = [
 	.approval-path { display: grid; grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1fr) 2.5rem minmax(0, 1fr); gap: 0.75rem; align-items: center; margin-top: clamp(2.5rem, 5vw, 4.5rem); padding: clamp(1rem, 2.5vw, 1.8rem); border-block: 1px solid var(--rule); background: var(--color-paper); }
 	.approval-path div { min-width: 0; }
 	.approval-path span, .approval-path strong { display: block; }
-	.approval-path span { color: var(--color-ink-soft); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+	.approval-path span { color: var(--color-ink-soft); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 	.approval-path strong { margin-top: 0.25rem; }
 	.approval-path i { position: relative; height: 1px; background: var(--color-hairline-strong); }
 	.approval-path i::after { position: absolute; right: 0; top: 50%; width: 0.45rem; height: 0.45rem; border-top: 1px solid var(--color-ink-soft); border-right: 1px solid var(--color-ink-soft); content: ''; transform: translateY(-50%) rotate(45deg); }
 	.approval-path .person { padding: 0.8rem 1rem; background: var(--color-softgreen); }
 	.guardrail-list { display: grid; gap: 0; margin-top: 3rem; border-top: 1px solid var(--rule); }
 	.guardrail-list li { padding-block: 1.25rem; border-bottom: 1px solid var(--rule); }
-	.guardrail-list h3 { font-size: 1rem; font-weight: 700; }
-	.guardrail-list p { max-width: 58ch; margin-top: 0.4rem; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
+	.guardrail-list h3 { font-size: var(--text-body); font-weight: 700; }
+	.guardrail-list p { max-width: 58ch; margin-top: 0.4rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.55; }
 
 	.faq-grid { align-items: start; }
 	.faq-intro { position: sticky; top: 7rem; }
@@ -354,9 +362,10 @@ const videoChapters = [
 
 	.closing { border-top: 1px solid var(--color-hairline); background: var(--color-softgreen); }
 	.closing-grid { display: grid; gap: 2rem 5rem; align-items: end; padding-block: var(--space-section-tight); }
-	.onward { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; padding-bottom: 2.5rem; font-size: 0.9rem; }
+	.onward { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; padding-bottom: 2.5rem; font-size: var(--text-body-sm); }
 
 	@media (min-width: 900px) {
+		.feature-chapters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 		.hero-grid { grid-template-columns: minmax(0, 0.88fr) minmax(30rem, 1.12fr); }
 		.video-grid { grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1.28fr); }
 		.setup-grid, .proof-grid { grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr); }
@@ -377,11 +386,11 @@ const videoChapters = [
 
 	@media (max-width: 639px) {
 		.hero-grid { padding-block: 3.5rem 4.5rem; }
-		.hero h1 { font-size: clamp(2.8rem, 15vw, 4.25rem); }
+		.feature-chapters { margin-block: 1rem; }
 		.hero-evidence { padding-left: 0; padding-bottom: 5.5rem; }
 		.setup-slip { width: 72%; }
 		.video-section, .questions, .guardrails, .faq, .setup-section, .proof-section { scroll-margin-top: 5rem; }
-		.video-copy h2, .setup-copy h2, .questions-intro h2, .proof-copy h2, .guardrails-heading h2, .faq-intro h2, .closing h2 { font-size: 2.35rem; }
+		.video-copy h2, .setup-copy h2, .questions-intro h2, .proof-copy h2, .guardrails-heading h2, .faq-intro h2, .closing h2 { font-size: var(--text-h2); }
 		.answer-facts { grid-template-columns: 1fr; }
 		.question-list li { grid-template-columns: 2rem minmax(0, 1fr); }
 		.hero-actions a, .closing-actions a { width: 100%; }

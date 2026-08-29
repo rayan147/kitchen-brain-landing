@@ -59,12 +59,12 @@ const faqItems = [
 	<section class="hero" aria-labelledby="ingredients-prices-heading">
 		<div class="container-page hero-grid">
 			<div class="hero-copy anim-enter">
-				<nav aria-label="Breadcrumb" class="breadcrumb">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
 					<a href="/features">Every feature</a>
 					<span aria-hidden="true">/</span>
 					<span>Ingredients and supplier prices</span>
 				</nav>
-				<h1 id="ingredients-prices-heading">Know which supplier price is inside the recipe.</h1>
+				<h1 id="ingredients-prices-heading" class="feature-display">Know which supplier price is inside the recipe.</h1>
 				<p class="hero-lede">
 					A case price is not comparable until pack size and usable yield have had their say.
 					Keep every offer attached to the ingredient, with the working open.
@@ -90,7 +90,7 @@ const faqItems = [
 				<div class="ingredient-record">
 					<div class="record-head"><span>Ingredient</span><span>Current</span></div>
 					<div class="ingredient-title">
-						<div><h2>Chicken thigh</h2><p>Purchased by weight · usable after trim</p></div>
+					<div><strong class="record-title">Chicken thigh</strong><p>Purchased by weight · usable after trim</p></div>
 						<strong>$5.09 / kg</strong>
 					</div>
 				</div>
@@ -283,7 +283,7 @@ const faqItems = [
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
 			</div>
 		</div>
-		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
+		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>
 
@@ -291,43 +291,41 @@ const faqItems = [
 	.ingredients-prices { overflow: clip; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
 	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
-	.breadcrumb { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .875rem; color: var(--color-ink-soft); }
-	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
-	.hero h1 { max-width: 12ch; margin-top: 1.5rem; font-size: clamp(2.65rem, 4.8vw, 5.45rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; }
-	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: clamp(1.05rem, .98rem + .35vw, 1.3rem); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero h1 { max-width: 12ch; margin-top: 1.5rem; }
+	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
 	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
 	.btn-outline:hover { background: var(--color-softgreen); }
-	.figure-note { margin-bottom: .7rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.figure-note { margin-bottom: .7rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.ingredient-record, .offer { min-width: 0; padding: clamp(1.1rem, 2.5vw, 1.6rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.ingredient-record { border-top: 3px solid var(--color-green); }
-	.record-head { display: flex; justify-content: space-between; gap: 1rem; font-size: .69rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.record-head { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-soft); }
 	.ingredient-title { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-top: .9rem; }
-	.ingredient-title h2 { font-size: clamp(1.45rem, 2vw, 1.9rem); font-weight: 600; }
-	.ingredient-title p { margin-top: .2rem; font-size: .82rem; color: var(--color-ink-soft); }
-	.ingredient-title > strong { color: var(--color-green-deep); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+	.ingredient-title .record-title { display: block; font-family: var(--font-display); font-size: var(--text-record); font-weight: 600; }
+	.ingredient-title p { margin-top: .2rem; font-size: var(--text-caption); color: var(--color-ink-soft); }
+	.ingredient-title > strong { color: var(--color-green-deep); font-size: var(--text-record-sm); font-variant-numeric: tabular-nums; }
 	.offer-join { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; height: 1.65rem; padding-inline: 16%; }
 	.offer-join span { border-right: 1px solid var(--color-amber-deep); border-bottom: 1px solid var(--color-amber-deep); }
 	.offer-join span:first-child { border-left: 1px solid var(--color-amber-deep); border-right: 0; }
 	.offers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
 	.offer { border-top: 3px solid var(--color-ticket-rule); }
 	.offer.preferred { border-top-color: var(--color-amber-deep); }
-	.offer > strong { display: block; margin-top: 1rem; font-size: 1.7rem; font-variant-numeric: tabular-nums; }
+	.offer > strong { display: block; margin-top: 1rem; font-size: var(--text-record); font-variant-numeric: tabular-nums; }
 	.offer > small { display: block; margin-top: .15rem; color: var(--color-ink-soft); }
 	.offer > p { margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--color-ticket-rule); color: var(--color-green-deep); font-weight: 700; font-variant-numeric: tabular-nums; }
-	.offer-board figcaption, .ingredient-workspace figcaption, .comparison-table figcaption, .screenshot-frame figcaption { margin-top: .85rem; font-size: .78rem; line-height: 1.45; color: var(--color-ink-soft); }
+	.offer-board figcaption, .ingredient-workspace figcaption, .comparison-table figcaption, .screenshot-frame figcaption { margin-top: .85rem; font-size: var(--text-label-sm); line-height: 1.45; color: var(--color-ink-soft); }
 	.problem { border-bottom: 1px solid var(--color-hairline); background: var(--color-paper); }
 	.problem-grid { display: grid; gap: 3rem; align-items: center; padding-block: var(--spacing-section-tight); }
 	.problem h2, .section-intro h2, .evidence h2, .capabilities h2, .faq h2, .closing h2 { font-size: var(--text-h2); font-weight: 600; line-height: 1.12; }
 	.problem p, .section-intro p, .evidence-grid > div > p, .capabilities-grid > div > p, .faq-grid > div > p, .closing p { max-width: 58ch; margin-top: 1.1rem; color: var(--color-ink-soft); line-height: 1.65; }
 	.price-drift { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
 	.price-drift div { padding: 1.35rem; border-top: 2px solid var(--color-ticket-rule); background: var(--color-cream); }
-	.price-drift span, .workspace-side span { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
-	.price-drift strong { display: block; margin-top: .45rem; font-size: 1.75rem; font-variant-numeric: tabular-nums; }
+	.price-drift span, .workspace-side span { display: block; font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.price-drift strong { display: block; margin-top: .45rem; font-size: var(--text-record); font-variant-numeric: tabular-nums; }
 	.price-drift small { color: var(--color-ink-soft); }
 	.price-drift svg, .story-nav svg, summary svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 	.price-drift svg { color: var(--color-amber-deep); }
-	.price-drift figcaption { grid-column: 1 / -1; color: var(--color-ink-soft); font-size: .8rem; }
+	.price-drift figcaption { grid-column: 1 / -1; color: var(--color-ink-soft); font-size: var(--text-caption); }
 	.story-nav { display: grid; padding-block: 1.25rem; }
 	.story-nav a { display: grid; min-height: 84px; grid-template-columns: 1fr auto; gap: .25rem 1rem; align-content: center; padding: 1.2rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); }
 	.story-nav a:first-child { border-top: 1px solid var(--color-ticket-rule); }
@@ -342,15 +340,15 @@ const faqItems = [
 	.ingredient-workspace { display: grid; gap: 1px; margin-top: clamp(2.5rem, 6vw, 4.5rem); background: var(--color-hairline-strong); box-shadow: var(--shadow-lift); }
 	.workspace-main, .workspace-side > div { background: var(--color-paper); }
 	.workspace-main { padding: clamp(1.3rem, 4vw, 2.2rem); }
-	.panel-bar { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--color-hairline); font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.panel-bar { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--color-hairline); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
 	.workspace-title { margin-top: 1.5rem; }
-	.workspace-title h3 { font-size: 1.75rem; font-weight: 600; }
+	.workspace-title h3 { font-size: var(--text-record); font-weight: 600; }
 	.workspace-title p { color: var(--color-ink-soft); }
 	.fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 1.5rem; background: var(--color-hairline); }
 	.fact-grid div { padding: 1rem; background: var(--color-offwhite); }
-	.fact-grid dt { font-size: .72rem; color: var(--color-ink-soft); }
+	.fact-grid dt { font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.fact-grid dd { margin-top: .3rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-	.source-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem; margin-top: 1rem; font-size: .82rem; }
+	.source-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem; margin-top: 1rem; font-size: var(--text-caption); }
 	.source-line span { color: var(--color-ink-soft); }
 	.workspace-side { display: grid; gap: 1px; }
 	.workspace-side > div { padding: 1.25rem; }
@@ -358,18 +356,18 @@ const faqItems = [
 	.workspace-side small { color: var(--color-ink-soft); }
 	.feature-scenes { display: grid; gap: 2rem; margin-top: 3rem; }
 	.feature-scenes article { padding-top: 1.25rem; border-top: 1px solid var(--color-hairline-strong); }
-	.feature-scenes h3, .history h3, .impact h3 { font-size: 1.25rem; font-weight: 600; }
+	.feature-scenes h3, .history h3, .impact h3 { font-size: var(--text-record-sm); font-weight: 600; }
 	.feature-scenes p { margin-top: .65rem; color: var(--color-ink-soft); line-height: 1.6; }
 	.comparison-table { margin-top: clamp(2.5rem, 6vw, 4.5rem); border: 1px solid var(--color-ticket-rule); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.comparison-head, .comparison-row { display: grid; grid-template-columns: 1.05fr 1fr 1fr; gap: 1rem; padding: 1rem clamp(1rem, 3vw, 1.75rem); }
-	.comparison-head { background: var(--color-ink); color: var(--color-paper); font-size: .75rem; font-weight: 700; letter-spacing: .05em; }
+	.comparison-head { background: var(--color-ink); color: var(--color-paper); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .05em; }
 	.comparison-row { border-top: 1px solid var(--color-ticket-rule); }
-	.comparison-row strong { color: var(--color-ink-soft); font-size: .8rem; }
+	.comparison-row strong { color: var(--color-ink-soft); font-size: var(--text-caption); }
 	.comparison-row span { font-weight: 600; font-variant-numeric: tabular-nums; }
 	.result-row { background: var(--color-softgreen); }
 	.comparison-result { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; padding: 1.2rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
-	.comparison-result span { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-green-deep); }
-	.comparison-result strong { font-size: 1.15rem; }
+	.comparison-result span { font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-green-deep); }
+	.comparison-result strong { font-size: var(--text-body-lg); }
 	.comparison-result small { color: var(--color-ink-soft); }
 	.comparison-table figcaption { padding-inline: clamp(1rem, 3vw, 1.75rem); padding-bottom: 1rem; }
 	.history-impact { display: grid; gap: 2rem; margin-top: 3rem; }
@@ -380,20 +378,20 @@ const faqItems = [
 	.history span, .impact span { text-align: right; }
 	.impact small { display: block; color: var(--color-ink-soft); }
 	.impact b { color: var(--color-amber-deep); font-variant-numeric: tabular-nums; }
-	.impact > p { margin-top: .8rem; font-size: .78rem; color: var(--color-ink-soft); }
+	.impact > p { margin-top: .8rem; font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.evidence { padding-block: var(--spacing-section); background: var(--color-ink); color: var(--color-paper); }
 	.evidence-grid { display: grid; gap: 3rem; align-items: center; }
 	.evidence-grid > div > p { color: var(--color-ink-muted); }
 	.evidence ul { margin-top: 1.5rem; }
 	.evidence li { padding-block: .7rem; border-bottom: 1px solid var(--color-ink-rule); color: var(--color-ink-muted); }
-	.screenshot-frame { min-width: 0; padding: .7rem; background: var(--color-paper); box-shadow: 0 1px 2px rgb(0 0 0 / .2), 0 12px 30px rgb(0 0 0 / .22); }
+	.screenshot-frame { min-width: 0; padding: .7rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.screenshot-frame img { display: block; width: 100%; height: auto; }
 	.screenshot-frame figcaption { color: var(--color-ink-soft); padding-inline: .3rem; }
 	.capabilities { padding-block: var(--spacing-section); background: var(--color-paper); }
 	.capabilities-grid { display: grid; gap: 3rem; }
 	.count { display: flex; align-items: baseline; gap: .75rem; }
-	.count strong { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-green-deep); }
-	.count span { font-size: .8rem; color: var(--color-ink-soft); }
+	.count strong { font-family: var(--font-display); font-size: var(--text-h2); color: var(--color-green-deep); }
+	.count span { font-size: var(--text-caption); color: var(--color-ink-soft); }
 	details summary { cursor: pointer; list-style: none; }
 	details summary::-webkit-details-marker { display: none; }
 	.capabilities details { scroll-margin-top: 1rem; border-top: 1px solid var(--color-ticket-rule); border-bottom: 1px solid var(--color-ticket-rule); }

@@ -58,10 +58,10 @@ const faqItems = [
 	<section class="hero" aria-labelledby="inventory-heading">
 		<div class="container-page hero-grid">
 			<div class="hero-copy anim-enter">
-				<nav aria-label="Breadcrumb" class="breadcrumb">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
 					<a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Inventory</span>
 				</nav>
-				<h1 id="inventory-heading">Know when the shelf number deserves your trust.</h1>
+				<h1 id="inventory-heading" class="feature-display">Know when the shelf number deserves your trust.</h1>
 				<p class="hero-lede">
 					Start with a physical count. Carry every dated movement after it. If the result is stale
 					or unsupported, say so before it changes what you buy.
@@ -75,7 +75,7 @@ const faqItems = [
 			<figure class="shelf-ticket inventory-enter">
 				<p class="figure-note">Illustrative shelf record</p>
 				<div class="ticket-head"><span>Walk-in · Protein</span><span class="state fresh">Fresh</span></div>
-				<div class="ticket-title"><div><h2>Chicken thigh</h2><p>Computed from the last trusted count</p></div><strong>26.2 kg</strong></div>
+				<div class="ticket-title"><div><strong class="record-title">Chicken thigh</strong><p>Computed from the last trusted count</p></div><strong>26.2 kg</strong></div>
 				<div class="equation" aria-label="24 kilograms counted, plus 10 kilograms received, minus 7.8 kilograms packed, equals 26.2 kilograms on hand">
 					<div><small>Counted</small><strong>24.0</strong><span>kg</span></div><b aria-hidden="true">+</b>
 					<div><small>Received</small><strong>10.0</strong><span>kg</span></div><b aria-hidden="true">−</b>
@@ -193,7 +193,7 @@ const faqItems = [
 			<div><h2 id="closing-heading">A shelf number ready to use.</h2><p>Bring one real shopping list and count one shelf. Follow the baseline into the buy gap with every movement shown.</p></div>
 			<div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div>
 		</div>
-		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
+		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>
 
@@ -201,46 +201,43 @@ const faqItems = [
 	.inventory-page { overflow: clip; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
 	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
-	.breadcrumb { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .875rem; color: var(--color-ink-soft); }
-	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
-	.hero h1 { max-width: 12ch; margin-top: 1.5rem; font-size: clamp(2.65rem, 4.8vw, 5.45rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; }
-	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: clamp(1.05rem, .98rem + .35vw, 1.3rem); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero h1 { max-width: 12ch; margin-top: 1.5rem; }
+	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
 	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
 	.btn-outline:hover { background: var(--color-softgreen); }
-	.figure-note { margin-bottom: .7rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
-	.shelf-ticket { position: relative; min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
-	.shelf-ticket::before { position: absolute; inset: 0 0 auto; height: 3px; background: var(--color-green); content: ''; }
-	.ticket-head, .panel-bar, .gap-head { display: flex; justify-content: space-between; gap: 1rem; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
-	.state { display: inline-flex; width: fit-content; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: .7rem; font-weight: 700; font-style: normal; letter-spacing: .05em; text-transform: uppercase; }
+	.figure-note { margin-bottom: .7rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.shelf-ticket { position: relative; min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
+	.ticket-head, .panel-bar, .gap-head { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--text-micro); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.state { display: inline-flex; width: fit-content; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: var(--text-micro); font-weight: 700; font-style: normal; letter-spacing: .05em; text-transform: uppercase; }
 	.state.fresh { background: var(--color-softgreen); color: var(--color-green-deep); }
 	.state.stale { background: var(--color-softamber); color: var(--color-amber-deep); }
 	.state.missing { border: 1px solid var(--color-hairline); color: var(--color-ink-soft); }
 	.ticket-title { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-top: 1.1rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--color-ticket-rule); }
-	.ticket-title h2 { font-size: clamp(1.45rem, 2vw, 1.9rem); font-weight: 600; }
-	.ticket-title p { margin-top: .2rem; font-size: .82rem; color: var(--color-ink-soft); }
-	.ticket-title > strong { color: var(--color-green-deep); font-size: 1.55rem; font-variant-numeric: tabular-nums; }
+	.ticket-title .record-title { display: block; font-family: var(--font-display); font-size: var(--text-record); font-weight: 600; }
+	.ticket-title p { margin-top: .2rem; font-size: var(--text-caption); color: var(--color-ink-soft); }
+	.ticket-title > strong { color: var(--color-green-deep); font-size: var(--text-record); font-variant-numeric: tabular-nums; }
 	.equation { display: grid; grid-template-columns: repeat(7, auto); gap: .45rem; align-items: center; margin-top: 1.2rem; }
 	.equation > div { min-width: 0; }
-	.equation small, .gap-equation small { display: block; font-size: .66rem; color: var(--color-ink-soft); }
-	.equation strong { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
-	.equation span { margin-left: .2rem; font-size: .72rem; color: var(--color-ink-soft); }
-	.equation b, .gap-equation > b { color: var(--color-amber-deep); font-size: 1.1rem; }
+	.equation small, .gap-equation small { display: block; font-size: var(--text-micro); color: var(--color-ink-soft); }
+	.equation strong { font-size: var(--text-body-lg); font-variant-numeric: tabular-nums; }
+	.equation span { margin-left: .2rem; font-size: var(--text-label-sm); color: var(--color-ink-soft); }
+	.equation b, .gap-equation > b { color: var(--color-amber-deep); font-size: var(--text-body-lg); }
 	.equation .result { padding: .7rem; background: var(--color-softgreen); }
-	.ticket-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--color-ticket-rule); font-size: .72rem; color: var(--color-ink-soft); }
-	.shelf-ticket figcaption, .movement-workspace figcaption, .gap-sheet figcaption { margin-top: .85rem; font-size: .78rem; line-height: 1.45; color: var(--color-ink-soft); }
+	.ticket-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--color-ticket-rule); font-size: var(--text-label-sm); color: var(--color-ink-soft); }
+	.shelf-ticket figcaption, .movement-workspace figcaption, .gap-sheet figcaption { margin-top: .85rem; font-size: var(--text-label-sm); line-height: 1.45; color: var(--color-ink-soft); }
 	.problem { border-bottom: 1px solid var(--color-hairline); background: var(--color-paper); }
 	.problem-grid { display: grid; gap: 3rem; align-items: center; padding-block: var(--spacing-section-tight); }
 	.problem h2, .section-intro h2, .trust-proof h2, .capabilities h2, .faq h2, .closing h2 { font-size: var(--text-h2); font-weight: 600; line-height: 1.12; }
 	.problem p, .section-intro p, .trust-proof-grid > div > p, .capabilities-grid > div > p, .faq-grid > div > p, .closing p { max-width: 58ch; margin-top: 1.1rem; color: var(--color-ink-soft); line-height: 1.65; }
 	.stale-scene { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
 	.stale-scene div { padding: 1.35rem; border-top: 2px solid var(--color-ticket-rule); background: var(--color-cream); }
-	.stale-scene span, .movement-side span { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-amber-deep); }
-	.stale-scene strong { display: block; margin-top: .45rem; font-size: 1.7rem; }
+	.stale-scene span, .movement-side span { display: block; font-size: var(--text-micro); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.stale-scene strong { display: block; margin-top: .45rem; font-size: var(--text-record); }
 	.stale-scene small { color: var(--color-ink-soft); }
 	.stale-scene svg, .story-nav svg, summary svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 	.stale-scene svg { color: var(--color-amber-deep); }
-	.stale-scene figcaption { grid-column: 1 / -1; color: var(--color-ink-soft); font-size: .8rem; }
+	.stale-scene figcaption { grid-column: 1 / -1; color: var(--color-ink-soft); font-size: var(--text-caption); }
 	.story-nav { display: grid; padding-block: 1.25rem; }
 	.story-nav a { display: grid; min-height: 84px; grid-template-columns: 1fr auto; gap: .25rem 1rem; align-content: center; padding: 1.2rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); }
 	.story-nav a:first-child { border-top: 1px solid var(--color-ticket-rule); }
@@ -258,7 +255,7 @@ const faqItems = [
 	.panel-bar { padding-bottom: .8rem; border-bottom: 1px solid var(--color-hairline); }
 	.movement-main ol { margin-top: .8rem; }
 	.movement-main li { display: grid; grid-template-columns: minmax(8.5rem, .8fr) 1fr auto; gap: 1rem; align-items: center; padding-block: .85rem; border-bottom: 1px solid var(--color-hairline); }
-	.movement-main time { font-size: .78rem; color: var(--color-ink-soft); }
+	.movement-main time { font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.movement-main li span small { display: block; color: var(--color-ink-soft); }
 	.movement-main li b { font-variant-numeric: tabular-nums; }
 	.movement-main li.baseline b { color: var(--color-green-deep); }
@@ -271,18 +268,18 @@ const faqItems = [
 	.movement-side small { color: var(--color-ink-soft); }
 	.feature-scenes { display: grid; gap: 2rem; margin-top: 3rem; }
 	.feature-scenes article { padding-top: 1.25rem; border-top: 1px solid var(--color-hairline-strong); }
-	.feature-scenes h3, .trust-board h3 { font-size: 1.25rem; font-weight: 600; }
+	.feature-scenes h3, .trust-board h3 { font-size: var(--text-record-sm); font-weight: 600; }
 	.feature-scenes p { margin-top: .65rem; color: var(--color-ink-soft); line-height: 1.6; }
 	.gap-sheet { margin-top: clamp(2.5rem, 6vw, 4.5rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.gap-head { padding: 1rem clamp(1rem, 3vw, 1.75rem); background: var(--color-ink); color: var(--color-paper); }
 	.gap-equation { display: grid; grid-template-columns: repeat(5, auto); gap: 1rem; align-items: center; padding: clamp(1.2rem, 4vw, 2rem); }
 	.gap-equation > div { min-width: 0; }
-	.gap-equation strong { display: block; margin-top: .25rem; font-size: 1.45rem; font-variant-numeric: tabular-nums; }
-	.gap-equation span { display: block; margin-top: .2rem; font-size: .75rem; color: var(--color-ink-soft); }
+	.gap-equation strong { display: block; margin-top: .25rem; font-size: var(--text-record); font-variant-numeric: tabular-nums; }
+	.gap-equation span { display: block; margin-top: .2rem; font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.gap-result { padding: 1rem; background: var(--color-softgreen); }
 	.buy-line { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1.15rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
 	.buy-line span small { display: block; color: var(--color-ink-soft); }
-	.buy-line > b { color: var(--color-green-deep); font-size: 1.2rem; }
+	.buy-line > b { color: var(--color-green-deep); font-size: var(--text-record-sm); }
 	.gap-sheet figcaption { padding: 0 clamp(1rem, 3vw, 1.75rem) 1rem; }
 	.trust-board { display: grid; gap: 2rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
 	.trust-head p { margin-top: .6rem; color: var(--color-ink-soft); }
@@ -300,8 +297,8 @@ const faqItems = [
 	.capabilities { padding-block: var(--spacing-section); background: var(--color-paper); }
 	.capabilities-grid { display: grid; gap: 3rem; }
 	.count { display: flex; align-items: baseline; gap: .75rem; }
-	.count strong { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-green-deep); }
-	.count span { font-size: .8rem; color: var(--color-ink-soft); }
+	.count strong { font-family: var(--font-display); font-size: var(--text-h2); color: var(--color-green-deep); }
+	.count span { font-size: var(--text-caption); color: var(--color-ink-soft); }
 	details summary { cursor: pointer; list-style: none; }
 	details summary::-webkit-details-marker { display: none; }
 	.capabilities details { scroll-margin-top: 1rem; border-top: 1px solid var(--color-ticket-rule); border-bottom: 1px solid var(--color-ticket-rule); }
@@ -337,11 +334,11 @@ const faqItems = [
 	}
 
 	@media (max-width: 719px) {
-		.hero-grid { gap: 1rem; padding-block: 1.25rem 1rem; }
-		.hero h1 { margin-top: .25rem; font-size: clamp(2rem, 10.4vw, 2.55rem); }
-		.hero-lede { margin-top: .7rem; font-size: .95rem; line-height: 1.38; }
+		.hero-grid { gap: .25rem; padding-block: 1.25rem 1rem; }
+		.hero h1 { margin-top: .25rem; }
+		.hero-lede { margin-top: .7rem; font-size: var(--text-body-sm); line-height: 1.38; }
 		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .8rem; }
-		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .55rem; font-size: .82rem; text-align: center; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .55rem; font-size: var(--text-caption); text-align: center; }
 		.closing-actions > * { width: 100%; justify-content: center; }
 		.figure-note { margin-bottom: .45rem; }
 		.shelf-ticket { padding: .8rem; }
@@ -349,7 +346,7 @@ const faqItems = [
 		.equation { margin-top: .75rem; }
 		.ticket-foot { margin-top: .65rem; padding-top: .6rem; }
 		.ticket-title { display: block; }
-		.ticket-title > strong { display: block; margin-top: .8rem; }
+		.ticket-title > strong { display: block; margin-top: .5rem; }
 		.equation { grid-template-columns: 1fr auto 1fr; }
 		.equation > div:last-child { grid-column: 1 / -1; }
 		.stale-scene { grid-template-columns: 1fr; }

@@ -33,6 +33,15 @@ typography:
     fontWeight: 600
     lineHeight: 1.2
     letterSpacing: "0.14em"
+  supporting:
+    micro: "0.6875rem"
+    labelSmall: "0.75rem"
+    caption: "0.8125rem"
+    bodySmall: "0.875rem"
+    body: "1rem"
+    bodyLarge: "1.125rem"
+    recordSmall: "1.25rem"
+    record: "1.5rem"
 rounded:
   pill: "999px"
 spacing:
@@ -116,6 +125,7 @@ The palette stays low-noise: warm neutrals hold the page, green carries actions,
 - **Headline** (600, fluid headline scale, 1.12): Major section headings.
 - **Body** (400): Explanations and task guidance, generally constrained to about 54–62 characters per line where the implementation does so.
 - **Label** (600, compact, 0.14em letter spacing, uppercase): Eyebrows and short operational labels.
+- **Supporting roles** (0.6875–1.5rem): Micro data, compact labels, captions, body copy, and record titles use the shared semantic stops rather than route-local sizes.
 
 **The Founder-Direct Rule.** Contact copy speaks as Rayan and names the outcome—email, call, book a demo, or contact support—without invented service guarantees.
 

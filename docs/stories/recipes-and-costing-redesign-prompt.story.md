@@ -112,7 +112,7 @@
 
 ### Step 11 — Revise and Finish
 
-- **Word count:** 2,087 words in the implementation prompt. Page copy was revised separately in the finished route, with imported capability labels counted at build time.
+- **Word count before → after:** 2,087 words in the implementation prompt → 386 rendered article words in the finished route, including capability labels, lifecycle guidance, FAQs, and onward navigation.
 - **Claims removed because they could not be shown:** generic time savings, invented ROI, customer outcomes, “real-time” integrations, AI import, multimedia training and multi-location publishing. Version history is now included because the marketed app exposes earlier published recipe versions.
 - **Browser revision:** The desktop and mobile passes kept both product chapters in one reading flow, removed mobile horizontal scrolling from the recipe builder, retained the actual CostCook screenshots in the costing chapter, and added a clear entry from the existing Features hub.
 - **FAQ revision:** Six concise disclosures answer the last practical objections about scaling, sub-recipes, missing prices, visible arithmetic, print/export, and confirmed quote prices. Every answer stays inside the shipped feature register.
