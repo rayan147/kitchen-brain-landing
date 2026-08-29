@@ -90,6 +90,8 @@ export interface RowGroup {
 	rows: Row[];
 }
 
+// Considered Strategy; not used because rivals and rows vary as dated evidence
+// data, not as interchangeable behavior selected by the page at runtime.
 export const comparison: RowGroup[] = [
 	{
 		title: 'Recipes and costing',

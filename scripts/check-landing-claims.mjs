@@ -213,12 +213,25 @@ requireText(comparePage, 'It does not mean their product cannot do it.', 'compar
 requireText(comparisonSource, 'export const VERIFIED_ON', 'comparison verification date');
 requireText(comparePage, 'VERIFIED_ON', 'comparison verification date on the page');
 requireText(comparePage, 'costcookNo', 'comparison must count its own no rows');
+requireText(
+	comparePage,
+	'costcookLimits',
+	'comparison surfaces every CostCook no row before the detailed table',
+);
 const costcookNoRows = (comparisonSource.match(/costcook: 'no'/g) ?? []).length;
 if (costcookNoRows < 4) {
 	failures.push(
 		`comparison honesty: only ${costcookNoRows} row(s) say CostCook does not do something. ` +
 			'A comparison that wins every row does not survive a demo call. If capability really ' +
 			'changed, move the row and say so in RC-40 rather than lowering this floor.',
+	);
+}
+// A prior version contradicted its own six No rows in the close and turned a
+// pricing-page omission into a claim about competitors' products. Keep both
+// failure phrases out instead of trusting future copy edits to remember RC-40.
+if (/the rows neither of them has|the whole board|the two rows we do not have/i.test(comparePage)) {
+	failures.push(
+		'comparison honesty: page copy overstates competitor evidence or understates CostCook No rows',
 	);
 }
 // Nutrition labels are the specific rows this guard exists for: they are the
