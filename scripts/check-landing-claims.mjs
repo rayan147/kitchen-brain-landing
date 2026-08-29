@@ -84,6 +84,7 @@ const surfaceFiles = [
 	// 2026-08-29. Every FAQ answer is public claim copy and names its rows.
 	'src/lib/faq.ts',
 	'src/pages/faq.astro',
+	'src/components/sections/FaqPage.astro',
 	// 2026-08-29. Sage: the data file carries every capability sentence, the
 	// section renders it. Both are scanned, and the model-name guard below is
 	// aimed squarely at them.

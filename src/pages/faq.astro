@@ -1,20 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import FaqPage from '../components/sections/FaqPage.astro';
 import { faq, faqCount } from '../lib/faq';
-import { contactCta, cta, demoCta } from '../lib/site';
 import { spellCapital } from '../lib/words';
 
 // story: docs/stories/faq.story.md
-//
-// EVERYTHING OPEN. No accordion. The reader is on a phone, skimming, and an
-// answer behind a click is an answer they do not read (CLAUDE.md principle 3:
-// nothing hidden). Four groups, a jump list at the top so the page is a table
-// of contents before it is a wall, and every question carries an id so a
-// reply to a cold email can link straight to #cancel.
-//
-// ONE PRIMARY, AT THE END. The page answers first and asks once, in the same
-// words as the homepage. The demo call and the contact page are the quiet
-// alternatives, as everywhere else.
 
 const description = `${spellCapital(faqCount)} plain answers about the CostCook trial, the bill, who it fits, how the work moves, and getting started.`;
 
@@ -33,102 +23,16 @@ const jsonLd = JSON.stringify({
 		}))
 	)
 });
+
+const directionContract = `THESIS: Reveal the catch before asking for trust; refuse the accordion wall and generic feature-card FAQ.
+OWN-WORLD: Warm answer sheet, cream decision ticket, green actions, amber rules, Fraunces decisions, Instrument Sans mechanics.
+STORY: Check the hard terms, choose a question path, read every answer in place, then try one real order.
+FIRST VIEWPORT: Editorial promise left; trial, card, first charge, and cancel ticket right; billing action immediately visible.
+FORM: Founder answer sheet, first-ranked extension of the established Kitchen Ticket world; seed faq-answer-sheet.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md`;
 ---
 
-<Base title="CostCook questions, answered plainly" description={description} path="/faq">
+<Base title="CostCook questions, answered plainly" description={description} path="/faq" directionContract={directionContract}>
 	<script type="application/ld+json" is:inline set:html={jsonLd} />
-
-	<section class="container-page py-section" aria-labelledby="faq-title">
-		<div class="max-w-3xl">
-			<p class="eyebrow">Frequently asked</p>
-			<h1 id="faq-title" class="mt-4 text-display font-semibold">
-				The questions a cold email leaves you with.
-			</h1>
-			<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
-				{spellCapital(faqCount)} answers, every one checked against the app you would start
-				today. Where the answer is no, it says no.
-			</p>
-		</div>
-
-		<nav aria-label="Question groups" class="mt-10 border-y border-ticket-rule py-5">
-			<ol role="list" class="flex flex-wrap gap-x-8 gap-y-2">
-				{
-					faq.map((group, index) => (
-						<li>
-							<a
-								href={`#${group.id}`}
-								class="inline-flex min-h-11 items-center gap-3 text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink"
-							>
-								<span class="font-mono text-eyebrow font-semibold text-amber-deep" aria-hidden="true">
-									{String(index + 1).padStart(2, '0')}
-								</span>
-								{group.title}
-							</a>
-						</li>
-					))
-				}
-			</ol>
-		</nav>
-
-		{
-			faq.map((group, index) => (
-				<section
-					id={group.id}
-					class="scroll-mt-8 border-b border-hairline py-12 lg:grid lg:grid-cols-[4fr_8fr] lg:gap-16"
-					aria-labelledby={`${group.id}-title`}
-				>
-					<div class="lg:sticky lg:top-8 lg:self-start">
-						<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-							{String(index + 1).padStart(2, '0')} · {group.entries.length} questions
-						</p>
-						<h2 id={`${group.id}-title`} class="mt-3 text-h2 font-semibold">
-							{group.title}
-						</h2>
-					</div>
-					<dl class="mt-8 lg:mt-0">
-						{group.entries.map((entry) => (
-							<div id={entry.id} class="scroll-mt-8 border-t border-ticket-rule py-6 first:border-t-0 first:pt-0">
-								<dt class="text-h3 font-semibold">{entry.question}</dt>
-								{entry.answer.map((paragraph) => (
-									<dd
-										class="mt-3 max-w-[64ch] text-ink-soft [&_a]:font-medium [&_a]:text-green-deep [&_a]:underline [&_a]:decoration-hairline [&_a]:underline-offset-4 hover:[&_a]:decoration-green"
-										set:html={paragraph}
-									/>
-								))}
-							</div>
-						))}
-					</dl>
-				</section>
-			))
-		}
-
-		<div class="grid items-start gap-10 py-12 lg:grid-cols-[7fr_5fr] lg:gap-16">
-			<div class="max-w-3xl">
-				<p class="eyebrow">Still deciding</p>
-				<h2 class="mt-4 text-h2 font-semibold">Put one real order through it.</h2>
-				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
-					The answer to most of the rest is a menu and a guest count you already quoted, and
-					what comes back.
-				</p>
-			</div>
-			<div class="border-t border-ticket-rule pt-6 lg:mt-3">
-				<a
-					href={cta.href}
-					target={cta.target}
-					rel={cta.rel}
-					aria-label={cta.ariaLabel}
-					class="btn-primary"
-				>
-					{cta.label}
-				</a>
-				<p class="mt-5 text-sm text-ink-soft">
-					A question that is not here? <a href={contactCta.href} class="btn-quiet">Contact Rayan</a>.
-				</p>
-				<p class="mt-3 text-sm text-ink-soft">
-					Rather watch yours run first?{' '}
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book 15 minutes</a>.
-				</p>
-			</div>
-		</div>
-	</section>
+	<FaqPage />
 </Base>

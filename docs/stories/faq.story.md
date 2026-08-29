@@ -3,9 +3,9 @@
 ## My story
 
 - **Piece:** `/faq`, the questions page
-- **Title / headline:** The questions a cold email leaves you with.
+- **Title / headline:** Know the catch before you hand over the card.
 - **My hero's name:** The owner-caterer who got the text, opened the site on a phone, and has three objections before they have read a paragraph
-- **Content file(s):** `src/lib/faq.ts`, `src/pages/faq.astro`, link lines in `src/lib/site.ts` and `src/components/sections/StartHere.astro`
+- **Content file(s):** `src/lib/faq.ts`, `src/pages/faq.astro`, `src/components/sections/FaqPage.astro`, link lines in `src/lib/site.ts` and `src/components/sections/StartHere.astro`
 
 ## The 11 steps
 
@@ -55,7 +55,7 @@
 
 | § | Section | Beats | Value turn |
 |---|---------|-------|------------|
-| 1 | Title + jump list | 1–2 | a wall → a table of contents |
+| 1 | Promise + before-you-start ticket | 1–2 | suspicion → four hard terms visible |
 | 2 | The trial, the bill, and leaving | 3–4 | the catch hidden → the catch named |
 | 3 | Whether it fits your kitchen | 5–6 | spin → flat noes that make the yeses credible |
 | 4 | How the work moves | 7–10 | claims → mechanics with rows behind them |
@@ -76,7 +76,7 @@ Every answer turns doubt → checkable fact by naming the mechanism (Stripe, Set
 
 - **Intention:** Get to the card with nothing left to be surprised by.
 - **Obstacle:** Every FAQ the reader has ever read.
-- **Headline:** "The questions a cold email leaves you with." Subhead: "Where the answer is no, it says no."
+- **Headline:** "Know the catch before you hand over the card." Subhead: "Where the answer is no, it says no."
 
 ### Step 8 — Cool Talk
 
@@ -84,7 +84,7 @@ Every answer turns doubt → checkable fact by naming the mechanism (Stripe, Set
 
 ### Step 9 — Bringing a Scene to Life
 
-Phone, one bar, the walk-in door propped with a foot. The reader is not going to open an accordion. Everything is open, the groups are numbered, and #cancel is a link that can go in a reply.
+Phone, one bar, the walk-in door propped with a foot. The reader is not going to open an accordion. Everything is open, the four hard terms are visible first, and #cancel is a link that can go in a reply.
 
 ### Step 10 — Connecting Your Scenes
 
