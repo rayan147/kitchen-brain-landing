@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import WhoItsForPage from '../components/sections/WhoItsForPage.astro';
+
+// Considered Template Method; not used because this route shares the existing
+// Base shell but its work-fit story is one fixed composition, not a page
+// algorithm with overridable steps.
+const directionContract = [
+	'THESIS: The work decides whether CostCook fits, not the sign out front; refuse persona cards that turn labels into gates.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, square records, green actions.',
+	'STORY: Category doubt becomes a work-based fit test, then a shared service calendar, connected plan, honest limits, and one real-menu next step.',
+	'FIRST VIEWPORT: Direct answer at left; recurring service and a dated private dinner share one planning ticket at right.',
+	'FORM: Code-led editorial route; who-its-for-work-fit; one settling service ticket owns motion and ruled sections carry the read.',
+	'FINISH: Navigation, no-JS, reduced motion, keyboard, 200% text, desktop, mobile, build contract, review, and documentation all close.'
+].join(' ');
+---
+
+<Base
+	title="Who CostCook is for | Caterers, restaurants and special events"
+	description="See whether CostCook fits your kitchen's work: catering, meal prep, special dinners, changing menus, and restaurant event work planned by date and guest count."
+	path="/who-its-for"
+	directionContract={directionContract}
+>
+	<WhoItsForPage />
+</Base>
