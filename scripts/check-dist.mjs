@@ -40,7 +40,7 @@ const menuTargets = [
 		area: 'ingredients-and-supplier-prices',
 		href: '/features/ingredients-and-supplier-prices'
 	},
-	{ id: 'import', area: 'getting-prices-in' },
+	{ id: 'import', area: 'invoices-and-price-list-import', href: '/features/invoices-and-price-list-import' },
 	{ id: 'orders', area: 'the-day-itself' },
 	{ id: 'purchasing', area: 'the-day-itself' },
 	{ id: 'inventory', area: 'the-day-itself' },
