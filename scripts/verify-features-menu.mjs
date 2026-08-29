@@ -133,7 +133,9 @@ try {
 			sectionLefts: sections.map((section) => section.getBoundingClientRect().left)
 		};
 	})()`);
-	assert(desktop.linkCount === 9, `desktop: expected 9 links, received ${desktop.linkCount}`);
+	// Considered Strategy; not used because this pins one fixed navigation
+	// contract (nine curated entries plus the all-features action), not swappable behavior.
+	assert(desktop.linkCount === 10, `desktop: expected 10 links, received ${desktop.linkCount}`);
 	assert(desktop.minTarget >= 44, `desktop: smallest link target is ${desktop.minTarget}px`);
 	assert(desktop.left >= 0 && desktop.right <= desktop.innerWidth, 'desktop: panel leaves the viewport');
 	assert(desktop.scrollWidth === desktop.innerWidth, 'desktop: horizontal overflow');

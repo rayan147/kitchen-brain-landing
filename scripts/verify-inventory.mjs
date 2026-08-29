@@ -68,6 +68,8 @@ try {
 		return result.result.value;
 	};
 	const viewport = (width, height, mobile = false) => send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile });
+	// Considered Strategy; not used because every capture needs the same fixed
+	// stabilization sequence rather than interchangeable browser behaviors.
 	const navigate = async () => {
 		await send('Page.navigate', { url: route });
 		for (let attempt = 0; attempt < 50; attempt += 1) {
@@ -78,7 +80,6 @@ try {
 			const captureStyle = document.createElement('style');
 			captureStyle.textContent = 'astro-dev-toolbar { display: none !important; }';
 			document.head.append(captureStyle);
-			document.querySelector('astro-dev-toolbar')?.remove();
 			document.querySelectorAll('.anim-enter, .reveal-pending').forEach((element) => {
 				element.style.animation = 'none'; element.style.transition = 'none';
 				element.style.opacity = '1'; element.style.transform = 'none';
