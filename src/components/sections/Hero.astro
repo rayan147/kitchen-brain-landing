@@ -89,24 +89,27 @@ import { cta, launchPlan } from '../../lib/site';
 		<div class="mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2">
 			<img
 				src="/proof/hero-pricing-mobile.png"
-				alt="The Next step box on an order's pricing panel: charge at least $89.78 per guest to meet the 30 percent target."
-				width={440}
-				height={160}
+				alt="The Next step box on an order's pricing panel: charge at least $89.94 per guest to meet the 30 percent target."
+				width={616}
+				height={174}
+				fetchpriority="high"
 				decoding="async"
-				class="mx-auto h-auto w-full max-w-[440px] sm:hidden"
+				class="mx-auto h-auto w-full max-w-[308px] sm:hidden"
 			/>
 			<img
 				src="/proof/hero-pricing.png"
-				alt="An order's pricing panel. Live totals: revenue $12,240.00, theoretical food cost $4,847.96, food cost per guest $26.93. Food-cost target: 39.6 percent food cost, marked critical, 9.6 percentage points over target. Next step: charge at least $89.78 per guest to meet the 30 percent target."
-				width={750}
-				height={274}
+				alt="An order's pricing panel. Live totals: revenue $12,240.00, theoretical food cost $4,856.55, food cost per guest $26.98. Food-cost target: 39.7 percent food cost, marked critical, 9.7 percentage points over target. Next step: charge at least $89.94 per guest to meet the 30 percent target."
+				width={1284}
+				height={548}
+				fetchpriority="high"
 				decoding="async"
-				class="hidden h-auto w-full sm:block"
+				style="width: 642px; max-width: 100%"
+				class="mx-auto hidden h-auto sm:block"
 			/>
 		</div>
 		<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
-			The pricing panel from the tour below. Food cost against the target, and the price
-			that would have met it, before the quote goes out.
+			The pricing panel on the tour's order, captured from the sandbox build. Food cost
+			against the target, and the price that would have met it, before the quote goes out.
 		</figcaption>
 	</figure>
 
