@@ -1,5 +1,5 @@
 import { SAGE_STATUS } from './sage';
-import { LABELS_STATUS } from './labels';
+import { labelsAvailability } from './labels';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -85,9 +85,9 @@ export const SECTION_META: Readonly<
 	},
 	'Compliance and labels': {
 		slug: 'compliance-and-labels',
-		blurb: 'The fifteen numbers an FDA panel carries, per recipe, and a sheet to print them on. Kitchen date labels are built and marked Coming.',
+		blurb: labelsAvailability.sectionBlurb,
 		wall: 'Somebody asks for the numbers on a dish. Roughly is not an answer, and neither is a figure you worked out once and cannot show your working for.',
-		lede: 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels are built in the app behind a release flag and not included at launch, so they are marked Coming below rather than folded into the shipped list.'
+		lede: labelsAvailability.sectionLede
 	},
 	'Team, and what it connects to': {
 		slug: 'team-and-connections',
@@ -345,9 +345,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		/* Built behind the label_printing flag and not in the launch plan (RC-35,
 		   RC-51). The word comes from src/lib/labels.ts; while it is Coming the
 		   area page renders only items[0].detail, so that line is the summary. */
-		status: LABELS_STATUS === 'yes' ? 'available' : 'in-development',
+		status: labelsAvailability.isComing ? 'in-development' : 'available',
 		items: [
-			{ lead: 'Built, behind a flag, marked Coming.', detail: 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. It is behind a release flag and not included at launch, so it is marked Coming until that changes.' },
+			{ lead: labelsAvailability.featureLead, detail: labelsAvailability.featureDetail },
 			{ lead: 'Storage condition first.', detail: 'Refrigerated, frozen, thawed or opened, with no default.' },
 			{ lead: 'A date you settle.', detail: 'A saved shelf life, a number of days, an exact date, or the made date only.' },
 			{ lead: 'One label per container.', detail: 'Numbered, with the event and the kitchen on an order-tied label.' },
@@ -542,7 +542,7 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				description: 'Date and allergen stickers from the prep list, frozen for reprints.',
 				featureId: 'labels',
 				icon: 'labels',
-				...(LABELS_STATUS === 'yes' ? {} : { coming: true as const })
+				...(labelsAvailability.isComing ? { coming: true as const } : {})
 			}
 		]
 	},

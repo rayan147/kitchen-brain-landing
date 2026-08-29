@@ -5,7 +5,7 @@
 - **Piece:** Kitchen label printing across the site: `/features/labels-and-printing`, the header menu item (Coming chip), the `/features` group, the `/compare` row note, the FAQ entry, the homepage give-up line
 - **Title / headline:** The sticker says what you chose. Nothing more.
 - **My hero's name:** The cook at the prep bench at 5 a.m. with forty containers cooling and a roll of blank stickers, who has been burned by a use-by date somebody guessed
-- **Content file(s):** `src/lib/labels.ts`, `src/components/sections/LabelsPrintingFeature.astro`, `src/pages/features/labels-and-printing.astro`, `src/lib/features.ts` (labels group, menu item), `src/lib/comparison.ts` (row note), `src/lib/faq.ts` (#label-printing), `src/components/sections/TheOtherTools.astro` (give-up), `scripts/capture-labels-proof.mjs`
+- **Content file(s):** `src/lib/labels.ts`, `src/lib/availability.ts`, `src/components/sections/LabelsPrintingFeature.astro`, `src/pages/features/labels-and-printing.astro`, `src/lib/features.ts` (labels group, menu item), `src/lib/comparison.ts` (row note), `src/lib/faq.ts` (#label-printing), `src/components/sections/TheOtherTools.astro` (give-up), `src/components/sections/FeatureIndex.astro`, `src/pages/compare.astro`, `src/pages/pricing.astro`, `scripts/capture-labels-proof.mjs`
 
 ## The 11 steps
 
@@ -56,7 +56,7 @@
 | § | Section | Beats | Value turn |
 |---|---------|-------|------------|
 | 1 | Hero: status chip, headline, status sentence, dialog capture | 1–2, 7 | a guessed date → a chosen one; a chip → a sentence |
-| 2 | How a label is made (six steps) + sticker | 3–6, 8 | retyping → six taps |
+| 2 | How a label is made (six steps) + sticker | 3–6, 8 | retyping → six explicit decisions |
 | 3 | The record + print view | 9 | a soaked sticker → a tap |
 | 4 | What it prints on + settings capture | 8 | brand lock-in → millimetres |
 | 5 | What it is not | 10 | a sales page → boundaries |
@@ -75,7 +75,7 @@ Each step turns "the app decides" into "you decide and it records". The status s
 
 ### Step 7 — Sorkin
 
-- **Intention:** Put a defensible date on the container in six taps.
+- **Intention:** Put a defensible date on the container in six steps.
 - **Obstacle:** It is built but not in the plan the reader can buy today.
 - **Headline:** "The sticker says what you chose. Nothing more."
 
@@ -90,11 +90,12 @@ Wet hands, the walk-in door held with a foot, a phone propped on the lowboy. Ref
 ### Step 10 — Connecting Your Scenes
 
 - POV: second person; the cook is "you", the owner reads over their shoulder.
-- Status: `LABELS_STATUS` in `src/lib/labels.ts` feeds the chip, the group badge, the row, the FAQ and the status sentence. RC-35 owns the word.
+- Status: `LABELS_STATUS` and `labelsAvailability` in `src/lib/labels.ts` feed the chip, group badge, row, FAQ, homepage tradeoff, SEO description and status sentence. The shared Coming definition says only that the feature is absent today; the feature detail names whether it is being built or already behind a flag. RC-35 owns the word.
 - Hand-off: the closing sends the reader to the trial for everything that ships and to `/features` for the rest.
 
 ### Step 11 — Revise and Finish
 
-- Cut: the phone dialog capture (1700 CSS px tall; the sticker crop stands in), the seeded device name from every alt, "printer-ready output" from the old group line.
+- Cut: the phone dialog capture (1700 CSS px tall; one responsive picture serves the sticker instead), the seeded device name from every alt, "printer-ready output" from the old group line, the unverified "six taps" count, and a trial action beside a Coming promise.
+- Added: first-frame proof, status-aligned hero action, an on-page chapter index, full-size proof links, 72px FAQ targets, explicit trial terms at the close, and one atomic availability object for every public status surface.
 - Every capability traces to `src/routes/labels/*`, `src/lib/domain/labeling/*`, `src/lib/labels/transport.ts` and `src/lib/server/features/access.ts` at sandbox/demo c01bf751; RC-51 lists them.
 - Ending: "Print what you chose. Keep the record." then the primary CTA.

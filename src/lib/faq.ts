@@ -21,6 +21,7 @@
  * because a link is a string with markup, and there are three of them.
  */
 import { launchPlan, site } from './site';
+import { labelsAvailability } from './labels';
 
 export interface FaqEntry {
 	/** Stable id for deep links (#cancel). Lowercase, hyphenated. */
@@ -142,17 +143,14 @@ export const faq: readonly FaqGroup[] = [
 				question: 'Does it do nutrition labels?',
 				answer: [
 					'Yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Print nutrition label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
-					'Kitchen date and allergen stickers are a separate thing, built behind a release flag and marked Coming; see the next answer. Dietary characteristics (vegan, gluten-free and the like) are not assessed and nothing is inferred from an ingredient name.'
+					labelsAvailability.nutritionFaqCrosslink
 				],
 				claims: ['RC-42', 'RC-47', 'RC-50']
 			},
 			{
 				id: 'label-printing',
 				question: 'Does it print kitchen labels with a use-by date?',
-				answer: [
-					'Built, behind a flag, and marked Coming. Tap Label on the prep list, the pack list, a recipe or an ingredient; choose refrigerated, frozen, thawed or opened; settle the use-by date yourself (a saved shelf life, a number of days, an exact date, or the made date only, and the app never guesses one); count the containers; and print through your browser onto a 30-up sticker sheet, a 58 or 62 mm thermal roll, a 2 by 1 inch die-cut roll or stock you measure. What the sticker said is frozen on the record, so a reprint is the label that went on the container.',
-					'It is behind a release flag and not included in the launch subscription, so every mention of it here says Coming. There is no direct connection to a label printer; the output is the print dialog.'
-				],
+				answer: labelsAvailability.faqStatus,
 				claims: ['RC-35', 'RC-51']
 			},
 			{

@@ -48,13 +48,15 @@
  * (PaperIn's note that quiet secondaries are "at their cap of two" predates the
  * comparison page and the features hub, and is stale.)
  */
+import { labelsAvailability } from '../../lib/labels';
+
 const giveUps = [
-	{
+	...(labelsAvailability.homepageTradeoff ? [{
 		/* Swapped 2026-08-29 (RC-50): the printed panel ships from the browser, so
 		   the give-up is the label PRINTER, which is the /compare row still coming. */
 		title: 'Kitchen label printing',
-		body: 'Date and allergen stickers from the prep list are built in the app, behind a release flag and not in the launch plan, so they are marked Coming. Nutrition sheets print from the recipe today.'
-	},
+		body: labelsAvailability.homepageTradeoff
+	}] : []),
 	{
 		title: 'Buying that tops you back up to par',
 		body: 'Shopping is what the jobs on the books need, minus what the shelf can be trusted for. It will not order you back up to a par level.'
@@ -213,8 +215,8 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
 				CostCook is one plan with everything in it, which means there is no tier to move up
 				to when something is missing. Four of the things the bigger tools list are the ones
-				most likely to matter to you. Three of them are not planned. One is being built,
-				and it says so.
+				most likely to matter to you. Three are not planned. Kitchen labels are already
+				built behind a release flag, but are not in the launch plan and stay marked Coming.
 			</p>
 			<ul role="list" class="mt-7 grid gap-x-12 gap-y-6 sm:grid-cols-2">
 				{

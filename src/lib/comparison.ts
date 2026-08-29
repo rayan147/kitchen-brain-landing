@@ -52,6 +52,7 @@
  */
 
 import { SAGE_STATUS } from './sage';
+import { labelsAvailability } from './labels';
 
 export const VERIFIED_ON = 'August 23, 2026';
 
@@ -308,8 +309,8 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Kitchen label printing',
-				costcook: 'coming',
-				note: 'Built in the app behind a release flag and not included at launch: storage condition, a use-by date the cook settles, one numbered label per container, printed through the browser onto sheet or roll stock and frozen for reprints. No direct printer connection.',
+				costcook: labelsAvailability.verdict,
+				note: labelsAvailability.comparisonNote,
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			}

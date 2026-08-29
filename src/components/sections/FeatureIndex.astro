@@ -3,6 +3,7 @@ import { featureSections, featureCount, inDevelopmentFeatureGroups } from '../..
 import { spellCapital } from '../../lib/words';
 import { demoCta } from '../../lib/site';
 import FeatureAreaIcon from '../FeatureAreaIcon.astro';
+import { comingDefinition } from '../../lib/availability';
 
 // The /features HUB. Five cards, zero feature items.
 //
@@ -54,9 +55,8 @@ import FeatureAreaIcon from '../FeatureAreaIcon.astro';
 				part of your week you are worried about.
 			</p>
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
-				{spellCapital(inDevelopmentFeatureGroups.length)} more things are marked Coming, which
-				means being built now rather than planned: none of it is in the app you would start
-				today, so none of it counts toward the {featureCount}.
+				{spellCapital(inDevelopmentFeatureGroups.length)} more things are marked Coming. {comingDefinition}{' '}
+				None of them count toward the {featureCount} shipped features.
 			</p>
 			<p class="mt-6">
 				<a href="/#demo" class="btn-quiet">Watch the 2:30 product tour</a>

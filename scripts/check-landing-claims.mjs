@@ -290,7 +290,7 @@ for (const [name, source] of [['src/lib/labels.ts', labelsSource], ['src/compone
 	if (/direct(ly)? to (the |a |your )?(label )?printer|sends? (it |them |labels )?to (the |a |your )?printer/i.test(source)) failures.push(`${name}: may not say a label reaches a printer on its own`);
 }
 const printerRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Kitchen label printing'"));
-if (!printerRow.slice(0, 200).includes("costcook: 'coming'")) {
+if (!printerRow.slice(0, 220).includes('costcook: labelsAvailability.verdict')) {
 	failures.push('comparison honesty: the label printer is not connected (RC-35); that row may not claim yes');
 }
 // Every surface that says the sheet prints must say what the sheet says of itself.

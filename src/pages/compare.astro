@@ -4,6 +4,7 @@ import { comparison, competitors, costcookNo, NOT_LISTED, VERIFIED_ON } from '..
 import { spell } from '../lib/words';
 import CellMark from '../components/CellMark.astro';
 import { cta, demoCta, launchPlan } from '../lib/site';
+import { comingDefinition } from '../lib/availability';
 
 const costcookLimits = comparison.flatMap((group) =>
 	group.rows.filter((row) => row.costcook === 'no').map((row) => row.label)
@@ -28,7 +29,7 @@ const costcookLimits = comparison.flatMap((group) =>
 // rather than as the hedge it is. Four rows, three marks. See CellMark.astro.
 const legend = [
 	['yes', 'It ships in the CostCook you would start today.'],
-	['coming', 'Being built. Not in the app you would start today, so it is not a yes.'],
+	['coming', comingDefinition],
 	['no', 'CostCook does not do this.'],
 	[null, 'Not named on their own pricing page on the date below. It does not mean their product cannot do it.']
 ] as const;
