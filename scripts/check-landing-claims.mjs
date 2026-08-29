@@ -85,6 +85,11 @@ const surfaceFiles = [
 	'src/lib/faq.ts',
 	'src/pages/faq.astro',
 	'src/components/sections/FaqPage.astro',
+	// 2026-08-29. The audience route explains fit across catering, meal prep,
+	// special dinners, and restaurant event work; all capability and limit copy
+	// stays inside RC-01/03/21/22/24/25/26/30/44.
+	'src/pages/who-its-for.astro',
+	'src/components/sections/WhoItsForPage.astro',
 	// 2026-08-29. Sage: the data file carries every capability sentence, the
 	// section renders it. Both are scanned, and the model-name guard below is
 	// aimed squarely at them.
@@ -162,6 +167,7 @@ requireText(navSource, 'data-features-menu', 'features menu disclosure');
 requireText(navSource, 'featureMenuSections', 'features menu data source');
 requireText(navSource, 'docs/stories/features-navigation.story.md', 'features menu story pointer');
 requireText(siteSource, "href: '/contact'", 'contact page nav link');
+requireText(siteSource, "href: '/who-its-for'", 'who-it-is-for navigation link');
 // The homepage link used to promise "every shipped feature" and point at a
 // page that listed them. /features is now a hub of five areas, so the promise
 // moved with the page rather than the pin being quietly relocated.

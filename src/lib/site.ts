@@ -101,6 +101,10 @@ export const launchPlan = {
 export const nav: readonly { label: string; href: string; earlyVisible?: true }[] = [
 	// Root-relative so the same links resolve from /features too.
 	{ label: 'Pricing', href: '/pricing', earlyVisible: true },
+	// The fit question is a bookmarkable read, not an ARIA tabs widget. It is
+	// deliberately not earlyVisible: pricing still owns the one phone slot,
+	// while the full footer keeps this destination available at every width.
+	{ label: 'Who it\'s for', href: '/who-its-for' },
 	// 'Every feature' left this array on 2026-08-23. /features is now a hub
 	// over five area pages, and a flat link to it hid that structure one click
 	// deep; the header renders it as a disclosure instead (see featuresMenu and

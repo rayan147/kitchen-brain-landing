@@ -114,6 +114,7 @@ Do not add these without a new ledger review:
 | Combined production | RC-36 |
 | Receiving language | RC-27, RC-37 |
 | Who this is for | RC-01, RC-44 |
+| Who it's for route (`/who-its-for`) | RC-01, RC-03, RC-21, RC-22, RC-24–RC-26, RC-30, RC-44 |
 | The other tools | RC-40, RC-42, RC-43, RC-47 |
 | In development, everywhere it is named | RC-35, RC-45 |
 | Feature reference | RC-35, RC-42, RC-45, and every shipped claim `src/lib/features.ts` renders |
