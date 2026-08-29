@@ -570,6 +570,7 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['menus', '/features/menus-and-quotes'],
 	['ingredients', '/features/ingredients-and-supplier-prices'],
 	['import', '/features/invoices-and-price-list-import'],
+	['purchasing', '/features/purchasing-and-receiving'],
 	['inventory', '/features/inventory']
 ]);
 

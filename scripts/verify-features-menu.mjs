@@ -192,7 +192,7 @@ try {
 	const focusOutState = await evaluate(`!document.querySelector('[data-features-menu]').open`);
 	assert(focusOutState, 'keyboard: tabbing out of the menu did not close it');
 
-	await navigate(`${baseUrl}/features/the-day-itself#features-purchasing`);
+	await navigate(`${baseUrl}/features/purchasing-and-receiving#features-purchasing`);
 	for (let attempt = 0; attempt < 20; attempt += 1) {
 		const targetTop = await evaluate(`document.querySelector('#features-purchasing').getBoundingClientRect().top`);
 		if (targetTop >= 0 && targetTop < 200) break;
@@ -201,11 +201,11 @@ try {
 	const deepLink = await evaluate(`(() => {
 		const target = document.querySelector('#features-purchasing');
 		const rect = target.getBoundingClientRect();
-		return { hash: location.hash, top: rect.top, title: target.querySelector('h2').textContent.trim() };
+		return { hash: location.hash, top: rect.top, title: target.querySelector('h2, summary span')?.textContent.trim() };
 	})()`);
 	assert(deepLink.hash === '#features-purchasing', 'deep link: hash was not preserved');
 	assert(deepLink.top >= 0 && deepLink.top < 200, `deep link: target landed at ${deepLink.top}px`);
-	assert(deepLink.title.length > 0, 'deep link: target section has no visible heading');
+	assert(deepLink.title?.length > 0, 'deep link: target section has no visible heading or disclosure label');
 
 	await viewport(390, 844, true);
 	await navigate(`${baseUrl}/`);
