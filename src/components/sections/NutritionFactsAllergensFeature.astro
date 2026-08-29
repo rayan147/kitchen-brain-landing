@@ -41,6 +41,21 @@ const macroFacts = [
 	{ label: 'Fat', value: '—', state: 'Source value missing' }
 ] as const;
 
+// Considered Strategy; not used because these are two fixed, presentational
+// crops of one verified capture, not interchangeable image-rendering behavior.
+const heroProofViews = [
+	{
+		className: 'nutrition-view',
+		label: 'Nutrition facts',
+		alt: 'Enlarged CostCook recipe crop showing Calories 245, Protein 45.4 grams, Carbs 2.7 grams, a blank Fat value, and the Nutrition Facts panel.'
+	},
+	{
+		className: 'allergen-view',
+		label: 'Allergen review',
+		alt: 'Enlarged CostCook recipe crop showing the ingredient statement, no confirmed allergen declarations, and an incomplete allergen review for six ingredients.'
+	}
+] as const;
+
 const evidenceSteps = [
 	{
 		title: 'Evidence enters',
@@ -117,6 +132,15 @@ const faqItems = [
 					Compute the fifteen Nutrition Facts values per portion, roll evidence-backed
 					allergen tags into the recipe, and keep every missing fact visible before you print.
 				</p>
+				<dl class="hero-facts" aria-label="Captured Chicken Shawarma nutrition summary">
+					{macroFacts.map((fact) => (
+						<div>
+							<dt>{fact.label}</dt>
+							<dd>{fact.value}</dd>
+							{'state' in fact && <small>{fact.state}</small>}
+						</div>
+					))}
+				</dl>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
@@ -125,27 +149,25 @@ const faqItems = [
 
 			<figure class="hero-proof anim-enter" style="--enter-delay: 120ms">
 				<p class="capture-label">Captured CostCook recipe</p>
-				<div class="hero-crop">
-					<img
-						src={nutrition.proof.panel.src}
-						alt={nutrition.proof.panel.alt}
-						width={nutrition.proof.panel.width}
-						height={nutrition.proof.panel.height}
-						decoding="async"
-					/>
+				<div class="hero-crops">
+					{heroProofViews.map((view) => (
+						<div class:list={['proof-crop', view.className]}>
+							<span>{view.label}</span>
+							<img
+								src={nutrition.proof.panel.src}
+								alt={view.alt}
+								width={nutrition.proof.panel.width}
+								height={nutrition.proof.panel.height}
+								decoding="async"
+							/>
+						</div>
+					))}
 				</div>
-				<figcaption>Chicken Shawarma, per portion. The missing fat value remains blank.</figcaption>
+				<figcaption>
+					Chicken Shawarma, per portion. The missing fat value remains blank.
+					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
+				</figcaption>
 			</figure>
-
-			<dl class="macro-rail anim-enter" style="--enter-delay: 220ms" aria-label="Captured Chicken Shawarma nutrition summary">
-				{macroFacts.map((fact) => (
-					<div>
-						<dt>{fact.label}</dt>
-						<dd>{fact.value}</dd>
-						{'state' in fact && <small>{fact.state}</small>}
-					</div>
-				))}
-			</dl>
 		</div>
 	</section>
 
@@ -191,11 +213,19 @@ const faqItems = [
 				</dl>
 			</div>
 			<figure class="panel-proof" data-reveal>
-				<div class="panel-window" aria-hidden="true">
-					<img src={nutrition.proof.panel.src} alt="" width={nutrition.proof.panel.width} height={nutrition.proof.panel.height} loading="lazy" decoding="async" />
+				<div class="panel-window">
+					<img
+						src={nutrition.proof.panel.src}
+						alt="Enlarged crop of the Chicken Shawarma Nutrition Facts panel beside its missing-values notice."
+						width={nutrition.proof.panel.width}
+						height={nutrition.proof.panel.height}
+						loading="lazy"
+						decoding="async"
+					/>
 				</div>
 				<figcaption>
 					The captured recipe names unavailable nutrients, keeps their rows blank, and lists each source record beside the panel.
+					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
 				</figcaption>
 			</figure>
 		</div>
@@ -209,6 +239,22 @@ const faqItems = [
 				that uses it, and leaves incomplete review visible all the way to pack-out.
 			</p>
 		</div>
+		<figure class="container-page allergen-proof" data-reveal>
+			<div class="allergen-window">
+				<img
+					src={nutrition.proof.panel.src}
+					alt="Enlarged crop of the Chicken Shawarma allergen review showing no confirmed declarations and six ingredients awaiting evidence review."
+					width={nutrition.proof.panel.width}
+					height={nutrition.proof.panel.height}
+					loading="lazy"
+					decoding="async"
+				/>
+			</div>
+			<figcaption>
+				The real incomplete state is shown at reading size rather than reduced to a status badge.
+				<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
+			</figcaption>
+		</figure>
 		<ol class="container-page evidence-chain" aria-label="Allergen evidence path">
 			{evidenceSteps.map((step, index) => (
 				<li data-reveal>
@@ -238,15 +284,20 @@ const faqItems = [
 				<p class="snap">A blank row beats a made-up zero.</p>
 			</div>
 			<figure class="label-proof" data-reveal>
-				<img
-					src={nutrition.proof.label.src}
-					alt={nutrition.proof.label.alt}
-					width={nutrition.proof.label.width}
-					height={nutrition.proof.label.height}
-					loading="lazy"
-					decoding="async"
-				/>
-				<figcaption>{nutrition.proof.caption}</figcaption>
+				<div class="label-window">
+					<img
+						src={nutrition.proof.label.src}
+						alt="Enlarged top section of the printable Chicken Shawarma sheet, including the calculated-estimate notice and Nutrition Facts panel."
+						width={nutrition.proof.label.width}
+						height={nutrition.proof.label.height}
+						loading="lazy"
+						decoding="async"
+					/>
+				</div>
+				<figcaption>
+					{nutrition.proof.caption}
+					<a href={nutrition.proof.label.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size sheet</a>
+				</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -312,28 +363,36 @@ const faqItems = [
 
 <style>
 	.nutrition-page { --rule: color-mix(in srgb, var(--color-ink) 18%, transparent); overflow: clip; }
+	.nutrition-page :global(.container-page) { max-width: 80rem; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
-	.hero-grid { position: relative; display: grid; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; padding-block: clamp(3.5rem, 6vw, 6.5rem) clamp(7rem, 11vw, 10rem); }
+	.hero-grid { display: grid; gap: clamp(3.5rem, 7vw, 7rem); align-items: center; padding-block: clamp(4.5rem, 8vw, 8rem); }
 	.breadcrumb { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.6rem; font-size: 0.875rem; color: var(--color-ink-soft); }
 	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
 	.hero h1 { max-width: 10ch; font-family: var(--font-display); font-size: clamp(3rem, 5.55vw, 5.9rem); font-weight: 600; line-height: 0.96; letter-spacing: -0.03em; text-wrap: balance; }
 	.hero h1::after { display: block; width: min(6.5ch, 100%); height: 0.28rem; margin-top: 1.2rem; background: var(--color-ink); content: ''; }
-	.hero-lede { max-width: 42ch; margin-top: 1.55rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
+	.hero-lede { max-width: 42ch; margin-top: 1.75rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.65; }
+	.hero-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 32rem; margin-top: 2rem; border-block: 0.25rem solid var(--color-ink); }
+	.hero-facts div { min-width: 0; padding: 0.9rem 1rem 0.9rem 0; border-bottom: 1px solid var(--rule); }
+	.hero-facts div:nth-child(odd) { border-right: 1px solid var(--rule); }
+	.hero-facts div:nth-child(even) { padding-left: 1rem; }
+	.hero-facts div:nth-last-child(-n + 2) { border-bottom: 0; }
+	.hero-facts dt { color: var(--color-ink-soft); font-size: 0.75rem; font-weight: 700; }
+	.hero-facts dd { margin-top: 0.25rem; color: var(--color-green-deep); font-size: clamp(1.45rem, 2.5vw, 2rem); font-weight: 720; font-variant-numeric: tabular-nums; }
+	.hero-facts small { display: block; margin-top: 0.2rem; color: var(--color-amber-deep); font-size: 0.7rem; line-height: 1.25; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
 	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
 	.btn-outline:hover { background: var(--color-green); color: white; }
 	.hero-proof { min-width: 0; }
 	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
-	.hero-crop { aspect-ratio: 1 / 1.04; overflow: hidden; border: 1px solid var(--rule); border-top: 0; background: var(--color-paper); box-shadow: 0 20px 38px color-mix(in srgb, var(--color-ink) 14%, transparent); }
-	.hero-crop img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-	.hero-proof figcaption, .panel-proof figcaption, .label-proof figcaption { margin-top: 0.85rem; color: var(--color-ink-soft); font-size: 0.78rem; line-height: 1.5; }
-	.macro-rail { position: absolute; right: var(--page-gutter, 1.25rem); bottom: clamp(2rem, 4vw, 3rem); left: var(--page-gutter, 1.25rem); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 0.28rem solid var(--color-ink); background: var(--color-paper); box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 12%, transparent); }
-	.macro-rail div { min-width: 0; padding: 0.85rem clamp(0.75rem, 2vw, 1.4rem); border-right: 1px solid var(--rule); }
-	.macro-rail div:last-child { border-right: 0; }
-	.macro-rail dt { color: var(--color-ink-soft); font-size: 0.75rem; font-weight: 700; }
-	.macro-rail dd { margin-top: 0.25rem; color: var(--color-green-deep); font-size: clamp(1.35rem, 3vw, 2rem); font-weight: 720; font-variant-numeric: tabular-nums; }
-	.macro-rail small { display: block; margin-top: 0.2rem; color: var(--color-amber-deep); font-size: 0.65rem; line-height: 1.25; }
+	.hero-crops { display: grid; gap: 1px; overflow: hidden; border: 1px solid var(--rule); border-top: 0; background: var(--rule); box-shadow: 0 20px 38px color-mix(in srgb, var(--color-ink) 14%, transparent); }
+	.proof-crop { position: relative; aspect-ratio: 1.2 / 1; overflow: hidden; background: var(--color-paper); }
+	.proof-crop > span { position: absolute; z-index: 2; top: 0.85rem; left: 0.85rem; padding: 0.45rem 0.65rem; background: var(--color-ink); color: var(--color-offwhite); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; }
+	.proof-crop img { position: absolute; max-width: none; height: auto; }
+	.proof-crop.nutrition-view img { top: -10%; left: -2%; width: 270%; }
+	.proof-crop.allergen-view img { top: -10%; left: -93%; width: 180%; }
+	.hero-proof figcaption, .panel-proof figcaption, .allergen-proof figcaption, .label-proof figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.55rem 1.25rem; margin-top: 1rem; color: var(--color-ink-soft); font-size: 0.82rem; line-height: 1.55; }
+	.hero-proof figcaption a, .panel-proof figcaption a, .allergen-proof figcaption a, .label-proof figcaption a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 700; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
 
 	.split { background: var(--color-ink); color: var(--color-offwhite); }
 	.split-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--space-section-tight); }
@@ -357,20 +416,23 @@ const faqItems = [
 	.product-nav strong { margin-top: 0.35rem; max-width: 42ch; line-height: 1.4; }
 
 	.product-section { scroll-margin-top: 2rem; }
-	.product-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--space-section); }
-	.product-copy > p, .allergen-heading > p, .print-copy > p, .capabilities-intro > p, .faq-intro > p, .closing p { max-width: 46ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: 1.05rem; line-height: 1.65; }
+	.product-grid { display: grid; gap: clamp(4rem, 8vw, 8rem); align-items: start; padding-block: var(--space-section); }
+	.product-copy > p, .allergen-heading > p, .print-copy > p, .capabilities-intro > p, .faq-intro > p, .closing p { max-width: 48ch; margin-top: 1.5rem; color: var(--color-ink-soft); font-size: 1.08rem; line-height: 1.75; }
 	.source-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; border-top: 1px solid var(--rule); }
 	.source-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
 	.source-facts dt { color: var(--color-ink-soft); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 	.source-facts dd { margin-top: 0.35rem; font-weight: 680; line-height: 1.4; }
 	.panel-proof { min-width: 0; }
-	.panel-window { aspect-ratio: 1.15 / 1; overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 11%, transparent); }
-	.panel-window img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 31%; }
+	.panel-window { position: relative; aspect-ratio: 1.7 / 1; overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 11%, transparent); }
+	.panel-window img { position: absolute; top: -30%; left: -1%; width: 150%; max-width: none; height: auto; }
 
 	.allergens { background: var(--color-softgreen); }
-	.allergen-heading { display: grid; gap: 2rem; padding-top: var(--space-section); }
-	.evidence-chain { display: grid; margin-top: clamp(3rem, 6vw, 5rem); border-block: 1px solid var(--rule); }
-	.evidence-chain li { position: relative; padding: 1.5rem 1.2rem 1.5rem 0; border-bottom: 1px solid var(--rule); }
+	.allergen-heading { display: grid; gap: 2.5rem; padding-top: var(--space-section); }
+	.allergen-proof { margin-top: clamp(4rem, 8vw, 7rem); }
+	.allergen-window { position: relative; aspect-ratio: 2.15 / 1; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.allergen-window img { position: absolute; top: -28%; left: -55%; width: 155%; max-width: none; height: auto; }
+	.evidence-chain { display: grid; gap: 0; margin-top: clamp(4rem, 8vw, 7rem); border-block: 1px solid var(--rule); }
+	.evidence-chain li { position: relative; padding: clamp(1.75rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
 	.evidence-chain li:last-child { border-bottom: 0; }
 	.evidence-chain li > span { color: var(--color-amber-deep); font-size: 0.7rem; font-weight: 750; letter-spacing: 0.07em; }
 	.evidence-chain h3 { margin-top: 0.8rem; font-family: var(--font-display); font-size: 1.45rem; font-weight: 600; line-height: 1.2; }
@@ -380,13 +442,14 @@ const faqItems = [
 	.evidence-note p { max-width: 63ch; color: var(--color-ink-soft); line-height: 1.65; }
 
 	.print-proof, .faq { background: var(--color-offwhite); }
-	.print-grid, .faq-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--space-section); }
+	.print-grid, .faq-grid { display: grid; gap: clamp(4rem, 8vw, 8rem); align-items: start; padding-block: var(--space-section); }
 	.print-copy { align-self: center; }
 	.print-copy ul { margin-top: 2rem; border-top: 1px solid var(--rule); }
 	.print-copy li { padding-block: 0.75rem; border-bottom: 1px solid var(--rule); line-height: 1.45; }
 	.snap { margin-top: 2.5rem; color: var(--color-green-deep); font-family: var(--font-display); font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 600; line-height: 1.15; }
-	.label-proof { max-width: 28rem; justify-self: center; }
-	.label-proof img { display: block; width: 100%; height: auto; border-top: 0.3rem solid var(--color-ink); background: white; box-shadow: 0 18px 34px color-mix(in srgb, var(--color-ink) 12%, transparent); }
+	.label-proof { width: min(100%, 36rem); justify-self: center; }
+	.label-window { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-top: 0.3rem solid var(--color-ink); background: white; box-shadow: 0 18px 34px color-mix(in srgb, var(--color-ink) 12%, transparent); }
+	.label-window img { position: absolute; top: 0; left: -12%; width: 124%; max-width: none; height: auto; }
 
 	.capabilities { background: var(--color-cream); }
 	.capabilities-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--space-section); }
@@ -419,32 +482,40 @@ const faqItems = [
 	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.2rem 2rem; border-top: 1px solid var(--rule); font-size: 0.9rem; }
 
 	@media (min-width: 48rem) {
+		.hero-crops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.product-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.product-nav a { padding: 1.2rem 2rem 1.2rem 0; }
 		.product-nav a + a { padding-left: 2rem; border-top: 0; border-left: 1px solid var(--color-hairline); }
 		.allergen-heading, .evidence-note { grid-template-columns: 5fr 7fr; align-items: start; }
-		.evidence-chain { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+		.evidence-chain { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.evidence-chain li { border-right: 1px solid var(--rule); border-bottom: 0; }
-		.evidence-chain li:not(:first-child) { padding-left: 1.2rem; }
-		.evidence-chain li:last-child { border-right: 0; }
-		.evidence-chain li:not(:last-child)::after { position: absolute; top: 2rem; right: -0.35rem; z-index: 1; width: 0.65rem; height: 0.65rem; border-top: 1px solid var(--color-ink); border-right: 1px solid var(--color-ink); background: var(--color-softgreen); content: ''; transform: rotate(45deg); }
+		.evidence-chain li:nth-child(even) { border-right: 0; }
+		.evidence-chain li:nth-child(-n + 2) { border-bottom: 1px solid var(--rule); }
+		.evidence-chain li:nth-child(odd)::after { position: absolute; top: 2.35rem; right: -0.35rem; z-index: 1; width: 0.65rem; height: 0.65rem; border-top: 1px solid var(--color-ink); border-right: 1px solid var(--color-ink); background: var(--color-softgreen); content: ''; transform: rotate(45deg); }
 	}
 
 	@media (min-width: 64rem) {
-		.hero-grid, .split-grid, .product-grid, .print-grid, .capabilities-grid, .faq-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-		.hero-grid { min-height: 48rem; }
-		.macro-rail { left: calc(var(--page-gutter, 1.25rem) + 1rem); width: min(58rem, calc(100% - var(--page-gutter, 1.25rem) * 2)); }
+		.hero-grid, .split-grid, .print-grid, .capabilities-grid, .faq-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+		.hero-grid { grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr); min-height: 50rem; }
+		.product-copy { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(3rem, 7vw, 7rem); align-items: start; }
+		.product-copy > p { margin-top: 0; }
+		.source-facts { grid-column: 1 / -1; max-width: 58rem; }
 		.path-source { min-height: 10rem; }
 		.closing-grid { grid-template-columns: 7fr 5fr; }
 		.closing-actions { justify-content: flex-end; }
 	}
 
 	@media (max-width: 47.999rem) {
-		.hero-grid { padding-bottom: 3.5rem; }
-		.macro-rail { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: -1rem; }
-		.macro-rail div:nth-child(2) { border-right: 0; }
-		.macro-rail div:nth-child(-n + 2) { border-bottom: 1px solid var(--rule); }
+		.hero-grid { padding-block: 4rem 5rem; }
 		.hero h1 { font-size: clamp(3rem, 15vw, 4.6rem); }
+		.hero-crops { gap: 1rem; border: 0; background: transparent; box-shadow: none; }
+		.proof-crop { aspect-ratio: 1.15 / 1; border: 1px solid var(--rule); box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+		.panel-window { aspect-ratio: 1.05 / 1; }
+		.panel-window img { top: -4%; left: -2%; width: 225%; }
+		.allergen-window { aspect-ratio: 1.05 / 1; }
+		.allergen-window img { top: -13%; left: -99%; width: 230%; }
+		.label-window { aspect-ratio: 1 / 1.18; }
+		.label-window img { left: -22%; width: 144%; }
 		.broken-path { grid-template-columns: 1fr; }
 		.path-source { grid-row: auto; }
 		.path-branches { grid-row: auto; min-height: 2rem; }

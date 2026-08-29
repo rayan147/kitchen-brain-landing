@@ -25,6 +25,8 @@ Use a proof-label composition inside the established Kitchen Ticket world. The m
 
 The final build is code-led. Preview composition `exec-90664d26` is a critique reference only; generated interface imagery is not approved product evidence and does not ship.
 
+Authentic proof is shown through magnified, task-specific crops rather than reduced full-screen repeats. Each proof figure provides a full-size capture link. The evidence path uses a 2×2 rhythm at tablet and desktop widths so food-safety explanations do not collapse into four narrow columns.
+
 ## Workflow decision
 
 Marketing evaluation is low-frequency, high-information, and high-risk. Keep both product chapters on one specialist route for comparison, keep evidence and missing-state explanations denormalized beside the claims, and keep print/compliance boundaries explicit before action. No child routes or broader route-family restructuring is needed.

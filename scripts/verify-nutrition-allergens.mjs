@@ -102,6 +102,8 @@ try {
 			faqCount: document.querySelectorAll('[data-nutrition-disclosure]').length,
 			capabilityCount: document.querySelectorAll('[data-capability-disclosure]').length,
 			evidenceCount: document.querySelectorAll('.evidence-chain > li').length,
+			proofCropCount: document.querySelectorAll('.proof-crop, .panel-window, .allergen-window, .label-window').length,
+			fullProofLinkCount: document.querySelectorAll('[data-full-proof-link]').length,
 			proofSources: [...document.querySelectorAll('img')].map((image) => image.getAttribute('src')).filter(Boolean),
 			scrollWidth: document.documentElement.scrollWidth,
 			innerWidth,
@@ -110,6 +112,7 @@ try {
 		if (!state.title.includes('Nutrition facts and allergen management software')) throw new Error(`${width}: wrong title`);
 		if (state.h1 !== 'One recipe. Two answers you cannot guess at.') throw new Error(`${width}: wrong H1`);
 		if (state.faqCount !== 6 || state.capabilityCount !== 2 || state.evidenceCount !== 4) throw new Error(`${width}: disclosure or evidence count drifted`);
+		if (state.proofCropCount !== 5 || state.fullProofLinkCount !== 4) throw new Error(`${width}: readable proof contract drifted`);
 		if (!state.proofSources.includes('/proof/nutrition-panel.png') || !state.proofSources.includes('/proof/nutrition-label.png')) throw new Error(`${width}: authentic proof is missing`);
 		if (state.scrollWidth !== state.innerWidth) throw new Error(`${width}: horizontal overflow ${state.scrollWidth}/${state.innerWidth}`);
 
