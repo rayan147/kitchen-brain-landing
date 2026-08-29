@@ -2,9 +2,9 @@
 
 ## My story
 
-- **Piece:** Sage across the site: homepage section, header menu item, `/features` group, `/compare` row, `/pricing` card, FAQ entry
+- **Piece:** Sage across the site: homepage section, header menu item, `/features` group, `/compare` row, `/pricing`, FAQ entry
 - **Title / headline:** Ask your kitchen a question. See where the answer came from.
-- **My hero's name:** The owner-caterer who has been burned by "AI" on a pricing page and wants to know what the thing actually reads, what it can touch, and whether it is real
+- **My hero's name:** The owner-caterer who has been burned by a confident assistant and wants to know what Sage reads, what it can touch, and how to check it
 - **Content file(s):** `src/lib/sage.ts`, `src/components/sections/Sage.astro`, `src/lib/features.ts` (assistant group, menu item), `src/lib/comparison.ts` (row note), `src/lib/faq.ts` (#sage)
 
 ## The 11 steps
@@ -25,14 +25,14 @@
 
 ### Step 1 — The Idea
 
-> An owner-caterer wants to know, before Saturday, what is wrong with Saturday's order without opening five screens, but every assistant they have met either made numbers up or was a chat box bolted onto a sales page.
+> An owner-caterer wants to know, before Saturday, what is wrong with Saturday's order without opening five screens, but every assistant they have met either hid its evidence or tried to replace their judgment.
 
 ### Step 2 — Your Character
 
 - **Want:** One question, one answer, from their own numbers, on a phone.
 - **Need:** To see the source under every line, so they can stop trusting the sentence and check the record.
 - **Wound:** A confident wrong number. Software that "learned their business" and acted on it.
-- **Flaw:** Reads the badge, not the paragraph. Will assume "Coming" means never, and "AI" means made up.
+- **Flaw:** Reads the fluent answer before checking the record underneath it.
 
 ### Step 3 — The Plot
 
@@ -47,9 +47,9 @@
 | 7 B Story | The founder's honesty rule: the status is the ledger's, not the owner's. |
 | 8 Fun and Games | The six guardrails, each one a test in the app repo. |
 | 9 Midpoint | "It never changes a record on its own." |
-| 10 Bad Guys Close In | It is behind a flag. It is not in the app you would start today. |
-| 11 All Is Lost | The badge says Coming. The flaw says "so, never." |
-| 12 Finale + Final Image | The paragraph says it plainly, links to the feature list, hands off to the rival beat. |
+| 10 Bad Guys Close In | Roles, missing evidence, limits and the approval boundary test whether the answer is safe to use. |
+| 11 All Is Lost | A faster answer without evidence would only be a faster risk. |
+| 12 Finale + Final Image | Available now is stated plainly, and the dedicated guide shows the complete path. |
 
 ### Step 4 — From Beats to Scenes
 
@@ -59,7 +59,7 @@
 | 2 | Six abilities | 3 | "AI" → six named things |
 | 3 | The capture | 4–5 | claim → a real answer with its record |
 | 4 | What it will not do | 6–9 | fear of a confident wrong number → six enforced limits |
-| 5 | Status paragraph | 10–12 | badge → sentence |
+| 5 | Availability paragraph | 10–12 | badge → sentence and guide |
 | 6 | Feature menu / compare / pricing / FAQ | — | the same status word, everywhere, from one file |
 
 ### Step 5 — Character Voices
@@ -73,7 +73,7 @@
 - Abilities: each line is a question then the mechanism (which screen or ledger it reads, who may ask).
 - Capture: told → shown, with the fixture named so the reader is not misled into thinking it is the wedding.
 - Guardrails: each lead is a promise; each detail names the enforcement, not the intention.
-- Status: the badge word and a full sentence, so a skimmer and a reader get the same fact.
+- Availability: the badge word and a full sentence, so a skimmer and a reader get the same fact.
 
 ### Step 7 — Sorkin
 
@@ -92,11 +92,11 @@ Thursday night, phone in one hand, the walk-in door open with a foot. One questi
 ### Step 10 — Connecting Your Scenes
 
 - POV: second person. The app's labels quoted, never paraphrased.
-- Hand-off: PaperIn (how prices get in) → Sage (what you can ask about them) → TheOtherTools (the category, where "an assistant" sits on the comparison as a Coming row). `stops.ts` carries the order.
+- Hand-off: PaperIn (how prices get in) → Sage (what you can ask about them) → TheOtherTools (the wider category comparison). `stops.ts` carries the order.
 - Same word everywhere: `SAGE_STATUS` in `src/lib/sage.ts` feeds the row, the group, the chip, the badge, the FAQ.
 
 ### Step 11 — Revise and Finish
 
-- Cut: the model name (never allowed), "never invents a number" (softened per the app's ledger), a "coming in the fall" line (no date allowed), the per-record "Ask Sage about this order" idea (designed, not built).
+- Cut: the model name, absolute accuracy claims, the per-record "Ask Sage about this order" idea, autonomous action language and anything past the six implemented tools.
 - Every capability traces to one of six tools in `src/lib/server/sage/tools.ts` and `proposals.ts` at sandbox/demo e8b69fe4; every guardrail to a test file; RC-49 lists them.
-- Ending: the status sentence, then the hand-off. When the deployed flag is confirmed, the word flips in one file and that paragraph is replaced, not softened.
+- Ending: the availability sentence links to the dedicated guide and video, then the homepage story hands off.

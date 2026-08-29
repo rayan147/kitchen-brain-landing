@@ -1,0 +1,394 @@
+---
+import { sage, sageStatusWord } from '../../lib/sage';
+import { cta, demoCta } from '../../lib/site';
+
+// Considered Strategy; not used because the page selects one fixed editorial
+// view of Sage's static product contract; no behavior is swapped at runtime.
+const faqItems = [
+	{
+		question: 'Is Sage available now?',
+		answer:
+			'Yes. Sage is available inside CostCook. You can reach it from the app navigation and, while setup is unfinished, from the setup header.'
+	},
+	{
+		question: 'How does Sage help during setup?',
+		answer:
+			'Your setup progress saves after each stage. Ask Sage opens the assistant with starting questions that fit the stage and the records entered so far. Back to setup returns you to the unfinished stage.'
+	},
+	{
+		question: 'What can I ask Sage?',
+		answer:
+			'Sage supports six bounded jobs: attention across upcoming work, orders on a date, a recipe-cost explanation, recent ingredient price moves, receiving follow-ups, and a shopping-list draft for an owner or manager to review.'
+	},
+	{
+		question: 'Can Sage change my kitchen records?',
+		answer:
+			'Not on its own. Five checks read records. The sixth can prepare a shopping-list draft. A person reviews the impact, and CostCook checks the underlying records again before an approved draft is created.'
+	},
+	{
+		question: 'What happens when the evidence is missing?',
+		answer:
+			'Sage names the missing evidence or an incomplete check instead of filling the gap with a confident number. The answer remains useful because it tells you what the record still needs.'
+	},
+	{
+		question: 'Who can see price moves or approve a shopping-list draft?',
+		answer:
+			'Ingredient price moves and shopping-list preparation require a manager or owner. Staff can ask about attention, orders, recipe costs and receiving follow-ups without using Sage as a way around CostCook roles.'
+	}
+] as const;
+
+const videoChapters = [
+	{ at: '0:00', title: 'Ask during setup', detail: 'The setup stage stays saved while Sage is one action away.' },
+	{ at: '0:05', title: 'Fit the records', detail: 'Starting questions follow what your kitchen has entered so far.' },
+	{ at: '0:10', title: 'Check the source', detail: 'The answer keeps its evidence and record link in view.' },
+	{ at: '0:15', title: 'Keep the final say', detail: 'Five checks read. One prepares a draft. You approve.' }
+] as const;
+---
+
+<!-- story: docs/stories/sage-feature.story.md -->
+<article id="features-assistant" class="sage-page">
+	<section class="hero" aria-labelledby="sage-feature-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="breadcrumb">
+					<a href="/features">Every feature</a>
+					<span aria-hidden="true">/</span>
+					<span>Sage</span>
+				</nav>
+				<p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p>
+				<h1 id="sage-feature-heading">Ask your kitchen. Check the answer.</h1>
+				<p class="hero-lede">
+					Sage is inside CostCook, including during setup. It reads the records you have,
+					shows where each answer came from, and waits for your approval before prepared work
+					becomes real.
+				</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href="#watch-sage" class="btn-outline">Watch 20 seconds</a>
+				</div>
+			</div>
+
+			<figure class="hero-evidence anim-enter" style="--enter-delay: 120ms">
+				<div class="answer-sheet">
+					<p>Captured Sage answer</p>
+					<picture>
+						<source media="(max-width: 639px)" srcset={sage.proof.mobile.src} />
+						<img
+							src={sage.proof.desktop.src}
+							alt={sage.proof.desktop.alt}
+							width={sage.proof.desktop.width}
+							height={sage.proof.desktop.height}
+							decoding="async"
+						/>
+					</picture>
+				</div>
+				<div class="setup-slip" aria-label="Ask Sage during setup">
+					<span>During setup</span>
+					<strong>Ask Sage</strong>
+					<small>Progress saves. Come back to the same stage.</small>
+				</div>
+				<figcaption>{sage.proof.caption}</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section id="watch-sage" class="video-section" aria-labelledby="video-heading">
+		<div class="container-page video-grid">
+			<div class="video-copy" data-reveal>
+				<h2 id="video-heading">Watch Sage at work.</h2>
+				<p>
+					A 20-second path from an unfinished setup stage to a checkable answer and a
+					human decision. These are captured CostCook states, not a concept animation.
+				</p>
+				<ol class="chapter-list">
+					{videoChapters.map((chapter) => (
+						<li><time>{chapter.at}</time><span><strong>{chapter.title}</strong><small>{chapter.detail}</small></span></li>
+					))}
+				</ol>
+			</div>
+			<figure class="video-frame" data-reveal>
+				<video
+					controls
+					playsinline
+					preload="metadata"
+					poster="/proof/sage-walkthrough-poster.jpg"
+					aria-label="Sage product walkthrough, 20 seconds"
+				>
+					<source src="/proof/sage-walkthrough.webm" type="video/webm" />
+					<source src="/proof/sage-walkthrough.mp4" type="video/mp4" />
+					<track kind="captions" src="/proof/sage-walkthrough.vtt" srclang="en" label="English" default />
+					Your browser does not support embedded video. The transcript follows beside the player.
+				</video>
+				<figcaption>Silent walkthrough assembled from the Sage fixture and setup captures on 2026-08-29.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="setup-section" aria-labelledby="setup-heading">
+		<div class="container-page setup-grid">
+			<figure class="setup-capture" data-reveal>
+				<img
+					src="/proof/sage-onboarding.png"
+					alt="CostCook setup on the Ingredients stage. The header says Set up your kitchen and Progress saves after each stage, with Ask Sage, Support and Save and exit actions."
+					width="1280"
+					height="720"
+					loading="lazy"
+					decoding="async"
+				/>
+				<figcaption>Captured setup state. Ask Sage is present in the setup header.</figcaption>
+			</figure>
+			<div class="setup-copy" data-reveal>
+				<h2 id="setup-heading">Ask before the kitchen is fully set up.</h2>
+				<p>
+					Sage does not pretend a half-built catalog is finished. It starts from what you
+					have entered, tells you what is still missing, and keeps the route back to setup visible.
+				</p>
+				<dl>
+					<div><dt>Leave without losing your place</dt><dd>{sage.onboarding.entry}</dd></div>
+					<div><dt>Ask a question that fits</dt><dd>{sage.onboarding.context}</dd></div>
+					<div><dt>Return to the work</dt><dd>{sage.onboarding.return}</dd></div>
+				</dl>
+			</div>
+		</div>
+	</section>
+
+	<section class="questions" aria-labelledby="questions-heading">
+		<div class="container-page questions-grid">
+			<div class="questions-intro" data-reveal>
+				<h2 id="questions-heading">Six kitchen jobs. No vague seventh.</h2>
+				<p>Each question reaches a bounded CostCook check. The assistant does not get a general door into your data.</p>
+			</div>
+			<ol class="question-list">
+				{sage.abilities.map((ability, index) => (
+					<li data-reveal>
+						<span>{String(index + 1).padStart(2, '0')}</span>
+						<div><h3>&ldquo;{ability.ask}&rdquo;</h3><p>{ability.does}</p></div>
+					</li>
+				))}
+			</ol>
+		</div>
+	</section>
+
+	<section class="proof-section" aria-labelledby="proof-heading">
+		<div class="container-page proof-grid">
+			<div class="proof-copy" data-reveal>
+				<h2 id="proof-heading">The number arrives with its record.</h2>
+				<p>In the captured fixture, the question is simple: which ingredient prices went up recently?</p>
+				<dl class="answer-facts">
+					<div><dt>Price move</dt><dd>$24.00 → $33.00</dd></div>
+					<div><dt>Calculated change</dt><dd>37.5%</dd></div>
+					<div><dt>Evidence</dt><dd>2 purchases</dd></div>
+					<div><dt>Source</dt><dd>Ingredient · Cucumber</dd></div>
+				</dl>
+				<p class="snap">A missing number is an answer, too.</p>
+			</div>
+			<figure class="proof-capture" data-reveal>
+				<p>Where this came from</p>
+				<picture>
+					<source media="(max-width: 639px)" srcset={sage.proof.mobile.src} />
+					<img
+						src={sage.proof.desktop.src}
+						alt={sage.proof.desktop.alt}
+						width={sage.proof.desktop.width}
+						height={sage.proof.desktop.height}
+						loading="lazy"
+						decoding="async"
+					/>
+				</picture>
+				<figcaption>{sage.proof.caption}</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="guardrails" aria-labelledby="guardrails-heading">
+		<div class="container-page">
+			<div class="guardrails-heading" data-reveal>
+				<h2 id="guardrails-heading">Useful because the boundaries are visible.</h2>
+				<p>An answer stays separate from an action. A prepared draft stays separate from approval.</p>
+			</div>
+			<div class="approval-path" data-reveal aria-label="Five checks read records, one tool prepares a draft, and a person approves">
+				<div><span>5 checks</span><strong>Read records</strong></div>
+				<i aria-hidden="true"></i>
+				<div><span>1 tool</span><strong>Prepares a draft</strong></div>
+				<i aria-hidden="true"></i>
+				<div class="person"><span>You</span><strong>Approve or discard</strong></div>
+			</div>
+			<ul class="guardrail-list" role="list">
+				{sage.guardrails.map((rule) => (
+					<li data-reveal><h3>{rule.lead}</h3><p>{rule.detail}</p></li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	<section class="faq" aria-labelledby="faq-heading">
+		<div class="container-page faq-grid">
+			<div class="faq-intro" data-reveal>
+				<h2 id="faq-heading">Frequently asked questions</h2>
+				<p>The availability, setup and control questions worth settling before you ask the first one.</p>
+			</div>
+			<div class="faq-list">
+				{faqItems.map((item) => (
+					<details data-reveal data-sage-disclosure>
+						<summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary>
+						<p>{item.answer}</p>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid" data-reveal>
+			<div>
+				<h2 id="closing-heading">Ask the next question. Keep the final say.</h2>
+				<p>Check the record underneath the answer, then return to the kitchen work that needs you.</p>
+			</div>
+			<div class="closing-actions">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book 15 minutes</a>
+			</div>
+		</div>
+		<nav class="container-page onward" aria-label="Related feature guides">
+			<a href="/features/invoices-and-price-list-import">Invoices &amp; price-list import</a>
+			<a href="/features/recipes-and-costing">Recipes &amp; food costing</a>
+			<a href="/features">Every CostCook feature</a>
+		</nav>
+	</section>
+</article>
+
+<style>
+	.sage-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); overflow: clip; }
+	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.hero-grid { display: grid; gap: clamp(3.5rem, 7vw, 7rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
+	.breadcrumb { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.6rem; font-size: 0.875rem; color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
+	.availability { display: inline-flex; align-items: center; gap: 0.55rem; margin-bottom: 1.25rem; color: var(--color-green-deep); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+	.availability span { width: 0.65rem; height: 0.65rem; border-radius: 999px; background: var(--color-green); box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-green) 13%, transparent); }
+	.hero h1 { max-width: 10ch; font-family: var(--font-display); font-size: clamp(3rem, 5.6vw, 5.9rem); font-weight: 600; line-height: 0.98; letter-spacing: -0.028em; text-wrap: balance; }
+	.hero-lede { max-width: 40ch; margin-top: 1.75rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
+	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
+	.btn-outline:hover { background: var(--color-green); color: white; }
+	.hero-evidence { position: relative; min-width: 0; padding: 0 0 clamp(5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem); }
+	.answer-sheet { position: relative; background: var(--color-paper); box-shadow: 0 18px 36px color-mix(in srgb, var(--color-ink) 14%, transparent); }
+	.answer-sheet::before { position: absolute; inset: 0 0 auto; height: 4px; background: var(--color-green); content: ''; }
+	.answer-sheet > p { padding: 0.8rem 1rem; border-bottom: 1px solid var(--rule); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.answer-sheet img { display: block; width: 100%; height: auto; }
+	.setup-slip { position: absolute; bottom: 1.1rem; left: 0; width: min(56%, 17rem); padding: 1.2rem; border-top: 3px solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 13px 25px color-mix(in srgb, var(--color-ink) 15%, transparent); transform: rotate(-1.5deg); }
+	.setup-slip span, .setup-slip strong, .setup-slip small { display: block; }
+	.setup-slip span { color: var(--color-amber-deep); font-size: 0.68rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.setup-slip strong { margin-top: 0.55rem; font-family: var(--font-display); font-size: 1.5rem; }
+	.setup-slip small { margin-top: 0.55rem; color: var(--color-ink-soft); line-height: 1.45; }
+	.hero-evidence > figcaption { margin: 1rem 0 0 auto; max-width: 56ch; color: var(--color-ink-soft); font-size: 0.76rem; line-height: 1.5; }
+
+	.video-section { background: var(--color-ink); color: var(--color-offwhite); }
+	.video-grid { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; padding-block: var(--space-section); }
+	.video-copy h2, .setup-copy h2, .questions-intro h2, .proof-copy h2, .guardrails-heading h2, .faq-intro h2, .closing h2 { font-family: var(--font-display); font-size: clamp(2.1rem, 3.8vw, 4rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+	.video-copy > p { max-width: 43ch; margin-top: 1.25rem; color: color-mix(in srgb, var(--color-offwhite) 75%, transparent); line-height: 1.65; }
+	.chapter-list { margin-top: 2rem; border-top: 1px solid color-mix(in srgb, white 20%, transparent); }
+	.chapter-list li { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: 1rem; padding-block: 0.9rem; border-bottom: 1px solid color-mix(in srgb, white 15%, transparent); }
+	.chapter-list time { color: var(--color-amber-light); font-variant-numeric: tabular-nums; }
+	.chapter-list strong, .chapter-list small { display: block; }
+	.chapter-list small { margin-top: 0.2rem; color: color-mix(in srgb, var(--color-offwhite) 68%, transparent); line-height: 1.45; }
+	.video-frame { min-width: 0; }
+	.video-frame video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 1px solid color-mix(in srgb, white 25%, transparent); background: black; object-fit: contain; }
+	.video-frame figcaption { margin-top: 0.8rem; color: color-mix(in srgb, var(--color-offwhite) 68%, transparent); font-size: 0.78rem; line-height: 1.5; }
+
+	.setup-section, .proof-section, .faq { background: var(--color-offwhite); }
+	.setup-grid, .proof-grid, .faq-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--space-section); }
+	.setup-capture { min-width: 0; }
+	.setup-capture img { display: block; width: 100%; height: auto; border-top: 4px solid var(--color-green); box-shadow: 0 15px 28px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.setup-capture figcaption, .proof-capture figcaption { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: 0.78rem; line-height: 1.5; }
+	.setup-copy > p, .questions-intro > p, .proof-copy > p:not(.snap), .guardrails-heading > p, .faq-intro > p, .closing p { max-width: 45ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: 1.05rem; line-height: 1.65; }
+	.setup-copy dl { margin-top: 2rem; border-top: 1px solid var(--rule); }
+	.setup-copy dl div { padding-block: 1rem; border-bottom: 1px solid var(--rule); }
+	.setup-copy dt { font-weight: 700; }
+	.setup-copy dd { margin-top: 0.35rem; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
+
+	.questions { background: var(--color-softgreen); }
+	.questions-grid { display: grid; gap: clamp(3rem, 6vw, 6rem); align-items: start; padding-block: var(--space-section); }
+	.questions-intro { position: sticky; top: 7rem; }
+	.question-list { border-top: 1px solid var(--rule); }
+	.question-list li { display: grid; grid-template-columns: 2.8rem minmax(0, 1fr); gap: clamp(1rem, 3vw, 2rem); padding-block: clamp(1.25rem, 2.5vw, 2rem); border-bottom: 1px solid var(--rule); }
+	.question-list > li > span { color: var(--color-amber-deep); font-size: 0.76rem; font-weight: 750; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
+	.question-list h3 { font-family: var(--font-display); font-size: clamp(1.3rem, 2vw, 1.75rem); font-weight: 600; line-height: 1.2; }
+	.question-list p { max-width: 55ch; margin-top: 0.55rem; color: var(--color-ink-soft); line-height: 1.6; }
+
+	.proof-grid { align-items: start; }
+	.answer-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; border-top: 1px solid var(--rule); }
+	.answer-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
+	.answer-facts dt { color: var(--color-ink-soft); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+	.answer-facts dd { margin-top: 0.35rem; font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+	.snap { margin-top: 2rem; padding-top: 1.4rem; border-top: 3px solid var(--color-amber-deep); font-family: var(--font-display); font-size: clamp(1.55rem, 2.7vw, 2.25rem); font-weight: 600; line-height: 1.15; }
+	.proof-capture { min-width: 0; }
+	.proof-capture > p { padding: 0.8rem 1rem; border-top: 4px solid var(--color-green); background: var(--color-paper); color: var(--color-green-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.proof-capture img { display: block; width: 100%; height: auto; box-shadow: 0 15px 28px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+
+	.guardrails { background: var(--color-cream); }
+	.guardrails > .container-page { padding-block: var(--space-section); }
+	.guardrails-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem 4rem; align-items: end; }
+	.approval-path { display: grid; grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1fr) 2.5rem minmax(0, 1fr); gap: 0.75rem; align-items: center; margin-top: clamp(2.5rem, 5vw, 4.5rem); padding: clamp(1rem, 2.5vw, 1.8rem); border-block: 1px solid var(--rule); background: var(--color-paper); }
+	.approval-path div { min-width: 0; }
+	.approval-path span, .approval-path strong { display: block; }
+	.approval-path span { color: var(--color-ink-soft); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+	.approval-path strong { margin-top: 0.25rem; }
+	.approval-path i { position: relative; height: 1px; background: var(--color-hairline-strong); }
+	.approval-path i::after { position: absolute; right: 0; top: 50%; width: 0.45rem; height: 0.45rem; border-top: 1px solid var(--color-ink-soft); border-right: 1px solid var(--color-ink-soft); content: ''; transform: translateY(-50%) rotate(45deg); }
+	.approval-path .person { padding: 0.8rem 1rem; background: var(--color-softgreen); }
+	.guardrail-list { display: grid; gap: 0; margin-top: 3rem; border-top: 1px solid var(--rule); }
+	.guardrail-list li { padding-block: 1.25rem; border-bottom: 1px solid var(--rule); }
+	.guardrail-list h3 { font-size: 1rem; font-weight: 700; }
+	.guardrail-list p { max-width: 58ch; margin-top: 0.4rem; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
+
+	.faq-grid { align-items: start; }
+	.faq-intro { position: sticky; top: 7rem; }
+	.faq-list { border-top: 1px solid var(--rule); }
+	.faq-list details { border-bottom: 1px solid var(--rule); }
+	.faq-list summary { display: flex; min-height: 4.4rem; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; font-weight: 700; cursor: pointer; }
+	.faq-list summary::-webkit-details-marker { display: none; }
+	.faq-list summary svg { flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; transition: transform 160ms ease-out; }
+	.faq-list details[open] summary svg { transform: rotate(180deg); }
+	.faq-list details > p { max-width: 62ch; padding: 0 3rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.65; }
+
+	.closing { border-top: 1px solid var(--color-hairline); background: var(--color-softgreen); }
+	.closing-grid { display: grid; gap: 2rem 5rem; align-items: end; padding-block: var(--space-section-tight); }
+	.onward { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; padding-bottom: 2.5rem; font-size: 0.9rem; }
+
+	@media (min-width: 900px) {
+		.hero-grid { grid-template-columns: minmax(0, 0.88fr) minmax(30rem, 1.12fr); }
+		.video-grid { grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1.28fr); }
+		.setup-grid, .proof-grid { grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr); }
+		.questions-grid, .faq-grid { grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr); }
+		.guardrail-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+		.guardrail-list li { padding-right: 2rem; }
+		.guardrail-list li:not(:nth-child(3n + 1)) { padding-left: 2rem; border-left: 1px solid var(--rule); }
+		.closing-grid { grid-template-columns: minmax(0, 1fr) auto; }
+	}
+
+	@media (max-width: 899px) {
+		.questions-intro, .faq-intro { position: static; }
+		.setup-copy { order: -1; }
+		.approval-path { grid-template-columns: 1fr; }
+		.approval-path i { width: 1px; height: 1.5rem; margin-left: 1rem; }
+		.approval-path i::after { right: 50%; top: auto; bottom: 0; transform: translateX(50%) rotate(135deg); }
+	}
+
+	@media (max-width: 639px) {
+		.hero-grid { padding-block: 3.5rem 4.5rem; }
+		.hero h1 { font-size: clamp(2.8rem, 15vw, 4.25rem); }
+		.hero-evidence { padding-left: 0; padding-bottom: 5.5rem; }
+		.setup-slip { width: 72%; }
+		.video-section, .questions, .guardrails, .faq, .setup-section, .proof-section { scroll-margin-top: 5rem; }
+		.video-copy h2, .setup-copy h2, .questions-intro h2, .proof-copy h2, .guardrails-heading h2, .faq-intro h2, .closing h2 { font-size: 2.35rem; }
+		.answer-facts { grid-template-columns: 1fr; }
+		.question-list li { grid-template-columns: 2rem minmax(0, 1fr); }
+		.hero-actions a, .closing-actions a { width: 100%; }
+		.faq-list details > p { padding-right: 0; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.btn-outline, .faq-list summary svg { transition: none; }
+	}
+</style>

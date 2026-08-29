@@ -403,10 +403,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 		// Status is read from src/lib/sage.ts, the one place it may change (RC-49).
 		status: SAGE_STATUS === 'yes' ? 'available' : 'in-development',
 		items: [
-			// The area page renders items[0].detail alone for an in-development
-			// group, so this one line is the whole public description there and
-			// on /pricing. It names the six things and the boundary, nothing else.
-			{ lead: 'Not in the app you would start today.', detail: 'Sage answers questions from the records you already keep: what needs attention, the orders on a date, why a dish costs what it costs, which prices moved, what came up short in receiving. It shows where every number came from, and the one thing it can prepare, a shopping list draft, waits for you to approve it. Built and tested on the sandbox; not in the launch price, and it carries no date.' }
+			{ lead: 'Ask during setup.', detail: 'Setup keeps an Ask Sage entry, offers questions that fit the stage and records entered so far, and gives you a direct route back.' },
+			{ lead: 'Six bounded kitchen jobs.', detail: 'Ask what needs attention, what is on a date, why a dish costs what it costs, which prices moved, or what came up short in receiving. Sage can also prepare a shopping-list draft for a manager or owner to approve.' },
+			{ lead: 'Sources under the answer.', detail: 'Each answer shows the records and checks behind its numbers, and says when evidence is missing.' },
+			{ lead: 'A draft is not a change.', detail: 'Five tools read. One prepares a shopping-list draft. The underlying records are checked again before a person approves it.' }
 		]
 	},
 	{
@@ -563,14 +563,15 @@ const shippedFeatureGroupsById = new Map(
 );
 const featureGroupsById = new Map(featureGroups.map((group) => [group.id, group] as const));
 
-// Considered Strategy; not used because five fixed editorial destinations
+// Considered Strategy; not used because six fixed editorial destinations
 // are static route data, not interchangeable navigation algorithms.
 const dedicatedFeatureRoutes = new Map<string, string>([
 	['math', '/features/recipes-and-costing'],
 	['menus', '/features/menus-and-quotes'],
 	['ingredients', '/features/ingredients-and-supplier-prices'],
 	['import', '/features/invoices-and-price-list-import'],
-	['inventory', '/features/inventory']
+	['inventory', '/features/inventory'],
+	['assistant', '/features/sage']
 ]);
 
 export const featureMenuHref = (featureId: string, coming = false) => {

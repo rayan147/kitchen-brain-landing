@@ -44,6 +44,9 @@ const surfaceFiles = [
 	// Dedicated Inventory story. Trust-state and gap-planning claims are high
 	// risk because stale counts must never read as safe to subtract.
 	'src/components/sections/InventoryFeature.astro',
+	// Sage specialist page. Availability, onboarding and assistant boundaries
+	// are release claims and must stay inside RC-46/RC-49.
+	'src/components/sections/SageFeature.astro',
 	// The three drawn area figures. They redraw claims their own pages already
 	// make (RC-16, RC-19, RC-09, RC-38, RC-39, RC-42) and must never outrun them.
 	'src/components/FeatureAreaFigure.astro',
@@ -488,6 +491,9 @@ requireText(featuresSource, "status: SAGE_STATUS === 'yes'", 'features reads the
 requireText(sageSection, '{sageStatusWord}', 'sage section prints its status');
 if (/SAGE_STATUS = 'coming'/.test(sageSource) && !/not in the app you would start today/.test(sageSection)) {
 	failures.push('sage: status is coming but the section no longer says it is not in the app you would start today');
+}
+if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start today|not in the launch price/.test(`${sageSection}\n${comparisonSource}\n${featuresSource}`)) {
+	failures.push('sage: status is available but a shared product surface still describes it as unavailable');
 }
 
 const forbiddenClaims = [
