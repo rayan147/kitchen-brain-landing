@@ -1,0 +1,328 @@
+---
+import { featureGroups } from '../../lib/features';
+import { cta, demoCta } from '../../lib/site';
+
+const ledgerGroup = featureGroups.find((group) => group.id === 'ledger');
+if (!ledgerGroup) throw new Error('Missing public feature group: ledger');
+
+const purchaseSources = [
+	{ source: 'Invoice import', record: 'Northline Foods · INV-8831', amount: '$2,184.30' },
+	{ source: 'Receiving', record: 'PO-1048 · received delivery', amount: '$423.00' },
+	{ source: 'Order log', record: 'Harbor wedding · market run', amount: '$186.40' },
+	{ source: 'Quick log', record: 'Produce top-up · cash receipt', amount: '$74.20' }
+] as const;
+
+const historyRows = [
+	{ label: 'Chicken thigh · 10 kg case', before: '$43.00', after: '$47.00', change: '+9.3%' },
+	{ label: 'Baby spinach · 2 kg case', before: '$18.60', after: '$17.90', change: '−3.8%' },
+	{ label: 'Olive oil · 5 L tin', before: '$51.20', after: '$51.20', change: 'No change' }
+] as const;
+
+const recoveryStates = [
+	{ label: 'Late purchase', action: 'Keep its purchase date', note: 'Current cost follows when the purchase happened, not when it was typed.' },
+	{ label: 'Wrong amount', action: 'Add a signed adjustment', note: 'A required reason joins the record; history is not restated.' },
+	{ label: 'Missing trusted count', action: 'Withhold turnover', note: 'The metric waits until two trusted counts bracket the period.' }
+] as const;
+
+// Considered Strategy; not used because the FAQ and evidence rows are static
+// editorial data, not interchangeable behavior selected at runtime.
+const faqItems = [
+	{
+		question: 'Where do purchase records come from?',
+		answer: 'One ledger accepts manual entry, invoice import, order log, and receiving. Every entry keeps its source, and a whole invoice can be committed as one all-or-nothing batch.'
+	},
+	{
+		question: 'What does the month verdict compare?',
+		answer: 'It compares theoretical ingredient usage with actual spend. The remaining difference is named as an unaccounted gap rather than automatically blamed as waste.'
+	},
+	{
+		question: 'How does logged waste affect the gap?',
+		answer: 'Logged waste values part of the gap at frozen sticker cost. It re-labels supported spend without pretending to explain the rest.'
+	},
+	{
+		question: 'Can I correct an old purchase?',
+		answer: 'Corrections are signed adjustments with a required reason. The adjustment joins the record, so the original history is not silently edited.'
+	},
+	{
+		question: 'When does inventory turnover appear?',
+		answer: 'Only when two trusted inventory counts bracket the selected period. Without those rails, CostCook does not manufacture a turnover number.'
+	}
+] as const;
+---
+
+<!-- story: docs/stories/purchases-month-cost.story.md -->
+<article class="ledger-page">
+	<section class="hero" aria-labelledby="ledger-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Purchases & month cost</span></nav>
+				<h1 id="ledger-heading">Know what the month should have cost—and what it actually did.</h1>
+				<p class="hero-lede">Bring every purchase into one sourced ledger, compare theoretical use with actual spend, and keep the unaccounted gap honest.</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+				</div>
+			</div>
+
+			<figure class="month-sheet ledger-enter">
+				<p class="figure-note">Illustrative August close</p>
+				<div class="sheet-top"><span>Food-cost review · 1–31 Aug</span><span class="status review">Review</span></div>
+				<div class="month-working" aria-label="Theoretical use 18,420 dollars, actual spend 19,135 dollars, difference 715 dollars">
+					<div><small>Theoretical use</small><strong>$18,420</strong></div>
+					<span aria-hidden="true">→</span>
+					<div><small>Actual spend</small><strong>$19,135</strong></div>
+					<div class="difference"><small>Difference</small><strong>+$715</strong></div>
+				</div>
+				<div class="gap-split"><span><small>Logged waste</small><strong>$286</strong></span><span><small>Still unaccounted</small><strong>$429</strong></span></div>
+				<figcaption>Illustrative amounts. The difference stays open until the supporting records explain it.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="problem" aria-labelledby="problem-heading">
+		<div class="container-page problem-grid">
+			<div><h2 id="problem-heading">A $715 gap is not automatically $715 of waste.</h2><p>Waste can explain the part you logged. Late purchases, corrections, and count quality can explain—or limit—other parts. The remainder should stay named without assigning blame.</p></div>
+			<div class="gap-scene" role="img" aria-label="An illustrative 715 dollar gap separates into 286 dollars of logged waste and 429 dollars still unaccounted">
+				<div><small>Month difference</small><strong>$715</strong><span>Needs review</span></div>
+				<div class="gap-mark" aria-hidden="true">=</div>
+				<div><small>Known + open</small><strong>$286 + $429</strong><span>Waste + unaccounted</span></div>
+			</div>
+		</div>
+	</section>
+
+	<nav class="story-nav container-page" aria-label="On this page">
+		<a href="#purchase-ledger"><span>See every purchase source</span><small>Keep imported, received, order, and quick-log entries in one dated record.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#month-close"><span>Explain the month</span><small>Compare theoretical use with actual spend, then keep known and unknown parts distinct.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+	</nav>
+
+	<section id="purchase-ledger" class="product-section ledger-section" aria-labelledby="purchase-ledger-heading">
+		<div class="container-page">
+			<div class="section-intro"><h2 id="purchase-ledger-heading">One ledger. Four doors in.</h2><p>Import a supplier invoice, post a received purchase order, attach spend to an event, or log one item quickly. The source stays on every row.</p></div>
+			<figure class="ledger-sheet">
+				<div class="ledger-head"><span>Purchase ledger · illustrative</span><span>August · 47 rows</span></div>
+				<div class="line-head"><span>Source</span><span>Record</span><span>Amount</span></div>
+				{purchaseSources.map((row) => <div class="ledger-line"><span class="source-tag">{row.source}</span><strong>{row.record}</strong><b>{row.amount}</b></div>)}
+				<div class="ledger-foot"><span><strong>History stays attached</strong><small>Source · purchase date · correction trail</small></span><b>$19,135.00</b></div>
+				<figcaption>Illustrative supplier, records, row count, and amounts. Ledger filters can narrow by ingredient and date, with paging beyond 50 rows.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section id="month-close" class="product-section close-section" aria-labelledby="month-close-heading">
+		<div class="container-page">
+			<div class="section-intro"><h2 id="month-close-heading">Make the month show its working.</h2><p>Theoretical usage and actual spend set the difference. Logged waste can account for part of it; CostCook leaves the rest visibly unaccounted.</p></div>
+			<figure class="reconciliation">
+				<div class="recon-head"><span>August food-cost bridge</span><span>Illustrative amounts</span></div>
+				<div class="recon-line"><span>Theoretical ingredient use</span><strong>$18,420</strong></div>
+				<div class="recon-line actual"><span>Actual purchase spend</span><strong>$19,135</strong></div>
+				<div class="recon-line variance"><span>Difference to explain</span><strong>+$715</strong></div>
+				<div class="recon-breakdown"><div><small>Explained by logged waste</small><strong>$286</strong><span>Frozen sticker cost</span></div><div><small>Still unaccounted</small><strong>$429</strong><span>Kept open for review</span></div></div>
+				<figcaption>Illustrative reconciliation. The unaccounted gap is named without being auto-classified as waste.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="history" aria-labelledby="history-heading">
+		<div class="container-page history-grid">
+			<div><h2 id="history-heading">Let dates and corrections keep the past intact.</h2><p>Current cost follows the purchase date. Price drift shows the signed change over the window you choose. If an amount is wrong, add a reasoned adjustment instead of replacing the old line.</p></div>
+			<figure class="history-sheet">
+				<div class="history-top"><span>Price movement · illustrative</span><span>1–31 Aug</span></div>
+				{historyRows.map((row) => <div class="history-line"><strong>{row.label}</strong><span>{row.before} → {row.after}</span><b>{row.change}</b></div>)}
+				<div class="adjustment"><span class="status adjusted">Adjusted</span><strong>Produce receipt +$12.40</strong><small>Reason required · original row retained</small></div>
+				<figcaption>Illustrative items, prices, changes, and correction. Signed percentages show direction over the selected window.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="recovery" aria-labelledby="recovery-heading">
+		<div class="container-page recovery-grid">
+			<div><h2 id="recovery-heading">When the evidence stops, the conclusion stops.</h2><p>A late record keeps its date, a correction keeps its reason, and turnover waits for trusted counts. Each limit preserves what is known and names the next action.</p></div>
+			<div class="recovery-list">{recoveryStates.map((state) => <div><span class="status attention">{state.label}</span><strong>{state.action}</strong><small>{state.note}</small></div>)}</div>
+		</div>
+	</section>
+
+	<section class="capabilities" aria-labelledby="capabilities-heading">
+		<div class="container-page capabilities-grid">
+			<div><h2 id="capabilities-heading">The complete Purchases & month cost list.</h2><p>Everything below is shipped today and remains available for the diligence read.</p><p class="count"><strong>{ledgerGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<details id="features-ledger" open><summary><span>Purchases & month cost</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{ledgerGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
+		</div>
+	</section>
+
+	<section class="faq" aria-labelledby="faq-heading">
+		<div class="container-page faq-grid"><div><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions behind turning purchase history into a month result without outrunning the evidence.</p></div><div class="faq-list">{faqItems.map((item) => <details><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>)}</div></div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the month with the known and unknown parts still visible.</h2><p>Bring one real month. Follow every purchase into the ledger and inspect the result beside the records that support it.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
+		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
+	</section>
+</article>
+
+<style>
+	.ledger-page { overflow: clip; }
+	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
+	.breadcrumb { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .875rem; color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
+	.hero h1 { max-width: 13ch; margin-top: 1.5rem; font-size: clamp(2.45rem, 4.35vw, 4.9rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; }
+	.hero-lede { max-width: 56ch; margin-top: 1.75rem; font-size: clamp(1.05rem, .98rem + .35vw, 1.3rem); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
+	.btn-outline:hover { background: var(--color-softgreen); }
+	.figure-note { margin-bottom: .7rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.month-sheet, .ledger-sheet, .reconciliation, .history-sheet { min-width: 0; background: var(--color-paper); box-shadow: var(--shadow-ticket); }
+	.month-sheet { padding: clamp(1.15rem, 3vw, 1.75rem); }
+	.sheet-top, .ledger-head, .line-head, .recon-head, .history-top { display: flex; justify-content: space-between; gap: 1rem; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.status { display: inline-flex; width: fit-content; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: .7rem; font-weight: 700; font-style: normal; letter-spacing: .04em; text-transform: uppercase; }
+	.status.review, .status.attention { background: var(--color-softamber); color: var(--color-amber-deep); }
+	.status.adjusted { background: var(--color-softgreen); color: var(--color-green-deep); }
+	.month-working { display: grid; grid-template-columns: 1fr auto 1fr; gap: .65rem; align-items: center; margin-top: 1.15rem; }
+	.month-working > div { padding: .85rem; background: var(--color-cream); }
+	.month-working > span { color: var(--color-amber-deep); font-family: var(--font-display); font-size: 1.35rem; }
+	.month-working .difference { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; border-top: 2px solid var(--color-amber-deep); background: var(--color-softamber); }
+	.month-working small, .gap-split small, .recon-breakdown small { display: block; color: var(--color-ink-soft); font-size: .7rem; }
+	.month-working strong { display: block; margin-top: .2rem; font-size: 1.45rem; font-variant-numeric: tabular-nums; }
+	.month-working .difference strong { color: var(--color-amber-deep); }
+	.gap-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 1px; background: var(--color-ticket-rule); }
+	.gap-split span { display: flex; justify-content: space-between; gap: .75rem; padding: .75rem .85rem; background: var(--color-paper); }
+	.gap-split strong { font-variant-numeric: tabular-nums; }
+	.month-sheet figcaption, .ledger-sheet figcaption, .reconciliation figcaption, .history-sheet figcaption { margin-top: .8rem; font-size: .76rem; line-height: 1.45; color: var(--color-ink-soft); }
+	.problem { border-bottom: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.problem-grid, .history-grid, .recovery-grid { display: grid; gap: 3rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.problem h2, .section-intro h2, .history h2, .recovery h2, .capabilities h2, .faq h2, .closing h2 { font-size: var(--text-h2); font-weight: 600; line-height: 1.12; }
+	.problem p, .section-intro p, .history-grid > div > p, .recovery-grid > div > p, .capabilities-grid > div > p, .faq-grid > div > p, .closing p { max-width: 60ch; margin-top: 1.1rem; color: var(--color-ink-soft); line-height: 1.65; }
+	.gap-scene { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+	.gap-scene > div:not(.gap-mark) { padding: 1.35rem; border-top: 2px solid var(--color-ticket-rule); background: var(--color-cream); }
+	.gap-scene small, .gap-scene span { display: block; color: var(--color-ink-soft); }
+	.gap-scene strong { display: block; margin-block: .4rem; font-size: 1.55rem; font-variant-numeric: tabular-nums; }
+	.gap-mark { color: var(--color-amber-deep); font-family: var(--font-display); font-size: 1.7rem; }
+	.story-nav { display: grid; padding-block: 1.25rem; }
+	.story-nav a { display: grid; min-height: 84px; grid-template-columns: 1fr auto; gap: .25rem 1rem; align-content: center; padding: 1.2rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); }
+	.story-nav a:first-child { border-top: 1px solid var(--color-ticket-rule); }
+	.story-nav span { font-weight: 700; }
+	.story-nav small { max-width: 48ch; color: var(--color-ink-soft); }
+	.story-nav svg, summary svg { grid-column: 2; grid-row: 1 / 3; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; color: var(--color-green-deep); }
+	.product-section { scroll-margin-top: 1rem; padding-block: var(--spacing-section); }
+	.ledger-section { background: var(--color-softgreen); }
+	.close-section { background: var(--color-cream); }
+	.section-intro { display: grid; gap: 1.5rem 4rem; align-items: end; }
+	.section-intro p { margin-top: 0; }
+	.ledger-sheet, .reconciliation { margin-top: clamp(2.5rem, 6vw, 4.5rem); }
+	.ledger-head, .recon-head, .history-top { padding: 1rem clamp(1rem, 3vw, 1.75rem); background: var(--color-ink); color: var(--color-paper); }
+	.line-head, .ledger-line { display: grid; grid-template-columns: .65fr minmax(0, 1.5fr) .55fr; gap: 1rem; align-items: center; padding: .85rem clamp(1rem, 3vw, 1.75rem); }
+	.line-head, .ledger-line { border-bottom: 1px solid var(--color-hairline); }
+	.ledger-line b { justify-self: end; font-variant-numeric: tabular-nums; }
+	.source-tag { width: fit-content; color: var(--color-green-deep); font-size: .76rem; font-weight: 700; }
+	.ledger-foot { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
+	.ledger-foot small { display: block; color: var(--color-ink-soft); }
+	.ledger-foot > b { color: var(--color-green-deep); font-variant-numeric: tabular-nums; }
+	.ledger-sheet figcaption, .reconciliation figcaption, .history-sheet figcaption { padding: 0 clamp(1rem, 3vw, 1.75rem) 1rem; }
+	.recon-line { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem clamp(1rem, 3vw, 1.75rem); border-bottom: 1px solid var(--color-hairline); }
+	.recon-line strong { font-variant-numeric: tabular-nums; }
+	.recon-line.actual { background: var(--color-cream); }
+	.recon-line.variance { border-top: 2px solid var(--color-amber-deep); background: var(--color-softamber); color: var(--color-amber-deep); font-weight: 700; }
+	.recon-breakdown { display: grid; grid-template-columns: 1fr 1fr; }
+	.recon-breakdown > div { padding: 1.2rem clamp(1rem, 3vw, 1.75rem); border-right: 1px solid var(--color-ticket-rule); }
+	.recon-breakdown > div:last-child { border-right: 0; }
+	.recon-breakdown strong { display: block; margin-block: .35rem; font-size: 1.7rem; font-variant-numeric: tabular-nums; }
+	.recon-breakdown span { color: var(--color-ink-soft); font-size: .8rem; }
+	.history { background: var(--color-paper); }
+	.history-line { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 1rem; padding: .9rem clamp(1rem, 3vw, 1.75rem); border-bottom: 1px solid var(--color-hairline); }
+	.history-line span, .history-line b { font-variant-numeric: tabular-nums; }
+	.history-line span { color: var(--color-ink-soft); }
+	.history-line b { min-width: 5ch; text-align: right; color: var(--color-green-deep); }
+	.adjustment { display: grid; grid-template-columns: auto 1fr; gap: .4rem 1rem; padding: 1rem clamp(1rem, 3vw, 1.75rem); background: var(--color-softgreen); }
+	.adjustment strong { align-self: center; }
+	.adjustment small { grid-column: 2; color: var(--color-ink-soft); }
+	.recovery { background: var(--color-ink); color: var(--color-paper); }
+	.recovery-grid > div > p { color: var(--color-ink-muted); }
+	.recovery-list { border-block: 1px solid var(--color-ticket-rule); }
+	.recovery-list > div { display: grid; grid-template-columns: auto 1fr; gap: .45rem 1rem; padding: 1rem 0; border-bottom: 1px solid var(--color-ticket-rule); }
+	.recovery-list > div:last-child { border-bottom: 0; }
+	.recovery-list strong { align-self: center; }
+	.recovery-list small { grid-column: 2; color: var(--color-ink-muted); }
+	.capabilities { padding-block: var(--spacing-section); background: var(--color-offwhite); }
+	.capabilities-grid, .faq-grid { display: grid; gap: 3rem; }
+	.count { display: flex; align-items: baseline; gap: .75rem; }
+	.count strong { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-green-deep); }
+	.count span { font-size: .8rem; color: var(--color-ink-soft); }
+	details summary { cursor: pointer; list-style: none; }
+	details summary::-webkit-details-marker { display: none; }
+	.capabilities details { scroll-margin-top: 1rem; border-block: 1px solid var(--color-ticket-rule); }
+	.capabilities summary, .faq summary { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 1rem; font-weight: 700; }
+	.capabilities details[open] summary, .faq details[open] summary { color: var(--color-green-deep); }
+	.capabilities details[open] summary svg, .faq details[open] summary svg { transform: rotate(180deg); }
+	.capabilities summary svg, .faq summary svg { flex: 0 0 auto; transition: transform 150ms ease-out; }
+	.capabilities details ul { padding-bottom: 1.5rem; }
+	.capabilities details li { padding-block: .75rem; border-top: 1px solid var(--color-hairline); line-height: 1.5; }
+	.capabilities details li span { color: var(--color-ink-soft); }
+	.faq { padding-block: var(--spacing-section); border-top: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.faq-list details { border-top: 1px solid var(--color-ticket-rule); }
+	.faq-list details:last-child { border-bottom: 1px solid var(--color-ticket-rule); }
+	.faq-list summary { padding-block: .7rem; }
+	.faq-list details p { max-width: 64ch; padding: 0 2.5rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.6; }
+	.closing { border-top: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
+	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
+
+	@media (min-width: 720px) {
+		.hero-grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
+		.problem-grid, .section-intro, .history-grid, .recovery-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+		.story-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.story-nav a { padding-inline: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
+		.story-nav a + a { border-left: 1px solid var(--color-ticket-rule); }
+		.capabilities-grid { grid-template-columns: minmax(15rem, .55fr) minmax(0, 1.45fr); }
+		.capabilities details ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2rem; }
+		.closing-actions { justify-content: flex-end; margin-top: 0; }
+	}
+
+	@media (max-width: 719px) {
+		.hero-grid { gap: .9rem; padding-block: 1.2rem .85rem; }
+		.hero h1 { margin-top: .25rem; font-size: clamp(1.82rem, 8.5vw, 2.25rem); }
+		.hero-lede { margin-top: .6rem; font-size: .88rem; line-height: 1.32; }
+		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .7rem; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .45rem; font-size: .8rem; text-align: center; }
+		.closing-actions > * { width: 100%; justify-content: center; }
+		.figure-note { margin-bottom: .3rem; }
+		.month-sheet { padding: .65rem; }
+		.month-working { gap: .35rem; margin-top: .45rem; }
+		.month-working > div { padding: .48rem; }
+		.month-working strong { font-size: 1.05rem; }
+		.month-working .difference { padding-block: .38rem; }
+		.gap-split span { display: block; padding: .45rem .5rem; }
+		.month-sheet figcaption { margin-top: .35rem; font-size: .68rem; }
+		.gap-scene { grid-template-columns: 1fr; }
+		.gap-mark { justify-self: center; transform: rotate(90deg); }
+		.line-head { display: none; }
+		.ledger-line { grid-template-columns: 1fr auto; gap: .35rem 1rem; }
+		.ledger-line strong { grid-column: 1 / -1; grid-row: 1; }
+		.ledger-line .source-tag { grid-column: 1; grid-row: 2; }
+		.ledger-line b { grid-column: 2; grid-row: 2; }
+		.ledger-foot { align-items: flex-start; flex-direction: column; }
+		.recon-breakdown { grid-template-columns: 1fr; }
+		.recon-breakdown > div { border-right: 0; border-bottom: 1px solid var(--color-ticket-rule); }
+		.history-line { grid-template-columns: 1fr auto; gap: .35rem 1rem; }
+		.history-line strong { grid-column: 1 / -1; }
+	}
+
+	@media (max-width: 360px) {
+		.gap-split { grid-template-columns: 1fr; }
+		.month-working { grid-template-columns: 1fr auto; }
+		.month-working > div:nth-of-type(2) { grid-column: 1 / -1; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.capabilities summary svg, .faq summary svg { transition: none; }
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		@keyframes ledger-reconcile-step { from { opacity: .35; filter: blur(2px); transform: translateY(5px); } }
+		.ledger-enter .month-working > *, .ledger-enter .gap-split > * { animation: ledger-reconcile-step 420ms cubic-bezier(.22, 1, .36, 1) backwards; }
+		.ledger-enter .month-working > :nth-child(1) { animation-delay: 180ms; }
+		.ledger-enter .month-working > :nth-child(2) { animation-delay: 300ms; }
+		.ledger-enter .month-working > :nth-child(3) { animation-delay: 420ms; }
+		.ledger-enter .month-working > :nth-child(4) { animation-delay: 540ms; }
+		.ledger-enter .gap-split > :nth-child(1) { animation-delay: 660ms; }
+		.ledger-enter .gap-split > :nth-child(2) { animation-delay: 780ms; }
+	}
+</style>
