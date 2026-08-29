@@ -576,7 +576,7 @@ const shippedFeatureGroupsById = new Map(
 );
 const featureGroupsById = new Map(featureGroups.map((group) => [group.id, group] as const));
 
-// Considered Strategy; not used because seven fixed editorial destinations
+// Considered Strategy; not used because eight fixed editorial destinations
 // are static route data, not interchangeable navigation algorithms.
 const dedicatedFeatureRoutes = new Map<string, string>([
 	['math', '/features/recipes-and-costing'],
@@ -584,6 +584,7 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['ingredients', '/features/ingredients-and-supplier-prices'],
 	['import', '/features/invoices-and-price-list-import'],
 	['purchasing', '/features/purchasing-and-receiving'],
+	['nutrition', '/features/nutrition-facts-and-allergens'],
 	['inventory', '/features/inventory'],
 	['assistant', '/features/sage']
 ]);

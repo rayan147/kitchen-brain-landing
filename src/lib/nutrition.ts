@@ -24,7 +24,7 @@
  */
 export const nutrition = {
 	verified: { sha: 'e8b69fe4', branch: 'sandbox/demo', on: '2026-08-29' },
-	href: '/features/compliance-and-labels#features-nutrition',
+	href: '/features/nutrition-facts-and-allergens',
 	/** In the order a meal-prep reader asks. */
 	points: [
 		{
