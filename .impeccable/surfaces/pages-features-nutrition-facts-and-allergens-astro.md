@@ -25,7 +25,7 @@ Use a proof-label composition inside the established Kitchen Ticket world. The m
 
 The final build is code-led. Preview composition `exec-90664d26` is a critique reference only; generated interface imagery is not approved product evidence and does not ship.
 
-Authentic proof is shown through magnified, task-specific crops rather than reduced full-screen repeats. Each proof figure provides a full-size capture link. The evidence path uses a 2×2 rhythm at tablet and desktop widths so food-safety explanations do not collapse into four narrow columns.
+Authentic proof is exported from the verified source capture into high-resolution, task-specific assets rather than reduced full-screen repeats or CSS-positioned crops. Responsive `<picture>` sources give the summary and allergen review a separately composed mobile focal point; screenshots keep their natural aspect ratio, and each proof figure provides a full-size source link. The evidence path uses a 2×2 rhythm at tablet and desktop widths so food-safety explanations do not collapse into four narrow columns.
 
 ## Workflow decision
 

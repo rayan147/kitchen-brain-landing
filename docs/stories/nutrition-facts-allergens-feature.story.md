@@ -102,6 +102,8 @@
 
 ### Step 11 — Revise and Finish
 
+- **Screenshot revision, 2026-08-29:** Re-exported the verified source capture into high-resolution, task-specific assets for the summary, Nutrition Facts panel, allergen review, and print label. Desktop and mobile now receive crops composed for their available width instead of CSS-positioned slices of the full dashboard. The hero caption was tightened to explain that the proof is cropped to the answer; the story order, claims, point of view, and snap line remain unchanged.
+
 - **Readability revision, 2026-08-29:** Replaced reduced full-screen repeats with magnified nutrition, allergen, and print crops; added full-size capture links; opened the allergen evidence path from four tight columns to a 2×2 reading rhythm. The story order, point of view, claims, and single snap line are unchanged.
 
 - **Word count before → after:** 1,320 → target under 900 words in the rendered page.

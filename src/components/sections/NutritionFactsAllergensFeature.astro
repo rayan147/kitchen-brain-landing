@@ -41,20 +41,32 @@ const macroFacts = [
 	{ label: 'Fat', value: '—', state: 'Source value missing' }
 ] as const;
 
-// Considered Strategy; not used because these are two fixed, presentational
-// crops of one verified capture, not interchangeable image-rendering behavior.
-const heroProofViews = [
-	{
-		className: 'nutrition-view',
-		label: 'Nutrition facts',
-		alt: 'Enlarged CostCook recipe crop showing Calories 245, Protein 45.4 grams, Carbs 2.7 grams, a blank Fat value, and the Nutrition Facts panel.'
+// Considered Strategy; not used because these are fixed responsive art-direction
+// assets for one verified capture, not interchangeable image-rendering behavior.
+const proofAssets = {
+	summary: {
+		desktop: '/proof/nutrition/nutrition-summary-wide.png',
+		mobile: '/proof/nutrition/nutrition-summary-mobile.png',
+		width: 1136,
+		height: 345
 	},
-	{
-		className: 'allergen-view',
-		label: 'Allergen review',
-		alt: 'Enlarged CostCook recipe crop showing the ingredient statement, no confirmed allergen declarations, and an incomplete allergen review for six ingredients.'
+	panel: {
+		src: '/proof/nutrition/nutrition-facts-panel.png',
+		width: 810,
+		height: 1360
+	},
+	allergens: {
+		desktop: '/proof/nutrition/allergen-review-wide.png',
+		mobile: '/proof/nutrition/allergen-review-mobile.png',
+		width: 1442,
+		height: 1380
+	},
+	label: {
+		src: '/proof/nutrition/label-panel.png',
+		width: 692,
+		height: 1340
 	}
-] as const;
+} as const;
 
 const evidenceSteps = [
 	{
@@ -149,22 +161,21 @@ const faqItems = [
 
 			<figure class="hero-proof anim-enter" style="--enter-delay: 120ms">
 				<p class="capture-label">Captured CostCook recipe</p>
-				<div class="hero-crops">
-					{heroProofViews.map((view) => (
-						<div class:list={['proof-crop', view.className]}>
-							<span>{view.label}</span>
-							<img
-								src={nutrition.proof.panel.src}
-								alt={view.alt}
-								width={nutrition.proof.panel.width}
-								height={nutrition.proof.panel.height}
-								decoding="async"
-							/>
-						</div>
-					))}
+				<div class="hero-shot">
+					<picture>
+						<source media="(max-width: 47.999rem)" srcset={proofAssets.summary.mobile} width="568" height="345" />
+						<img
+							src={proofAssets.summary.desktop}
+							alt="Focused CostCook Nutrition crop showing a calculated per-portion result with Calories 245 and source-driven values."
+							width={proofAssets.summary.width}
+							height={proofAssets.summary.height}
+							decoding="async"
+							data-proof-image
+						/>
+					</picture>
 				</div>
 				<figcaption>
-					Chicken Shawarma, per portion. The missing fat value remains blank.
+					Chicken Shawarma, per portion. The source capture is cropped to the answer, not shrunk to the whole recipe screen.
 					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
 				</figcaption>
 			</figure>
@@ -215,12 +226,13 @@ const faqItems = [
 			<figure class="panel-proof" data-reveal>
 				<div class="panel-window">
 					<img
-						src={nutrition.proof.panel.src}
-						alt="Enlarged crop of the Chicken Shawarma Nutrition Facts panel beside its missing-values notice."
-						width={nutrition.proof.panel.width}
-						height={nutrition.proof.panel.height}
+						src={proofAssets.panel.src}
+						alt="Focused Chicken Shawarma Nutrition Facts panel showing Calories 245, Carbohydrate 2.7 grams, Protein 45.4 grams, and missing values left blank."
+						width={proofAssets.panel.width}
+						height={proofAssets.panel.height}
 						loading="lazy"
 						decoding="async"
+						data-proof-image
 					/>
 				</div>
 				<figcaption>
@@ -241,14 +253,18 @@ const faqItems = [
 		</div>
 		<figure class="container-page allergen-proof" data-reveal>
 			<div class="allergen-window">
-				<img
-					src={nutrition.proof.panel.src}
-					alt="Enlarged crop of the Chicken Shawarma allergen review showing no confirmed declarations and six ingredients awaiting evidence review."
-					width={nutrition.proof.panel.width}
-					height={nutrition.proof.panel.height}
-					loading="lazy"
-					decoding="async"
-				/>
+				<picture>
+					<source media="(max-width: 47.999rem)" srcset={proofAssets.allergens.mobile} width="850" height="800" />
+					<img
+						src={proofAssets.allergens.desktop}
+						alt="Focused Chicken Shawarma allergen review showing no confirmed declarations and six ingredients awaiting evidence review."
+						width={proofAssets.allergens.width}
+						height={proofAssets.allergens.height}
+						loading="lazy"
+						decoding="async"
+						data-proof-image
+					/>
+				</picture>
 			</div>
 			<figcaption>
 				The real incomplete state is shown at reading size rather than reduced to a status badge.
@@ -286,12 +302,13 @@ const faqItems = [
 			<figure class="label-proof" data-reveal>
 				<div class="label-window">
 					<img
-						src={nutrition.proof.label.src}
-						alt="Enlarged top section of the printable Chicken Shawarma sheet, including the calculated-estimate notice and Nutrition Facts panel."
-						width={nutrition.proof.label.width}
-						height={nutrition.proof.label.height}
+						src={proofAssets.label.src}
+						alt="Focused printable Chicken Shawarma Nutrition Facts panel with Calories 245 and the missing nutrient rows left blank."
+						width={proofAssets.label.width}
+						height={proofAssets.label.height}
 						loading="lazy"
 						decoding="async"
+						data-proof-image
 					/>
 				</div>
 				<figcaption>
@@ -385,12 +402,8 @@ const faqItems = [
 	.btn-outline:hover { background: var(--color-green); color: white; }
 	.hero-proof { min-width: 0; }
 	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
-	.hero-crops { display: grid; gap: 1px; overflow: hidden; border: 1px solid var(--rule); border-top: 0; background: var(--rule); box-shadow: 0 20px 38px color-mix(in srgb, var(--color-ink) 14%, transparent); }
-	.proof-crop { position: relative; aspect-ratio: 1.2 / 1; overflow: hidden; background: var(--color-paper); }
-	.proof-crop > span { position: absolute; z-index: 2; top: 0.85rem; left: 0.85rem; padding: 0.45rem 0.65rem; background: var(--color-ink); color: var(--color-offwhite); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; }
-	.proof-crop img { position: absolute; max-width: none; height: auto; }
-	.proof-crop.nutrition-view img { top: -10%; left: -2%; width: 270%; }
-	.proof-crop.allergen-view img { top: -10%; left: -93%; width: 180%; }
+	.hero-shot { overflow: hidden; border: 1px solid var(--rule); border-top: 0; background: var(--color-paper); box-shadow: 0 20px 38px color-mix(in srgb, var(--color-ink) 14%, transparent); }
+	.hero-shot picture, .hero-shot img, .panel-window img, .allergen-window picture, .allergen-window img, .label-window img { display: block; width: 100%; height: auto; }
 	.hero-proof figcaption, .panel-proof figcaption, .allergen-proof figcaption, .label-proof figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.55rem 1.25rem; margin-top: 1rem; color: var(--color-ink-soft); font-size: 0.82rem; line-height: 1.55; }
 	.hero-proof figcaption a, .panel-proof figcaption a, .allergen-proof figcaption a, .label-proof figcaption a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 700; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
 
@@ -423,14 +436,12 @@ const faqItems = [
 	.source-facts dt { color: var(--color-ink-soft); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 	.source-facts dd { margin-top: 0.35rem; font-weight: 680; line-height: 1.4; }
 	.panel-proof { min-width: 0; }
-	.panel-window { position: relative; aspect-ratio: 1.7 / 1; overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 11%, transparent); }
-	.panel-window img { position: absolute; top: -30%; left: -1%; width: 150%; max-width: none; height: auto; }
+	.panel-window { overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 11%, transparent); }
 
 	.allergens { background: var(--color-softgreen); }
 	.allergen-heading { display: grid; gap: 2.5rem; padding-top: var(--space-section); }
 	.allergen-proof { margin-top: clamp(4rem, 8vw, 7rem); }
-	.allergen-window { position: relative; aspect-ratio: 2.15 / 1; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 10%, transparent); }
-	.allergen-window img { position: absolute; top: -28%; left: -55%; width: 155%; max-width: none; height: auto; }
+	.allergen-window { overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 10%, transparent); }
 	.evidence-chain { display: grid; gap: 0; margin-top: clamp(4rem, 8vw, 7rem); border-block: 1px solid var(--rule); }
 	.evidence-chain li { position: relative; padding: clamp(1.75rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
 	.evidence-chain li:last-child { border-bottom: 0; }
@@ -448,8 +459,7 @@ const faqItems = [
 	.print-copy li { padding-block: 0.75rem; border-bottom: 1px solid var(--rule); line-height: 1.45; }
 	.snap { margin-top: 2.5rem; color: var(--color-green-deep); font-family: var(--font-display); font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 600; line-height: 1.15; }
 	.label-proof { width: min(100%, 36rem); justify-self: center; }
-	.label-window { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-top: 0.3rem solid var(--color-ink); background: white; box-shadow: 0 18px 34px color-mix(in srgb, var(--color-ink) 12%, transparent); }
-	.label-window img { position: absolute; top: 0; left: -12%; width: 124%; max-width: none; height: auto; }
+	.label-window { overflow: hidden; border-top: 0.3rem solid var(--color-ink); background: white; box-shadow: 0 18px 34px color-mix(in srgb, var(--color-ink) 12%, transparent); }
 
 	.capabilities { background: var(--color-cream); }
 	.capabilities-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--space-section); }
@@ -482,7 +492,6 @@ const faqItems = [
 	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.2rem 2rem; border-top: 1px solid var(--rule); font-size: 0.9rem; }
 
 	@media (min-width: 48rem) {
-		.hero-crops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.product-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.product-nav a { padding: 1.2rem 2rem 1.2rem 0; }
 		.product-nav a + a { padding-left: 2rem; border-top: 0; border-left: 1px solid var(--color-hairline); }
@@ -497,9 +506,8 @@ const faqItems = [
 	@media (min-width: 64rem) {
 		.hero-grid, .split-grid, .print-grid, .capabilities-grid, .faq-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 		.hero-grid { grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr); min-height: 50rem; }
-		.product-copy { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(3rem, 7vw, 7rem); align-items: start; }
-		.product-copy > p { margin-top: 0; }
-		.source-facts { grid-column: 1 / -1; max-width: 58rem; }
+		.product-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+		.source-facts { grid-template-columns: 1fr; }
 		.path-source { min-height: 10rem; }
 		.closing-grid { grid-template-columns: 7fr 5fr; }
 		.closing-actions { justify-content: flex-end; }
@@ -508,14 +516,7 @@ const faqItems = [
 	@media (max-width: 47.999rem) {
 		.hero-grid { padding-block: 4rem 5rem; }
 		.hero h1 { font-size: clamp(3rem, 15vw, 4.6rem); }
-		.hero-crops { gap: 1rem; border: 0; background: transparent; box-shadow: none; }
-		.proof-crop { aspect-ratio: 1.15 / 1; border: 1px solid var(--rule); box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 10%, transparent); }
-		.panel-window { aspect-ratio: 1.05 / 1; }
-		.panel-window img { top: -4%; left: -2%; width: 225%; }
-		.allergen-window { aspect-ratio: 1.05 / 1; }
-		.allergen-window img { top: -13%; left: -99%; width: 230%; }
-		.label-window { aspect-ratio: 1 / 1.18; }
-		.label-window img { left: -22%; width: 144%; }
+		.hero-shot { box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 10%, transparent); }
 		.broken-path { grid-template-columns: 1fr; }
 		.path-source { grid-row: auto; }
 		.path-branches { grid-row: auto; min-height: 2rem; }
