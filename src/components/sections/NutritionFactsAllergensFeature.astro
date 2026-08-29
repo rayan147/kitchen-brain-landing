@@ -1,7 +1,7 @@
 ---
 import { featureGroups } from '../../lib/features';
 import { nutrition } from '../../lib/nutrition';
-import { cta, demoCta } from '../../lib/site';
+import { cta, demoCta, launchPlan } from '../../lib/site';
 
 const nutritionGroup = featureGroups.find((group) => group.id === 'nutrition');
 const ingredientGroup = featureGroups.find((group) => group.id === 'ingredients');
@@ -33,13 +33,6 @@ const capabilityGroups = [
 	}
 ] as const;
 const capabilityCount = capabilityGroups.reduce((total, group) => total + group.items.length, 0);
-
-const macroFacts = [
-	{ label: 'Calories', value: '339' },
-	{ label: 'Protein', value: '22 g' },
-	{ label: 'Carbs', value: '48.1 g' },
-	{ label: 'Fat', value: '7 g' }
-] as const;
 
 // Considered Strategy; not used because these are fixed responsive art-direction
 // assets for one verified capture, not interchangeable image-rendering behavior.
@@ -137,7 +130,7 @@ const faqItems = [
 <article id="features-nutrition" class="nutrition-page">
 	<section class="hero" aria-labelledby="nutrition-feature-heading">
 		<div class="container-page hero-grid">
-			<div class="hero-copy anim-enter">
+			<div class="hero-copy">
 				<nav aria-label="Breadcrumb" class="breadcrumb">
 					<a href="/features">Every feature</a>
 					<span aria-hidden="true">/</span>
@@ -148,18 +141,11 @@ const faqItems = [
 					Compute the fifteen Nutrition Facts values per portion, roll evidence-backed
 					allergen tags into the recipe, and keep every missing fact visible before you print.
 				</p>
-				<dl class="hero-facts" aria-label="Captured Chicken Burrito Bowl nutrition summary">
-					{macroFacts.map((fact) => (
-						<div>
-							<dt>{fact.label}</dt>
-							<dd>{fact.value}</dd>
-						</div>
-					))}
-				</dl>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
 				</div>
+				<p class="hero-terms">{launchPlan.trialDays} days free, then {launchPlan.displayPrice}. Charged $0 today.</p>
 			</div>
 
 			<figure class="hero-proof anim-enter" style="--enter-delay: 120ms">
@@ -179,7 +165,7 @@ const faqItems = [
 				</div>
 				<figcaption>
 					Chicken Burrito Bowl, one 297 g portion. The source capture is cropped to the answer and retained at 2× pixel density for legible text.
-					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
+					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full recipe capture</a>
 				</figcaption>
 			</figure>
 		</div>
@@ -240,7 +226,7 @@ const faqItems = [
 				</div>
 				<figcaption>
 					This actual dish fills every row from one verified USDA branded record, including explicit zero values rather than assumed ones.
-					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
+					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full Nutrition Facts panel</a>
 				</figcaption>
 			</figure>
 		</div>
@@ -271,7 +257,7 @@ const faqItems = [
 			</div>
 			<figcaption>
 				The confirmed allergen line and its named nutrition source stay together at reading size.
-				<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
+				<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open allergen evidence in full capture</a>
 			</figcaption>
 		</figure>
 		<ol class="container-page evidence-chain" aria-label="Allergen evidence path">
@@ -369,7 +355,7 @@ const faqItems = [
 				<p>Bring one real recipe, match the ingredients you know, and leave every missing fact visible until you know it too.</p>
 			</div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a>
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
 			</div>
 		</div>
@@ -382,25 +368,19 @@ const faqItems = [
 </article>
 
 <style>
-	.nutrition-page { --rule: color-mix(in srgb, var(--color-ink) 18%, transparent); overflow: clip; }
+	.nutrition-page { --rule: color-mix(in srgb, var(--color-ink) 18%, transparent); overflow-wrap: anywhere; }
 	.nutrition-page :global(.container-page) { max-width: 80rem; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
-	.hero-grid { display: grid; gap: clamp(3.5rem, 7vw, 7rem); align-items: center; padding-block: clamp(4.5rem, 8vw, 8rem); }
-	.breadcrumb { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.6rem; font-size: 0.875rem; color: var(--color-ink-soft); }
-	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
-	.hero h1 { max-width: 10ch; font-family: var(--font-display); font-size: clamp(3rem, 5.55vw, 5.9rem); font-weight: 600; line-height: 0.96; letter-spacing: -0.03em; text-wrap: balance; }
+	.hero-grid { display: grid; gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-block: clamp(2.5rem, 5vw, 4.75rem); }
+	.hero-copy, .split-grid > *, .product-grid > *, .allergen-heading > *, .print-grid > *, .capabilities-grid > *, .faq-grid > *, .closing-grid > * { min-width: 0; }
+	.breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
+	.hero h1 { max-width: 13ch; font-family: var(--font-display); font-size: var(--text-display); font-weight: 600; line-height: var(--text-display--line-height); letter-spacing: var(--text-display--letter-spacing); text-wrap: balance; }
 	.hero h1::after { display: block; width: min(6.5ch, 100%); height: 0.28rem; margin-top: 1.2rem; background: var(--color-ink); content: ''; }
-	.hero-lede { max-width: 42ch; margin-top: 1.75rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.65; }
-	.hero-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 32rem; margin-top: 2rem; border-block: 0.25rem solid var(--color-ink); }
-	.hero-facts div { min-width: 0; padding: 0.9rem 1rem 0.9rem 0; border-bottom: 1px solid var(--rule); }
-	.hero-facts div:nth-child(odd) { border-right: 1px solid var(--rule); }
-	.hero-facts div:nth-child(even) { padding-left: 1rem; }
-	.hero-facts div:nth-last-child(-n + 2) { border-bottom: 0; }
-	.hero-facts dt { color: var(--color-ink-soft); font-size: 0.75rem; font-weight: 700; }
-	.hero-facts dd { margin-top: 0.25rem; color: var(--color-green-deep); font-size: clamp(1.45rem, 2.5vw, 2rem); font-weight: 720; font-variant-numeric: tabular-nums; }
-	.hero-facts small { display: block; margin-top: 0.2rem; color: var(--color-amber-deep); font-size: 0.7rem; line-height: 1.25; }
+	.hero-lede { max-width: 48ch; margin-top: 1.35rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
 	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
+	.hero-terms { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
 	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
 	.btn-outline:hover { background: var(--color-green); color: white; }
 	.hero-proof { min-width: 0; }
@@ -412,7 +392,7 @@ const faqItems = [
 
 	.split { background: var(--color-ink); color: var(--color-offwhite); }
 	.split-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--space-section-tight); }
-	.split h2, .product-copy h2, .allergen-heading h2, .print-copy h2, .capabilities-intro h2, .faq-intro h2, .closing h2 { font-family: var(--font-display); font-size: clamp(2.1rem, 3.8vw, 4rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+	.split h2, .product-copy h2, .allergen-heading h2, .print-copy h2, .capabilities-intro h2, .faq-intro h2, .closing h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: var(--text-h2--line-height); text-wrap: balance; }
 	.split-copy p { max-width: 44ch; margin-top: 1.25rem; color: color-mix(in srgb, var(--color-offwhite) 76%, transparent); font-size: 1.05rem; line-height: 1.65; }
 	.broken-path { display: grid; grid-template-columns: 1fr 3rem 1fr; grid-template-rows: repeat(2, auto); gap: 0.85rem; align-items: stretch; }
 	.path-source, .path-output { padding: 1.1rem; border: 1px solid color-mix(in srgb, white 24%, transparent); }
@@ -450,7 +430,7 @@ const faqItems = [
 	.evidence-chain li { position: relative; padding: clamp(1.75rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
 	.evidence-chain li:last-child { border-bottom: 0; }
 	.evidence-chain li > span { color: var(--color-amber-deep); font-size: 0.7rem; font-weight: 750; letter-spacing: 0.07em; }
-	.evidence-chain h3 { margin-top: 0.8rem; font-family: var(--font-display); font-size: 1.45rem; font-weight: 600; line-height: 1.2; }
+	.evidence-chain h3 { margin-top: 0.8rem; font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: var(--text-h3--line-height); }
 	.evidence-chain p { margin-top: 0.6rem; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
 	.evidence-note { display: grid; gap: 0.8rem; padding-block: var(--space-section-tight); }
 	.evidence-note strong { color: var(--color-amber-deep); font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.5rem); }
@@ -508,8 +488,7 @@ const faqItems = [
 	}
 
 	@media (min-width: 64rem) {
-		.hero-grid, .split-grid, .print-grid, .capabilities-grid, .faq-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-		.hero-grid { grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr); min-height: 50rem; }
+		.split-grid, .print-grid, .capabilities-grid, .faq-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 		.product-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 		.source-facts { grid-template-columns: 1fr; }
 		.path-source { min-height: 10rem; }
@@ -517,9 +496,13 @@ const faqItems = [
 		.closing-actions { justify-content: flex-end; }
 	}
 
+	@media (min-width: 72rem) {
+		.hero-grid { grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr); }
+	}
+
 	@media (max-width: 47.999rem) {
-		.hero-grid { padding-block: 4rem 5rem; }
-		.hero h1 { font-size: clamp(3rem, 15vw, 4.6rem); }
+		.hero-grid { padding-block: 2.5rem 3.5rem; }
+		.hero-actions a { width: 100%; }
 		.hero-shot { box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 10%, transparent); }
 		.broken-path { grid-template-columns: 1fr; }
 		.path-source { grid-row: auto; }
