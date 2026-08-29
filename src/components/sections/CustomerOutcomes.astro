@@ -11,15 +11,24 @@
  *   rebuild four times -> change the count once
  *   retype to buy it   -> send the buying without retyping it   (RC-22, RC-26, RC-27)
  *   margin after       -> bring the real price back
+ *
+ * NO IMAGE HERE, CONSIDERED AND DECLINED 2026-08-26. This was one of the two
+ * candidates in BRIEF-visual-density-2026-08-26.md. There is no single screen
+ * that asserts what this section asserts: the four cards span quoting, scaling,
+ * buying and price return, four different surfaces, so any crop would argue a
+ * quarter of the claim and would still need its own RC row to do that much. A
+ * four-up strip is what the demo poster already failed at 390 once. If a crop
+ * is ever wanted here it is one card's claim, captured off the guarded demo
+ * seed, and it needs the ledger row before the pixels.
  */
 const outcomes = [
 	{
 		title: 'Quote with the food cost in front of you',
-		body: 'Choose the menu, enter the guests and price per person, and see the event against your food-cost target before you say yes.'
+		body: 'Pick the menu, enter guests and price per head, and see the job against your food-cost target before you say yes.'
 	},
 	{
 		title: 'Change the count once',
-		body: 'Recipes scale, shared ingredients roll together, whole packs recalculate, and the Shop, Prep, and Pack lists stay on the same plan.'
+		body: 'Recipes scale, shared ingredients roll together, whole packs recalculate, and Shop, Prep and Pack stay on one plan.'
 	},
 	{
 		title: 'Send the buying without retyping it',
@@ -27,7 +36,7 @@ const outcomes = [
 	},
 	{
 		title: 'Bring the real price back to the next quote',
-		body: 'Record what you paid. Approved prices update future costing while the confirmed event remains frozen.'
+		body: 'Record what you paid. Approved prices update future costing; the confirmed event stays frozen.'
 	}
 ];
 ---
@@ -35,12 +44,17 @@ const outcomes = [
 <section id="outcomes" class="bg-softgreen" aria-labelledby="outcomes-heading">
 	<div class="container-page py-section">
 		<div class="max-w-3xl" data-reveal>
-			<h2 id="outcomes-heading" class="text-h2 font-semibold">
+			<!-- "What it does instead" is not a generic kicker. The four cards below
+			     answer TheProblem's four pains one for one, and index.astro records
+			     that pairing as the condition keeping the section order valid. At
+			     390 the two sections sit 3,085px apart, so nothing on screen said
+			     they were a pair. The eyebrow says it in three words. -->
+			<p class="eyebrow">What it does instead</p>
+			<h2 id="outcomes-heading" class="mt-4 text-h2 font-semibold">
 				One order becomes the plan the whole kitchen can run.
 			</h2>
 			<p class="mt-5 max-w-[64ch] text-lede text-ink-soft">
-				CostCook connects the owner&rsquo;s quote to the quantities the kitchen buys, cooks,
-				and packs. The same order carries the work from the first price to the final delivery.
+				One order carries the work from the first price to the final delivery.
 			</p>
 		</div>
 
@@ -63,7 +77,7 @@ const outcomes = [
 		</ol>
 
 		<p class="mt-8 text-sm text-ink-soft" data-reveal>
-			Need the implementation detail? <a href="/features" class="btn-quiet">See every shipped feature</a>.
+			Need the implementation detail? <a href="/features" class="btn-quiet">See everything it does, area by area</a>.
 		</p>
 	</div>
 </section>

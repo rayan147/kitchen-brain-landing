@@ -1,0 +1,86 @@
+---
+/**
+ * The audience section. Third stop, between the problem and the proof video:
+ * the reader has just been told their pain, and the next question is whether
+ * this thing is aimed at someone like them. It has to be answered before the
+ * proof, not after, or the video plays to a reader who is not sure it is
+ * theirs.
+ *
+ * NO PERSONA GRID. The competitors segment by customer type because they sell
+ * to restaurants, groups, ghost kitchens and hotels. CostCook sells to one
+ * kind of kitchen. Inventing four personas to fill a row of cards is the exact
+ * move that makes a page read like a marketing department, which is the thing
+ * this reader arrived braced for.
+ *
+ * THE MISFIT LIST IS THE POINT. For someone who came in from a cold email,
+ * being told plainly what this is not for buys more trust than any list of who
+ * it is for, and it is the one thing a page selling to them will not do.
+ * Every line is already documented and cannot be softened here (RC-44):
+ *
+ *   several locations  ->  /compare "Several locations", a no row
+ *   lot tracking       ->  /compare "Lot tracking and FSMA 204", a no row
+ *   permission grid    ->  /compare "Tiered user access", a no row
+ *   the restaurant     ->  RC-01 for the audience and RC-03 for the mechanism:
+ *                          the estimate starts from a costed menu plus a guest
+ *                          count, which is not the shape a fixed daily service
+ *                          has. It is a fit statement, NOT a capability claim,
+ *                          and it may not be written as one.
+ *
+ * If any of those four ever changes, the /compare row moves first and this
+ * list follows it. No CTA here on purpose: the reader is deciding whether to
+ * keep reading, not whether to buy.
+ */
+import { spellCapital } from '../../lib/words';
+
+const notFor = [
+	{
+		title: 'You run one restaurant on a fixed daily menu',
+		body: 'Everything here starts from an event with a guest count. A service that repeats daily is a different shape, and a tool built for it will fit you better.'
+	},
+	{
+		title: 'You need several locations to see their own shelves',
+		body: 'CostCook is one kitchen workspace. There is no per-site inventory and no roll-up across sites.'
+	},
+	{
+		title: 'You need lot tracking for FSMA 204',
+		body: 'This was built for caterers, not for a facility under a traceability rule.'
+	},
+	{
+		title: 'You need a permission grid for a big team',
+		body: 'Owner and manager roles gate setup. Beyond that there is no per-screen control, so you cannot hand over the prep list and keep someone out of the costs.'
+	}
+];
+---
+
+<section id="who" class="container-page py-section-tight" aria-labelledby="who-heading">
+	<div class="max-w-3xl" data-reveal>
+		<p class="eyebrow">Who this is for</p>
+		<h2 id="who-heading" class="mt-4 text-h2 font-semibold">
+			Built for the kitchen where the person who quotes the job also cooks it.
+		</h2>
+		<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
+			Catering and meal prep, run by an owner-operator with a small crew. You price jobs
+			that change, you buy for dates rather than a steady week, and nobody down the hall
+			owns the spreadsheet. That is the whole audience.
+		</p>
+	</div>
+
+	<div class="mt-12 border-t border-ticket-rule pt-8" data-reveal>
+		<h3 class="text-h3 font-semibold">And plainly, who it is not for.</h3>
+		<p class="mt-4 max-w-[66ch] text-ink-soft">
+			{spellCapital(notFor.length)} kitchens should
+			<a href="/compare" class="btn-quiet">buy something else</a>. Better you find that
+			out here than a month in.
+		</p>
+		<ul role="list" class="mt-7 grid gap-x-12 gap-y-6 sm:grid-cols-2">
+			{
+				notFor.map((entry) => (
+					<li class="border-t border-hairline pt-4">
+						<p class="font-semibold">{entry.title}</p>
+						<p class="mt-2 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{entry.body}</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>

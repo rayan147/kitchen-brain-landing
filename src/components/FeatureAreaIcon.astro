@@ -1,0 +1,73 @@
+---
+/**
+ * One hairline mark per feature area, keyed by the SECTION_META slug.
+ *
+ * WHY ICONS AT ALL, on a page whose design note says decoration is limited to
+ * the ticket motif and amber eyebrows. These are not decoration: the five areas
+ * are five plain-language phrases that all begin with a similar cadence
+ * ("Recipes and costing", "Getting prices in", "The day itself"), and in a
+ * disclosure panel a reader scans rather than reads, the phrases blur into one
+ * another. The mark is the thing the eye lands on before the words resolve.
+ *
+ * DRAWN TO SURVIVE ON PAPER, which is the test CLAUDE.md sets. Every one of
+ * these is 1.5px line art in currentColor with no fill, no gradient and no
+ * second colour, so it prints as a printed mark rather than a screen glyph. If
+ * one of them ever needs a fill or a brand colour to read, it is the wrong
+ * drawing.
+ *
+ * width/height ARE REQUIRED, not stylistic. scripts/check-dist.mjs fails the
+ * build on any inline svg that ships a viewBox alone (issue #54): a viewBox-only
+ * svg has no intrinsic size, so it collapses or explodes before CSS arrives.
+ *
+ * Decorative by default: every place this renders, the area name is right
+ * beside it as real text, so the mark is aria-hidden and adds nothing for a
+ * screen reader to announce twice.
+ */
+interface Props {
+	slug: string;
+	class?: string;
+}
+const { slug, class: className = '' } = Astro.props;
+
+/**
+ * Keyed by slug, NOT by section title. Slugs are typed in SECTION_META
+ * precisely because titles get reworded; a lookup on the title would silently
+ * drop every mark the day someone edits a heading.
+ */
+const MARKS: Record<string, string> = {
+	// A price tag: what the plate costs, hung on the food.
+	'recipes-and-costing':
+		'<path d="M10.6 2.75H15.5a1.75 1.75 0 0 1 1.75 1.75v4.9a1.75 1.75 0 0 1-.51 1.24l-6.1 6.1a1.75 1.75 0 0 1-2.48 0l-4.4-4.4a1.75 1.75 0 0 1 0-2.48l6.1-6.1a1.75 1.75 0 0 1 1.24-.51Z"/><circle cx="13.4" cy="6.6" r="1.15"/>',
+	// Into the tray: paper, spreadsheets and pasted text arriving in one queue.
+	'getting-prices-in': '<path d="M10 2.75v8.1"/><path d="M6.9 7.75 10 10.85l3.1-3.1"/><path d="M3.25 13.4v2.1a1.75 1.75 0 0 0 1.75 1.75h10a1.75 1.75 0 0 0 1.75-1.75v-2.1"/>',
+	// The clipboard the shop, prep and pack lists come off.
+	'the-day-itself':
+		'<path d="M7.4 3.75H5.5A1.75 1.75 0 0 0 3.75 5.5v10A1.75 1.75 0 0 0 5.5 17.25h9a1.75 1.75 0 0 0 1.75-1.75v-10A1.75 1.75 0 0 0 14.5 3.75h-1.9"/><path d="M7.4 2.75h5.2v2.4H7.4z"/><path d="M6.9 9.6h6.2"/><path d="M6.9 12.9h4.1"/>',
+	// The panel itself: a box with a heavy rule and two thin ones.
+	'compliance-and-labels':
+		'<rect x="3.25" y="3.25" width="13.5" height="13.5" rx="1.75"/><path d="M6.1 7.9h7.8"/><path d="M6.1 11h7.8"/><path d="M6.1 14.1h4.9"/>',
+	// Three nodes, joined: the crew, and what the app is wired to.
+	'team-and-connections':
+		'<circle cx="10" cy="5.15" r="2.4"/><circle cx="4.9" cy="14.35" r="2.4"/><circle cx="15.1" cy="14.35" r="2.4"/><path d="M8.35 7.35 6.55 12.15"/><path d="M11.65 7.35l1.8 4.8"/>'
+};
+
+const mark = MARKS[slug];
+---
+
+{
+	mark && (
+		<svg
+			width="20"
+			height="20"
+			viewBox="0 0 20 20"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="1.5"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			aria-hidden="true"
+			class={className}
+			set:html={mark}
+		/>
+	)
+}

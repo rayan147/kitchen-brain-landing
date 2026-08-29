@@ -1,5 +1,12 @@
 ---
-import { demoCta, nav, site } from '../lib/site';
+import { demoCta, featuresMenu, nav, signIn, site } from '../lib/site';
+
+// The header renders /features as a disclosure over its five areas. A footer
+// is a list rather than a menu, so it carries the plain hub link, in the slot
+// it held before the split.
+const footerLinks = nav.flatMap((item) =>
+	item.href === '/pricing' ? [item, { label: 'Every feature', href: featuresMenu.href }] : [item]
+);
 import BrandLockup from './BrandLockup.astro';
 
 // Static site: computing the year at build time would freeze at the last
@@ -29,7 +36,7 @@ const year = 2026;
 		<nav aria-label="Footer">
 			<ul role="list" class="flex flex-wrap gap-x-6 gap-y-2">
 				{
-					nav.map((item) => (
+					footerLinks.map((item) => (
 						<li>
 							<a
 								href={item.href}
@@ -40,6 +47,16 @@ const year = 2026;
 						</li>
 					))
 				}
+				<li>
+					<a
+						href={signIn.href}
+						target={signIn.target}
+						aria-label={signIn.ariaLabel}
+						class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
+					>
+						{signIn.label}
+					</a>
+				</li>
 				<li>
 					<a
 						href={demoCta.href}

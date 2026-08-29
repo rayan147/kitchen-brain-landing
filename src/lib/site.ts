@@ -49,6 +49,22 @@ export const cta = {
 	rel: undefined
 } as const;
 
+/**
+ * Returning users. The app calls this "Sign in" (its login page title is
+ * "Sign in | CostCook"), so the page uses the same word. "Log in" here and
+ * "Sign in" there is a small lie about how carefully anything else was built.
+ *
+ * Deliberately NOT in the `nav` array below. That array is prospect
+ * navigation with a one-slot mobile budget; this is an account action for
+ * someone who already decided, and it renders beside the CTA at every width.
+ */
+export const signIn = {
+	label: 'Sign in',
+	ariaLabel: 'Sign in to CostCook',
+	href: 'https://app.costcook.io/login',
+	target: '_self'
+} as const;
+
 export const demoCta = {
 	label: 'Book a 15-min demo',
 	ariaLabel: 'Book a 15-min demo (opens in a new tab)',
@@ -85,6 +101,27 @@ export const launchPlan = {
 export const nav: readonly { label: string; href: string; earlyVisible?: true }[] = [
 	// Root-relative so the same links resolve from /features too.
 	{ label: 'Pricing', href: '/pricing', earlyVisible: true },
-	{ label: 'Every feature', href: '/features' },
+	// 'Every feature' left this array on 2026-08-23. /features is now a hub
+	// over five area pages, and a flat link to it hid that structure one click
+	// deep; the header renders it as a disclosure instead (see featuresMenu and
+	// SiteNav). It stays in the FOOTER as a plain link, because a footer is a
+	// list, not a menu, and a second disclosure down there would be worse.
+	{ label: 'How we compare', href: '/compare' },
 	{ label: 'Contact', href: contactCta.href }
 ];
+
+/**
+ * Header disclosure copy. The curated destinations live beside the feature
+ * source data, while this object owns only the shared navigation language.
+ *
+ * A DISCLOSURE, NOT A HOVER MENU. The reader is on a phone mid-shift where
+ * hover does not exist, so it opens on click and on Enter, in the same way at
+ * every width. Nothing about the site depends on it: JS off leaves a working
+ * <details>, and /features itself is the same five choices on a page.
+ */
+export const featuresMenu = {
+	label: 'Features',
+	href: '/features',
+	overviewLabel: 'Explore every shipped feature',
+	ariaLabel: 'Features, broken down by kitchen job'
+} as const;

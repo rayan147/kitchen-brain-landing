@@ -14,19 +14,19 @@
 const moments = [
 	{
 		title: 'You quote from an old price',
-		body: 'The vendor changed the case price, but the copied recipe and event sheet never heard about it.'
+		body: 'The vendor changed the case price. The copied recipe and the event sheet never heard about it.'
 	},
 	{
 		title: 'You rebuild the same order four times',
-		body: 'A head-count change means new recipe math, a new shopping list, a new prep plan, and another pack check.'
+		body: 'Forty more guests means new recipe math, a new shopping list, a new prep plan, another pack check.'
 	},
 	{
 		title: 'You retype the list to buy it',
-		body: 'The shopping list becomes an email to each supplier, then a checklist at the dock, then whatever the truck was short.'
+		body: 'The list becomes an email to each supplier, then a checklist at the dock, then whatever the truck was short.'
 	},
 	{
 		title: 'You learn the margin after service',
-		body: 'The event looked busy. Only later do the invoices show whether the price you gave away actually worked.'
+		body: 'The event looked busy. The invoices decide, weeks later, whether the price worked.'
 	}
 ];
 ---
@@ -34,12 +34,35 @@ const moments = [
 <section id="problem" class="border-y border-hairline bg-cream">
 	<div class="container-page py-section-tight">
 		<div class="max-w-3xl" data-reveal>
-			<h2 class="text-h2 font-semibold">The spreadsheet works until the job changes.</h2>
+			<!-- Eyebrow added 2026-08-26 as part of the page-wide role register.
+			     See the note in src/pages/index.astro for the measurement. -->
+			<p class="eyebrow">What goes wrong</p>
+			<h2 class="mt-4 text-h2 font-semibold">The spreadsheet works until the job changes.</h2>
 			<p class="mt-5 max-w-[68ch] text-lede text-ink-soft">
-				A supplier price moves. The client adds forty guests. A case arrives short. Each
-				change creates another place to retype the math, another sheet that can disagree,
-				and another chance to find the mistake when the kitchen can least afford it. The
-				quote is only the first of them.
+				A supplier price moves. The client adds forty guests. A case arrives short. Every
+				change is another place to retype the math, and another sheet that can disagree.
+			</p>
+			<!-- THE FLAW, added 2026-08-27. Everything above this line diagnoses the
+			     TOOL; this line describes the reader, which is the difference between a
+			     page that explains a problem and a page someone recognises themselves
+			     in. Written without blame on purpose: starting from last job's sheet is
+			     the correct move with the tools most kitchens have, and a reader told
+			     otherwise stops reading. STORY-SPINE-2026-08-27.md, worksheet 2. -->
+			<p class="mt-5 max-w-[68ch] text-ink-soft">
+				So every job starts as the last job&rsquo;s sheet, saved under a new name. That is
+				the right move with the tools most kitchens have. It is also how the price you
+				quote and the price you pay drift apart without anybody getting anything wrong.
+			</p>
+			<!-- The provenance claim, surfaced here as well as in BuiltForKitchens. It
+			     is the strongest credibility asset the page owns and it used to appear
+			     only at 78% depth, which meant the reader evaluated the whole diagnosis
+			     before learning who made it. One line, not a relocation: the full block
+			     with the photograph stays where it is. -->
+			<p class="mt-5 max-w-[68ch] text-ink-soft">
+				I cooked professionally for twelve years before I wrote any of this. Those four
+				are my own week, not a survey. I have quoted a job off a price that had already
+				moved and found out weeks later, at the invoice. That is the one I built this
+				for.
 			</p>
 		</div>
 

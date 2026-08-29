@@ -1,0 +1,104 @@
+---
+import { comparison } from '../../lib/comparison';
+
+// What CostCook connects to, on /features rather than on a page of its own.
+//
+// WHY NOT A DEDICATED PAGE. Two Coming rows and one shipped argument is not a
+// page; a page of nothing but Coming reads as a roadmap and costs trust with
+// the exact reader this site is built for. It becomes its own route when there
+// are four shipped connections to put on it, not before.
+//
+// THE ORDER IS THE ARGUMENT. Competitors lead an integrations page with logos.
+// The honest thing CostCook has and they do not is that prices arrive without
+// a connection at all, because the intake reads the paper the supplier already
+// sends. So that goes first and the two in-flight connectors go second, where
+// they read as additions rather than as the answer.
+//
+// EVIDENCE. Five doors is RC-38, read on sandbox/demo: the import dropzone
+// accepts JPEG, PNG, WebP, PDF, CSV, XLSX and DOCX, with a paste control
+// beside it. Staged-until-confirmed is RC-09. The unreadable note is RC-39.
+// Square and QuickBooks are RC-45. QuickBooks is genuinely unbuilt. Square is
+// NOT: sandbox/demo carries the provider, catalog mapping, settings screens,
+// the OAuth callback and the webhook, all of it behind
+// integrationExecutionAllowed(businessId, 'square_integration',
+// env.FEATURE_SQUARE_INTEGRATION_ENABLED), which defaults off. "Coming" is
+// therefore true of the app a reader would start today and stays true only
+// while that flag is off in production. If it is ever switched on for anyone,
+// this section and the /compare row are both underclaiming and must move to
+// Yes. Neither carries a date either way.
+//
+// The two Coming lines are read out of comparison.ts rather than retyped, so
+// the /compare table and this section cannot say different things about the
+// same connector.
+const comingRows = comparison
+	.flatMap((group) => group.rows)
+	.filter((row) => row.label === 'Point of sale' || row.label === 'Accounting');
+---
+
+<section id="connections" class="border-t border-hairline" aria-labelledby="connections-heading">
+	<div class="container-page py-section">
+		<div class="max-w-3xl">
+			<p class="eyebrow">What it connects to</p>
+			<h2 id="connections-heading" class="mt-4 text-h2 font-semibold">
+				Your supplier does not have to be plugged in. CostCook reads the paper.
+			</h2>
+			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">
+				The reason there is no long list of connectors here is that prices get in
+				without one. An order guide, a price sheet, an invoice, or a photograph of a
+				delivery slip taken on the loading dock all go through the same queue.
+			</p>
+		</div>
+
+		<div class="mt-10 grid gap-8 border-y border-ticket-rule py-8 sm:grid-cols-3">
+			<div>
+				<h3 class="font-semibold">Five doors in</h3>
+				<p class="mt-2 text-sm leading-relaxed text-ink-soft">
+					A photo, a PDF, a spreadsheet, a Word document, or text you paste. Every one
+					lands in the same review.
+				</p>
+			</div>
+			<div>
+				<h3 class="font-semibold">Staged, not written</h3>
+				<p class="mt-2 text-sm leading-relaxed text-ink-soft">
+					What comes out sits outside your catalog until you confirm it. Nothing
+					reaches a plate cost that you have not seen.
+				</p>
+			</div>
+			<div>
+				<h3 class="font-semibold">What it could not read</h3>
+				<p class="mt-2 text-sm leading-relaxed text-ink-soft">
+					Anything unreadable is quoted back to you word for word, beside what was
+					staged, rather than dropped or guessed at.
+				</p>
+			</div>
+		</div>
+
+		<div class="mt-12 max-w-3xl">
+			<h3 class="text-h3 font-semibold">Two connections being built</h3>
+			<p class="mt-4 max-w-[62ch] text-ink-soft">
+				Coming means the same here as it does on the comparison page: being built now,
+				and not in the app you would start today. There is no date on either, because a
+				date is a promise and neither has earned one yet.
+			</p>
+			<ul role="list" class="mt-6 space-y-5">
+				{
+					comingRows.map((row) => (
+						<li class="border-t border-hairline pt-4">
+							<div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+								<p class="font-semibold">{row.label}</p>
+								<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-amber-deep">
+									Coming
+								</span>
+							</div>
+							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.note}</p>
+						</li>
+					))
+				}
+			</ul>
+			<p class="mt-6 max-w-[62ch] text-sm text-ink-soft">
+				Until they land, nothing in CostCook reads from or writes to your books or your
+				till.
+			</p>
+		</div>
+	</div>
+</section>

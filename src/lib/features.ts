@@ -10,6 +10,91 @@
  *  - Copy rules apply here like everywhere else: kitchen English, no
  *    em-dashes, no claim the app can't survive on a demo call.
  */
+/** The five sections, in reading order. Same words as the /compare groups. */
+export const SECTIONS = [
+	'Recipes and costing',
+	'Getting prices in',
+	'The day itself',
+	'Compliance and labels',
+	'Team, and what it connects to'
+] as const;
+
+export type Section = (typeof SECTIONS)[number];
+
+/**
+ * Per-section page metadata. Added 2026-08-23, when /features stopped being
+ * one page of 145 line items and became a hub over five section pages.
+ *
+ * `slug` is TYPED, NOT DERIVED. These are public URLs; a regex over the title
+ * would make /features/team-and-what-it-connects-to, and the day someone
+ * rewords a section heading every link to it would 404 silently. Change a
+ * title freely, change a slug only with a redirect.
+ *
+ * `blurb` is the one sentence a section card carries on the hub. `lede` is the
+ * prose that opens its own page. Splitting 145 items across five pages only
+ * produces five smaller walls unless something above the list says what the
+ * area is FOR, so the lede is load-bearing, not decoration.
+ *
+ * `wall` was added 2026-08-27 and is the reader's MOMENT, not the product's
+ * summary: the WHO + WANT + WALL of STORY-SPINE-2026-08-27.md, worksheet 1,
+ * narrowed to one area of the week. Every one of the five is drawn from the
+ * same hero as the homepage - the owner-caterer who quotes the job and cooks
+ * it - so the five pages are one story at a lower altitude rather than five
+ * stories. It carries the lede's type on the area page and the lede drops to
+ * body, because the reader comes before the product.
+ *
+ * A `wall` IS NOT A CAPABILITY CLAIM AND MAY NOT BECOME ONE. It describes
+ * something that happens in a kitchen; the moment it describes what the app
+ * does, it needs a ledger row and it stops doing its job. The one to watch is
+ * team-and-connections: the obvious wall to write there is handing the prep
+ * list to somebody without handing over the costs, and RC-44 says plainly that
+ * you cannot do that. It says setup instead.
+ *
+ * IT RENDERS ON THE AREA PAGE ONLY, deliberately. The hub is five signposts
+ * and was rebuilt out of a 145-item wall precisely to stay scannable; a second
+ * sentence per card turns five cards back into prose. The asymmetry is the
+ * decision, not an oversight - do not "fix" it by rendering wall on the hub.
+ *
+ * NO COUNTS IN THIS COPY. `count`, `comingCount` and `featureCount` are all
+ * derived from `groups` further down this file. A number typed into a sentence
+ * here is a hardcoded claim sitting beside a computed one, which is the drift
+ * this file is shaped to prevent. Interpolate or do not count.
+ */
+export const SECTION_META: Readonly<
+	Record<Section, { slug: string; blurb: string; wall: string; lede: string }>
+> = {
+	'Recipes and costing': {
+		slug: 'recipes-and-costing',
+		blurb: 'What a plate costs, from the case price up, with the arithmetic shown.',
+		wall: 'Somebody wants a number today, and the last time you costed this menu the case price was different.',
+		lede: 'A price arrives on a case. It has to travel through a yield, a sub-recipe, a portion size and a guest count before it becomes a number you can put in front of a customer. This is that path, and every step of it stays visible.'
+	},
+	'Getting prices in': {
+		slug: 'getting-prices-in',
+		blurb: 'Invoices, price lists and spreadsheets read into the app, staged for you to confirm.',
+		wall: 'The new price list arrived as a photograph of a printout. Keying it in is an evening you do not have. Not keying it in means quoting off last month.',
+		lede: 'Nobody types a supplier price list twice. Paper and spreadsheets come in, get read, and wait as staged facts until you say they are right. Nothing writes itself into your costing behind your back.'
+	},
+	'The day itself': {
+		slug: 'the-day-itself',
+		blurb: 'The event, the shopping, the prep, the pack, and what actually came through the back door.',
+		wall: 'It is five in the morning, your hands are wet, and the sheet taped to the hotel pan has to be right. There is no second trip to the store.',
+		lede: 'The part of the week that happens on your feet. An event gets quoted and frozen, the shopping and prep lists fall out of it, and the delivery you tick off at the back door is the order you sent rather than a second round of typing.'
+	},
+	'Compliance and labels': {
+		slug: 'compliance-and-labels',
+		blurb: 'The fifteen numbers an FDA panel carries, per recipe. Printing them is being built.',
+		wall: 'Somebody asks for the numbers on a dish. Roughly is not an answer, and neither is a figure you worked out once and cannot show your working for.',
+		lede: 'Nutrition facts are computed per recipe out of the ingredients you already entered. Getting them onto a kitchen label is the part that is still being built, and it is marked Coming below rather than folded into the shipped list.'
+	},
+	'Team, and what it connects to': {
+		slug: 'team-and-connections',
+		blurb: 'Who can change what, how a new kitchen gets started, and the connections being built.',
+		wall: 'The kitchen is empty on Monday and there is a job on Saturday. Everything in here is the distance between those two.',
+		lede: 'Everything around the edges: getting a kitchen from empty to a first costed order, who on the crew can change what, and how the app behaves on a phone with one bar. The connection work in this section is still being built and is marked Coming rather than folded into the shipped list.'
+	}
+};
+
 export type FeatureItem = {
 	lead: string;
 	detail: string;
@@ -17,6 +102,13 @@ export type FeatureItem = {
 
 export type FeatureGroup = {
 	id: string;
+	/**
+	 * Which of the five plain-language sections this group reads under. The
+	 * strings are the /compare row-group titles VERBATIM (src/lib/comparison.ts).
+	 * A caterer who reads both pages must meet the same five words in the same
+	 * order; if these two lists ever diverge, one of them is wrong.
+	 */
+	section: Section;
 	kicker: string;
 	title: string;
 	status?: 'available' | 'in-development';
@@ -26,6 +118,7 @@ export type FeatureGroup = {
 export const featureGroups: readonly FeatureGroup[] = [
 	{
 		id: 'math',
+		section: 'Recipes and costing',
 		kicker: 'The costing math',
 		title: 'One engine, whole numbers, shown work.',
 		items: [
@@ -47,6 +140,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'today',
+		section: 'The day itself',
 		kicker: 'Today, the home screen',
 		title: 'Opens on what needs attention.',
 		items: [
@@ -61,6 +155,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'ingredients',
+		section: 'Recipes and costing',
 		kicker: 'Ingredients',
 		title: 'Buying facts that stay attached to the food.',
 		items: [
@@ -83,6 +178,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'recipes',
+		section: 'Recipes and costing',
 		kicker: 'Recipes',
 		title: 'A sauce is one recipe, even in five dishes.',
 		items: [
@@ -100,6 +196,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'menus',
+		section: 'Recipes and costing',
 		kicker: 'Menus',
 		title: 'What each guest gets, priced.',
 		items: [
@@ -112,6 +209,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'orders',
+		section: 'The day itself',
 		kicker: 'Orders, the event',
 		title: 'Quote it, freeze it, run it.',
 		items: [
@@ -140,6 +238,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'purchasing',
+		section: 'The day itself',
 		kicker: 'Purchase orders & receiving',
 		title: 'What you send, and what actually arrives.',
 		items: [
@@ -156,6 +255,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'ledger',
+		section: 'Getting prices in',
 		kicker: 'Purchases & month cost',
 		title: 'What the month should have cost, and did.',
 		items: [
@@ -174,6 +274,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'inventory',
+		section: 'The day itself',
 		kicker: 'Inventory',
 		title: 'The shelf, computed, never guessed.',
 		items: [
@@ -187,6 +288,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'import',
+		section: 'Getting prices in',
 		kicker: 'Import & AI intake',
 		title: 'Paper in, staged facts out, you confirm.',
 		items: [
@@ -212,9 +314,27 @@ export const featureGroups: readonly FeatureGroup[] = [
 		]
 	},
 	{
+		/* RC-42. Shipped on sandbox/demo: src/lib/core/nutrition.ts carries
+		   LABEL_NUTRIENT_CODES and calculateRecipeNutrition() with its
+		   complete/partial/incomplete status. It was missing from this list
+		   while /compare said Yes, which broke this page's own promise that
+		   anything absent here is something CostCook does not do yet. The
+		   PRINTED panel stays off: that is a separate coming row. */
+		id: 'nutrition',
+		section: 'Compliance and labels',
+		kicker: 'Nutrition facts',
+		title: 'The fifteen numbers an FDA label carries, per recipe.',
+		items: [
+			{ lead: 'Computed per recipe.', detail: 'All fifteen nutrients an FDA label carries, rolled up through sub-recipes to the dish.' },
+			{ lead: 'USDA profiles.', detail: 'Nutrient data comes from USDA FoodData Central and attaches to the ingredient.' },
+			{ lead: 'Partial is said out loud.', detail: 'A missing profile or a missing conversion reports the dish as partial rather than totalling an incomplete recipe.' }
+		]
+	},
+	{
 		id: 'labels',
+		section: 'Compliance and labels',
 		kicker: 'Labels & printing',
-		title: 'In development',
+		title: 'Kitchen label printing.',
 		status: 'in-development',
 		items: [
 			{ lead: 'Not included at launch.', detail: 'Kitchen label workflows and printer-ready output are being prepared for a later release.' }
@@ -222,6 +342,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'team',
+		section: 'Team, and what it connects to',
 		kicker: 'Team & settings',
 		title: 'Five cards, not a maze.',
 		items: [
@@ -237,6 +358,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'setup',
+		section: 'Team, and what it connects to',
 		kicker: 'Setup',
 		title: 'From empty to a costed first order.',
 		items: [
@@ -248,6 +370,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'reliability',
+		section: 'Team, and what it connects to',
 		kicker: 'Sign-in & reliability',
 		title: 'Built for wet hands and thin signal.',
 		items: [
@@ -263,15 +386,172 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'api',
+		section: 'Team, and what it connects to',
 		kicker: 'Ordering integrations',
-		title: 'In development',
+		title: 'External ordering connections.',
 		status: 'in-development',
 		items: [
 			{ lead: 'Not included at launch.', detail: 'External ordering connections are being developed for a later release.' }
 		]
+	},
+	{
+		id: 'assistant',
+		section: 'Team, and what it connects to',
+		kicker: 'Sage, the in-app assistant',
+		title: 'Sage, answering from your own numbers.',
+		status: 'in-development',
+		items: [
+			{ lead: 'Not included at launch.', detail: 'A chat assistant that answers from your own kitchen’s numbers is being built. It is not in the app you would start today.' }
+		]
+	},
+	{
+		id: 'accounting',
+		section: 'Team, and what it connects to',
+		kicker: 'Accounting & point of sale',
+		title: 'Square and QuickBooks.',
+		status: 'in-development',
+		items: [
+			{ lead: 'Not included at launch.', detail: 'Square and QuickBooks connections are being built. Until they land, nothing here reads from or writes to your books.' }
+		]
 	}
 ] as const;
+
+/**
+ * The page reads in section order, not file order. Grouping here rather than
+ * reordering the array above keeps every group's history intact and makes the
+ * section a property of the group instead of a fact about its position.
+ * Sections with no groups are dropped, so an empty heading cannot render.
+ */
+export const featureSections = SECTIONS.map((section) => {
+	const groups = featureGroups.filter((group) => group.section === section);
+	return {
+		section,
+		...SECTION_META[section],
+		groups,
+		/* Shipped items only, so the five section counts sum to featureCount.
+		   check-landing-claims asserts that sum: a per-section number that
+		   drifts from the headline number is the exact defect this file has
+		   produced twice, and it is only catchable by arithmetic. */
+		count: groups
+			.filter((group) => group.status !== 'in-development')
+			.reduce((sum, group) => sum + group.items.length, 0),
+		comingCount: groups.filter((group) => group.status === 'in-development').length
+	};
+}).filter((entry) => entry.groups.length > 0);
+
+/** Slug to section entry, for getStaticPaths and for /features/[section]. */
+export const featureSectionBySlug = (slug: string) =>
+	featureSections.find((entry) => entry.slug === slug);
 
 export const availableFeatureGroups = featureGroups.filter((group) => group.status !== 'in-development');
 export const inDevelopmentFeatureGroups = featureGroups.filter((group) => group.status === 'in-development');
 export const featureCount = availableFeatureGroups.reduce((sum, group) => sum + group.items.length, 0);
+
+export type FeatureMenuIcon =
+	| 'recipe'
+	| 'menu'
+	| 'ingredient'
+	| 'import'
+	| 'orders'
+	| 'purchasing'
+	| 'inventory'
+	| 'ledger';
+
+export type FeatureMenuItem = {
+	label: string;
+	description: string;
+	featureId: string;
+	icon: FeatureMenuIcon;
+};
+
+export type FeatureMenuSection = {
+	label: string;
+	items: readonly FeatureMenuItem[];
+};
+
+/**
+ * The shared header's fast path into the complete feature inventory.
+ *
+ * Considered Composite; not used because this is a fixed two-level data tree
+ * rendered by one navigation component. Recursive part/whole behavior would
+ * add indirection without a second depth or a second rendering algorithm.
+ */
+export const featureMenuSections: readonly FeatureMenuSection[] = [
+	{
+		label: 'Build and price',
+		items: [
+			{
+				label: 'Recipes & food costing',
+				description: 'See yield, portion, and plate-cost math with the work shown.',
+				featureId: 'math',
+				icon: 'recipe'
+			},
+			{
+				label: 'Menus & quotes',
+				description: 'Price a menu before you say the number out loud.',
+				featureId: 'menus',
+				icon: 'menu'
+			},
+			{
+				label: 'Ingredients & supplier prices',
+				description: 'Keep pack costs, yields, and supplier history attached to the food.',
+				featureId: 'ingredients',
+				icon: 'ingredient'
+			},
+			{
+				label: 'Invoices & price-list import',
+				description: 'Bring in paper or spreadsheets, then confirm what changes.',
+				featureId: 'import',
+				icon: 'import'
+			}
+		]
+	},
+	{
+		label: 'Run the event',
+		items: [
+			{
+				label: 'Orders, shop, prep & pack',
+				description: 'Turn one menu and guest count into the plan for the day.',
+				featureId: 'orders',
+				icon: 'orders'
+			},
+			{
+				label: 'Purchasing & receiving',
+				description: 'Send the order, record what arrived, and keep shortfalls visible.',
+				featureId: 'purchasing',
+				icon: 'purchasing'
+			},
+			{
+				label: 'Inventory',
+				description: 'See what is on the shelf before the next shopping list is built.',
+				featureId: 'inventory',
+				icon: 'inventory'
+			},
+			{
+				label: 'Purchases & month cost',
+				description: 'Compare what the month should have cost with what you spent.',
+				featureId: 'ledger',
+				icon: 'ledger'
+			}
+		]
+	}
+];
+
+// A broken mega-menu is worse than no shortcut. Resolve each curated item
+// through the owning area so the header and the five-page feature family can
+// change independently without hand-written URLs drifting apart.
+const shippedFeatureGroupsById = new Map(
+	availableFeatureGroups.map((group) => [group.id, group] as const)
+);
+
+export const featureMenuHref = (featureId: string) => {
+	const group = shippedFeatureGroupsById.get(featureId);
+	if (!group) throw new Error(`Feature menu points to missing or unshipped group: ${featureId}`);
+	return `/features/${SECTION_META[group.section].slug}#features-${featureId}`;
+};
+
+for (const section of featureMenuSections) {
+	for (const item of section.items) {
+		featureMenuHref(item.featureId);
+	}
+}

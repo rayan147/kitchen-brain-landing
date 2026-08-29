@@ -2,15 +2,18 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/sections/Hero.astro';
 import TheProblem from '../components/sections/TheProblem.astro';
+import WhoThisIsFor from '../components/sections/WhoThisIsFor.astro';
 import SeeItRun from '../components/sections/SeeItRun.astro';
 import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
 import TheYield from '../components/sections/TheYield.astro';
+import PaperIn from '../components/sections/PaperIn.astro';
+import TheOtherTools from '../components/sections/TheOtherTools.astro';
 import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
 import StartHere from '../components/sections/StartHere.astro';
 ---
 
 <!--
-  Seven scroll stops, one claim each.
+  Ten scroll stops, one claim each.
 
   SeeItRun moved from fourth to third on 2026-08-21. SETTLED BY MEASUREMENT at
   390x844, so nobody has to re-litigate it:
@@ -30,19 +33,67 @@ import StartHere from '../components/sections/StartHere.astro';
   that settles "is this real" for a cold-email skeptic. Bigger gain, softer
   loss.
 
+  WhoThisIsFor added 2026-08-23 as the third stop. It sits AFTER the problem
+  and BEFORE the proof video on purpose: the reader has just been shown their
+  own week, the next question is whether the tool is aimed at someone like
+  them, and that has to be settled before the footage plays or the proof lands
+  on a reader unsure it is theirs. It costs SeeItRun some depth on the page,
+  which is the same currency the measurement above spends; it is worth it
+  because the misfit list is the section a cold-email skeptic trusts most, and
+  a reader who has decided the page is not about them never reaches the video
+  at all. It reuses the /compare no rows rather than making new claims (RC-44).
+
   If CustomerOutcomes is ever rewritten so its answers stop mirroring
   TheProblem's pains one for one, this trade is void and the order is worth
   re-measuring.
 
   TheYield returns to the page after sitting unimported. It carries the one
   argument nothing else here makes and no competitor makes either.
+
+  PaperIn added 2026-08-23, eighth stop, sitting seventh. The page argued the
+  loop and never said how prices get INTO it, which is the single capability
+  meez and Parsley lead with and we had been silent about. It is placed after
+  TheYield rather than earlier on purpose: both are mechanics under the loop,
+  and putting an import section in front of the proof video would open the page
+  on data entry instead of on the job. It is NOT a fifth CustomerOutcomes card,
+  because that pairing has to stay 1:1 with TheProblem or the measurement above
+  is void. Backed by RC-09 and RC-26; see the header of the component.
+
+  ONE TREATMENT FOR THE SECTION-OPENING ROLE, 2026-08-26. Five of the nine
+  stops opened straight on an h2 while three carried an amber eyebrow above it
+  (WhoThisIsFor, TheYield, PaperIn). Same semantic role, two costumes, which is
+  part of what a reader reported as "a lot of text". The eyebrow is now on all
+  nine. Hero keeps its own kicker instead: page-opening is a different role from
+  section-opening. The eyebrow is the cheapest device on the page - 31px and two
+  or three words per section, no image, no new colour.
+
+  WHAT THE MEASUREMENT SAID. Rendered at 390x844 and 1440x900 with every
+  [data-reveal] forced revealed and reduced motion on, the page was NOT short of
+  space. Outer isolation - a section's largest internal gap against the gap that
+  follows it - ran 1.14 to 8.35 at 390, and the flat-reading stops were at the
+  LOW end. Adding air was the one fix the numbers ruled out.
+
+  What they pointed at instead was internal flatness. PaperIn held both records
+  at once: the highest isolation on the page (8.35 at 390, 14.4 at 1440) and the
+  lowest internal differentiation on it, a 20px largest internal gap. That is
+  what produced the longest run of pixels holding no image and no rule at either
+  width - 990px at 390 and 824px at 1440, both inside it. A section can be
+  perfectly separated from its neighbours and still read as a wall.
+
+  So the fix there was four ticket rules under the four doors, not another 2,000
+  pixels of white space. After: 742px at 390, 682px at 1440 (which now falls in
+  TheProblem, not here), isolation down to 2.91 and 5.05, page height up 4.3%
+  and 3.3%. The full record is BRIEF-visual-density-2026-08-26.md section 5.
 -->
 <Base>
 	<Hero />
 	<TheProblem />
+	<WhoThisIsFor />
 	<SeeItRun />
 	<CustomerOutcomes />
 	<TheYield />
+	<PaperIn />
+	<TheOtherTools />
 	<BuiltForKitchens />
 	<StartHere />
 </Base>

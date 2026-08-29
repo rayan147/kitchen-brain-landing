@@ -1,0 +1,103 @@
+---
+// The one thing the page never said out loud: how the prices get IN.
+//
+// WHY THIS SECTION EXISTS. Every other stop argues the chain (cost it, buy it,
+// prep it, pack it, bring the price back). The chain starts from current
+// prices, and the page had no slot that said where current prices come from.
+// Meanwhile the largest group on /features is "Import & AI intake" (twenty
+// items), and src/lib/workflow.ts has carried the best intake copy in the repo
+// since it was written, imported by nothing. Competitors lead with this; we
+// ship it and say nothing.
+//
+// TRUTH PASS. Four rows carry this, one per sentence, and nothing here goes
+// past them. Two of them were opened FOR this section, because presence in
+// features.ts is not ledger backing:
+//   RC-38  One queue takes a photo, a PDF, a spreadsheet, a Word document or
+//          pasted text. Backs "four doors, one queue". Opened 2026-08-23 off
+//          the app's ImportDropzone accept list, not off /features.
+//   RC-09  Imported information remains staged until the user reviews and
+//          commits it. So every sentence is you-confirm shaped. "Staged until
+//          you commit it", never "it reads your invoices".
+//   RC-39  What extraction could not read is surfaced verbatim beside what it
+//          staged. Backs the quoted-back sentence. Also opened 2026-08-23.
+//   RC-26  Purchases enter through posted receiving, invoice import, or manual
+//          entry. Manual is named on purpose: the ledger's exclusion list
+//          forbids both of the phrases that promise a kitchen never types
+//          anything, and keying the awkward invoice in is a supported path
+//          here, not a failure. (Those two phrases are deliberately not
+//          written out in this comment: the guard scans whole files, comments
+//          included, which is the point.)
+// Also excluded and deliberately absent: production-certified OCR accuracy,
+// and any fully-automatic import or matching promise.
+//
+// NOT A SECOND TELLING OF OUTCOME FOUR. CustomerOutcomes' "Bring the real
+// price back to the next quote" is the receiving-writes-the-purchase loop:
+// prices you have already paid. This is the other direction, prices a supplier
+// sends you before you buy. Adjacent, not the same promise. If either one is
+// ever rewritten toward the other, one of them has to go.
+//
+// NO SCREENSHOT, DELIBERATELY. public/proof carries the yield crops and
+// nothing else, and capturing the diff review needs a staged import batch the
+// walkthrough seed does not create. The honest options were a gap or a mock.
+// A page whose argument is that the number never lies does not mock a screen.
+// If the app repo's @landing test ever produces an import crop, it belongs
+// here and the alt text is prospect-facing copy like every other alt in
+// src/components/sections.
+//
+// THE ANCHOR IS UNREFERENCED ON PURPOSE. Nothing enumerates section anchors
+// (Hero links #demo and that is the only cross-section href on the page), so
+// id="intake" exists for deep links and for parity with its neighbours, not
+// for a nav that does not exist.
+//
+// NO CTA HERE. The primary lives once, at the close. Quiet secondaries are at
+// their cap of two already.
+
+// The accept list, in the order RC-38 states it. Photograph, PDF, spreadsheet,
+// Word document, pasted text - the Word document rides with the PDF because a
+// fifth door reads as a feature list and the queue does not care which it was.
+const doors = ['Photograph it', 'Drop the PDF or the doc in', 'Upload the spreadsheet', 'Paste the text'];
+---
+
+<section id="intake" class="container-page border-t border-hairline py-section">
+	<div class="max-w-2xl" data-reveal>
+		<p class="eyebrow">Before any of that</p>
+		<h2 class="mt-4 text-h2 font-semibold">Paper in, staged facts out, you confirm.</h2>
+		<p class="mt-5 text-lede text-ink-soft">
+			All of this runs on what your food costs this week, so something has to get the
+			price board, the order guide and the invoices in. Four doors, one queue.
+		</p>
+	</div>
+
+	<!-- The four doors were a clause inside the lede until 2026-08-26. Measured at
+	     390 this section held the page's longest unbroken run of body text (656px)
+	     and its smallest internal gap (20px) at the same time: the most isolated
+	     section on the page and the flattest one inside. The words are the same
+	     four RC-38 backs; splitting them onto ticket rules is what gives the eye
+	     somewhere to land. No door outranks another, so there are no numerals
+	     here - CustomerOutcomes numbers its four because those ARE ordered. -->
+	<ul role="list" class="mt-10 grid gap-x-12 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
+		{
+			doors.map((door, index) => (
+				<li
+					class="border-t border-ticket-rule pt-4"
+					data-reveal
+					style={`--reveal-delay: ${index * 70}ms`}
+				>
+					<p class="font-semibold">{door}</p>
+				</li>
+			))
+		}
+	</ul>
+
+	<div class="mt-12 max-w-2xl" data-reveal>
+		<p class="text-ink-soft">
+			What comes back is a list of differences to look at, not a catalog that changed
+			behind you. Nothing is written until you commit it, and whatever could not be made
+			out is quoted back as it appeared rather than guessed at.
+		</p>
+		<p class="mt-5 text-ink-soft">
+			The awkward invoice you would rather key in by hand is still a supported way to do
+			it. Reading the paper is the fast part. Saying yes to it is yours.
+		</p>
+	</div>
+</section>

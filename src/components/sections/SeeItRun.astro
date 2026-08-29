@@ -1,4 +1,6 @@
 ---
+import { cta, launchPlan } from '../../lib/site';
+
 
 
 // Screen tour of the actual build (public/demo.mp4, H.264 + AAC).
@@ -43,14 +45,17 @@
 
 	<section id="demo" class="container-page py-section-tight">
 		<div data-reveal>
-			<h2 class="max-w-3xl text-h2 font-semibold">
+			<!-- Eyebrow added 2026-08-26 with the page-wide role register (see
+			     src/pages/index.astro). This one names the register itself: the
+			     section either side of it argues, and this one shows. -->
+			<p class="eyebrow">See it run</p>
+			<h2 class="mt-4 max-w-3xl text-h2 font-semibold">
 				Follow one 180-guest wedding from quote to shelf. Then three events in one run.
 			</h2>
 			<p class="mt-5 max-w-[68ch] text-lede text-ink-soft">
-				This is the working product, not a mockup. Two and a half minutes: the food
-				cost that lands before the quote goes out, the shopping and prep lists it turns
-				into, purchase orders that really send, a delivery that arrives wrong, and the
-				price carried back to the next job.
+				This is the working product, not a mockup. Two and a half minutes: the food cost
+				before the quote goes out, the shopping and prep lists it turns into, purchase
+				orders that really send, a delivery that arrives wrong, and the price carried back.
 			</p>
 		<!-- WCAG 1.2.1 and CLAUDE.md principle 4: this stands in for the footage
 		     for anyone who cannot watch it, so it describes the cut IN ORDER and
@@ -96,12 +101,24 @@
 			</p>
 
 		<!-- Not styled as a ticket: real product footage should read as real,
-		     not as another branded artifact. Poster is the frame that names the
-		     price: the ring on "Charge at least $89.78 per guest", with $68.00
-		     and $12,240.00 either side of it. It was the vendor-grouped shop
-		     list, which is a dense table that reads as a spreadsheet screenshot
-		     at the width a phone actually draws this player. Chosen by card in
-		     assemble-silent.mjs, so re-timing b02 moves it too. -->
+		     not as another branded artifact. The poster names the price either
+		     way: the ring on "Charge at least $89.78 per guest". Chosen by card
+		     in assemble-silent.mjs, so re-timing b02 moves the wide one too.
+		
+		     TWO POSTERS SINCE 2026-08-23, and the phone gets the default.
+		     MEASURED at 390: the wide frame carries its caption band across the
+		     bottom 23% of the image, which is exactly where the native control
+		     bar draws, so "Charge $89.78 a head to hit 30." rendered half
+		     covered, over an app screenshot too dense to read at that scale.
+		     The previous fix for this swapped WHICH dense frame was used and
+		     did not survive the device.
+		
+		     demo-poster-mobile.jpg is built from the wide one by
+		     scripts/build-mobile-poster.py: the same caption band moved to the
+		     TOP, over a crop of the Next-step panel alone. The bottom of the
+		     frame is deliberately empty so the control bar covers nothing. If
+		     the cut is re-recorded, re-run that script rather than cropping by
+		     hand. -->
 		<!-- Centred and capped at the capture width: the footage is 1600x1000, and
 		     stretching it past that only blurs it. -->
 		<div class="relative mt-8 mx-auto max-w-[1600px]">
@@ -109,7 +126,7 @@
 				controls
 				playsinline
 				preload="none"
-				poster="/demo-poster.jpg"
+				poster="/demo-poster-mobile.jpg"
 				width="1600"
 				height="1000"
 				class="w-full border border-hairline bg-paper shadow-ticket"
@@ -123,14 +140,22 @@
 					<a href="/demo.mp4" class="btn-quiet">Download it instead</a>
 				</p>
 			</video>
-			<!-- Play affordance: the poster alone reads as a static screenshot.
-			     Dark chip echoes the footage's own caption chips. Decorative
-			     (the video carries the labels), lets taps fall through to the
-			     video, removed on first play; shown only when scripting can
-			     remove it, so no-JS playback is never covered. -->
+			<!-- Play affordance for the WIDE poster only. That frame is an app
+			     screenshot and reads as a static image without it. Dark chip echoes
+			     the footage's own caption chips. Decorative (the video carries the
+			     labels), lets taps fall through to the video, removed on first play;
+			     shown only when scripting can remove it, so no-JS playback is never
+			     covered.
+			
+			     NOT ON THE PHONE, since 2026-08-23. The mobile poster opens on its
+			     own caption band, so it never reads as a screenshot and needs no
+			     chip to say it moves. Pinned top-left it sat straight on top of that
+			     caption and covered "Charge $89.78 a", which is the one line the
+			     poster exists to deliver. Below sm the native control bar draws its
+			     own play button anyway. -->
 			<span
 				id="demo-play-badge"
-				class="pointer-events-none absolute top-3 left-3 hidden items-center gap-2 rounded-full bg-ink/85 px-3.5 py-1.5 text-sm font-medium text-offwhite shadow-ticket [@media(scripting:enabled)]:inline-flex"
+				class="pointer-events-none absolute top-3 left-3 hidden items-center gap-2 rounded-full bg-ink/85 px-3.5 py-1.5 text-sm font-medium text-offwhite shadow-ticket sm:[@media(scripting:enabled)]:inline-flex"
 				aria-hidden="true"
 			>
 				<svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true">
@@ -140,17 +165,56 @@
 			</span>
 		</div>
 
-		<!-- No CTA here on purpose. This section sits third now, and a Start link
-		     at this depth was one of six competing next-actions. The reader is
-		     still being shown the thing; the ask belongs at the close. -->
+		<!-- One primary, restored 2026-08-23. It was pulled when this section
+		     competed with six next-actions; the page now carries two primaries
+		     and three quiet links, so the condition that justified pulling it is
+		     gone. MEASURED at 390 before this went back: the hero primary ended
+		     at 520px and the next one appeared at 9,043px of a 9,604px page,
+		     leaving 8,523px (10.1 viewports) with nothing to click, and the
+		     header is position:static so it scrolls away rather than covering it.
+		
+		     The other half of that old note still holds and is why this sits
+		     AFTER the player rather than beside it: a reader mid-film is still
+		     being shown the thing. It renders cta.label like every other primary
+		     on the page, so the page still opens, middles and closes on one
+		     action. -->
+		<div class="mt-10 border-t border-ticket-rule pt-6" data-reveal>
+			<p class="max-w-[54ch] text-ink-soft">
+				That was one real order, start to finish. Yours will have different numbers.
+			</p>
+			<a
+				href={cta.href}
+				target={cta.target}
+				rel={cta.rel}
+				aria-label={cta.ariaLabel}
+				class="btn-primary mt-5"
+			>
+				{cta.label}
+			</a>
+			<p class="mt-4 text-sm text-ink-soft">
+				{launchPlan.trialDays} days free. Card up front, charged $0 today.
+			</p>
+		</div>
 	</div>
 </section>
 
 <script>
-	// One job: clear the play chip once the footage is rolling.
 	const video = document.querySelector<HTMLVideoElement>('#demo video');
+
+	// Clear the play chip once the footage is rolling.
 	const badge = document.getElementById('demo-play-badge');
 	if (video && badge) {
 		video.addEventListener('play', () => badge.remove(), { once: true });
+	}
+
+	// POSTER SWAPS UP, NOT DOWN. The mobile composite is the server-rendered
+	// default and the wide frame is the enhancement, because the reader most
+	// likely to have JS off is on the phone, and the phone is the width where
+	// the desktop poster fails: MEASURED at 390, its caption band lands under
+	// Chromium's native control bar and the app screenshot behind it is too
+	// dense to read. Failing this check leaves a legible poster on a big
+	// screen, which is the harmless direction.
+	if (video && window.matchMedia('(min-width: 640px)').matches) {
+		video.setAttribute('poster', '/demo-poster.jpg');
 	}
 </script>

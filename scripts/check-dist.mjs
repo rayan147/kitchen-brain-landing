@@ -27,4 +27,41 @@ for (const page of pages) {
 	}
 }
 if (failed) process.exit(1);
+
+// The Features mega-menu is a curated shortcut into the exhaustive page. Its
+// links and target ids must ship together; source-level typing cannot catch a
+// template that stopped rendering one side of that contract.
+const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
+const menuTargets = [
+	{ id: 'math', area: 'recipes-and-costing' },
+	{ id: 'menus', area: 'recipes-and-costing' },
+	{ id: 'ingredients', area: 'recipes-and-costing' },
+	{ id: 'import', area: 'getting-prices-in' },
+	{ id: 'orders', area: 'the-day-itself' },
+	{ id: 'purchasing', area: 'the-day-itself' },
+	{ id: 'inventory', area: 'the-day-itself' },
+	{ id: 'ledger', area: 'getting-prices-in' }
+];
+
+if (!homeHtml.includes('data-features-menu')) {
+	console.error('check-dist: homepage is missing the Features disclosure');
+	failed = true;
+}
+
+for (const target of menuTargets) {
+	const href = `href="/features/${target.area}#features-${target.id}"`;
+	const id = `id="features-${target.id}"`;
+	const featuresHtml = readFileSync(join(dist, `features/${target.area}/index.html`), 'utf8');
+	if (!homeHtml.includes(href)) {
+		console.error(`check-dist: Features menu is missing ${href}`);
+		failed = true;
+	}
+	if (!featuresHtml.includes(id)) {
+		console.error(`check-dist: Features page is missing ${id}`);
+		failed = true;
+	}
+}
+
+if (failed) process.exit(1);
 console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s) all carry intrinsic width/height`);
+console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
