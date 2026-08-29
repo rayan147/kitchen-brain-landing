@@ -2,10 +2,10 @@
 /**
  * Sage on the homepage. story: docs/stories/sage.story.md
  *
- * EIGHTH STOP, between PaperIn and TheOtherTools. It sits with the mechanics
+ * Between PaperIn and TeamAccess. It sits with the mechanics
  * (yield, intake) rather than with the proof or the ask, because it is a
  * thing the product does, and it sits BEFORE the rival beat so the reader
- * meets it before the give-ups list, which is where the assistant appears on
+ * meets it before the access boundary and give-ups list, where the assistant appears on
  * /compare. It is not a fifth CustomerOutcomes card: that
  * pairing has to stay 1:1 with TheProblem.
  *
@@ -24,12 +24,9 @@ import { sage, sageStatusWord } from '../../lib/sage';
 	<div class="container-page py-section">
 		<div class="grid gap-12 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
 			<div class="max-w-3xl" data-reveal>
-				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-					<p class="eyebrow">{sage.name}, the assistant</p>
-					<span class="inline-flex items-center rounded-full border border-green bg-paper px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-green-deep">
-						{sageStatusWord}
-					</span>
-				</div>
+				<span class="inline-flex items-center rounded-full border border-green bg-paper px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-green-deep">
+					{sageStatusWord}
+				</span>
 				<h2 id="sage-heading" class="mt-4 text-h2 font-semibold">
 					Ask your kitchen a question. See where the answer came from.
 				</h2>
@@ -39,18 +36,19 @@ import { sage, sageStatusWord } from '../../lib/sage';
 					it can prepare, a shopping list, waits for you to approve it.
 				</p>
 
-				<!-- The six things it can do, as the questions a reader would type.
-				     Six because there are six tools; see src/lib/sage.ts. -->
+				<p class="mt-8 font-semibold">Eleven checks. One reviewed proposal.</p>
+				<!-- The homepage groups the complete twelve-tool contract into the five
+				     kitchen decisions a first-time visitor scans for. -->
 				<ol role="list" class="mt-8 border-t border-ticket-rule">
 					{
-						sage.abilities.map((ability, index) => (
+						sage.homepageGroups.map((group, index) => (
 							<li class="grid gap-x-4 gap-y-1 border-b border-dashed border-ticket-rule py-3 sm:grid-cols-[2.5rem_minmax(0,1fr)]">
 								<p class="font-mono text-eyebrow font-semibold tabular-nums text-amber-deep">
 									{String(index + 1).padStart(2, '0')}
 								</p>
 								<div class="min-w-0">
-									<p class="font-semibold">&ldquo;{ability.ask}&rdquo;</p>
-									<p class="mt-1 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{ability.does}</p>
+									<p class="font-semibold">{group.name}</p>
+									<p class="mt-1 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{group.detail}</p>
 								</div>
 							</li>
 						))

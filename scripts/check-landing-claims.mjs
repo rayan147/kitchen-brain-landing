@@ -44,9 +44,11 @@ const surfaceFiles = [
 	// Dedicated Inventory story. Trust-state and gap-planning claims are high
 	// risk because stale counts must never read as safe to subtract.
 	'src/components/sections/InventoryFeature.astro',
+	'src/components/sections/RecipesCostingFeature.astro',
 	// Sage specialist page. Availability, onboarding and assistant boundaries
 	// are release claims and must stay inside RC-46/RC-49.
 	'src/components/sections/SageFeature.astro',
+	'src/components/sections/TeamAccessFeature.astro',
 	// Dedicated Purchasing & Receiving story. Its send, posting, and price-write
 	// boundaries are financial claims, so the full public explanation is scanned.
 	'src/components/sections/PurchasingReceivingFeature.astro',
@@ -97,6 +99,7 @@ const surfaceFiles = [
 	'src/lib/labels.ts',
 	'src/components/sections/LabelsPrintingFeature.astro',
 	'src/components/sections/Sage.astro',
+	'src/components/sections/TeamAccess.astro',
 	// 2026-08-29. Nutrition: the data file and the section, both claim copy.
 	'src/lib/nutrition.ts',
 	'src/components/sections/NutritionFacts.astro',
@@ -137,6 +140,7 @@ for (const component of [
 	'NutritionFacts',
 	'PaperIn',
 	'Sage',
+	'TeamAccess',
 	'BuiltForKitchens',
 	'StartHere',
 ]) {
@@ -204,7 +208,8 @@ const expectedSectionOrder = [
 	// Eighth since 2026-08-29: a mechanic, with the mechanics, ahead of the
 	// rival beat whose /compare link lists it as a Coming row.
 	'<Sage />',
-	// Ninth since 2026-08-27: the rival beat lands after the reader wants the
+	'<TeamAccess />',
+	// The rival beat lands after the reader wants the
 	// thing, and before the maker signs it. See src/pages/index.astro.
 	'<TheOtherTools />',
 	'<BuiltForKitchens />',
@@ -472,7 +477,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 50; claim += 1) {
+for (let claim = 1; claim <= 53; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -491,6 +496,7 @@ const expectedStopIds = [
 	'nutrition',
 	'intake',
 	'sage',
+	'access',
 	'alternatives',
 	'trust',
 	'start',

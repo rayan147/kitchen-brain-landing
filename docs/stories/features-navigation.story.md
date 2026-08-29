@@ -45,7 +45,7 @@
 | 5 Debate | A large menu could become a second wall of features. |
 | 6 Break into Two | Features opens into “Build and price” and “Run the event.” |
 | 7 B Story | The navigation respects the operator deciding between software and the next task. |
-| 8 Fun and Games | Eight specific links jump to the matching evidence. |
+| 8 Fun and Games | Kitchen-job links, Sage and Team & Access jump to the matching evidence. |
 | 9 Midpoint | One scan replaces the full-list search. |
 | 10 Bad Guys Close In | Phone width, keyboard, zoom, reduced motion, and no JavaScript test the shortcut. |
 | 11 All Is Lost | The product may do the job, but poor navigation makes the visitor prove it alone. |
@@ -62,7 +62,7 @@
 
 ### Step 5 — Character Voices
 
-- **Reader's words:** recipe, food cost, menu, quote, supplier price, invoice, shop, prep, pack, receiving, shelf, month cost.
+- **Reader's words:** recipe, food cost, menu, quote, supplier price, invoice, shop, prep, pack, receiving, shelf, month cost, invite, owner, manager, staff.
 - **Product voice:** competent, calm, unfussy.
 - **Banned:** seamless, powerful, optimize.
 
@@ -99,4 +99,4 @@
 
 - **Word count before → after:** 139 words across eight draft descriptions → 103 words.
 - **Claims removed:** No time-saved, revenue, customer, or automation claim added.
-- **Final Image:** Choose the kitchen job and land on the evidence for it.
+- **Final Image:** Choose the kitchen job or access question and land on the evidence for it.

@@ -18,12 +18,12 @@ const faqItems = [
 	{
 		question: 'What can I ask Sage?',
 		answer:
-			'Sage supports six bounded jobs: attention across upcoming work, orders on a date, a recipe-cost explanation, recent ingredient price moves, receiving follow-ups, and a shopping-list draft for an owner or manager to review.'
+			'Sage supports eleven read-only checks across the shift, recipes, stock, buying and setup. It can also prepare one shopping-list proposal for an owner or manager to review.'
 	},
 	{
 		question: 'Can Sage change my kitchen records?',
 		answer:
-			'Not on its own. Five checks read records. The sixth can prepare a shopping-list draft. A person reviews the impact, and CostCook checks the underlying records again before an approved draft is created.'
+			'Not on its own. Eleven checks read records. The twelfth tool can prepare a shopping-list proposal. A person reviews the impact, and CostCook checks the underlying records again before an approved proposal is created.'
 	},
 	{
 		question: 'What happens when the evidence is missing?',
@@ -41,7 +41,7 @@ const videoChapters = [
 	{ at: '0:00', title: 'Ask during setup', detail: 'The setup stage stays saved while Sage is one action away.' },
 	{ at: '0:05', title: 'Fit the records', detail: 'Starting questions follow what your kitchen has entered so far.' },
 	{ at: '0:10', title: 'Check the source', detail: 'The answer keeps its evidence and record link in view.' },
-	{ at: '0:15', title: 'Keep the final say', detail: 'Five checks read. One prepares a draft. You approve.' }
+	{ at: '0:15', title: 'Keep the final say', detail: 'Checks read. One proposal waits for you.' }
 ] as const;
 ---
 
@@ -155,7 +155,7 @@ const videoChapters = [
 	<section class="questions" aria-labelledby="questions-heading">
 		<div class="container-page questions-grid">
 			<div class="questions-intro" data-reveal>
-				<h2 id="questions-heading">Six kitchen jobs. No vague seventh.</h2>
+				<h2 id="questions-heading">Eleven kitchen checks. One reviewed proposal.</h2>
 				<p>Each question reaches a bounded CostCook check. The assistant does not get a general door into your data.</p>
 			</div>
 			<ol class="question-list">
@@ -206,10 +206,10 @@ const videoChapters = [
 				<h2 id="guardrails-heading">Useful because the boundaries are visible.</h2>
 				<p>An answer stays separate from an action. A prepared draft stays separate from approval.</p>
 			</div>
-			<div class="approval-path" data-reveal aria-label="Five checks read records, one tool prepares a draft, and a person approves">
-				<div><span>5 checks</span><strong>Read records</strong></div>
+			<div class="approval-path" data-reveal aria-label="Eleven checks read records, one tool prepares a proposal, and a person approves">
+				<div><span>11 checks</span><strong>Read records</strong></div>
 				<i aria-hidden="true"></i>
-				<div><span>1 tool</span><strong>Prepares a draft</strong></div>
+				<div><span>1 tool</span><strong>Prepares a proposal</strong></div>
 				<i aria-hidden="true"></i>
 				<div class="person"><span>You</span><strong>Approve or discard</strong></div>
 			</div>

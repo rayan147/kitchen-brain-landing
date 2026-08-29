@@ -40,10 +40,10 @@
 |------|---------------|
 | 1 Opening Image | Saturday's order, and the reader does not know what is wrong with it yet. |
 | 2 Theme Stated | See where the answer came from. |
-| 3 Set-Up | Six questions a kitchen actually asks, listed as the reader would type them. |
+| 3 Set-Up | Questions a kitchen actually asks are grouped by shift, recipes, stock, buying and setup. |
 | 4 Catalyst | A real answer, captured: cucumber, $24.00 to $33.00, 37.5 percent, two purchases, with the record linked. |
 | 5 Debate | Is it real, and what can it touch? |
-| 6 Break into Two | Five checks read; one drafts; a person approves. |
+| 6 Break into Two | Eleven checks read; one shopping-list proposal waits for a person to approve it. |
 | 7 B Story | The founder's honesty rule: the status is the ledger's, not the owner's. |
 | 8 Fun and Games | The six guardrails, each one a test in the app repo. |
 | 9 Midpoint | "It never changes a record on its own." |
@@ -56,7 +56,7 @@
 | § | Section | Beats | Value turn |
 |---|---------|-------|------------|
 | 1 | Eyebrow, badge, headline, lede | 1–2 | a chat box → a question with a source |
-| 2 | Six abilities | 3 | "AI" → six named things |
+| 2 | Twelve bounded jobs | 3 | "AI" → eleven named checks and one reviewed proposal |
 | 3 | The capture | 4–5 | claim → a real answer with its record |
 | 4 | What it will not do | 6–9 | fear of a confident wrong number → six enforced limits |
 | 5 | Availability paragraph | 10–12 | badge → sentence and guide |
@@ -97,6 +97,6 @@ Thursday night, phone in one hand, the walk-in door open with a foot. One questi
 
 ### Step 11 — Revise and Finish
 
-- Cut: the model name, absolute accuracy claims, the per-record "Ask Sage about this order" idea, autonomous action language and anything past the six implemented tools.
-- Every capability traces to one of six tools in `src/lib/server/sage/tools.ts` and `proposals.ts` at sandbox/demo e8b69fe4; every guardrail to a test file; RC-49 lists them.
+- Cut: the model name, absolute accuracy claims, the per-record "Ask Sage about this order" idea and autonomous action language.
+- Every capability traces to the eleven read tools and one approval-bound shopping proposal on sandbox/demo `99321170`; every guardrail to a test file; RC-49 lists them.
 - Ending: the availability sentence links to the dedicated guide and video, then the homepage story hands off.

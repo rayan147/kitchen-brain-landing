@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import TeamAccessFeature from '../../components/sections/TeamAccessFeature.astro';
+
+// Considered Factory Method; not used because this route is one editorial
+// composition, not a family of objects whose creation varies by subclass.
+const directionContract = [
+	'THESIS: CostCook has three real roles and a finite list of enforced boundaries, not a configurable permission grid.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, square access slips and green actions.',
+	'STORY: A chef-owner is about to invite a manager and a cook, reads the exact sensitive boundaries, sees what remains shared, then meets the limits before acting.',
+	'FIRST VIEWPORT: Editorial statement at left; three overlapping staff passes at right, with the owner pass carrying the sensitive-work rule.',
+	'FORM: Code-led editorial extension of the established feature family; no persona-card catalogue and no permission-grid overclaim.',
+	'FINISH: Verify role language, the explicit no, navigation, keyboard behavior, no-JavaScript reading order and five-width reflow.'
+].join(' ');
+---
+
+<Base
+	title="Team roles and access boundaries | CostCook"
+	description="See what Owner, Manager and Staff mean in CostCook, which sensitive actions are role-aware, and which fine-grained permissions are not available."
+	path="/features/team-and-access"
+	directionContract={directionContract}
+>
+	<TeamAccessFeature />
+</Base>

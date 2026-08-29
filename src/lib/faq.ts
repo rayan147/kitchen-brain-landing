@@ -128,9 +128,17 @@ export const faq: readonly FaqGroup[] = [
 				id: 'permissions',
 				question: 'Can I give a cook the prep list without showing them the costs?',
 				answer: [
-					'No. Owner and manager roles gate setup and billing. Beyond that there is no per-screen control, so anyone on the workspace can open the costs.'
+					'No. Owner, Manager and Staff protect specific sensitive actions, but there is no per-screen control, so anyone on the workspace can open the costs. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
 				],
-				claims: ['RC-44']
+				claims: ['RC-44', 'RC-52']
+			},
+			{
+				id: 'roles',
+				question: 'What do Owner, Manager and Staff mean?',
+				answer: [
+					'Owner carries billing and owner-only recipe lifecycle decisions. Manager carries setup, teammate administration, and the Sage checks that expose price movement or prepare a shopping proposal. Staff works from the shared operational record without those higher-role actions. Invited teammates join as Staff today; there is no custom permission builder.'
+				],
+				claims: ['RC-52']
 			},
 			{
 				id: 'fsma',
@@ -163,7 +171,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'sage',
 				question: 'What is Sage?',
 				answer: [
-					'An assistant inside CostCook that answers questions from the records you already keep: what needs attention for Saturday, the orders on a date, why a dish costs what it costs, which prices moved, what came up short in receiving. Every answer shows where its numbers came from, and the one thing it can prepare, a shopping list draft, waits for you to approve it. It cannot reach another kitchen and it never changes a record on its own.',
+					'An assistant inside CostCook with eleven read-only checks across the shift, recipes, stock, buying and setup. Every answer shows where its numbers came from, and the one thing it can prepare, a shopping-list proposal, waits for a manager or owner to approve it. It cannot reach another kitchen and it never changes a record on its own.',
 					'Sage is available now and stays within reach during setup. Its starting questions follow the setup stage and the records entered so far, and a Back to setup action returns you to the unfinished stage. See the <a href="/features/sage">Sage feature guide and video</a>.'
 				],
 				claims: ['RC-46', 'RC-49']

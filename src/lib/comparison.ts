@@ -327,9 +327,16 @@ export const comparison: RowGroup[] = [
 				meez: 'Pro, $119, five active devices'
 			},
 			{
-				label: 'Tiered user access',
+				label: 'Role-aware sensitive actions',
+				costcook: 'yes',
+				note: 'Owner, Manager and Staff boundaries protect billing, team and setup work, recipe lifecycle decisions, and selected Sage actions.',
+				parsley: 'Business, $379',
+				meez: NOT_LISTED
+			},
+			{
+				label: 'Fine-grained screen permissions',
 				costcook: 'no',
-				note: 'Owner and manager roles gate setup. There is no fine-grained permission grid.',
+				note: 'No custom roles or per-screen permission grid. A workspace teammate can open cost screens.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},

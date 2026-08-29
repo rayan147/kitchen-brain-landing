@@ -9,6 +9,7 @@ import TheYield from '../components/sections/TheYield.astro';
 import NutritionFacts from '../components/sections/NutritionFacts.astro';
 import PaperIn from '../components/sections/PaperIn.astro';
 import Sage from '../components/sections/Sage.astro';
+import TeamAccess from '../components/sections/TeamAccess.astro';
 import TheOtherTools from '../components/sections/TheOtherTools.astro';
 import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
 import StartHere from '../components/sections/StartHere.astro';
@@ -16,7 +17,7 @@ import StickyCta from '../components/StickyCta.astro';
 ---
 
 <!--
-  Ten scroll stops, one claim each.
+  One claim per scroll stop.
 
   SeeItRun moved from fourth to third on 2026-08-21. SETTLED BY MEASUREMENT at
   390x844, so nobody has to re-litigate it:
@@ -105,6 +106,11 @@ import StickyCta from '../components/StickyCta.astro';
   rather than implying one; RC-46 and RC-49 hold the conditions. Not a
   CustomerOutcomes card, for the 1:1 reason above. Story: docs/stories/sage.story.md
 
+  TEAM & ACCESS ADDED 2026-08-29 after Sage. Sage introduces role-aware checks;
+  the next question is who can carry protected work. The homepage names the
+  three roles and the missing permission grid, then hands the diligence read to
+  /features/team-and-access. Story: docs/stories/team-and-access.story.md
+
   NUTRITION FACTS ADDED 2026-08-29 as the seventh stop, after TheYield and
   before PaperIn, at the owner's request. Both are recipe-level mechanics and
   yield sets up the sentence this one continues (the plate's numbers come from
@@ -121,6 +127,7 @@ import StickyCta from '../components/StickyCta.astro';
 	<NutritionFacts />
 	<PaperIn />
 	<Sage />
+	<TeamAccess />
 	<TheOtherTools />
 	<BuiltForKitchens />
 	<StartHere />
