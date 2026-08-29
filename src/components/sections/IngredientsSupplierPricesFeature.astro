@@ -1,0 +1,456 @@
+---
+import { featureGroups } from '../../lib/features';
+import { cta, demoCta } from '../../lib/site';
+
+const ingredientGroup = featureGroups.find((group) => group.id === 'ingredients');
+if (!ingredientGroup) throw new Error('Missing public feature group: ingredients');
+
+const packFacts = [
+	{ label: 'Pack', left: '10 kg case', right: '22 lb case' },
+	{ label: 'Case price', left: '$46.80', right: '$49.20' },
+	{ label: 'Usable yield', left: '92%', right: '95%' },
+	{ label: 'Usable cost', left: '$5.09 / kg', right: '$5.19 / kg' }
+] as const;
+
+const affectedRecipes = [
+	{ name: 'Herb roast chicken', use: '1.8 kg', change: '+$0.18' },
+	{ name: 'Grain bowl', use: '720 g', change: '+$0.07' },
+	{ name: 'Canapé tray', use: '450 g', change: '+$0.04' }
+] as const;
+
+// Considered Strategy; not used because these questions and comparison rows
+// vary as static editorial data, not interchangeable behavior at runtime.
+const faqItems = [
+	{
+		question: 'Can one ingredient have prices from more than one supplier?',
+		answer:
+			'Yes. Concurrent supplier offers sit on the same ingredient and compare per usable unit, cheapest first. You choose which offer becomes the current price.'
+	},
+	{
+		question: 'How does CostCook compare different pack sizes?',
+		answer:
+			'Each offer keeps its pack quantity, purchase unit, price, and usable yield. CostCook converts those facts to the same usable-unit cost so a case and a bag can be compared on equal terms.'
+	},
+	{
+		question: 'Where did the current price come from?',
+		answer:
+			'Every current price carries its source, supplier, and effective date. Purchase history remains underneath the ingredient instead of being replaced by one unexplained number.'
+	},
+	{
+		question: 'What happens when a supplier price changes?',
+		answer:
+			'Before you adopt the change, CostCook shows the recipes and menus that use the ingredient. Once applied, recipes using it recost from the new ingredient price.'
+	},
+	{
+		question: 'What if a price or conversion is missing?',
+		answer:
+			'The catalog names ingredients that still need a fact. Recipe totals that cannot be fully costed stay marked partial rather than quietly treating the missing line as free.'
+	},
+	{
+		question: 'Can I bring in existing ingredient data?',
+		answer:
+			'Yes. Ingredients support CSV import, and supplier prices can also enter through the staged import workflow. Imported facts wait for confirmation before they change costing.'
+	}
+] as const;
+---
+
+<!-- story: docs/stories/ingredients-supplier-prices.story.md -->
+<article class="ingredients-prices">
+	<section class="hero" aria-labelledby="ingredients-prices-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="breadcrumb">
+					<a href="/features">Every feature</a>
+					<span aria-hidden="true">/</span>
+					<span>Ingredients and supplier prices</span>
+				</nav>
+				<h1 id="ingredients-prices-heading">Know which supplier price is inside the recipe.</h1>
+				<p class="hero-lede">
+					A case price is not comparable until pack size and usable yield have had their say.
+					Keep every offer attached to the ingredient, with the working open.
+				</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
+						{cta.label}
+					</a>
+					<a
+						href={demoCta.href}
+						target={demoCta.target}
+						rel={demoCta.rel}
+						aria-label={demoCta.ariaLabel}
+						class="btn-outline"
+					>
+						Book 15 minutes
+					</a>
+				</div>
+			</div>
+
+			<figure class="offer-board anim-enter" style="--enter-delay: 120ms">
+				<p class="figure-note">Illustrative supplier comparison</p>
+				<div class="ingredient-record">
+					<div class="record-head"><span>Ingredient</span><span>Current</span></div>
+					<div class="ingredient-title">
+						<div><h2>Chicken thigh</h2><p>Purchased by weight · usable after trim</p></div>
+						<strong>$5.09 / kg</strong>
+					</div>
+				</div>
+				<div class="offer-join" aria-hidden="true"><span></span><span></span></div>
+				<div class="offers">
+					<div class="offer preferred">
+						<div class="record-head"><span>Northline Foods</span><span>In use</span></div>
+						<strong>$46.80</strong><small>10 kg case · 92% usable</small>
+						<p>$5.09 per usable kg</p>
+					</div>
+					<div class="offer">
+						<div class="record-head"><span>Market Supply</span><span>Offer</span></div>
+						<strong>$49.20</strong><small>22 lb case · 95% usable</small>
+						<p>$5.19 per usable kg</p>
+					</div>
+				</div>
+				<figcaption>Illustrative values. Every offer keeps its source, supplier, and effective date.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="problem" aria-labelledby="problem-heading">
+		<div class="container-page problem-grid">
+			<div data-reveal>
+				<h2 id="problem-heading">The old price still looks right.</h2>
+				<p>
+					The invoice changed. The pack changed. The spreadsheet did not. By the time the food-cost
+					percentage looks wrong, the number may already be in front of a customer.
+				</p>
+			</div>
+			<figure class="price-drift" data-reveal>
+				<div><span>Last costed</span><strong>$42.10</strong><small>10 kg case</small></div>
+				<svg width="56" height="22" viewBox="0 0 56 22" aria-hidden="true"><path d="M1 11h47M41 4l7 7-7 7" /></svg>
+				<div><span>This invoice</span><strong>$46.80</strong><small>10 kg case</small></div>
+				<figcaption>The difference is not a rounding error. It is a different buying fact.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<nav class="story-nav container-page" aria-label="On this page">
+		<a href="#ingredient-records">
+			<span>Ingredient records</span>
+			<small>Keep purchase, yield, storage, and allergen facts on the food.</small>
+			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
+		</a>
+		<a href="#supplier-prices">
+			<span>Supplier prices</span>
+			<small>Compare unlike packs by the usable unit and keep the source.</small>
+			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
+		</a>
+	</nav>
+
+	<section id="ingredient-records" class="product-section ingredient-chapter" aria-labelledby="ingredient-records-heading">
+		<div class="container-page">
+			<div class="section-intro" data-reveal>
+				<h2 id="ingredient-records-heading">One ingredient record, wherever the food is used.</h2>
+				<p>
+					Start from scratch, a USDA reference, or a purchase. Keep the buying unit, usable yield,
+					conversions, suppliers, allergens, storage area, and par level together.
+				</p>
+			</div>
+
+			<figure class="ingredient-workspace" data-reveal>
+				<div class="workspace-main">
+					<div class="panel-bar"><span>Ingredient record</span><span>Costable</span></div>
+					<div class="workspace-title"><h3>Chicken thigh</h3><p>Protein · purchased by weight</p></div>
+					<dl class="fact-grid">
+						<div><dt>Purchase unit</dt><dd>10 kg case</dd></div>
+						<div><dt>Usable yield</dt><dd>92%</dd></div>
+						<div><dt>Purchased cost</dt><dd>$4.68 / kg</dd></div>
+						<div><dt>Usable cost</dt><dd>$5.09 / kg</dd></div>
+					</dl>
+					<div class="source-line"><span>Current source</span><strong>Northline Foods · effective 28 Aug</strong></div>
+				</div>
+				<div class="workspace-side">
+					<div><span>Kitchen facts</span><strong>Walk-in · Meat</strong><small>Par level 20 kg</small></div>
+					<div><span>Conversions</span><strong>1 case = 10 kg</strong><small>Unit and yield chosen, never guessed</small></div>
+					<div><span>Used by</span><strong>3 recipes · 2 menus</strong><small>Checked before a change or delete</small></div>
+				</div>
+				<figcaption>Illustrative ingredient record built only from shipped CostCook fields and behavior.</figcaption>
+			</figure>
+
+			<div class="feature-scenes">
+				<article><h3>Enter it where you meet it.</h3><p>Create an ingredient from the catalog, from a purchase, or inside the recipe you are already building.</p></article>
+				<article><h3>Keep purchased and usable separate.</h3><p>See both costs side by side. Trim and cooking loss remain facts, not an invisible adjustment.</p></article>
+				<article><h3>Find what still needs attention.</h3><p>Catalog health shows what is costable and which ingredient is still missing a price or conversion.</p></article>
+			</div>
+		</div>
+	</section>
+
+	<section id="supplier-prices" class="product-section supplier-chapter" aria-labelledby="supplier-prices-heading">
+		<div class="container-page">
+			<div class="section-intro supplier-intro" data-reveal>
+				<h2 id="supplier-prices-heading">Compare the food, not the shape of the case.</h2>
+				<p>
+					A lower case price can still cost more after pack size and yield. Convert each offer to
+					the same usable unit, keep its provenance, then adopt the one you intend to use.
+				</p>
+			</div>
+
+			<figure class="comparison-table" data-reveal>
+				<div class="comparison-head"><span>Chicken thigh</span><span>Northline Foods</span><span>Market Supply</span></div>
+				{packFacts.map((fact) => (
+					<div class:list={['comparison-row', fact.label === 'Usable cost' && 'result-row']}>
+						<strong>{fact.label}</strong><span>{fact.left}</span><span>{fact.right}</span>
+					</div>
+				))}
+				<div class="comparison-result"><span>Preferred offer</span><strong>Northline Foods</strong><small>10¢ less per usable kg</small></div>
+				<figcaption>Illustrative comparison. CostCook orders concurrent offers by usable-unit cost.</figcaption>
+			</figure>
+
+			<div class="history-impact">
+				<div class="history" data-reveal>
+					<h3>The source stays with the number.</h3>
+					<ol role="list">
+						<li><time>28 Aug</time><span><strong>$46.80</strong> Northline invoice</span></li>
+						<li><time>14 Aug</time><span><strong>$45.40</strong> Northline purchase</span></li>
+						<li><time>31 Jul</time><span><strong>$44.95</strong> Market price list</span></li>
+					</ol>
+				</div>
+				<div class="impact" data-reveal>
+					<h3>See what the change touches first.</h3>
+					<ul role="list">
+						{affectedRecipes.map((recipe) => (
+							<li><span><strong>{recipe.name}</strong><small>{recipe.use} in recipe</small></span><b>{recipe.change}</b></li>
+						))}
+					</ul>
+					<p>Illustrative recipe impact from adopting the changed supplier price.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="evidence" aria-labelledby="evidence-heading">
+		<div class="container-page evidence-grid">
+			<div data-reveal>
+				<h2 id="evidence-heading">The supplier price keeps walking.</h2>
+				<p>
+					Once the ingredient is inside a recipe, purchased amount, usable yield, quantity to buy,
+					prep state, and cost contribution remain on the same line.
+				</p>
+				<ul role="list">
+					<li>Missing prices are named instead of reading as zero.</li>
+					<li>Every ingredient line reconciles to the recipe total.</li>
+					<li>The arithmetic opens when a number needs checking.</li>
+				</ul>
+			</div>
+			<figure class="screenshot-frame" data-reveal>
+				<picture>
+					<source media="(max-width: 639px)" srcset="/proof/yield-lines-mobile.png" />
+					<img src="/proof/yield-lines.png" width="2272" height="1370" loading="lazy" decoding="async" alt="CostCook recipe lines showing ingredient amounts used, usable yield, quantity to buy, preparation state, and each line's cost." />
+				</picture>
+				<figcaption>Real CostCook interface: each ingredient carries its working into the recipe.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="capabilities" aria-labelledby="capabilities-heading">
+		<div class="container-page capabilities-grid">
+			<div data-reveal>
+				<h2 id="capabilities-heading">The complete Ingredients list.</h2>
+				<p>Everything below is shipped today and remains available for the diligence read.</p>
+				<p class="count"><strong>{ingredientGroup.items.length}</strong><span>shipped capabilities</span></p>
+			</div>
+			<details id="features-ingredients" data-reveal open>
+				<summary><span>Ingredients and supplier prices</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary>
+				<ul role="list">
+					{ingredientGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}
+				</ul>
+			</details>
+		</div>
+	</section>
+
+	<section class="faq" aria-labelledby="faq-heading">
+		<div class="container-page faq-grid">
+			<div data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions behind comparing a supplier price you can trust.</p></div>
+			<div class="faq-list">
+				{faqItems.map((item) => (
+					<details data-reveal><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid" data-reveal>
+			<div><h2 id="closing-heading">A price you can trace. A quote you can defend.</h2><p>Bring one supplier sheet and one real ingredient. Follow the case price into the recipe with the working shown.</p></div>
+			<div class="closing-actions">
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+			</div>
+		</div>
+		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
+	</section>
+</article>
+
+<style>
+	.ingredients-prices { overflow: clip; }
+	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
+	.breadcrumb { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .875rem; color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
+	.hero h1 { max-width: 12ch; margin-top: 1.5rem; font-size: clamp(2.65rem, 4.8vw, 5.45rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; }
+	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: clamp(1.05rem, .98rem + .35vw, 1.3rem); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
+	.btn-outline:hover { background: var(--color-softgreen); }
+	.figure-note { margin-bottom: .7rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.ingredient-record, .offer { min-width: 0; padding: clamp(1.1rem, 2.5vw, 1.6rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
+	.ingredient-record { border-top: 3px solid var(--color-green); }
+	.record-head { display: flex; justify-content: space-between; gap: 1rem; font-size: .69rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.ingredient-title { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-top: .9rem; }
+	.ingredient-title h2 { font-size: clamp(1.45rem, 2vw, 1.9rem); font-weight: 600; }
+	.ingredient-title p { margin-top: .2rem; font-size: .82rem; color: var(--color-ink-soft); }
+	.ingredient-title > strong { color: var(--color-green-deep); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+	.offer-join { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; height: 1.65rem; padding-inline: 16%; }
+	.offer-join span { border-right: 1px solid var(--color-amber-deep); border-bottom: 1px solid var(--color-amber-deep); }
+	.offer-join span:first-child { border-left: 1px solid var(--color-amber-deep); border-right: 0; }
+	.offers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+	.offer { border-top: 3px solid var(--color-ticket-rule); }
+	.offer.preferred { border-top-color: var(--color-amber-deep); }
+	.offer > strong { display: block; margin-top: 1rem; font-size: 1.7rem; font-variant-numeric: tabular-nums; }
+	.offer > small { display: block; margin-top: .15rem; color: var(--color-ink-soft); }
+	.offer > p { margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--color-ticket-rule); color: var(--color-green-deep); font-weight: 700; font-variant-numeric: tabular-nums; }
+	.offer-board figcaption, .ingredient-workspace figcaption, .comparison-table figcaption, .screenshot-frame figcaption { margin-top: .85rem; font-size: .78rem; line-height: 1.45; color: var(--color-ink-soft); }
+	.problem { border-bottom: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.problem-grid { display: grid; gap: 3rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.problem h2, .section-intro h2, .evidence h2, .capabilities h2, .faq h2, .closing h2 { font-size: var(--text-h2); font-weight: 600; line-height: 1.12; }
+	.problem p, .section-intro p, .evidence-grid > div > p, .capabilities-grid > div > p, .faq-grid > div > p, .closing p { max-width: 58ch; margin-top: 1.1rem; color: var(--color-ink-soft); line-height: 1.65; }
+	.price-drift { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+	.price-drift div { padding: 1.35rem; border-top: 2px solid var(--color-ticket-rule); background: var(--color-cream); }
+	.price-drift span, .workspace-side span { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.price-drift strong { display: block; margin-top: .45rem; font-size: 1.75rem; font-variant-numeric: tabular-nums; }
+	.price-drift small { color: var(--color-ink-soft); }
+	.price-drift svg, .story-nav svg, summary svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+	.price-drift svg { color: var(--color-amber-deep); }
+	.price-drift figcaption { grid-column: 1 / -1; color: var(--color-ink-soft); font-size: .8rem; }
+	.story-nav { display: grid; padding-block: 1.25rem; }
+	.story-nav a { display: grid; min-height: 84px; grid-template-columns: 1fr auto; gap: .25rem 1rem; align-content: center; padding: 1.2rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); }
+	.story-nav a:first-child { border-top: 1px solid var(--color-ticket-rule); }
+	.story-nav span { font-weight: 700; }
+	.story-nav small { max-width: 48ch; color: var(--color-ink-soft); }
+	.story-nav svg { grid-column: 2; grid-row: 1 / 3; color: var(--color-green-deep); }
+	.product-section { scroll-margin-top: 1rem; padding-block: var(--spacing-section); }
+	.ingredient-chapter { background: var(--color-softgreen); }
+	.supplier-chapter { background: var(--color-cream); }
+	.section-intro { display: grid; gap: 1.5rem 4rem; align-items: end; }
+	.section-intro p { margin-top: 0; }
+	.ingredient-workspace { display: grid; gap: 1px; margin-top: clamp(2.5rem, 6vw, 4.5rem); background: var(--color-hairline-strong); box-shadow: var(--shadow-lift); }
+	.workspace-main, .workspace-side > div { background: var(--color-paper); }
+	.workspace-main { padding: clamp(1.3rem, 4vw, 2.2rem); }
+	.panel-bar { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--color-hairline); font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.workspace-title { margin-top: 1.5rem; }
+	.workspace-title h3 { font-size: 1.75rem; font-weight: 600; }
+	.workspace-title p { color: var(--color-ink-soft); }
+	.fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 1.5rem; background: var(--color-hairline); }
+	.fact-grid div { padding: 1rem; background: var(--color-offwhite); }
+	.fact-grid dt { font-size: .72rem; color: var(--color-ink-soft); }
+	.fact-grid dd { margin-top: .3rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+	.source-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem; margin-top: 1rem; font-size: .82rem; }
+	.source-line span { color: var(--color-ink-soft); }
+	.workspace-side { display: grid; gap: 1px; }
+	.workspace-side > div { padding: 1.25rem; }
+	.workspace-side strong, .workspace-side small { display: block; margin-top: .4rem; }
+	.workspace-side small { color: var(--color-ink-soft); }
+	.feature-scenes { display: grid; gap: 2rem; margin-top: 3rem; }
+	.feature-scenes article { padding-top: 1.25rem; border-top: 1px solid var(--color-hairline-strong); }
+	.feature-scenes h3, .history h3, .impact h3 { font-size: 1.25rem; font-weight: 600; }
+	.feature-scenes p { margin-top: .65rem; color: var(--color-ink-soft); line-height: 1.6; }
+	.comparison-table { margin-top: clamp(2.5rem, 6vw, 4.5rem); border: 1px solid var(--color-ticket-rule); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
+	.comparison-head, .comparison-row { display: grid; grid-template-columns: 1.05fr 1fr 1fr; gap: 1rem; padding: 1rem clamp(1rem, 3vw, 1.75rem); }
+	.comparison-head { background: var(--color-ink); color: var(--color-paper); font-size: .75rem; font-weight: 700; letter-spacing: .05em; }
+	.comparison-row { border-top: 1px solid var(--color-ticket-rule); }
+	.comparison-row strong { color: var(--color-ink-soft); font-size: .8rem; }
+	.comparison-row span { font-weight: 600; font-variant-numeric: tabular-nums; }
+	.result-row { background: var(--color-softgreen); }
+	.comparison-result { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; padding: 1.2rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
+	.comparison-result span { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-green-deep); }
+	.comparison-result strong { font-size: 1.15rem; }
+	.comparison-result small { color: var(--color-ink-soft); }
+	.comparison-table figcaption { padding-inline: clamp(1rem, 3vw, 1.75rem); padding-bottom: 1rem; }
+	.history-impact { display: grid; gap: 2rem; margin-top: 3rem; }
+	.history, .impact { padding-top: 1.4rem; border-top: 1px solid var(--color-ticket-rule); }
+	.history ol, .impact ul { margin-top: 1.25rem; }
+	.history li, .impact li { display: flex; justify-content: space-between; gap: 1rem; padding-block: .8rem; border-bottom: 1px solid var(--color-ticket-rule); }
+	.history time { color: var(--color-ink-soft); font-variant-numeric: tabular-nums; }
+	.history span, .impact span { text-align: right; }
+	.impact small { display: block; color: var(--color-ink-soft); }
+	.impact b { color: var(--color-amber-deep); font-variant-numeric: tabular-nums; }
+	.impact > p { margin-top: .8rem; font-size: .78rem; color: var(--color-ink-soft); }
+	.evidence { padding-block: var(--spacing-section); background: var(--color-ink); color: var(--color-paper); }
+	.evidence-grid { display: grid; gap: 3rem; align-items: center; }
+	.evidence-grid > div > p { color: var(--color-ink-muted); }
+	.evidence ul { margin-top: 1.5rem; }
+	.evidence li { padding-block: .7rem; border-bottom: 1px solid var(--color-ink-rule); color: var(--color-ink-muted); }
+	.screenshot-frame { min-width: 0; padding: .7rem; background: var(--color-paper); box-shadow: 0 1px 2px rgb(0 0 0 / .2), 0 12px 30px rgb(0 0 0 / .22); }
+	.screenshot-frame img { display: block; width: 100%; height: auto; }
+	.screenshot-frame figcaption { color: var(--color-ink-soft); padding-inline: .3rem; }
+	.capabilities { padding-block: var(--spacing-section); background: var(--color-paper); }
+	.capabilities-grid { display: grid; gap: 3rem; }
+	.count { display: flex; align-items: baseline; gap: .75rem; }
+	.count strong { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-green-deep); }
+	.count span { font-size: .8rem; color: var(--color-ink-soft); }
+	details summary { cursor: pointer; list-style: none; }
+	details summary::-webkit-details-marker { display: none; }
+	.capabilities details { scroll-margin-top: 1rem; border-top: 1px solid var(--color-ticket-rule); border-bottom: 1px solid var(--color-ticket-rule); }
+	.capabilities summary, .faq summary { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 1rem; font-weight: 700; }
+	.capabilities details[open] summary, .faq details[open] summary { color: var(--color-green-deep); }
+	.capabilities details[open] summary svg, .faq details[open] summary svg { transform: rotate(180deg); }
+	.capabilities summary svg, .faq summary svg { flex: 0 0 auto; transition: transform 150ms ease-out; }
+	.capabilities details ul { display: grid; gap: 0 2rem; padding-bottom: 1.5rem; }
+	.capabilities details li { padding-block: .75rem; border-top: 1px solid var(--color-hairline); line-height: 1.5; }
+	.capabilities details li span { color: var(--color-ink-soft); }
+	.faq { padding-block: var(--spacing-section); border-top: 1px solid var(--color-hairline); background: var(--color-offwhite); }
+	.faq-grid { display: grid; gap: 3rem; }
+	.faq-list details { border-top: 1px solid var(--color-ticket-rule); }
+	.faq-list details:last-child { border-bottom: 1px solid var(--color-ticket-rule); }
+	.faq-list summary { padding-block: .7rem; }
+	.faq-list details p { max-width: 64ch; padding: 0 2.5rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.6; }
+	.closing { border-top: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
+	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
+
+	@media (min-width: 720px) {
+		.hero-grid { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
+		.problem-grid, .section-intro, .evidence-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+		.story-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.story-nav a { padding-inline: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
+		.story-nav a + a { border-left: 1px solid var(--color-ticket-rule); }
+		.ingredient-workspace { grid-template-columns: minmax(0, 1.6fr) minmax(14rem, .75fr); }
+		.feature-scenes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+		.history-impact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.capabilities-grid { grid-template-columns: minmax(15rem, .55fr) minmax(0, 1.45fr); }
+		.capabilities details ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.closing-actions { justify-content: flex-end; margin-top: 0; }
+	}
+
+	@media (max-width: 719px) {
+		.hero-actions > *, .closing-actions > * { width: 100%; justify-content: center; }
+		.ingredient-title { display: block; }
+		.ingredient-title > strong { display: block; margin-top: .8rem; }
+		.price-drift { grid-template-columns: 1fr; }
+		.price-drift svg { transform: rotate(90deg); justify-self: center; }
+		.comparison-head, .comparison-row { grid-template-columns: minmax(6.5rem, .8fr) repeat(2, minmax(7.5rem, 1fr)); }
+		.comparison-table { overflow-x: auto; overscroll-behavior-inline: contain; }
+	}
+
+	@media (max-width: 470px) {
+		.offers { grid-template-columns: 1fr; }
+		.offer-join { display: none; }
+		.offer + .offer { margin-top: .5rem; }
+		.fact-grid { grid-template-columns: 1fr; }
+		.comparison-table { margin-inline: -1.25rem; border-inline: 0; }
+		.comparison-head { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-inline: 1.25rem; }
+		.comparison-head span:first-child { display: none; }
+		.comparison-row { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-inline: 1.25rem; }
+		.comparison-row strong { grid-column: 1 / -1; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.capabilities summary svg, .faq summary svg { transition: none; }
+	}
+</style>

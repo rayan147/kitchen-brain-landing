@@ -35,7 +35,11 @@ const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
 const menuTargets = [
 	{ id: 'math', area: 'recipes-and-costing', href: '/features/recipes-and-costing' },
 	{ id: 'menus', area: 'menus-and-quotes', href: '/features/menus-and-quotes' },
-	{ id: 'ingredients', area: 'recipes-and-costing' },
+	{
+		id: 'ingredients',
+		area: 'ingredients-and-supplier-prices',
+		href: '/features/ingredients-and-supplier-prices'
+	},
 	{ id: 'import', area: 'getting-prices-in' },
 	{ id: 'orders', area: 'the-day-itself' },
 	{ id: 'purchasing', area: 'the-day-itself' },

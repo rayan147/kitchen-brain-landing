@@ -270,12 +270,12 @@ try {
 	await send('Input.dispatchMouseEvent', { type: 'mousePressed', x: noScriptLinkBox.x, y: noScriptLinkBox.y, button: 'left', clickCount: 1 });
 	await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: noScriptLinkBox.x, y: noScriptLinkBox.y, button: 'left', clickCount: 1 });
 	for (let attempt = 0; attempt < 30; attempt += 1) {
-		if (await evaluate(`location.href === ${JSON.stringify(`${baseUrl}/features/recipes-and-costing#features-math`)}`)) break;
+		if (await evaluate(`location.href === ${JSON.stringify(`${baseUrl}/features/recipes-and-costing`)}`)) break;
 		await delay(100);
 	}
 	const noScriptDestination = await evaluate('location.href');
 	assert(
-		noScriptDestination === `${baseUrl}/features/recipes-and-costing#features-math`,
+		noScriptDestination === `${baseUrl}/features/recipes-and-costing`,
 		'no JavaScript: destination link did not navigate'
 	);
 

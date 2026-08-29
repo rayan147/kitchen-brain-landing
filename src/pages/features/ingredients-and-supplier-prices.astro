@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import IngredientsSupplierPricesFeature from '../../components/sections/IngredientsSupplierPricesFeature.astro';
+
+// Considered Template Method; not used because the dedicated feature pages
+// share a visual system, while their evidence scenes and reading sequences are
+// deliberately different rather than overridable steps in one algorithm.
+const directionContract = [
+	'THESIS: One ingredient record turns unlike supplier packs into a price the kitchen can compare and the recipe can use; refuse the generic feature-card catalogue.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, square operational records, green actions.',
+	'STORY: The chef-owner catches the old case price, joins supplier offers to one ingredient, inspects the usable-unit comparison and recipe impact, then starts or books a demo.',
+	'FIRST VIEWPORT: Editorial statement at left; one ingredient record and two supplier offers dominate the right; both actions remain visible.',
+	'FORM: Code-led editorial split extending the approved Recipes & Costing surface; seed key ingredients-one-comparable-cost.',
+	'FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md'
+].join(' ');
+---
+
+<Base
+	title="Ingredient and supplier price management for caterers | CostCook"
+	description="Keep pack costs, yields, supplier offers, and price history attached to one ingredient, with the comparable usable-unit cost shown."
+	path="/features/ingredients-and-supplier-prices"
+	directionContract={directionContract}
+>
+	<IngredientsSupplierPricesFeature />
+</Base>
