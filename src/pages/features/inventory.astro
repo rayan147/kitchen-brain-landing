@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import InventoryFeature from '../../components/sections/InventoryFeature.astro';
+
+// Considered Template Method; not used because the dedicated feature pages
+// share a visual system, while their evidence scenes and reading sequences are
+// deliberately different rather than overridable steps in one algorithm.
+const directionContract = [
+	'THESIS: An on-hand number earns trust from a dated physical count and the movements after it; refuse the generic inventory-dashboard and feature-card catalogue.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber state rules, square shelf records, green actions.',
+	'STORY: The chef-owner meets an exact-looking stale count, sees the count-plus-movement working, follows trusted shelf into the buy gap, resolves edge states, then starts or books a demo.',
+	'FIRST VIEWPORT: Editorial statement at left; a shelf ticket showing physical count, later movement, computed on-hand and Fresh state dominates the right; both actions remain visible.',
+	'FORM: Code-led editorial split extending the approved Recipes & Costing surface; seed key inventory-count-movement-trust.',
+	'FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md'
+].join(' ');
+---
+
+<Base
+	title="Inventory management for caterers | CostCook"
+	description="Start from a dated physical count, carry purchases, waste, and completed Pack movement forward, and subtract only trusted on-hand stock from the next buy."
+	path="/features/inventory"
+	directionContract={directionContract}
+>
+	<InventoryFeature />
+</Base>

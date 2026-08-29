@@ -1,0 +1,389 @@
+---
+import { featureGroups } from '../../lib/features';
+import { cta, demoCta } from '../../lib/site';
+
+const inventoryGroup = featureGroups.find((group) => group.id === 'inventory');
+if (!inventoryGroup) throw new Error('Missing public feature group: inventory');
+
+const movements = [
+	{ date: '28 Aug · 7:10 AM', label: 'Physical count', amount: '24.0 kg', kind: 'baseline' },
+	{ date: '28 Aug · 11:40 AM', label: 'Northline receiving', amount: '+10.0 kg', kind: 'in' },
+	{ date: '29 Aug · 5:20 AM', label: 'Packed for two orders', amount: '−7.8 kg', kind: 'out' }
+] as const;
+
+const trustStates = [
+	{ ingredient: 'Chicken thigh', quantity: '26.2 kg', state: 'Fresh', note: 'Trusted count; available to reduce buying.', tone: 'fresh' },
+	{ ingredient: 'Baby spinach', quantity: '8.4 kg', state: 'Stale', note: 'Shown for context; count again before using it.', tone: 'stale' },
+	{ ingredient: 'Olive oil', quantity: '—', state: 'Never counted', note: 'No estimate invented; buying stays unchanged.', tone: 'missing' }
+] as const;
+
+// Considered Strategy; not used because the FAQ and evidence rows vary as
+// static editorial data, not interchangeable behavior selected at runtime.
+const faqItems = [
+	{
+		question: 'How is on-hand inventory calculated?',
+		answer:
+			'A dated physical count resets the baseline. Later purchases, waste, and completed Pack consumption move that baseline forward, so the result can be traced back through dated movements.'
+	},
+	{
+		question: 'What do Fresh, Stale, and Never counted mean?',
+		answer:
+			'They say whether the on-hand quantity is backed by a qualifying physical count. Fresh can be used in planning; stale needs another count; never counted means CostCook has no baseline to estimate from.'
+	},
+	{
+		question: 'Will a stale count reduce what the shopping list buys?',
+		answer:
+			'No. Only trusted on-hand quantity reduces estimated buying. A stale or unsupported estimate can remain visible for context, but it is not allowed to quietly subtract from the buy.'
+	},
+	{
+		question: 'Does a par level automatically add food to the shopping list?',
+		answer:
+			'No. A par level can mark an ingredient below par, at or above par, unevaluable, or without a par, but buying does not replenish to par.'
+	},
+	{
+		question: 'What happens when a count is corrected later?',
+		answer:
+			'Counts are append-only and dated. The pack cost freezes at count time, so a back-dated correction does not silently restate the shelf history that was already recorded.'
+	},
+	{
+		question: 'Can I see what the shelf was worth on an earlier date?',
+		answer:
+			'Yes. Inventory can show shelf value as of a selected date, using the count and movement history available for that point in time.'
+	}
+] as const;
+---
+
+<!-- story: docs/stories/inventory.story.md -->
+<article class="inventory-page">
+	<section class="hero" aria-labelledby="inventory-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="breadcrumb">
+					<a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Inventory</span>
+				</nav>
+				<h1 id="inventory-heading">Know when the shelf number deserves your trust.</h1>
+				<p class="hero-lede">
+					Start with a physical count. Carry every dated movement after it. If the result is stale
+					or unsupported, say so before it changes what you buy.
+				</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+				</div>
+			</div>
+
+			<figure class="shelf-ticket inventory-enter">
+				<p class="figure-note">Illustrative shelf record</p>
+				<div class="ticket-head"><span>Walk-in · Protein</span><span class="state fresh">Fresh</span></div>
+				<div class="ticket-title"><div><h2>Chicken thigh</h2><p>Computed from the last trusted count</p></div><strong>26.2 kg</strong></div>
+				<div class="equation" aria-label="24 kilograms counted, plus 10 kilograms received, minus 7.8 kilograms packed, equals 26.2 kilograms on hand">
+					<div><small>Counted</small><strong>24.0</strong><span>kg</span></div><b aria-hidden="true">+</b>
+					<div><small>Received</small><strong>10.0</strong><span>kg</span></div><b aria-hidden="true">−</b>
+					<div><small>Packed</small><strong>7.8</strong><span>kg</span></div><b aria-hidden="true">=</b>
+					<div class="result"><small>On hand</small><strong>26.2</strong><span>kg</span></div>
+				</div>
+				<div class="ticket-foot"><span>Baseline: 28 Aug · 7:10 AM</span><span>3 dated movements</span></div>
+				<figcaption>Illustrative values. The state and every movement stay attached to the result.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="problem" aria-labelledby="problem-heading">
+		<div class="container-page problem-grid">
+			<div><h2 id="problem-heading">The empty shelf was hidden inside an exact number.</h2><p>The old count still said one case. Prep opened the walk-in and found none. A number without its count date can be precise, tidy, and wrong at the same time.</p></div>
+			<figure class="stale-scene">
+				<div><span>On screen</span><strong>1 case</strong><small>Last counted 12 days ago</small></div>
+				<svg width="56" height="22" viewBox="0 0 56 22" aria-hidden="true"><path d="M1 11h47M41 4l7 7-7 7" /></svg>
+				<div><span>On the shelf</span><strong>Empty</strong><small>Prep starts at 5:30 AM</small></div>
+				<figcaption>A stale count is not a low count. It is a question that still needs an answer.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<nav class="story-nav container-page" aria-label="On this page">
+		<a href="#count-and-trust"><span>Count and trust</span><small>Reset the baseline and keep freshness beside the quantity.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#plan-the-gap"><span>Plan the gap</span><small>Subtract trusted shelf from need, with overrides kept separate.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+	</nav>
+
+	<section id="count-and-trust" class="product-section count-chapter" aria-labelledby="count-heading">
+		<div class="container-page">
+			<div class="section-intro"><h2 id="count-heading">Count once. Let the dated movement explain what came next.</h2><p>A physical count resets the baseline. Purchases, waste, and completed Pack consumption move it forward without turning one editable running total into the source of truth.</p></div>
+
+			<figure class="movement-workspace">
+				<div class="movement-main">
+					<div class="panel-bar"><span>Chicken thigh · movement history</span><span>As of 29 Aug</span></div>
+					<ol role="list">
+						{movements.map((movement) => (
+							<li class={movement.kind}><time>{movement.date}</time><span><strong>{movement.label}</strong><small>{movement.kind === 'baseline' ? 'New inventory baseline' : 'Movement after count'}</small></span><b>{movement.amount}</b></li>
+						))}
+					</ol>
+					<div class="movement-total"><span>Computed on hand</span><strong>26.2 kg</strong></div>
+				</div>
+				<div class="movement-side">
+					<div><span>Trust state</span><strong>Fresh</strong><small>Backed by a qualifying count</small></div>
+					<div><span>Shelf value</span><strong>$122.62</strong><small>Illustrative value as of 29 Aug</small></div>
+					<div><span>Count cost</span><strong>$4.68 / kg</strong><small>Frozen at count time</small></div>
+				</div>
+				<figcaption>Illustrative movement history built only from shipped inventory behavior.</figcaption>
+			</figure>
+
+			<div class="feature-scenes">
+				<article><h3>A count is a baseline, not an edit.</h3><p>Each physical count is dated and appended. From that point forward, later movement explains the shelf.</p></article>
+				<article><h3>Freshness stays visible.</h3><p>Fresh, stale, and never counted are states beside the quantity, not footnotes discovered after planning.</p></article>
+				<article><h3>History keeps its old price.</h3><p>The pack cost freezes at count time, so a later correction does not rewrite what the shelf was worth then.</p></article>
+			</div>
+		</div>
+	</section>
+
+	<section id="plan-the-gap" class="product-section gap-chapter" aria-labelledby="gap-heading">
+		<div class="container-page">
+			<div class="section-intro"><h2 id="gap-heading">Subtract only the shelf you can defend.</h2><p>Start with what the next orders need. A trusted count may reduce estimated buying; a stale or unsupported number may not. Chef overrides remain a separate decision.</p></div>
+
+			<figure class="gap-sheet">
+				<div class="gap-head"><span>Chicken thigh · next jobs</span><span>Illustrative gap</span></div>
+				<div class="gap-equation">
+					<div><small>Orders need</small><strong>31.5 kg</strong><span>Two confirmed jobs</span></div>
+					<b aria-hidden="true">−</b>
+					<div><small>Trusted shelf</small><strong>26.2 kg</strong><span>Fresh count state</span></div>
+					<b aria-hidden="true">=</b>
+					<div class="gap-result"><small>Left to cover</small><strong>5.3 kg</strong><span>Before whole-pack rounding</span></div>
+				</div>
+				<div class="buy-line"><span><strong>Shopping list</strong><small>Northline Foods · 10 kg case</small></span><b>1 case</b></div>
+				<figcaption>Illustrative need-minus-trusted-shelf working. Whole-pack buying remains visible after the gap.</figcaption>
+			</figure>
+
+			<div class="trust-board">
+				<div class="trust-head"><h3>Every shelf state gets a different answer.</h3><p>The quantity may be visible without being trusted enough to change the buy.</p></div>
+				<ul role="list">
+					{trustStates.map((item) => (
+						<li><span><strong>{item.ingredient}</strong><small>{item.note}</small></span><b>{item.quantity}</b><em class:list={['state', item.tone]}>{item.state}</em></li>
+					))}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="trust-proof" aria-labelledby="trust-proof-heading">
+		<div class="container-page trust-proof-grid">
+			<div><h2 id="trust-proof-heading">No count, no invented shelf.</h2><p>When the math cannot support an estimate, the state says what is missing and the buy remains unchanged. The recovery is direct: count the ingredient.</p></div>
+			<div class="recovery-list">
+				<div><span class="state fresh">Fresh</span><strong>Use in the buy gap</strong><small>The qualifying count and later movement are available.</small></div>
+				<div><span class="state stale">Stale</span><strong>Count again</strong><small>Keep the old quantity visible, but do not subtract it.</small></div>
+				<div><span class="state missing">Never counted</span><strong>Set the baseline</strong><small>Nothing is estimated before the first physical count.</small></div>
+			</div>
+		</div>
+	</section>
+
+	<section class="capabilities" aria-labelledby="capabilities-heading">
+		<div class="container-page capabilities-grid">
+			<div><h2 id="capabilities-heading">The complete Inventory list.</h2><p>Everything below is shipped today and remains available for the diligence read.</p><p class="count"><strong>{inventoryGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<details id="features-inventory" open><summary><span>Inventory</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{inventoryGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
+		</div>
+	</section>
+
+	<section class="faq" aria-labelledby="faq-heading">
+		<div class="container-page faq-grid">
+			<div><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions behind letting a shelf quantity change what you buy.</p></div>
+			<div class="faq-list">{faqItems.map((item) => <details><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>)}</div>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid">
+			<div><h2 id="closing-heading">A shelf number ready to use.</h2><p>Bring one real shopping list and count one shelf. Follow the baseline into the buy gap with every movement shown.</p></div>
+			<div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div>
+		</div>
+		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
+	</section>
+</article>
+
+<style>
+	.inventory-page { overflow: clip; }
+	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
+	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
+	.breadcrumb { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .875rem; color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
+	.hero h1 { max-width: 12ch; margin-top: 1.5rem; font-size: clamp(2.65rem, 4.8vw, 5.45rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; }
+	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: clamp(1.05rem, .98rem + .35vw, 1.3rem); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
+	.btn-outline:hover { background: var(--color-softgreen); }
+	.figure-note { margin-bottom: .7rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.shelf-ticket { position: relative; min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
+	.shelf-ticket::before { position: absolute; inset: 0 0 auto; height: 3px; background: var(--color-green); content: ''; }
+	.ticket-head, .panel-bar, .gap-head { display: flex; justify-content: space-between; gap: 1rem; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.state { display: inline-flex; width: fit-content; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: .7rem; font-weight: 700; font-style: normal; letter-spacing: .05em; text-transform: uppercase; }
+	.state.fresh { background: var(--color-softgreen); color: var(--color-green-deep); }
+	.state.stale { background: var(--color-softamber); color: var(--color-amber-deep); }
+	.state.missing { border: 1px solid var(--color-hairline); color: var(--color-ink-soft); }
+	.ticket-title { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-top: 1.1rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--color-ticket-rule); }
+	.ticket-title h2 { font-size: clamp(1.45rem, 2vw, 1.9rem); font-weight: 600; }
+	.ticket-title p { margin-top: .2rem; font-size: .82rem; color: var(--color-ink-soft); }
+	.ticket-title > strong { color: var(--color-green-deep); font-size: 1.55rem; font-variant-numeric: tabular-nums; }
+	.equation { display: grid; grid-template-columns: repeat(7, auto); gap: .45rem; align-items: center; margin-top: 1.2rem; }
+	.equation > div { min-width: 0; }
+	.equation small, .gap-equation small { display: block; font-size: .66rem; color: var(--color-ink-soft); }
+	.equation strong { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+	.equation span { margin-left: .2rem; font-size: .72rem; color: var(--color-ink-soft); }
+	.equation b, .gap-equation > b { color: var(--color-amber-deep); font-size: 1.1rem; }
+	.equation .result { padding: .7rem; background: var(--color-softgreen); }
+	.ticket-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--color-ticket-rule); font-size: .72rem; color: var(--color-ink-soft); }
+	.shelf-ticket figcaption, .movement-workspace figcaption, .gap-sheet figcaption { margin-top: .85rem; font-size: .78rem; line-height: 1.45; color: var(--color-ink-soft); }
+	.problem { border-bottom: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.problem-grid { display: grid; gap: 3rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.problem h2, .section-intro h2, .trust-proof h2, .capabilities h2, .faq h2, .closing h2 { font-size: var(--text-h2); font-weight: 600; line-height: 1.12; }
+	.problem p, .section-intro p, .trust-proof-grid > div > p, .capabilities-grid > div > p, .faq-grid > div > p, .closing p { max-width: 58ch; margin-top: 1.1rem; color: var(--color-ink-soft); line-height: 1.65; }
+	.stale-scene { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+	.stale-scene div { padding: 1.35rem; border-top: 2px solid var(--color-ticket-rule); background: var(--color-cream); }
+	.stale-scene span, .movement-side span { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.stale-scene strong { display: block; margin-top: .45rem; font-size: 1.7rem; }
+	.stale-scene small { color: var(--color-ink-soft); }
+	.stale-scene svg, .story-nav svg, summary svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+	.stale-scene svg { color: var(--color-amber-deep); }
+	.stale-scene figcaption { grid-column: 1 / -1; color: var(--color-ink-soft); font-size: .8rem; }
+	.story-nav { display: grid; padding-block: 1.25rem; }
+	.story-nav a { display: grid; min-height: 84px; grid-template-columns: 1fr auto; gap: .25rem 1rem; align-content: center; padding: 1.2rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); }
+	.story-nav a:first-child { border-top: 1px solid var(--color-ticket-rule); }
+	.story-nav span { font-weight: 700; }
+	.story-nav small { max-width: 48ch; color: var(--color-ink-soft); }
+	.story-nav svg { grid-column: 2; grid-row: 1 / 3; color: var(--color-green-deep); }
+	.product-section { scroll-margin-top: 1rem; padding-block: var(--spacing-section); }
+	.count-chapter { background: var(--color-softgreen); }
+	.gap-chapter { background: var(--color-cream); }
+	.section-intro { display: grid; gap: 1.5rem 4rem; align-items: end; }
+	.section-intro p { margin-top: 0; }
+	.movement-workspace { display: grid; gap: 1px; margin-top: clamp(2.5rem, 6vw, 4.5rem); background: var(--color-hairline-strong); box-shadow: var(--shadow-lift); }
+	.movement-main, .movement-side > div { background: var(--color-paper); }
+	.movement-main { padding: clamp(1.2rem, 3vw, 2rem); }
+	.panel-bar { padding-bottom: .8rem; border-bottom: 1px solid var(--color-hairline); }
+	.movement-main ol { margin-top: .8rem; }
+	.movement-main li { display: grid; grid-template-columns: minmax(8.5rem, .8fr) 1fr auto; gap: 1rem; align-items: center; padding-block: .85rem; border-bottom: 1px solid var(--color-hairline); }
+	.movement-main time { font-size: .78rem; color: var(--color-ink-soft); }
+	.movement-main li span small { display: block; color: var(--color-ink-soft); }
+	.movement-main li b { font-variant-numeric: tabular-nums; }
+	.movement-main li.baseline b { color: var(--color-green-deep); }
+	.movement-main li.out b { color: var(--color-amber-deep); }
+	.movement-total { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1rem; background: var(--color-softgreen); }
+	.movement-total strong { color: var(--color-green-deep); font-variant-numeric: tabular-nums; }
+	.movement-side { display: grid; gap: 1px; }
+	.movement-side > div { padding: 1.25rem; }
+	.movement-side strong, .movement-side small { display: block; margin-top: .4rem; }
+	.movement-side small { color: var(--color-ink-soft); }
+	.feature-scenes { display: grid; gap: 2rem; margin-top: 3rem; }
+	.feature-scenes article { padding-top: 1.25rem; border-top: 1px solid var(--color-hairline-strong); }
+	.feature-scenes h3, .trust-board h3 { font-size: 1.25rem; font-weight: 600; }
+	.feature-scenes p { margin-top: .65rem; color: var(--color-ink-soft); line-height: 1.6; }
+	.gap-sheet { margin-top: clamp(2.5rem, 6vw, 4.5rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
+	.gap-head { padding: 1rem clamp(1rem, 3vw, 1.75rem); background: var(--color-ink); color: var(--color-paper); }
+	.gap-equation { display: grid; grid-template-columns: repeat(5, auto); gap: 1rem; align-items: center; padding: clamp(1.2rem, 4vw, 2rem); }
+	.gap-equation > div { min-width: 0; }
+	.gap-equation strong { display: block; margin-top: .25rem; font-size: 1.45rem; font-variant-numeric: tabular-nums; }
+	.gap-equation span { display: block; margin-top: .2rem; font-size: .75rem; color: var(--color-ink-soft); }
+	.gap-result { padding: 1rem; background: var(--color-softgreen); }
+	.buy-line { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1.15rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
+	.buy-line span small { display: block; color: var(--color-ink-soft); }
+	.buy-line > b { color: var(--color-green-deep); font-size: 1.2rem; }
+	.gap-sheet figcaption { padding: 0 clamp(1rem, 3vw, 1.75rem) 1rem; }
+	.trust-board { display: grid; gap: 2rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
+	.trust-head p { margin-top: .6rem; color: var(--color-ink-soft); }
+	.trust-board li { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; padding-block: .9rem; border-bottom: 1px solid var(--color-ticket-rule); }
+	.trust-board li span small { display: block; max-width: 45ch; color: var(--color-ink-soft); }
+	.trust-board li > b { font-variant-numeric: tabular-nums; }
+	.trust-proof { padding-block: var(--spacing-section); background: var(--color-ink); color: var(--color-paper); }
+	.trust-proof-grid { display: grid; gap: 3rem; align-items: center; }
+	.trust-proof-grid > div > p { color: var(--color-ink-muted); }
+	.recovery-list { background: var(--color-paper); color: var(--color-ink); box-shadow: var(--shadow-lift); }
+	.recovery-list > div { display: grid; grid-template-columns: auto 1fr; gap: .5rem 1rem; padding: 1.1rem; border-bottom: 1px solid var(--color-hairline); }
+	.recovery-list > div:last-child { border-bottom: 0; }
+	.recovery-list strong { align-self: center; }
+	.recovery-list small { grid-column: 2; color: var(--color-ink-soft); }
+	.capabilities { padding-block: var(--spacing-section); background: var(--color-paper); }
+	.capabilities-grid { display: grid; gap: 3rem; }
+	.count { display: flex; align-items: baseline; gap: .75rem; }
+	.count strong { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-green-deep); }
+	.count span { font-size: .8rem; color: var(--color-ink-soft); }
+	details summary { cursor: pointer; list-style: none; }
+	details summary::-webkit-details-marker { display: none; }
+	.capabilities details { scroll-margin-top: 1rem; border-top: 1px solid var(--color-ticket-rule); border-bottom: 1px solid var(--color-ticket-rule); }
+	.capabilities summary, .faq summary { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 1rem; font-weight: 700; }
+	.capabilities details[open] summary, .faq details[open] summary { color: var(--color-green-deep); }
+	.capabilities details[open] summary svg, .faq details[open] summary svg { transform: rotate(180deg); }
+	.capabilities summary svg, .faq summary svg { flex: 0 0 auto; transition: transform 150ms ease-out; }
+	.capabilities details ul { padding-bottom: 1.5rem; }
+	.capabilities details li { padding-block: .75rem; border-top: 1px solid var(--color-hairline); line-height: 1.5; }
+	.capabilities details li span { color: var(--color-ink-soft); }
+	.faq { padding-block: var(--spacing-section); border-top: 1px solid var(--color-hairline); background: var(--color-offwhite); }
+	.faq-grid { display: grid; gap: 3rem; }
+	.faq-list details { border-top: 1px solid var(--color-ticket-rule); }
+	.faq-list details:last-child { border-bottom: 1px solid var(--color-ticket-rule); }
+	.faq-list summary { padding-block: .7rem; }
+	.faq-list details p { max-width: 64ch; padding: 0 2.5rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.6; }
+	.closing { border-top: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
+	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
+	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
+
+	@media (min-width: 720px) {
+		.hero-grid { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
+		.problem-grid, .section-intro, .trust-proof-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+		.story-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.story-nav a { padding-inline: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
+		.story-nav a + a { border-left: 1px solid var(--color-ticket-rule); }
+		.movement-workspace { grid-template-columns: minmax(0, 1.55fr) minmax(14rem, .72fr); }
+		.feature-scenes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+		.trust-board { grid-template-columns: minmax(14rem, .6fr) minmax(0, 1.4fr); }
+		.capabilities-grid { grid-template-columns: minmax(15rem, .55fr) minmax(0, 1.45fr); }
+		.capabilities details ul { grid-template-columns: repeat(2, minmax(0, 1fr)); display: grid; gap: 0 2rem; }
+		.closing-actions { justify-content: flex-end; margin-top: 0; }
+	}
+
+	@media (max-width: 719px) {
+		.hero-grid { gap: 1rem; padding-block: 1.25rem 1rem; }
+		.hero h1 { margin-top: .25rem; font-size: clamp(2rem, 10.4vw, 2.55rem); }
+		.hero-lede { margin-top: .7rem; font-size: .95rem; line-height: 1.38; }
+		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .8rem; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .55rem; font-size: .82rem; text-align: center; }
+		.closing-actions > * { width: 100%; justify-content: center; }
+		.figure-note { margin-bottom: .45rem; }
+		.shelf-ticket { padding: .8rem; }
+		.ticket-title { margin-top: .7rem; padding-bottom: .75rem; }
+		.equation { margin-top: .75rem; }
+		.ticket-foot { margin-top: .65rem; padding-top: .6rem; }
+		.ticket-title { display: block; }
+		.ticket-title > strong { display: block; margin-top: .8rem; }
+		.equation { grid-template-columns: 1fr auto 1fr; }
+		.equation > div:last-child { grid-column: 1 / -1; }
+		.stale-scene { grid-template-columns: 1fr; }
+		.stale-scene svg { transform: rotate(90deg); justify-self: center; }
+		.movement-main li { grid-template-columns: 1fr auto; }
+		.movement-main time { grid-column: 1 / -1; }
+		.gap-equation { grid-template-columns: 1fr; }
+		.gap-equation > b { transform: rotate(90deg); justify-self: center; }
+		.trust-board li { grid-template-columns: 1fr auto; }
+		.trust-board li em { grid-column: 1 / -1; }
+	}
+
+	@media (max-width: 430px) {
+		.equation { grid-template-columns: 1fr auto 1fr; }
+		.equation > div:nth-of-type(3) { grid-column: 1; }
+		.equation > b:nth-of-type(3) { grid-column: 2; }
+		.equation > div:last-child { grid-column: 3; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.capabilities summary svg, .faq summary svg { transition: none; }
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		@keyframes inventory-count-step {
+			from { opacity: .35; filter: blur(2px); transform: translateY(5px); }
+		}
+		.inventory-enter .equation > * { animation: inventory-count-step 420ms cubic-bezier(.22, 1, .36, 1) backwards; }
+		.inventory-enter .equation > :nth-child(1) { animation-delay: 180ms; }
+		.inventory-enter .equation > :nth-child(2) { animation-delay: 280ms; }
+		.inventory-enter .equation > :nth-child(3) { animation-delay: 360ms; }
+		.inventory-enter .equation > :nth-child(4) { animation-delay: 460ms; }
+		.inventory-enter .equation > :nth-child(5) { animation-delay: 540ms; }
+		.inventory-enter .equation > :nth-child(6) { animation-delay: 640ms; }
+		.inventory-enter .equation > :nth-child(7) { animation-delay: 720ms; }
+	}
+</style>
