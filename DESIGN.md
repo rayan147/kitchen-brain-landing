@@ -50,6 +50,11 @@ components:
     textColor: "#ffffff"
     rounded: "{rounded.pill}"
     padding: "1rem 1.75rem"
+  button-outline:
+    backgroundColor: "transparent"
+    textColor: "{colors.green-deep}"
+    rounded: "{rounded.pill}"
+    padding: "0.9rem 1.5rem"
 ---
 
 # Design System: CostCook
@@ -62,6 +67,8 @@ CostCook's incumbent marketing identity is practical, warm, and quiet: an off-wh
 
 Contact follows the same founder-direct voice. Public visitors get a dedicated `/contact` destination with email, phone, and demo actions; existing users are directed to authenticated **Contact support** inside CostCook, where account context can accompany the message.
 
+When marketing needs to show connected product evidence, the same visual world can tighten into a calm, seeded workspace. Editorial Fraunces remains outside and at key explanatory handoffs; dense product labels, tables, statuses, and tabular numbers use Instrument Sans inside a bounded paper surface. This is product proof within the marketing system, not a separate dashboard identity.
+
 **Key Characteristics:**
 
 - Warm off-white, green, and amber palette
@@ -69,6 +76,7 @@ Contact follows the same founder-direct voice. Public visitors get a dedicated `
 - Quiet border rules and sparse, purposeful elevation
 - Direct actions with explicit outcomes and accessible touch targets
 - Founder-direct contact language without an anonymous form
+- Calm, bounded product-proof workspaces with explicit data provenance
 
 ## Colors
 
@@ -117,15 +125,17 @@ Pages use a centered container capped at 72rem with fluid horizontal gutters. Se
 
 Contact entry points remain discoverable beside the homepage price, on the pricing page, and in shared navigation and footer destinations. These links converge on `/contact`; they do not duplicate the page's content in place.
 
+Dense product proof keeps one working frame active inside a bounded shell rather than shrinking several frames into thumbnails or repeating them as equal cards. Wide layouts may hold stable local navigation beside the evidence. When that rail no longer leaves the evidence legible, replace it with a native compact control and preserve the same choices and sequence. Wide tables may scroll inside their own frame; the page itself must not overflow.
+
 ## Elevation & Depth
 
-The system is flat by default. Borders, background bands, and paper contrast create most separation; compact ticket imagery may use a restrained two-layer shadow. The contact workflow itself uses rules and a soft-green band rather than floating cards.
+The system is flat by default. Borders, background bands, and paper contrast create most separation; compact ticket imagery may use a restrained two-layer shadow. A large, interactive product-proof shell may use a broader two-layer shadow to read as one contained artifact, while its internal metrics, tables, and asides remain border-led and flat. The contact workflow itself uses rules and a soft-green band rather than floating cards.
 
-**The Flat-by-Default Rule.** Use elevation for physical ticket-like artifacts, not routine contact information or navigation.
+**The Flat-by-Default Rule.** Use elevation for physical ticket-like artifacts and bounded product proof, not routine contact information, navigation, or every internal panel.
 
 ## Shapes
 
-Primary actions are full pills, a warm counterpoint to the serif display face. Most content containers remain square and are separated with thin rules instead of rounded cards. Focus outlines follow each element's existing shape.
+Primary actions are full pills, a warm counterpoint to the serif display face. Most content containers remain square and are separated with thin rules instead of rounded cards. A bounded product-proof shell may use gently rounded outer corners while the data surfaces inside it stay square and rule-separated. Focus outlines follow each element's existing shape.
 
 ## Components
 
@@ -134,6 +144,7 @@ Primary actions are full pills, a warm counterpoint to the serif display face. M
 - **Shape:** Full pill for primary actions.
 - **Primary:** Working-green fill, white semibold text, and generous horizontal padding.
 - **Hover / Focus:** Deep-green hover; a two-pixel green focus outline with a two-pixel offset; active state moves down one pixel.
+- **Outline:** Transparent paper-compatible ground, a Working-green border, Deep Working Green text, and the same pill silhouette; hover uses Soft Green without competing with the primary action.
 - **Quiet link:** Deep-green semibold underlined text. Vertical padding expands the hit area to at least 44px without disrupting inline rhythm.
 
 The homepage contact action beside the price keeps the quiet-link treatment and a minimum 44px target. Contact-page email and demo actions use the primary button; phone, sign-in, and contextual links use the quieter link language according to hierarchy.
@@ -149,6 +160,10 @@ The homepage contact action beside the price keeps the quiet-link treatment and 
 
 Shared navigation uses compact Instrument Sans links with 44px minimum targets. `Contact` is part of the same shared navigation source as the other destinations, so header and footer placement do not drift. The persistent start action remains visually primary.
 
+### Embedded product proof
+
+Product proof is a bounded, paper-like workspace inside the marketing page. Use Instrument Sans, compact labels, tabular numerals, pale rules, and restrained green or amber status emphasis inside the frame. Keep one primary evidence frame visible, preserve direct access to the available views, and keep explanatory copy attached to the evidence it interprets. Synthetic records and amounts must carry a persistent, plainly worded illustrative label; a one-time disclaimer elsewhere on the page is insufficient.
+
 ### Contact workflow
 
 The public contact surface offers email, phone, and demo actions. It does not present an anonymous form or promise a response time. Existing users are sent to authenticated in-app **Contact support** rather than the public path. Safety copy must continue to warn visitors not to send passwords, payment card details, or other sensitive information.
@@ -162,9 +177,12 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Do** route existing users to authenticated in-app **Contact support**.
 - **Do** maintain at least a 44px target for the homepage contact action and shared navigation actions.
 - **Do** retain the warning against sharing sensitive information.
+- **Do** label seeded or constructed product records and amounts as illustrative beside the product proof where the values remain visible.
+- **Do** use tabular numerals and quiet rules when presenting operational amounts for comparison.
 
 ### Don't:
 
 - **Don't** add an anonymous public contact form without a new product decision.
 - **Don't** invent response-time, availability, or service-level claims.
 - **Don't** turn contact guidance into a floating SaaS card or introduce a new visual identity for the route.
+- **Don't** present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence.

@@ -143,16 +143,21 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 							</div>
 
 							<div class="flex flex-wrap items-center justify-between gap-x-6 border-t border-ticket-rule bg-cream px-6 py-2.5">
-								<a
-									href={featuresMenu.href}
-									aria-current={path === featuresMenu.href ? 'page' : undefined}
-									class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 transition-colors duration-150 hover:decoration-green"
-								>
-									{featuresMenu.overviewLabel}
-									<svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-										<path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-									</svg>
-								</a>
+								<div class="flex flex-wrap items-center gap-x-6">
+									<a
+										href={featuresMenu.tourHref}
+										aria-current={path === featuresMenu.tourHref ? 'page' : undefined}
+										class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 transition-colors duration-150 hover:decoration-green"
+									>
+										{featuresMenu.tourLabel}
+										<svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+											<path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+										</svg>
+									</a>
+									<a href={featuresMenu.href} class="inline-flex min-h-11 items-center text-sm font-semibold text-ink-soft underline decoration-ticket-rule underline-offset-4 hover:text-ink">
+										{featuresMenu.overviewLabel}
+									</a>
+								</div>
 								<p class="text-xs text-ink-soft">Every line is shipped unless it is marked Coming.</p>
 							</div>
 						</div>
