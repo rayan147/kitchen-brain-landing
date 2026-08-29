@@ -89,12 +89,15 @@ try {
 		await delay(180);
 		await evaluate(`(() => {
 			document.querySelectorAll('img').forEach((image) => { image.loading = 'eager'; });
-			window.scrollTo(0, document.body.scrollHeight);
 		})()`);
-		await delay(500);
+		const proofPositions = await evaluate(`[...document.querySelectorAll('[data-proof-image]')].map((image) => image.getBoundingClientRect().top + window.scrollY)`);
+		for (const proofPosition of proofPositions) {
+			await evaluate(`window.scrollTo(0, ${JSON.stringify(proofPosition)})`);
+			await delay(180);
+		}
 		await evaluate(`window.scrollTo(0, 0)`);
 		await evaluate(`document.querySelectorAll('.reveal-pending').forEach((node) => node.classList.add('revealed'))`);
-		await evaluate(`Promise.all([document.fonts?.ready, ...[...document.images].filter((image) => image.complete).map((image) => image.decode?.().catch(() => {}))])`);
+		await evaluate(`Promise.all([document.fonts?.ready, ...[...document.images].map((image) => image.decode?.().catch(() => {}))])`);
 		await delay(800);
 		const state = await evaluate(`(() => ({
 			title: document.title,
@@ -102,9 +105,11 @@ try {
 			faqCount: document.querySelectorAll('[data-nutrition-disclosure]').length,
 			capabilityCount: document.querySelectorAll('[data-capability-disclosure]').length,
 			evidenceCount: document.querySelectorAll('.evidence-chain > li').length,
-			proofCropCount: document.querySelectorAll('.proof-crop, .panel-window, .allergen-window, .label-window').length,
+			proofImageCount: document.querySelectorAll('[data-proof-image]').length,
 			fullProofLinkCount: document.querySelectorAll('[data-full-proof-link]').length,
-			proofSources: [...document.querySelectorAll('img')].map((image) => image.getAttribute('src')).filter(Boolean),
+			proofSources: [...document.querySelectorAll('[data-proof-image]')].map((image) => new URL(image.currentSrc, location.href).pathname),
+			proofWidths: [...document.querySelectorAll('[data-proof-image]')].map((image) => Math.round(image.getBoundingClientRect().width)),
+			proofNaturalWidths: [...document.querySelectorAll('[data-proof-image]')].map((image) => image.naturalWidth),
 			scrollWidth: document.documentElement.scrollWidth,
 			innerWidth,
 			bodyHeight: document.body.scrollHeight
@@ -112,8 +117,13 @@ try {
 		if (!state.title.includes('Nutrition facts and allergen management software')) throw new Error(`${width}: wrong title`);
 		if (state.h1 !== 'One recipe. Two answers you cannot guess at.') throw new Error(`${width}: wrong H1`);
 		if (state.faqCount !== 6 || state.capabilityCount !== 2 || state.evidenceCount !== 4) throw new Error(`${width}: disclosure or evidence count drifted`);
-		if (state.proofCropCount !== 5 || state.fullProofLinkCount !== 4) throw new Error(`${width}: readable proof contract drifted`);
-		if (!state.proofSources.includes('/proof/nutrition-panel.png') || !state.proofSources.includes('/proof/nutrition-label.png')) throw new Error(`${width}: authentic proof is missing`);
+		if (state.proofImageCount !== 4 || state.fullProofLinkCount !== 4) throw new Error(`${width}: readable proof contract drifted`);
+		const expectedProofSources = width < 768
+			? ['/proof/nutrition/nutrition-summary-mobile.png', '/proof/nutrition/nutrition-facts-panel.png', '/proof/nutrition/allergen-review-mobile.png', '/proof/nutrition/label-panel.png']
+			: ['/proof/nutrition/nutrition-summary-wide.png', '/proof/nutrition/nutrition-facts-panel.png', '/proof/nutrition/allergen-review-wide.png', '/proof/nutrition/label-panel.png'];
+		if (!expectedProofSources.every((source) => state.proofSources.includes(source))) throw new Error(`${width}: focused proof source is missing`);
+		if (state.proofWidths.some((proofWidth) => proofWidth < Math.min(300, width - 48))) throw new Error(`${width}: proof is rendered too small: ${state.proofWidths.join(', ')}`);
+		if (state.proofNaturalWidths.some((naturalWidth) => naturalWidth === 0)) throw new Error(`${width}: proof image did not load`);
 		if (state.scrollWidth !== state.innerWidth) throw new Error(`${width}: horizontal overflow ${state.scrollWidth}/${state.innerWidth}`);
 
 		if (width === 1440 || width === 390) {
