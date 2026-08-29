@@ -4,31 +4,38 @@ import { site } from '../../lib/site';
 const safeguards = [
 	{
 		title: 'Start with the kitchen you already have',
-		body: 'Use one real menu, supplier sheet, or order. Guided setup shows what is complete and lets you return without duplicating it.'
+		body: 'Use one real menu, supplier sheet or order. Guided setup shows what is done and lets you come back without duplicating it.'
 	},
-	{
-		title: 'You approve what becomes true',
-		body: 'Imported prices and recipe details stay staged for review. CostCook suggests the match; you decide what is saved.'
-	},
+	/* "You approve what becomes true" was the second entry here until 2026-08-26.
+	   It was PaperIn's whole section said again 700px further down the page:
+	   staged for review, you decide what is saved, suggested not applied. A claim
+	   that good does not get stronger by being made twice in a row, and the page
+	   was spending 22 words to make it the second time. PaperIn owns it. If
+	   PaperIn is ever cut, this comes back before anything else does. */
 	{
 		title: 'Built for event production',
-		body: 'This is for catering and meal-prep kitchens that work from menus and guest counts. It is not a POS or online-ordering system.'
+		body: 'For catering and meal-prep kitchens that work from menus and guest counts. Not a POS and not an online-ordering system.'
 	}
 ];
 ---
 
 <section id="trust" class="container-page py-section" aria-labelledby="trust-heading">
+	<!-- min-w-0 on the grid children. A grid item defaults to min-width:auto, so it
+     refuses to shrink below its longest word; at 200% text that floor was wider
+     than the column and the whole page scrolled sideways at 360. -->
 	<div class="grid items-start gap-12 lg:grid-cols-[5fr_7fr] lg:gap-20">
-		<div data-reveal>
-			<h2 id="trust-heading" class="text-h2 font-semibold">
+		<div class="min-w-0" data-reveal>
+			<!-- Eyebrow added 2026-08-26 with the page-wide role register (see
+			     src/pages/index.astro). -->
+			<p class="eyebrow">Who made it</p>
+			<h2 id="trust-heading" class="mt-4 text-h2 font-semibold break-words">
 				Built by a chef. Set up with your real work.
 			</h2>
 			<p class="mt-5 max-w-[52ch] text-lede text-ink-soft">
-				I spent twelve years cooking professionally before becoming a software engineer.
 				CostCook is the system I wanted when one menu had to become a quote, a shopping
-				list, a prep plan, and a pack list without losing the cost along the way.
+				list, a prep plan and a pack list without losing the cost along the way.
 			</p>
-			<div class="mt-6 flex items-center gap-4">
+			<div class="mt-6 flex flex-wrap items-center gap-4">
 				<img
 					src="/founder.jpg"
 					alt={`${site.founderName}, the chef who built CostCook`}
@@ -41,7 +48,7 @@ const safeguards = [
 			</div>
 		</div>
 
-		<ul role="list" class="border-t border-hairline" data-reveal>
+		<ul role="list" class="min-w-0 border-t border-hairline" data-reveal>
 			{
 				safeguards.map((safeguard) => (
 					<li class="grid gap-2 border-b border-hairline py-6 sm:grid-cols-[4fr_6fr] sm:gap-8">

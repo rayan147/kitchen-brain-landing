@@ -1,0 +1,225 @@
+---
+/**
+ * One drawn figure per feature area, keyed by slug. THREE OF THE FIVE AREAS GET
+ * ONE. The other two render nothing, and that is the decision rather than a gap:
+ *
+ *   the-day-itself        DECLINED. Its shape is the loop, and the loop is
+ *                         already drawn twice - LoopBand in the hero and the
+ *                         workflow rail. LoopBand's own comment says two
+ *                         drawings of one chain that disagree are worse than no
+ *                         drawing, and a third would be two chances to disagree.
+ *   team-and-connections  DECLINED. Setup, roles, offline behaviour and two
+ *                         unbuilt connectors are a list, not a shape. A figure
+ *                         added so that all five pages match is the persona-grid
+ *                         mistake drawn instead of written.
+ *
+ * A figure earns its place here when the ARGUMENT is geometric - when the shape
+ * makes the point faster than the paragraph above it can. That is true of an
+ * arithmetic path, of a gate, and of a split between what ships and what does
+ * not. It is not true of a list.
+ *
+ * EVERY FIGURE'S GEOMETRY IS IN PIXELS, NOT REM. These are drawings; their
+ * labels are text and still scale with the reader's font size, but bar heights,
+ * gaps and marks do not, because at 200% text a rem-sized mark grows while its
+ * column does not and ends up clipped inside a row that still reports zero page
+ * overflow. That failure shipped once on the homepage figure. The probe is a
+ * per-child collision and scrollWidth check, not scrollWidth on the document.
+ *
+ * THE GRID TRACKS ARE PIXELS FOR THE SAME REASON. A minmax(9rem, 1fr) column
+ * floor is 288px once the reader doubles the root size, which is wider than a
+ * 360px phone's content box, and the page scrolls sideways (WCAG 1.4.10). It
+ * did exactly that here before these were pinned.
+ *
+ * NO NEW CLAIMS. Each figure redraws something the page above it already says
+ * and the ledger already backs: RC-16 and RC-19 for the costing path, RC-09,
+ * RC-38 and RC-39 for the intake gate, RC-42 for the nutrition split. If a
+ * figure ever needs a sentence its area page does not already carry, it needs a
+ * ledger row first.
+ */
+interface Props {
+	slug: string;
+}
+const { slug } = Astro.props;
+
+// The path a case price walks before it is a number you can say out loud. This
+// is SECTION_META's own lede for the area, drawn: a yield, a sub-recipe, a
+// portion size and a guest count.
+const costingPath = [
+	{ op: null, tag: 'CASE', label: 'What the supplier charged for the whole pack.' },
+	{ op: 'divided by the pack', tag: 'UNIT', label: 'A price per kilo, per litre, per each.' },
+	{ op: 'divided by the yield', tag: 'EDIBLE', label: 'What is left once the skins and the cores are gone.' },
+	{ op: 'times the recipe line', tag: 'PLATE', label: 'The share of one dish that ingredient is.' },
+	{ op: 'times the guest count', tag: 'EVENT', label: 'The food cost the quote gets judged against.' }
+];
+
+// Four doors, one queue, and a gate. The gate is the whole argument.
+const intakeFlow = [
+	{
+		tag: 'FOUR DOORS',
+		gate: false,
+		label: 'A photograph, a PDF or a doc, a spreadsheet, pasted text. The queue does not care which it was.'
+	},
+	{
+		tag: 'ONE QUEUE',
+		gate: false,
+		label: 'Read, and matched against the ingredients you already have. Nothing saved.'
+	},
+	{
+		tag: 'YOU CONFIRM',
+		gate: true,
+		label: 'A list of differences to look at. Whatever could not be made out is quoted back as it appeared.'
+	},
+	{
+		tag: 'YOUR PRICES',
+		gate: false,
+		label: 'Only the lines you said yes to. The rest waits, or gets keyed in by hand.'
+	}
+];
+
+const nutrientCount = 15;
+---
+
+{
+	slug === 'recipes-and-costing' && (
+		<figure class="mt-12" data-reveal>
+			<div class="border-y border-ticket-rule bg-paper px-5 py-8 sm:px-8">
+				<p class="sr-only">
+					The path a case price walks, in five steps. What the supplier charged for the
+					whole pack, divided by the pack to give a price per unit, divided by the yield to
+					give the price of the part you can actually serve, times the recipe line to give
+					that ingredient's share of one dish, and times the guest count to give the food
+					cost the quote is judged against.
+				</p>
+				<ol
+					role="list"
+					class="grid grid-cols-[repeat(auto-fit,minmax(144px,1fr))] gap-x-6 gap-y-8"
+					aria-hidden="true"
+				>
+					{costingPath.map((step) => (
+						<li class="min-w-0">
+							{/* The operator sits ABOVE its stop rather than between two of
+							    them, so it stays attached to the right stop however the grid
+							    wraps. A glyph between columns points at the wrong neighbour
+							    the moment a row breaks, which is the failure LoopBand
+							    records for its arrows. */}
+							<p class="h-4 font-mono text-eyebrow tracking-wide text-ink-soft">
+								{step.op ?? ''}
+							</p>
+							<div class="mt-2 border-t-2 border-amber pt-3">
+								<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+									{step.tag}
+								</p>
+								<p class="mt-2 text-sm leading-snug text-ink-soft">{step.label}</p>
+							</div>
+						</li>
+					))}
+				</ol>
+			</div>
+			<figcaption class="mt-4 max-w-[66ch] text-sm text-ink-soft">
+				<strong class="font-semibold text-ink">One price, four steps.</strong>{' '}
+				Every one of them stays on the screen, so a cost you do not believe can be taken
+				apart until you find the step you disagree with.
+			</figcaption>
+		</figure>
+	)
+}
+
+{
+	slug === 'getting-prices-in' && (
+		<figure class="mt-12" data-reveal>
+			<div class="border-y border-ticket-rule bg-paper px-5 py-8 sm:px-8">
+				<p class="sr-only">
+					How a price gets in, in four steps. Four doors: a photograph, a PDF or a
+					document, a spreadsheet, or pasted text. One queue, where it is read and matched
+					against the ingredients you already have, with nothing saved. Then you confirm:
+					a list of differences to look at, with whatever could not be made out quoted
+					back as it appeared. Only then, your prices, and only the lines you said yes to.
+					The rest waits, or gets keyed in by hand.
+				</p>
+				<ol
+					role="list"
+					class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-x-6 gap-y-8"
+					aria-hidden="true"
+				>
+					{intakeFlow.map((step) => (
+						<li class="min-w-0">
+							{/* The gate is the only stop drawn differently, because it is the
+							    only stop that is a promise rather than a mechanism. Amber is
+							    the warning colour in this system and that is the correct
+							    register: it marks the step where a human has to act. */}
+							<div
+								class:list={[
+									'border-t-2 pt-3',
+									step.gate ? 'border-amber' : 'border-ink-rule/45'
+								]}
+							>
+								<p
+									class:list={[
+										'font-mono text-eyebrow font-semibold tracking-wide',
+										step.gate ? 'text-amber-deep' : 'text-ink-soft'
+									]}
+								>
+									{step.tag}
+								</p>
+								<p class="mt-2 text-sm leading-snug text-ink-soft">{step.label}</p>
+							</div>
+						</li>
+					))}
+				</ol>
+			</div>
+			<figcaption class="mt-4 max-w-[66ch] text-sm text-ink-soft">
+				<strong class="font-semibold text-ink">The gate in the middle is the point.</strong>{' '}
+				Everything to the left of it is a proposal. Reading the paper is the fast part;
+				saying yes to it stays yours.
+			</figcaption>
+		</figure>
+	)
+}
+
+{
+	slug === 'compliance-and-labels' && (
+		<figure class="mt-12" data-reveal>
+			<div class="border-y border-ticket-rule bg-paper px-5 py-8 sm:px-8">
+				<p class="sr-only">
+					Two halves, drawn side by side. On the left, the fifteen nutrients an FDA panel
+					carries, all fifteen computed per recipe from USDA profiles. On the right, the
+					printed panel itself, drawn as an empty outline, because it is being built and
+					is not in the app you would start today.
+				</p>
+				<div class="grid gap-10 sm:grid-cols-2 sm:gap-12" aria-hidden="true">
+					<div class="min-w-0">
+						<p class="font-mono text-eyebrow font-semibold tracking-wide text-ink-soft">
+							THE NUMBERS
+						</p>
+						{/* Fifteen marks at a fixed pixel size. They are a count, not text, so
+						    they must not grow with the reader's font size. */}
+						<div class="mt-5 flex flex-wrap gap-[6px]">
+							{Array.from({ length: nutrientCount }).map(() => (
+								<span class="block size-[14px] bg-softgreen ring-1 ring-ink-rule/45" />
+							))}
+						</div>
+						<p class="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">
+							All fifteen an FDA panel carries, computed per recipe from USDA profiles. It
+							says so when a profile is missing rather than totalling an incomplete dish.
+						</p>
+					</div>
+					<div class="min-w-0">
+						<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+							THE PRINTED PANEL
+						</p>
+						<div class="mt-5 h-[64px] w-[112px] border-2 border-dashed border-amber bg-softamber/40" />
+						<p class="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">
+							Being built. It is marked Coming below rather than folded into the shipped
+							list, which is the same word the comparison page defines.
+						</p>
+					</div>
+				</div>
+			</div>
+			<figcaption class="mt-4 max-w-[66ch] text-sm text-ink-soft">
+				<strong class="font-semibold text-ink">The numbers ship. The paper does not, yet.</strong>{' '}
+				Drawing the difference is more honest than a badge, because a badge is the thing a
+				reader skips.
+			</figcaption>
+		</figure>
+	)
+}

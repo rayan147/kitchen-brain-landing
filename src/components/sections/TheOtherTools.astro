@@ -1,0 +1,234 @@
+---
+/**
+ * Beats nine and ten: the rival, and the honest cost of choosing this one.
+ * STORY-SPINE-2026-08-27.md has the full map. Two beats share one section
+ * because on this page they are one thought — here are the tools that look
+ * like the answer, and here is what picking this one costs you.
+ *
+ * NOBODY IS NAMED HERE, AND NOBODY MAY BE. RC-40 scopes named competitors to
+ * /compare and to the condition that a cell reports what their own pricing
+ * page listed on a stated date. This section argues the CATEGORY and links to
+ * the table for the names. RC-47 opened 2026-08-27 for the category claim
+ * itself, on the owner's request for a comparison on the homepage.
+ *
+ * NO SENTENCE HERE MAY SAY WHAT ANOTHER PRODUCT CANNOT DO. That is the single
+ * way this section becomes a false statement about a company, and it is a live
+ * pull, because the beat wants a villain. The lede therefore describes an
+ * ASSUMPTION (a menu that repeats) rather than a limitation, and the turn is
+ * written as the question to go and ask them, not as an answer given for them.
+ *
+ * THE FOUR GIVE-UPS SHARE NO ROW WITH WhoThisIsFor. That section's four are
+ * about FIT — the wrong shape of kitchen, at 30% depth, sorting readers out
+ * before the film plays. These four are about CAPABILITY: the right kitchen,
+ * a missing feature, read by someone who already wants the thing. Saying any
+ * of the same four twice would be the failure the BuiltForKitchens comment
+ * records. Each is a /compare row and may not be softened here:
+ *
+ *   printed labels  -> "Printed USDA nutrition labels", COMING, and the only one
+ *                      of the four that is. The framing sentence says three are
+ *                      not planned and one is being built, because /compare's
+ *                      legend exists to keep coming from reading as no and a
+ *                      heading that flattens the two undoes it.  RC-42 splits
+ *                      the computed facts (ship) from the panel (does not).
+ *   top up to par   -> "Buying that tops up to par", no.         RC-43.
+ *   dietary         -> "Dietary characteristics", no.
+ *   Spanish         -> "English and Spanish", no.
+ *
+ * If any of those four ships, the /compare row moves first and this follows it.
+ *
+ * NO PRIMARY CTA. The page opens, middles and closes on one action and this is
+ * not one of the three. The quiet link out to /compare is the whole ask: a
+ * reader at this beat wants the table, not a trial.
+ *
+ * THAT IS THE SECOND /compare LINK ON THE PAGE, and it is deliberate. Counted
+ * on the built homepage: six quiet links, two of them to /compare. The other is
+ * WhoThisIsFor's "buy something else" at 30% depth, which is a sorting link -
+ * it is aimed at a reader who should leave. This one is at 80% depth and is
+ * aimed at a reader who wants to stay and check the claim. Different job,
+ * different reader, half a page apart, and nothing in npm run check can see the
+ * count either way. If they ever end up adjacent, this one goes.
+ * (PaperIn's note that quiet secondaries are "at their cap of two" predates the
+ * comparison page and the features hub, and is stale.)
+ */
+const giveUps = [
+	{
+		title: 'Printed nutrition labels',
+		body: 'The fifteen nutrients an FDA label carries are computed per recipe, from USDA profiles. The printed panel is still being built.'
+	},
+	{
+		title: 'Buying that tops you back up to par',
+		body: 'Shopping is what the jobs on the books need, minus what the shelf can be trusted for. It will not order you back up to a par level.'
+	},
+	{
+		title: 'Dietary characteristics',
+		body: 'A recipe shows the heading and says plainly that it has not been assessed. Nothing is inferred from an ingredient name.'
+	},
+	{
+		title: 'Spanish',
+		body: 'English only.'
+	}
+];
+
+// The figure. Seven equal marks against nine irregular ones on scattered dates:
+// the restaurant's week and the caterer's month, drawn at the same scale. Bar
+// heights on the right are guest counts, which is why they are uneven and why
+// three dates are empty.
+const restaurantWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
+---
+
+<section
+	id="alternatives"
+	class="border-y border-hairline bg-cream"
+	aria-labelledby="alternatives-heading"
+>
+	<div class="container-page py-section">
+		<div class="max-w-3xl" data-reveal>
+			<p class="eyebrow">The other tools</p>
+			<h2 id="alternatives-heading" class="mt-4 text-h2 font-semibold">
+				Most kitchen software is built for the week that repeats.
+			</h2>
+			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
+				Recipe costing was solved for restaurants a long time ago, and the tools that
+				solved it are built on the thing a restaurant has: a menu that comes back. The
+				same dishes, the same covers, the same order guide every Tuesday.
+			</p>
+		</div>
+
+		<!-- Drawn, not screenshotted, for the reason LoopBand is: the claim is a
+		     shape, and no crop of anybody's screen can show a shape. Plain bordered
+		     boxes rather than inline vector markup, so scripts/check-dist.mjs has no
+		     viewBox to fail the build over. Astro ships HTML comments to dist and
+		     that checker scans them, so naming the tag here failed the build once. -->
+		<figure class="mt-10" data-reveal>
+			<div class="border-y border-ticket-rule bg-paper px-5 py-8 sm:px-8">
+				<p class="sr-only">
+					Two calendars drawn at the same scale. A restaurant week is seven identical
+					marks, Monday to Sunday, all the same height: one menu, served again. A
+					catering month is twelve dates of which only six carry a job, and every job a
+					different height, because every job is a different guest count.
+				</p>
+
+				<div class="grid gap-10 sm:grid-cols-2 sm:gap-12" aria-hidden="true">
+					<!-- min-w-0 on every flex child in both rows. A flex item defaults to
+					     min-width:auto and refuses to shrink below its own glyph, which put the
+					     twelve date marks 9px past the viewport at 200% text on a phone.
+					
+					     THE DATE MARKS ARE DRAWN, NOT TYPED, for the other half of that same
+					     problem. min-w-0 is exactly the rule that had been holding each cell
+					     open to its own character, so with it on, a bullet glyph stopped
+					     overflowing the page and started clipping inside its cell instead -
+					     which the page-level overflow check cannot see. A rounded box has no
+					     min-content width, so it shrinks with the column.
+					
+					     THE FIGURE'S GEOMETRY IS IN PIXELS, NOT REM, on purpose. Bar heights,
+					     gaps and dot sizes are a drawing rather than text, and rem units made
+					     them grow with the reader's font size while the container did not: at
+					     200% the six job dots rendered 12px wide inside an 8.2px column. The
+					     labels around the drawing are still text and still scale. -->
+					<div class="min-w-0">
+						<p class="font-mono text-eyebrow font-semibold tracking-wide text-ink-soft">
+							A RESTAURANT WEEK
+						</p>
+						<div class="mt-5 flex items-end gap-[6px]" style="height: 80px">
+							{
+								restaurantWeek.map(() => (
+									<span class="h-12 min-w-0 flex-1 border-t-2 border-ink-rule/45 bg-softgreen" />
+								))
+							}
+						</div>
+						<div class="mt-2 flex gap-[6px]">
+							{
+								restaurantWeek.map((day) => (
+									<span class="min-w-0 flex-1 text-center font-mono text-eyebrow text-ink-soft">{day}</span>
+								))
+							}
+						</div>
+						<p class="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">
+							One menu, served again. The order guide is the same one as last week.
+						</p>
+					</div>
+
+					<div class="min-w-0">
+						<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+							A CATERING MONTH
+						</p>
+						<div class="mt-5 flex items-end gap-[6px]" style="height: 80px">
+							{
+								cateringDates.map((size) => (
+									<span
+										class:list={[
+											'min-w-0 flex-1',
+											size > 0 ? 'border-t-2 border-amber bg-softamber' : 'border-b border-dashed border-ink-rule/45'
+										]}
+										style={`height: ${size > 0 ? size * 9 : 0}px`}
+									/>
+								))
+							}
+						</div>
+						<div class="mt-2 flex gap-[6px]">
+							{
+								cateringDates.map((size) => (
+									<span class="min-w-0 flex-1">
+										<span
+											class:list={[
+												'mx-auto block rounded-full',
+												size > 0 ? 'size-[6px] bg-amber-deep' : 'size-[4px] bg-ink-rule/45'
+											]}
+										/>
+									</span>
+								))
+							}
+						</div>
+						<p class="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">
+							A different menu on every date, and a guest count somebody else chooses.
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- The {' '} after </strong> and before the /compare link are load-bearing.
+			     A newline at an element boundary is collapsed away by the compiler, and
+			     this shipped reading "the week.That is" and "on thecomparison page" once.
+			     Same failure the Hero comment records for the price line. -->
+			<figcaption class="mt-4 max-w-[66ch] text-sm text-ink-soft">
+				<strong class="font-semibold text-ink">The unit is the job, not the week.</strong>{' '}
+				That is the assumption everything downstream is built on, which is why it is worth
+				checking before you pick a tool rather than after.
+			</figcaption>
+		</figure>
+
+		<div class="mt-12 max-w-2xl" data-reveal>
+			<p class="text-ink-soft">
+				So the question to take to any of them is not whether it costs a recipe. They all
+				do, and several do it well. It is what happens to your Saturday when the client
+				adds forty guests on Thursday: whether the shopping list, the prep sheet and the
+				pack list all move with them, or whether that part is still yours to redo by hand.
+			</p>
+		</div>
+
+		<div class="mt-12 border-t border-ticket-rule pt-8" data-reveal>
+			<h3 class="text-h3 font-semibold">And here is what you give up.</h3>
+			<p class="mt-4 max-w-[66ch] text-ink-soft">
+				CostCook is one plan with everything in it, which means there is no tier to move up
+				to when something is missing. Four of the things the bigger tools list are the ones
+				most likely to matter to you. Three of them are not planned. One is being built,
+				and it says so.
+			</p>
+			<ul role="list" class="mt-7 grid gap-x-12 gap-y-6 sm:grid-cols-2">
+				{
+					giveUps.map((entry) => (
+						<li class="border-t border-hairline pt-4">
+							<p class="font-semibold">{entry.title}</p>
+							<p class="mt-2 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{entry.body}</p>
+						</li>
+					))
+				}
+			</ul>
+			<p class="mt-8 text-sm text-ink-soft">
+				Every row, including the ones where they win, is on the{' '}
+				<a href="/compare" class="btn-quiet">comparison page</a>. It names them and reports
+				what their own pricing pages listed, on a date printed at the bottom.
+			</p>
+		</div>
+	</div>
+</section>

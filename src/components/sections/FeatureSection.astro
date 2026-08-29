@@ -1,0 +1,132 @@
+---
+import { featureSections } from '../../lib/features';
+import { spellCapital } from '../../lib/words';
+import { demoCta } from '../../lib/site';
+import FeatureAreaIcon from '../FeatureAreaIcon.astro';
+import FeatureAreaFigure from '../FeatureAreaFigure.astro';
+
+type Entry = (typeof featureSections)[number];
+interface Props {
+	entry: Entry;
+}
+const { entry } = Astro.props;
+const siblings = featureSections.filter((other) => other.slug !== entry.slug);
+
+// One feature area, on its own page (/features/[section]).
+//
+// The five-section sticky sub-nav that used to sit here is GONE: on a page
+// that shows one section it pointed at four places the reader had left. The
+// sibling links moved to the bottom, where "what else is there" is the actual
+// question, and the crumb at the top answers "where am I".
+//
+// The lede is not decoration. Dividing 145 items by five gives five smaller
+// walls unless something above the list says what this area is for; that
+// sentence lives in SECTION_META so the hub card and this page cannot drift.
+//
+// THE READER COMES BEFORE THE PRODUCT, since 2026-08-27. `wall` takes the
+// lede's type and the lede drops to body underneath it. The wall is the moment
+// in a kitchen this area is for; the lede is what the area contains. Opening
+// on the second one asks a reader to care about a category before they have
+// been reminded why they clicked. Both live in SECTION_META and neither is a
+// capability claim; see the doc comment there, and worksheet 1 of
+// STORY-SPINE-2026-08-27.md.
+//
+// THE COUNT EYEBROW STAYS ABOVE THE H1, which reads like a contradiction of
+// that and is not. The breadcrumb, the area mark and the count are one
+// orientation cluster answering "where am I"; splitting the count out and
+// dropping it below the wall would separate it from the mark it sits beside and
+// leave the page opening on nothing. It is a locator, not a pitch - the count
+// is reassurance for the diligence reader rather than the reason to read on,
+// which is the same reading FeatureIndex records for the hub cards. The wall
+// still holds the largest type on the page after the heading.
+//
+// MEASURED at 390 after the demotion, because dropping the lede to body could
+// have made a wall of the header on the two areas that carry no figure: longest
+// unbroken run before the first rule is 308px on the-day-itself and 364px on
+// team-and-connections, against the 656px that triggered the fix recorded in
+// BRIEF-visual-density-2026-08-26.md. No rule needed.
+//
+// The figure, where there is one, sits AFTER the header block and BEFORE the
+// list: it argues the area, and three of the five areas have an argument with a
+// shape. The other two render nothing. FeatureAreaFigure.astro says why.
+//
+// Coming groups render their one-line detail instead of an item list. They are
+// not shipped, so they get a sentence, not a feature list that would read like
+// one. The badge word is "Coming", the same word the /compare legend defines.
+// Do not invent a second status vocabulary here.
+---
+
+<section class="border-y border-hairline bg-cream" aria-labelledby="area-heading">
+	<div class="container-page py-section">
+		<nav aria-label="Breadcrumb" class="text-sm">
+			<a href="/features" class="btn-quiet">Every feature</a>
+			<span class="text-ink-soft"> / {entry.section}</span>
+		</nav>
+
+		<div class="mt-6 max-w-3xl" data-reveal>
+			<div class="flex items-center gap-x-3">
+				<FeatureAreaIcon slug={entry.slug} class="shrink-0 text-amber-deep" />
+				<p class="eyebrow">{entry.count} shipped things</p>
+			</div>
+			<h1 id="area-heading" class="mt-4 text-display font-semibold break-words">{entry.section}</h1>
+			<p class="mt-5 max-w-[58ch] text-lede text-ink">{entry.wall}</p>
+			<p class="mt-5 max-w-[62ch] text-ink-soft">{entry.lede}</p>
+		</div>
+
+		<FeatureAreaFigure slug={entry.slug} />
+
+		<div class="mt-12 space-y-12">
+			{
+				entry.groups.map((group) => (
+					<div id={`features-${group.id}`} class="scroll-mt-8 border-t border-ticket-rule pt-6">
+						<div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+							<p class="eyebrow">{group.kicker}</p>
+							{group.status === 'in-development' && (
+								<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-amber-deep">
+									Coming
+								</span>
+							)}
+						</div>
+						<h2 class="mt-3 max-w-2xl text-h3 font-semibold">{group.title}</h2>
+						{group.status === 'in-development' ? (
+							<p class="mt-4 max-w-[66ch] text-ink-soft">{group.items[0].detail}</p>
+						) : (
+							<ul role="list" class="mt-5 gap-x-12 sm:columns-2">
+								{group.items.map((item) => (
+									<li class="break-inside-avoid border-t border-hairline py-2.5 text-sm leading-relaxed">
+										<strong class="font-semibold text-ink">{item.lead}</strong>
+										<span class="text-ink-soft"> {item.detail}</span>
+									</li>
+								))}
+							</ul>
+						)}
+					</div>
+				))
+			}
+		</div>
+
+		<div class="mt-16 border-t border-ticket-rule pt-8">
+			<h2 class="text-h3 font-semibold">
+				{spellCapital(siblings.length)} other areas.
+			</h2>
+			<ul role="list" class="mt-5 grid gap-x-10 gap-y-5 sm:grid-cols-2">
+				{
+					siblings.map((other) => (
+						<li>
+							<a href={`/features/${other.slug}`} class="font-semibold underline decoration-ticket-rule decoration-1 underline-offset-4 transition-colors duration-150 hover:decoration-ink">
+								{other.section}
+							</a>
+							<p class="mt-1 max-w-[52ch] text-sm text-ink-soft">{other.blurb}</p>
+						</li>
+					))
+				}
+			</ul>
+			<p class="mt-8 max-w-[66ch] text-ink-soft">
+				If this area covers your kitchen, bring one real menu and see it run.{' '}
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet"
+					>Book 15 minutes</a
+				>
+			</p>
+		</div>
+	</div>
+</section>

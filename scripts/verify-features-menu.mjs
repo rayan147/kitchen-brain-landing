@@ -190,7 +190,7 @@ try {
 	const focusOutState = await evaluate(`!document.querySelector('[data-features-menu]').open`);
 	assert(focusOutState, 'keyboard: tabbing out of the menu did not close it');
 
-	await navigate(`${baseUrl}/features#features-purchasing`);
+	await navigate(`${baseUrl}/features/the-day-itself#features-purchasing`);
 	for (let attempt = 0; attempt < 20; attempt += 1) {
 		const targetTop = await evaluate(`document.querySelector('#features-purchasing').getBoundingClientRect().top`);
 		if (targetTop >= 0 && targetTop < 200) break;
@@ -270,11 +270,14 @@ try {
 	await send('Input.dispatchMouseEvent', { type: 'mousePressed', x: noScriptLinkBox.x, y: noScriptLinkBox.y, button: 'left', clickCount: 1 });
 	await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: noScriptLinkBox.x, y: noScriptLinkBox.y, button: 'left', clickCount: 1 });
 	for (let attempt = 0; attempt < 30; attempt += 1) {
-		if (await evaluate(`location.href === ${JSON.stringify(`${baseUrl}/features#features-math`)}`)) break;
+		if (await evaluate(`location.href === ${JSON.stringify(`${baseUrl}/features/recipes-and-costing#features-math`)}`)) break;
 		await delay(100);
 	}
 	const noScriptDestination = await evaluate('location.href');
-	assert(noScriptDestination === `${baseUrl}/features#features-math`, 'no JavaScript: destination link did not navigate');
+	assert(
+		noScriptDestination === `${baseUrl}/features/recipes-and-costing#features-math`,
+		'no JavaScript: destination link did not navigate'
+	);
 
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

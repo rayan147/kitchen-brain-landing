@@ -1,0 +1,110 @@
+---
+import { featureSections, featureCount, inDevelopmentFeatureGroups } from '../../lib/features';
+import { spellCapital } from '../../lib/words';
+import { demoCta } from '../../lib/site';
+import FeatureAreaIcon from '../FeatureAreaIcon.astro';
+
+// The /features HUB. Five cards, zero feature items.
+//
+// REBUILT 2026-08-23, replacing a single page that carried all 145 items under
+// a sticky sub-nav. The sub-nav made the wall scrollable; it did not make it
+// readable. A reader mid-shift does not scan 145 lines to find out whether
+// purchasing is covered, and the previous page asked them to.
+//
+// The five areas are the /compare row-group titles verbatim, so a caterer who
+// reads both reference pages meets the same five words in the same order.
+// Each card says what the area is FOR before it says how much is in it: the
+// count is reassurance for the diligence reader, not the reason to click.
+//
+// Nothing is hidden here — the whole set of five is on screen. Depth lives one
+// click down, which is where depth belongs on a page a phone loads first.
+//
+// THE CARDS STAY TERSE. Each area page opens on a `wall` sentence, the moment
+// in a kitchen that area is for, and that sentence is deliberately NOT rendered
+// here: five cards each carrying a blurb, a count and a second sentence is the
+// wall this hub was built to replace. The asymmetry is the decision. See the
+// doc comment on SECTION_META in src/lib/features.ts.
+//
+// The lede does name the five as one chain taken apart, because a reader
+// arriving from the homepage has just been shown that chain and a hub that
+// reads as five unrelated departments loses it. It is the same order as
+// /compare's row groups, which is the invariant this page cannot break.
+---
+
+<section class="border-y border-hairline bg-cream" aria-labelledby="features-hub-heading">
+	<div class="container-page py-section">
+		{/* break-words on the h1: MEASURED at 200% text on a 360px viewport,
+		    "Everything" at display size is wider than the column and scrolled
+		    the page sideways (WCAG 1.4.10). It only engages when a single word
+		    genuinely cannot fit, so nothing changes at normal sizes. */}
+		<div class="max-w-3xl" data-reveal>
+			<p class="eyebrow">The complete list</p>
+			<h1 id="features-hub-heading" class="mt-4 text-display font-semibold break-words">
+				Everything CostCook does today. All {featureCount} things.
+			</h1>
+			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
+				This list is written from the code, not the roadmap. Every line of it is shipped and
+				working in the app you would see on a demo call. If something is not in here,
+				CostCook does not do it yet.
+			</p>
+			<p class="mt-4 max-w-[66ch] text-ink-soft">
+				It reads in five areas, and they are the one job the homepage draws, taken apart:
+				the prices coming in, what a plate costs, the day it all happens on, what you have
+				to be able to prove, and everything around the edges. Pick the one that matches the
+				part of your week you are worried about.
+			</p>
+			<p class="mt-4 max-w-[66ch] text-ink-soft">
+				{spellCapital(inDevelopmentFeatureGroups.length)} more things are marked Coming, which
+				means being built now rather than planned: none of it is in the app you would start
+				today, so none of it counts toward the {featureCount}.
+			</p>
+			<p class="mt-6">
+				<a href="/#demo" class="btn-quiet">Watch the 2:30 product tour</a>
+			</p>
+		</div>
+
+		<ul role="list" class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
+			{
+				featureSections.map((entry, i) => (
+					<li class="border-t border-ticket-rule pt-6">
+						{/* The same mark the header disclosure uses, from the same
+						    component, keyed by the same slug. A reader who opened the
+						    menu and clicked through arrives at the card carrying the
+						    mark they just aimed at. */}
+						<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+							<FeatureAreaIcon slug={entry.slug} class="shrink-0 text-amber-deep" />
+							<p class="eyebrow">Area {i + 1} of {featureSections.length}</p>
+							{/* The count, not the bare word. "Coming" alone beside an area
+							    heading reads as though the whole area is unbuilt, and four of
+							    the five things in this one ship today. */}
+							{entry.comingCount > 0 && (
+								<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-amber-deep">
+									{entry.comingCount} coming
+								</span>
+							)}
+						</div>
+						<h2 class="mt-3 text-h3 font-semibold">
+							{/* The whole heading is the link, so the tap target is the
+							    line a reader is already looking at rather than a small
+							    word underneath it. */}
+							<a href={`/features/${entry.slug}`} class="underline decoration-ticket-rule decoration-1 underline-offset-4 transition-colors duration-150 hover:decoration-ink">
+								{entry.section}
+							</a>
+						</h2>
+						<p class="mt-3 max-w-[52ch] text-ink-soft">{entry.blurb}</p>
+						<p class="mt-4 font-mono text-xs tracking-wide text-ink-soft">
+							{entry.count} shipped · {entry.groups.map((group) => group.kicker).join(' · ')}
+						</p>
+					</li>
+				))
+			}
+		</ul>
+
+		<p class="mt-16 max-w-[66ch] border-t border-ticket-rule pt-6 text-ink-soft">
+			That is the whole of it. If it covers your kitchen, bring one real menu and see it run.{' '}
+			<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet"
+				>Book 15 minutes</a
+			>
+		</p>
+	</div>
+</section>

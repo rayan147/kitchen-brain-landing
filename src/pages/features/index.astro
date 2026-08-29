@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import FeatureIndex from '../../components/sections/FeatureIndex.astro';
+
+// The features HUB. Was a single 145-item page until 2026-08-23; the depth now
+// lives on /features/[section] and this page's only job is to let a reader
+// pick the area that matches their problem. Exhaustiveness is a virtue on its
+// own screen and a tax on everyone else's, and that applies to /features too.
+---
+
+<Base
+	title="Every CostCook feature: the complete shipped list"
+	description="Everything CostCook does today, written from the code, in five areas: recipes and costing, getting prices in, the day itself, compliance and labels, and team and connections."
+	path="/features"
+>
+	<FeatureIndex />
+</Base>

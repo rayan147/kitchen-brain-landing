@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import FeatureSection from '../../components/sections/FeatureSection.astro';
+import Integrations from '../../components/sections/Integrations.astro';
+import { featureSections } from '../../lib/features';
+
+// One page per feature area. Slugs come from SECTION_META and are typed there,
+// not derived from the headings, so a reworded heading cannot silently 404
+// every inbound link to a public URL.
+export function getStaticPaths() {
+	return featureSections.map((entry) => ({
+		params: { section: entry.slug },
+		props: { entry }
+	}));
+}
+
+const { entry } = Astro.props;
+// The connections section belongs on the area whose name promises it, next to
+// the two Coming connector groups, rather than on the hub where it would be
+// the only detail on a page of signposts.
+const showsConnections = entry.slug === 'team-and-connections';
+---
+
+<Base
+	title={`${entry.section}: CostCook features`}
+	description={entry.blurb}
+	path={`/features/${entry.slug}`}
+>
+	<FeatureSection entry={entry} />
+	{showsConnections && <Integrations />}
+</Base>
