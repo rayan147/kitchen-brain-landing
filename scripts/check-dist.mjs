@@ -27,4 +27,41 @@ for (const page of pages) {
 	}
 }
 if (failed) process.exit(1);
+
+// The Features mega-menu is a curated shortcut into the exhaustive page. Its
+// links and target ids must ship together; source-level typing cannot catch a
+// template that stopped rendering one side of that contract.
+const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
+const featuresHtml = readFileSync(join(dist, 'features/index.html'), 'utf8');
+const menuTargets = [
+	'math',
+	'menus',
+	'ingredients',
+	'import',
+	'orders',
+	'purchasing',
+	'inventory',
+	'ledger'
+];
+
+if (!homeHtml.includes('data-features-menu')) {
+	console.error('check-dist: homepage is missing the Features disclosure');
+	failed = true;
+}
+
+for (const target of menuTargets) {
+	const href = `href="/features#features-${target}"`;
+	const id = `id="features-${target}"`;
+	if (!homeHtml.includes(href)) {
+		console.error(`check-dist: Features menu is missing ${href}`);
+		failed = true;
+	}
+	if (!featuresHtml.includes(id)) {
+		console.error(`check-dist: Features page is missing ${id}`);
+		failed = true;
+	}
+}
+
+if (failed) process.exit(1);
 console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s) all carry intrinsic width/height`);
+console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve to built section ids`);

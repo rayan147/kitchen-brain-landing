@@ -74,3 +74,11 @@ export const nav: readonly { label: string; href: string; earlyVisible?: true }[
 	{ label: 'Every feature', href: '/features' },
 	{ label: 'Contact', href: contactCta.href }
 ];
+
+/** Header disclosure copy; destinations stay with the feature source data. */
+export const featuresMenu = {
+	label: 'Features',
+	ariaLabel: 'Features, broken down by kitchen job',
+	overviewLabel: 'Explore every shipped feature',
+	overviewHref: '/features'
+} as const;
