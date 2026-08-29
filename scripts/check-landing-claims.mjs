@@ -50,6 +50,9 @@ const surfaceFiles = [
 	// Dedicated Purchasing & Receiving story. Its send, posting, and price-write
 	// boundaries are financial claims, so the full public explanation is scanned.
 	'src/components/sections/PurchasingReceivingFeature.astro',
+	// Dedicated Orders, Shop, Prep & Pack story. Its frozen-plan, inventory, and
+	// completion-state claims must stay inside the shipped orders feature group.
+	'src/components/sections/OrderShopPrepPackFeature.astro',
 	// The three drawn area figures. They redraw claims their own pages already
 	// make (RC-16, RC-19, RC-09, RC-38, RC-39, RC-42) and must never outrun them.
 	'src/components/FeatureAreaFigure.astro',
