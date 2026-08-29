@@ -41,12 +41,12 @@
 | 1 Opening Image | Sunday night: cooling containers, a label roll, and a customer asking about protein and milk. |
 | 2 Theme Stated | One recipe should carry both answers, but neither answer should outrun its evidence. |
 | 3 Set-Up | Calories live in one sheet, allergens in another, and every recipe edit starts a second round of copying. |
-| 4 Catalyst | The shawarma recipe changes; the old label and allergen note no longer describe the food. |
+| 4 Catalyst | The burrito bowl recipe changes; the old label and allergen note no longer describe the food. |
 | 5 Debate | Can software be trusted when a nutrient source or allergen review is missing? |
 | 6 Break into Two | CostCook computes nutrition from matched ingredient profiles and rolls evidence-backed allergen tags into the recipe. |
 | 7 B Story | The customer and the cook both need an honest answer more than a fast, polished one. |
 | 8 Fun and Games | Per-portion macros, the full fifteen-row panel, source records, incomplete states, recipe roll-up, pack-list badges, and browser print. |
-| 9 Midpoint | The captured Chicken Shawarma recipe shows 245 calories, 45.4 g protein, 2.7 g carbohydrate, and a blank fat value. |
+| 9 Midpoint | An actual 297 g Chicken Burrito Bowl fills all fifteen rows from USDA FoodData Central branded record 2704502: 339 calories, 22 g protein, 48.1 g carbohydrate, 7 g fat, and confirmed milk and soy allergens. |
 | 10 Bad Guys Close In | Missing profiles, unreviewed ingredients, dietary assumptions, ingredient order, and label-printer expectations test the claim. |
 | 11 All Is Lost | A full-looking answer would be easier to print and harder to defend. |
 | 12 Finale + Final Image | The owner prints the sourced estimate, keeps incomplete review visible, and answers the customer without pretending certainty. |
@@ -101,6 +101,8 @@
 - **Hand-offs:** The customer’s two questions lead to two product chapters; the nutrition chapter hands its missing-value rule to allergen evidence; both converge in the printed sheet; the sheet’s disclaimers open the trust section; the FAQ resolves buying objections; the CTA returns to the next real recipe.
 
 ### Step 11 — Revise and Finish
+
+- **Complete-dish proof revision, 2026-08-29:** Replaced the partial Chicken Shawarma capture with an actual 297 g Chicken Burrito Bowl built from manufacturer analytical data in USDA FoodData Central branded record 2704502. The record supplies all fifteen label nutrients, including explicit zeros for trans fat, added sugars, and vitamin D, and the product evidence confirms milk and soy. Recaptured the live CostCook summary, complete panel, evidence card, and printable sheet at 2× pixel density; constrained the allergen proof to its native reading width instead of enlarging it across the page. The missing-value principle remains in the narrative because completeness still depends on the source, but the midpoint now demonstrates the complete case the reader asked to see.
 
 - **Screenshot revision, 2026-08-29:** Re-exported the verified source capture into high-resolution, task-specific assets for the summary, Nutrition Facts panel, allergen review, and print label. Desktop and mobile now receive crops composed for their available width instead of CSS-positioned slices of the full dashboard. The hero caption was tightened to explain that the proof is cropped to the answer; the story order, claims, point of view, and snap line remain unchanged.
 

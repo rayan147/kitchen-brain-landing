@@ -35,10 +35,10 @@ const capabilityGroups = [
 const capabilityCount = capabilityGroups.reduce((total, group) => total + group.items.length, 0);
 
 const macroFacts = [
-	{ label: 'Calories', value: '245' },
-	{ label: 'Protein', value: '45.4 g' },
-	{ label: 'Carbs', value: '2.7 g' },
-	{ label: 'Fat', value: '—', state: 'Source value missing' }
+	{ label: 'Calories', value: '339' },
+	{ label: 'Protein', value: '22 g' },
+	{ label: 'Carbs', value: '48.1 g' },
+	{ label: 'Fat', value: '7 g' }
 ] as const;
 
 // Considered Strategy; not used because these are fixed responsive art-direction
@@ -47,23 +47,27 @@ const proofAssets = {
 	summary: {
 		desktop: '/proof/nutrition/nutrition-summary-wide.png',
 		mobile: '/proof/nutrition/nutrition-summary-mobile.png',
-		width: 1136,
-		height: 345
+		desktopWidth: 2272,
+		desktopHeight: 292,
+		mobileWidth: 716,
+		mobileHeight: 604
 	},
 	panel: {
 		src: '/proof/nutrition/nutrition-facts-panel.png',
-		width: 810,
-		height: 1360
+		width: 800,
+		height: 1340
 	},
 	allergens: {
 		desktop: '/proof/nutrition/allergen-review-wide.png',
 		mobile: '/proof/nutrition/allergen-review-mobile.png',
-		width: 1442,
-		height: 1380
+		desktopWidth: 1424,
+		desktopHeight: 786,
+		mobileWidth: 716,
+		mobileHeight: 866
 	},
 	label: {
 		src: '/proof/nutrition/label-panel.png',
-		width: 692,
+		width: 688,
 		height: 1340
 	}
 } as const;
@@ -144,12 +148,11 @@ const faqItems = [
 					Compute the fifteen Nutrition Facts values per portion, roll evidence-backed
 					allergen tags into the recipe, and keep every missing fact visible before you print.
 				</p>
-				<dl class="hero-facts" aria-label="Captured Chicken Shawarma nutrition summary">
+				<dl class="hero-facts" aria-label="Captured Chicken Burrito Bowl nutrition summary">
 					{macroFacts.map((fact) => (
 						<div>
 							<dt>{fact.label}</dt>
 							<dd>{fact.value}</dd>
-							{'state' in fact && <small>{fact.state}</small>}
 						</div>
 					))}
 				</dl>
@@ -163,19 +166,19 @@ const faqItems = [
 				<p class="capture-label">Captured CostCook recipe</p>
 				<div class="hero-shot">
 					<picture>
-						<source media="(max-width: 47.999rem)" srcset={proofAssets.summary.mobile} width="568" height="345" />
+						<source media="(max-width: 47.999rem)" srcset={proofAssets.summary.mobile} width={proofAssets.summary.mobileWidth} height={proofAssets.summary.mobileHeight} />
 						<img
 							src={proofAssets.summary.desktop}
-							alt="Focused CostCook Nutrition crop showing a calculated per-portion result with Calories 245 and source-driven values."
-							width={proofAssets.summary.width}
-							height={proofAssets.summary.height}
+							alt="CostCook Nutrition summary for Chicken Burrito Bowl showing a complete per-portion result: 339 calories, 22 grams protein, 48.1 grams carbohydrate, and 7 grams fat."
+							width={proofAssets.summary.desktopWidth}
+							height={proofAssets.summary.desktopHeight}
 							decoding="async"
 							data-proof-image
 						/>
 					</picture>
 				</div>
 				<figcaption>
-					Chicken Shawarma, per portion. The source capture is cropped to the answer, not shrunk to the whole recipe screen.
+					Chicken Burrito Bowl, one 297 g portion. The source capture is cropped to the answer and retained at 2× pixel density for legible text.
 					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
 				</figcaption>
 			</figure>
@@ -192,7 +195,7 @@ const faqItems = [
 				</p>
 			</div>
 			<div class="broken-path" data-reveal aria-label="One recipe copied separately into a nutrition sheet and an allergen note">
-				<div class="path-source"><span>Recipe changed</span><strong>Chicken Shawarma</strong></div>
+				<div class="path-source"><span>Recipe changed</span><strong>Chicken Burrito Bowl</strong></div>
 				<div class="path-branches" aria-hidden="true"><i></i><i></i></div>
 				<div class="path-output"><span>Nutrition sheet</span><strong>Old quantities</strong></div>
 				<div class="path-output warning"><span>Allergen note</span><strong>Review unknown</strong></div>
@@ -227,7 +230,7 @@ const faqItems = [
 				<div class="panel-window">
 					<img
 						src={proofAssets.panel.src}
-						alt="Focused Chicken Shawarma Nutrition Facts panel showing Calories 245, Carbohydrate 2.7 grams, Protein 45.4 grams, and missing values left blank."
+						alt="Complete Chicken Burrito Bowl Nutrition Facts panel showing all fifteen values, from 339 calories through 680 milligrams potassium."
 						width={proofAssets.panel.width}
 						height={proofAssets.panel.height}
 						loading="lazy"
@@ -236,7 +239,7 @@ const faqItems = [
 					/>
 				</div>
 				<figcaption>
-					The captured recipe names unavailable nutrients, keeps their rows blank, and lists each source record beside the panel.
+					This actual dish fills every row from one verified USDA branded record, including explicit zero values rather than assumed ones.
 					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
 				</figcaption>
 			</figure>
@@ -254,12 +257,12 @@ const faqItems = [
 		<figure class="container-page allergen-proof" data-reveal>
 			<div class="allergen-window">
 				<picture>
-					<source media="(max-width: 47.999rem)" srcset={proofAssets.allergens.mobile} width="850" height="800" />
+					<source media="(max-width: 47.999rem)" srcset={proofAssets.allergens.mobile} width={proofAssets.allergens.mobileWidth} height={proofAssets.allergens.mobileHeight} />
 					<img
 						src={proofAssets.allergens.desktop}
-						alt="Focused Chicken Shawarma allergen review showing no confirmed declarations and six ingredients awaiting evidence review."
-						width={proofAssets.allergens.width}
-						height={proofAssets.allergens.height}
+						alt="Chicken Burrito Bowl ingredient evidence showing confirmed Contains: Milk, Soy and USDA FoodData Central 2704502 as the nutrition source."
+						width={proofAssets.allergens.desktopWidth}
+						height={proofAssets.allergens.desktopHeight}
 						loading="lazy"
 						decoding="async"
 						data-proof-image
@@ -267,7 +270,7 @@ const faqItems = [
 				</picture>
 			</div>
 			<figcaption>
-				The real incomplete state is shown at reading size rather than reduced to a status badge.
+				The confirmed allergen line and its named nutrition source stay together at reading size.
 				<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full-size capture</a>
 			</figcaption>
 		</figure>
@@ -303,7 +306,7 @@ const faqItems = [
 				<div class="label-window">
 					<img
 						src={proofAssets.label.src}
-						alt="Focused printable Chicken Shawarma Nutrition Facts panel with Calories 245 and the missing nutrient rows left blank."
+						alt="Printable Chicken Burrito Bowl Nutrition Facts panel with all fifteen nutrient values filled, including explicit zero values."
 						width={proofAssets.label.width}
 						height={proofAssets.label.height}
 						loading="lazy"
@@ -441,7 +444,8 @@ const faqItems = [
 	.allergens { background: var(--color-softgreen); }
 	.allergen-heading { display: grid; gap: 2.5rem; padding-top: var(--space-section); }
 	.allergen-proof { margin-top: clamp(4rem, 8vw, 7rem); }
-	.allergen-window { overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.allergen-window { max-width: 48rem; margin-inline: auto; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.allergen-proof figcaption { max-width: 48rem; margin-inline: auto; }
 	.evidence-chain { display: grid; gap: 0; margin-top: clamp(4rem, 8vw, 7rem); border-block: 1px solid var(--rule); }
 	.evidence-chain li { position: relative; padding: clamp(1.75rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
 	.evidence-chain li:last-child { border-bottom: 0; }
