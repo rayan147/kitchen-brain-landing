@@ -51,6 +51,8 @@
  * per the release-check rule at the top of the ledger.
  */
 
+import { SAGE_STATUS } from './sage';
+
 export const VERIFIED_ON = 'August 23, 2026';
 
 export const NOT_LISTED = 'Not listed';
@@ -359,8 +361,9 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'An assistant that answers from your numbers',
-				costcook: 'coming',
-				note: 'Sage is being built.',
+				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
+				costcook: SAGE_STATUS,
+				note: 'Sage. Built and tested on the sandbox: reads your records, shows its sources, drafts a shopping list for you to approve. Not in the app you would start today.',
 				parsley: NOT_LISTED,
 				meez: 'Enterprise, custom'
 			},

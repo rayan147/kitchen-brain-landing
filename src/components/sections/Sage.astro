@@ -1,0 +1,121 @@
+---
+/**
+ * Sage on the homepage. story: docs/stories/sage.story.md
+ *
+ * EIGHTH STOP, between PaperIn and TheOtherTools. It sits with the mechanics
+ * (yield, intake) rather than with the proof or the ask, because it is a
+ * thing the product does, and it sits BEFORE the rival beat so the reader
+ * meets it before the give-ups list, which is where "an assistant" appears on
+ * /compare as a Coming row. It is not a fifth CustomerOutcomes card: that
+ * pairing has to stay 1:1 with TheProblem.
+ *
+ * STATUS IS PRINTED, NOT IMPLIED. The eyebrow carries the status word from
+ * src/lib/sage.ts, the figure's label says which build it was captured on, and
+ * the last line says plainly that it is not in the app you would start today.
+ * The owner asked for this section on 2026-08-29 (RC-46 records that as the
+ * name's approval); the status is the ledger's, not the owner's, and it flips
+ * in one place when the deployed flag is confirmed (RC-49).
+ *
+ * NO PRIMARY CTA. The page opens, middles and closes on one action. The quiet
+ * link goes to the feature area, where the group carries the same Coming badge.
+ */
+import SectionHandoff from '../SectionHandoff.astro';
+import { sage, sageStatusWord } from '../../lib/sage';
+---
+
+<section id="sage" class="border-t border-hairline bg-softgreen" aria-labelledby="sage-heading">
+	<div class="container-page py-section">
+		<div class="grid gap-12 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
+			<div class="max-w-3xl" data-reveal>
+				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+					<p class="eyebrow">{sage.name}, the assistant</p>
+					<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-amber-deep">
+						{sageStatusWord}
+					</span>
+				</div>
+				<h2 id="sage-heading" class="mt-4 text-h2 font-semibold">
+					Ask your kitchen a question. See where the answer came from.
+				</h2>
+				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
+					{sage.name} reads the records you already keep in CostCook and answers in plain
+					lines, each one marked as from your records, calculated, or missing. The one thing
+					it can prepare, a shopping list, waits for you to approve it.
+				</p>
+
+				<!-- The six things it can do, as the questions a reader would type.
+				     Six because there are six tools; see src/lib/sage.ts. -->
+				<ol role="list" class="mt-8 border-t border-ticket-rule">
+					{
+						sage.abilities.map((ability, index) => (
+							<li class="grid gap-x-4 gap-y-1 border-b border-dashed border-ticket-rule py-3 sm:grid-cols-[2.5rem_minmax(0,1fr)]">
+								<p class="font-mono text-eyebrow font-semibold tabular-nums text-amber-deep">
+									{String(index + 1).padStart(2, '0')}
+								</p>
+								<div class="min-w-0">
+									<p class="font-semibold">&ldquo;{ability.ask}&rdquo;</p>
+									<p class="mt-1 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{ability.does}</p>
+								</div>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+
+			<!-- The capture. Two crops of one thread, shown at half their 2x size
+			     and never wider. The label names the build; the caption names the
+			     kitchen. Neither is the wedding from the tour and the copy says so,
+			     because a reader who watches the film and then sees a different
+			     supplier here would be right to ask. -->
+			<figure data-reveal>
+				<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+					SANDBOX BUILD · {sage.verified.branch} · {sage.verified.on}
+				</p>
+				<div class="mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2">
+					<img
+						src={sage.proof.mobile.src}
+						alt={sage.proof.mobile.alt}
+						width={sage.proof.mobile.width}
+						height={sage.proof.mobile.height}
+						loading="lazy"
+						decoding="async"
+						class="mx-auto h-auto w-full max-w-[326px] sm:hidden"
+					/>
+					<img
+						src={sage.proof.desktop.src}
+						alt={sage.proof.desktop.alt}
+						width={sage.proof.desktop.width}
+						height={sage.proof.desktop.height}
+						loading="lazy"
+						decoding="async"
+						style="width: 811px; max-width: 100%"
+						class="hidden h-auto sm:block"
+					/>
+				</div>
+				<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">{sage.proof.caption}</figcaption>
+			</figure>
+		</div>
+
+		<div class="mt-12 border-t border-ticket-rule pt-8" data-reveal>
+			<h3 class="text-h3 font-semibold">What it will not do.</h3>
+			<ul role="list" class="mt-6 grid gap-x-12 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					sage.guardrails.map((rule) => (
+						<li class="border-t border-hairline pt-4">
+							<p class="font-semibold">{rule.lead}</p>
+							<p class="mt-2 max-w-[44ch] text-sm leading-relaxed text-ink-soft">{rule.detail}</p>
+						</li>
+					))
+				}
+			</ul>
+			<!-- The status, in a sentence, so nobody has to decode a badge. If
+			     SAGE_STATUS becomes 'yes', this paragraph is replaced, not softened. -->
+			<p class="mt-8 max-w-[66ch] text-ink-soft">
+				<strong class="font-semibold text-ink">{sageStatusWord}.</strong> {sage.name} runs on
+				the sandbox build and is not in the app you would start today. It carries no date, and
+				it is not in the launch price. <a href={sage.href} class="btn-quiet">Where it sits on the feature list</a>.
+			</p>
+		</div>
+
+		<SectionHandoff from="sage" />
+	</div>
+</section>

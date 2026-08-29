@@ -59,6 +59,11 @@ const surfaceFiles = [
 	// 2026-08-29. Every FAQ answer is public claim copy and names its rows.
 	'src/lib/faq.ts',
 	'src/pages/faq.astro',
+	// 2026-08-29. Sage: the data file carries every capability sentence, the
+	// section renders it. Both are scanned, and the model-name guard below is
+	// aimed squarely at them.
+	'src/lib/sage.ts',
+	'src/components/sections/Sage.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -92,6 +97,7 @@ for (const component of [
 	'CustomerOutcomes',
 	'TheYield',
 	'PaperIn',
+	'Sage',
 	'BuiltForKitchens',
 	'StartHere',
 ]) {
@@ -136,7 +142,10 @@ const expectedSectionOrder = [
 	'<CustomerOutcomes />',
 	'<TheYield />',
 	'<PaperIn />',
-	// Eighth since 2026-08-27: the rival beat lands after the reader wants the
+	// Eighth since 2026-08-29: a mechanic, with the mechanics, ahead of the
+	// rival beat whose /compare link lists it as a Coming row.
+	'<Sage />',
+	// Ninth since 2026-08-27: the rival beat lands after the reader wants the
 	// thing, and before the maker signs it. See src/pages/index.astro.
 	'<TheOtherTools />',
 	'<BuiltForKitchens />',
@@ -367,7 +376,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 48; claim += 1) {
+for (let claim = 1; claim <= 49; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -384,6 +393,7 @@ const expectedStopIds = [
 	'outcomes',
 	'yield',
 	'intake',
+	'sage',
 	'alternatives',
 	'trust',
 	'start',
@@ -453,6 +463,19 @@ if (/class="btn-primary[^"]*"[\s\S]{0,200}demoCta\.label/.test(startHereSource))
 	failures.push('close section renders the demo CTA as a second primary action');
 }
 
+// RC-49: Sage's status lives in one file and every surface reads it. The
+// homepage section, the compare row and the feature group may not carry their
+// own word, and the section must print the word rather than imply it.
+const sageSource = surfaces[surfaceFiles.indexOf('src/lib/sage.ts')];
+const sageSection = surfaces[surfaceFiles.indexOf('src/components/sections/Sage.astro')];
+requireText(sageSource, 'export const SAGE_STATUS', 'sage status lives in sage.ts');
+requireText(comparisonSource, 'costcook: SAGE_STATUS', 'compare reads the sage status');
+requireText(featuresSource, "status: SAGE_STATUS === 'yes'", 'features reads the sage status');
+requireText(sageSection, '{sageStatusWord}', 'sage section prints its status');
+if (/SAGE_STATUS = 'coming'/.test(sageSource) && !/not in the app you would start today/.test(sageSection)) {
+	failures.push('sage: status is coming but the section no longer says it is not in the app you would start today');
+}
+
 const forbiddenClaims = [
 	[/\bknow the margin\b/i, 'full-margin language'],
 	[/\bno data entry\b/i, 'no-data-entry promise'],
@@ -460,6 +483,12 @@ const forbiddenClaims = [
 	[/\bfree while/i, 'unapproved pricing promise'],
 	[/\beverything downstream re-reads/i, 'confirmed-order repricing implication'],
 	[/\bhandles it automatically\b/i, 'unqualified automation promise'],
+	// RC-49. The assistant's model and provider are configuration, not claims,
+	// and the default has never been evaluated on the marketed branch.
+	// CLAUDE.md is a filename that comments cite; the lookahead spares it.
+	[/\b(gemini|gpt-?\d|openai|anthropic|claude(?!\.md)|sonnet|opus|llama|mistral)\b/i, 'model or provider name'],
+	[/\bnever invents? a number\b/i, 'unqualified never-invents claim (RC-49 softens it)'],
+	[/\blearns? your (business|kitchen)\b/i, 'assistant-learns claim'],
 ];
 for (const [pattern, label] of forbiddenClaims) {
 	if (pattern.test(publicCopy)) failures.push(`public copy contains forbidden ${label}`);
