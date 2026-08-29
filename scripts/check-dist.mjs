@@ -33,8 +33,8 @@ if (failed) process.exit(1);
 // template that stopped rendering one side of that contract.
 const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
 const menuTargets = [
-	{ id: 'math', area: 'recipes-and-costing' },
-	{ id: 'menus', area: 'recipes-and-costing' },
+	{ id: 'math', area: 'recipes-and-costing', href: '/features/recipes-and-costing' },
+	{ id: 'menus', area: 'menus-and-quotes', href: '/features/menus-and-quotes' },
 	{ id: 'ingredients', area: 'recipes-and-costing' },
 	{ id: 'import', area: 'getting-prices-in' },
 	{ id: 'orders', area: 'the-day-itself' },
@@ -49,7 +49,7 @@ if (!homeHtml.includes('data-features-menu')) {
 }
 
 for (const target of menuTargets) {
-	const href = `href="/features/${target.area}#features-${target.id}"`;
+	const href = `href="${target.href ?? `/features/${target.area}#features-${target.id}`}"`;
 	const id = `id="features-${target.id}"`;
 	const featuresHtml = readFileSync(join(dist, `features/${target.area}/index.html`), 'utf8');
 	if (!homeHtml.includes(href)) {
