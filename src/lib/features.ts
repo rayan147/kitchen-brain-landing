@@ -544,9 +544,17 @@ const shippedFeatureGroupsById = new Map(
 	availableFeatureGroups.map((group) => [group.id, group] as const)
 );
 
+// Considered Strategy; not used because dedicated editorial destinations are
+// static route data, not interchangeable link-building behavior at runtime.
+const dedicatedFeatureMenuRoutes = new Map([
+	['ingredients', '/features/ingredients-and-supplier-prices']
+]);
+
 export const featureMenuHref = (featureId: string) => {
 	const group = shippedFeatureGroupsById.get(featureId);
 	if (!group) throw new Error(`Feature menu points to missing or unshipped group: ${featureId}`);
+	const dedicatedRoute = dedicatedFeatureMenuRoutes.get(featureId);
+	if (dedicatedRoute) return dedicatedRoute;
 	return `/features/${SECTION_META[group.section].slug}#features-${featureId}`;
 };
 

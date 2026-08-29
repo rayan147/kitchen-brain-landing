@@ -35,7 +35,7 @@ const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
 const menuTargets = [
 	{ id: 'math', area: 'recipes-and-costing' },
 	{ id: 'menus', area: 'recipes-and-costing' },
-	{ id: 'ingredients', area: 'recipes-and-costing' },
+	{ id: 'ingredients', area: 'ingredients-and-supplier-prices', dedicated: true },
 	{ id: 'import', area: 'getting-prices-in' },
 	{ id: 'orders', area: 'the-day-itself' },
 	{ id: 'purchasing', area: 'the-day-itself' },
@@ -49,7 +49,9 @@ if (!homeHtml.includes('data-features-menu')) {
 }
 
 for (const target of menuTargets) {
-	const href = `href="/features/${target.area}#features-${target.id}"`;
+	const href = target.dedicated
+		? `href="/features/${target.area}"`
+		: `href="/features/${target.area}#features-${target.id}"`;
 	const id = `id="features-${target.id}"`;
 	const featuresHtml = readFileSync(join(dist, `features/${target.area}/index.html`), 'utf8');
 	if (!homeHtml.includes(href)) {
