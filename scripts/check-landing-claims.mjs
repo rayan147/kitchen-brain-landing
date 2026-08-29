@@ -56,6 +56,9 @@ const surfaceFiles = [
 	// the sticky bar carries a primary, so both go through the scan.
 	'src/components/StickyCta.astro',
 	'src/components/SectionHandoff.astro',
+	// 2026-08-29. Every FAQ answer is public claim copy and names its rows.
+	'src/lib/faq.ts',
+	'src/pages/faq.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -401,6 +404,31 @@ for (const id of expectedStopIds.slice(0, -1)) {
 		failures.push(`hand-offs: section #${id} has no <SectionHandoff from="${id}" /> at its foot`);
 	}
 }
+
+// H1: the FAQ. Every answer lists the ledger rows it rests on, and every one
+// of those rows must exist. An answer that cites nothing, or cites a row that
+// is not in the ledger, is an unbacked claim wearing a citation.
+const faqSource = surfaces[surfaceFiles.indexOf('src/lib/faq.ts')];
+const faqEntries = [...faqSource.matchAll(/id: '([a-z-]+)',\s*question:[\s\S]*?claims: \[([^\]]*)\]/g)];
+if (faqEntries.length === 0) failures.push('faq: could not read any entries to check');
+for (const [, id, claimList] of faqEntries) {
+	const rows = [...claimList.matchAll(/'(RC-\d{2})'/g)].map((m) => m[1]);
+	if (rows.length === 0) failures.push(`faq: #${id} cites no ledger row`);
+	for (const row of rows) {
+		if (!ledger.includes(`| ${row} |`)) failures.push(`faq: #${id} cites ${row}, which is not in the ledger`);
+	}
+}
+// A "no" row on /compare may not become a "yes" in an answer. The four RC-44
+// misfits and the RC-47 give-ups are the ones a friendly answer is most
+// tempted to soften, so their answers are pinned to open with the word.
+for (const id of ['locations', 'permissions', 'fsma', 'spanish']) {
+	const entry = faqSource.slice(faqSource.indexOf(`id: '${id}'`));
+	if (!/answer: \[\s*'(?:No\.|Not yet\.)/.test(entry.slice(0, 400))) {
+		failures.push(`faq: #${id} must open with "No." (it is a no row on /compare)`);
+	}
+}
+requireText(siteSource, "href: '/faq'", 'faq reachable from nav and footer');
+requireText(startHereSource, 'href="/faq"', 'close links to the faq');
 
 if (/href:\s*['"]#book['"]/.test(siteSource)) {
 	failures.push('booking CTA still points to the inline booking section');

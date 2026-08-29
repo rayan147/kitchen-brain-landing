@@ -117,6 +117,7 @@ Do not add these without a new ledger review:
 | Feature reference | RC-35, RC-42, RC-45, and every shipped claim `src/lib/features.ts` renders |
 | What it connects to | RC-09, RC-38, RC-39, RC-45 |
 | Comparison | RC-40 through RC-43 |
+| FAQ (`/faq`, `src/lib/faq.ts`) | Every row an answer's `claims` field names; `check-landing-claims.mjs` requires each to exist. The no answers rest on RC-44 and RC-47 and are pinned to open with the word. |
 | Features hub (`/features`) | RC-40 (the five area titles are the comparison's row groups, verbatim) |
 | Feature areas (`/features/[section]`) | Every RC the group items rest on, unchanged by the 2026-08-23 split; RC-45 and RC-46 for the Coming groups |
 | Feature-area walls (`SECTION_META.wall`) | RC-01, and RC-44 for the one it must not write: team-and-connections may not promise handing over a prep list while keeping someone out of the costs. Each wall describes a moment in a kitchen, never a capability; a wall that says what the app does needs its own row. |

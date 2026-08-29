@@ -93,6 +93,10 @@ export const nav: readonly { label: string; href: string; earlyVisible?: true }[
 	// SiteNav). It stays in the FOOTER as a plain link, because a footer is a
 	// list, not a menu, and a second disclosure down there would be worse.
 	{ label: 'How we compare', href: '/compare' },
+	// Added 2026-08-29. Not earlyVisible: pricing keeps the one phone slot, and
+	// the FAQ's first group IS the pricing questions, reachable from /pricing
+	// and from the close. The header carries it from md up, the footer always.
+	{ label: 'FAQ', href: '/faq' },
 	{ label: 'Contact', href: contactCta.href }
 ];
 
