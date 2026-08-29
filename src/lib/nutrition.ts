@@ -2,7 +2,7 @@
  * Nutrition facts, as data. story: docs/stories/nutrition-facts.story.md
  *
  * SHIPPED, AND THE PAPER TOO. RC-42 has backed the computed panel since
- * 2026-08-23. On 2026-08-29 the print page was read off sandbox/demo e8b69fe4
+ * 2026-08-23. On 2026-08-29 the print page was read off sandbox/demo dff9469c
  * (`src/routes/catalog/recipes/[id]/nutrition-label/`, a live read model with
  * no feature flag in front of it), so "printed" moved from Coming to Yes in
  * one deliberate act, recorded as RC-50. What is STILL Coming is the label
@@ -23,7 +23,7 @@
  * No pattern: a table the section renders once.
  */
 export const nutrition = {
-	verified: { sha: 'e8b69fe4', branch: 'sandbox/demo', on: '2026-08-29' },
+	verified: { sha: 'dff9469c', branch: 'sandbox/demo', on: '2026-08-29' },
 	href: '/features/nutrition-facts-and-allergens',
 	/** In the order a meal-prep reader asks. */
 	points: [
@@ -58,16 +58,16 @@ export const nutrition = {
 		panel: {
 			src: '/proof/nutrition-panel.png',
 			width: 2272,
-			height: 2456,
-			alt: 'The Nutrition section of a recipe, Chicken Shawarma, per portion, with a Print nutrition label button. A strip of four: Calories 245, Protein 45.4 g, Carbs 2.7 g, Fat blank. A notice: some label nutrients are unavailable; the source profiles do not provide every Nutrition Facts value, and missing values stay blank instead of being counted as zero. A Nutrition Facts panel: Calories 245, Total Carbohydrate 2.7 g at 1 percent daily value, Protein 45.4 g, every other row blank. Beside it: the ingredient statement in recipe order, an allergen review marked incomplete for six ingredients with no allergen-free claim, dietary characteristics not assessed, and a sources list: chicken breast, coriander, kosher salt and Greek yogurt from USDA FoodData Central records 2646170, 170922, 173468 and 2259794; oregano and chili flake from seeded demo references.'
+			height: 1732,
+			alt: 'The complete Nutrition section for a 297 gram Chicken Burrito Bowl. The summary shows 339 calories, 22 grams protein, 48.1 grams carbohydrate, and 7 grams fat. All fifteen Nutrition Facts rows are populated, including explicit zero values for trans fat, added sugars, and vitamin D. The allergen review says Contains: Milk, Soy, and the source is USDA FoodData Central branded record 2704502.'
 		},
 		label: {
 			src: '/proof/nutrition-label.png',
 			width: 768,
-			height: 2072,
-			alt: 'The printable nutrition label sheet for Chicken Shawarma from Maple and Main Catering: calculated estimate, per portion, some values unavailable. A Nutrition Facts panel with Calories 245, Total Carbohydrate 2.7 g, Protein 45.4 g and the other rows blank; the ingredient statement in recipe order; an allergen review incomplete line with no allergen-free claim; the nutrition sources, four USDA FoodData Central records and two seeded demo references; and a footer: live recipe calculation printed 8/29/26, 9:28 AM, this estimate is not a claim of retail-label regulatory compliance.'
+			height: 1956,
+			alt: 'The printable nutrition label sheet for Chicken Burrito Bowl from Maple and Main Catering. The complete per-portion Nutrition Facts panel shows 339 calories, 7 grams total fat, 3.5 grams saturated fat, 0 grams trans fat, 50.5 milligrams cholesterol, 561 milligrams sodium, 48.1 grams carbohydrate, 3.9 grams fiber, 6 grams total sugars, 0 grams added sugars, 22 grams protein, 0 micrograms vitamin D, 199 milligrams calcium, 2.6 milligrams iron, and 680 milligrams potassium. The sheet also lists the ingredient, Contains: Milk, Soy, USDA FoodData Central 2704502, and the calculated-estimate disclaimer.'
 		},
 		caption:
-			'Captured in the demo kitchen from the tour, on the sandbox build, 2026-08-29. Four of Chicken Shawarma’s six ingredients were matched to USDA FoodData Central records through the app’s own search; two still carry the demo world’s seeded profiles. Where a source does not carry a value the row is blank, which is the behaviour the section describes.'
+			'Captured at 2× resolution from the live CostCook demo on 2026-08-29. This 297 g Chicken Burrito Bowl uses the manufacturer analytical values published in USDA FoodData Central branded record 2704502, including all fifteen label nutrients and confirmed milk and soy allergens. The sheet remains a calculated estimate, not a retail-label compliance claim.'
 	}
 } as const;
