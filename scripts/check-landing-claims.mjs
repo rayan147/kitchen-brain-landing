@@ -113,6 +113,8 @@ const publicCopy = [...surfaces, comparePage].join('\n');
 const siteSource = surfaces[0];
 const heroSource = surfaces[1];
 const startHereSource = surfaces[surfaceFiles.indexOf('src/components/sections/StartHere.astro')];
+const whoSource = surfaces[surfaceFiles.indexOf('src/components/sections/WhoThisIsFor.astro')];
+const alternativesSource = surfaces[surfaceFiles.indexOf('src/components/sections/TheOtherTools.astro')];
 
 const failures = [];
 const requireText = (source, value, label) => {
@@ -132,6 +134,19 @@ for (const component of [
 	'StartHere',
 ]) {
 	requireText(index, `<${component} />`, 'landing composition');
+}
+
+// RC-44 / RC-47: restaurant ownership is not a proxy for product fit. One
+// kitchen can run regular service and event-driven work; only the requirements
+// CostCook cannot support belong in the limits ticket.
+requireText(
+	whoSource,
+	'catering-only kitchen or a restaurant too',
+	'restaurant event-work fit',
+);
+requireText(alternativesSource, 'A restaurant can run both.', 'restaurant dual-workflow fit');
+if (/one restaurant on a fixed daily menu|shape is wrong for you|tool built for it will fit you better/i.test(publicCopy)) {
+	failures.push('restaurant positioning: a restaurant owner is still framed as the wrong fit');
 }
 // The exhaustive list lives on its own page. The outcome section links to it,
 // so completeness stays available without making the homepage exhaustive.
@@ -489,8 +504,12 @@ for (const [, id, claimList] of faqEntries) {
 		if (!ledger.includes(`| ${row} |`)) failures.push(`faq: #${id} cites ${row}, which is not in the ledger`);
 	}
 }
-// A "no" row on /compare may not become a "yes" in an answer. The four RC-44
-// misfits and the RC-47 give-ups are the ones a friendly answer is most
+const restaurantAnswer = faqSource.slice(faqSource.indexOf("id: 'restaurant'"));
+if (!/answer: \[\s*'Yes, for the part of your business/.test(restaurantAnswer.slice(0, 700))) {
+	failures.push('faq: the restaurant answer must open with the event-work fit, not a blanket misfit');
+}
+// A "no" row on /compare may not become a "yes" in an answer. The three RC-44
+// product limits and the RC-47 give-ups are the ones a friendly answer is most
 // tempted to soften, so their answers are pinned to open with the word.
 for (const id of ['locations', 'permissions', 'fsma', 'spanish']) {
 	const entry = faqSource.slice(faqSource.indexOf(`id: '${id}'`));

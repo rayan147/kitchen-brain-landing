@@ -4,7 +4,7 @@
 
 - **Piece:** Homepage, 2026-08-29 visual-and-guidance revision (no new claims; new figures, hand-offs, and one phone-only bar)
 - **Title / headline:** Cost it, buy it, prep it, pack it. Enter the numbers once. (unchanged)
-- **My hero's name:** The owner-caterer reading on a phone, mid-shift, off a cold email
+- **My hero's name:** The chef-owner, including a restaurant owner between regular service and a special event, reading on a phone mid-shift
 - **Content file(s):** `src/components/sections/Hero.astro`, `TheProblem.astro`, `WhoThisIsFor.astro`, `CustomerOutcomes.astro`, `TheOtherTools.astro`, `src/components/SectionHandoff.astro`, `src/components/StickyCta.astro`, `src/lib/stops.ts`
 
 ## The 11 steps
@@ -25,7 +25,7 @@
 
 ### Step 1 — The Idea
 
-> An owner-caterer on a phone, skeptical from a cold email, wants to decide in under a minute whether this is real and aimed at them, but the page gave them ten screens of type, no picture of the product until the fourth screen, and nothing that said where to look next.
+> A chef-owner with changing event work wants to decide in under a minute whether this is real and aimed at that part of the kitchen, but labels like restaurant or caterer can hide the work they actually share.
 
 ### Step 2 — Your Character
 
@@ -43,7 +43,7 @@ The beats are the existing page's (STORY-SPINE-2026-08-27.md). This pass changes
 | 1 Opening Image | The fold: the chain named, and now the product's pricing panel under the ask (Hero figure). |
 | 2 Theme Stated | "Enter the numbers once." (unchanged) |
 | 3 Set-Up | The four moments of the week, now dealt onto the counter as four tickets beside the diagnosis (TheProblem). |
-| 4 Catalyst | Who it is for, beside who it is not, in one frame (WhoThisIsFor). |
+| 4 Catalyst | Who the event-driven work is for, beside the product's real limits, in one frame (WhoThisIsFor). |
 | 5 Debate | Is this real? The film. (unchanged) |
 | 6 Break into Two | Four answers, each with the frame of the film that proves it (CustomerOutcomes). |
 | 7 B Story | The yield. (unchanged) |
@@ -59,7 +59,7 @@ The beats are the existing page's (STORY-SPINE-2026-08-27.md). This pass changes
 |---|---------|-------|------------|--------------|
 | 1 | Hero | 1–2 | "software" → "that panel, for my order" | Pricing-panel crop straddling the fold |
 | 2 | TheProblem | 3 | my week → my week, named | Ticket stack in the empty right column; provenance cut to two sentences |
-| 3 | WhoThisIsFor | 4 | is this for me → yes, and here is who it is not for | Misfit list as one ticket, right column |
+| 3 | WhoThisIsFor | 4 | does my restaurant label exclude me → no, and here are the real limits | Limits ticket in the right column |
 | 4 | SeeItRun | 5 | claim → footage | Hand-off only |
 | 5 | CustomerOutcomes | 6 | four sentences → four frames | 2x2 crops with timestamps |
 | 6–8 | TheYield, PaperIn, TheOtherTools | 7–10 | — | Hand-offs; calendars beside the lede |
@@ -69,14 +69,14 @@ The beats are the existing page's (STORY-SPINE-2026-08-27.md). This pass changes
 ### Step 5 — Character Voices
 
 - **Reader's words:** the sheet, the case, the count, the truck, the invoice, Saturday, a head.
-- **Product voice (new lines only):** mono micro-labels, the brand's one device: `ORDER · 180 GUESTS · $68 A HEAD`, `FROM THE TOUR · 0:29`, `NEXT · SEE IT RUN`, `NOT FOR · FOUR KITCHENS`.
+- **Product voice (new lines only):** mono micro-labels, the brand's one device: `ORDER · 180 GUESTS · $68 A HEAD`, `FROM THE TOUR · 0:29`, `NEXT · SEE IT RUN`, `LIMITS · THREE REQUIREMENTS`.
 - **Banned:** seamless, powerful, in one click, exclamation points, em-dashes.
 
 ### Step 6 — Dialogue
 
 - Hero figure: doubt (is there a product?) → evidence (there is, and it is already arguing about my price).
 - TheProblem tickets: a list → a stack of paper on a counter, which is what the reader's problem physically is.
-- WhoThisIsFor ticket: a paragraph of fit → a ticket that could be pinned to the wall and checked against.
+- WhoThisIsFor ticket: a business-type label → the work that fits and the requirements that do not.
 - Outcome crops: told → shown, each with the second in the film it was cut from.
 - Hand-offs: "am I done?" → "no, the next one is called this, and it is that way."
 
@@ -104,3 +104,4 @@ The key scene is the fold on a phone, one thumb in, screen dimmed by a walk-in l
 - Cut: TheProblem's provenance paragraph from four sentences to two (the full block still lives in BuiltForKitchens); TheOtherTools's "so the question" paragraph merged into the lede column, "and several do it well" dropped.
 - Nothing claimed that was not already on the ledger. RC-48 added for the frame rule, not for a capability.
 - Ending unchanged: the CTA is the Final Image and the phone bar carries the same words to it.
+- Positioning correction: restaurant owners who cater, run special dinners, or build changing menus are explicitly included; only unsupported requirements remain in the limits ticket.

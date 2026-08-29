@@ -17,12 +17,10 @@
  * ASSUMPTION (a menu that repeats) rather than a limitation, and the turn is
  * written as the question to go and ask them, not as an answer given for them.
  *
- * THE FOUR GIVE-UPS SHARE NO ROW WITH WhoThisIsFor. That section's four are
- * about FIT — the wrong shape of kitchen, at 30% depth, sorting readers out
- * before the film plays. These four are about CAPABILITY: the right kitchen,
- * a missing feature, read by someone who already wants the thing. Saying any
- * of the same four twice would be the failure the BuiltForKitchens comment
- * records. Each is a /compare row and may not be softened here:
+ * THE FOUR GIVE-UPS SHARE NO ROW WITH WhoThisIsFor. That section names three
+ * unsupported requirements before the film plays. These four are later
+ * capability tradeoffs, read by someone who already wants the thing. Each is
+ * a /compare row and may not be softened here:
  *
  *   label printer   -> "Kitchen label printing", COMING, and the only one of the
  *                      four that is. The framing sentence says three are not
@@ -71,13 +69,11 @@ const giveUps = [
 	}
 ];
 
-// The figure. Seven equal marks against nine irregular ones on scattered dates:
-// the restaurant's week and the caterer's month, drawn at the same scale. Bar
-// heights on the right are guest counts, which is why they are uneven and why
-// three dates are empty.
+// The figure. Seven equal marks against irregular special-event dates, drawn at
+// the same scale. One restaurant kitchen can run both planning patterns.
 import SectionHandoff from '../SectionHandoff.astro';
 
-const restaurantWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const regularServiceWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 ---
 
@@ -96,12 +92,12 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 		<div class="max-w-3xl" data-reveal>
 			<p class="eyebrow">The other tools</p>
 			<h2 id="alternatives-heading" class="mt-4 text-h2 font-semibold">
-				Most kitchen software is built for the week that repeats.
+				Your regular week and your special events are two different plans.
 			</h2>
 			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
-				Recipe costing was solved for restaurants a long time ago, and the tools that
-				solved it are built on the thing a restaurant has: a menu that comes back. The
-				same dishes, the same covers, the same order guide every Tuesday.
+				A restaurant can run both. Regular service may come back each week; catering,
+				special dinners, and changing menus move by date, menu, and guest count. CostCook
+				is built for that changing side of the kitchen.
 			</p>
 		</div>
 
@@ -113,10 +109,9 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 		<figure class="lg:mt-2" data-reveal>
 			<div class="border-y border-ticket-rule bg-paper px-5 py-8 sm:px-8">
 				<p class="sr-only">
-					Two calendars drawn at the same scale. A restaurant week is seven identical
-					marks, Monday to Sunday, all the same height: one menu, served again. A
-					catering month is twelve dates of which only six carry a job, and every job a
-					different height, because every job is a different guest count.
+					Two calendars drawn at the same scale. A regular service week is seven
+					identical marks, Monday to Sunday. A special-event calendar has twelve dates,
+					only six with a job, each a different height for a different guest count.
 				</p>
 
 				<div class="grid gap-10 sm:grid-cols-2 sm:gap-12" aria-hidden="true">
@@ -138,18 +133,18 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 					     labels around the drawing are still text and still scale. -->
 					<div class="min-w-0">
 						<p class="font-mono text-eyebrow font-semibold tracking-wide text-ink-soft">
-							A RESTAURANT WEEK
+							REGULAR SERVICE
 						</p>
 						<div class="mt-5 flex items-end gap-[6px]" style="height: 80px">
 							{
-								restaurantWeek.map(() => (
+								regularServiceWeek.map(() => (
 									<span class="h-12 min-w-0 flex-1 border-t-2 border-ink-rule/45 bg-softgreen" />
 								))
 							}
 						</div>
 						<div class="mt-2 flex gap-[6px]">
 							{
-								restaurantWeek.map((day) => (
+								regularServiceWeek.map((day) => (
 									<span class="min-w-0 flex-1 text-center font-mono text-eyebrow text-ink-soft">{day}</span>
 								))
 							}
@@ -161,7 +156,7 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 
 					<div class="min-w-0">
 						<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-							A CATERING MONTH
+							SPECIAL EVENTS
 						</p>
 						<div class="mt-5 flex items-end gap-[6px]" style="height: 80px">
 							{
@@ -201,9 +196,8 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 			     this shipped reading "the week.That is" and "on thecomparison page" once.
 			     Same failure the Hero comment records for the price line. -->
 			<figcaption class="mt-4 max-w-[66ch] text-sm text-ink-soft">
-				<strong class="font-semibold text-ink">The unit is the job, not the week.</strong>{' '}
-				That is the assumption everything downstream is built on, which is why it is worth
-				checking before you pick a tool rather than after.
+				<strong class="font-semibold text-ink">For event work, the unit is the job.</strong>{' '}
+				That remains true when the same kitchen also runs regular service.
 			</figcaption>
 			<p class="mt-5 max-w-[66ch] text-ink-soft">
 				So the question to take to any of them is not whether it costs a recipe. They all

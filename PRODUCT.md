@@ -8,11 +8,11 @@ web
 
 ## Users
 
-CostCook is for independent caterers and working chef-owners who quote jobs, manage recipes, buy ingredients, and may also cook or oversee the event. The primary reader evaluates the product while balancing kitchen work with a customer decision that needs a defensible number.
+CostCook is for independent caterers, restaurant owners with catering or event-driven menus, and working chef-owners who quote jobs, manage recipes, buy ingredients, and may also cook or oversee the event. The primary reader evaluates the product while balancing kitchen work with a customer decision that needs a defensible number.
 
 ## Product Purpose
 
-CostCook connects a catering menu and guest count to the recipes, quantities, shopping, prep, pack plan, and food-cost math needed to quote and run the job. Success means the kitchen can act from the same recipe record the owner used to price the work.
+CostCook connects a catering job, special dinner, or other changing menu and guest count to the recipes, quantities, shopping, prep, pack plan, and food-cost math needed to quote and run it. Success means the kitchen can act from the same recipe record the owner used to price the work.
 
 ## Positioning
 

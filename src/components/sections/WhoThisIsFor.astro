@@ -6,45 +6,35 @@
  * proof, not after, or the video plays to a reader who is not sure it is
  * theirs.
  *
- * NO PERSONA GRID. The competitors segment by customer type because they sell
- * to restaurants, groups, ghost kitchens and hotels. CostCook sells to one
- * kind of kitchen. Inventing four personas to fill a row of cards is the exact
- * move that makes a page read like a marketing department, which is the thing
- * this reader arrived braced for.
+ * NO PERSONA GRID. CostCook fits event-driven work whether it happens in a
+ * catering-only kitchen or beside regular restaurant service. Business-type
+ * cards would hide that shared job behind labels.
  *
- * THE MISFIT LIST IS THE POINT. For someone who came in from a cold email,
- * being told plainly what this is not for buys more trust than any list of who
- * it is for, and it is the one thing a page selling to them will not do.
- * Every line is already documented and cannot be softened here (RC-44):
+ * THE LIMITS LIST IS THE POINT. For someone who came in from a cold email,
+ * being told plainly what the product cannot support buys trust. Every line is
+ * already documented and cannot be softened here (RC-44):
  *
  *   several locations  ->  /compare "Several locations", a no row
  *   lot tracking       ->  /compare "Lot tracking and FSMA 204", a no row
  *   permission grid    ->  /compare "Tiered user access", a no row
- *   the restaurant     ->  RC-01 for the audience and RC-03 for the mechanism:
- *                          the estimate starts from a costed menu plus a guest
- *                          count, which is not the shape a fixed daily service
- *                          has. It is a fit statement, NOT a capability claim,
- *                          and it may not be written as one.
  *
- * If any of those four ever changes, the /compare row moves first and this
+ * If any of those three ever changes, the /compare row moves first and this
  * list follows it. No CTA here on purpose: the reader is deciding whether to
  * keep reading, not whether to buy.
  */
 import { spellCapital } from '../../lib/words';
 import SectionHandoff from '../SectionHandoff.astro';
 
-const notFor = [
-	{
-		title: 'You run one restaurant on a fixed daily menu',
-		body: 'Everything here starts from an event with a guest count. A service that repeats daily is a different shape, and a tool built for it will fit you better.'
-	},
+// Considered Strategy; not used because restaurant/event fit and the product
+// limits are claim-backed static content, not interchangeable behavior.
+const limits = [
 	{
 		title: 'You need several locations to see their own shelves',
 		body: 'CostCook is one kitchen workspace. There is no per-site inventory and no roll-up across sites.'
 	},
 	{
 		title: 'You need lot tracking for FSMA 204',
-		body: 'This was built for caterers, not for a facility under a traceability rule.'
+		body: 'CostCook does not provide the lot tracking a facility under a traceability rule needs.'
 	},
 	{
 		title: 'You need a permission grid for a big team',
@@ -54,11 +44,8 @@ const notFor = [
 ---
 
 <!-- story: docs/stories/homepage-visual-guidance.story.md -->
-<!-- TWO COLUMNS SINCE 2026-08-29. The fit statement stays on the left; the
-     misfit list moves into the right column as one ticket, so the section is a
-     single frame (who it is for, beside who it is not for) instead of a text
-     column over a text grid with the right 40% of the viewport empty. The
-     four lines are unchanged and still bound by RC-44. -->
+<!-- TWO COLUMNS SINCE 2026-08-29. The fit statement stays on the left and the
+     product limits sit beside it as one ticket, making the section one frame. -->
 <section id="who" class="container-page py-section-tight" aria-labelledby="who-heading">
 	<div class="grid gap-12 lg:grid-cols-[6fr_5fr] lg:gap-16">
 	<div class="max-w-3xl" data-reveal>
@@ -67,25 +54,24 @@ const notFor = [
 			Built for the kitchen where the person who quotes the job also cooks it.
 		</h2>
 		<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
-			Catering and meal prep, run by an owner-operator with a small crew. You price jobs
-			that change, you buy for dates rather than a steady week, and nobody down the hall
-			owns the spreadsheet. That is the whole audience.
+			Catering, meal prep, special dinners, and changing menus, whether you run a
+			catering-only kitchen or a restaurant too. You price work that changes, buy for
+			dates and guest counts, and need the plan to move when the event moves.
 		</p>
-		<h3 class="mt-10 text-h3 font-semibold">And plainly, who it is not for.</h3>
+		<h3 class="mt-10 text-h3 font-semibold">And plainly, where it stops.</h3>
 		<p class="mt-4 max-w-[66ch] text-ink-soft">
-			{spellCapital(notFor.length)} kitchens should
-			<a href="/compare" class="btn-quiet">buy something else</a>. Better you find that
-			out here than a month in.
+			{spellCapital(limits.length)} requirements need a different setup. See the full
+			<a href="/compare" class="btn-quiet">product comparison</a> before you decide.
 		</p>
 	</div>
 
 	<div class="border border-ticket-rule bg-cream px-5 py-5 shadow-ticket sm:px-6 lg:rotate-[1.5deg]" data-reveal>
 		<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-			NOT FOR · {spellCapital(notFor.length).toUpperCase()} KITCHENS
+			LIMITS · {spellCapital(limits.length).toUpperCase()} REQUIREMENTS
 		</p>
 		<ul role="list" class="mt-4">
 			{
-				notFor.map((entry) => (
+				limits.map((entry) => (
 					<li class="border-t border-dashed border-ticket-rule py-4">
 						<p class="font-semibold">{entry.title}</p>
 						<p class="mt-1.5 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{entry.body}</p>

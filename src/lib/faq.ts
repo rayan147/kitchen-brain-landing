@@ -109,11 +109,11 @@ export const faq: readonly FaqGroup[] = [
 			},
 			{
 				id: 'restaurant',
-				question: 'I run a restaurant with a fixed menu. Will it work?',
+				question: 'I run a restaurant. Will CostCook fit?',
 				answer: [
-					'It will cost your recipes, but the shape is wrong for you. Everything here begins with an event and a head count, and a service that repeats daily is a different shape. A tool built for that will fit you better, and the <a href="/compare">comparison page</a> names two.'
+					'Yes, for the part of your business that moves by event, menu, date, and guest count: catering, special dinners, and other changing menus. CostCook carries that plan through recipe costing, shopping, prep, pack, purchasing, and food cost. You can run regular restaurant service alongside that work and still belong here. The <a href="/compare">comparison page</a> shows the product limits that may still matter to you.'
 				],
-				claims: ['RC-01', 'RC-03', 'RC-44', 'RC-40']
+				claims: ['RC-01', 'RC-03', 'RC-21', 'RC-22', 'RC-24', 'RC-25', 'RC-26', 'RC-30', 'RC-40', 'RC-44']
 			},
 			{
 				id: 'locations',
@@ -134,7 +134,7 @@ export const faq: readonly FaqGroup[] = [
 			{
 				id: 'fsma',
 				question: 'Does it do lot tracking for FSMA 204?',
-				answer: ['No. It was built for caterers, not for a facility under a traceability rule.'],
+				answer: ['No. CostCook does not provide the lot tracking a facility under a traceability rule needs.'],
 				claims: ['RC-44']
 			},
 			{

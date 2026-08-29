@@ -4,7 +4,7 @@
 
 - **Piece:** `/faq`, the questions page
 - **Title / headline:** Know the catch before you hand over the card.
-- **My hero's name:** The owner-caterer who got the text, opened the site on a phone, and has three objections before they have read a paragraph
+- **My hero's name:** The chef-owner, including the restaurant owner who caters or runs special menus, who opened the site on a phone and has three objections before reading a paragraph
 - **Content file(s):** `src/lib/faq.ts`, `src/pages/faq.astro`, `src/components/sections/FaqPage.astro`, link lines in `src/lib/site.ts` and `src/components/sections/StartHere.astro`
 
 ## The 11 steps
@@ -25,11 +25,11 @@
 
 ### Step 1 — The Idea
 
-> An owner-caterer who half-wants to try this needs the catch named before they hand over a card, but every software FAQ they have read was written to hide the catch.
+> A chef-owner with changing event work who half-wants to try this needs the catch and the fit named before handing over a card, but every software FAQ they have read was written to hide both.
 
 ### Step 2 — Your Character
 
-- **Want:** The catch. What it costs, when, how to get out, and whether it does the four things they are afraid it does not.
+- **Want:** The catch. What it costs, when, how to get out, and whether it fits the catering, special-dinner, or changing-menu side of their kitchen.
 - **Need:** To be told no by the company, in plain words, so that the yeses can be believed.
 - **Wound:** A trial that turned into a bill, and a "contact sales to cancel". A feature list where "coming soon" meant never.
 - **Flaw:** Assumes every answer is spin, so reads only the first word of each.
@@ -42,7 +42,7 @@
 | 2 Theme Stated | "Where the answer is no, it says no." |
 | 3 Set-Up | Group 1: the money. Trial, card, cancel, price, seats, export. |
 | 4 Catalyst | "Can I take my work with me?" answered with a yes and a plain "not yet". |
-| 5 Debate | Group 2: fit. Four flat noes, one not-yet, one "it is food cost, not margin". |
+| 5 Debate | Group 2: fit. Restaurant owners get a precise yes for event-driven work; actual limits still get flat noes. |
 | 6 Break into Two | The reader believes the noes, so the yeses in group 3 land. |
 | 7 B Story | The founder answering in first person ("that one is on me to build", "I do"). |
 | 8 Fun and Games | Group 3: how the work moves, one mechanic per question, each on a ledger row. |
@@ -57,14 +57,14 @@
 |---|---------|-------|------------|
 | 1 | Promise + before-you-start ticket | 1–2 | suspicion → four hard terms visible |
 | 2 | The trial, the bill, and leaving | 3–4 | the catch hidden → the catch named |
-| 3 | Whether it fits your kitchen | 5–6 | spin → flat noes that make the yeses credible |
+| 3 | Whether it fits your kitchen | 5–6 | a restaurant label → the event work and actual limits named precisely |
 | 4 | How the work moves | 7–10 | claims → mechanics with rows behind them |
 | 5 | Getting started, and getting help | 11 | alone with a login → a person who answers |
 | 6 | Close | 12 | reading → one real order |
 
 ### Step 5 — Character Voices
 
-- **Reader's words:** the catch, the card, day sixteen, the truck was short, forty guests, the walk-in, one bar, margin (which we correct to food cost, gently).
+- **Reader's words:** the catch, the card, day sixteen, special dinner, catering order, the truck was short, forty guests, the walk-in, one bar, margin (which we correct to food cost, gently).
 - **Product voice:** first person where a human is answering (cancel, export, help), otherwise plain second person. "No." as a complete sentence.
 - **Banned:** seamless, powerful, in one click, exclamation points, em-dashes, "margin" as a claim, "no data entry".
 
@@ -96,3 +96,4 @@ Phone, one bar, the walk-in door propped with a foot. The reader is not going to
 - Cut: an onboarding-wizard answer (RC-10 to RC-15 are conditional on the deployed build and the ledger says so), a "how accurate is the OCR" answer (excluded claim), and a "how fast is setup" answer (excluded claim).
 - Every answer names its rows; `check-landing-claims.mjs` fails on a row that does not exist and on a no answer that stops opening with "No."
 - Ending: the homepage's close, in its words, once.
+- Positioning correction: a restaurant owner is not a misfit. The answer now distinguishes repeating daily service from the catering, special-dinner, and changing-menu work CostCook is built to plan.
