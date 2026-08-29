@@ -7,6 +7,8 @@ import BrandLockup from './BrandLockup.astro';
 // all use the same mechanism. The script adds only the recovery behavior a
 // navigation panel needs: Escape, click-away, link activation, and focus-out.
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+// Considered State; not used because the active destination is derived from
+// the current URL and the navigation owns no self-transitioning behavior.
 ---
 
 <!-- story: docs/stories/features-navigation.story.md -->
@@ -124,7 +126,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 																<span class="flex flex-wrap items-baseline gap-x-2 text-sm font-semibold text-ink">
 																	{item.label}
 																	{item.coming && (
-																		<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2 py-0.5 font-mono text-[0.625rem] font-semibold tracking-wide text-amber-deep">
+																		<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2 py-0.5 font-mono text-xs font-semibold tracking-wide text-amber-deep">
 																			Coming
 																		</span>
 																	)}
@@ -163,7 +165,10 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 							<a
 								href={item.href}
 								aria-current={path === item.href ? 'page' : undefined}
-								class="inline-flex min-h-11 items-center text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink"
+								class:list={[
+									'inline-flex min-h-11 items-center text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink',
+									path === item.href && 'text-ink underline decoration-ticket-rule underline-offset-8'
+								]}
 							>
 								{item.label}
 							</a>
