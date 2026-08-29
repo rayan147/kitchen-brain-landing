@@ -64,6 +64,9 @@ const surfaceFiles = [
 	// aimed squarely at them.
 	'src/lib/sage.ts',
 	'src/components/sections/Sage.astro',
+	// 2026-08-29. Nutrition: the data file and the section, both claim copy.
+	'src/lib/nutrition.ts',
+	'src/components/sections/NutritionFacts.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -96,6 +99,7 @@ for (const component of [
 	'SeeItRun',
 	'CustomerOutcomes',
 	'TheYield',
+	'NutritionFacts',
 	'PaperIn',
 	'Sage',
 	'BuiltForKitchens',
@@ -141,6 +145,8 @@ const expectedSectionOrder = [
 	'<SeeItRun />',
 	'<CustomerOutcomes />',
 	'<TheYield />',
+	// Seventh since 2026-08-29: recipe-level, after yield, before intake.
+	'<NutritionFacts />',
 	'<PaperIn />',
 	// Eighth since 2026-08-29: a mechanic, with the mechanics, ahead of the
 	// rival beat whose /compare link lists it as a Coming row.
@@ -189,19 +195,30 @@ if (costcookNoRows < 4) {
 			'changed, move the row and say so in RC-40 rather than lowering this floor.',
 	);
 }
-// Nutrition labels are the specific row this guard exists for: they are the most
-// prominent thing on both competitors' pages and the one we must never claim.
-// Nutrition facts compute and ship (RC-42); the PRINTED panel does not. That
-// split is the whole claim, so both halves are pinned: the printed row must
-// exist and must still be 'coming'. If it ever ships, move it deliberately.
+// Nutrition labels are the specific rows this guard exists for: they are the
+// most prominent thing on both competitors' pages. Since 2026-08-29 (RC-50)
+// the printed sheet ships from the browser and the row is 'yes', on the
+// condition that its note carries the estimate-not-compliance boundary the
+// sheet itself prints. The label PRINTER row is the one that stays 'coming'.
 requireText(comparisonSource, "label: 'Printed USDA nutrition labels'", 'comparison nutrition row');
 const printedPanel = comparisonSource.slice(
 	comparisonSource.indexOf("label: 'Printed USDA nutrition labels'"),
 );
-if (!printedPanel.slice(0, 200).includes("costcook: 'coming'")) {
-	failures.push(
-		'comparison honesty: printed USDA nutrition labels are not built, so that row may not claim yes',
-	);
+if (!printedPanel.slice(0, 400).includes("costcook: 'yes'")) {
+	failures.push('comparison: printed USDA nutrition labels ship (RC-50); the row must say yes');
+}
+if (!/not a retail-label compliance claim/.test(printedPanel.slice(0, 600))) {
+	failures.push('comparison honesty: the printed-labels note must carry the estimate-not-compliance boundary');
+}
+const printerRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Kitchen label printing'"));
+if (!printerRow.slice(0, 200).includes("costcook: 'coming'")) {
+	failures.push('comparison honesty: the label printer is not connected (RC-35); that row may not claim yes');
+}
+// Every surface that says the sheet prints must say what the sheet says of itself.
+const nutritionSource = surfaces[surfaceFiles.indexOf('src/lib/nutrition.ts')];
+requireText(nutritionSource, 'not a retail-label compliance claim', 'nutrition copy carries the boundary');
+if (/\b(FDA[- ]approved|compliant label|regulatory[- ]compliant)\b/i.test(publicCopy)) {
+	failures.push('public copy claims regulatory compliance for a nutrition label (RC-50 forbids it)');
 }
 // RC-40, the status marks. /compare renders yes/coming/no as a glyph beside the
 // word in the CostCook column. A competitor cell is a STRING reporting what
@@ -376,7 +393,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 49; claim += 1) {
+for (let claim = 1; claim <= 50; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -392,6 +409,7 @@ const expectedStopIds = [
 	'demo',
 	'outcomes',
 	'yield',
+	'nutrition',
 	'intake',
 	'sage',
 	'alternatives',

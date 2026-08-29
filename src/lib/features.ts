@@ -84,9 +84,9 @@ export const SECTION_META: Readonly<
 	},
 	'Compliance and labels': {
 		slug: 'compliance-and-labels',
-		blurb: 'The fifteen numbers an FDA panel carries, per recipe. Printing them is being built.',
+		blurb: 'The fifteen numbers an FDA panel carries, per recipe, and a sheet to print them on. The label printer is being built.',
 		wall: 'Somebody asks for the numbers on a dish. Roughly is not an answer, and neither is a figure you worked out once and cannot show your working for.',
-		lede: 'Nutrition facts are computed per recipe out of the ingredients you already entered. Getting them onto a kitchen label is the part that is still being built, and it is marked Coming below rather than folded into the shipped list.'
+		lede: 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Sending them to a label printer is the part that is still being built, and it is marked Coming below rather than folded into the shipped list.'
 	},
 	'Team, and what it connects to': {
 		slug: 'team-and-connections',
@@ -328,7 +328,12 @@ export const featureGroups: readonly FeatureGroup[] = [
 		items: [
 			{ lead: 'Computed per recipe.', detail: 'All fifteen nutrients an FDA label carries, rolled up through sub-recipes to the dish.' },
 			{ lead: 'USDA profiles.', detail: 'Nutrient data comes from USDA FoodData Central and attaches to the ingredient.' },
-			{ lead: 'Partial is said out loud.', detail: 'A missing profile or a missing conversion reports the dish as partial rather than totalling an incomplete recipe.' }
+			{ lead: 'Partial is said out loud.', detail: 'A missing profile or a missing conversion reports the dish as partial rather than totalling an incomplete recipe.' },
+			/* RC-50, 2026-08-29. The print page on sandbox/demo,
+			   src/routes/catalog/recipes/[id]/nutrition-label, is a live read model
+			   with no flag in front of it. Browser print onto label stock; the
+			   printer integration is the labels group below and is still Coming. */
+			{ lead: 'Printed from the recipe.', detail: 'Print nutrition label makes a sheet with the kitchen name, the panel, the ingredient statement, the allergen line and the print time, for the browser to put on label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.' }
 		]
 	},
 	{
@@ -454,6 +459,7 @@ export const featureCount = availableFeatureGroups.reduce((sum, group) => sum + 
 
 export type FeatureMenuIcon =
 	| 'assistant'
+	| 'nutrition'
 	| 'recipe'
 	| 'menu'
 	| 'ingredient'
@@ -511,6 +517,13 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				description: 'Bring in paper or spreadsheets, then confirm what changes.',
 				featureId: 'import',
 				icon: 'import'
+			},
+			// Added 2026-08-29 at the owner's request. Shipped group, so no chip.
+			{
+				label: 'Nutrition facts & allergens',
+				description: 'The fifteen label numbers per portion, from USDA profiles, printable.',
+				featureId: 'nutrition',
+				icon: 'nutrition'
 			}
 		]
 	},

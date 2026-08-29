@@ -183,8 +183,9 @@ const nutrientCount = 15;
 				<p class="sr-only">
 					Two halves, drawn side by side. On the left, the fifteen nutrients an FDA panel
 					carries, all fifteen computed per recipe from USDA profiles. On the right, the
-					printed panel itself, drawn as an empty outline, because it is being built and
-					is not in the app you would start today.
+					printed sheet, drawn as a filled panel because it prints from the browser today,
+					and beside it a label printer drawn as an empty outline, because that
+					connection is being built and is not in the app you would start today.
 				</p>
 				<div class="grid gap-10 sm:grid-cols-2 sm:gap-12" aria-hidden="true">
 					<div class="min-w-0">
@@ -205,18 +206,21 @@ const nutrientCount = 15;
 					</div>
 					<div class="min-w-0">
 						<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-							THE PRINTED PANEL
+							THE PAPER, AND THE PRINTER
 						</p>
-						<div class="mt-5 h-[64px] w-[112px] border-2 border-dashed border-amber bg-softamber/40" />
+						<div class="mt-5 flex items-end gap-3">
+							<div class="h-[64px] w-[112px] border-2 border-ink-rule/60 bg-paper" />
+							<div class="h-[40px] w-[64px] border-2 border-dashed border-amber bg-softamber/40" />
+						</div>
 						<p class="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">
-							Being built. It is marked Coming below rather than folded into the shipped
-							list, which is the same word the comparison page defines.
+							The sheet prints from the browser today. The label printer is being built and
+							is marked Coming below, the same word the comparison page defines.
 						</p>
 					</div>
 				</div>
 			</div>
 			<figcaption class="mt-4 max-w-[66ch] text-sm text-ink-soft">
-				<strong class="font-semibold text-ink">The numbers ship. The paper does not, yet.</strong>{' '}
+				<strong class="font-semibold text-ink">The numbers ship, and so does the paper. The printer does not, yet.</strong>{' '}
 				Drawing the difference is more honest than a badge, because a badge is the thing a
 				reader skips.
 			</figcaption>

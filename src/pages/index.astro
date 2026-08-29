@@ -6,6 +6,7 @@ import WhoThisIsFor from '../components/sections/WhoThisIsFor.astro';
 import SeeItRun from '../components/sections/SeeItRun.astro';
 import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
 import TheYield from '../components/sections/TheYield.astro';
+import NutritionFacts from '../components/sections/NutritionFacts.astro';
 import PaperIn from '../components/sections/PaperIn.astro';
 import Sage from '../components/sections/Sage.astro';
 import TheOtherTools from '../components/sections/TheOtherTools.astro';
@@ -103,6 +104,12 @@ import StickyCta from '../components/StickyCta.astro';
   assistant" appears as a Coming row. It prints its status (src/lib/sage.ts)
   rather than implying one; RC-46 and RC-49 hold the conditions. Not a
   CustomerOutcomes card, for the 1:1 reason above. Story: docs/stories/sage.story.md
+
+  NUTRITION FACTS ADDED 2026-08-29 as the seventh stop, after TheYield and
+  before PaperIn, at the owner's request. Both are recipe-level mechanics and
+  yield sets up the sentence this one continues (the plate's numbers come from
+  the line). Shipped, so no badge; the print page moved "printed labels" from
+  Coming to Yes the same day (RC-50). Story: docs/stories/nutrition-facts.story.md
 -->
 <Base>
 	<Hero />
@@ -111,6 +118,7 @@ import StickyCta from '../components/StickyCta.astro';
 	<SeeItRun />
 	<CustomerOutcomes />
 	<TheYield />
+	<NutritionFacts />
 	<PaperIn />
 	<Sage />
 	<TheOtherTools />
