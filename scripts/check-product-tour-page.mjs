@@ -25,12 +25,19 @@ const required = [
 	'data-tour-select',
 	'data-tour-prev',
 	'data-tour-next',
+	'data-label="Usable yield"',
+	'data-label="Cost"',
 	'One event. Every part of the week that gets it out the door.',
 	'Alvarez–Whitman wedding',
 	'Illustrative tour data',
 	'Labels & printing is marked Coming.',
 	'data-seed-key="product-tour-connected-event"',
 	'Stop 1 of 12',
+	'$127.66 / 10 kg',
+	'$14.03 / kg',
+	'$109.42',
+	'$164.16',
+	'$6.84',
 	'/features/recipes-and-costing',
 	'/features/labels-and-printing',
 	'/features/sage',
@@ -41,6 +48,9 @@ const missing = required.filter((fragment) => !html.includes(fragment));
 if (missing.length > 0) throw new Error(`Product tour build is missing: ${missing.join(', ')}`);
 if (html.includes('Why this stop matters')) {
 	throw new Error('Product tour coach panels must not use a kicker above the callout heading.');
+}
+if (html.includes('$61.50 / 10 kg') || html.includes('$6.76 / kg')) {
+	throw new Error('Product tour still contains the unreconciled chicken costing proof.');
 }
 
 if ((html.match(/id="tour-tab-/g) ?? []).length !== 12) {

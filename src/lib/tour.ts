@@ -30,6 +30,65 @@ export type TourStop = {
 	};
 };
 
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+	minimumFractionDigits: 2,
+	maximumFractionDigits: 2
+});
+const formatCurrency = (value: number) => currencyFormatter.format(value);
+const roundMoney = (value: number) => Math.round((value + Number.EPSILON) * 100) / 100;
+
+const recipeCostingInputs = {
+	chickenUsedKg: 7.8,
+	chickenUsableYield: 0.91,
+	chickenPackKg: 10,
+	chickenPackPrice: 127.66,
+	otherIngredientCosts: [24.86, 9.84, 20.04],
+	portions: 24
+} as const;
+
+const chickenPurchasedCostPerKg = roundMoney(recipeCostingInputs.chickenPackPrice / recipeCostingInputs.chickenPackKg);
+const chickenUsableCostPerKg = roundMoney(chickenPurchasedCostPerKg / recipeCostingInputs.chickenUsableYield);
+const chickenLineCost = roundMoney(
+	(recipeCostingInputs.chickenUsedKg / recipeCostingInputs.chickenUsableYield) *
+	(recipeCostingInputs.chickenPackPrice / recipeCostingInputs.chickenPackKg)
+);
+const recipeCost = roundMoney(chickenLineCost + recipeCostingInputs.otherIngredientCosts.reduce((total, cost) => total + cost, 0));
+
+export const tourRecipeCostingProof = Object.freeze({
+	...recipeCostingInputs,
+	chickenPurchasedCostPerKg,
+	chickenUsableCostPerKg,
+	chickenLineCost,
+	chickenPlateShare: roundMoney(chickenLineCost / recipeCostingInputs.portions),
+	recipeCost,
+	perPortionCost: roundMoney(recipeCost / recipeCostingInputs.portions),
+	invoiceTotal: roundMoney(830.96 + recipeCostingInputs.chickenPackPrice),
+	purchaseOrderTotal: roundMoney(622.72 + recipeCostingInputs.chickenPackPrice)
+});
+
+// Considered Chain of Responsibility; not used because these are one fixed
+// set of related arithmetic invariants, not handlers that selectively consume
+// different request types.
+const expectedRecipeProof = {
+	chickenPackPrice: 127.66,
+	chickenPurchasedCostPerKg: 12.77,
+	chickenUsableCostPerKg: 14.03,
+	chickenLineCost: 109.42,
+	chickenPlateShare: 4.56,
+	recipeCost: 164.16,
+	perPortionCost: 6.84,
+	invoiceTotal: 958.62,
+	purchaseOrderTotal: 750.38
+} as const;
+const recipeProofHasDrifted = Object.entries(expectedRecipeProof).some(
+	([key, expectedValue]) => tourRecipeCostingProof[key as keyof typeof expectedRecipeProof] !== expectedValue
+);
+if (recipeProofHasDrifted) {
+	throw new Error('Product tour recipe-costing proof no longer reconciles.');
+}
+
 // Considered Strategy; not used because the twelve tour stops vary as static,
 // validated content data and share one rendering behavior. A strategy per stop
 // would turn editorial variation into twelve unnecessary implementations.
@@ -44,14 +103,14 @@ export const tourStops: readonly TourStop[] = [
 		callout: 'The same 7.8 kg of chicken has to survive the recipe, the purchase order, and the back door.',
 		featureHref: featureMenuHref('math'),
 		metrics: [
-			{ label: 'Recipe cost', value: '$164.16' },
-			{ label: 'Per portion', value: '$6.84' },
+			{ label: 'Recipe cost', value: formatCurrency(tourRecipeCostingProof.recipeCost) },
+			{ label: 'Per portion', value: formatCurrency(tourRecipeCostingProof.perPortionCost) },
 			{ label: 'Food cost', value: '30.4%', tone: 'good' },
 			{ label: 'Batch yield', value: '24 portions' }
 		],
 		columns: ['Ingredient', 'Used', 'Usable yield', 'Cost'],
 		rows: [
-			['Chicken thigh', '7.8 kg', '91%', '$109.42'],
+			['Chicken thigh', `${tourRecipeCostingProof.chickenUsedKg} kg`, `${tourRecipeCostingProof.chickenUsableYield * 100}%`, formatCurrency(tourRecipeCostingProof.chickenLineCost)],
 			['Herb marinade', '1.1 kg', '100%', '$24.86'],
 			['Lemon', '12 each', '82%', '$9.84'],
 			['Pan jus', '1.4 L', '100%', '$20.04']
@@ -60,9 +119,9 @@ export const tourStops: readonly TourStop[] = [
 			title: 'Cost path',
 			status: 'Complete',
 			lines: [
-				{ label: 'Case', value: '$61.50 / 10 kg' },
-				{ label: 'Usable cost', value: '$6.76 / kg' },
-				{ label: 'Plate share', value: '$4.56' },
+				{ label: 'Case', value: `${formatCurrency(tourRecipeCostingProof.chickenPackPrice)} / ${tourRecipeCostingProof.chickenPackKg} kg` },
+				{ label: 'Usable cost', value: `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerKg)} / kg` },
+				{ label: 'Plate share', value: formatCurrency(tourRecipeCostingProof.chickenPlateShare) },
 				{ label: 'Missing prices', value: 'None', tone: 'good' }
 			],
 			footnote: 'Open any line to see the arithmetic and the price source.'
@@ -112,16 +171,16 @@ export const tourStops: readonly TourStop[] = [
 		callout: 'A cheaper case is not cheaper if the usable kilo costs more.',
 		featureHref: featureMenuHref('ingredients'),
 		metrics: [
-			{ label: 'Current pack', value: '$61.50' },
-			{ label: 'Purchased cost', value: '$6.15 / kg' },
-			{ label: 'Usable cost', value: '$6.76 / kg' },
+			{ label: 'Current pack', value: formatCurrency(tourRecipeCostingProof.chickenPackPrice) },
+			{ label: 'Purchased cost', value: `${formatCurrency(tourRecipeCostingProof.chickenPurchasedCostPerKg)} / kg` },
+			{ label: 'Usable cost', value: `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerKg)} / kg` },
 			{ label: 'Recipes affected', value: '6', tone: 'attention' }
 		],
 		columns: ['Supplier offer', 'Pack', 'Effective', 'Usable cost'],
 		rows: [
-			['Harbor Foods', '10 kg · $61.50', 'Aug 27', '$6.76 / kg'],
-			['Northline Produce', '10 kg · $64.20', 'Aug 25', '$7.05 / kg'],
-			['Metro Wholesale', '5 kg · $33.10', 'Aug 20', '$7.27 / kg']
+			['Harbor Foods', `10 kg · ${formatCurrency(tourRecipeCostingProof.chickenPackPrice)}`, 'Aug 27', `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerKg)} / kg`],
+			['Northline Produce', '10 kg · $131.20', 'Aug 25', '$14.42 / kg'],
+			['Metro Wholesale', '5 kg · $67.10', 'Aug 20', '$14.75 / kg']
 		],
 		aside: {
 			title: 'Ingredient facts',
@@ -145,14 +204,14 @@ export const tourStops: readonly TourStop[] = [
 		callout: 'Three doubtful rows wait. The other sixteen do not need typing twice.',
 		featureHref: featureMenuHref('import'),
 		metrics: [
-			{ label: 'Invoice total', value: '$892.46' },
+			{ label: 'Invoice total', value: formatCurrency(tourRecipeCostingProof.invoiceTotal) },
 			{ label: 'Rows read', value: '19' },
 			{ label: 'Exact matches', value: '16', tone: 'good' },
 			{ label: 'Needs review', value: '3', tone: 'attention' }
 		],
 		columns: ['Source line', 'Matched ingredient', 'Pack price', 'Status'],
 		rows: [
-			['CHK THIGH BNLS 10KG', 'Chicken thigh, boneless', '$61.50', 'Exact'],
+			['CHK THIGH BNLS 10KG', 'Chicken thigh, boneless', formatCurrency(tourRecipeCostingProof.chickenPackPrice), 'Exact'],
 			['LEMON 140CT', 'Lemon', '$38.00', 'Exact'],
 			['MIXED HERB CS', 'Choose ingredient', '$27.80', 'Review'],
 			['OIL EVOO 4X3L', 'Olive oil, extra virgin', '$92.16', 'Exact']
@@ -163,7 +222,7 @@ export const tourStops: readonly TourStop[] = [
 			lines: [
 				{ label: 'Supplier', value: 'Harbor Foods' },
 				{ label: 'Invoice date', value: 'Aug 27, 2026' },
-				{ label: 'Computed total', value: '$892.46', tone: 'good' },
+				{ label: 'Computed total', value: formatCurrency(tourRecipeCostingProof.invoiceTotal), tone: 'good' },
 				{ label: 'Difference', value: '$0.00', tone: 'good' }
 			],
 			footnote: 'Nothing reaches the catalog until the review is confirmed.'
@@ -282,7 +341,7 @@ export const tourStops: readonly TourStop[] = [
 		featureHref: featureMenuHref('purchasing'),
 		metrics: [
 			{ label: 'Purchase order', value: 'PO-1047' },
-			{ label: 'Ordered', value: '$684.22' },
+			{ label: 'Ordered', value: formatCurrency(tourRecipeCostingProof.purchaseOrderTotal) },
 			{ label: 'Received lines', value: '11 of 12' },
 			{ label: 'Needs follow-up', value: '1', tone: 'attention' }
 		],

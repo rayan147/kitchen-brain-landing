@@ -113,3 +113,11 @@
 ## Revision — Team & access parity (2026-08-29)
 
 The feature audit found the shipped Owner, Manager, and Staff boundary and added it to the public menu. The tour now carries the same catering team into a twelfth stop immediately before Sage. It names the sensitive actions each role may perform, states that invitations join as Staff, and explicitly refuses the unshipped fine-grained screen-permission claim. This keeps the tour's parity contract intact while making the approval boundary visible before the assistant scene.
+
+## Revision — Inspectable recipe proof (2026-08-29)
+
+The recipe stop keeps its original 7.8 kg chicken requirement, 91% usable yield, 24-portion batch, and `$109.42` chicken line. The connected Harbor Foods case price changes to `$127.66 / 10 kg`, making the displayed `$12.77 / kg` purchased cost, `$14.03 / kg` usable cost, `$4.56` plate share, `$164.16` batch, and `$6.84` portion reconcile after currency rounding. The corrected case price follows the same ingredient through supplier comparison, invoice intake, and purchasing totals.
+
+The story still runs through the same 12 stops and retains the same snap line. On a phone, each ingredient now becomes a readable evidence row with Ingredient, Used, Usable yield, and Cost visible without a hidden horizontal swipe. A shared stop URL lands at the tour workspace, so the selected proof is in view rather than one viewport below the hero. The final handoff becomes instant for readers who request reduced motion.
+
+All 11 story-building steps remain complete: the hero, want, wound, plot, scenes, voices, value turns, intention, snap, physical scene, hand-offs, and final image are unchanged; this revision makes their numeric proof and responsive delivery honest.

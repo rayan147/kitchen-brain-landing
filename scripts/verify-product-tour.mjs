@@ -117,7 +117,10 @@ try {
 			selected: document.querySelector('[data-tour-tab][aria-selected="true"]')?.dataset.index,
 			scrollWidth: document.documentElement.scrollWidth,
 			innerWidth,
-			minControl: Math.min(...[...document.querySelectorAll('[data-tour-prev], [data-tour-next]')].map((control) => control.getBoundingClientRect().height))
+			minControl: Math.min(...[...document.querySelectorAll('[data-tour-prev], [data-tour-next]')].map((control) => control.getBoundingClientRect().height)),
+			tableOverflow: document.querySelector('[data-tour-scene]:not([hidden]) .app-table-wrap')?.scrollWidth - document.querySelector('[data-tour-scene]:not([hidden]) .app-table-wrap')?.clientWidth,
+			mobileControlVisible: Boolean(document.querySelector('[data-tour-select]')?.getClientRects().length),
+			railVisible: Boolean(document.querySelector('.tour-rail')?.getClientRects().length)
 		}))()`);
 		assert(layout.tabs === 12, `${width}: expected twelve tabs`);
 		assert(layout.scenes === 12, `${width}: expected twelve scenes`);
@@ -125,6 +128,12 @@ try {
 		assert(layout.selected === '0', `${width}: first stop is not selected`);
 		assert(layout.scrollWidth === layout.innerWidth, `${width}: horizontal page overflow`);
 		assert(layout.minControl >= 44, `${width}: tour controls are below 44px`);
+		if (width < 1100) {
+			assert(layout.tableOverflow === 0, `${width}: active evidence table still needs horizontal scrolling`);
+			assert(layout.mobileControlVisible && !layout.railVisible, `${width}: compact tour navigation did not replace the rail`);
+		} else {
+			assert(layout.railVisible && !layout.mobileControlVisible, `${width}: desktop tour rail is not visible`);
+		}
 	}
 
 	await viewport(1440, 900);
@@ -136,7 +145,7 @@ try {
 	}))()`);
 	assert(labelsStop.visibleId === 'labels-printing', 'Labels and printing scene did not become visible');
 	assert(labelsStop.text?.includes('Coming'), 'Labels and printing scene does not expose its Coming status');
-	await evaluate(`document.querySelectorAll('[data-tour-tab]')[11].click()`);
+	await evaluate(`[...document.querySelectorAll('[data-tour-tab]')].at(-1).click()`);
 	const finalStop = await evaluate(`(() => ({
 		selected: document.querySelector('[data-tour-tab][aria-selected="true"]')?.dataset.index,
 		visibleId: document.querySelector('[data-tour-scene]:not([hidden])')?.dataset.stopId,
@@ -152,8 +161,17 @@ try {
 	await send('Page.navigate', { url: 'about:blank' });
 	await delay(100);
 	await navigate('/tour/main#tour-inventory');
-	const directStop = await evaluate(`document.querySelector('[data-tour-scene]:not([hidden])')?.dataset.stopId`);
-	assert(directStop === 'inventory', 'direct inventory hash did not select the inventory stop');
+	const directStop = await evaluate(`(() => ({
+		id: document.querySelector('[data-tour-scene]:not([hidden])')?.dataset.stopId,
+		workspaceTop: document.querySelector('[data-tour]')?.getBoundingClientRect().top,
+		workspaceBottom: document.querySelector('[data-tour]')?.getBoundingClientRect().bottom,
+		viewportHeight: innerHeight
+	}))()`);
+	assert(directStop.id === 'inventory', 'direct inventory hash did not select the inventory stop');
+	assert(
+		directStop.workspaceTop >= 0 && directStop.workspaceTop <= 32 && directStop.workspaceBottom > directStop.viewportHeight,
+		`direct inventory hash did not align the tour workspace with the viewport: ${JSON.stringify(directStop)}`
+	);
 
 	await viewport(390, 844, true);
 	await navigate();
@@ -172,7 +190,30 @@ try {
 	assert(mobileStop.selected === '4' && mobileStop.select === '4', 'mobile select did not stay synchronized');
 	assert(mobileStop.visibleId === 'nutrition-allergens', 'mobile select did not open nutrition and allergens');
 	assert(mobileStop.scrollWidth === mobileStop.innerWidth, 'mobile selection introduced page overflow');
+	const mobileEvidence = await evaluate(`(() => {
+		const table = document.querySelector('[data-tour-scene]:not([hidden]) .app-table-wrap');
+		return {
+			overflow: table.scrollWidth - table.clientWidth,
+			labelledCells: table.querySelectorAll('td[data-label]').length,
+			cells: table.querySelectorAll('td').length
+		};
+	})()`);
+	assert(mobileEvidence.overflow === 0, 'mobile evidence table still needs horizontal scrolling');
+	assert(mobileEvidence.labelledCells === mobileEvidence.cells, 'mobile evidence cells are missing visible labels');
 	await capture('product-tour-mobile');
+
+	await viewport(1440, 900);
+	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+	await navigate();
+	const finishScrollBehavior = await evaluate(`(() => {
+		[...document.querySelectorAll('[data-tour-tab]')].at(-1).click();
+		const heading = document.querySelector('#tour-close-heading');
+		heading.scrollIntoView = (options) => { window.__tourFinishBehavior = options.behavior; };
+		document.querySelector('[data-tour-next]').click();
+		return window.__tourFinishBehavior;
+	})()`);
+	assert(finishScrollBehavior === 'auto', 'reduced-motion tour finish still uses smooth scrolling');
+	await send('Emulation.setEmulatedMedia', { features: [] });
 
 	await viewport(320, 844, true);
 	await navigate();
