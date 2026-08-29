@@ -1,0 +1,81 @@
+---
+/**
+ * Phone-only bar carrying the primary action between the demo and the close.
+ *
+ * MEASURED 2026-08-29 at 390x844: the demo section's CTA ended near 4,500px
+ * and the next one appeared at ~11,500px of a ~12,700px page, so a reader who
+ * had just watched the proof scrolled seven thousand pixels with nothing to
+ * act on. This bar appears once #demo has scrolled off the top and hides
+ * again once #start is in view, which is the only stretch where the page has
+ * no primary of its own. It never shows on the first screen, never over the
+ * close, and never above md, where the page is short enough to see the ask.
+ *
+ * ONE ACTION, SAME WORDS. It renders cta.label from site.ts like every other
+ * primary, so the page still opens, middles and closes on one action and the
+ * claim check's F1 rule holds by construction.
+ *
+ * JS OFF: it stays hidden. It is a convenience duplicate of a link that exists
+ * three times in the document, so hiding it costs a no-JS reader nothing
+ * (principle 3 is about content, and this is not content).
+ *
+ * Considered Observer (a scroll-position store the bar and the header both
+ * subscribe to); not used because there is exactly one subscriber and the
+ * platform already ships the observer. One IntersectionObserver, two
+ * sentinels, no store.
+ */
+import { cta, launchPlan } from '../lib/site';
+---
+
+<div
+	hidden
+	data-sticky-cta
+	class="fixed inset-x-0 bottom-0 z-30 border-t border-ticket-rule bg-cream/95 px-[clamp(1rem,4vw,1.5rem)] py-2.5 shadow-ticket backdrop-blur-sm md:hidden"
+	style="padding-bottom: max(0.625rem, env(safe-area-inset-bottom))"
+>
+	<div class="mx-auto flex max-w-lg items-center justify-between gap-3">
+		<p class="text-sm leading-snug text-ink-soft">
+			<strong class="font-semibold text-ink">{launchPlan.trialDays} days free.</strong> Charged $0 today.
+		</p>
+		<a
+			href={cta.href}
+			target={cta.target}
+			rel={cta.rel}
+			aria-label={cta.ariaLabel}
+			class="btn-primary shrink-0 px-4 py-2.5 text-sm whitespace-nowrap"
+		>
+			{cta.label}
+		</a>
+	</div>
+</div>
+
+<script>
+	const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
+	const demo = document.getElementById('demo');
+	const start = document.getElementById('start');
+	if (bar && demo && start && 'IntersectionObserver' in window) {
+		let pastDemo = false;
+		let reachedClose = false;
+		const update = () => {
+			bar.hidden = !(pastDemo && !reachedClose);
+		};
+		// Past the demo means its bottom edge is above the viewport, not merely
+		// that it stopped intersecting (it also stops intersecting when the reader
+		// scrolls back UP past it, and the bar must not show there).
+		new IntersectionObserver(
+			([entry]) => {
+				pastDemo = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
+				update();
+			},
+			{ threshold: 0 }
+		).observe(demo);
+		// Reached the close means its top has entered the viewport; once it has,
+		// the bar stays away for the footer too (the close is the last primary).
+		new IntersectionObserver(
+			([entry]) => {
+				reachedClose = entry.boundingClientRect.top < window.innerHeight;
+				update();
+			},
+			{ threshold: 0 }
+		).observe(start);
+	}
+</script>

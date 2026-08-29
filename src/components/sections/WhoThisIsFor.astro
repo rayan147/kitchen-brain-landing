@@ -31,6 +31,7 @@
  * keep reading, not whether to buy.
  */
 import { spellCapital } from '../../lib/words';
+import SectionHandoff from '../SectionHandoff.astro';
 
 const notFor = [
 	{
@@ -52,7 +53,14 @@ const notFor = [
 ];
 ---
 
+<!-- story: docs/stories/homepage-visual-guidance.story.md -->
+<!-- TWO COLUMNS SINCE 2026-08-29. The fit statement stays on the left; the
+     misfit list moves into the right column as one ticket, so the section is a
+     single frame (who it is for, beside who it is not for) instead of a text
+     column over a text grid with the right 40% of the viewport empty. The
+     four lines are unchanged and still bound by RC-44. -->
 <section id="who" class="container-page py-section-tight" aria-labelledby="who-heading">
+	<div class="grid gap-12 lg:grid-cols-[6fr_5fr] lg:gap-16">
 	<div class="max-w-3xl" data-reveal>
 		<p class="eyebrow">Who this is for</p>
 		<h2 id="who-heading" class="mt-4 text-h2 font-semibold">
@@ -63,24 +71,30 @@ const notFor = [
 			that change, you buy for dates rather than a steady week, and nobody down the hall
 			owns the spreadsheet. That is the whole audience.
 		</p>
-	</div>
-
-	<div class="mt-12 border-t border-ticket-rule pt-8" data-reveal>
-		<h3 class="text-h3 font-semibold">And plainly, who it is not for.</h3>
+		<h3 class="mt-10 text-h3 font-semibold">And plainly, who it is not for.</h3>
 		<p class="mt-4 max-w-[66ch] text-ink-soft">
 			{spellCapital(notFor.length)} kitchens should
 			<a href="/compare" class="btn-quiet">buy something else</a>. Better you find that
 			out here than a month in.
 		</p>
-		<ul role="list" class="mt-7 grid gap-x-12 gap-y-6 sm:grid-cols-2">
+	</div>
+
+	<div class="border border-ticket-rule bg-cream px-5 py-5 shadow-ticket sm:px-6 lg:rotate-[1.5deg]" data-reveal>
+		<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+			NOT FOR · {spellCapital(notFor.length).toUpperCase()} KITCHENS
+		</p>
+		<ul role="list" class="mt-4">
 			{
 				notFor.map((entry) => (
-					<li class="border-t border-hairline pt-4">
+					<li class="border-t border-dashed border-ticket-rule py-4">
 						<p class="font-semibold">{entry.title}</p>
-						<p class="mt-2 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{entry.body}</p>
+						<p class="mt-1.5 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{entry.body}</p>
 					</li>
 				))
 			}
 		</ul>
 	</div>
+	</div>
+
+	<SectionHandoff from="who" />
 </section>

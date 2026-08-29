@@ -73,6 +73,8 @@ const giveUps = [
 // the restaurant's week and the caterer's month, drawn at the same scale. Bar
 // heights on the right are guest counts, which is why they are uneven and why
 // three dates are empty.
+import SectionHandoff from '../SectionHandoff.astro';
+
 const restaurantWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 ---
@@ -83,6 +85,12 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 	aria-labelledby="alternatives-heading"
 >
 	<div class="container-page py-section">
+		<!-- FIGURE LEADS SINCE 2026-08-29. The two calendars are the best drawing on
+		     the page and they sat under a paragraph with the right 40% of the
+		     viewport empty beside it. At lg the lede is the left column and the
+		     figure the right, so the shape is in view the moment the heading is.
+		     story: docs/stories/homepage-visual-guidance.story.md -->
+		<div class="grid gap-10 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
 		<div class="max-w-3xl" data-reveal>
 			<p class="eyebrow">The other tools</p>
 			<h2 id="alternatives-heading" class="mt-4 text-h2 font-semibold">
@@ -93,6 +101,12 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 				solved it are built on the thing a restaurant has: a menu that comes back. The
 				same dishes, the same covers, the same order guide every Tuesday.
 			</p>
+			<p class="mt-5 max-w-[66ch] text-ink-soft">
+				So the question to take to any of them is not whether it costs a recipe. They all
+				do. It is what happens to your Saturday when the client adds forty guests on
+				Thursday: whether the shopping list, the prep sheet and the pack list all move with
+				them, or whether that part is still yours to redo by hand.
+			</p>
 		</div>
 
 		<!-- Drawn, not screenshotted, for the reason LoopBand is: the claim is a
@@ -100,7 +114,7 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 		     boxes rather than inline vector markup, so scripts/check-dist.mjs has no
 		     viewBox to fail the build over. Astro ships HTML comments to dist and
 		     that checker scans them, so naming the tag here failed the build once. -->
-		<figure class="mt-10" data-reveal>
+		<figure class="lg:mt-2" data-reveal>
 			<div class="border-y border-ticket-rule bg-paper px-5 py-8 sm:px-8">
 				<p class="sr-only">
 					Two calendars drawn at the same scale. A restaurant week is seven identical
@@ -196,14 +210,6 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 				checking before you pick a tool rather than after.
 			</figcaption>
 		</figure>
-
-		<div class="mt-12 max-w-2xl" data-reveal>
-			<p class="text-ink-soft">
-				So the question to take to any of them is not whether it costs a recipe. They all
-				do, and several do it well. It is what happens to your Saturday when the client
-				adds forty guests on Thursday: whether the shopping list, the prep sheet and the
-				pack list all move with them, or whether that part is still yours to redo by hand.
-			</p>
 		</div>
 
 		<div class="mt-12 border-t border-ticket-rule pt-8" data-reveal>
@@ -230,5 +236,7 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 				what their own pricing pages listed, on a date printed at the bottom.
 			</p>
 		</div>
+
+		<SectionHandoff from="alternatives" />
 	</div>
 </section>

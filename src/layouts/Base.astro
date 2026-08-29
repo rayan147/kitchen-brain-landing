@@ -90,11 +90,18 @@ const ogImage = new URL('/og.png', site.url).href;
 					},
 					{ rootMargin: '0px 0px -8% 0px', threshold: 0.1 }
 				);
+				// Only the next three screens are ever hidden. Deeper blocks stay
+				// painted: a full-page capture (link previews, crawlers, screenshot
+				// tools) never intersects anything, and with every block hidden
+				// the page rendered as ten blank sections. The reveal is a first-
+				// screens courtesy, not a page-long effect. 2026-08-29.
+				const revealFloor = window.innerHeight * 3;
 				for (const el of els) {
 					// >= innerHeight: anything even partially painted must never
 					// be hidden (reviewers: a visible sliver in the 0.9–1.0 band
 					// would blink out and, outside the -8% root, stay hidden).
-					if (el.getBoundingClientRect().top >= window.innerHeight) {
+					const top = el.getBoundingClientRect().top;
+					if (top >= window.innerHeight && top < revealFloor) {
 						el.classList.add('reveal-pending');
 						io.observe(el);
 					}

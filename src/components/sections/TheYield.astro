@@ -26,6 +26,7 @@
 //     `defaultYieldPct: real('default_yield_pct').notNull().default(100)`.
 //     Nothing is assumed until a human sets it, which is why the copy says so
 //     rather than implying a stocked database.
+import SectionHandoff from '../SectionHandoff.astro';
 ---
 
 <section id="yield" class="container-page border-t border-hairline py-section">
@@ -101,4 +102,6 @@
 			at two hundred.
 		</figcaption>
 	</figure>
+
+	<SectionHandoff from="yield" />
 </section>
