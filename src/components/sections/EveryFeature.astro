@@ -2,6 +2,8 @@
 import { availableFeatureGroups, inDevelopmentFeatureGroups, featureCount } from '../../lib/features';
 import { demoCta } from '../../lib/site';
 
+// Considered Strategy; not used because the feature hub has one fixed
+// editorial guide link and one stable exhaustive-list presentation.
 // The complete shipped-feature list (src/lib/features.ts, written from the
 // code audit). This is the body of the /features reference page — the home
 // page carries only a quiet link from CustomerOutcomes, per Krug's
@@ -24,6 +26,20 @@ import { demoCta } from '../../lib/site';
 				list, CostCook does not do it yet.
 			</p>
 		</div>
+
+		<!-- story: docs/stories/recipes-and-costing-redesign-prompt.story.md -->
+		<aside class="mt-8 border-y border-ticket-rule py-4" aria-labelledby="recipes-costing-guide-heading">
+			<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+				<div>
+					<p class="eyebrow">Featured product guide</p>
+					<h2 id="recipes-costing-guide-heading" class="mt-2 text-h3 font-semibold">Recipes &amp; costing</h2>
+					<p class="mt-2 max-w-[62ch] text-sm leading-relaxed text-ink-soft">
+						Follow one working recipe from the kitchen method to an inspectable portion and menu cost.
+					</p>
+				</div>
+				<a href="/features/recipes-and-costing" class="btn-quiet shrink-0">Explore the guide</a>
+			</div>
+		</aside>
 
 		<nav aria-label="Feature groups" class="mt-8" data-reveal>
 			<ul role="list" class="flex flex-wrap gap-x-6 gap-y-1">

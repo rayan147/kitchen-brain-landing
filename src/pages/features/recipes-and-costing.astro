@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import RecipesCostingFeature from '../../components/sections/RecipesCostingFeature.astro';
+
+// Considered Strategy; not used because this feature family has one deliberate
+// editorial exception and one stable default, with no runtime-swappable layouts.
+const directionContract = [
+	'THESIS: One working recipe serves the line and the quote; refuse the generic feature-card catalogue.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, square records, green actions.',
+	'STORY: The chef-owner sees the split workflow, chooses recipe management or costing, inspects real evidence, then starts or books a demo.',
+	'FIRST VIEWPORT: Editorial statement at left; joined recipe and costing records dominate the right; both actions remain visible.',
+	'FORM: Approved editorial split, first-ranked structure; seed key recipes-costing-one-record.',
+	'FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md'
+].join(' ');
+---
+
+<Base
+	title="Recipe management and costing software for caterers | CostCook"
+	description="Keep the working recipe and the food-cost math connected, from ingredient yield and sub-recipes to plate cost and the customer quote."
+	path="/features/recipes-and-costing"
+	directionContract={directionContract}
+>
+	<RecipesCostingFeature />
+</Base>
