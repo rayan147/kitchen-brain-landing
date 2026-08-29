@@ -1,6 +1,6 @@
 ---
 import { featureGroups } from '../../lib/features';
-import { cta, demoCta } from '../../lib/site';
+import { cta, demoCta, launchPlan } from '../../lib/site';
 
 const ordersGroup = featureGroups.find((group) => group.id === 'orders');
 if (!ordersGroup) throw new Error('Missing public feature group: orders');
@@ -19,7 +19,7 @@ const packLines = [
 
 const recoveryStates = [
 	{ label: 'Plan changed', action: 'Recheck only stale lines', note: 'Checks cleared by the change do not stay falsely complete.' },
-	{ label: 'Aged plan', action: 'Review before the kitchen runs it', note: 'An old frozen plan is marked old, never silently recomputed.' },
+	{ label: 'Aged plan', action: 'Review before the kitchen runs it', note: 'An older confirmed plan is marked old, never silently recomputed.' },
 	{ label: 'Pack still open', action: 'Mark short, packed, or not sure', note: 'The close creates reviewable evidence instead of hiding the gap.' }
 ] as const;
 
@@ -36,7 +36,7 @@ const faqItems = [
 	},
 	{
 		question: 'What happens when the plan changes?',
-		answer: 'Durable checks stay on the server. A plan change clears exactly the checks it made stale, so completed work is not erased without reason and stale work does not stay checked.'
+		answer: 'Checks stay saved to the order. A plan change clears only the checks it made stale, so completed work is not erased without reason and outdated work does not stay checked.'
 	},
 	{
 		question: 'Can the crew print the lists?',
@@ -53,14 +53,15 @@ const faqItems = [
 <article class="orders-page">
 	<section class="hero" aria-labelledby="orders-heading">
 		<div class="container-page hero-grid">
-			<div class="hero-copy anim-enter">
+			<div class="hero-copy">
 				<nav aria-label="Breadcrumb" class="breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Orders, shop, prep & pack</span></nav>
 				<h1 id="orders-heading">One confirmed order. Three working lists. Nothing important left in somebody's head.</h1>
-				<p class="hero-lede">Turn the same menu and guest count into what to buy, what to prep, and what must reach the van—with the frozen event plan behind every check.</p>
+				<p class="hero-lede">Turn the same menu and guest count into what to buy, what to prep, and what must reach the van. Confirmation holds that event plan steady behind every check.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
 				</div>
+				<p class="hero-terms">{launchPlan.trialDays} days free, then {launchPlan.displayPrice}. Charged $0 today.</p>
 			</div>
 
 			<figure class="event-ticket orders-enter">
@@ -74,7 +75,7 @@ const faqItems = [
 					<div class="result"><small>Pack</small><strong>7/8</strong><span>1 open</span></div>
 				</div>
 				<div class="ticket-line"><span>Braised chicken · hotel pan</span><b class="state open">Not packed</b></div>
-				<figcaption>Illustrative counts. Each stage reads the same frozen event while keeping its own progress.</figcaption>
+				<figcaption>Illustrative counts. Each stage reads the same confirmed event while keeping its own progress.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -92,12 +93,12 @@ const faqItems = [
 
 	<nav class="story-nav container-page" aria-label="On this page">
 		<a href="#shop-the-order"><span>Shop the order</span><small>Keep need, on hand, pack size, and packs on the same line.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
-		<a href="#prep-and-pack"><span>Prep, then pack</span><small>Move the frozen plan through two distinct kitchen handoffs.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#prep-and-pack"><span>Prep, then pack</span><small>Move the confirmed plan through two distinct kitchen handoffs.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
 	</nav>
 
 	<section class="source" aria-labelledby="source-heading">
 		<div class="container-page source-grid">
-			<div><p class="eyebrow">The source</p><h2 id="source-heading">Freeze the event the crew is actually running.</h2><p>A confirmed order keeps its menu, date, guest count, plan, math, and money together. Later prices can move; the quote and frozen working plan remain visible.</p></div>
+			<div><p class="eyebrow">The source</p><h2 id="source-heading">Hold the event steady for the crew running it.</h2><p>Confirming an order freezes the menu, date, guest count, plan, math, and money together. That preserves the commitment while later prices can move.</p></div>
 			<div class="source-record"><span>Confirmed event · illustrative</span><div><small>Menu</small><strong>Harvest Table</strong></div><div><small>Guests</small><strong>80</strong></div><div><small>Service</small><strong>30 Aug · 6:00 PM</strong></div></div>
 		</div>
 	</section>
@@ -117,7 +118,7 @@ const faqItems = [
 
 	<section id="prep-and-pack" class="product-section pack-section" aria-labelledby="pack-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="pack-heading">What leaves the shelf becomes two different promises.</h2><p>Prep follows the notes frozen at confirmation. Pack carries food, equipment, and allergen context, then keeps the last open line visible at the loading door.</p></div>
+			<div class="section-intro"><h2 id="pack-heading">What leaves the shelf becomes two different promises.</h2><p>Prep follows the notes saved at confirmation. Pack carries food, equipment, and allergen context, then keeps the last open line visible at the loading door.</p></div>
 			<figure class="pack-board">
 				<div class="prep-strip"><span><small>Prep</small><strong>7 of 7 tasks complete</strong></span><b class="state done">Ready for pack</b></div>
 				<div class="line-head"><span>Pack line</span><span>Progress</span><span>State</span></div>
@@ -130,15 +131,15 @@ const faqItems = [
 
 	<section class="recovery" aria-labelledby="recovery-heading">
 		<div class="container-page recovery-grid">
-			<div><h2 id="recovery-heading">When the plan moves, the checks tell the truth.</h2><p>Changed work, an old frozen plan, and an incomplete pack close keep distinct states. Each one preserves what is safe and names the next action.</p></div>
+			<div><h2 id="recovery-heading">When the plan moves, the checks tell the truth.</h2><p>Changed work, an older confirmed plan, and an incomplete pack close keep distinct states. Each one preserves what is safe and names the next action.</p></div>
 			<div class="recovery-list">{recoveryStates.map((item) => <div><span class="state attention">{item.label}</span><strong>{item.action}</strong><small>{item.note}</small></div>)}</div>
 		</div>
 	</section>
 
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
-			<div><h2 id="capabilities-heading">The complete Orders, shop, prep & pack list.</h2><p>Everything below is shipped today and remains available for the diligence read.</p><p class="count"><strong>{ordersGroup.items.length}</strong><span>shipped capabilities</span></p></div>
-			<details id="features-orders" open><summary><span>Orders, the event</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{ordersGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
+			<div><h2 id="capabilities-heading">The complete Orders, shop, prep & pack list.</h2><p>Open the full shipped list when you want the details.</p><p class="count"><strong>{ordersGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<details id="features-orders"><summary><span>See all {ordersGroup.items.length} shipped capabilities</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{ordersGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
 		</div>
 	</section>
 
@@ -147,37 +148,39 @@ const faqItems = [
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">
-		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the van on the same plan you priced, shopped, and cooked.</h2><p>Bring one real event. Follow it from menu and guest count to the final pack line.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
+		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the van on the same plan you priced, shopped, and cooked.</h2><p>Bring one real event. Follow it from menu and guest count to the final pack line.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
 		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>
 
 <style>
-	.orders-page { overflow: clip; }
+	.orders-page { overflow-wrap: anywhere; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
-	.hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
-	.breadcrumb { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .875rem; color: var(--color-ink-soft); }
-	.breadcrumb a, .onward a { color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
-	.hero h1 { max-width: 14ch; margin-top: 1.5rem; font-size: clamp(2.45rem, 4.4vw, 5rem); font-weight: 600; line-height: .98; letter-spacing: -.03em; }
-	.hero-lede { max-width: 56ch; margin-top: 1.75rem; font-size: clamp(1.05rem, .98rem + .35vw, 1.3rem); line-height: 1.55; color: var(--color-ink-soft); }
+	.hero-grid { display: grid; gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-block: clamp(2.5rem, 4vw, 4.75rem); }
+	.hero-copy, .problem-grid > *, .source-grid > *, .section-intro > *, .recovery-grid > *, .capabilities-grid > *, .faq-grid > *, .closing-grid > * { min-width: 0; }
+	.breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); color: var(--color-ink-soft); }
+	.breadcrumb a, .onward a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline); text-underline-offset: 4px; }
+	.hero h1 { max-width: 16ch; margin-top: 1.15rem; font-size: var(--text-display); font-weight: 600; line-height: var(--text-display--line-height); letter-spacing: var(--text-display--letter-spacing); }
+	.hero-lede { max-width: 56ch; margin-top: 1.35rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+	.hero-terms { margin-top: .8rem; font-size: var(--text-eyebrow); line-height: 1.5; color: var(--color-ink-soft); }
 	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
 	.btn-outline:hover { background: var(--color-softgreen); }
-	.figure-note, .eyebrow { margin-bottom: .7rem; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.figure-note, .eyebrow { margin-bottom: .7rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.event-ticket { min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
-	.ticket-head, .sheet-head, .line-head { display: flex; justify-content: space-between; gap: 1rem; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
-	.state { display: inline-flex; width: fit-content; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: .7rem; font-weight: 700; font-style: normal; letter-spacing: .04em; text-transform: uppercase; }
+	.ticket-head, .sheet-head, .line-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }
+	.state { display: inline-flex; width: fit-content; max-width: 100%; align-items: center; min-height: 24px; padding: .2rem .55rem; border-radius: 999px; font-family: var(--font-body); font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; font-style: normal; letter-spacing: .04em; text-align: center; text-transform: uppercase; white-space: normal; }
 	.state.confirmed, .state.done { background: var(--color-softgreen); color: var(--color-green-deep); }
 	.state.open, .state.attention { background: var(--color-softamber); color: var(--color-amber-deep); }
 	.stage-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: .6rem; align-items: center; margin-top: 1.2rem; }
 	.stage-flow div { padding: .8rem; background: var(--color-cream); }
 	.stage-flow .result { background: var(--color-softamber); }
-	.stage-flow small, .source-record small, .prep-strip small { display: block; color: var(--color-ink-soft); font-size: .7rem; }
-	.stage-flow strong { display: block; font-size: 1.45rem; font-variant-numeric: tabular-nums; }
-	.stage-flow span { color: var(--color-ink-soft); font-size: .72rem; }
+	.stage-flow small, .source-record small, .prep-strip small { display: block; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); }
+	.stage-flow strong { display: block; font-size: var(--text-h3); font-variant-numeric: tabular-nums; }
+	.stage-flow span { color: var(--color-ink-soft); font-size: var(--text-eyebrow); }
 	.stage-flow svg, .story-nav svg, summary svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; color: var(--color-amber-deep); }
-	.ticket-line { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-ticket-rule); font-size: .82rem; }
-	.event-ticket figcaption, .work-sheet figcaption, .pack-board figcaption { margin-top: .85rem; font-size: .78rem; line-height: 1.45; color: var(--color-ink-soft); }
+	.ticket-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-ticket-rule); }
+	.event-ticket figcaption, .work-sheet figcaption, .pack-board figcaption { margin-top: .85rem; font-size: var(--text-eyebrow); line-height: 1.45; color: var(--color-ink-soft); }
 	.problem { border-bottom: 1px solid var(--color-hairline); background: var(--color-paper); }
 	.problem-grid, .source-grid, .recovery-grid { display: grid; gap: 3rem; align-items: center; padding-block: var(--spacing-section-tight); }
 	.problem h2, .source h2, .section-intro h2, .recovery h2, .capabilities h2, .faq h2, .closing h2 { font-size: var(--text-h2); font-weight: 600; line-height: 1.12; }
@@ -185,8 +188,8 @@ const faqItems = [
 	.pan-scene { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
 	.pan-scene > div:not(.pan-mark) { padding: 1.35rem; border-top: 2px solid var(--color-ticket-rule); background: var(--color-cream); }
 	.pan-scene small, .pan-scene span { display: block; color: var(--color-ink-soft); }
-	.pan-scene strong { display: block; margin-block: .4rem; font-size: 1.7rem; font-variant-numeric: tabular-nums; }
-	.pan-mark { color: var(--color-amber-deep); font-family: var(--font-display); font-size: 1.7rem; }
+	.pan-scene strong { display: block; margin-block: .4rem; font-size: var(--text-h3); font-variant-numeric: tabular-nums; }
+	.pan-mark { color: var(--color-amber-deep); font-family: var(--font-display); font-size: var(--text-h3); }
 	.story-nav { display: grid; padding-block: 1.25rem; }
 	.story-nav a { display: grid; min-height: 84px; grid-template-columns: 1fr auto; gap: .25rem 1rem; align-content: center; padding: 1.2rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); }
 	.story-nav a:first-child { border-top: 1px solid var(--color-ticket-rule); }
@@ -196,8 +199,8 @@ const faqItems = [
 	.source { background: var(--color-ink); color: var(--color-paper); }
 	.source-grid > div > p { color: var(--color-ink-muted); }
 	.source-record { background: var(--color-paper); color: var(--color-ink); box-shadow: var(--shadow-lift); }
-	.source-record > span { display: block; padding: .8rem 1rem; background: var(--color-softgreen); color: var(--color-green-deep); font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
-	.source-record > div { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--color-hairline); }
+	.source-record > span { display: block; padding: .8rem 1rem; background: var(--color-softgreen); color: var(--color-green-deep); font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+	.source-record > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; padding: 1rem; border-bottom: 1px solid var(--color-hairline); }
 	.source-record strong { font-variant-numeric: tabular-nums; }
 	.product-section { scroll-margin-top: 1rem; padding-block: var(--spacing-section); }
 	.shop-section { background: var(--color-softgreen); }
@@ -226,8 +229,8 @@ const faqItems = [
 	.capabilities { padding-block: var(--spacing-section); background: var(--color-offwhite); }
 	.capabilities-grid, .faq-grid { display: grid; gap: 3rem; }
 	.count { display: flex; align-items: baseline; gap: .75rem; }
-	.count strong { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-green-deep); }
-	.count span { font-size: .8rem; color: var(--color-ink-soft); }
+	.count strong { font-family: var(--font-display); font-size: var(--text-h2); color: var(--color-green-deep); }
+	.count span { font-size: var(--text-eyebrow); color: var(--color-ink-soft); }
 	details summary { cursor: pointer; list-style: none; }
 	details summary::-webkit-details-marker { display: none; }
 	.capabilities details { scroll-margin-top: 1rem; border-block: 1px solid var(--color-ticket-rule); }
@@ -260,19 +263,19 @@ const faqItems = [
 
 	@media (max-width: 719px) {
 		.hero-grid { gap: 1rem; padding-block: 1.2rem .9rem; }
-		.hero h1 { margin-top: .25rem; font-size: clamp(1.85rem, 8.8vw, 2.3rem); }
-		.hero-lede { margin-top: .65rem; font-size: .9rem; line-height: 1.35; }
+		.hero h1 { margin-top: .25rem; }
+		.hero-lede { margin-top: .65rem; line-height: 1.4; }
 		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .75rem; }
-		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .45rem; font-size: .8rem; text-align: center; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .45rem; text-align: center; }
+		.hero-terms { margin-top: .55rem; }
 		.closing-actions > * { width: 100%; justify-content: center; }
 		.figure-note { margin-bottom: .35rem; }
 		.event-ticket { padding: .7rem; }
 		.stage-flow { gap: .3rem; margin-top: .5rem; }
 		.stage-flow svg { width: 16px; }
 		.stage-flow div { padding: .5rem; }
-		.stage-flow strong { font-size: 1.1rem; }
 		.ticket-line { margin-top: .5rem; padding-top: .5rem; }
-		.event-ticket figcaption { margin-top: .45rem; font-size: .7rem; }
+		.event-ticket figcaption { margin-top: .45rem; }
 		.pan-scene { grid-template-columns: 1fr; }
 		.pan-mark { justify-self: center; transform: rotate(90deg); }
 		.line-head { display: none; }
@@ -281,9 +284,12 @@ const faqItems = [
 		.work-line b, .pack-line em { grid-column: 2; grid-row: 2; }
 		.sheet-foot, .prep-strip { align-items: flex-start; flex-direction: column; }
 		.source-record > div { align-items: flex-start; flex-direction: column; gap: .3rem; }
+		.recovery-list > div { grid-template-columns: 1fr; }
+		.recovery-list small { grid-column: 1; }
 	}
 
 	@media (max-width: 360px) {
+		.hero-actions { grid-template-columns: 1fr; }
 		.stage-flow { grid-template-columns: 1fr auto 1fr; }
 		.stage-flow svg:last-of-type { display: none; }
 		.stage-flow .result { grid-column: 1 / -1; }
@@ -294,7 +300,7 @@ const faqItems = [
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
-		@keyframes orders-handoff-step { from { opacity: .35; filter: blur(2px); transform: translateX(-5px); } }
+		@keyframes orders-handoff-step { from { opacity: .55; transform: translateX(-4px); } }
 		.orders-enter .stage-flow > * { animation: orders-handoff-step 420ms cubic-bezier(.22, 1, .36, 1) backwards; }
 		.orders-enter .stage-flow > :nth-child(1) { animation-delay: 180ms; }
 		.orders-enter .stage-flow > :nth-child(2) { animation-delay: 300ms; }

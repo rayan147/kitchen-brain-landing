@@ -54,7 +54,10 @@ try {
 		}
 		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
 		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
-			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
+			const responseUrl = new URL(message.params.response.url);
+			if (!responseUrl.pathname.startsWith('/_vercel/insights/')) {
+				failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
+			}
 		}
 	});
 
@@ -109,7 +112,9 @@ try {
 			chapters: ['shop-the-order', 'prep-and-pack', 'features-orders', 'faq-heading'].every((id) => document.getElementById(id)),
 			menuHref: [...document.querySelectorAll('[data-features-menu] a')].find((link) => link.textContent.trim().startsWith('Orders'))?.getAttribute('href'),
 			motionName: getComputedStyle(document.querySelector('.orders-enter .stage-flow > *')).animationName,
-			genericRevealCount: document.querySelectorAll('.orders-page [data-reveal]').length
+			genericRevealCount: document.querySelectorAll('.orders-page [data-reveal]').length,
+			heroActionBottoms: actions.slice(0, 2).map((action) => Math.round(action.getBoundingClientRect().bottom)),
+			viewportHeight: innerHeight
 		};
 	})()`);
 	assert(desktop.title?.startsWith('One confirmed order.'), 'desktop: page identity is missing');
@@ -119,6 +124,7 @@ try {
 	assert(desktop.menuHref === '/features/order-shop-prep-pack', 'desktop: dropdown destination is wrong');
 	assert(desktop.motionName === 'orders-handoff-step', `desktop: orders motion owner is ${desktop.motionName}`);
 	assert(desktop.genericRevealCount === 0, `desktop: ${desktop.genericRevealCount} generic reveal hook(s) remain`);
+	assert(desktop.heroActionBottoms.every((bottom) => bottom <= desktop.viewportHeight), `desktop: hero actions end at ${desktop.heroActionBottoms.join('px and ')}px in a ${desktop.viewportHeight}px viewport`);
 	await capture('desktop');
 
 	await viewport(390, 844, true);
@@ -138,8 +144,16 @@ try {
 
 	await viewport(320, 844, true);
 	await navigate();
-	const zoomOverflow = await evaluate(`(() => { document.documentElement.style.fontSize = '200%'; return new Promise((resolve) => requestAnimationFrame(() => resolve(document.documentElement.scrollWidth - innerWidth))); })()`);
-	assert(zoomOverflow === 0, `200% text at 320px: horizontal overflow is ${zoomOverflow}px`);
+	const zoomLayout = await evaluate(`(() => { document.documentElement.style.fontSize = '200%'; return new Promise((resolve) => requestAnimationFrame(() => {
+		const viewportWidth = document.documentElement.clientWidth;
+		const escaped = [...document.querySelectorAll('.orders-page *')].filter((element) => {
+			const rect = element.getBoundingClientRect();
+			return rect.left < -1 || rect.right > viewportWidth + 1;
+		}).length;
+		resolve({ overflow: document.documentElement.scrollWidth - innerWidth, escaped });
+	})); })()`);
+	assert(zoomLayout.overflow === 0, `200% text at 320px: horizontal overflow is ${zoomLayout.overflow}px`);
+	assert(zoomLayout.escaped === 0, `200% text at 320px: ${zoomLayout.escaped} element(s) escape the viewport`);
 
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 	await viewport(390, 844, true);
