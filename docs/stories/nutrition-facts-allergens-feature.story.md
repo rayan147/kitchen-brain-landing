@@ -102,7 +102,8 @@
 
 ### Step 11 — Revise and Finish
 
+- **Readability revision, 2026-08-29:** Replaced reduced full-screen repeats with magnified nutrition, allergen, and print crops; added full-size capture links; opened the allergen evidence path from four tight columns to a 2×2 reading rhythm. The story order, point of view, claims, and single snap line are unchanged.
+
 - **Word count before → after:** 1,320 → target under 900 words in the rendered page.
 - **Claims removed because they could not be shown:** FDA compliance, regulatory ingredient ordering, dietary-characteristic assessment, allergen-free status, fully automatic allergen inference, direct label-printer integration.
 - **Final Image:** Print the next label from the recipe you can show your working for.
-
