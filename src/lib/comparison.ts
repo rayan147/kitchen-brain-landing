@@ -1,5 +1,6 @@
 /**
  * The comparison table, as data.
+ * Coming-plan revision: docs/stories/homepage-coming-plans.story.md
  *
  * WHY THIS FILE EXISTS AT ALL. docs/release-claim-ledger.md excludes
  * "competitor comparisons ... without owner-approved evidence". The owner asked
@@ -13,7 +14,7 @@
  *
  *   'yes'      CostCook only. It ships in the build you would start today.
  *   'coming'   CostCook only. Being built, not in that build. Never a tick.
- *   'no'       CostCook only. We do not do this. There are six of them and
+ *   'no'       CostCook only. We do not do this. The remaining rows stay,
  *              they stay, because a table where one column is ticks all the way
  *              down reads as marketing to the exact reader we want.
  *
@@ -53,6 +54,7 @@
 
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
+import { comingPlans } from './coming-plans';
 
 export const VERIFIED_ON = 'August 23, 2026';
 
@@ -243,8 +245,8 @@ export const comparison: RowGroup[] = [
 				   catalog and nutrition rows were both wrong off a stale local
 				   branch. Par levels ship: core/inventory-planning.ts carries
 				   below-par / at-or-above-par / unevaluable / no-par, judged
-				   only from a trusted count. Buying does not read them, so the
-				   two halves are separate rows. RC-43. */
+				   only from a trusted count. Buying does not read them today; the
+				   separate replenishment row is Coming. RC-43. */
 				label: 'Par levels per ingredient',
 				costcook: 'yes',
 				note: 'A floor you set, and the shelf is flagged when it falls under. Judged only from a count it can trust, never from a guess.',
@@ -252,9 +254,9 @@ export const comparison: RowGroup[] = [
 				meez: NOT_LISTED
 			},
 			{
-				label: 'Buying that tops up to par',
-				costcook: 'no',
-				note: 'Shopping is what the jobs on the books need minus what the shelf can be trusted for. It will not order you back up to a par level.',
+				label: comingPlans.parBuying.comparisonLabel,
+				costcook: comingPlans.parBuying.verdict,
+				note: comingPlans.parBuying.comparisonNote,
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			}
@@ -294,9 +296,9 @@ export const comparison: RowGroup[] = [
 				meez: 'Enterprise, custom'
 			},
 			{
-				label: 'Dietary characteristics',
-				costcook: 'no',
-				note: 'A recipe shows the heading and tells you plainly that it has not been assessed. Nothing is inferred from an ingredient name.',
+				label: comingPlans.dietary.comparisonLabel,
+				costcook: comingPlans.dietary.verdict,
+				note: comingPlans.dietary.comparisonNote,
 				parsley: 'Chef Plus, $189',
 				meez: NOT_LISTED
 			},
@@ -341,8 +343,9 @@ export const comparison: RowGroup[] = [
 				meez: NOT_LISTED
 			},
 			{
-				label: 'English and Spanish',
-				costcook: 'no',
+				label: comingPlans.spanish.comparisonLabel,
+				costcook: comingPlans.spanish.verdict,
+				note: comingPlans.spanish.comparisonNote,
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},

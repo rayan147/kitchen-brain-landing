@@ -70,6 +70,9 @@ const surfaceFiles = [
 	// public copy on the site, so it is scanned like every other surface and
 	// its cell contract is pinned below.
 	'src/lib/comparison.ts',
+	// Owner-confirmed 2026-08-30. These three Coming corrections feed the
+	// homepage, comparison, FAQ, inventory and nutrition surfaces.
+	'src/lib/coming-plans.ts',
 	// The mega-menu descriptions are capability copy, so they pass through the
 	// same forbidden-claim scan as the feature pages they link into.
 	'src/components/SiteNav.astro',
@@ -244,6 +247,7 @@ for (const component of expectedSectionOrder) {
 // and must be rendered on the page, and the CostCook column must still contain
 // real "no" rows. A table that ticks all the way down is the failure mode.
 const comparisonSource = surfaces[surfaceFiles.indexOf('src/lib/comparison.ts')];
+const comingPlansSource = surfaces[surfaceFiles.indexOf('src/lib/coming-plans.ts')];
 const featuresSource = surfaces[surfaceFiles.indexOf('src/lib/features.ts')];
 const featureIndexSource =
 	surfaces[surfaceFiles.indexOf('src/components/sections/FeatureIndex.astro')];
@@ -261,14 +265,36 @@ requireText(
 	'comparison surfaces every CostCook no row before the detailed table',
 );
 const costcookNoRows = (comparisonSource.match(/costcook: 'no'/g) ?? []).length;
-if (costcookNoRows < 4) {
+if (costcookNoRows < 3) {
 	failures.push(
 		`comparison honesty: only ${costcookNoRows} row(s) say CostCook does not do something. ` +
 			'A comparison that wins every row does not survive a demo call. If capability really ' +
 			'changed, move the row and say so in RC-40 rather than lowering this floor.',
 	);
 }
-// A prior version contradicted its own six No rows in the close and turned a
+for (const key of ['parBuying', 'dietary', 'spanish']) {
+	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
+}
+for (const phrase of [
+	"title: 'Buying that tops you back up to par'",
+	"title: 'Dietary characteristics'",
+	"title: 'Spanish'"
+]) {
+	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
+}
+if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 3) {
+	failures.push('owner-confirmed Coming plans: all three corrected capabilities must remain Coming');
+}
+for (const key of ['parBuying', 'dietary', 'spanish']) {
+	requireText(
+		comparisonSource,
+		`costcook: comingPlans.${key}.verdict`,
+		`comparison consumes the shared ${key} status`,
+	);
+}
+requireText(alternativesSource, 'data-coming-plans', 'homepage Coming plan group');
+requireText(alternativesSource, 'Coming soon', 'homepage Coming status');
+// A prior version contradicted its own No rows in the close and turned a
 // pricing-page omission into a claim about competitors' products. Keep both
 // failure phrases out instead of trusting future copy edits to remember RC-40.
 if (/the rows neither of them has|the whole board|the two rows we do not have/i.test(comparePage)) {
@@ -546,13 +572,18 @@ if (!/answer: \[\s*'Yes, for the part of your business/.test(restaurantAnswer.sl
 	failures.push('faq: the restaurant answer must open with the event-work fit, not a blanket misfit');
 }
 // A "no" row on /compare may not become a "yes" in an answer. The three RC-44
-// product limits and the RC-47 give-ups are the ones a friendly answer is most
-// tempted to soften, so their answers are pinned to open with the word.
-for (const id of ['locations', 'permissions', 'fsma', 'spanish']) {
+// product limits are the ones a friendly answer is most tempted to soften, so
+// their answers are pinned to open with the word. Spanish moved to Coming in
+// the owner-confirmed 2026-08-30 RC-47 revision.
+for (const id of ['locations', 'permissions', 'fsma']) {
 	const entry = faqSource.slice(faqSource.indexOf(`id: '${id}'`));
 	if (!/answer: \[\s*'(?:No\.|Not yet\.)/.test(entry.slice(0, 400))) {
 		failures.push(`faq: #${id} must open with "No." (it is a no row on /compare)`);
 	}
+}
+const spanishAnswer = faqSource.slice(faqSource.indexOf("id: 'spanish'"));
+if (!spanishAnswer.slice(0, 400).includes('comingPlans.spanish.faq')) {
+	failures.push('faq: #spanish must read the shared Coming plan');
 }
 requireText(siteSource, "href: '/faq'", 'faq reachable from nav and footer');
 requireText(startHereSource, 'href="/faq"', 'close links to the faq');

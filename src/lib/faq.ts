@@ -22,6 +22,7 @@
  */
 import { launchPlan, site } from './site';
 import { labelsAvailability } from './labels';
+import { comingPlans } from './coming-plans';
 
 export interface FaqEntry {
 	/** Stable id for deep links (#cancel). Lowercase, hyphenated. */
@@ -164,7 +165,7 @@ export const faq: readonly FaqGroup[] = [
 			{
 				id: 'spanish',
 				question: 'Is there a Spanish version?',
-				answer: ['No. English only.'],
+				answer: [comingPlans.spanish.faq],
 				claims: ['RC-47']
 			},
 			{
@@ -267,7 +268,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'inventory',
 				question: 'Is the inventory a live count?',
 				answer: [
-					'No. A physical count sets the baseline; purchases, waste and completed Pack move it from there, and the app tells you how fresh the number is. You can set a par level per ingredient and it will tell you whether you are below it, judged only from a trusted count. It will not buy you back up to par.'
+					`No. A physical count sets the baseline; purchases, waste and completed Pack move it from there, and the app tells you how fresh the number is. You can set a par level per ingredient and it will tell you whether you are below it, judged only from a trusted count. ${comingPlans.parBuying.faq}`
 				],
 				claims: ['RC-31', 'RC-43']
 			}

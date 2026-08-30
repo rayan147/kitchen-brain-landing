@@ -108,3 +108,4 @@
 - **Word count before → after:** Hero paragraphs, 79 → 52 words; the fit decision moved into its own scannable frame and the exhaustive evidence stayed intact.
 - **Claims removed because they couldn't be shown:** “the whole board”; “the rows neither of them has”; full tiered access. The team section separates shipped role-aware boundaries from the missing fine-grained permission grid.
 - **Final Image:** Bring the next menu you need to cost and leave with an answer.
+- **2026-08-30 status revision:** Owner confirmation moved buying-to-par, dietary characteristics and Spanish from No to Coming. Kitchen label printing was already Coming. All four remain outside today’s app and carry no promised date; the detailed rows now read from `src/lib/coming-plans.ts` or the label release status.

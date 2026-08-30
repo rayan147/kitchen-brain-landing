@@ -17,22 +17,11 @@
  * ASSUMPTION (a menu that repeats) rather than a limitation, and the turn is
  * written as the question to go and ask them, not as an answer given for them.
  *
- * THE FOUR GIVE-UPS SHARE NO ROW WITH WhoThisIsFor. That section names three
- * unsupported requirements before the film plays. These four are later
- * capability tradeoffs, read by someone who already wants the thing. Each is
- * a /compare row and may not be softened here:
- *
- *   label printer   -> "Kitchen label printing", COMING, and the only one of the
- *                      four that is. The framing sentence says three are not
- *                      planned and one is being built, because /compare's
- *                      legend exists to keep coming from reading as no and a
- *                      heading that flattens the two undoes it. Until 2026-08-29
- *                      this slot was the printed panel; RC-50 moved that to yes.
- *   top up to par   -> "Buying that tops up to par", no.         RC-43.
- *   dietary         -> "Dietary characteristics", no.
- *   Spanish         -> "English and Spanish", no.
- *
- * If any of those four ships, the /compare row moves first and this follows it.
+ * FOUR COMING PLANS. On 2026-08-30 the release owner changed buying-to-par,
+ * dietary characteristics and Spanish from No to Coming soon. Kitchen label
+ * printing was already Coming. The homepage and /compare move together so a
+ * future item cannot read as absent in one place and promised in another.
+ * Story: docs/stories/homepage-coming-plans.story.md
  *
  * NO PRIMARY CTA. The page opens, middles and closes on one action and this is
  * not one of the three. The quiet link out to /compare is the whole ask: a
@@ -49,27 +38,23 @@
  * comparison page and the features hub, and is stale.)
  */
 import { labelsAvailability } from '../../lib/labels';
+import { comingPlanList } from '../../lib/coming-plans';
 
-const giveUps = [
+const comingItems = [
 	...(labelsAvailability.homepageTradeoff ? [{
-		/* Swapped 2026-08-29 (RC-50): the printed panel ships from the browser, so
-		   the give-up is the label PRINTER, which is the /compare row still coming. */
+		id: 'labels',
 		title: 'Kitchen label printing',
 		body: labelsAvailability.homepageTradeoff
 	}] : []),
-	{
-		title: 'Buying that tops you back up to par',
-		body: 'Shopping is what the jobs on the books need, minus what the shelf can be trusted for. It will not order you back up to a par level.'
-	},
-	{
-		title: 'Dietary characteristics',
-		body: 'A recipe shows the heading and says plainly that it has not been assessed. Nothing is inferred from an ingredient name.'
-	},
-	{
-		title: 'Spanish',
-		body: 'English only.'
-	}
+	...comingPlanList.map((plan) => ({ id: plan.id, title: plan.title, body: plan.homepage }))
 ];
+
+const comingIcons: Record<string, readonly string[]> = {
+	labels: ['M7 8V3h10v5', 'M6 17H4v-7h16v7h-2', 'M7 14h10v7H7z', 'M17 11h.01'],
+	'par-buying': ['M3 5h2l2 10h10l2-7H6', 'M9 20h.01M17 20h.01', 'M9 11h6', 'M12 8v6'],
+	dietary: ['M12 21c5-3 8-7 8-12-5 0-9 2-11 6', 'M12 21C7 17 5 12 5 5c5 0 8 3 8 7'],
+	spanish: ['M4 5h16v11H9l-5 4z', 'M8 9h8', 'M8 12h5']
+} as const;
 
 // The figure. Seven equal marks against irregular special-event dates, drawn at
 // the same scale. One restaurant kitchen can run both planning patterns.
@@ -79,6 +64,7 @@ const regularServiceWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 ---
 
+<!-- story: docs/stories/homepage-coming-plans.story.md -->
 <section
 	id="alternatives"
 	class="border-y border-hairline bg-cream"
@@ -210,26 +196,38 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 		</figure>
 		</div>
 
-		<div class="mt-12 border-t border-ticket-rule pt-8" data-reveal>
-			<h3 class="text-h3 font-semibold">And here is what you give up.</h3>
-			<p class="mt-4 max-w-[66ch] text-ink-soft">
-				CostCook is one plan with everything in it, which means there is no tier to move up
-				to when something is missing. Four of the things the bigger tools list are the ones
-				most likely to matter to you. Three are not planned. Kitchen labels are already
-				built behind a release flag, but are not in the launch plan and stay marked Coming.
-			</p>
-			<ul role="list" class="mt-7 grid gap-x-12 gap-y-6 sm:grid-cols-2">
+		<div class="coming-plans" data-coming-plans data-reveal>
+			<div class="coming-heading">
+				<div>
+					<span>Coming soon</span>
+					<h3 class="mt-3 text-h3 font-semibold">Four additions to the plan.</h3>
+				</div>
+				<p>
+					None is included in the CostCook you would start today, and no release date is
+					promised. Kitchen labels are already built behind a flag; the other three are now
+					on the build plan.
+				</p>
+			</div>
+			<ul role="list" class="coming-list">
 				{
-					giveUps.map((entry) => (
-						<li class="border-t border-hairline pt-4">
-							<p class="font-semibold">{entry.title}</p>
-							<p class="mt-2 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{entry.body}</p>
+					comingItems.map((entry) => (
+						<li data-coming-plan={entry.id}>
+							<span class="coming-icon" aria-hidden="true">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+									{comingIcons[entry.id].map((path) => <path d={path} />)}
+								</svg>
+							</span>
+							<div>
+								<p class="font-semibold">{entry.title}</p>
+								<p class="mt-1 max-w-[58ch] text-sm leading-relaxed text-ink-soft">{entry.body}</p>
+							</div>
+							<strong>Coming soon</strong>
 						</li>
 					))
 				}
 			</ul>
-			<p class="mt-8 text-sm text-ink-soft">
-				Every row, including the ones where they win, is on the{' '}
+			<p class="coming-footnote">
+				Every shipped, Coming and No row is on the{' '}
 				<a href="/compare" class="btn-quiet">comparison page</a>. It names them and reports
 				what their own pricing pages listed, on a date printed at the bottom.
 			</p>
@@ -238,3 +236,92 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 		<SectionHandoff from="alternatives" />
 	</div>
 </section>
+
+<style>
+	.coming-plans {
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-ticket-rule);
+	}
+
+	.coming-heading {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+		gap: 1.5rem 4rem;
+		align-items: end;
+	}
+
+	.coming-heading span,
+	.coming-list > li > strong {
+		display: inline-flex;
+		width: fit-content;
+		border: 1px solid var(--color-amber-deep);
+		border-radius: 999px;
+		padding: 0.25rem 0.55rem;
+		font-size: var(--text-caption);
+		font-weight: 700;
+		line-height: 1.2;
+		color: var(--color-amber-deep);
+	}
+
+	.coming-heading > p,
+	.coming-footnote {
+		max-width: 62ch;
+		font-size: var(--text-body-sm);
+		line-height: 1.55;
+		color: var(--color-ink-soft);
+	}
+
+	.coming-list {
+		display: grid;
+		margin-top: 2rem;
+		border-top: 1px solid var(--color-hairline-strong);
+	}
+
+	.coming-list > li {
+		display: grid;
+		grid-template-columns: 3rem minmax(0, 1fr) auto;
+		gap: 1rem 1.25rem;
+		align-items: start;
+		padding-block: 1rem;
+		border-bottom: 1px solid var(--color-hairline-strong);
+	}
+
+	.coming-icon {
+		display: grid;
+		place-items: center;
+		width: 3rem;
+		height: 3rem;
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 999px;
+		background: var(--color-paper);
+		color: var(--color-amber-deep);
+	}
+
+	.coming-icon svg {
+		stroke: currentColor;
+		stroke-width: 1.7;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.coming-list > li > strong {
+		margin-top: 0.7rem;
+		white-space: nowrap;
+	}
+
+	.coming-footnote {
+		margin-top: 2rem;
+	}
+
+	@media (max-width: 40rem) {
+		.coming-list > li {
+			grid-template-columns: 3rem minmax(0, 1fr);
+		}
+
+		.coming-list > li > strong {
+			grid-column: 2;
+			margin-top: 0;
+		}
+	}
+</style>
