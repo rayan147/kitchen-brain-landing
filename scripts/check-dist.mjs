@@ -93,6 +93,21 @@ for (const step of demoGuideSteps) {
 	}
 }
 
+const outcomeStages = ['quote', 'plan', 'buy', 'cost-again'];
+if (
+	!homeHtml.includes('data-outcomes-guide') ||
+	(homeHtml.match(/data-outcome-handoff/g) ?? []).length !== outcomeStages.length
+) {
+	console.error('check-dist: homepage outcomes are missing the guided route or one of its handoffs');
+	failed = true;
+}
+for (const stage of outcomeStages) {
+	if (!homeHtml.includes(`data-outcome-stage="${stage}"`)) {
+		console.error(`check-dist: homepage outcome route is missing ${stage}`);
+		failed = true;
+	}
+}
+
 const intakeSources = [
 	'Photograph it',
 	'Drop the PDF or the doc in',
@@ -241,6 +256,7 @@ console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
 console.log(`check-dist: homepage demo retains ${demoGuideSteps.length} readable handoffs and the multi-run boundary`);
+console.log(`check-dist: homepage outcomes retain ${outcomeStages.length} guided handoffs and their proof`);
 console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);
 console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
 console.log(`check-dist: homepage yield calculation retains ${yieldStages.length} visible stages and proof`);
