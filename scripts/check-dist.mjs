@@ -77,6 +77,22 @@ for (const step of loopSteps) {
 	}
 }
 
+const demoGuideSteps = ['quote', 'shop', 'prep', 'send', 'receive', 'update'];
+if (
+	!homeHtml.includes('data-demo-guide') ||
+	!homeHtml.includes('data-demo-guide-jump') ||
+	!homeHtml.includes('data-demo-multi-run')
+) {
+	console.error('check-dist: homepage demo is missing its readable guide, jump link, or multi-run proof');
+	failed = true;
+}
+for (const step of demoGuideSteps) {
+	if (!homeHtml.includes(`data-demo-guide-step="${step}"`)) {
+		console.error(`check-dist: homepage demo guide is missing ${step}`);
+		failed = true;
+	}
+}
+
 const intakeSources = [
 	'Photograph it',
 	'Drop the PDF or the doc in',
@@ -224,6 +240,7 @@ if (failed) process.exit(1);
 console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s) all carry intrinsic width/height`);
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
+console.log(`check-dist: homepage demo retains ${demoGuideSteps.length} readable handoffs and the multi-run boundary`);
 console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);
 console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
 console.log(`check-dist: homepage yield calculation retains ${yieldStages.length} visible stages and proof`);
