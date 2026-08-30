@@ -6,6 +6,32 @@ import { setTimeout as delay } from 'node:timers/promises';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const routes = [
+	'/',
+	'/compare',
+	'/contact',
+	'/faq',
+	'/features',
+	'/features/compliance-and-labels',
+	'/features/getting-prices-in',
+	'/features/ingredients-and-supplier-prices',
+	'/features/inventory',
+	'/features/invoices-and-price-list-import',
+	'/features/labels-and-printing',
+	'/features/menus-and-quotes',
+	'/features/nutrition-facts-and-allergens',
+	'/features/order-shop-prep-pack',
+	'/features/purchases-and-month-cost',
+	'/features/purchasing-and-receiving',
+	'/features/recipes-and-costing',
+	'/features/sage',
+	'/features/team-and-access',
+	'/features/team-and-connections',
+	'/features/the-day-itself',
+	'/pricing',
+	'/tour/main',
+	'/who-its-for'
+];
+const detailedFeatureRoutes = new Set([
 	'/features/ingredients-and-supplier-prices',
 	'/features/inventory',
 	'/features/invoices-and-price-list-import',
@@ -13,7 +39,14 @@ const routes = [
 	'/features/purchases-and-month-cost',
 	'/features/recipes-and-costing',
 	'/features/sage'
-];
+]);
+const specialistFeatureRoutes = new Set([
+	...detailedFeatureRoutes,
+	'/features/nutrition-facts-and-allergens',
+	'/features/order-shop-prep-pack',
+	'/features/purchasing-and-receiving',
+	'/features/team-and-access'
+]);
 const viewports = [[1440, 900], [1280, 800], [1024, 768], [768, 1024], [390, 844]];
 const profile = await mkdtemp(join(tmpdir(), 'costcook-feature-family-'));
 const port = 9341;
@@ -74,6 +107,9 @@ try {
 	});
 	const evaluate = async (expression) => {
 		const result = await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
+		if (result.exceptionDetails) {
+			throw new Error(result.exceptionDetails.exception?.description || result.exceptionDetails.text);
+		}
 		return result.result.value;
 	};
 	await Promise.all([send('Page.enable'), send('Runtime.enable'), send('Network.enable')]);
@@ -99,29 +135,45 @@ try {
 			const state = await evaluate(`(() => {
 				const heights = (selector) => [...document.querySelectorAll(selector)].map((node) => node.getBoundingClientRect().height);
 				const heroActions = [...document.querySelectorAll('.hero-actions a')].map((node) => node.getBoundingClientRect());
+				const heroGrid = document.querySelector('.hero-grid');
+				const heroGridStyle = heroGrid ? getComputedStyle(heroGrid) : null;
+				const heroActionsGroup = document.querySelector('.hero-actions');
 				return {
 					h1Count: document.querySelectorAll('h1').length,
 					heroH2Count: document.querySelectorAll('.hero h2').length,
 					overflow: document.documentElement.scrollWidth - innerWidth,
 					chapterNavCount: document.querySelectorAll('nav[aria-label="On this page"] a').length,
-					breadcrumbMin: Math.min(...heights('.feature-breadcrumb a')),
+					breadcrumbMin: Math.min(...heights('.feature-breadcrumb a, .breadcrumb a')),
 					onwardMin: Math.min(...heights('.feature-onward a')),
 					faqMin: Math.min(...heights('.faq summary')),
 					heroTargetsMin: Math.min(...heroActions.map((rect) => rect.height)),
 					heroBottom: Math.max(...heroActions.map((rect) => rect.bottom)),
-					heroActionsFit: heroActions.every((rect) => rect.bottom <= innerHeight)
+					heroActionsFit: heroActions.every((rect) => rect.bottom <= innerHeight),
+					heroPaddingTop: heroGridStyle ? parseFloat(heroGridStyle.paddingTop) : null,
+					heroPaddingBottom: heroGridStyle ? parseFloat(heroGridStyle.paddingBottom) : null,
+					heroRowGap: heroGridStyle ? parseFloat(heroGridStyle.rowGap) : null,
+					heroActionMargin: heroActionsGroup ? parseFloat(getComputedStyle(heroActionsGroup).marginTop) : null,
+					heroIsStacked: heroGridStyle ? heroGridStyle.gridTemplateColumns.split(' ').length === 1 : false
 				};
 			})()`);
 			const label = `${route} at ${width}x${height}`;
 			assert(state.h1Count === 1, `${label}: expected one H1, found ${state.h1Count}`);
-			assert(state.heroH2Count === 0, `${label}: illustrative hero record is exposed as an H2`);
 			assert(state.overflow === 0, `${label}: horizontal overflow is ${state.overflow}px`);
-			assert(state.chapterNavCount >= 2, `${label}: missing local chapter navigation`);
-			assert(state.breadcrumbMin >= 44, `${label}: breadcrumb target is ${state.breadcrumbMin}px`);
-			assert(state.onwardMin >= 44, `${label}: onward target is ${state.onwardMin}px`);
-			assert(state.faqMin >= 44, `${label}: FAQ target is ${state.faqMin}px`);
-			assert(state.heroTargetsMin >= 44, `${label}: hero target is ${state.heroTargetsMin}px`);
-			assert(state.heroActionsFit, `${label}: hero action ends at ${state.heroBottom}px, below the ${height}px first viewport`);
+			if (detailedFeatureRoutes.has(route)) {
+				assert(state.heroH2Count === 0, `${label}: illustrative hero record is exposed as an H2`);
+				assert(state.chapterNavCount >= 2, `${label}: missing local chapter navigation`);
+				assert(state.onwardMin >= 44, `${label}: onward target is ${state.onwardMin}px`);
+				assert(state.faqMin >= 44, `${label}: FAQ target is ${state.faqMin}px`);
+				assert(state.heroActionsFit, `${label}: hero action ends at ${state.heroBottom}px, below the ${height}px first viewport`);
+			}
+			if (specialistFeatureRoutes.has(route)) {
+				assert(state.breadcrumbMin >= 44, `${label}: breadcrumb target is ${state.breadcrumbMin}px`);
+				assert(state.heroTargetsMin >= 44, `${label}: hero target is ${state.heroTargetsMin}px`);
+				assert(state.heroPaddingTop >= 32, `${label}: hero top padding is ${state.heroPaddingTop}px`);
+				assert(state.heroPaddingBottom >= 32, `${label}: hero bottom padding is ${state.heroPaddingBottom}px`);
+				assert(state.heroActionMargin >= 24, `${label}: hero action separation is ${state.heroActionMargin}px`);
+				if (state.heroIsStacked) assert(state.heroRowGap >= 32, `${label}: stacked hero gap is ${state.heroRowGap}px`);
+			}
 		}
 	}
 
@@ -149,4 +201,4 @@ if (failures.length > 0) {
 	console.error(`Feature-family browser verification failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
 }
-console.log('Feature-family browser verification passed: seven routes, five viewports, and 200% text at 320px.');
+console.log('Site spacing verification passed: 24 routes, five viewports, specialist hero rhythm, and 200% text at 320px.');

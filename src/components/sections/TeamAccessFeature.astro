@@ -158,7 +158,10 @@ const faqItems = [
 <style>
 	.team-access-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
-	.hero-grid, .shared-grid, .limit-grid, .faq-grid, .closing-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--space-section); }
+	.hero-grid, .shared-grid, .limit-grid, .faq-grid, .closing-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; }
+	.hero-grid { padding-block: clamp(4rem, 7vw, 7.5rem); }
+	.shared-grid, .limit-grid, .faq-grid { padding-block: var(--spacing-section); }
+	.closing-grid { padding-block: var(--spacing-section-tight); }
 	.hero-grid > *, .shared-grid > *, .limit-grid > *, .faq-grid > *, .closing-grid > * { min-width: 0; }
 	.feature-breadcrumb { margin-bottom: 1.6rem; }
 	h1 { max-width: 10.5ch; }
@@ -186,7 +189,7 @@ const faqItems = [
 	.access-facts dt { color: var(--color-ink-soft); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
 	.access-facts dd { margin-top: .35rem; font-weight: 700; }
 	.roles { scroll-margin-top: 5rem; background: var(--color-softgreen); }
-	.roles > .container-page { padding-block: var(--space-section); }
+	.roles > .container-page { padding-block: var(--spacing-section); }
 	.roles-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem 5rem; align-items: end; }
 	.role-ledger { margin-top: clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--rule); }
 	.role-ledger > section { display: grid; gap: 1.5rem 4rem; padding-block: clamp(1.8rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
