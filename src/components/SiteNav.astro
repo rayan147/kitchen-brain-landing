@@ -115,7 +115,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 															aria-current={path === featureMenuHref(item.featureId, item.coming === true) ? 'page' : undefined}
 															class="grid min-h-11 grid-cols-[1.25rem_minmax(0,1fr)] gap-2 rounded-md px-2 py-2.5 transition-colors duration-150 hover:bg-cream sm:gap-3 sm:px-3"
 														>
-															{item.icon === 'assistant' ? (
+															{item.icon === 'sage' ? (
 																<SageIcon size={20} context="navigation" class="mt-0.5 text-amber-deep" />
 															) : (
 																<svg

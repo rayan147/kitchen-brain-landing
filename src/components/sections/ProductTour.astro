@@ -74,8 +74,8 @@ import SageIcon from '../SageIcon.astro';
 								data-index={index}
 							>
 								<span>{String(index + 1).padStart(2, '0')}</span>
-								<strong class:list={[stop.id === 'sage' && 'sage-stop-label']}>
-									{stop.id === 'sage' && <SageIcon size={18} context="tour" />}
+								<strong class:list={[stop.icon === 'sage' && 'sage-stop-label']}>
+									{stop.icon === 'sage' && <SageIcon size={18} context="tour" />}
 									{stop.label}
 								</strong>
 							</button>

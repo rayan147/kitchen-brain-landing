@@ -27,6 +27,7 @@ import { comingPlans } from './coming-plans';
 export interface FaqEntry {
 	/** Stable id for deep links (#cancel). Lowercase, hyphenated. */
 	id: string;
+	icon?: 'sage';
 	question: string;
 	/** Plain paragraphs. A paragraph may contain one inline <a>; nothing else. */
 	answer: readonly string[];
@@ -170,6 +171,7 @@ export const faq: readonly FaqGroup[] = [
 			},
 			{
 				id: 'sage',
+				icon: 'sage',
 				question: 'What is Sage?',
 				answer: [
 					'An assistant inside CostCook with eleven read-only checks across the shift, recipes, stock, buying and setup. Every answer shows where its numbers came from, and the one thing it can prepare, a shopping-list proposal, waits for a manager or owner to approve it. It cannot reach another kitchen and it never changes a record on its own.',

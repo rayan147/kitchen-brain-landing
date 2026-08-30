@@ -14,10 +14,10 @@
 interface Props {
 	size?: number;
 	class?: string;
-	context?: string;
+	context: 'navigation' | 'homepage' | 'specialist' | 'feature-area' | 'comparison' | 'faq' | 'tour';
 }
 
-const { size = 24, class: className = '', context = 'sage' } = Astro.props;
+const { size = 24, class: className = '', context } = Astro.props;
 ---
 
 <!-- story: docs/stories/sage.story.md -->

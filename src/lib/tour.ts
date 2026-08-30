@@ -13,6 +13,7 @@ export type TourMetric = {
 
 export type TourStop = {
 	id: string;
+	icon?: 'sage';
 	featureId: string;
 	label: string;
 	appArea: string;
@@ -469,6 +470,7 @@ export const tourStops: readonly TourStop[] = [
 	},
 	{
 		id: 'sage',
+		icon: 'sage',
 		featureId: 'assistant',
 		label: 'Sage, the assistant',
 		appArea: 'Sage / Saturday event check',

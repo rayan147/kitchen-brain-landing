@@ -104,6 +104,7 @@ export type FeatureItem = {
 
 export type FeatureGroup = {
 	id: string;
+	icon?: 'sage';
 	/**
 	 * Which of the five plain-language sections this group reads under. The
 	 * strings are the /compare row-group titles VERBATIM (src/lib/comparison.ts).
@@ -416,6 +417,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'assistant',
+		icon: 'sage',
 		section: 'Team, and what it connects to',
 		kicker: 'Sage, the in-app assistant',
 		title: 'Sage, answering from your own numbers.',
@@ -472,7 +474,7 @@ export const inDevelopmentFeatureGroups = featureGroups.filter((group) => group.
 export const featureCount = availableFeatureGroups.reduce((sum, group) => sum + group.items.length, 0);
 
 export type FeatureMenuIcon =
-	| 'assistant'
+	| 'sage'
 	| 'labels'
 	| 'nutrition'
 	| 'recipe'
@@ -586,7 +588,7 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				label: 'Sage, the assistant',
 				description: 'Ask a question, get an answer from your own records, with its sources.',
 				featureId: 'assistant',
-				icon: 'assistant',
+				icon: 'sage',
 				...(SAGE_STATUS === 'yes' ? {} : { coming: true })
 			},
 			{

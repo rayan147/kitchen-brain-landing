@@ -114,10 +114,10 @@ const decisionFacts = [
 								id={entry.id}
 								data-faq-entry
 								data-snap-question={entry.id === 'guests' ? '' : undefined}
-								class:list={['answer-row', entry.id === 'guests' && 'answer-row-snap', entry.id === 'sage' && 'answer-row-sage']}
+								class:list={['answer-row', entry.id === 'guests' && 'answer-row-snap', entry.icon === 'sage' && 'answer-row-sage']}
 							>
 								<dt>
-									{entry.id === 'sage' && <SageIcon size={24} context="faq" />}
+									{entry.icon === 'sage' && <SageIcon size={24} context="faq" />}
 									<span>{entry.question}</span>
 								</dt>
 								{entry.answer.map((paragraph) => <dd set:html={paragraph} />)}
