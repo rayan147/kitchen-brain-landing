@@ -157,6 +157,22 @@ for (const output of realOrderOutputs) {
 	}
 }
 
+const founderConsequences = ['missing', 'connected', 'event'];
+if (
+	!homeHtml.includes('data-founder-trust') ||
+	!homeHtml.includes('data-founder-portrait') ||
+	!homeHtml.includes('data-founder-contact')
+) {
+	console.error('check-dist: homepage founder section is missing its portrait, trust scene, or contact');
+	failed = true;
+}
+for (const consequence of founderConsequences) {
+	if (!homeHtml.includes(`data-founder-consequence="${consequence}"`)) {
+		console.error(`check-dist: homepage founder section is missing ${consequence}`);
+		failed = true;
+	}
+}
+
 // Sage is one bounded path: records are read, one proposal can be prepared,
 // and a person decides whether it moves. Preserve that story and both pieces
 // of product evidence when the homepage section is edited.
@@ -213,4 +229,5 @@ console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.le
 console.log(`check-dist: homepage yield calculation retains ${yieldStages.length} visible stages and proof`);
 console.log(`check-dist: homepage retains ${comingPlans.length} explicitly marked Coming soon plans`);
 console.log(`check-dist: homepage close retains ${realOrderInputs.length} real-order inputs, ${realOrderOutputs.length} outputs, and trial terms`);
+console.log(`check-dist: homepage founder trust retains a portrait, direct contact, and ${founderConsequences.length} product consequences`);
 console.log(`check-dist: homepage Sage retains ${sageStages.length} stages, ${sageScopes.length} jobs, and ${sageBoundaries.length} boundaries`);
