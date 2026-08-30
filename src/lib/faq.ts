@@ -51,7 +51,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'trial',
 				question: 'What does the trial actually cost?',
 				answer: [
-					`Nothing for ${days} days. Stripe takes a card when you start and charges $0 that day. On day sixteen billing begins at ${price} per kitchen workspace unless you cancelled first, and there is no invoice for the ${days} days.`
+					`Nothing for ${days} days. Stripe takes a card when you start and charges $0 during the trial. On day sixteen billing begins at ${price} per kitchen workspace unless you cancelled first.`
 				],
 				claims: ['RC-34']
 			},
@@ -306,9 +306,9 @@ export const faq: readonly FaqGroup[] = [
 				id: 'phone',
 				question: 'Does it work on a phone in a walk-in with one bar?',
 				answer: [
-					'Yes. It was built to be read on a phone mid-shift and it works with no signal and with JavaScript off.'
+					'Previously loaded order pages remain readable with no signal and show when they were cached. A page you did not load before going offline shows the offline fallback, and actions that write data need a connection. With a connection, core pages are server-rendered and remain readable with JavaScript off.'
 				],
-				claims: ['RC-40']
+				claims: ['RC-54']
 			},
 			{
 				id: 'help',

@@ -117,3 +117,7 @@
 - **Revision target (2026-08-29):** The receiving scene now shows the ordered-to-received case price before the posted total, distinguishes the sent PO from the received-short outcome, and presents handoff choices as static example rows rather than live controls.
 - **Progressive-disclosure rule:** The nine-item shipped catalogue stays available but closed until the reader asks for the full list.
 - **Final Image (the CTA sentence):** Walk back into prep knowing what arrived, what it cost, and what still needs buying.
+
+## Revision — send-failure lifecycle (2026-08-30)
+
+All eleven steps remain complete. The send scene now follows the shipped lifecycle precisely: the purchase-order record is created in a queued state before email is attempted; a delivery failure is written to that same record and remains safe to retry. The scene still turns uncertainty into a concrete recovery action, and the established snap line and final image remain unchanged.

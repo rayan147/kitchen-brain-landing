@@ -26,7 +26,7 @@ const faqItems = [
 	},
 	{
 		question: 'What happens if the supplier email fails?',
-		answer: 'The purchase-order record is written only after a successful send. A failed send remains retryable, with the failure kept on record.'
+		answer: 'The purchase order is recorded as queued before CostCook attempts the email. If the send fails, that same record keeps the failure and remains safe to retry.'
 	},
 	{
 		question: 'Do I have to type the delivery again?',
@@ -102,7 +102,7 @@ const faqItems = [
 					<div class="po-row"><span>Baby spinach · 2 kg case</span><b>4 cases</b></div>
 				</div>
 				<div class="po-actions"><span>Available handoffs</span><ul role="list"><li>Email supplier</li><li>Print PO</li><li>Handled by me</li></ul></div>
-				<figcaption>Illustrative purchase order. The record is written after a successful send; a failed email remains retryable.</figcaption>
+				<figcaption>Illustrative purchase order. The record starts queued before email is attempted; a failed send stays on the record and remains retryable.</figcaption>
 			</figure>
 		</div>
 	</section>

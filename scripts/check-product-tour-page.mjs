@@ -28,7 +28,7 @@ const required = [
 	'data-label="Usable yield"',
 	'data-label="Cost"',
 	'One event. Every part of the week that gets it out the door.',
-	'Alvarez–Whitman wedding',
+	'Garden wedding supper',
 	'Illustrative tour data',
 	'Labels & printing is marked Coming.',
 	'data-seed-key="product-tour-connected-event"',
@@ -38,6 +38,9 @@ const required = [
 	'$109.42',
 	'$164.16',
 	'$6.84',
+	'Revenue after food cost',
+	'4.1 kg · count first',
+	'Difference to explain',
 	'/features/recipes-and-costing',
 	'/features/labels-and-printing',
 	'/features/sage',
@@ -51,6 +54,9 @@ if (html.includes('Why this stop matters')) {
 }
 if (html.includes('$61.50 / 10 kg') || html.includes('$6.76 / kg')) {
 	throw new Error('Product tour still contains the unreconciled chicken costing proof.');
+}
+for (const forbidden of ['Gross margin', 'Unaccounted gap', 'Alvarez–Whitman wedding']) {
+	if (html.includes(forbidden)) throw new Error(`Product tour still contains stale claim copy: ${forbidden}`);
 }
 
 if ((html.match(/id="tour-tab-/g) ?? []).length !== 12) {

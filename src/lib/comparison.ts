@@ -35,7 +35,7 @@
  * ($24, $119, $199) and the column header says so. Putting $49 monthly beside
  * $179 annual-prepay would be the first thing a skeptical caterer caught.
  *
- * VERIFIED 2026-08-23 against https://www.parsleysoftware.com/pricing and
+ * VERIFIED 2026-08-30 against https://www.parsleysoftware.com/pricing and
  * https://www.getmeez.com/pricing. Both are living pages. RC-40's release check
  * is to re-read both and update VERIFIED_ON before this ships or ships again.
  *
@@ -47,16 +47,16 @@
  * local branch, and develop are all the wrong answer here: the only question a
  * cell answers is whether a visitor who starts today gets the thing.
  *
- * NOTE FOR THE RELEASE OWNER: the ledger's demo-base pin is 6a29e88e and
- * sandbox/demo is now at b858a483. The pin needs refreshing before deployment,
- * per the release-check rule at the top of the ledger.
+ * The release ledger records the application SHA used for this truth pass.
+ * Deployed feature flags and billing-portal configuration still require the
+ * release-owner checks named there.
  */
 
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
 
-export const VERIFIED_ON = 'August 23, 2026';
+export const VERIFIED_ON = 'August 30, 2026';
 
 export const NOT_LISTED = 'Not listed';
 
@@ -313,7 +313,7 @@ export const comparison: RowGroup[] = [
 				label: 'Kitchen label printing',
 				costcook: labelsAvailability.verdict,
 				note: labelsAvailability.comparisonNote,
-				parsley: NOT_LISTED,
+				parsley: '$59/month add-on',
 				meez: NOT_LISTED
 			}
 		]
@@ -333,7 +333,7 @@ export const comparison: RowGroup[] = [
 				costcook: 'yes',
 				note: 'Owner, Manager and Staff boundaries protect billing, team and setup work, recipe lifecycle decisions, and selected Sage actions.',
 				parsley: 'Business, $379',
-				meez: NOT_LISTED
+				meez: 'Starter, $24'
 			},
 			{
 				label: 'Fine-grained screen permissions',
@@ -354,7 +354,7 @@ export const comparison: RowGroup[] = [
 				costcook: 'no',
 				note: 'One kitchen workspace.',
 				parsley: 'Enterprise, call for quote',
-				meez: NOT_LISTED
+				meez: 'Starter, $24; added recipe-viewer locations $60/month each'
 			},
 			{
 				label: 'Point of sale',
@@ -368,7 +368,7 @@ export const comparison: RowGroup[] = [
 				costcook: 'coming',
 				note: 'QuickBooks is being built.',
 				parsley: NOT_LISTED,
-				meez: NOT_LISTED
+				meez: 'Restaurant365 sync, $199/month plus setup fee'
 			},
 			{
 				label: 'An API to build against',

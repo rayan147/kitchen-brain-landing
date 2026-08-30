@@ -16,6 +16,8 @@ const required = [
 	'aria-label="On this page"',
 	'id="faq-heading"',
 	'What happens if the supplier email fails?',
+	'recorded as queued before CostCook attempts the email',
+	'same record keeps the failure and remains safe to retry',
 	'Walk back into prep with one record.',
 	'Book a 15-min demo',
 	'days free, then',
@@ -38,6 +40,7 @@ if (/<details id="features-purchasing"\s+open>/.test(html)) {
 }
 
 const forbiddenSourceFragments = ['overflow: clip', 'filter: blur', '>Book 15 minutes<', 'hero-copy anim-enter', '<strong>Email supplier</strong>'];
+forbiddenSourceFragments.push('written only after a successful send');
 const forbidden = forbiddenSourceFragments.filter((fragment) => component.includes(fragment));
 if (forbidden.length > 0) {
 	throw new Error(`Purchasing & Receiving source regressed: ${forbidden.join(', ')}`);

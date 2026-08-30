@@ -31,6 +31,16 @@ for (const id of ['trial', 'cancel', 'guests', 'phone', 'demo']) {
 	requireText(`id="${id}"`, `stable #${id} deep link`);
 }
 
+for (const [text, label] of [
+	['charges $0 during the trial', 'bounded trial charge'],
+	['Previously loaded order pages remain readable with no signal', 'bounded offline behavior'],
+	['actions that write data need a connection', 'offline write boundary']
+]) requireText(text, label);
+
+for (const staleClaim of ['there is no invoice for the 15 days', 'works with no signal and with JavaScript off']) {
+	if (html.includes(staleClaim)) failures.push(`stale claim remains: ${staleClaim}`);
+}
+
 if (failures.length > 0) {
 	console.error(`FAQ page contract failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);

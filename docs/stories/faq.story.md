@@ -99,3 +99,7 @@ Phone, one bar, the walk-in door propped with a foot. The reader is not going to
 - Positioning correction: a restaurant owner is not a misfit. The answer now distinguishes repeating daily service from the catering, special-dinner, and changing-menu work CostCook is built to plan.
 - Access correction: the FAQ names Owner, Manager and Staff boundaries without claiming a permission grid, and links the dedicated Team & Access guide.
 - Sage correction: the answer now reflects eleven read-only checks and one approval-bound shopping-list proposal rather than the stale six-tool summary.
+
+## Revision — trial and offline boundaries (2026-08-30)
+
+All eleven steps remain complete. The trial answer promises only what the product and Stripe setup establish: $0 charged during the 15-day trial, with billing beginning on day sixteen unless cancelled. It no longer promises that Stripe creates no invoice. The walk-in answer separates three states that used to be collapsed into “works offline”: previously loaded order pages remain readable from their cache and show its time; unseen pages fall back offline; writes need a connection. Server-rendered reading with JavaScript disabled remains a separate capability, not an offline guarantee. The page’s snap line and final image remain unchanged.

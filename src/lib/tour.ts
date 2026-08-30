@@ -134,7 +134,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Menus & quotes',
 		appArea: 'Menus / Garden wedding supper',
 		title: 'Say the per-guest price with the food cost beside it.',
-		intro: 'Build the menu once, set the guest count, and inspect the margin before the customer hears the number.',
+		intro: 'Build the menu once, set the guest count, and inspect the food-cost room before the customer hears the number.',
 		callout: 'At 180 guests, one dollar per head is a $180 decision.',
 		featureHref: featureMenuHref('menus'),
 		metrics: [
@@ -155,7 +155,7 @@ export const tourStops: readonly TourStop[] = [
 			status: 'Ready to confirm',
 			lines: [
 				{ label: 'Menu food cost', value: '$1,491.38' },
-				{ label: 'Gross margin', value: '$3,548.62', tone: 'good' },
+				{ label: 'Revenue after food cost', value: '$3,548.62', tone: 'good' },
 				{ label: 'Target food cost', value: '31.0%' },
 				{ label: 'Room to target', value: '1.4 pts', tone: 'good' }
 			],
@@ -267,7 +267,7 @@ export const tourStops: readonly TourStop[] = [
 		id: 'labels-printing',
 		featureId: 'labels',
 		label: 'Labels & printing',
-		appArea: 'Prep / Alvarez–Whitman wedding / Labels',
+		appArea: 'Prep / Garden wedding supper / Labels',
 		title: 'Choose the date and allergen facts before a sticker prints.',
 		intro: 'This feature is Coming. The preview starts from the prep list, asks the cook to settle the storage and use-by facts, then freezes what each sticker said for reprints.',
 		callout: 'A label can repeat the date you chose. It cannot choose a food-safety date for you.',
@@ -301,7 +301,7 @@ export const tourStops: readonly TourStop[] = [
 		id: 'orders-plan',
 		featureId: 'orders',
 		label: 'Orders, shop, prep & pack',
-		appArea: 'Orders / Alvarez–Whitman wedding',
+		appArea: 'Orders / Garden wedding supper',
 		title: 'Run shop, prep, and pack from the quote you confirmed.',
 		intro: 'The 180-guest plan carries the frozen quote into three working lists, with check-offs that survive the walk-in and prep table.',
 		callout: 'One guest count. Three lists. No second round of typing.',
@@ -392,7 +392,7 @@ export const tourStops: readonly TourStop[] = [
 			status: '7 lines to buy',
 			lines: [
 				{ label: 'Chicken thigh', value: '10.0 kg', tone: 'attention' },
-				{ label: 'Mixed herbs', value: '0.9 kg', tone: 'attention' },
+				{ label: 'Mixed herbs', value: '4.1 kg · count first', tone: 'attention' },
 				{ label: 'Trusted surplus', value: '5 lines', tone: 'good' },
 				{ label: 'Refused estimates', value: '3' }
 			],
@@ -411,7 +411,7 @@ export const tourStops: readonly TourStop[] = [
 		metrics: [
 			{ label: 'Theoretical', value: '$8,420.00' },
 			{ label: 'Actual spend', value: '$8,891.40' },
-			{ label: 'Unaccounted gap', value: '$471.40', tone: 'attention' },
+			{ label: 'Difference to explain', value: '$471.40', tone: 'attention' },
 			{ label: 'Inventory trust', value: 'Counted', tone: 'good' }
 		],
 		columns: ['Cost evidence', 'Amount', 'Source', 'Review'],
@@ -493,7 +493,7 @@ export const tourStops: readonly TourStop[] = [
 			title: 'Answer sources',
 			status: 'Read-only check',
 			lines: [
-				{ label: 'Order', value: 'Alvarez–Whitman' },
+				{ label: 'Order', value: 'Garden wedding supper' },
 				{ label: 'Purchase order', value: 'PO-1047' },
 				{ label: 'Inventory area', value: 'Walk-in 1' },
 				{ label: 'Proposed writes', value: '0', tone: 'good' }

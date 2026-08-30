@@ -45,6 +45,12 @@ const surfaceFiles = [
 	// risk because stale counts must never read as safe to subtract.
 	'src/components/sections/InventoryFeature.astro',
 	'src/components/sections/RecipesCostingFeature.astro',
+	// Menus and the guided tour contain public financial labels and illustrative
+	// arithmetic. They were previously outside this scan, which let a gross-
+	// margin claim and a stale-count subtraction pass while the guard stayed green.
+	'src/components/sections/MenusQuotesFeature.astro',
+	'src/components/sections/ProductTour.astro',
+	'src/lib/tour.ts',
 	// Sage specialist page. Availability, onboarding and assistant boundaries
 	// are release claims and must stay inside RC-46/RC-49.
 	'src/components/sections/SageFeature.astro',
@@ -129,6 +135,10 @@ const startHereSource = surfaces[surfaceFiles.indexOf('src/components/sections/S
 const whoSource = surfaces[surfaceFiles.indexOf('src/components/sections/WhoThisIsFor.astro')];
 const trustSource = surfaces[surfaceFiles.indexOf('src/components/sections/BuiltForKitchens.astro')];
 const alternativesSource = surfaces[surfaceFiles.indexOf('src/components/sections/TheOtherTools.astro')];
+
+// Considered Facade; not used because these surfaces are static claim data,
+// not a complex subsystem callers need to operate. One explicit evidence list
+// and focused invariants make omissions visible without hiding file ownership.
 
 const failures = [];
 const requireText = (source, value, label) => {
@@ -257,6 +267,7 @@ const integrationsSource =
 	surfaces[surfaceFiles.indexOf('src/components/sections/Integrations.astro')];
 requireText(comparePage, 'It does not mean their product cannot do it.', 'comparison legend');
 requireText(comparisonSource, 'export const VERIFIED_ON', 'comparison verification date');
+requireText(comparisonSource, "VERIFIED_ON = 'August 30, 2026'", 'current comparison verification date');
 requireText(comparePage, 'VERIFIED_ON', 'comparison verification date on the page');
 requireText(comparePage, 'costcookNo', 'comparison must count its own no rows');
 requireText(
@@ -334,6 +345,13 @@ const printerRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Kitc
 if (!printerRow.slice(0, 220).includes('costcook: labelsAvailability.verdict')) {
 	failures.push('comparison honesty: the label printer is not connected (RC-35); that row may not claim yes');
 }
+requireText(printerRow.slice(0, 260), "parsley: '$59/month add-on'", 'current Parsley label-printing add-on');
+const roleRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Role-aware sensitive actions'"));
+requireText(roleRow.slice(0, 420), "meez: 'Starter, $24'", 'current meez access listing');
+const locationsRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Several locations'"));
+requireText(locationsRow.slice(0, 360), 'added recipe-viewer locations $60/month each', 'current meez location add-on');
+const accountingRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Accounting'"));
+requireText(accountingRow.slice(0, 320), 'Restaurant365 sync, $199/month plus setup fee', 'current meez accounting integration');
 // Every surface that says the sheet prints must say what the sheet says of itself.
 const nutritionSource = surfaces[surfaceFiles.indexOf('src/lib/nutrition.ts')];
 requireText(nutritionSource, 'not a retail-label compliance claim', 'nutrition copy carries the boundary');
@@ -502,7 +520,7 @@ if (/hover:(?:block|flex|opacity)/.test(navSource) || /group-hover/.test(navSour
 	failures.push('features menu opens on hover. It must open on click, at every width.');
 }
 
-requireText(ledger, '6a29e88e36445b74ba5d057fe0461196e39b5c35', 'release ledger');
+requireText(ledger, 'f44c9393973244b8b7f62edaf98c1bd0362162ce', 'release ledger truth-pass baseline');
 requireText(ledger, 'dfb71efc524da94efc6cec2f354751ce69d424e2', 'release ledger');
 requireText(ledger, '7ceb02dbb67034e507aeb279abb421ddd90df87f', 'release ledger');
 requireText(siteSource, 'href: booking.url', 'booking CTA');
@@ -513,7 +531,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 53; claim += 1) {
+for (let claim = 1; claim <= 54; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -587,6 +605,27 @@ if (!spanishAnswer.slice(0, 400).includes('comingPlans.spanish.faq')) {
 }
 requireText(siteSource, "href: '/faq'", 'faq reachable from nav and footer');
 requireText(startHereSource, 'href="/faq"', 'close links to the faq');
+requireText(faqSource, "claims: ['RC-54']", 'offline FAQ cites its resilience boundary');
+requireText(faqSource, 'Previously loaded order pages remain readable with no signal', 'bounded offline FAQ answer');
+requireText(faqSource, 'actions that write data need a connection', 'offline write boundary');
+
+// The tour is illustrative, but its language must still obey the same product
+// invariants as a feature page: food cost is not business margin, stale stock
+// cannot reduce buying, and the total month difference is not all unexplained.
+const tourSource = surfaces[surfaceFiles.indexOf('src/lib/tour.ts')];
+const productTourSource = surfaces[surfaceFiles.indexOf('src/components/sections/ProductTour.astro')];
+requireText(tourSource, "label: 'Revenue after food cost'", 'tour food-cost remainder label');
+requireText(tourSource, "value: '4.1 kg · count first'", 'tour stale-count buying boundary');
+requireText(tourSource, "label: 'Difference to explain'", 'tour month difference label');
+requireText(tourSource, 'Garden wedding supper', 'tour illustrative event identity');
+requireText(productTourSource, '<strong>Garden wedding supper</strong>', 'tour visible event identity');
+
+const purchasingSource = surfaces[surfaceFiles.indexOf('src/components/sections/PurchasingReceivingFeature.astro')];
+requireText(purchasingSource, 'recorded as queued before CostCook attempts the email', 'purchase-order queued lifecycle');
+requireText(purchasingSource, 'same record keeps the failure and remains safe to retry', 'purchase-order retry lifecycle');
+
+requireText(featureIndexSource, 'feature groups below contain work marked Coming', 'features Coming group count');
+requireText(pricingSource, 'feature groups contain work marked Coming', 'pricing Coming group count');
 
 if (/href:\s*['"]#book['"]/.test(siteSource)) {
 	failures.push('booking CTA still points to the inline booking section');
@@ -629,6 +668,10 @@ if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start to
 
 const forbiddenClaims = [
 	[/\bknow the margin\b/i, 'full-margin language'],
+	[/\bgross margin\b|\binspect the margin\b/i, 'unsupported margin label'],
+	[/\bwritten only after a successful send\b/i, 'incorrect purchase-order send lifecycle'],
+	[/\bthere is no invoice for the\b/i, 'unsupported no-invoice trial promise'],
+	[/\bworks with no signal and with JavaScript off\b/i, 'collapsed offline and no-JavaScript promise'],
 	[/\bno data entry\b/i, 'no-data-entry promise'],
 	[/\bnothing is re-keyed\b/i, 'no-rekeying promise'],
 	[/\bfree while/i, 'unapproved pricing promise'],

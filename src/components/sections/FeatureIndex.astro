@@ -32,6 +32,8 @@ import { comingDefinition } from '../../lib/availability';
 // /compare's row groups, which is the invariant this page cannot break.
 ---
 
+<!-- story: docs/stories/features-navigation.story.md -->
+
 <section class="border-y border-hairline bg-cream" aria-labelledby="features-hub-heading">
 	<div class="container-page py-section">
 		{/* break-words on the h1: MEASURED at 200% text on a 360px viewport,
@@ -55,8 +57,8 @@ import { comingDefinition } from '../../lib/availability';
 				part of your week you are worried about.
 			</p>
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
-				{spellCapital(inDevelopmentFeatureGroups.length)} more things are marked Coming. {comingDefinition}{' '}
-				None of them count toward the {featureCount} shipped features.
+				{spellCapital(inDevelopmentFeatureGroups.length)} feature groups below contain work marked Coming. {comingDefinition}{' '}
+				Those future capabilities do not count toward the {featureCount} shipped features.
 			</p>
 			<p class="mt-6">
 				<a href="/#demo" class="btn-quiet">Watch the 2:30 product tour</a>

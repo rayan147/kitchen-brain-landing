@@ -5,7 +5,7 @@
 - **Piece:** Global navigation feature explainer
 - **Title / headline:** Features, broken down by the kitchen job
 - **My hero's name:** The working chef-owner evaluating CostCook
-- **Content file(s):** `src/components/SiteNav.astro`, `src/lib/features.ts`
+- **Content file(s):** `src/components/SiteNav.astro`, `src/lib/features.ts`, `src/components/sections/FeatureIndex.astro`, `src/pages/pricing.astro`
 
 ## The 11 steps
 
@@ -108,3 +108,7 @@ The Features disclosure offers twelve job-led destinations. Its footer gives the
 ## Revision — direct product-tour link (2026-08-29)
 
 The guided tour is now a first-class destination in the shared navigation. On wide screens, “Product tour” sits beside Pricing so a visitor can start the seeded walkthrough without first opening Features. At tighter widths, the established Features disclosure remains the route into the tour and protects the header’s limited space. The footer carries the direct link at every width, preserving a second recovery path without inventing new language or another workflow.
+
+## Revision — Coming group count (2026-08-30)
+
+All eleven steps remain complete. The Features hub and Pricing page now say that three **feature groups** contain Coming work. They no longer imply that CostCook has only three individual Coming capabilities. The detailed rows remain the authoritative inventory, preserving the same scan path, snap line, and final handoff.

@@ -121,3 +121,7 @@ The recipe stop keeps its original 7.8 kg chicken requirement, 91% usable yield,
 The story still runs through the same 12 stops and retains the same snap line. On a phone, each ingredient now becomes a readable evidence row with Ingredient, Used, Usable yield, and Cost visible without a hidden horizontal swipe. A shared stop URL lands at the tour workspace, so the selected proof is in view rather than one viewport below the hero. The final handoff becomes instant for readers who request reduced motion.
 
 All 11 story-building steps remain complete: the hero, want, wound, plot, scenes, voices, value turns, intention, snap, physical scene, hand-offs, and final image are unchanged; this revision makes their numeric proof and responsive delivery honest.
+
+## Revision — claim and arithmetic truth pass (2026-08-30)
+
+All eleven steps remain complete. The illustrative tour event is now the Garden wedding supper, so it cannot be mistaken for the separately recorded Alvarez-Whitman homepage demo. The menu scene names **revenue after food cost**, not gross margin, because CostCook does not calculate labor or overhead. The inventory scene refuses to subtract the stale mixed-herb count and shows the full 4.1 kg need with a count-first instruction. The month scene calls $471.40 the **difference to explain**; after $186.50 of logged waste, $284.90 remains unaccounted. The original snap line and final image remain unchanged.
