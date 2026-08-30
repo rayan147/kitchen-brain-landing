@@ -81,6 +81,8 @@ export type Verdict = 'yes' | 'no' | 'coming';
 
 export interface Row {
 	label: string;
+	/** Optional product identity mark used beside a visible capability label. */
+	icon?: 'sage';
 	costcook: Verdict;
 	/** Shown under the label. Required wherever a tick or a dash needs its edge. */
 	note?: string;
@@ -378,6 +380,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'An assistant that answers from your numbers',
+				icon: 'sage',
 				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
 				costcook: SAGE_STATUS,
 				note: 'Sage is available now. It reads your records, shows its sources, helps during setup and can prepare a shopping-list draft for you to approve.',

@@ -1,6 +1,7 @@
 ---
 import { sage, sageStatusWord } from '../../lib/sage';
 import { cta, demoCta } from '../../lib/site';
+import SageIcon from '../SageIcon.astro';
 
 // Considered Strategy; not used because the page selects one fixed editorial
 // view of Sage's static product contract; no behavior is swapped at runtime.
@@ -55,7 +56,10 @@ const videoChapters = [
 					<span aria-hidden="true">/</span>
 					<span>Sage</span>
 				</nav>
-				<p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p>
+				<div class="sage-identity">
+					<SageIcon size={32} context="specialist" />
+					<div><strong>Sage</strong><p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p></div>
+				</div>
 				<h1 id="sage-feature-heading" class="feature-display">Ask your kitchen. Check the answer.</h1>
 				<p class="hero-lede">
 					Sage is inside CostCook, including during setup. It reads the records you have,
@@ -266,8 +270,11 @@ const videoChapters = [
 <style>
 	.sage-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); overflow: clip; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
-	.hero-grid { display: grid; gap: clamp(3.5rem, 7vw, 7rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
-	.availability { display: inline-flex; align-items: center; gap: 0.55rem; margin-bottom: 1.25rem; color: var(--color-green-deep); font-size: var(--text-caption); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+	.hero-grid { display: grid; gap: clamp(3.5rem, 7vw, 7rem); align-items: center; padding-block: clamp(3.5rem, 6vw, 7rem); }
+	.sage-identity { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; color: var(--color-green-deep); }
+	.sage-identity > div { display: flex; min-width: 0; flex-wrap: wrap; align-items: center; gap: .3rem .7rem; }
+	.sage-identity strong { color: var(--color-ink); font-family: var(--font-display); font-size: var(--text-record); font-weight: 600; line-height: 1.1; }
+	.availability { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--color-green-deep); font-size: var(--text-caption); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 	.availability span { width: 0.65rem; height: 0.65rem; border-radius: 999px; background: var(--color-green); box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-green) 13%, transparent); }
 	.hero h1 { max-width: 10ch; }
 	.hero-lede { max-width: 40ch; margin-top: 1.75rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }

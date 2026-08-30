@@ -2,6 +2,7 @@
 import { featureMenuHref, featureMenuSections } from '../lib/features';
 import { cta, featuresMenu, nav, signIn } from '../lib/site';
 import BrandLockup from './BrandLockup.astro';
+import SageIcon from './SageIcon.astro';
 
 // The native disclosure is the reliable base: click, Enter, touch, and no-JS
 // all use the same mechanism. The script adds only the recovery behavior a
@@ -51,10 +52,6 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 			<symbol id="feature-menu-labels" viewBox="0 0 20 20">
 				<path d="M3.5 5.25h13v9.5h-13v-9.5Z" />
 				<path d="M6 8.25h8M6 11h5M13.25 11.75h.5" />
-			</symbol>
-			<symbol id="feature-menu-assistant" viewBox="0 0 20 20">
-				<path d="M3.5 4.75h13v8.5H9.25L5.5 16.5v-3.25h-2v-8.5Z" />
-				<path d="M7 8h6M7 10.5h4" />
 			</symbol>
 			<symbol id="feature-menu-ledger" viewBox="0 0 20 20">
 				<path d="M4.5 2.75h11v14.5l-2-1.25-2 1.25-2-1.25-2 1.25-3-1.75V2.75Z" />
@@ -118,20 +115,24 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 															aria-current={path === featureMenuHref(item.featureId, item.coming === true) ? 'page' : undefined}
 															class="grid min-h-11 grid-cols-[1.25rem_minmax(0,1fr)] gap-2 rounded-md px-2 py-2.5 transition-colors duration-150 hover:bg-cream sm:gap-3 sm:px-3"
 														>
-															<svg
-																width="20"
-																height="20"
-																viewBox="0 0 20 20"
-																fill="none"
-																stroke="currentColor"
-																stroke-width="1.5"
-																stroke-linecap="round"
-																stroke-linejoin="round"
-																class="mt-0.5 text-amber-deep"
-																aria-hidden="true"
-															>
-																<use href={`#feature-menu-${item.icon}`} />
-															</svg>
+															{item.icon === 'assistant' ? (
+																<SageIcon size={20} context="navigation" class="mt-0.5 text-amber-deep" />
+															) : (
+																<svg
+																	width="20"
+																	height="20"
+																	viewBox="0 0 20 20"
+																	fill="none"
+																	stroke="currentColor"
+																	stroke-width="1.5"
+																	stroke-linecap="round"
+																	stroke-linejoin="round"
+																	class="mt-0.5 text-amber-deep"
+																	aria-hidden="true"
+																>
+																	<use href={`#feature-menu-${item.icon}`} />
+																</svg>
+															)}
 															<span class="min-w-0">
 																<span class="flex flex-wrap items-baseline gap-x-2 text-sm font-semibold text-ink">
 																	{item.label}

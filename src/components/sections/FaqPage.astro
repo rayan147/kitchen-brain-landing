@@ -2,6 +2,7 @@
 import { faq, faqCount } from '../../lib/faq';
 import { contactCta, cta, demoCta, launchPlan } from '../../lib/site';
 import { spellCapital } from '../../lib/words';
+import SageIcon from '../SageIcon.astro';
 
 type GroupGuide = {
 	description: string;
@@ -113,9 +114,12 @@ const decisionFacts = [
 								id={entry.id}
 								data-faq-entry
 								data-snap-question={entry.id === 'guests' ? '' : undefined}
-								class:list={['answer-row', entry.id === 'guests' && 'answer-row-snap']}
+								class:list={['answer-row', entry.id === 'guests' && 'answer-row-snap', entry.id === 'sage' && 'answer-row-sage']}
 							>
-								<dt>{entry.question}</dt>
+								<dt>
+									{entry.id === 'sage' && <SageIcon size={24} context="faq" />}
+									<span>{entry.question}</span>
+								</dt>
 								{entry.answer.map((paragraph) => <dd set:html={paragraph} />)}
 							</div>
 						))}
@@ -377,6 +381,17 @@ const decisionFacts = [
 		font-weight: 600;
 		line-height: 1.25;
 		text-wrap: balance;
+	}
+
+	.answer-row-sage dt {
+		display: flex;
+		align-items: center;
+		gap: .75rem;
+		color: var(--color-green-deep);
+	}
+
+	.answer-row-sage dt span {
+		color: var(--color-ink);
 	}
 
 	.answer-row dd {

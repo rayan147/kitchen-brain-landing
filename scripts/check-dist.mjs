@@ -237,6 +237,27 @@ for (const boundary of sageBoundaries) {
 	}
 }
 
+// Sage owns one distinctive mark wherever a reader encounters it as a named
+// product feature. The shared component carries a context hook so a future
+// visual refactor cannot leave the homepage and supporting decision routes
+// speaking different icon languages.
+const sageIconSurfaces = [
+	['index.html', 'homepage'],
+	['index.html', 'navigation'],
+	['features/sage/index.html', 'specialist'],
+	['features/team-and-connections/index.html', 'feature-area'],
+	['compare/index.html', 'comparison'],
+	['faq/index.html', 'faq'],
+	['tour/main/index.html', 'tour']
+];
+for (const [page, context] of sageIconSurfaces) {
+	const html = readFileSync(join(dist, page), 'utf8');
+	if (!html.includes(`data-sage-icon="${context}"`)) {
+		console.error(`check-dist: ${page} is missing the shared Sage icon in ${context}`);
+		failed = true;
+	}
+}
+
 for (const target of menuTargets) {
 	const href = `href="${target.href ?? `/features/${target.area}#features-${target.id}`}"`;
 	const id = `id="features-${target.id}"`;
@@ -264,3 +285,4 @@ console.log(`check-dist: homepage retains ${comingPlans.length} explicitly marke
 console.log(`check-dist: homepage close retains ${realOrderInputs.length} real-order inputs, ${realOrderOutputs.length} outputs, and trial terms`);
 console.log(`check-dist: homepage founder trust retains a portrait, direct contact, and ${founderConsequences.length} product consequences`);
 console.log(`check-dist: homepage Sage retains ${sageStages.length} stages, ${sageScopes.length} jobs, and ${sageBoundaries.length} boundaries`);
+console.log(`check-dist: shared Sage icon is present across ${sageIconSurfaces.length} homepage and decision-route contexts`);

@@ -1,6 +1,7 @@
 ---
 import { tourSeedKey, tourStops } from '../../lib/tour';
 import { cta, demoCta } from '../../lib/site';
+import SageIcon from '../SageIcon.astro';
 ---
 
 <!-- story: docs/stories/product-tour.story.md -->
@@ -73,7 +74,10 @@ import { cta, demoCta } from '../../lib/site';
 								data-index={index}
 							>
 								<span>{String(index + 1).padStart(2, '0')}</span>
-								<strong>{stop.label}</strong>
+								<strong class:list={[stop.id === 'sage' && 'sage-stop-label']}>
+									{stop.id === 'sage' && <SageIcon size={18} context="tour" />}
+									{stop.label}
+								</strong>
 							</button>
 						))}
 					</div>
@@ -311,6 +315,8 @@ import { cta, demoCta } from '../../lib/site';
 	.tour-rail button[aria-selected='true'] { background: #e5f1ea; color: #1f3b2d; }
 	.tour-rail button span { font-variant-numeric: tabular-nums; font-size: .75rem; letter-spacing: .08em; }
 	.tour-rail button strong { font-size: var(--text-eyebrow); line-height: 1.25; }
+	.tour-rail .sage-stop-label { display: flex; align-items: center; gap: .45rem; }
+	.tour-rail .sage-stop-label svg { flex: 0 0 auto; }
 	.tour-stage { min-width: 0; background: #f7f9f7; }
 	.app-topbar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(12rem, 22rem) auto; align-items: center; gap: 1rem; min-height: 4.2rem; border-bottom: 1px solid #dce3dd; background: #fff; padding: .75rem 1.2rem; }
 	.app-brand { display: flex; min-width: 0; align-items: center; gap: .7rem; }
