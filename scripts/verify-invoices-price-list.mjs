@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
-const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4326';
+const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const url = `${baseUrl}/features/invoices-and-price-list-import`;
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
 await mkdir(reviewDir, { recursive: true });
