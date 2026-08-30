@@ -99,3 +99,4 @@ Wet hands, the walk-in door held with a foot, a phone propped on the lowboy. Ref
 - Added: first-frame proof, status-aligned hero action, an on-page chapter index, full-size proof links, 72px FAQ targets, explicit trial terms at the close, and one atomic availability object for every public status surface.
 - Every capability traces to `src/routes/labels/*`, `src/lib/domain/labeling/*`, `src/lib/labels/transport.ts` and `src/lib/server/features/access.ts` at sandbox/demo c01bf751; RC-51 lists them.
 - Ending: "Print what you chose. Keep the record." then the primary CTA.
+- 2026-08-30 revision: public copy now says only what the reader needs to decide: Labels is Coming and is not included today. The internal sandbox and release-flag provenance remains in RC-51, not on the page.

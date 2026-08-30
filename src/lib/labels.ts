@@ -8,7 +8,8 @@
  * (`src/lib/server/features/access.ts`, env `FEATURE_LABEL_PRINTING_ENABLED`,
  * default off, per-business override), and RC-35 is the owner's decision that
  * it is not included at launch. So every surface prints Coming from the one
- * word below, exactly as Sage did, and the captures say SANDBOX BUILD.
+ * word below, exactly as Sage did. Internal provenance stays in this file and
+ * the release ledger instead of appearing in public capture labels.
  *
  * WHAT MAY NOT BE SAID. That a label reaches a printer on its own: the only
  * output today is the browser's print dialog (`src/lib/labels/transport.ts`,
@@ -40,7 +41,7 @@ export const labelsAvailability = {
 	word: labelsStatusWord,
 	featureLead: labelsAreComing ? 'Built, behind a flag, marked Coming.' : 'Available now.',
 	pageSentence: labelsAreComing
-		? 'Not in the app you would start today. The feature is built behind a release flag and is not included in the launch subscription. This page shows the sandbox build, and every public mention stays marked Coming until that changes.'
+		? 'Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.'
 		: 'Available now in the CostCook subscription you would start today.',
 	featureDetail: labelsAreComing
 		? 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. The feature is built behind a release flag and not included at launch, so it remains marked Coming.'
@@ -123,13 +124,13 @@ export const labels = {
 		'The app never picks a use-by date. A saved shelf life, a number you enter, an exact date, or the made date only.'
 	],
 	proof: {
-		heroAlt: 'Sandbox label proof for Braised Short Rib, refrigerated, with use-by and made dates and two numbered containers.',
+		heroAlt: 'Label preview for Braised Short Rib, refrigerated, with use-by and made dates and two numbered containers.',
 		/** The top of the Label dialog on a desktop. On phones the page shows the sticker instead. */
 		dialog: {
 			src: '/proof/labels/dialog-wide.png',
 			width: 2080,
 			height: 616,
-			alt: 'Sandbox label dialog for Braised Short Rib showing four storage choices, Refrigerated selected, and a two-sticker preview.'
+			alt: 'Label dialog for Braised Short Rib showing four storage choices, Refrigerated selected, and a two-sticker preview.'
 		},
 		sticker: {
 			src: '/proof/labels/sticker.png',
@@ -150,6 +151,6 @@ export const labels = {
 			alt: 'Label stock settings showing five measured sheet, roll, and custom stock choices.'
 		},
 		caption:
-			'Captured from the running app in the tour’s demo kitchen on the sandbox build, 2026-08-29, with the label_printing flag turned on for the demo business (scripts/capture-labels-proof.mjs). Braised Short Rib for the Alvarez-Whitman wedding, refrigerated, the FDA Food Code seven-day suggestion accepted, two containers.'
+			'Braised Short Rib for the Alvarez-Whitman wedding, refrigerated, with the FDA Food Code seven-day suggestion accepted and two containers recorded.'
 	}
 } as const;

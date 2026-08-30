@@ -31,7 +31,7 @@ export const sage = {
 	/** The app's own one-line description, verbatim from its page header. */
 	tagline:
 		'Ask about your kitchen. Sage reads your records, shows where every number came from, and can prepare a draft for you to approve.',
-	/** Where the app repo was read. Printed beside the captures. */
+	/** Internal provenance for release review; never printed beside the captures. */
 	verified: { sha: '99321170', branch: 'sandbox/demo', on: '2026-08-29' },
 	href: '/features/sage',
 	onboarding: {
@@ -87,7 +87,7 @@ export const sage = {
 			alt: 'A Sage answer on a phone. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record.'
 		},
 		caption:
-			'Captured on the sandbox build on 2026-08-29, in a fixture kitchen made for testing Sage, not the wedding in the tour. The cucumber, the supplier and the prices are the fixture’s.'
+			'An example from a different kitchen than the wedding in the tour: cucumber from Coastline Produce rose from $24.00 to $33.00 across two linked purchases.'
 	}
 } as const;
 

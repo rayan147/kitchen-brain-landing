@@ -1,3 +1,4 @@
+/** Product tour content. story: docs/stories/product-tour.story.md */
 import { featureMenuHref, featureMenuSections } from './features';
 import { labelsAvailability } from './labels';
 
@@ -268,7 +269,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Labels & printing',
 		appArea: 'Prep / Alvarez–Whitman wedding / Labels',
 		title: 'Choose the date and allergen facts before a sticker prints.',
-		intro: 'This feature is Coming. The sandbox flow starts from the prep list, asks the cook to settle the storage and use-by facts, then freezes what each sticker said for reprints.',
+		intro: 'This feature is Coming. The preview starts from the prep list, asks the cook to settle the storage and use-by facts, then freezes what each sticker said for reprints.',
 		callout: 'A label can repeat the date you chose. It cannot choose a food-safety date for you.',
 		featureHref: featureMenuHref('labels', labelsAvailability.isComing),
 		metrics: [
@@ -286,7 +287,7 @@ export const tourStops: readonly TourStop[] = [
 		],
 		aside: {
 			title: 'Label setup',
-			status: 'Sandbox build',
+			status: 'Coming',
 			lines: [
 				{ label: 'Stock', value: '2 × 1 in roll' },
 				{ label: 'Made on', value: 'Aug 29, 2026' },

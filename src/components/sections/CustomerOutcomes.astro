@@ -32,8 +32,8 @@
  */
 import SectionHandoff from '../SectionHandoff.astro';
 
-/** Where and when every crop below was taken; the eyebrow prints it. */
-const captured = { branch: 'sandbox/demo', on: '2026-08-29' };
+// Considered Decorator; not used because evidence labels are static content,
+// not responsibilities added to proof objects at runtime.
 
 const outcomes = [
 	{
@@ -104,14 +104,9 @@ const outcomes = [
 						data-reveal
 						style={`--reveal-delay: ${index * 70}ms`}
 					>
-						<div class="flex items-baseline justify-between gap-4">
-							<p class="font-mono text-sm font-semibold tabular-nums text-amber-deep">
-								{String(index + 1).padStart(2, '0')}
-							</p>
-							<p class="font-mono text-eyebrow tracking-wide text-ink-soft">
-								SANDBOX BUILD · {captured.branch} · {captured.on}
-							</p>
-						</div>
+						<p class="font-mono text-sm font-semibold tabular-nums text-amber-deep">
+							{String(index + 1).padStart(2, '0')}
+						</p>
 						{/* The paper box grows to the crop; the crop is shown at half its 2x
 						    pixel width and never cut. */}
 						<div class="mt-4 flex items-start justify-center border border-hairline bg-paper p-4 shadow-ticket">

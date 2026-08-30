@@ -108,7 +108,7 @@
 
 ## Revision — Labels & printing parity (2026-08-29)
 
-`main` added Labels & printing to the Features dropdown after the first tour build. The tour now carries the same seeded event into an eleventh stop between nutrition and event execution. The stop states **Coming** in the first metric, describes the sandbox workflow rather than the launch product, names the browser print-dialog boundary, and keeps the cook responsible for the use-by date. The original snap line remains unchanged.
+`main` added Labels & printing to the Features dropdown after the first tour build. The tour now carries the same seeded event into an eleventh stop between nutrition and event execution. The stop states **Coming** in the first metric, describes the preview workflow, names the browser print-dialog boundary, and keeps the cook responsible for the use-by date. The original snap line remains unchanged.
 
 ## Revision — Team & access parity (2026-08-29)
 

@@ -88,10 +88,11 @@ Phone at 200 percent brightness in a parking lot, thumb over the hero image, pin
 ### Step 10 — Connecting Your Scenes
 
 - POV: second person throughout; alts are descriptions, not persuasion.
-- Every figure carries the same eyebrow form, `SANDBOX BUILD · sandbox/demo · 2026-08-29`, so the reader learns once where the pictures come from. The outcomes no longer say "FROM THE TOUR" with a timestamp because they are no longer frames of the video; the order is the tour's order.
+- Each figure now names the product evidence it shows, such as `RECIPE NUTRITION` or `SAGE ANSWER · SOURCE LINKED`. Internal branch and build provenance stays in the release ledger instead of asking the reader to interpret engineering context.
 
 ### Step 11 — Revise and Finish
 
 - Cut: the whole Greek Salad table (seven lines) down to three with the calculation open; the empty cream under the Sage answer; the app chrome around the label sheet; the dead `shot` data in `src/lib/workflow.ts` that pointed at twelve deleted files.
 - Honest gaps kept: the nutrition panel still shows two seeded profiles and blank rows; the caption says so.
 - Ending: `node scripts/capture-proof.mjs` retakes all twelve.
+- 2026-08-30 revision: removed `SANDBOX BUILD` and branch/date labels from every public capture. Kept the exact records, amounts, alt text, and capture pipeline unchanged.

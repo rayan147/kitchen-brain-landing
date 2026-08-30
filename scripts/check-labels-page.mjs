@@ -29,7 +29,7 @@ const required = [
 	'/proof/labels/sticker.png',
 	'/proof/labels/print-sheet.png',
 	'/proof/labels/stock-picker.png',
-	'SANDBOX BUILD',
+	'LABEL PREVIEW',
 	'blank label is not an all-clear',
 	'never guesses a date',
 	'browser’s print dialog',
@@ -38,12 +38,13 @@ const required = [
 	'Does it send labels straight to a label printer?',
 	'Print what you chose. Keep the record.'
 ];
-if (coming) required.push('data-labels-status="coming"', 'data-labels-status-sentence', 'not included in the launch subscription', 'See what ships today');
+if (coming) required.push('data-labels-status="coming"', 'data-labels-status-sentence', 'Not included in the CostCook subscription', 'See what ships today');
 
 const missing = required.filter((fragment) => !html.includes(fragment));
 if (missing.length > 0) throw new Error(`Labels page build is missing: ${missing.join(', ')}`);
 
 if (coming && /Available now/.test(html)) throw new Error('Labels page says Available now while src/lib/labels.ts says coming.');
+if (/sandbox(?:\/demo| build)/i.test(html)) throw new Error('Labels page exposes internal sandbox provenance.');
 const forbidden = [/direct(ly)? to (the |a |your )?(label )?printer/i, /sends? (it |them |labels )?to (the |a |your )?printer/i, /Brother|DYMO|Dymo|Zebra|Avery/];
 for (const pattern of forbidden) {
 	if (pattern.test(html)) throw new Error(`Labels page carries a forbidden claim: ${pattern}`);
