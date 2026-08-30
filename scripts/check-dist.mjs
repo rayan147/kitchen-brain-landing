@@ -138,6 +138,25 @@ for (const plan of comingPlans) {
 	}
 }
 
+const realOrderInputs = ['One menu', 'Guest count', 'Current prices'];
+const realOrderOutputs = ['Food cost', 'Shopping', 'Prep', 'Pack'];
+if (!homeHtml.includes('data-real-order-path') || !homeHtml.includes('data-real-order-trial')) {
+	console.error('check-dist: homepage close is missing its real-order path or trial boundary');
+	failed = true;
+}
+for (const input of realOrderInputs) {
+	if (!homeHtml.includes(`data-order-input="${input}"`)) {
+		console.error(`check-dist: homepage real-order path is missing input ${input}`);
+		failed = true;
+	}
+}
+for (const output of realOrderOutputs) {
+	if (!homeHtml.includes(`data-order-output="${output}"`)) {
+		console.error(`check-dist: homepage real-order path is missing output ${output}`);
+		failed = true;
+	}
+}
+
 // Sage is one bounded path: records are read, one proposal can be prepared,
 // and a person decides whether it moves. Preserve that story and both pieces
 // of product evidence when the homepage section is edited.
@@ -193,4 +212,5 @@ console.log(`check-dist: homepage paper intake retains ${intakeSources.length} s
 console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
 console.log(`check-dist: homepage yield calculation retains ${yieldStages.length} visible stages and proof`);
 console.log(`check-dist: homepage retains ${comingPlans.length} explicitly marked Coming soon plans`);
+console.log(`check-dist: homepage close retains ${realOrderInputs.length} real-order inputs, ${realOrderOutputs.length} outputs, and trial terms`);
 console.log(`check-dist: homepage Sage retains ${sageStages.length} stages, ${sageScopes.length} jobs, and ${sageBoundaries.length} boundaries`);
