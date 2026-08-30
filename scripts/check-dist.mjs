@@ -77,6 +77,27 @@ for (const step of loopSteps) {
 	}
 }
 
+const intakeSources = [
+	'Photograph it',
+	'Drop the PDF or the doc in',
+	'Upload the spreadsheet',
+	'Paste the text'
+];
+if (
+	!homeHtml.includes('data-paper-intake') ||
+	!homeHtml.includes('data-intake-queue') ||
+	!homeHtml.includes('data-intake-confirmation')
+) {
+	console.error('check-dist: homepage paper intake is missing its source-to-confirmation path');
+	failed = true;
+}
+for (const source of intakeSources) {
+	if (!homeHtml.includes(`data-intake-source="${source}"`)) {
+		console.error(`check-dist: homepage paper intake is missing ${source}`);
+		failed = true;
+	}
+}
+
 for (const target of menuTargets) {
 	const href = `href="${target.href ?? `/features/${target.area}#features-${target.id}`}"`;
 	const id = `id="features-${target.id}"`;
@@ -95,3 +116,4 @@ if (failed) process.exit(1);
 console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s) all carry intrinsic width/height`);
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
+console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);

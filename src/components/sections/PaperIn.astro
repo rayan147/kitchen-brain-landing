@@ -56,51 +56,342 @@ import SectionHandoff from '../SectionHandoff.astro';
 // The accept list, in the order RC-38 states it. Photograph, PDF, spreadsheet,
 // Word document, pasted text - the Word document rides with the PDF because a
 // fifth door reads as a feature list and the queue does not care which it was.
-const doors = ['Photograph it', 'Drop the PDF or the doc in', 'Upload the spreadsheet', 'Paste the text'];
+// Considered Composite; not used because four fixed sources converge into one
+// static editorial diagram, not a tree of parts with shared behaviour.
+const doors = [
+	{
+		label: 'Photograph it',
+		iconPaths: ['M5 8h3l1.5-2h5L16 8h3v10H5z', 'M12 11a3 3 0 1 0 0 6 3 3 0 0 0 0-6z']
+	},
+	{
+		label: 'Drop the PDF or the doc in',
+		iconPaths: ['M7 3h7l4 4v14H7z', 'M14 3v5h5', 'M10 12h5', 'M10 16h5']
+	},
+	{
+		label: 'Upload the spreadsheet',
+		iconPaths: ['M5 4h14v16H5z', 'M5 9h14', 'M10 9v11', 'M14.5 9v11', 'M5 14h14']
+	},
+	{
+		label: 'Paste the text',
+		iconPaths: ['M9 5h6', 'M8 7H6v14h12V7h-2', 'M9 3h6v4H9z', 'M9 12h6', 'M9 16h6']
+	}
+];
 ---
 
-<section id="intake" class="container-page border-t border-hairline py-section">
-	<div class="max-w-2xl" data-reveal>
-		<p class="eyebrow">Before any of that</p>
-		<h2 class="mt-4 text-h2 font-semibold">Paper in, staged facts out, you confirm.</h2>
-		<p class="mt-5 text-lede text-ink-soft">
-			All of this runs on what your food costs this week, so something has to get the
-			price board, the order guide and the invoices in. Four doors, one queue.
-		</p>
+<!-- story: docs/stories/homepage-paper-in-visual.story.md -->
+<section id="intake" class="container-page border-t border-hairline py-section" aria-labelledby="intake-heading">
+	<div class="intake-layout">
+		<div class="intake-copy" data-reveal>
+			<p class="eyebrow">Before any of that</p>
+			<h2 id="intake-heading" class="mt-4 text-h2 font-semibold">
+				Paper in, staged facts out, you confirm.
+			</h2>
+			<p class="mt-5 text-lede text-ink-soft">
+				All of this runs on what your food costs this week, so something has to get the
+				price board, the order guide and the invoices in. Four doors, one queue.
+			</p>
+		</div>
+
+		<figure class="intake-map" data-paper-intake data-reveal>
+			<figcaption class="sr-only">
+				A photograph, document, spreadsheet or pasted text enters one staging queue. The
+				queue lists differences, quotes unclear text and waits for your confirmation.
+			</figcaption>
+
+			<div class="source-side">
+				<p class="map-label">Four ways in</p>
+				<ul role="list" class="source-list">
+					{
+						doors.map((door) => (
+							<li data-intake-source={door.label}>
+								<span class="source-icon" aria-hidden="true">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+										{door.iconPaths.map((path) => <path d={path} />)}
+									</svg>
+								</span>
+								<span>{door.label}</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<div class="flow-bridge" aria-hidden="true">
+				<span></span>
+			</div>
+
+			<div class="queue-sheet" data-intake-queue>
+				<div class="queue-head">
+					<p class="map-label">One review queue</p>
+					<span>Nothing written yet</span>
+				</div>
+				<ul role="list" class="queue-list">
+					<li>
+						<span class="queue-mark" aria-hidden="true">1</span>
+						<div><strong>Differences listed</strong><small>What changed stays visible.</small></div>
+					</li>
+					<li>
+						<span class="queue-mark" aria-hidden="true">2</span>
+						<div><strong>Unclear text quoted</strong><small>The source is shown, not guessed.</small></div>
+					</li>
+				</ul>
+				<div class="confirm-gate" data-intake-confirmation>
+					<span>Your gate</span>
+					<strong>You confirm</strong>
+				</div>
+			</div>
+		</figure>
 	</div>
 
-	<!-- The four doors were a clause inside the lede until 2026-08-26. Measured at
-	     390 this section held the page's longest unbroken run of body text (656px)
-	     and its smallest internal gap (20px) at the same time: the most isolated
-	     section on the page and the flattest one inside. The words are the same
-	     four RC-38 backs; splitting them onto ticket rules is what gives the eye
-	     somewhere to land. No door outranks another, so there are no numerals
-	     here - CustomerOutcomes numbers its four because those ARE ordered. -->
-	<ul role="list" class="mt-10 grid gap-x-12 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
-		{
-			doors.map((door, index) => (
-				<li
-					class="border-t border-ticket-rule pt-4"
-					data-reveal
-					style={`--reveal-delay: ${index * 70}ms`}
-				>
-					<p class="font-semibold">{door}</p>
-				</li>
-			))
-		}
-	</ul>
-
-	<div class="mt-12 max-w-2xl" data-reveal>
-		<p class="text-ink-soft">
+	<div class="review-copy" data-reveal>
+		<p>
 			What comes back is a list of differences to look at, not a catalog that changed
 			behind you. Nothing is written until you commit it, and whatever could not be made
 			out is quoted back as it appeared rather than guessed at.
 		</p>
-		<p class="mt-5 text-ink-soft">
-			The awkward invoice you would rather key in by hand is still a supported way to do
-			it. Reading the paper is the fast part. Saying yes to it is yours.
-		</p>
+		<div class="manual-note">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+				<path d="M6 3h12v18H6z" />
+				<path d="M9 8h6M9 12h6M9 16h3" />
+			</svg>
+			<p>
+				The awkward invoice you would rather key in by hand is still a supported way to do
+				it. Reading the paper is the fast part. Saying yes to it is yours.
+			</p>
+		</div>
 	</div>
 
 	<SectionHandoff from="intake" />
 </section>
+
+<style>
+	.intake-layout {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 29rem), 1fr));
+		gap: clamp(2.5rem, 6vw, 5.5rem);
+		align-items: center;
+	}
+
+	.intake-copy {
+		max-width: 37rem;
+	}
+
+	.intake-map {
+		display: grid;
+		gap: 1.25rem;
+		padding: 1.25rem;
+		border-block: 1px solid var(--color-ticket-rule);
+		background: var(--color-cream);
+	}
+
+	.map-label {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: var(--text-label-sm);
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-amber-deep);
+	}
+
+	.source-list {
+		display: grid;
+		margin-top: 0.75rem;
+	}
+
+	.source-list li {
+		display: grid;
+		grid-template-columns: 2.25rem minmax(0, 1fr);
+		gap: 0.75rem;
+		align-items: center;
+		min-height: 3.25rem;
+		padding-block: 0.5rem;
+		border-top: 1px solid var(--color-ticket-rule);
+		font-size: var(--text-body-sm);
+		font-weight: 600;
+	}
+
+	.source-icon {
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 999px;
+		background: var(--color-paper);
+		color: var(--color-amber-deep);
+	}
+
+	.source-icon svg,
+	.manual-note svg {
+		stroke: currentColor;
+		stroke-width: 1.7;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.flow-bridge {
+		display: grid;
+		place-items: center;
+		height: 1.5rem;
+	}
+
+	.flow-bridge span {
+		position: relative;
+		display: block;
+		width: 1px;
+		height: 100%;
+		background: var(--color-amber-deep);
+	}
+
+	.flow-bridge span::after {
+		position: absolute;
+		bottom: 0;
+		left: -3px;
+		width: 7px;
+		height: 7px;
+		border-right: 1.5px solid var(--color-amber-deep);
+		border-bottom: 1.5px solid var(--color-amber-deep);
+		content: '';
+		transform: rotate(45deg);
+	}
+
+	.queue-sheet {
+		border: 1px solid var(--color-hairline);
+		background: var(--color-paper);
+		box-shadow: var(--shadow-ticket);
+	}
+
+	.queue-head {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+		justify-content: space-between;
+		align-items: baseline;
+		padding: 1rem;
+		border-bottom: 1px solid var(--color-hairline);
+	}
+
+	.queue-head > span {
+		font-size: var(--text-caption);
+		font-weight: 600;
+		color: var(--color-ink-soft);
+	}
+
+	.queue-list li {
+		display: grid;
+		grid-template-columns: 1.75rem minmax(0, 1fr);
+		gap: 0.75rem;
+		align-items: start;
+		padding: 0.9rem 1rem;
+		border-bottom: 1px solid var(--color-hairline);
+	}
+
+	.queue-mark {
+		display: grid;
+		place-items: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		border-radius: 999px;
+		background: var(--color-softamber);
+		font-size: var(--text-micro);
+		font-weight: 700;
+		color: var(--color-amber-deep);
+	}
+
+	.queue-list strong,
+	.queue-list small {
+		display: block;
+	}
+
+	.queue-list strong {
+		font-size: var(--text-body-sm);
+	}
+
+	.queue-list small {
+		margin-top: 0.2rem;
+		font-size: var(--text-caption);
+		line-height: 1.4;
+		color: var(--color-ink-soft);
+	}
+
+	.confirm-gate {
+		display: flex;
+		gap: 0.75rem;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.85rem 1rem;
+		background: var(--color-softgreen);
+		color: var(--color-green-deep);
+	}
+
+	.confirm-gate span {
+		font-size: var(--text-caption);
+		font-weight: 600;
+	}
+
+	.confirm-gate strong {
+		font-size: var(--text-body-sm);
+	}
+
+	.review-copy {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+		gap: 1.5rem;
+		margin-top: clamp(2.5rem, 5vw, 4rem);
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--color-hairline);
+		color: var(--color-ink-soft);
+	}
+
+	.review-copy > p {
+		max-width: 43rem;
+	}
+
+	.manual-note {
+		display: grid;
+		grid-template-columns: 1.5rem minmax(0, 1fr);
+		gap: 0.875rem;
+		max-width: 36rem;
+	}
+
+	.manual-note svg {
+		color: var(--color-amber-deep);
+	}
+
+	@media (min-width: 48rem) {
+		.intake-map {
+			grid-template-columns: minmax(0, 0.9fr) 3rem minmax(0, 1.1fr);
+			gap: 0;
+			align-items: center;
+			padding: 1.5rem;
+		}
+
+		.flow-bridge {
+			height: auto;
+		}
+
+		.flow-bridge span {
+			width: 100%;
+			height: 1px;
+		}
+
+		.flow-bridge span::after {
+			top: -3px;
+			right: 0;
+			bottom: auto;
+			left: auto;
+			transform: rotate(-45deg);
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.review-copy {
+			gap: clamp(2.5rem, 5vw, 5rem);
+		}
+
+		.manual-note {
+			max-width: none;
+		}
+	}
+</style>
