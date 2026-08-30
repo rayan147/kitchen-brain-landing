@@ -167,3 +167,7 @@ The key scene is the fold on a phone, one thumb in, screen dimmed by a walk-in l
 - **Claims removed because they could not be shown:** none added; automatic purchasing, automatic supplier synchronization, guaranteed savings, and changed confirmed-event pricing remain excluded.
 - **Final image:** “The next quote starts with what you paid.”
 - 2026-08-30: the fold's audience line and the trust section's "Built for event production" now name restaurants too ("restaurants that cater"; "catering, meal-prep, and restaurant kitchens that plan work from menus and guest counts"). Both had still said caterers and meal-prep only, so the Opening Image excluded the reader the Who scene later welcomed. RC-01 amended; the claim guard pins both lines.
+
+## Revision — phone-first verification (2026-08-30)
+
+All eleven steps remain complete and the visible story is unchanged. The 320px and 390px folds still place the reader, the promise, the trial action, its billing boundary, the tour link, and the first product proof in that order. The persistent trial action now keeps a 44px touch target, and the document opts into phone safe areas so the fixed action clears the home indicator. No new copy, claim, section, or competing snap line was added.

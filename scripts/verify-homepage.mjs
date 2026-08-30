@@ -1,0 +1,228 @@
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawn } from 'node:child_process';
+import { setTimeout as delay } from 'node:timers/promises';
+
+const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
+const route = `${baseUrl}/`;
+const profile = await mkdtemp(join(tmpdir(), 'costcook-homepage-'));
+const port = 10000 + (process.pid % 40000);
+const browser = spawn('chromium', [
+	'--headless', '--no-sandbox', '--disable-gpu', '--hide-scrollbars',
+	`--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, 'about:blank'
+], { stdio: 'ignore' });
+
+const failures = [];
+const assert = (condition, message) => { if (!condition) failures.push(message); };
+let socket;
+
+try {
+	let target;
+	for (let attempt = 0; attempt < 50; attempt += 1) {
+		try {
+			const targets = await fetch(`http://127.0.0.1:${port}/json/list`).then((response) => response.json());
+			target = targets.find((entry) => entry.type === 'page');
+			if (target) break;
+		} catch { /* Chromium is still starting. */ }
+		await delay(100);
+	}
+	if (!target) throw new Error('Chromium DevTools target did not become ready');
+
+	socket = new WebSocket(target.webSocketDebuggerUrl);
+	await new Promise((resolve, reject) => {
+		socket.addEventListener('open', resolve, { once: true });
+		socket.addEventListener('error', reject, { once: true });
+	});
+
+	let messageId = 0;
+	const pending = new Map();
+	const pageErrors = [];
+	const failedRequests = [];
+	socket.addEventListener('message', (event) => {
+		const message = JSON.parse(event.data);
+		if (message.id) {
+			const request = pending.get(message.id);
+			if (!request) return;
+			pending.delete(message.id);
+			if (message.error) request.reject(new Error(message.error.message));
+			else request.resolve(message.result);
+			return;
+		}
+		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
+		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
+			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
+		}
+	});
+
+	const send = (method, params = {}) => new Promise((resolve, reject) => {
+		messageId += 1;
+		pending.set(messageId, { resolve, reject });
+		socket.send(JSON.stringify({ id: messageId, method, params }));
+	});
+	const evaluate = async (expression) => {
+		const result = await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
+		return result.result.value;
+	};
+	const viewport = (width, height, mobile = false) => send('Emulation.setDeviceMetricsOverride', {
+		width, height, deviceScaleFactor: 1, mobile
+	});
+	const navigate = async () => {
+		await send('Page.navigate', { url: route });
+		for (let attempt = 0; attempt < 50; attempt += 1) {
+			if (await evaluate(`document.readyState === 'complete' && location.href === ${JSON.stringify(route)}`)) break;
+			await delay(100);
+		}
+		await evaluate(`document.fonts.ready.then(() => {
+			document.querySelectorAll('[data-reveal]').forEach((element) => {
+				element.classList.remove('reveal-pending');
+				element.classList.add('revealed');
+			});
+			document.getAnimations().forEach((animation) => animation.finish());
+		})`);
+		await delay(50);
+	};
+	const capture = async (name, fullPage = true) => {
+		await evaluate(`new Promise((resolve) => {
+			document.documentElement.style.scrollBehavior = 'auto';
+			scrollTo(0, 0);
+			requestAnimationFrame(() => requestAnimationFrame(resolve));
+		})`);
+		const viewportShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true });
+		await writeFile(join(tmpdir(), `costcook-homepage-${name}-fold.png`), Buffer.from(viewportShot.data, 'base64'));
+		if (fullPage) {
+			const metrics = await send('Page.getLayoutMetrics');
+			const { width, height } = metrics.cssContentSize;
+			const shot = await send('Page.captureScreenshot', {
+				format: 'png', fromSurface: true, captureBeyondViewport: true,
+				clip: { x: 0, y: 0, width, height, scale: 1 }
+			});
+			await writeFile(join(tmpdir(), `costcook-homepage-${name}.png`), Buffer.from(shot.data, 'base64'));
+		}
+	};
+
+	await Promise.all([send('Page.enable'), send('Runtime.enable'), send('Network.enable')]);
+
+	// Considered Strategy; not used because viewport adaptation is declarative
+	// layout with one content order, not interchangeable runtime behavior.
+	for (const [width, height, mobile] of [[1440, 900, false], [1024, 768, false], [768, 1024, true], [844, 390, true], [390, 844, true], [320, 844, true]]) {
+		await viewport(width, height, mobile);
+		await navigate();
+		const state = await evaluate(`(() => {
+			const visibleActions = [...document.querySelectorAll('a, button, summary')].filter((element) => {
+				const style = getComputedStyle(element);
+				const rect = element.getBoundingClientRect();
+				return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 4 && rect.height > 4;
+			});
+			const heroFigure = document.querySelector('main > section:first-child figure');
+			return {
+				overflow: document.documentElement.scrollWidth - innerWidth,
+				minTarget: Math.min(...visibleActions.map((action) => action.getBoundingClientRect().height)),
+				headerHeight: document.querySelector('header').getBoundingClientRect().height,
+				heroProofTop: heroFigure.getBoundingClientRect().top,
+				hasPrimary: Boolean(document.querySelector('main > section:first-child .btn-primary')),
+				hasViewportFit: document.querySelector('meta[name="viewport"]')?.content.includes('viewport-fit=cover')
+			};
+		})()`);
+		assert(state.overflow === 0, `${width}x${height}: horizontal overflow is ${state.overflow}px`);
+		assert(state.minTarget >= 44, `${width}x${height}: smallest visible action is ${state.minTarget}px`);
+		assert(state.headerHeight < 150, `${width}x${height}: shared header is ${state.headerHeight}px tall`);
+		assert(state.hasPrimary, `${width}x${height}: hero primary action is missing`);
+		if (width <= 390) assert(state.heroProofTop < height, `${width}x${height}: product proof begins below the first viewport at ${state.heroProofTop}px`);
+		assert(state.hasViewportFit, `${width}x${height}: viewport-fit=cover is missing`);
+		if (width === 390) await capture('mobile');
+		if (width === 320) await capture('narrow', false);
+	}
+
+	await viewport(390, 844, true);
+	await navigate();
+	const menu = await evaluate(`(() => {
+		const details = document.querySelector('[data-features-menu]');
+		details.open = true;
+		const panel = details.querySelector('summary + div');
+		const rect = panel.getBoundingClientRect();
+		const pageTop = scrollY;
+		panel.scrollTop = panel.scrollHeight;
+		const links = panel.querySelectorAll('a');
+		const last = links[links.length - 1].getBoundingClientRect();
+		return {
+			bottom: rect.bottom,
+			clientHeight: panel.clientHeight,
+			scrollHeight: panel.scrollHeight,
+			pageStayedPut: scrollY === pageTop,
+			lastVisible: last.top >= rect.top && last.bottom <= rect.bottom
+		};
+	})()`);
+	assert(menu.bottom <= 844, `mobile menu: panel bottom is ${menu.bottom}px below the viewport`);
+	assert(menu.scrollHeight > menu.clientHeight, 'mobile menu: long destinations are not contained in a scroll region');
+	assert(menu.pageStayedPut, 'mobile menu: reaching the final destination scrolls the page');
+	assert(menu.lastVisible, 'mobile menu: final destination cannot be brought into the panel viewport');
+	await evaluate(`document.querySelector('[data-features-menu] > div').scrollTop = 0`);
+	const menuShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true });
+	await writeFile(join(tmpdir(), 'costcook-homepage-mobile-menu.png'), Buffer.from(menuShot.data, 'base64'));
+
+	await navigate();
+	const sticky = await evaluate(`(() => new Promise((resolve) => {
+		const demo = document.querySelector('#demo');
+		document.documentElement.style.scrollBehavior = 'auto';
+		scrollTo(0, demo.offsetTop + demo.offsetHeight + 10);
+		requestAnimationFrame(() => requestAnimationFrame(() => {
+			const bar = document.querySelector('[data-sticky-cta]');
+			const action = bar.querySelector('a');
+			resolve({ hidden: bar.hidden, actionHeight: action.getBoundingClientRect().height });
+		}));
+	}))()`);
+	assert(!sticky.hidden, 'mobile sticky action does not appear after the product tour');
+	assert(sticky.actionHeight >= 44, `mobile sticky action is ${sticky.actionHeight}px tall`);
+
+	await viewport(320, 844, true);
+	await navigate();
+	const zoom = await evaluate(`(() => new Promise((resolve) => {
+		document.querySelector('[data-features-menu]').open = false;
+		document.documentElement.style.fontSize = '200%';
+		requestAnimationFrame(() => {
+			const escaped = [...document.body.querySelectorAll('*')].filter((element) => {
+				if (element.closest('details:not([open])')) return false;
+				const rect = element.getBoundingClientRect();
+				return rect.width > 0 && (rect.left < -1 || rect.right > innerWidth + 1);
+			});
+			resolve({
+				overflow: document.documentElement.scrollWidth - innerWidth,
+				escaped: escaped.map((element) => element.tagName.toLowerCase() + '.' + (element.className || ''))
+			});
+		});
+	}))()`);
+	assert(zoom.overflow === 0, `320px at 200% text: horizontal overflow is ${zoom.overflow}px`);
+	assert(zoom.escaped.length === 0, `320px at 200% text: escaped elements: ${zoom.escaped.join(', ')}`);
+
+	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+	await viewport(390, 844, true);
+	await navigate();
+	const reduced = await evaluate(`getComputedStyle(document.querySelector('.anim-enter')).animationName`);
+	assert(reduced === 'none', `reduced motion: hero animation is ${reduced}`);
+
+	await send('Emulation.setScriptExecutionDisabled', { value: true });
+	await navigate();
+	const noScript = await evaluate(`(() => ({
+		heading: document.querySelector('h1')?.textContent.trim(),
+		primary: Boolean(document.querySelector('main .btn-primary')),
+		sections: document.querySelectorAll('main > section').length
+	}))()`);
+	assert(noScript.heading?.startsWith('Cost it, buy it, prep it, pack it.'), 'no JavaScript: homepage identity is missing');
+	assert(noScript.primary, 'no JavaScript: primary action is missing');
+	assert(noScript.sections >= 12, `no JavaScript: only ${noScript.sections} homepage sections rendered`);
+
+	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
+	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);
+} finally {
+	if (socket?.readyState === WebSocket.OPEN) socket.close();
+	browser.kill('SIGTERM');
+	await rm(profile, { recursive: true, force: true });
+}
+
+if (failures.length > 0) {
+	console.error(`Homepage browser verification failed:\n- ${failures.join('\n- ')}`);
+	process.exit(1);
+}
+
+console.log('Homepage browser verification passed: six viewports, phone-first fold, touch targets, contained mobile navigation, sticky action, 200% text, reduced motion, and no JavaScript.');

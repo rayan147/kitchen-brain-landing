@@ -112,3 +112,7 @@ The guided tour is now a first-class destination in the shared navigation. On wi
 ## Revision — Coming group count (2026-08-30)
 
 All eleven steps remain complete. The Features hub and Pricing page now say that three **feature groups** contain Coming work. They no longer imply that CostCook has only three individual Coming capabilities. The detailed rows remain the authoritative inventory, preserving the same scan path, snap line, and final handoff.
+
+## Revision — phone menu as a contained sheet (2026-08-30)
+
+All eleven steps remain complete and every destination keeps the same words and order. Below the tablet breakpoint, the long Features disclosure now opens as a bottom-anchored sheet with its own vertical scroll, safe-area clearance, and tighter phone spacing. The reader can reach the final tour and overview actions without scrolling the landing page out from under the menu; tablet and desktop keep the anchored two-column panel.

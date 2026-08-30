@@ -9,7 +9,7 @@ const artifacts = new URL('../artifacts/features-menu', import.meta.url).pathnam
 await mkdir(artifacts, { recursive: true });
 
 const profile = await mkdtemp(join(tmpdir(), 'costcook-features-menu-'));
-const port = 9333;
+const port = 10000 + (process.pid % 40000);
 const browser = spawn(
 	'chromium',
 	[
@@ -229,6 +229,8 @@ try {
 			left: rect.left,
 			right: rect.right,
 			bottom: rect.bottom,
+			clientHeight: panel.clientHeight,
+			panelScrollHeight: panel.scrollHeight,
 			scrollWidth: document.documentElement.scrollWidth,
 			scrollHeight: document.documentElement.scrollHeight,
 			innerWidth,
@@ -239,7 +241,8 @@ try {
 	assert(!mobile.directTourVisible, 'mobile: wide-only product-tour link crowded the header');
 	assert(mobile.footerTourVisible, 'mobile: footer product-tour link is not available');
 	assert(mobile.scrollWidth === mobile.innerWidth, 'mobile: horizontal overflow');
-	assert(mobile.scrollHeight >= mobile.bottom, 'mobile: document cannot scroll to the end of the panel');
+	assert(mobile.bottom <= 844, `mobile: panel bottom is ${mobile.bottom}px below the viewport`);
+	assert(mobile.panelScrollHeight > mobile.clientHeight, 'mobile: long destinations are not contained in a scroll region');
 	assert(mobile.sectionTops[1] > mobile.sectionTops[0], 'mobile: menu groups did not stack');
 	await capture('mobile-open');
 	const finalItemVisible = await evaluate(`(() => {
