@@ -6,6 +6,13 @@ import { setTimeout as delay } from 'node:timers/promises';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const route = `${baseUrl}/`;
+const previewHost = new URL(baseUrl).hostname;
+const localPreview = previewHost === '127.0.0.1' || previewHost === 'localhost';
+const localAnalyticsUrl = new URL('/_vercel/insights/script.js', baseUrl).href;
+// Considered Strategy; not used because this is one exact local-preview
+// exception, not a family of interchangeable request-classification rules.
+const isExpectedLocalAnalytics404 = (response) =>
+	localPreview && response.status === 404 && response.url === localAnalyticsUrl;
 const profile = await mkdtemp(join(tmpdir(), 'costcook-homepage-'));
 const port = 10000 + (process.pid % 40000);
 const browser = spawn('chromium', [
@@ -50,8 +57,11 @@ try {
 			return;
 		}
 		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
-		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
-			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
+		if (message.method === 'Network.responseReceived') {
+			const { response } = message.params;
+			if (response.status >= 400 && !isExpectedLocalAnalytics404(response)) {
+				failedRequests.push(`${response.status} ${response.url}`);
+			}
 		}
 	});
 
