@@ -59,6 +59,24 @@ if (!homeHtml.includes('data-features-menu')) {
 	failed = true;
 }
 
+// The hero loop is a sequence, not six unrelated labels. Keep its accessible
+// ordered-list contract and every visual stop in the built homepage so a
+// layout refactor cannot silently erase the guidance rail.
+const loopSteps = ['PRICE IN', 'COST IT', 'ORDER', 'SHOP', 'PREP', 'PACK'];
+if (
+	!homeHtml.includes('data-homepage-loop') ||
+	!homeHtml.includes('aria-label="From supplier price to packed order"')
+) {
+	console.error('check-dist: homepage workflow loop is missing its ordered-list landmark');
+	failed = true;
+}
+for (const step of loopSteps) {
+	if (!homeHtml.includes(`data-loop-step="${step}"`)) {
+		console.error(`check-dist: homepage workflow loop is missing ${step}`);
+		failed = true;
+	}
+}
+
 for (const target of menuTargets) {
 	const href = `href="${target.href ?? `/features/${target.area}#features-${target.id}`}"`;
 	const id = `id="features-${target.id}"`;
@@ -76,3 +94,4 @@ for (const target of menuTargets) {
 if (failed) process.exit(1);
 console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s) all carry intrinsic width/height`);
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
+console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
