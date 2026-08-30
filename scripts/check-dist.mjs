@@ -98,6 +98,22 @@ for (const source of intakeSources) {
 	}
 }
 
+const nutritionSteps = ['01', '02', '03', '04', '05'];
+if (
+	!homeHtml.includes('data-nutrition-evidence') ||
+	!homeHtml.includes('data-nutrition-proof') ||
+	!homeHtml.includes('data-nutrition-cue')
+) {
+	console.error('check-dist: homepage nutrition section is missing its evidence rail or proof');
+	failed = true;
+}
+for (const step of nutritionSteps) {
+	if (!homeHtml.includes(`data-nutrition-step="${step}"`)) {
+		console.error(`check-dist: homepage nutrition evidence is missing step ${step}`);
+		failed = true;
+	}
+}
+
 for (const target of menuTargets) {
 	const href = `href="${target.href ?? `/features/${target.area}#features-${target.id}`}"`;
 	const id = `id="features-${target.id}"`;
@@ -117,3 +133,4 @@ console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
 console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);
+console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
