@@ -24,3 +24,6 @@ docs/landing-capture/
 # this directory. Kept on disk so it can be inspected, out of the repo because
 # nothing produces or consumes it any more.
 scripts/demo-video/vo-silent/
+
+# a symlinked node_modules is not matched by node_modules/
+node_modules
