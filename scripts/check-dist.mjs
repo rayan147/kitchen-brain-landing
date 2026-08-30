@@ -114,6 +114,18 @@ for (const step of nutritionSteps) {
 	}
 }
 
+const yieldStages = ['Used in recipe', 'Trim yield', 'Required to buy', 'Purchase cost', 'Line cost'];
+if (!homeHtml.includes('data-yield-path') || !homeHtml.includes('data-yield-proof')) {
+	console.error('check-dist: homepage yield section is missing its calculation path or product proof');
+	failed = true;
+}
+for (const stage of yieldStages) {
+	if (!homeHtml.includes(`data-yield-stage="${stage}"`)) {
+		console.error(`check-dist: homepage yield calculation is missing ${stage}`);
+		failed = true;
+	}
+}
+
 // Sage is one bounded path: records are read, one proposal can be prepared,
 // and a person decides whether it moves. Preserve that story and both pieces
 // of product evidence when the homepage section is edited.
@@ -167,4 +179,5 @@ console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve 
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
 console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);
 console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
+console.log(`check-dist: homepage yield calculation retains ${yieldStages.length} visible stages and proof`);
 console.log(`check-dist: homepage Sage retains ${sageStages.length} stages, ${sageScopes.length} jobs, and ${sageBoundaries.length} boundaries`);
