@@ -114,6 +114,39 @@ for (const step of nutritionSteps) {
 	}
 }
 
+// Sage is one bounded path: records are read, one proposal can be prepared,
+// and a person decides whether it moves. Preserve that story and both pieces
+// of product evidence when the homepage section is edited.
+const sageStages = ['read', 'prepare', 'approve'];
+const sageScopes = ['Run the shift', 'Check a recipe', 'Check stock and buying', 'Finish setup', 'Prepare one change'];
+const sageBoundaries = ['Evidence', 'Access', 'Action'];
+if (
+	!homeHtml.includes('data-sage-home') ||
+	!homeHtml.includes('data-sage-answer') ||
+	!homeHtml.includes('data-sage-onboarding')
+) {
+	console.error('check-dist: homepage Sage section is missing its answer or onboarding evidence');
+	failed = true;
+}
+for (const stage of sageStages) {
+	if (!homeHtml.includes(`data-sage-stage="${stage}"`)) {
+		console.error(`check-dist: homepage Sage path is missing ${stage}`);
+		failed = true;
+	}
+}
+for (const scope of sageScopes) {
+	if (!homeHtml.includes(`data-sage-scope="${scope}"`)) {
+		console.error(`check-dist: homepage Sage scope is missing ${scope}`);
+		failed = true;
+	}
+}
+for (const boundary of sageBoundaries) {
+	if (!homeHtml.includes(`data-sage-boundary="${boundary}"`)) {
+		console.error(`check-dist: homepage Sage boundary is missing ${boundary}`);
+		failed = true;
+	}
+}
+
 for (const target of menuTargets) {
 	const href = `href="${target.href ?? `/features/${target.area}#features-${target.id}`}"`;
 	const id = `id="features-${target.id}"`;
@@ -134,3 +167,4 @@ console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve 
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
 console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);
 console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
+console.log(`check-dist: homepage Sage retains ${sageStages.length} stages, ${sageScopes.length} jobs, and ${sageBoundaries.length} boundaries`);
