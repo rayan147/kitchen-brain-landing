@@ -105,3 +105,4 @@ The key scene is the fold on a phone, one thumb in, screen dimmed by a walk-in l
 - Nothing claimed that was not already on the ledger. RC-48 added for the frame rule, not for a capability.
 - Ending unchanged: the CTA is the Final Image and the phone bar carries the same words to it.
 - Positioning correction: restaurant owners who cater, run special dinners, or build changing menus are explicitly included; only unsupported requirements remain in the limits ticket.
+- 2026-08-30: the fold's audience line and the trust section's "Built for event production" now name restaurants too ("restaurants that cater"; "catering, meal-prep, and restaurant kitchens that plan work from menus and guest counts"). Both had still said caterers and meal-prep only, so the Opening Image excluded the reader the Who scene later welcomed. RC-01 amended; the claim guard pins both lines.

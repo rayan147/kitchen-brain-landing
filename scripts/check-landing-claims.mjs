@@ -124,6 +124,7 @@ const siteSource = surfaces[0];
 const heroSource = surfaces[1];
 const startHereSource = surfaces[surfaceFiles.indexOf('src/components/sections/StartHere.astro')];
 const whoSource = surfaces[surfaceFiles.indexOf('src/components/sections/WhoThisIsFor.astro')];
+const trustSource = surfaces[surfaceFiles.indexOf('src/components/sections/BuiltForKitchens.astro')];
 const alternativesSource = surfaces[surfaceFiles.indexOf('src/components/sections/TheOtherTools.astro')];
 
 const failures = [];
@@ -156,6 +157,15 @@ requireText(
 	'restaurant event-work fit',
 );
 requireText(alternativesSource, 'A restaurant can run both.', 'restaurant dual-workflow fit');
+// The fold must name the same audience the Who section does. Until 2026-08-30
+// it named caterers and meal-prep kitchens only, contradicting RC-44 on the
+// same page. Scope stays event work, so the words are "restaurants that cater".
+requireText(heroSource, 'restaurants that cater', 'hero audience includes restaurants (RC-01, RC-44)');
+requireText(
+	trustSource,
+	'catering, meal-prep, and restaurant kitchens that plan work from menus and guest counts',
+	'trust section audience includes restaurants (RC-01, RC-44)',
+);
 if (/one restaurant on a fixed daily menu|shape is wrong for you|tool built for it will fit you better/i.test(publicCopy)) {
 	failures.push('restaurant positioning: a restaurant owner is still framed as the wrong fit');
 }

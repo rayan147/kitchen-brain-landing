@@ -34,7 +34,7 @@ Unless a row says otherwise, shipped evidence is read at the demo-base commit an
 
 | ID | Public claim | Classification | Evidence | Release check |
 | --- | --- | --- | --- | --- |
-| RC-01 | CostCook is for independent caterers and small kitchen teams. | Product positioning | `PRODUCT.md`, Users | Confirm audience has not changed. |
+| RC-01 | CostCook is for independent caterers, meal-prep kitchens, and restaurants for the work that runs by event, menu, date, and guest count. | Product positioning | `PRODUCT.md`, Users; owner correction of 2026-08-29 (RC-44) and owner request of 2026-08-30 that the homepage fold name restaurants the way Who this is for does. `src/components/sections/Hero.astro` audience line, `src/components/sections/BuiltForKitchens.astro` "Built for event production" | Confirm audience has not changed. Confirm the fold and the Who section name the same audience; a restaurant is named for its catering and event work, never for regular service as such. |
 | RC-02 | CostCook connects supplier prices, ingredients, recipes, menus, orders, shopping, prep, packing, and purchases. | Shipped workflow | `docs/audits/product-certification-20260730/feature-map.md`, product spine | Walk one connected seeded order. |
 | RC-03 | A costed menu, guest count, and selling price produce a live draft event estimate. | Shipped calculation | Order creation, order money, and golden-loop coverage | Create a draft order and change guests. |
 | RC-04 | CostCook shows theoretical event food cost and food-cost percentage against a target. | Shipped calculation | `src/lib/core/foodcost.ts`, `src/lib/server/order-money.ts` | Compare UI with independent arithmetic. |
