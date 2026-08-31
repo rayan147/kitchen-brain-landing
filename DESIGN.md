@@ -86,6 +86,7 @@ When marketing needs to show connected product evidence, the same visual world c
 - Direct actions with explicit outcomes and accessible touch targets
 - Founder-direct contact language without an anonymous form
 - Calm, bounded product-proof workspaces with explicit data provenance
+- Priority-led shared navigation with resilient native disclosures
 
 ## Colors
 
@@ -168,7 +169,15 @@ The homepage contact action beside the price keeps the quiet-link treatment and 
 
 ### Navigation
 
-Shared navigation uses compact Instrument Sans links with 44px minimum targets. `Contact` is part of the same shared navigation source as the other destinations, so header and footer placement do not drift. The persistent start action remains visually primary.
+Shared navigation uses compact Instrument Sans links with 44px minimum targets. Keep the most frequent evaluation destinations direct and group lower-frequency decision and help routes under a plainly labelled disclosure rather than rendering every destination as an equal tab. `Contact` remains in the same shared navigation source as the other destinations, so header and footer placement do not drift.
+
+Account access stays a quiet text action. `Book a demo` uses the outlined pill and sits beside the filled `Start CostCook` action; the difference communicates evaluation versus commitment without creating two primary buttons. Both conversion paths remain directly visible when the navigation condenses, while lower-priority links move into contained disclosures according to available width.
+
+Navigation disclosures use native `details` and `summary` so click, touch, keyboard, and no-JavaScript access share one reliable base. Enhancement may enforce one open disclosure at a time and close on Escape, focus-out, link activation, or click-away; Escape returns focus to the trigger. Enhancement must not own whether the destinations can be reached.
+
+**The Priority Ladder Rule.** Direct links answer the most frequent evaluation questions; grouped links support deeper exploration; quiet account access and distinct demo/start actions retain their own semantic weight.
+
+**The Native Disclosure Rule.** Navigation remains complete with JavaScript disabled. Script may improve closure and focus recovery, but never supply the only path to a destination.
 
 ### Embedded product proof
 
@@ -192,6 +201,8 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Do** label seeded or constructed product records and amounts as illustrative beside the product proof where the values remain visible.
 - **Do** use tabular numerals and quiet rules when presenting operational amounts for comparison.
 - **Do** tell visitors when a contact or demo action prepares an email rather than sending data from the site.
+- **Do** keep demo and start actions visible and visually distinct when shared navigation condenses.
+- **Do** build navigation disclosures on native `details` and `summary`, then enhance mutual exclusion and focus recovery.
 
 ### Don't:
 
@@ -200,3 +211,5 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Don't** turn contact guidance into a floating SaaS card or introduce a new visual identity for the route.
 - **Don't** present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence.
 - **Don't** show a sent, received, or confirmed state until the underlying system can prove that state.
+- **Don't** flatten every destination, account action, and conversion action into equal-weight header links.
+- **Don't** make JavaScript responsible for opening the only route to navigation destinations.

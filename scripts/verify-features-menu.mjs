@@ -5,6 +5,9 @@ import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
+const previewHost = new URL(baseUrl).hostname;
+const localPreview = previewHost === '127.0.0.1' || previewHost === 'localhost';
+const localAnalyticsUrl = new URL('/_vercel/insights/script.js', baseUrl).href;
 const artifacts = new URL('../artifacts/features-menu', import.meta.url).pathname;
 await mkdir(artifacts, { recursive: true });
 
@@ -69,7 +72,8 @@ try {
 		}
 		if (message.method === 'Network.responseReceived') {
 			const { response } = message.params;
-			if (response.status >= 400 && !response.url.includes('/_vercel/insights/script.js')) {
+			const expectedLocalAnalytics404 = localPreview && response.status === 404 && response.url === localAnalyticsUrl;
+			if (response.status >= 400 && !expectedLocalAnalytics404) {
 				failedRequests.push(`${response.status} ${response.url}`);
 			}
 		}
@@ -124,9 +128,11 @@ try {
 		const rect = panel.getBoundingClientRect();
 		return {
 			linkCount: links.length,
-			directTourVisible: Boolean(
+			flatTourVisible: Boolean(
 				document.querySelector('nav[aria-label="Main"] > ul > li > a[href="/tour/main"]')?.getClientRects().length
 			),
+			demoVisible: Boolean(document.querySelector('header a[href="/demo"]')?.getClientRects().length),
+			headerHeight: document.querySelector('header').getBoundingClientRect().height,
 			minTarget: Math.min(...links.map((link) => link.getBoundingClientRect().height)),
 			left: rect.left,
 			right: rect.right,
@@ -139,15 +145,31 @@ try {
 	// Considered Strategy; not used because this pins one fixed navigation
 	// contract (twelve curated entries plus tour and all-features actions), not swappable behavior.
 	assert(desktop.linkCount === 14, `desktop: expected 14 links, received ${desktop.linkCount}`);
-	assert(desktop.directTourVisible, 'desktop: direct product-tour link is not visible');
+	assert(!desktop.flatTourVisible, 'desktop: product tour still occupies a flat header tab');
+	assert(desktop.demoVisible, 'desktop: Book a demo action is not visible');
+	assert(desktop.headerHeight < 150, `desktop: shared header is ${desktop.headerHeight}px tall`);
 	assert(desktop.minTarget >= 44, `desktop: smallest link target is ${desktop.minTarget}px`);
 	assert(desktop.left >= 0 && desktop.right <= desktop.innerWidth, 'desktop: panel leaves the viewport');
 	assert(desktop.scrollWidth === desktop.innerWidth, 'desktop: horizontal overflow');
 	assert(desktop.sectionTops[0] === desktop.sectionTops[1], 'desktop: menu groups are not aligned');
 	assert(desktop.sectionLefts[0] < desktop.sectionLefts[1], 'desktop: menu groups did not form two columns');
 	await capture('desktop-open');
+	const explore = await evaluate(`(() => new Promise((resolve) => {
+		const features = document.querySelector('[data-features-menu]');
+		const details = document.querySelector('[data-explore-menu]');
+		details.open = true;
+		requestAnimationFrame(() => resolve({
+			linkCount: details.querySelectorAll('a').length,
+			hasTour: Boolean(details.querySelector('a[href="/tour/main"]')),
+			featuresClosed: !features.open
+		}));
+	}))()`);
+	assert(explore.linkCount === 5, `desktop Explore: expected 5 links, received ${explore.linkCount}`);
+	assert(explore.hasTour, 'desktop Explore: product tour is missing');
+	assert(explore.featuresClosed, 'desktop Explore: opening it did not close Features');
+	await capture('desktop-explore-open');
 
-	for (const [width, height] of [[1280, 800], [1024, 768], [768, 1024]]) {
+	for (const [width, height] of [[1280, 800], [1024, 768]]) {
 		await viewport(width, height);
 		await navigate(`${baseUrl}/`);
 		const responsive = await evaluate(`(() => {
@@ -220,9 +242,10 @@ try {
 		const sections = [...panel.querySelectorAll(':scope > div:first-child > section')];
 		const rect = panel.getBoundingClientRect();
 		return {
-			directTourVisible: Boolean(
+			flatTourVisible: Boolean(
 				document.querySelector('nav[aria-label="Main"] > ul > li > a[href="/tour/main"]')?.getClientRects().length
 			),
+			demoVisible: Boolean(document.querySelector('header a[href="/demo"]')?.getClientRects().length),
 			footerTourVisible: Boolean(
 				document.querySelector('nav[aria-label="Footer"] a[href="/tour/main"]')?.getClientRects().length
 			),
@@ -238,7 +261,8 @@ try {
 		};
 	})()`);
 	assert(mobile.left >= 0 && mobile.right <= mobile.innerWidth, 'mobile: panel leaves the viewport');
-	assert(!mobile.directTourVisible, 'mobile: wide-only product-tour link crowded the header');
+	assert(!mobile.flatTourVisible, 'mobile: product-tour link crowded the flat header');
+	assert(mobile.demoVisible, 'mobile: Demo action is not visible');
 	assert(mobile.footerTourVisible, 'mobile: footer product-tour link is not available');
 	assert(mobile.scrollWidth === mobile.innerWidth, 'mobile: horizontal overflow');
 	assert(mobile.bottom <= 844, `mobile: panel bottom is ${mobile.bottom}px below the viewport`);
@@ -253,16 +277,39 @@ try {
 		return rect.top >= 0 && rect.bottom <= innerHeight;
 	})()`);
 	assert(finalItemVisible, 'mobile: the final menu action cannot be scrolled into view');
+	const mobileMenu = await evaluate(`(() => new Promise((resolve) => {
+		const features = document.querySelector('[data-features-menu]');
+		const details = document.querySelector('[data-mobile-menu]');
+		details.open = true;
+		requestAnimationFrame(() => resolve({
+			visibleLinks: [...details.querySelectorAll('a')].filter((link) => link.getClientRects().length > 0).length,
+			hasPricing: Boolean(details.querySelector('a[href="/pricing"]')),
+			hasSignIn: Boolean(details.querySelector('a[href="https://app.costcook.io/login"]')),
+			featuresClosed: !features.open
+		}));
+	}))()`);
+	assert(mobileMenu.visibleLinks === 7, `mobile Menu: expected 7 visible links, received ${mobileMenu.visibleLinks}`);
+	assert(mobileMenu.hasPricing, 'mobile Menu: Pricing is missing');
+	assert(mobileMenu.hasSignIn, 'mobile Menu: Sign in is missing');
+	assert(mobileMenu.featuresClosed, 'mobile Menu: opening it did not close Features');
+	await capture('mobile-nav-open');
 
 	await viewport(320, 844, true);
 	await navigate(`${baseUrl}/`);
 	const reflow = await evaluate(`(() => {
 		document.documentElement.style.fontSize = '200%';
-		const details = document.querySelector('[data-features-menu]');
+		const details = document.querySelector('[data-mobile-menu]');
 		details.open = true;
-		return { scrollWidth: document.documentElement.scrollWidth, innerWidth };
+		return {
+			scrollWidth: document.documentElement.scrollWidth,
+			innerWidth,
+			featureTriggerVisible: Boolean(document.querySelector('[data-features-menu]').getClientRects().length),
+			featureLinkVisible: Boolean(details.querySelector('a[href="/features"]').getClientRects().length)
+		};
 	})()`);
 	assert(reflow.scrollWidth === reflow.innerWidth, '200% text at 320px: horizontal overflow');
+	assert(!reflow.featureTriggerVisible, '320px at 200% text: direct Features trigger still crowds the header');
+	assert(reflow.featureLinkVisible, '320px at 200% text: Features is missing from Menu');
 
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 	await viewport(390, 844, true);

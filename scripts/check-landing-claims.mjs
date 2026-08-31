@@ -132,6 +132,7 @@ const comparePage = await read('src/pages/compare.astro');
 // The header is not public claim copy, but it owns the sign-in destination, so
 // it is read for the pins below rather than added to the forbidden-claims scan.
 const navSource = await read('src/components/SiteNav.astro');
+const featureMenuContentsSource = await read('src/components/FeatureMenuContents.astro');
 const publicCopy = [...surfaces, comparePage].join('\n');
 const siteSource = surfaces[0];
 const heroSource = surfaces[1];
@@ -197,8 +198,12 @@ requireText(featureAreaPage, 'getStaticPaths', 'feature area routes are generate
 requireText(featureAreaPage, '<Integrations />', 'connections render on an area page');
 requireText(siteSource, "href: '/features'", 'features page nav link');
 requireText(navSource, 'data-features-menu', 'features menu disclosure');
-requireText(navSource, 'featureMenuSections', 'features menu data source');
+requireText(featureMenuContentsSource, 'featureMenuSections', 'features menu data source');
 requireText(navSource, 'docs/stories/features-navigation.story.md', 'features menu story pointer');
+requireText(navSource, 'data-explore-menu', 'secondary navigation disclosure');
+requireText(navSource, 'data-mobile-menu', 'contained mobile navigation');
+requireText(navSource, 'demoCta.href', 'header demo action');
+requireText(navSource, 'Book a demo', 'header demo label');
 requireText(siteSource, "href: '/contact'", 'contact page nav link');
 requireText(siteSource, "href: '/who-its-for'", 'who-it-is-for navigation link');
 // The homepage link used to promise "every shipped feature" and point at a
@@ -519,7 +524,7 @@ requireText(navSource, '<details', 'features menu is a native disclosure');
 // The header reads the curated menu list (featureMenuSections), which features.ts
 // derives from the same SECTIONS the hub renders. Renamed 2026-08-29 with the
 // mega-menu merge; the pin follows the identifier the header really uses.
-requireText(navSource, 'featureMenuSections.map', 'features menu lists the areas from one source');
+requireText(featureMenuContentsSource, 'featureMenuSections.map', 'features menu lists the areas from one source');
 if (/hover:(?:block|flex|opacity)/.test(navSource) || /group-hover/.test(navSource)) {
 	failures.push('features menu opens on hover. It must open on click, at every width.');
 }

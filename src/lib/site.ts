@@ -94,35 +94,44 @@ const productTourHref = '/tour/main';
  * indexes its own scroll is noise on a one-pager, and it competed with the
  * single primary CTA sitting beside it.
  *
- * `earlyVisible` is the mobile-header budget. Below `md` the header can carry
- * the wordmark, ONE link, and the CTA pill without crowding; pricing wins that
- * slot because it is the question a cold-email visitor asks first, and it was
- * previously unreachable from a phone header entirely. The footer renders the
- * whole array at every width.
+ * `header` controls only the desktop header hierarchy. The footer renders the
+ * whole flat list, while narrow screens expose the same destinations through
+ * one contained Menu disclosure so no route disappears with the breakpoint.
  */
-export const nav: readonly { label: string; href: string; earlyVisible?: true; wideOnly?: true }[] = [
+export const nav: readonly { label: string; href: string; header: 'direct' | 'explore' }[] = [
 	// Root-relative so the same links resolve from /features too.
-	{ label: 'Pricing', href: '/pricing', earlyVisible: true },
+	{ label: 'Pricing', href: '/pricing', header: 'direct' },
 	// Considered Composite; not used because this remains a flat destination
-	// list rendered by shared header and footer consumers. The direct tour link
-	// joins the wide header only; Features already exposes it at tighter widths.
-	{ label: 'Product tour', href: productTourHref, wideOnly: true },
+	// list with placement metadata. The nested feature inventory has its own
+	// shared renderer; recursive navigation nodes would add no useful node type.
+	{ label: 'Product tour', href: productTourHref, header: 'explore' },
 	// The fit question is a bookmarkable read, not an ARIA tabs widget. It is
 	// deliberately not earlyVisible: pricing still owns the one phone slot,
 	// while the full footer keeps this destination available at every width.
-	{ label: 'Who it\'s for', href: '/who-its-for' },
+	{ label: 'Who it\'s for', href: '/who-its-for', header: 'explore' },
 	// 'Every feature' left this array on 2026-08-23. /features is now a hub
 	// over five area pages, and a flat link to it hid that structure one click
 	// deep; the header renders it as a disclosure instead (see featuresMenu and
 	// SiteNav). It stays in the FOOTER as a plain link, because a footer is a
 	// list, not a menu, and a second disclosure down there would be worse.
-	{ label: 'How we compare', href: '/compare' },
+	{ label: 'How we compare', href: '/compare', header: 'explore' },
 	// Added 2026-08-29. Not earlyVisible: pricing keeps the one phone slot, and
 	// the FAQ's first group IS the pricing questions, reachable from /pricing
 	// and from the close. The header carries it from md up, the footer always.
-	{ label: 'FAQ', href: '/faq' },
-	{ label: 'Contact', href: contactCta.href }
+	{ label: 'FAQ', href: '/faq', header: 'explore' },
+	{ label: 'Contact', href: contactCta.href, header: 'explore' }
 ];
+
+export const exploreMenu = {
+	label: 'Explore',
+	ariaLabel: 'Explore CostCook',
+	items: nav.filter((item) => item.header === 'explore')
+} as const;
+
+export const mobileMenu = {
+	label: 'Menu',
+	ariaLabel: 'Site navigation'
+} as const;
 
 /**
  * Header disclosure copy. The curated destinations live beside the feature

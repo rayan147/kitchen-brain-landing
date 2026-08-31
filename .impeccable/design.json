@@ -32,11 +32,17 @@
         "name": "product-proof-workspace",
         "value": "0 24px 60px rgb(31 36 33 / 0.12), 0 4px 12px rgb(31 36 33 / 0.08)",
         "purpose": "A broad two-layer shadow that holds a large interactive product-proof workspace together as one artifact."
+      },
+      {
+        "name": "lift",
+        "value": "0 1px 2px rgb(31 36 33 / 0.06), 0 10px 28px rgb(31 36 33 / 0.08)",
+        "purpose": "A restrained lift for contained navigation panels and sheets above page content."
       }
     ],
     "motion": [
       { "name": "button-hover", "value": "150ms ease-out", "purpose": "Primary-button color and quiet-link underline feedback." },
-      { "name": "button-active", "value": "100ms ease-out", "purpose": "One-pixel primary-button press feedback." }
+      { "name": "button-active", "value": "100ms ease-out", "purpose": "One-pixel primary-button press feedback." },
+      { "name": "navigation-chevron", "value": "150ms ease-out", "purpose": "Native navigation-disclosure orientation feedback; removed under reduced motion." }
     ]
   },
   "components": [
@@ -66,9 +72,16 @@
     {
       "name": "Navigation Link",
       "kind": "nav",
-      "description": "A compact shared navigation destination with a 44px minimum target.",
+      "description": "A compact shared navigation destination with a 44px minimum target and quiet default hierarchy.",
       "html": "<a class=\"ds-nav-link\" href=\"/contact\">Contact</a>",
       "css": ".ds-nav-link { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-ink-soft, #49524c); font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: color 150ms ease-out; } .ds-nav-link:hover { color: var(--color-ink, #1f2421); } .ds-nav-link:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Navigation Disclosure",
+      "kind": "nav",
+      "description": "A native grouped-navigation base that remains operable without JavaScript; enhancement only coordinates closure and focus recovery.",
+      "html": "<details class=\"ds-nav-disclosure\"><summary>Explore <svg width=\"10\" height=\"6\" viewBox=\"0 0 10 6\" fill=\"none\" aria-hidden=\"true\"><path d=\"M1 1 5 5 9 1\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg></summary><ul><li><a href=\"/tour/main\">Product tour</a></li><li><a href=\"/compare\">How we compare</a></li><li><a href=\"/contact\">Contact</a></li></ul></details>",
+      "css": ".ds-nav-disclosure { position: relative; color: var(--color-ink-soft, #49524c); font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; } .ds-nav-disclosure summary { display: inline-flex; min-height: 44px; cursor: pointer; list-style: none; align-items: center; gap: 0.375rem; font-weight: 500; } .ds-nav-disclosure summary::-webkit-details-marker { display: none; } .ds-nav-disclosure summary:hover { color: var(--color-ink, #1f2421); } .ds-nav-disclosure summary:focus-visible, .ds-nav-disclosure a:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; } .ds-nav-disclosure summary svg { transition: transform 150ms ease-out; } .ds-nav-disclosure[open] summary svg { transform: rotate(180deg); } .ds-nav-disclosure ul { position: absolute; z-index: 1; top: 100%; right: 0; width: 15rem; margin: 0.5rem 0 0; padding: 0.5rem; border: 1px solid var(--color-ticket-rule, #e4d3b4); background: var(--color-paper, #fdfefd); list-style: none; box-shadow: 0 1px 2px rgb(31 36 33 / 0.06), 0 10px 28px rgb(31 36 33 / 0.08); } .ds-nav-disclosure a { display: flex; min-height: 44px; align-items: center; padding: 0.5rem 0.75rem; color: inherit; text-decoration: none; } .ds-nav-disclosure a:hover { background: #faf5ea; color: var(--color-ink, #1f2421); } @media (prefers-reduced-motion: reduce) { .ds-nav-disclosure summary svg { transition: none; } }"
     },
     {
       "name": "Contact Guidance",
@@ -87,13 +100,16 @@
       "Quiet border rules and sparse, purposeful elevation",
       "Direct actions with explicit outcomes and accessible touch targets",
       "Founder-direct contact language without an anonymous form",
-      "Calm, bounded product-proof workspaces with explicit data provenance"
+      "Calm, bounded product-proof workspaces with explicit data provenance",
+      "Priority-led shared navigation with resilient native disclosures"
     ],
     "rules": [
       { "name": "The Quiet Accent Rule", "body": "Green identifies actions; amber provides small operational emphasis. Neither becomes a broad decorative wash.", "section": "colors" },
       { "name": "The Founder-Direct Rule", "body": "Contact copy speaks as Rayan and names the outcome—email, call, book a demo, or contact support—without invented service guarantees.", "section": "typography" },
       { "name": "The Flat-by-Default Rule", "body": "Use elevation for physical ticket-like artifacts and bounded product proof, not routine contact information, navigation, or every internal panel.", "section": "elevation" },
-      { "name": "The Prepared-Handoff Rule", "body": "A static marketing form may prepare a visitor-owned email, but it must distinguish “ready to send” from “sent,” keep the message inspectable in the visitor's email app, and never imply receipt before the visitor sends it.", "section": "components" }
+      { "name": "The Prepared-Handoff Rule", "body": "A static marketing form may prepare a visitor-owned email, but it must distinguish “ready to send” from “sent,” keep the message inspectable in the visitor's email app, and never imply receipt before the visitor sends it.", "section": "components" },
+      { "name": "The Priority Ladder Rule", "body": "Direct links answer the most frequent evaluation questions; grouped links support deeper exploration; quiet account access and distinct demo/start actions retain their own semantic weight.", "section": "components" },
+      { "name": "The Native Disclosure Rule", "body": "Navigation remains complete with JavaScript disabled. Script may improve closure and focus recovery, but never supply the only path to a destination.", "section": "components" }
     ],
     "dos": [
       "Do preserve the existing off-white, green, amber, Fraunces, Instrument Sans, and quiet-rule identity when extending contact surfaces.",
@@ -103,14 +119,18 @@
       "Do retain the warning against sharing sensitive information.",
       "Do label seeded or constructed product records and amounts as illustrative beside the product proof where the values remain visible.",
       "Do use tabular numerals and quiet rules when presenting operational amounts for comparison.",
-      "Do tell visitors when a contact or demo action prepares an email rather than sending data from the site."
+      "Do tell visitors when a contact or demo action prepares an email rather than sending data from the site.",
+      "Do keep demo and start actions visible and visually distinct when shared navigation condenses.",
+      "Do build navigation disclosures on native details and summary, then enhance mutual exclusion and focus recovery."
     ],
     "donts": [
       "Don't add an anonymous public contact form without a new product decision.",
       "Don't invent response-time, availability, or service-level claims.",
       "Don't turn contact guidance into a floating SaaS card or introduce a new visual identity for the route.",
       "Don't present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence.",
-      "Don't show a sent, received, or confirmed state until the underlying system can prove that state."
+      "Don't show a sent, received, or confirmed state until the underlying system can prove that state.",
+      "Don't flatten every destination, account action, and conversion action into equal-weight header links.",
+      "Don't make JavaScript responsible for opening the only route to navigation destinations."
     ]
   }
 }
