@@ -112,6 +112,10 @@ const surfaceFiles = [
 	// 2026-08-29. Nutrition: the data file and the section, both claim copy.
 	'src/lib/nutrition.ts',
 	'src/components/sections/NutritionFacts.astro',
+	// 2026-08-31. The demo route qualifies one working session, describes the
+	// static email handoff honestly, and owns the direct calendar boundary.
+	'src/pages/demo.astro',
+	'src/components/sections/DemoRequest.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -523,9 +527,14 @@ if (/hover:(?:block|flex|opacity)/.test(navSource) || /group-hover/.test(navSour
 requireText(ledger, 'f44c9393973244b8b7f62edaf98c1bd0362162ce', 'release ledger truth-pass baseline');
 requireText(ledger, 'dfb71efc524da94efc6cec2f354751ce69d424e2', 'release ledger');
 requireText(ledger, '7ceb02dbb67034e507aeb279abb421ddd90df87f', 'release ledger');
-requireText(siteSource, 'href: booking.url', 'booking CTA');
-requireText(siteSource, "target: '_blank'", 'booking CTA');
-requireText(siteSource, "rel: 'noopener noreferrer'", 'booking CTA');
+requireText(siteSource, "href: '/demo'", 'demo preparation CTA');
+requireText(siteSource, "target: '_self'", 'demo preparation CTA');
+const demoRequestSource = surfaces[surfaceFiles.indexOf('src/components/sections/DemoRequest.astro')];
+requireText(demoRequestSource, 'href={booking.url}', 'owner-supplied demo calendar handoff');
+requireText(demoRequestSource, 'target="_blank"', 'demo calendar new-tab boundary');
+requireText(demoRequestSource, 'rel="noopener noreferrer"', 'demo calendar safe external link');
+requireText(demoRequestSource, 'CostCook has not claimed your request was sent', 'demo request truth state');
+requireText(demoRequestSource, 'docs/stories/request-demo.story.md', 'demo story pointer');
 requireText(publicCopy, 'Watch the 2:30 product tour', 'hero proof link');
 requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33

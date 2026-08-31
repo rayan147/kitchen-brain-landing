@@ -1,0 +1,347 @@
+---
+import { booking, cta, site } from '../../lib/site';
+
+const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('CostCook demo request')}`;
+---
+
+<!-- story: docs/stories/request-demo.story.md -->
+<div class="demo-page">
+	<section class="demo-hero" aria-labelledby="demo-title">
+		<div class="container-page demo-hero-grid">
+			<div class="demo-intro anim-enter">
+				<h1 id="demo-title">Put one real job on the screen.</h1>
+				<p class="demo-lede">
+					Tell Rayan what your kitchen needs to run. In 15 minutes, follow that work through
+					CostCook and leave knowing whether it fits.
+				</p>
+				<p class="demo-snap">Bring the menu you would otherwise price twice.</p>
+
+				<ol class="demo-path" aria-label="Your demo path">
+					<li>
+						<span class="path-mark" aria-hidden="true">1</span>
+						<span><strong>Name the work</strong><small>Menu, quote, order, prep plan, or supplier paper.</small></span>
+					</li>
+					<li>
+						<span class="path-mark" aria-hidden="true">2</span>
+						<span><strong>See it connected</strong><small>Cost, shopping, prep, and pack work from the same plan.</small></span>
+					</li>
+					<li>
+						<span class="path-mark" aria-hidden="true">3</span>
+						<span><strong>Decide with the work visible</strong><small>Leave knowing what fits and what setup would take.</small></span>
+					</li>
+				</ol>
+			</div>
+
+			<div class="demo-ticket anim-enter" style="--enter-delay: 120ms">
+				<div class="ticket-head">
+					<div>
+						<p class="ticket-title">Prepare your demo</p>
+						<p class="ticket-time">15 minutes · with Rayan</p>
+					</div>
+					<svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">
+						<rect x="5.5" y="4.5" width="31" height="33" rx="3" stroke="currentColor" stroke-width="1.5" />
+						<path d="M13 2.5v6M29 2.5v6M11 15h20M13 21h6M13 27h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+					</svg>
+				</div>
+
+				<div class="step-status" aria-live="polite">
+					<span data-step-indicator="1" aria-current="step">Kitchen</span>
+					<span class="step-rule" aria-hidden="true"></span>
+					<span data-step-indicator="2">You</span>
+					<span class="step-rule" aria-hidden="true"></span>
+					<span data-step-indicator="3">Time</span>
+				</div>
+
+				<form
+					class="demo-form"
+					data-demo-form
+					data-recipient={site.email}
+					action={directEmailHref}
+					method="get"
+					enctype="text/plain"
+				>
+					<fieldset data-step="1">
+						<legend>Start with the job.</legend>
+						<p class="step-copy">These details decide what goes on screen. They do not qualify you for a sales queue.</p>
+
+						<div class="field-grid">
+							<label class="field field-wide">
+								<span>Business name</span>
+								<input name="business" autocomplete="organization" required maxlength="100" />
+							</label>
+
+							<label class="field">
+								<span>Your role</span>
+								<select name="role" required>
+									<option value="">Choose one</option>
+									<option>Owner or chef-owner</option>
+									<option>Catering or events manager</option>
+									<option>Restaurant manager</option>
+									<option>Kitchen or operations lead</option>
+									<option>Consultant or partner</option>
+									<option>Something else</option>
+								</select>
+							</label>
+
+							<label class="field">
+								<span>Kitchen type</span>
+								<select name="kitchen" required>
+									<option value="">Choose one</option>
+									<option>Catering and private events</option>
+									<option>Restaurant with event work</option>
+									<option>Private chef</option>
+									<option>Meal prep or dated production</option>
+									<option>Something else</option>
+								</select>
+							</label>
+
+							<label class="field">
+								<span>Locations</span>
+								<select name="locations" required>
+									<option value="">Choose one</option>
+									<option value="1">1 location</option>
+									<option value="2-5">2–5 locations</option>
+									<option value="6+">6 or more locations</option>
+								</select>
+							</label>
+
+							<label class="field field-wide">
+								<span>What should we put through CostCook?</span>
+								<textarea name="workflow" rows="3" maxlength="600" placeholder="For example: a 180-guest wedding menu, this week's supplier sheet, or the prep plan for Friday."></textarea>
+							</label>
+						</div>
+
+						<div class="form-actions">
+							<button type="button" class="btn-primary" data-next>Continue to your details</button>
+						</div>
+					</fieldset>
+
+					<fieldset data-step="2">
+						<legend>Now name the person bringing it.</legend>
+						<p class="step-copy">Your browser will prepare an email to Rayan. You review and send it before choosing a time.</p>
+
+						<div class="field-grid">
+							<label class="field">
+								<span>First name</span>
+								<input name="firstName" autocomplete="given-name" required maxlength="80" />
+							</label>
+							<label class="field">
+								<span>Last name</span>
+								<input name="lastName" autocomplete="family-name" required maxlength="80" />
+							</label>
+							<label class="field field-wide">
+								<span>Work email</span>
+								<input name="email" type="email" inputmode="email" autocomplete="email" required maxlength="160" />
+							</label>
+							<label class="field field-wide">
+								<span>Phone <small>Optional</small></span>
+								<input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="40" />
+							</label>
+						</div>
+
+						<p class="safety-note">Do not include passwords, payment card details, or other sensitive information.</p>
+						<div class="form-actions form-actions-split">
+							<button type="button" class="btn-quiet" data-back>Back to kitchen</button>
+							<button type="submit" class="btn-primary">Prepare my demo request</button>
+						</div>
+					</fieldset>
+
+					<section class="prepared-step" data-step="3" aria-labelledby="prepared-title" tabindex="-1">
+						<svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+							<circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1.5" />
+							<path d="m15.5 24.5 5.5 5.5 11.5-13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+						<h2 id="prepared-title">Your request is ready to send.</h2>
+						<p>Your email app has the details. Send that message, then choose a time on Rayan’s calendar.</p>
+						<div class="prepared-actions">
+							<a href={booking.url} target="_blank" rel="noopener noreferrer" class="btn-primary">Choose a 15-minute time</a>
+							<a href={directEmailHref} class="btn-quiet">Email Rayan directly</a>
+						</div>
+						<p class="prepared-truth">CostCook has not claimed your request was sent. It is sent only when you send the prepared email.</p>
+					</section>
+
+					<noscript>
+						<p class="noscript-note">JavaScript is off, so both steps stay open. Completing the form opens your email app; you can then choose a time from Rayan’s reply or email him directly at <a href={directEmailHref}>{site.email}</a>.</p>
+					</noscript>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<section class="demo-agenda" aria-labelledby="agenda-title">
+		<div class="container-page agenda-grid">
+			<div>
+				<h2 id="agenda-title">A working session, not a feature parade.</h2>
+				<p>We start with the job you named. That keeps the call on the decision you need to make.</p>
+			</div>
+			<ol class="agenda-list">
+				<li><strong>First five minutes</strong><span>Put in the menu, head count, recipe, or supplier paper you brought.</span></li>
+				<li><strong>Next five minutes</strong><span>Follow the cost into shopping, prep, pack, or the workflow you asked to see.</span></li>
+				<li><strong>Last five minutes</strong><span>See the setup work, the limits, and whether CostCook fits the way your kitchen runs.</span></li>
+			</ol>
+		</div>
+	</section>
+
+	<section class="demo-alternatives" aria-labelledby="alternatives-title">
+		<div class="container-page alternatives-grid">
+			<div>
+				<h2 id="alternatives-title">Not ready for a call?</h2>
+				<p>You can still see the working product or start with your own data.</p>
+			</div>
+			<div class="alternative-actions">
+				<a href="/tour/main" class="btn-outline">Take the product tour</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+			</div>
+		</div>
+	</section>
+</div>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>('[data-demo-form]');
+	if (form) {
+		// Considered State; not used because this enhancer has three fixed visual
+		// frames and no state-specific object behavior. One explicit transition
+		// function keeps focus, visibility, and progress semantics together.
+		let currentStep = 1;
+		form.dataset.enhanced = 'true';
+
+		const setStep = (step: number) => {
+			currentStep = step;
+			form.dataset.currentStep = String(step);
+			for (const indicator of form.closest('.demo-ticket')?.querySelectorAll<HTMLElement>('[data-step-indicator]') ?? []) {
+				if (indicator.dataset.stepIndicator === String(step)) indicator.setAttribute('aria-current', 'step');
+				else indicator.removeAttribute('aria-current');
+			}
+		};
+
+		const firstStepFields = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-step="1"] input, [data-step="1"] select')];
+		form.querySelector('[data-next]')?.addEventListener('click', () => {
+			const invalid = firstStepFields.find((field) => !field.checkValidity());
+			if (invalid) {
+				invalid.reportValidity();
+				return;
+			}
+			setStep(2);
+			form.querySelector<HTMLElement>('[data-step="2"] input')?.focus();
+		});
+
+		form.querySelector('[data-back]')?.addEventListener('click', () => {
+			setStep(1);
+			form.querySelector<HTMLElement>('[data-step="1"] input')?.focus();
+		});
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			if (!form.reportValidity()) return;
+
+			const data = new FormData(form);
+			const value = (name: string) => String(data.get(name) ?? '').trim();
+			const lines = [
+				`Name: ${value('firstName')} ${value('lastName')}`,
+				`Work email: ${value('email')}`,
+				`Phone: ${value('phone') || 'Not provided'}`,
+				'',
+				`Business: ${value('business')}`,
+				`Role: ${value('role')}`,
+				`Kitchen type: ${value('kitchen')}`,
+				`Locations: ${value('locations')}`,
+				'',
+				'What to put through CostCook:',
+				value('workflow') || 'Not provided'
+			];
+			const recipient = form.dataset.recipient;
+			if (!recipient) return;
+			const mailto = `mailto:${recipient}?subject=${encodeURIComponent(`CostCook demo request · ${value('business')}`)}&body=${encodeURIComponent(lines.join('\n'))}`;
+			setStep(3);
+			form.querySelector<HTMLElement>('[data-step="3"]')?.focus();
+			window.location.href = mailto;
+		});
+
+		setStep(currentStep);
+	}
+</script>
+
+<style>
+	.demo-page { overflow: clip; }
+	.demo-hero { padding-block: clamp(3.5rem, 7vw, 7rem) clamp(4.5rem, 8vw, 8rem); }
+	.demo-hero-grid { display: grid; gap: clamp(3rem, 6vw, 6.5rem); align-items: start; }
+	.demo-intro { max-width: 39rem; }
+	.demo-intro h1 { font-size: var(--text-display); line-height: 1.02; letter-spacing: -0.02em; font-weight: 600; }
+	.demo-lede { margin-top: 1.5rem; max-width: 55ch; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
+	.demo-snap { margin-top: 1.75rem; padding-block: 1rem; border-block: 1px solid var(--color-ticket-rule); font-family: var(--font-display); font-size: var(--text-record-sm); font-weight: 600; color: var(--color-green-deep); }
+	.demo-path { margin-top: 2rem; display: grid; gap: 1.2rem; }
+	.demo-path li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.85rem; align-items: start; position: relative; }
+	.demo-path li:not(:last-child)::after { content: ''; position: absolute; top: 2rem; bottom: -1.2rem; left: 0.96rem; width: 1px; background: var(--color-ticket-rule); }
+	.path-mark { position: relative; z-index: 1; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; background: var(--color-softamber); color: var(--color-amber-deep); font-size: var(--text-caption); font-weight: 700; }
+	.demo-path strong, .demo-path small { display: block; }
+	.demo-path strong { line-height: 1.35; }
+	.demo-path small { margin-top: 0.2rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.45; }
+
+	.demo-ticket { background: var(--color-paper); border: 1px solid var(--color-ticket-rule); box-shadow: var(--shadow-ticket); }
+	.ticket-head { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.35rem clamp(1.25rem, 3vw, 2rem); border-bottom: 1px solid var(--color-ticket-rule); background: var(--color-cream); color: var(--color-green-deep); }
+	.ticket-title { font-family: var(--font-display); font-size: var(--text-record-sm); font-weight: 600; color: var(--color-ink); }
+	.ticket-time { margin-top: 0.15rem; font-size: var(--text-body-sm); color: var(--color-ink-soft); }
+	.step-status { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: center; gap: 0.65rem; padding: 1rem clamp(1.25rem, 3vw, 2rem); border-bottom: 1px solid var(--color-hairline); font-size: var(--text-caption); color: var(--color-ink-soft); }
+	.step-status span[aria-current='step'] { color: var(--color-green-deep); font-weight: 700; }
+	.step-rule { height: 1px; background: var(--color-hairline); }
+	.demo-form fieldset, .prepared-step { padding: clamp(1.5rem, 4vw, 2.25rem); }
+	.demo-form legend { float: left; width: 100%; font-family: var(--font-display); font-size: var(--text-h3); line-height: 1.2; font-weight: 600; }
+	.demo-form legend + * { clear: both; }
+	.step-copy { padding-top: 0.65rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.5; }
+	.field-grid { display: grid; gap: 1rem; margin-top: 1.5rem; }
+	.field { display: grid; gap: 0.45rem; align-content: start; }
+	.field > span { font-size: var(--text-body-sm); font-weight: 650; }
+	.field small { margin-left: 0.25rem; color: var(--color-ink-soft); font-weight: 400; }
+	.field input, .field select, .field textarea { width: 100%; min-height: 48px; border: 1px solid var(--color-ink-rule); border-radius: 0; background: var(--color-paper); padding: 0.72rem 0.8rem; color: var(--color-ink); font: inherit; }
+	.field textarea { min-height: 6.5rem; resize: vertical; line-height: 1.45; }
+	.field input::placeholder, .field textarea::placeholder { color: color-mix(in srgb, var(--color-ink-soft) 82%, white); opacity: 1; }
+	.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--color-green); }
+	.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { border-color: var(--color-green); outline: 2px solid var(--color-green); outline-offset: 2px; }
+	.form-actions { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
+	.form-actions-split { justify-content: space-between; align-items: center; gap: 1rem; }
+	.safety-note, .prepared-truth { margin-top: 1.1rem; font-size: var(--text-caption); line-height: 1.5; color: var(--color-ink-soft); }
+	.prepared-step { color: var(--color-green-deep); }
+	.prepared-step h2 { margin-top: 1.1rem; color: var(--color-ink); font-size: var(--text-h3); font-weight: 600; }
+	.prepared-step > p:not(.prepared-truth) { margin-top: 0.65rem; max-width: 46ch; color: var(--color-ink-soft); }
+	.prepared-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.5rem; }
+	.noscript-note { margin: 0 1.5rem 1.5rem; padding: 1rem; border: 1px solid var(--color-ticket-rule); background: var(--color-cream); color: var(--color-ink-soft); font-size: var(--text-body-sm); }
+	.noscript-note a { color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 3px; }
+	.demo-form[data-enhanced='true'] [data-step] { display: none; }
+	.demo-form[data-enhanced='true'][data-current-step='1'] [data-step='1'],
+	.demo-form[data-enhanced='true'][data-current-step='2'] [data-step='2'],
+	.demo-form[data-enhanced='true'][data-current-step='3'] [data-step='3'] { display: block; }
+
+	.demo-agenda { border-block: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
+	.agenda-grid, .alternatives-grid { display: grid; gap: 2.5rem; padding-block: var(--spacing-section-tight); }
+	.agenda-grid h2, .alternatives-grid h2 { font-size: var(--text-h2); font-weight: 600; }
+	.agenda-grid > div > p, .alternatives-grid > div > p { margin-top: 1rem; max-width: 54ch; color: var(--color-ink-soft); font-size: var(--text-body-lg); }
+	.agenda-list { border-top: 1px solid var(--color-hairline-strong); }
+	.agenda-list li { display: grid; gap: 0.35rem; padding-block: 1.15rem; border-bottom: 1px solid var(--color-hairline-strong); }
+	.agenda-list strong { color: var(--color-green-deep); }
+	.agenda-list span { color: var(--color-ink-soft); line-height: 1.5; }
+	.alternatives-grid { align-items: center; }
+	.alternative-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; border: 1px solid var(--color-green); border-radius: 999px; padding: 0.9rem 1.5rem; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
+	.btn-outline:hover { background: var(--color-softgreen); }
+
+	@media (min-width: 48rem) {
+		.field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.field-wide { grid-column: 1 / -1; }
+		.agenda-grid, .alternatives-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; gap: clamp(3rem, 7vw, 7rem); }
+		.agenda-list li { grid-template-columns: minmax(8rem, 0.8fr) minmax(0, 1.7fr); gap: 1.5rem; }
+	}
+
+	@media (min-width: 64rem) {
+		.demo-hero-grid { grid-template-columns: minmax(0, 5fr) minmax(31rem, 5fr); }
+		.demo-ticket { position: sticky; top: 1.5rem; }
+	}
+
+	@media (max-width: 30rem) {
+		.form-actions, .form-actions-split, .prepared-actions, .alternative-actions { align-items: stretch; flex-direction: column; }
+		.form-actions .btn-primary, .form-actions .btn-quiet, .prepared-actions a, .alternative-actions a { justify-content: center; width: 100%; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.btn-outline { transition: none; }
+	}
+</style>

@@ -176,7 +176,9 @@ Product proof is a bounded, paper-like workspace inside the marketing page. Use 
 
 ### Contact workflow
 
-The public contact surface offers email, phone, and demo actions. It does not present an anonymous form or promise a response time. Existing users are sent to authenticated in-app **Contact support** rather than the public path. Safety copy must continue to warn visitors not to send passwords, payment card details, or other sensitive information.
+The public contact surface offers email, phone, and demo actions. It does not present an anonymous form or promise a response time. A dedicated demo-request surface may gather named business, workflow, and contact context when each field makes the working session more useful, but the handoff remains founder-direct and visitor-controlled rather than entering an implied sales queue. Existing users are sent to authenticated in-app **Contact support** rather than the public path. Safety copy must continue to warn visitors not to send passwords, payment card details, or other sensitive information.
+
+**The Prepared-Handoff Rule.** A static marketing form may prepare a visitor-owned email, but it must distinguish “ready to send” from “sent,” keep the message inspectable in the visitor's email app, and never imply receipt before the visitor sends it.
 
 ## Do's and Don'ts
 
@@ -189,6 +191,7 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Do** retain the warning against sharing sensitive information.
 - **Do** label seeded or constructed product records and amounts as illustrative beside the product proof where the values remain visible.
 - **Do** use tabular numerals and quiet rules when presenting operational amounts for comparison.
+- **Do** tell visitors when a contact or demo action prepares an email rather than sending data from the site.
 
 ### Don't:
 
@@ -196,3 +199,4 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Don't** invent response-time, availability, or service-level claims.
 - **Don't** turn contact guidance into a floating SaaS card or introduce a new visual identity for the route.
 - **Don't** present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence.
+- **Don't** show a sent, received, or confirmed state until the underlying system can prove that state.

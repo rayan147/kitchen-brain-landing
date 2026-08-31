@@ -67,10 +67,10 @@ export const signIn = {
 
 export const demoCta = {
 	label: 'Book a 15-min demo',
-	ariaLabel: 'Book a 15-min demo (opens in a new tab)',
-	href: booking.url,
-	target: '_blank',
-	rel: 'noopener noreferrer'
+	ariaLabel: 'Prepare and book a 15-minute CostCook demo',
+	href: '/demo',
+	target: '_self',
+	rel: undefined
 } as const;
 
 export const contactCta = {

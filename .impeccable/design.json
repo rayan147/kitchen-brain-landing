@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-29T16:17:00.000Z",
+  "generatedAt": "2026-08-31T00:00:00.000Z",
   "title": "Design System: CostCook",
   "extensions": {
     "colorMeta": {
@@ -92,7 +92,8 @@
     "rules": [
       { "name": "The Quiet Accent Rule", "body": "Green identifies actions; amber provides small operational emphasis. Neither becomes a broad decorative wash.", "section": "colors" },
       { "name": "The Founder-Direct Rule", "body": "Contact copy speaks as Rayan and names the outcome—email, call, book a demo, or contact support—without invented service guarantees.", "section": "typography" },
-      { "name": "The Flat-by-Default Rule", "body": "Use elevation for physical ticket-like artifacts and bounded product proof, not routine contact information, navigation, or every internal panel.", "section": "elevation" }
+      { "name": "The Flat-by-Default Rule", "body": "Use elevation for physical ticket-like artifacts and bounded product proof, not routine contact information, navigation, or every internal panel.", "section": "elevation" },
+      { "name": "The Prepared-Handoff Rule", "body": "A static marketing form may prepare a visitor-owned email, but it must distinguish “ready to send” from “sent,” keep the message inspectable in the visitor's email app, and never imply receipt before the visitor sends it.", "section": "components" }
     ],
     "dos": [
       "Do preserve the existing off-white, green, amber, Fraunces, Instrument Sans, and quiet-rule identity when extending contact surfaces.",
@@ -101,13 +102,15 @@
       "Do maintain at least a 44px target for the homepage contact action and shared navigation actions.",
       "Do retain the warning against sharing sensitive information.",
       "Do label seeded or constructed product records and amounts as illustrative beside the product proof where the values remain visible.",
-      "Do use tabular numerals and quiet rules when presenting operational amounts for comparison."
+      "Do use tabular numerals and quiet rules when presenting operational amounts for comparison.",
+      "Do tell visitors when a contact or demo action prepares an email rather than sending data from the site."
     ],
     "donts": [
       "Don't add an anonymous public contact form without a new product decision.",
       "Don't invent response-time, availability, or service-level claims.",
       "Don't turn contact guidance into a floating SaaS card or introduce a new visual identity for the route.",
-      "Don't present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence."
+      "Don't present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence.",
+      "Don't show a sent, received, or confirmed state until the underlying system can prove that state."
     ]
   }
 }
