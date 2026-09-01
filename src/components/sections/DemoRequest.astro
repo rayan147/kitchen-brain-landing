@@ -8,7 +8,7 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 <div class="demo-page">
 	<section class="demo-hero" aria-labelledby="demo-title">
 		<div class="container-page demo-hero-grid">
-			<div class="demo-intro anim-enter">
+			<div class="demo-intro">
 				<h1 id="demo-title">Put one real job on the screen.</h1>
 				<p class="demo-lede">
 					Tell Rayan what your kitchen needs to run. In 15 minutes, follow that work through
@@ -32,7 +32,7 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 				</ol>
 			</div>
 
-			<div class="demo-ticket anim-enter" style="--enter-delay: 120ms">
+			<div class="demo-ticket">
 				<div class="ticket-head">
 					<div>
 						<p class="ticket-title">Prepare your demo</p>
@@ -55,6 +55,8 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 				<form
 					class="demo-form"
 					data-demo-form
+					data-current-step="1"
+					data-phase="idle"
 					data-recipient={site.email}
 					action={directEmailHref}
 					method="get"
@@ -199,19 +201,71 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 <script>
 	const form = document.querySelector<HTMLFormElement>('[data-demo-form]');
 	if (form) {
-		// Considered State; not used because this enhancer has three fixed visual
-		// frames and no state-specific object behavior. One explicit transition
-		// function keeps focus, visibility, and progress semantics together.
-		let currentStep = 1;
-		form.dataset.enhanced = 'true';
+		// Considered State; not used because the three fixed presentation frames
+		// share one transition mechanic and do not have distinct object behavior.
+		let transitioning = false;
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-		const setStep = (step: number) => {
-			currentStep = step;
-			form.dataset.currentStep = String(step);
+		const updateProgress = (step: number) => {
 			for (const indicator of form.closest('.demo-ticket')?.querySelectorAll<HTMLElement>('[data-step-indicator]') ?? []) {
 				if (indicator.dataset.stepIndicator === String(step)) indicator.setAttribute('aria-current', 'step');
 				else indicator.removeAttribute('aria-current');
 			}
+		};
+
+		const transitionTo = async (step: number, focusTarget: string) => {
+			if (transitioning || form.dataset.currentStep === String(step)) return false;
+			const outgoing = form.querySelector<HTMLElement>(`[data-step="${form.dataset.currentStep}"]`);
+			const incoming = form.querySelector<HTMLElement>(`[data-step="${step}"]`);
+			if (!outgoing || !incoming) return false;
+
+			transitioning = true;
+			form.dataset.phase = 'leaving';
+			form.setAttribute('aria-busy', 'true');
+
+			if (!reducedMotion.matches) {
+				await outgoing.animate(
+					[
+						{ opacity: 1, transform: 'translateY(0)' },
+						{ opacity: 0, transform: 'translateY(-6px)' }
+					],
+					{ duration: 160, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'forwards' }
+				).finished;
+			}
+
+			const fromHeight = form.getBoundingClientRect().height;
+			form.style.height = `${fromHeight}px`;
+			form.style.overflow = 'hidden';
+			form.dataset.currentStep = String(step);
+			form.dataset.phase = 'entering';
+			updateProgress(step);
+
+			if (!reducedMotion.matches) {
+				const toHeight = incoming.getBoundingClientRect().height;
+				const [heightAnimation, enterAnimation] = [
+					form.animate(
+						[{ height: `${fromHeight}px` }, { height: `${toHeight}px` }],
+						{ duration: 280, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+					),
+					incoming.animate(
+						[
+							{ opacity: 0, transform: 'translateY(8px)' },
+							{ opacity: 1, transform: 'translateY(0)' }
+						],
+						{ duration: 220, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'both' }
+					)
+				];
+				await Promise.all([heightAnimation.finished, enterAnimation.finished]);
+			}
+
+			form.style.removeProperty('height');
+			form.style.removeProperty('overflow');
+			form.dataset.phase = 'idle';
+			form.removeAttribute('aria-busy');
+			transitioning = false;
+			form.querySelector<HTMLElement>(focusTarget)?.focus();
+			form.dispatchEvent(new CustomEvent('demo-step-settled', { detail: { step } }));
+			return true;
 		};
 
 		const firstStepFields = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-step="1"] input, [data-step="1"] select')];
@@ -221,16 +275,14 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 				invalid.reportValidity();
 				return;
 			}
-			setStep(2);
-			form.querySelector<HTMLElement>('[data-step="2"] input')?.focus();
+			void transitionTo(2, '[data-step="2"] input');
 		});
 
 		form.querySelector('[data-back]')?.addEventListener('click', () => {
-			setStep(1);
-			form.querySelector<HTMLElement>('[data-step="1"] input')?.focus();
+			void transitionTo(1, '[data-step="1"] input');
 		});
 
-		form.addEventListener('submit', (event) => {
+		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			if (!form.reportValidity()) return;
 
@@ -252,12 +304,14 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 			const recipient = form.dataset.recipient;
 			if (!recipient) return;
 			const mailto = `mailto:${recipient}?subject=${encodeURIComponent(`CostCook demo request · ${value('business')}`)}&body=${encodeURIComponent(lines.join('\n'))}`;
-			setStep(3);
-			form.querySelector<HTMLElement>('[data-step="3"]')?.focus();
-			window.location.href = mailto;
+			const moved = await transitionTo(3, '[data-step="3"]');
+			if (!moved) return;
+			form.dataset.emailHandoff = 'holding';
+			window.setTimeout(() => {
+				form.dataset.emailHandoff = 'opening';
+				window.location.href = mailto;
+			}, 1800);
 		});
-
-		setStep(currentStep);
 	}
 </script>
 
@@ -306,10 +360,14 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 	.prepared-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.5rem; }
 	.noscript-note { margin: 0 1.5rem 1.5rem; padding: 1rem; border: 1px solid var(--color-ticket-rule); background: var(--color-cream); color: var(--color-ink-soft); font-size: var(--text-body-sm); }
 	.noscript-note a { color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 3px; }
-	.demo-form[data-enhanced='true'] [data-step] { display: none; }
-	.demo-form[data-enhanced='true'][data-current-step='1'] [data-step='1'],
-	.demo-form[data-enhanced='true'][data-current-step='2'] [data-step='2'],
-	.demo-form[data-enhanced='true'][data-current-step='3'] [data-step='3'] { display: block; }
+	.demo-form[data-current-step] [data-step] { display: none; }
+	.demo-form[data-current-step='1'] [data-step='1'],
+	.demo-form[data-current-step='2'] [data-step='2'],
+	.demo-form[data-current-step='3'] [data-step='3'] { display: block; }
+	@media (scripting: none) {
+		.demo-form[data-current-step] [data-step] { display: block; }
+		.step-status { display: none; }
+	}
 
 	.demo-agenda { border-block: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
 	.agenda-grid, .alternatives-grid { display: grid; gap: 2.5rem; padding-block: var(--spacing-section-tight); }

@@ -128,29 +128,66 @@ try {
 	})()`);
 	assert(emptyAdvance === '1', 'validation: empty kitchen step advanced');
 
-	const completedFlow = await evaluate(`(() => {
+	const completedFlow = await evaluate(`(async () => {
 		const form = document.querySelector('[data-demo-form]');
 		const set = (name, value) => { form.elements[name].value = value; };
+		const waitForStep = (step) => new Promise((resolve, reject) => {
+			if (form.dataset.currentStep === String(step) && form.dataset.phase === 'idle') return resolve();
+			const timeout = setTimeout(() => reject(new Error('step transition timed out')), 1500);
+			form.addEventListener('demo-step-settled', (event) => {
+				if (event.detail.step !== step) return;
+				clearTimeout(timeout);
+				resolve();
+			}, { once: true });
+		});
 		set('business', 'Garden Table Catering');
 		set('role', 'Owner or chef-owner');
 		set('kitchen', 'Catering and private events');
 		set('locations', '1');
 		set('workflow', 'A 180-guest wedding menu');
 		document.querySelector('[data-next]').click();
+		const duringNext = {
+			step: form.dataset.currentStep,
+			phase: form.dataset.phase,
+			outgoingVisible: getComputedStyle(document.querySelector('[data-step="1"]')).display !== 'none',
+			incomingHidden: getComputedStyle(document.querySelector('[data-step="2"]')).display === 'none'
+		};
+		await waitForStep(2);
 		const afterNext = form.dataset.currentStep;
+		const nextFocus = document.activeElement?.getAttribute('name');
 		document.querySelector('[data-back]').click();
+		await waitForStep(1);
 		const afterBack = form.dataset.currentStep;
 		document.querySelector('[data-next]').click();
+		await waitForStep(2);
 		set('firstName', 'Maya');
 		set('lastName', 'Ortiz');
 		set('email', 'maya@example.com');
 		form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-		return { afterNext, afterBack, afterSubmit: form.dataset.currentStep, preparedVisible: getComputedStyle(document.querySelector('[data-step="3"]')).display };
+		await waitForStep(3);
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+		return {
+			duringNext,
+			afterNext,
+			nextFocus,
+			afterBack,
+			afterSubmit: form.dataset.currentStep,
+			preparedVisible: getComputedStyle(document.querySelector('[data-step="3"]')).display,
+			handoffAfterOneSecond: form.dataset.emailHandoff,
+			phase: form.dataset.phase
+		};
 	})()`);
+	assert(completedFlow.duringNext.step === '1', 'workflow: outgoing frame was removed before its exit');
+	assert(completedFlow.duringNext.phase === 'leaving', `workflow: expected leaving phase, received ${completedFlow.duringNext.phase}`);
+	assert(completedFlow.duringNext.outgoingVisible, 'workflow: outgoing frame flashed away immediately');
+	assert(completedFlow.duringNext.incomingHidden, 'workflow: incoming frame appeared before the outgoing frame left');
 	assert(completedFlow.afterNext === '2', 'workflow: valid kitchen details did not advance');
+	assert(completedFlow.nextFocus === 'firstName', `workflow: focus moved to ${completedFlow.nextFocus || 'nothing'} after the contact frame settled`);
 	assert(completedFlow.afterBack === '1', 'workflow: Back did not restore the kitchen step');
 	assert(completedFlow.afterSubmit === '3', 'workflow: valid contact details did not prepare the request');
 	assert(completedFlow.preparedVisible === 'block', 'workflow: prepared-email state is hidden');
+	assert(completedFlow.handoffAfterOneSecond === 'holding', 'workflow: email application opened before the prepared state was readable');
+	assert(completedFlow.phase === 'idle', `workflow: prepared frame did not settle; phase is ${completedFlow.phase}`);
 
 	for (const [width, height] of [[1280, 800], [1024, 768], [768, 1024]]) {
 		await viewport(width, height);
@@ -190,8 +227,25 @@ try {
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 	await viewport(390, 844, true);
 	await navigate();
-	const reducedMotion = await evaluate(`getComputedStyle(document.querySelector('.anim-enter')).animationName`);
-	assert(reducedMotion === 'none', `reduced motion: entrance animation is ${reducedMotion}`);
+	const reducedMotion = await evaluate(`(async () => {
+		const form = document.querySelector('[data-demo-form]');
+		const set = (name, value) => { form.elements[name].value = value; };
+		set('business', 'Garden Table Catering');
+		set('role', 'Owner or chef-owner');
+		set('kitchen', 'Catering and private events');
+		set('locations', '1');
+		document.querySelector('[data-next]').click();
+		await Promise.resolve();
+		return {
+			step: form.dataset.currentStep,
+			phase: form.dataset.phase,
+			focus: document.activeElement?.getAttribute('name'),
+			pageEntrances: document.querySelectorAll('.demo-page .anim-enter').length
+		};
+	})()`);
+	assert(reducedMotion.step === '2' && reducedMotion.phase === 'idle', 'reduced motion: frame did not settle immediately');
+	assert(reducedMotion.focus === 'firstName', `reduced motion: focus moved to ${reducedMotion.focus || 'nothing'}`);
+	assert(reducedMotion.pageEntrances === 0, 'reduced motion: demo still carries a competing page entrance');
 
 	await send('Emulation.setScriptExecutionDisabled', { value: true });
 	await navigate();
@@ -217,4 +271,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('Demo browser verification passed: validation, three-frame workflow, desktop, responsive layouts, mobile fold, 200% text, reduced motion, and no-JavaScript fallback.');
+console.log('Demo browser verification passed: flash-free timed transitions, readable email hold, focus, responsive layouts, 200% text, reduced motion, and no-JavaScript fallback.');
