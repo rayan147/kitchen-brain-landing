@@ -83,9 +83,42 @@ import { cta, launchPlan } from '../../lib/site';
 	     ALT TEXT IS A CLAIM. Both alts read off the crop word for word; if the
 	     crop moves, they move. story: docs/stories/homepage-visual-guidance.story.md -->
 	<figure class="anim-enter mx-auto mt-10 max-w-3xl" style="--enter-delay: 300ms">
-		<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-			ORDER · 180 GUESTS · $68 A HEAD
-		</p>
+		<!-- Considered Composite; not used because this is one fixed, three-step
+		     explanation, not a reusable tree of content nodes. -->
+		<div class="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
+			<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+				QUOTE CHECK · DRAFT ORDER
+			</p>
+			<p class="font-mono text-xs font-semibold tracking-wide text-ink-soft">
+				180 guests × $68 = $12,240 revenue
+			</p>
+		</div>
+		<ol
+			class="mt-4 grid gap-3 border-y border-hairline py-3 text-left sm:grid-cols-3 sm:gap-0"
+			aria-label="How the quote check works"
+		>
+			<li class="flex gap-3 sm:px-4 sm:first:pl-0">
+				<span class="font-mono text-xs font-semibold text-amber-deep">01</span>
+				<div>
+					<strong class="block text-sm font-semibold text-ink">Set the event</strong>
+					<span class="block text-sm text-ink-soft">Guests × price per head</span>
+				</div>
+			</li>
+			<li class="flex gap-3 border-t border-hairline pt-3 sm:border-l sm:border-t-0 sm:px-4 sm:pt-0">
+				<span class="font-mono text-xs font-semibold text-amber-deep">02</span>
+				<div>
+					<strong class="block text-sm font-semibold text-ink">Check the food</strong>
+					<span class="block text-sm text-ink-soft">$26.98 food per guest</span>
+				</div>
+			</li>
+			<li class="flex gap-3 border-t border-hairline pt-3 sm:border-l sm:border-t-0 sm:px-4 sm:last:pr-0 sm:pt-0">
+				<span class="font-mono text-xs font-semibold text-amber-deep">03</span>
+				<div>
+					<strong class="block text-sm font-semibold text-ink">Decide before sending</strong>
+					<span class="block text-sm text-ink-soft">Charge at least $89.94 / guest</span>
+				</div>
+			</li>
+		</ol>
 		<div class="mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2">
 			<img
 				src="/proof/hero-pricing-mobile.png"
@@ -107,9 +140,10 @@ import { cta, launchPlan } from '../../lib/site';
 				class="mx-auto hidden h-auto sm:block"
 			/>
 		</div>
-		<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
-			The pricing panel on the tour's order, captured from the sandbox build. Food cost
-			against the target, and the price that would have met it, before the quote goes out.
+		<figcaption class="mt-3 max-w-[64ch] text-sm text-ink-soft">
+			The panel checks the price you entered against the food the order will require. At
+			$68 a head, this event is at 39.7% food cost against a 30% target, so CostCook names
+			the price that would meet it before the quote goes out.
 		</figcaption>
 	</figure>
 

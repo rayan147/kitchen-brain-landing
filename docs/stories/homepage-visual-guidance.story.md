@@ -2,10 +2,19 @@
 
 ## My story
 
-- **Piece:** Homepage, 2026-08-29 visual-and-guidance revision (no new claims; new figures, hand-offs, and one phone-only bar)
+- **Piece:** Homepage, 2026-09-02 quote-check guidance revision (no new claims; the hero evidence now explains the three decisions around the existing capture)
 - **Title / headline:** Cost it, buy it, prep it, pack it. Enter the numbers once. (unchanged)
 - **My hero's name:** The chef-owner, including a restaurant owner between regular service and a special event, reading on a phone mid-shift
 - **Content file(s):** `src/components/sections/Hero.astro`, `TheProblem.astro`, `WhoThisIsFor.astro`, `CustomerOutcomes.astro`, `TheOtherTools.astro`, `src/components/SectionHandoff.astro`, `src/components/StickyCta.astro`, `src/lib/stops.ts`
+
+### Revision — make the order label teach the panel
+
+The old `ORDER · 180 GUESTS · $68 A HEAD` eyebrow named the record but made the reader
+decode the screenshot alone. The hero now frames the same real capture as a three-step quote
+check: set the event, check food cost, decide before sending. The supporting line keeps the
+existing evidence explicit (`180 × $68 = $12,240`, `$26.98` food per guest, `39.7%` against
+the `30%` target, and the panel's `$89.94` recommendation). No capability or outcome claim
+changed; the visual order simply follows the reader's decision path.
 
 ## The 11 steps
 
