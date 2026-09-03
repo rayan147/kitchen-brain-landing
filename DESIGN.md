@@ -78,6 +78,8 @@ Contact follows the same founder-direct voice. Public visitors get a dedicated `
 
 When marketing needs to show connected product evidence, the same visual world can tighten into a calm, seeded workspace. Editorial Fraunces remains outside and at key explanatory handoffs; dense product labels, tables, statuses, and tabular numbers use Instrument Sans inside a bounded paper surface. This is product proof within the marketing system, not a separate dashboard identity.
 
+Read surfaces extend the ticket into a ruled working notebook. They lead with a real kitchen question, keep arithmetic and assumptions visible, and finish by naming the next operational job. Editorial structure should help a working chef reach a defensible number; it should not turn into a generic publication grid or a product pitch disguised as instruction.
+
 **Key Characteristics:**
 
 - Warm off-white, green, and amber palette
@@ -87,6 +89,7 @@ When marketing needs to show connected product evidence, the same visual world c
 - Founder-direct contact language without an anonymous form
 - Calm, bounded product-proof workspaces with explicit data provenance
 - Priority-led shared navigation with resilient native disclosures
+- Question-led read surfaces with visible working and a practical handoff
 
 ## Colors
 
@@ -138,6 +141,10 @@ Contact entry points remain discoverable beside the homepage price, on the prici
 
 Dense product proof keeps one working frame active inside a bounded shell rather than shrinking several frames into thumbnails or repeating them as equal cards. Wide layouts may hold stable local navigation beside the evidence. When that rail no longer leaves the evidence legible, replace it with a native compact control and preserve the same choices and sequence. Wide tables may scroll inside their own frame; the page itself must not overflow.
 
+Read surfaces use a hybrid route-family shape. The index is denormalized for quick comparison: topic, reading time, title, description, and date stay together in ruled rows. Each article is a focused reading screen with a bounded main measure and an adjacent guide path only when width permits. On narrow screens, that path returns to source order before the article; no article content or navigation disappears behind client-side behavior.
+
+**The Worked-Number Rule.** Order practical reading as question, arithmetic, boundary or exception, then next job. Keep the calculation and its assumptions visually attached to the decision they support.
+
 ## Elevation & Depth
 
 The system is flat by default. Borders, background bands, and paper contrast create most separation; compact ticket imagery may use a restrained two-layer shadow. A large, interactive product-proof shell may use a broader two-layer shadow to read as one contained artifact, while its internal metrics, tables, and asides remain border-led and flat. The contact workflow itself uses rules and a soft-green band rather than floating cards.
@@ -171,6 +178,8 @@ The homepage contact action beside the price keeps the quiet-link treatment and 
 
 Shared navigation uses compact Instrument Sans links with 44px minimum targets. Keep the most frequent evaluation destinations direct and group lower-frequency decision and help routes under a plainly labelled disclosure rather than rendering every destination as an equal tab. `Contact` remains in the same shared navigation source as the other destinations, so header and footer placement do not drift.
 
+The grouped disclosure label is `Resources`. Blog and other lower-frequency reading and evaluation destinations live beneath it on wide layouts, while the contained mobile menu exposes those same destinations directly. The disclosure stays visibly active on nested resource routes such as an individual blog article.
+
 Account access stays a quiet text action. `Book a demo` uses the outlined pill and sits beside the filled `Start CostCook` action; the difference communicates evaluation versus commitment without creating two primary buttons. Both conversion paths remain directly visible when the navigation condenses, while lower-priority links move into contained disclosures according to available width.
 
 Navigation disclosures use native `details` and `summary` so click, touch, keyboard, and no-JavaScript access share one reliable base. Enhancement may enforce one open disclosure at a time and close on Escape, focus-out, link activation, or click-away; Escape returns focus to the trigger. Enhancement must not own whether the destinations can be reached.
@@ -178,6 +187,14 @@ Navigation disclosures use native `details` and `summary` so click, touch, keybo
 **The Priority Ladder Rule.** Direct links answer the most frequent evaluation questions; grouped links support deeper exploration; quiet account access and distinct demo/start actions retain their own semantic weight.
 
 **The Native Disclosure Rule.** Navigation remains complete with JavaScript disabled. Script may improve closure and focus recovery, but never supply the only path to a destination.
+
+### Blog and article reading
+
+Blog indexes use flat, full-width ruled rows rather than floating cards. Preserve a stable metadata hierarchy—topic and reading time first, editorial title and summary second, date last—and let Fraunces carry the decision while Instrument Sans and tabular numerals carry the evidence.
+
+Long-form articles begin with page identity and useful context rather than a decorative hero. Keep body copy within a comfortable reading measure, render formulas and worked examples as plain, horizontally safe working blocks, and keep exceptions close enough to the arithmetic that the answer cannot be mistaken for a guarantee. A guide path may be sticky beside the article on wide screens, but it returns to source order on small screens and every target remains directly linkable.
+
+**The Working-Sheet Rule.** A practical article shows one kitchen question all the way through: formula, bounded example, exceptions, and the next job. Product handoffs follow the instruction; they do not interrupt or masquerade as it.
 
 ### Embedded product proof
 
@@ -203,6 +220,8 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Do** tell visitors when a contact or demo action prepares an email rather than sending data from the site.
 - **Do** keep demo and start actions visible and visually distinct when shared navigation condenses.
 - **Do** build navigation disclosures on native `details` and `summary`, then enhance mutual exclusion and focus recovery.
+- **Do** keep `Resources` as the grouped label for Blog and other lower-frequency reading destinations, with nested resource routes reflected in its active state.
+- **Do** keep blog metadata, arithmetic, assumptions, and next-job handoffs visually inspectable with rules, restrained color, and tabular numerals.
 
 ### Don't:
 
@@ -213,3 +232,4 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Don't** show a sent, received, or confirmed state until the underlying system can prove that state.
 - **Don't** flatten every destination, account action, and conversion action into equal-weight header links.
 - **Don't** make JavaScript responsible for opening the only route to navigation destinations.
+- **Don't** turn practical guides into image-led card grids, decorative hero essays, or product pitches that delay the first useful explanation.
