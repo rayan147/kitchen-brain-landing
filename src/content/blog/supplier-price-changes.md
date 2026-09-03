@@ -3,6 +3,8 @@ title: "How supplier price changes reach the recipes you already costed"
 description: "Keep the source, compare like-for-like packs, choose the current price deliberately, and trace the result into recipes and open quotes."
 publishedDate: 2026-09-03
 category: Buying & suppliers
+menuGroup: Plan and buy
+menuIcon: prices
 featured: false
 order: 6
 readMinutes: 7

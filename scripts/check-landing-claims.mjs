@@ -82,6 +82,7 @@ const surfaceFiles = [
 	// The mega-menu descriptions are capability copy, so they pass through the
 	// same forbidden-claim scan as the feature pages they link into.
 	'src/components/SiteNav.astro',
+	'src/components/BlogMenuContents.astro',
 	'src/components/sections/StartHere.astro',
 	// Added 2026-08-23. It carries the price and the in-development boundary
 	// (RC-34, RC-35, RC-45, RC-46), which is claim copy by any reading, and it
@@ -92,6 +93,13 @@ const surfaceFiles = [
 	// the sticky bar carries a primary, so both go through the scan.
 	'src/components/StickyCta.astro',
 	'src/components/SectionHandoff.astro',
+	// These new worked guides contain costing, purchasing, and product-boundary
+	// claims. Scan their public copy without pulling the older educational guide
+	// that explicitly defines the otherwise-forbidden “food-only gross margin”.
+	'src/content/blog/delivery-arrived-wrong.md',
+	'src/content/blog/expected-vs-actual-food-cost.md',
+	'src/content/blog/scale-catering-prep-list.md',
+	'src/content/blog/review-supplier-invoice.md',
 	// 2026-08-29. Every FAQ answer is public claim copy and names its rows.
 	'src/lib/faq.ts',
 	'src/pages/faq.astro',
@@ -133,6 +141,7 @@ const comparePage = await read('src/pages/compare.astro');
 // it is read for the pins below rather than added to the forbidden-claims scan.
 const navSource = await read('src/components/SiteNav.astro');
 const featureMenuContentsSource = await read('src/components/FeatureMenuContents.astro');
+const blogMenuContentsSource = await read('src/components/BlogMenuContents.astro');
 const publicCopy = [...surfaces, comparePage].join('\n');
 const siteSource = surfaces[0];
 const heroSource = surfaces[1];
@@ -202,7 +211,13 @@ requireText(featureMenuContentsSource, 'featureMenuSections', 'features menu dat
 requireText(navSource, 'docs/stories/features-navigation.story.md', 'features menu story pointer');
 requireText(navSource, 'data-resources-menu', 'secondary navigation disclosure');
 requireText(navSource, 'resourcesMenu', 'shared Resources navigation source');
+requireText(navSource, '<ResourcesMenuContents {path} />', 'Resources menu renderer');
+requireText(siteSource, 'docs/stories/resources-navigation.story.md', 'Resources menu story pointer');
 requireText(siteSource, "href: '/blog'", 'blog reachable from shared navigation');
+requireText(navSource, 'data-blog-menu', 'blog navigation disclosure');
+requireText(navSource, '<BlogMenuContents {path} />', 'blog menu renderer');
+requireText(blogMenuContentsSource, "getCollection('blog')", 'blog menu article source');
+requireText(blogMenuContentsSource, 'post.data.description', 'blog menu article descriptions');
 requireText(navSource, 'data-mobile-menu', 'contained mobile navigation');
 requireText(navSource, 'demoCta.href', 'header demo action');
 requireText(navSource, 'Book a demo', 'header demo label');

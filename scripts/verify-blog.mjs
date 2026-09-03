@@ -104,29 +104,35 @@ try {
 	await navigate('/blog');
 	const desktop = await evaluate(`(() => {
 		const links = [...document.querySelectorAll('main a')].filter((link) => link.getClientRects().length > 0);
-		const resources = document.querySelector('[data-resources-menu]');
-		resources.open = true;
+		const blog = document.querySelector('[data-blog-menu]');
+		blog.open = true;
 		return {
 			title: document.querySelector('h1')?.textContent.trim(),
 			overflow: document.documentElement.scrollWidth - innerWidth,
 			minTarget: Math.min(...links.map((link) => link.getBoundingClientRect().height)),
 			posts: document.querySelectorAll('article.blog-row').length,
-			blogNav: resources.querySelector('a[href="/blog"]')?.textContent.trim(),
-			activeResources: resources.querySelector('summary')?.classList.contains('text-ink'),
+			menuLinks: blog.querySelectorAll('a[href^="/blog/"]').length,
+			menuIcons: blog.querySelectorAll('a[href^="/blog/"] svg').length,
+			menuDescriptions: blog.querySelectorAll('a[href^="/blog/"] span span + span').length,
+			blogOverview: blog.querySelector('a[href="/blog"]')?.textContent.trim(),
+			activeBlog: blog.querySelector('summary')?.classList.contains('text-ink'),
 			contract: document.documentElement.innerHTML.includes('blog-working-through-the-number')
 		};
 	})()`);
 	assert(desktop.title === 'Practical answers for the numbers behind the food.', 'desktop index: page identity is missing');
 	assert(desktop.overflow === 0, `desktop index: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop index: smallest action is ${desktop.minTarget}px`);
-	assert(desktop.posts === 6, `desktop index: expected 6 article rows, received ${desktop.posts}`);
-	assert(desktop.blogNav === 'Blog', 'desktop index: Blog is missing from Resources');
-	assert(desktop.activeResources, 'desktop index: Resources is not active');
+	assert(desktop.posts === 10, `desktop index: expected 10 article rows, received ${desktop.posts}`);
+	assert(desktop.menuLinks === 10, `desktop index: expected 10 Blog menu articles, received ${desktop.menuLinks}`);
+	assert(desktop.menuIcons === 10, `desktop index: expected 10 Blog menu icons, received ${desktop.menuIcons}`);
+	assert(desktop.menuDescriptions === 10, `desktop index: expected 10 Blog menu descriptions, received ${desktop.menuDescriptions}`);
+	assert(desktop.blogOverview === 'Read every guide', 'desktop index: Blog overview action is missing');
+	assert(desktop.activeBlog, 'desktop index: Blog is not active');
 	assert(desktop.contract, 'desktop index: direction contract did not survive the build');
-	await evaluate(`document.querySelector('[data-resources-menu]').open = false`);
+	await evaluate(`document.querySelector('[data-blog-menu]').open = false`);
 	await capture('blog-desktop');
 
-	await navigate('/blog/food-cost-per-guest');
+	await navigate('/blog/delivery-arrived-wrong');
 	const article = await evaluate(`(() => ({
 		title: document.querySelector('h1')?.textContent.trim(),
 		overflow: document.documentElement.scrollWidth - innerWidth,
@@ -135,7 +141,7 @@ try {
 		structured: document.querySelector('script[type="application/ld+json"]')?.textContent.includes('Article'),
 		contract: document.documentElement.innerHTML.includes('blog-article-working-shown')
 	}))()`);
-	assert(article.title === 'How to calculate food cost per guest for a catering event', 'desktop article: page identity is missing');
+	assert(article.title === 'The delivery arrived wrong. What should you check before accepting it?', 'desktop article: page identity is missing');
 	assert(article.overflow === 0, `desktop article: horizontal overflow is ${article.overflow}px`);
 	assert(article.sections === article.tocLinks && article.sections >= 4, 'desktop article: table of contents does not match sections');
 	assert(article.structured, 'desktop article: Article structured data is missing');
@@ -145,12 +151,29 @@ try {
 	for (const [width, height] of [[1280, 800], [1024, 768], [768, 1024]]) {
 		await viewport(width, height);
 		await navigate('/blog');
-		const responsive = await evaluate(`(() => ({
-			overflow: document.documentElement.scrollWidth - innerWidth,
-			headerHeight: Math.round(document.querySelector('header').getBoundingClientRect().height)
-		}))()`);
+		const responsive = await evaluate(`(() => {
+			const blog = document.querySelector('[data-blog-menu]');
+			if (blog.getClientRects().length) blog.open = true;
+			const panel = blog.querySelector('summary + div');
+			const panelRect = blog.open ? panel.getBoundingClientRect() : null;
+			return {
+				overflow: document.documentElement.scrollWidth - innerWidth,
+				headerHeight: Math.round(document.querySelector('header').getBoundingClientRect().height),
+				blogDisclosureVisible: Boolean(blog.getClientRects().length),
+				compactMenuVisible: Boolean(document.querySelector('[data-mobile-menu]').getClientRects().length),
+				panelBottom: panelRect?.bottom ?? 0,
+				panelScrollHeight: blog.open ? panel.scrollHeight : 0,
+				panelClientHeight: blog.open ? panel.clientHeight : 0
+			};
+		})()`);
 		assert(responsive.overflow === 0, `${width}x${height}: horizontal overflow is ${responsive.overflow}px`);
 		assert(responsive.headerHeight < 170, `${width}x${height}: header is ${responsive.headerHeight}px tall`);
+		assert(responsive.blogDisclosureVisible === (width >= 1280), `${width}x${height}: Blog disclosure breakpoint is wrong`);
+		assert(responsive.compactMenuVisible === (width < 1280), `${width}x${height}: compact Menu breakpoint is wrong`);
+		if (width >= 1280) {
+			assert(responsive.panelBottom <= height, `${width}x${height}: Blog menu extends below the viewport`);
+			assert(responsive.panelScrollHeight > responsive.panelClientHeight, `${width}x${height}: long Blog menu is not independently scrollable`);
+		}
 	}
 
 	await viewport(390, 844, true);
@@ -162,12 +185,12 @@ try {
 		menuBlog: document.querySelector('[data-mobile-menu] a[href="/blog"]')?.textContent.trim()
 	}))()`);
 	assert(mobile.overflow === 0, `mobile index: horizontal overflow is ${mobile.overflow}px`);
-	assert(mobile.posts === 6, 'mobile index: article rows are missing');
+	assert(mobile.posts === 10, 'mobile index: article rows are missing');
 	assert(mobile.featuredTop < 1600, `mobile index: featured guide begins too late at ${mobile.featuredTop}px`);
 	assert(mobile.menuBlog === 'Blog', 'mobile index: Blog is missing from Menu');
 	await capture('blog-mobile');
 
-	await navigate('/blog/food-cost-per-guest');
+	await navigate('/blog/delivery-arrived-wrong');
 	const mobileArticle = await evaluate(`(() => ({
 		overflow: document.documentElement.scrollWidth - innerWidth,
 		tocTop: Math.round(document.querySelector('#article-path-title').getBoundingClientRect().top),
@@ -178,7 +201,7 @@ try {
 	await capture('blog-article-mobile');
 
 	await viewport(320, 844, true);
-	await navigate('/blog/food-cost-per-guest');
+	await navigate('/blog/delivery-arrived-wrong');
 	const zoomOverflow = await evaluate(`(() => {
 		document.documentElement.style.fontSize = '200%';
 		return new Promise((resolve) => requestAnimationFrame(() => resolve(document.documentElement.scrollWidth - innerWidth)));
@@ -203,7 +226,7 @@ try {
 		};
 	})()`);
 	assert(noScript.title === 'Practical answers for the numbers behind the food.', 'no JavaScript: blog identity is missing');
-	assert(noScript.posts === 6, 'no JavaScript: article rows are missing');
+	assert(noScript.posts === 10, 'no JavaScript: article rows are missing');
 	assert(noScript.blogLink === 'Blog', 'no JavaScript: Blog is missing from Menu');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);
@@ -218,4 +241,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('Blog browser verification passed: Resources navigation, index, article, intermediate widths, mobile, 200% text, reduced motion, and no-JavaScript.');
+console.log('Blog browser verification passed: article dropdown, index, article, intermediate widths, mobile, 200% text, reduced motion, and no-JavaScript.');

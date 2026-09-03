@@ -3,6 +3,8 @@ title: "The client added 40 guests. What actually needs to change?"
 description: "Separate quantities that scale with guests from whole-pack buying, fixed equipment, confirmed commitments, and the quote that needs another look."
 publishedDate: 2026-09-03
 category: Running the event
+menuGroup: Plan and buy
+menuIcon: guests
 featured: false
 order: 4
 readMinutes: 6

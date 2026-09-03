@@ -3,6 +3,8 @@ title: "How to cost a recipe from case price to portion cost"
 description: "Follow a supplier case through unit conversion, usable yield, recipe quantity, and portions without hiding the arithmetic."
 publishedDate: 2026-09-03
 category: Recipes & yield
+menuGroup: Cost the work
+menuIcon: yield
 featured: false
 order: 3
 readMinutes: 7

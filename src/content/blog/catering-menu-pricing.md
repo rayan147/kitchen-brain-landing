@@ -3,6 +3,8 @@ title: "Catering menu pricing: margin, markup, and food-cost target"
 description: "Understand the three percentages people mix together when pricing catering menus, then calculate each one from the same food cost."
 publishedDate: 2026-09-03
 category: Costing & pricing
+menuGroup: Cost the work
+menuIcon: percent
 featured: false
 order: 2
 readMinutes: 7

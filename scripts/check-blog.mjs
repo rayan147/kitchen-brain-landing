@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const dist = new URL('../dist', import.meta.url).pathname;
+const content = new URL('../src/content/blog', import.meta.url).pathname;
 const blogRoot = join(dist, 'blog');
 const indexHtml = readFileSync(join(blogRoot, 'index.html'), 'utf8');
 const failures = [];
@@ -24,6 +25,8 @@ for (const [text, label] of [
 	['Running the event', 'event topic'],
 	['Buying &amp; suppliers', 'supplier topic']
 ]) requireText(indexHtml, text, label);
+requireText(indexHtml, 'data-blog-menu', 'Blog navigation disclosure');
+requireText(indexHtml, 'Ten worked guides. The assumptions stay beside the arithmetic.', 'Blog menu evidence boundary');
 requirePattern(indexHtml, /<h4[^>]*><a href="\/blog\/food-cost-per-guest"/, 'post title nested beneath its topic heading');
 
 const expectedPosts = [
@@ -32,13 +35,25 @@ const expectedPosts = [
 	'case-price-to-portion-cost',
 	'client-added-40-guests',
 	'shopping-list-whole-packs',
-	'supplier-price-changes'
+	'supplier-price-changes',
+	'delivery-arrived-wrong',
+	'expected-vs-actual-food-cost',
+	'scale-catering-prep-list',
+	'review-supplier-invoice'
 ];
 const builtPosts = readdirSync(blogRoot, { withFileTypes: true })
 	.filter((entry) => entry.isDirectory())
 	.map((entry) => entry.name);
+const sourcePosts = readdirSync(content, { withFileTypes: true })
+	.filter((entry) => entry.isFile() && entry.name.endsWith('.md'));
+
+for (const entry of sourcePosts) {
+	const source = readFileSync(join(content, entry.name), 'utf8');
+	if (source.includes('—')) failures.push(`${entry.name} contains an em dash in user-facing copy`);
+}
 
 for (const slug of expectedPosts) {
+	requireText(indexHtml, `href="/blog/${slug}"`, `${slug} Blog menu link`);
 	if (!builtPosts.includes(slug)) failures.push(`missing built article route: /blog/${slug}`);
 	else {
 		const html = readFileSync(join(blogRoot, slug, 'index.html'), 'utf8');
@@ -77,4 +92,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('Blog contract passed: index, four topic paths, six articles, structured data, and product handoffs.');
+console.log('Blog contract passed: index, four topic paths, ten articles, structured data, and product handoffs.');

@@ -3,6 +3,8 @@ title: "How to turn a catering menu into a shopping list in whole packs"
 description: "Consolidate recipe needs, convert them into supplier pack units, round intentionally, and keep the difference visible."
 publishedDate: 2026-09-03
 category: Buying & suppliers
+menuGroup: Plan and buy
+menuIcon: packs
 featured: false
 order: 5
 readMinutes: 6
