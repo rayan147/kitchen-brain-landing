@@ -24,7 +24,7 @@ Food-cost percentage = food cost ÷ selling price × 100
 If a menu costs $26.98 per guest and sells for $68:
 
 ```text
-$26.98 ÷ $68.00 = 39.7% food cost
+$26.98 ÷ $68.00 ≈ 39.7% food cost
 ```
 
 The remaining 60.3% is not profit. It still has to cover labor, packaging, rentals, delivery, overhead, tax treatment where applicable, waste outside the recipe, and the return the business needs.
@@ -40,7 +40,7 @@ Markup = (selling price − cost) ÷ cost × 100
 Using the same food cost and selling price:
 
 ```text
-($68.00 − $26.98) ÷ $26.98 = 152.0% markup on food cost
+($68.00 − $26.98) ÷ $26.98 ≈ 152.0% markup on food cost
 ```
 
 Thirty percent food cost is not a 30% markup. A 30% markup on $26.98 would produce a selling price of only $35.07.
@@ -56,7 +56,7 @@ Food-only margin = (selling price − food cost) ÷ selling price × 100
 For the same menu:
 
 ```text
-($68.00 − $26.98) ÷ $68.00 = 60.3% food-only margin
+($68.00 − $26.98) ÷ $68.00 ≈ 60.3% food-only margin
 ```
 
 This is simply the other side of the 39.7% food-cost percentage. It is still not net profit because only food cost has been removed.
@@ -67,7 +67,7 @@ When you start with a target food-cost percentage, divide the food cost by the t
 
 ```text
 Selling price = food cost per guest ÷ target percentage
-$26.98 ÷ 0.30 = $89.94 per guest
+$26.9808 ÷ 0.30 ≈ $89.94 per guest
 ```
 
 This calculation is a decision aid, not a command. If the market will not support the result, the honest choices are to change the menu, change portions, negotiate buying, revise the target with full knowledge of the consequence, or decide the event is not a fit.

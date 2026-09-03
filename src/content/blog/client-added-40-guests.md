@@ -21,13 +21,13 @@ Food portions tied directly to the guest count use a scale factor:
 
 ```text
 Scale factor = new guests ÷ original guests
-220 ÷ 180 = 1.2222
+220 ÷ 180 ≈ 1.2222
 ```
 
 A recipe quantity planned at 18 lb for 180 guests becomes:
 
 ```text
-18 lb × 1.2222 = 22 lb
+18 lb × 1.2222 ≈ 22 lb
 ```
 
 Keep the recipe's own batch and yield rules intact. If the kitchen cooks only full batches or whole pots, translate the scaled need into the production quantity the crew can actually make.

@@ -94,7 +94,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 						return (
 							<section id={id} class="scroll-mt-28 pb-12 last:pb-0" aria-labelledby={`${id}-title`}>
 								<h3 id={`${id}-title`} class="pb-4 text-sm font-semibold text-amber-deep">{category}</h3>
-								{categoryPosts.map((post) => <BlogPostRow {post} />)}
+								{categoryPosts.map((post) => <BlogPostRow {post} headingLevel={4} />)}
 							</section>
 						);
 					})}
@@ -113,4 +113,3 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		</div>
 	</section>
 </Base>
-

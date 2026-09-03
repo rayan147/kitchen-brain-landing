@@ -38,7 +38,7 @@ Usable quantity = purchased quantity × yield
 20 lb × 0.85 = 17 lb usable
 
 Cost per usable lb = case price ÷ usable quantity
-$24.00 ÷ 17 lb = $1.41 per usable lb
+$24.00 ÷ 17 lb ≈ $1.41 per usable lb
 ```
 
 Yield should describe the product and preparation you actually use. Peeled onions, whole onions, roasted onions, and drained canned onions do not necessarily share a yield or unit path.
@@ -49,7 +49,7 @@ If the recipe uses 6 usable pounds:
 
 ```text
 Recipe line cost = usable unit cost × recipe quantity
-$1.41 × 6 lb = $8.47
+$1.4118 per usable lb × 6 lb ≈ $8.47
 ```
 
 Keep full precision while calculating and round the displayed result at the end. Rounding every intermediate conversion can create small differences that become noticeable across many portions.
@@ -60,7 +60,7 @@ If the finished recipe produces 24 portions:
 
 ```text
 Portion cost = recipe cost ÷ finished portions
-$8.47 ÷ 24 = $0.35 per portion
+$8.4706 ÷ 24 ≈ $0.35 per portion
 ```
 
 For a sub-recipe, the same logic applies. Cost the whole batch, record its finished yield, then let the parent recipe use only the quantity it needs.

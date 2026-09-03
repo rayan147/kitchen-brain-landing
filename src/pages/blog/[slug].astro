@@ -64,9 +64,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		</header>
 
 		<div class="container-page grid gap-10 py-section-tight lg:grid-cols-[minmax(0,44rem)_14rem] lg:justify-center lg:gap-16">
-			<div class="article-body min-w-0"><Content /></div>
 			{headings.length > 0 && (
-				<aside class="order-first lg:order-none" aria-labelledby="article-path-title">
+				<aside class="lg:col-start-2 lg:row-start-1" aria-labelledby="article-path-title">
 					<div class="border-y border-ticket-rule py-4 lg:sticky lg:top-6">
 						<h2 id="article-path-title" class="text-sm font-semibold">In this guide</h2>
 						<ol class="mt-3 space-y-1">
@@ -77,6 +76,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 					</div>
 				</aside>
 			)}
+			<div class="article-body min-w-0 lg:col-start-1 lg:row-start-1"><Content /></div>
 		</div>
 	</article>
 
@@ -96,7 +96,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 			<a href="/blog" class="btn-quiet inline-flex min-h-11 items-center">See every guide</a>
 		</div>
 		<div class="mt-7 border-b border-hairline">
-			{related.map((candidate) => <BlogPostRow post={candidate} compact />)}
+			{related.map((candidate) => <BlogPostRow post={candidate} headingLevel={3} compact />)}
 		</div>
 		<div class="mt-8"><a href={demoCta.href} class="btn-quiet inline-flex min-h-11 items-center">Or bring one real order to a 15-minute demo <span aria-hidden="true">→</span></a></div>
 	</section>

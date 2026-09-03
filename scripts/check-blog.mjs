@@ -11,6 +11,9 @@ const failures = [];
 const requireText = (html, text, label) => {
 	if (!html.includes(text)) failures.push(`missing ${label}: ${text}`);
 };
+const requirePattern = (html, pattern, label) => {
+	if (!pattern.test(html)) failures.push(`missing ${label}: ${pattern}`);
+};
 
 for (const [text, label] of [
 	['Practical answers for the numbers behind the food.', 'blog identity'],
@@ -21,6 +24,7 @@ for (const [text, label] of [
 	['Running the event', 'event topic'],
 	['Buying &amp; suppliers', 'supplier topic']
 ]) requireText(indexHtml, text, label);
+requirePattern(indexHtml, /<h4[^>]*><a href="\/blog\/food-cost-per-guest"/, 'post title nested beneath its topic heading');
 
 const expectedPosts = [
 	'food-cost-per-guest',
@@ -42,7 +46,26 @@ for (const slug of expectedPosts) {
 		requireText(html, 'In this guide', `${slug} table of contents`);
 		requireText(html, 'See the working inside the product.', `${slug} feature handoff`);
 		requireText(html, 'blog-article-working-shown', `${slug} emitted direction contract`);
+		requirePattern(html, /<h3[^>]*><a href="\/blog\//, `${slug} related post heading beneath its section`);
+		const guidePath = html.indexOf('aria-labelledby="article-path-title"');
+		const articleBody = html.indexOf('class="article-body');
+		if (guidePath < 0 || articleBody < 0 || guidePath > articleBody) {
+			failures.push(`${slug} guide navigation must precede article content in source order`);
+		}
 	}
+}
+
+requireText(
+	readFileSync(join(blogRoot, 'case-price-to-portion-cost', 'index.html'), 'utf8'),
+	'$1.4118 per usable lb × 6 lb ≈ $8.47',
+	'case-to-portion unrounded worked equation'
+);
+for (const slug of ['food-cost-per-guest', 'catering-menu-pricing']) {
+	requireText(
+		readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'),
+		'$26.9808 ÷ 0.30 ≈ $89.94 per guest',
+		`${slug} unrounded target-price equation`
+	);
 }
 
 if (builtPosts.length !== expectedPosts.length) {

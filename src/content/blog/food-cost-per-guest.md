@@ -38,8 +38,8 @@ Consider the illustrative 180-guest event used in the CostCook product tour:
 
 ```text
 180 guests × $68.00 = $12,240.00 revenue
-$4,856.55 ÷ 180 = $26.98 food cost per guest
-$4,856.55 ÷ $12,240.00 = 39.7% food cost
+$4,856.55 ÷ 180 ≈ $26.98 food cost per guest
+$4,856.55 ÷ $12,240.00 ≈ 39.7% food cost
 ```
 
 The $68 price sounds tidy. The food says something less tidy: 39.7 cents of every food-sales dollar is already assigned to ingredients.
@@ -51,7 +51,7 @@ If your food-cost target is 30%, reverse the percentage calculation to find the 
 ```text
 Required revenue = total food cost ÷ target percentage
 Required price per guest = food cost per guest ÷ target percentage
-$26.98 ÷ 0.30 = $89.94 per guest
+$26.9808 ÷ 0.30 ≈ $89.94 per guest
 ```
 
 That does not make $89.94 the correct market price. It tells you what the menu and target imply. You still have to decide whether to change the selling price, change the menu, accept a different target, or decline the work.
