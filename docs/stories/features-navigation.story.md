@@ -1,5 +1,13 @@
 # Story Tracker — Features navigation
 
+## Revision — Resources and Blog (2026-09-03)
+
+The secondary `Explore` disclosure becomes `Resources` and gains one first item: `Blog`.
+This preserves the existing priority ladder—Features and Pricing answer the fastest product
+questions; Resources holds longer evaluation and learning paths; Demo and Start remain
+visible decisions. Blog categories stay on `/blog`, so the header does not grow a third
+disclosure or force readers to choose a topic before they have seen the publication.
+
 ## My story
 
 - **Piece:** Global navigation feature explainer
@@ -119,6 +127,6 @@ All eleven steps remain complete and every destination keeps the same words and 
 
 ## Revision — demo action and calmer header (2026-08-31)
 
-All eleven steps remain complete. A visitor deciding between seeing CostCook and starting it now gets two visibly different actions: **Book a demo** is the outlined secondary action and **Start CostCook** remains the filled primary action. Adding another flat tab would turn every destination into equal-weight header noise, so the lower-frequency decision and help routes—Product tour, Who it’s for, How we compare, FAQ, and Contact—move under one **Explore** disclosure. Features and Pricing stay direct on desktop because they answer the two most frequent evaluation questions.
+All eleven steps remain complete. A visitor deciding between seeing CostCook and starting it now gets two visibly different actions: **Book a demo** is the outlined secondary action and **Start CostCook** remains the filled primary action. Adding another flat tab would turn every destination into equal-weight header noise, so Blog and the lower-frequency decision and help routes—Product tour, Who it’s for, How we compare, FAQ, and Contact—sit under one **Resources** disclosure. Features and Pricing stay direct on desktop because they answer the two most frequent evaluation questions.
 
-From 360px through narrow-tablet widths, **Features** keeps its own contained two-group sheet while a separate **Menu** sheet carries Pricing, every Explore destination, and Sign in. **Demo** and **Start** remain outside both sheets. Below 360px, the direct Features trigger yields the row and a Features overview link moves into Menu; the feature hub preserves the route into the same job-led inventory. This keeps every destination reachable without forcing the wordmark, five navigation links, account access, and two conversion actions onto one row. The hierarchy changes from crowded → deliberate; no claim copy or destination changes.
+From 360px through narrow-tablet widths, **Features** keeps its own contained two-group sheet while a separate **Menu** sheet carries Pricing, every Resources destination, and Sign in. **Demo** and **Start** remain outside both sheets. Below 360px, the direct Features trigger yields the row and a Features overview link moves into Menu; the feature hub preserves the route into the same job-led inventory. This keeps every destination reachable without forcing the wordmark, five navigation links, account access, and two conversion actions onto one row. The hierarchy changes from crowded → deliberate; Blog is the only new destination.

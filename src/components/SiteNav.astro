@@ -1,5 +1,5 @@
 ---
-import { cta, demoCta, exploreMenu, featuresMenu, mobileMenu, nav, signIn } from '../lib/site';
+import { cta, demoCta, featuresMenu, mobileMenu, nav, resourcesMenu, signIn } from '../lib/site';
 import BrandLockup from './BrandLockup.astro';
 import FeatureMenuContents from './FeatureMenuContents.astro';
 
@@ -8,7 +8,7 @@ import FeatureMenuContents from './FeatureMenuContents.astro';
 // navigation panel needs: Escape, click-away, link activation, and focus-out.
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const pricingItem = nav.find((item) => item.header === 'direct');
-const exploreActive = exploreMenu.items.some((item) => item.href === path);
+const resourcesActive = resourcesMenu.items.some((item) => item.href === path || path.startsWith(`${item.href}/`));
 // Considered State; not used because the active destination is derived from
 // the current URL while native details own each open/closed state.
 ---
@@ -116,22 +116,22 @@ const exploreActive = exploreMenu.items.some((item) => item.href === path);
 				)}
 
 				<li class="relative hidden lg:block">
-					<details data-nav-disclosure data-explore-menu>
+					<details data-nav-disclosure data-resources-menu>
 						<summary
-							aria-label={exploreMenu.ariaLabel}
+							aria-label={resourcesMenu.ariaLabel}
 							class:list={[
 								'inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink [&::-webkit-details-marker]:hidden',
-								exploreActive && 'text-ink'
+								resourcesActive && 'text-ink'
 							]}
 						>
-							{exploreMenu.label}
+							{resourcesMenu.label}
 							<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="nav-chevron transition-transform duration-150 [details[open]_&]:rotate-180">
 								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
 						</summary>
 						<div class="absolute top-full right-0 z-40 mt-2 w-60 border border-ticket-rule bg-paper p-2 shadow-lift">
 							<ul role="list">
-								{exploreMenu.items.map((item) => (
+								{resourcesMenu.items.map((item) => (
 									<li>
 										<a
 											href={item.href}
@@ -166,7 +166,7 @@ const exploreActive = exploreMenu.items.some((item) => item.href === path);
 								<ul role="list">
 									<li class="tiny-features-link"><a href={featuresMenu.href} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{featuresMenu.label}</a></li>
 									{pricingItem && <li><a href={pricingItem.href} aria-current={path === pricingItem.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{pricingItem.label}</a></li>}
-									{exploreMenu.items.map((item) => (
+									{resourcesMenu.items.map((item) => (
 										<li><a href={item.href} aria-current={path === item.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{item.label}</a></li>
 									))}
 									<li><a href={signIn.href} target={signIn.target} aria-label={signIn.ariaLabel} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{signIn.label}</a></li>

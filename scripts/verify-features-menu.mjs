@@ -154,9 +154,9 @@ try {
 	assert(desktop.sectionTops[0] === desktop.sectionTops[1], 'desktop: menu groups are not aligned');
 	assert(desktop.sectionLefts[0] < desktop.sectionLefts[1], 'desktop: menu groups did not form two columns');
 	await capture('desktop-open');
-	const explore = await evaluate(`(() => new Promise((resolve) => {
+	const resources = await evaluate(`(() => new Promise((resolve) => {
 		const features = document.querySelector('[data-features-menu]');
-		const details = document.querySelector('[data-explore-menu]');
+		const details = document.querySelector('[data-resources-menu]');
 		details.open = true;
 		requestAnimationFrame(() => resolve({
 			linkCount: details.querySelectorAll('a').length,
@@ -164,10 +164,10 @@ try {
 			featuresClosed: !features.open
 		}));
 	}))()`);
-	assert(explore.linkCount === 5, `desktop Explore: expected 5 links, received ${explore.linkCount}`);
-	assert(explore.hasTour, 'desktop Explore: product tour is missing');
-	assert(explore.featuresClosed, 'desktop Explore: opening it did not close Features');
-	await capture('desktop-explore-open');
+	assert(resources.linkCount === 6, `desktop Resources: expected 6 links, received ${resources.linkCount}`);
+	assert(resources.hasTour, 'desktop Resources: product tour is missing');
+	assert(resources.featuresClosed, 'desktop Resources: opening it did not close Features');
+	await capture('desktop-resources-open');
 
 	for (const [width, height] of [[1280, 800], [1024, 768]]) {
 		await viewport(width, height);
@@ -288,7 +288,7 @@ try {
 			featuresClosed: !features.open
 		}));
 	}))()`);
-	assert(mobileMenu.visibleLinks === 7, `mobile Menu: expected 7 visible links, received ${mobileMenu.visibleLinks}`);
+	assert(mobileMenu.visibleLinks === 8, `mobile Menu: expected 8 visible links, received ${mobileMenu.visibleLinks}`);
 	assert(mobileMenu.hasPricing, 'mobile Menu: Pricing is missing');
 	assert(mobileMenu.hasSignIn, 'mobile Menu: Sign in is missing');
 	assert(mobileMenu.featuresClosed, 'mobile Menu: opening it did not close Features');

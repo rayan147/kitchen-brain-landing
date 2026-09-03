@@ -98,34 +98,35 @@ const productTourHref = '/tour/main';
  * whole flat list, while narrow screens expose the same destinations through
  * one contained Menu disclosure so no route disappears with the breakpoint.
  */
-export const nav: readonly { label: string; href: string; header: 'direct' | 'explore' }[] = [
+export const nav: readonly { label: string; href: string; header: 'direct' | 'resources' }[] = [
 	// Root-relative so the same links resolve from /features too.
 	{ label: 'Pricing', href: '/pricing', header: 'direct' },
 	// Considered Composite; not used because this remains a flat destination
 	// list with placement metadata. The nested feature inventory has its own
 	// shared renderer; recursive navigation nodes would add no useful node type.
-	{ label: 'Product tour', href: productTourHref, header: 'explore' },
+	{ label: 'Blog', href: '/blog', header: 'resources' },
+	{ label: 'Product tour', href: productTourHref, header: 'resources' },
 	// The fit question is a bookmarkable read, not an ARIA tabs widget. It is
 	// deliberately not earlyVisible: pricing still owns the one phone slot,
 	// while the full footer keeps this destination available at every width.
-	{ label: 'Who it\'s for', href: '/who-its-for', header: 'explore' },
+	{ label: 'Who it\'s for', href: '/who-its-for', header: 'resources' },
 	// 'Every feature' left this array on 2026-08-23. /features is now a hub
 	// over five area pages, and a flat link to it hid that structure one click
 	// deep; the header renders it as a disclosure instead (see featuresMenu and
 	// SiteNav). It stays in the FOOTER as a plain link, because a footer is a
 	// list, not a menu, and a second disclosure down there would be worse.
-	{ label: 'How we compare', href: '/compare', header: 'explore' },
+	{ label: 'How we compare', href: '/compare', header: 'resources' },
 	// Added 2026-08-29. Not earlyVisible: pricing keeps the one phone slot, and
 	// the FAQ's first group IS the pricing questions, reachable from /pricing
 	// and from the close. The header carries it from md up, the footer always.
-	{ label: 'FAQ', href: '/faq', header: 'explore' },
-	{ label: 'Contact', href: contactCta.href, header: 'explore' }
+	{ label: 'FAQ', href: '/faq', header: 'resources' },
+	{ label: 'Contact', href: contactCta.href, header: 'resources' }
 ];
 
-export const exploreMenu = {
-	label: 'Explore',
-	ariaLabel: 'Explore CostCook',
-	items: nav.filter((item) => item.header === 'explore')
+export const resourcesMenu = {
+	label: 'Resources',
+	ariaLabel: 'CostCook resources',
+	items: nav.filter((item) => item.header === 'resources')
 } as const;
 
 export const mobileMenu = {

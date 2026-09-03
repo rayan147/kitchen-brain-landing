@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-31T00:00:00.000Z",
+  "generatedAt": "2026-09-03T00:00:00.000Z",
   "title": "Design System: CostCook",
   "extensions": {
     "colorMeta": {
@@ -79,9 +79,23 @@
     {
       "name": "Navigation Disclosure",
       "kind": "nav",
-      "description": "A native grouped-navigation base that remains operable without JavaScript; enhancement only coordinates closure and focus recovery.",
-      "html": "<details class=\"ds-nav-disclosure\"><summary>Explore <svg width=\"10\" height=\"6\" viewBox=\"0 0 10 6\" fill=\"none\" aria-hidden=\"true\"><path d=\"M1 1 5 5 9 1\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg></summary><ul><li><a href=\"/tour/main\">Product tour</a></li><li><a href=\"/compare\">How we compare</a></li><li><a href=\"/contact\">Contact</a></li></ul></details>",
+      "description": "A native Resources disclosure for lower-frequency reading and evaluation routes; enhancement only coordinates closure and focus recovery.",
+      "html": "<details class=\"ds-nav-disclosure\"><summary>Resources <svg width=\"10\" height=\"6\" viewBox=\"0 0 10 6\" fill=\"none\" aria-hidden=\"true\"><path d=\"M1 1 5 5 9 1\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg></summary><ul><li><a href=\"/blog\">Blog</a></li><li><a href=\"/tour/main\">Product tour</a></li><li><a href=\"/contact\">Contact</a></li></ul></details>",
       "css": ".ds-nav-disclosure { position: relative; color: var(--color-ink-soft, #49524c); font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; } .ds-nav-disclosure summary { display: inline-flex; min-height: 44px; cursor: pointer; list-style: none; align-items: center; gap: 0.375rem; font-weight: 500; } .ds-nav-disclosure summary::-webkit-details-marker { display: none; } .ds-nav-disclosure summary:hover { color: var(--color-ink, #1f2421); } .ds-nav-disclosure summary:focus-visible, .ds-nav-disclosure a:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; } .ds-nav-disclosure summary svg { transition: transform 150ms ease-out; } .ds-nav-disclosure[open] summary svg { transform: rotate(180deg); } .ds-nav-disclosure ul { position: absolute; z-index: 1; top: 100%; right: 0; width: 15rem; margin: 0.5rem 0 0; padding: 0.5rem; border: 1px solid var(--color-ticket-rule, #e4d3b4); background: var(--color-paper, #fdfefd); list-style: none; box-shadow: 0 1px 2px rgb(31 36 33 / 0.06), 0 10px 28px rgb(31 36 33 / 0.08); } .ds-nav-disclosure a { display: flex; min-height: 44px; align-items: center; padding: 0.5rem 0.75rem; color: inherit; text-decoration: none; } .ds-nav-disclosure a:hover { background: #faf5ea; color: var(--color-ink, #1f2421); } @media (prefers-reduced-motion: reduce) { .ds-nav-disclosure summary svg { transition: none; } }"
+    },
+    {
+      "name": "Blog List Row",
+      "kind": "custom",
+      "description": "A flat ruled reading record that keeps topic and reading time, title and summary, and publication date in one comparable row.",
+      "html": "<article class=\"ds-blog-row\"><div class=\"ds-blog-meta\"><strong>Kitchen topic</strong><span>7 min read</span></div><div><h2><a href=\"#\">One kitchen question, worked through</a></h2><p>Keep the inputs, arithmetic, boundary, and next job visible in the reading record.</p></div><time>Published date</time></article>",
+      "css": ".ds-blog-row { display: grid; grid-template-columns: 10rem minmax(0, 1fr) auto; gap: 1.5rem; align-items: start; border-top: 1px solid var(--color-hairline, #d3ddd6); padding-block: 1.5rem; color: var(--color-ink, #1f2421); } .ds-blog-meta { display: grid; gap: 0.5rem; color: var(--color-ink-soft, #49524c); font: 600 0.75rem/1.35 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; } .ds-blog-meta strong { color: var(--color-amber-deep, #8f5716); } .ds-blog-row h2 { margin: 0; font: 600 1.5rem/1.15 'Fraunces Variable', ui-serif, Georgia, serif; } .ds-blog-row h2 a { color: inherit; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: color 150ms ease-out, text-decoration-color 150ms ease-out; } .ds-blog-row h2 a:hover { color: var(--color-green-deep, #256549); text-decoration-color: var(--color-hairline, #d3ddd6); } .ds-blog-row h2 a:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; } .ds-blog-row p { max-width: 65ch; margin: 0.75rem 0 0; color: var(--color-ink-soft, #49524c); font: 400 0.875rem/1.6 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif; } .ds-blog-row time { color: var(--color-ink-soft, #49524c); font: 400 0.75rem/1.35 ui-monospace, monospace; font-variant-numeric: tabular-nums; } @media (max-width: 639px) { .ds-blog-row { grid-template-columns: 1fr; gap: 0.75rem; } .ds-blog-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; } }"
+    },
+    {
+      "name": "Article Working Block",
+      "kind": "custom",
+      "description": "A plain ruled block for formulas and bounded worked examples, using tabular numerals without decorative code chrome.",
+      "html": "<pre class=\"ds-working-block\" aria-label=\"Worked calculation\">Known input × rate = working total\nWorking total ÷ units = amount per unit</pre>",
+      "css": ".ds-working-block { max-width: 44rem; overflow-x: auto; margin-block: 1.5rem; border-block: 1px solid var(--color-ticket-rule, #e4d3b4); background: var(--color-paper, #fdfefd); padding: 1.25rem; color: var(--color-ink, #1f2421); font: 400 0.875rem/1.7 ui-monospace, monospace; font-variant-numeric: tabular-nums; white-space: pre; } .ds-working-block:focus-visible { outline: 2px solid var(--color-green, #2f7d5b); outline-offset: 2px; } @media (max-width: 639px) { .ds-working-block { padding-inline: 1.25rem; } }"
     },
     {
       "name": "Contact Guidance",
@@ -93,7 +107,7 @@
   ],
   "narrative": {
     "northStar": "The Kitchen Ticket",
-    "overview": "CostCook's incumbent marketing identity is practical, warm, and quiet: an off-white ground, restrained green actions, amber operational accents, and fine rules that recall kitchen tickets without turning the site into a theme. Fraunces gives decisions and page identity an editorial voice; Instrument Sans keeps supporting information direct and easy to scan.\n\nContact follows the same founder-direct voice. Public visitors get a dedicated /contact destination with email, phone, and demo actions; existing users are directed to authenticated Contact support inside CostCook, where account context can accompany the message.\n\nWhen marketing needs to show connected product evidence, the same visual world can tighten into a calm, seeded workspace. Editorial Fraunces remains outside and at key explanatory handoffs; dense product labels, tables, statuses, and tabular numbers use Instrument Sans inside a bounded paper surface. This is product proof within the marketing system, not a separate dashboard identity.",
+    "overview": "CostCook's incumbent marketing identity is practical, warm, and quiet: an off-white ground, restrained green actions, amber operational accents, and fine rules that recall kitchen tickets without turning the site into a theme. Fraunces gives decisions and page identity an editorial voice; Instrument Sans keeps supporting information direct and easy to scan.\n\nContact follows the same founder-direct voice. Public visitors get a dedicated /contact destination with email, phone, and demo actions; existing users are directed to authenticated Contact support inside CostCook, where account context can accompany the message.\n\nWhen marketing needs to show connected product evidence, the same visual world can tighten into a calm, seeded workspace. Editorial Fraunces remains outside and at key explanatory handoffs; dense product labels, tables, statuses, and tabular numbers use Instrument Sans inside a bounded paper surface. This is product proof within the marketing system, not a separate dashboard identity.\n\nRead surfaces extend the ticket into a ruled working notebook. They lead with a real kitchen question, keep arithmetic and assumptions visible, and finish by naming the next operational job. Editorial structure should help a working chef reach a defensible number; it should not turn into a generic publication grid or a product pitch disguised as instruction.",
     "keyCharacteristics": [
       "Warm off-white, green, and amber palette",
       "Fraunces display type paired with Instrument Sans body type",
@@ -101,7 +115,8 @@
       "Direct actions with explicit outcomes and accessible touch targets",
       "Founder-direct contact language without an anonymous form",
       "Calm, bounded product-proof workspaces with explicit data provenance",
-      "Priority-led shared navigation with resilient native disclosures"
+      "Priority-led shared navigation with resilient native disclosures",
+      "Question-led read surfaces with visible working and a practical handoff"
     ],
     "rules": [
       { "name": "The Quiet Accent Rule", "body": "Green identifies actions; amber provides small operational emphasis. Neither becomes a broad decorative wash.", "section": "colors" },
@@ -109,7 +124,9 @@
       { "name": "The Flat-by-Default Rule", "body": "Use elevation for physical ticket-like artifacts and bounded product proof, not routine contact information, navigation, or every internal panel.", "section": "elevation" },
       { "name": "The Prepared-Handoff Rule", "body": "A static marketing form may prepare a visitor-owned email, but it must distinguish “ready to send” from “sent,” keep the message inspectable in the visitor's email app, and never imply receipt before the visitor sends it.", "section": "components" },
       { "name": "The Priority Ladder Rule", "body": "Direct links answer the most frequent evaluation questions; grouped links support deeper exploration; quiet account access and distinct demo/start actions retain their own semantic weight.", "section": "components" },
-      { "name": "The Native Disclosure Rule", "body": "Navigation remains complete with JavaScript disabled. Script may improve closure and focus recovery, but never supply the only path to a destination.", "section": "components" }
+      { "name": "The Native Disclosure Rule", "body": "Navigation remains complete with JavaScript disabled. Script may improve closure and focus recovery, but never supply the only path to a destination.", "section": "components" },
+      { "name": "The Worked-Number Rule", "body": "Order practical reading as question, arithmetic, boundary or exception, then next job. Keep the calculation and its assumptions visually attached to the decision they support.", "section": "layout" },
+      { "name": "The Working-Sheet Rule", "body": "A practical article shows one kitchen question all the way through: formula, bounded example, exceptions, and the next job. Product handoffs follow the instruction; they do not interrupt or masquerade as it.", "section": "components" }
     ],
     "dos": [
       "Do preserve the existing off-white, green, amber, Fraunces, Instrument Sans, and quiet-rule identity when extending contact surfaces.",
@@ -121,7 +138,9 @@
       "Do use tabular numerals and quiet rules when presenting operational amounts for comparison.",
       "Do tell visitors when a contact or demo action prepares an email rather than sending data from the site.",
       "Do keep demo and start actions visible and visually distinct when shared navigation condenses.",
-      "Do build navigation disclosures on native details and summary, then enhance mutual exclusion and focus recovery."
+      "Do build navigation disclosures on native details and summary, then enhance mutual exclusion and focus recovery.",
+      "Do keep Resources as the grouped label for Blog and other lower-frequency reading destinations, with nested resource routes reflected in its active state.",
+      "Do keep blog metadata, arithmetic, assumptions, and next-job handoffs visually inspectable with rules, restrained color, and tabular numerals."
     ],
     "donts": [
       "Don't add an anonymous public contact form without a new product decision.",
@@ -130,7 +149,8 @@
       "Don't present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence.",
       "Don't show a sent, received, or confirmed state until the underlying system can prove that state.",
       "Don't flatten every destination, account action, and conversion action into equal-weight header links.",
-      "Don't make JavaScript responsible for opening the only route to navigation destinations."
+      "Don't make JavaScript responsible for opening the only route to navigation destinations.",
+      "Don't turn practical guides into image-led card grids, decorative hero essays, or product pitches that delay the first useful explanation."
     ]
   }
 }
