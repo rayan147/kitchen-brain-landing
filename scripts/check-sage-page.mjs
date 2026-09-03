@@ -22,7 +22,7 @@ const required = [
 	'/proof/sage-walkthrough.mp4',
 	'/proof/sage-walkthrough.vtt',
 	'Ask before the kitchen is fully set up.',
-	'Six kitchen jobs. No vague seventh.',
+	'Eleven kitchen checks. One reviewed proposal.',
 	'A missing number is an answer, too.',
 	'id="faq-heading"',
 	'Is Sage available now?',

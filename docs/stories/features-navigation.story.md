@@ -1,11 +1,19 @@
 # Story Tracker — Features navigation
 
+## Revision — Resources and Blog (2026-09-03)
+
+The secondary `Explore` disclosure becomes `Resources` and gains one first item: `Blog`.
+This preserves the existing priority ladder—Features and Pricing answer the fastest product
+questions; Resources holds longer evaluation and learning paths; Demo and Start remain
+visible decisions. Blog categories stay on `/blog`, so the header does not grow a third
+disclosure or force readers to choose a topic before they have seen the publication.
+
 ## My story
 
 - **Piece:** Global navigation feature explainer
 - **Title / headline:** Features, broken down by the kitchen job
 - **My hero's name:** The working chef-owner evaluating CostCook
-- **Content file(s):** `src/components/SiteNav.astro`, `src/lib/features.ts`
+- **Content file(s):** `src/components/SiteNav.astro`, `src/lib/features.ts`, `src/components/sections/FeatureIndex.astro`, `src/pages/pricing.astro`
 
 ## The 11 steps
 
@@ -45,7 +53,7 @@
 | 5 Debate | A large menu could become a second wall of features. |
 | 6 Break into Two | Features opens into “Build and price” and “Run the event.” |
 | 7 B Story | The navigation respects the operator deciding between software and the next task. |
-| 8 Fun and Games | Eight specific links jump to the matching evidence. |
+| 8 Fun and Games | Kitchen-job links, Sage and Team & Access jump to the matching evidence. |
 | 9 Midpoint | One scan replaces the full-list search. |
 | 10 Bad Guys Close In | Phone width, keyboard, zoom, reduced motion, and no JavaScript test the shortcut. |
 | 11 All Is Lost | The product may do the job, but poor navigation makes the visitor prove it alone. |
@@ -62,7 +70,7 @@
 
 ### Step 5 — Character Voices
 
-- **Reader's words:** recipe, food cost, menu, quote, supplier price, invoice, shop, prep, pack, receiving, shelf, month cost.
+- **Reader's words:** recipe, food cost, menu, quote, supplier price, invoice, shop, prep, pack, receiving, shelf, month cost, invite, owner, manager, staff.
 - **Product voice:** competent, calm, unfussy.
 - **Banned:** seamless, powerful, optimize.
 
@@ -99,4 +107,26 @@
 
 - **Word count before → after:** 139 words across eight draft descriptions → 103 words.
 - **Claims removed:** No time-saved, revenue, customer, or automation claim added.
-- **Final Image:** Choose the kitchen job and land on the evidence for it.
+- **Final Image:** Choose the kitchen job or access question and land on the evidence for it.
+
+## Revision — guided product-tour entry (2026-08-29)
+
+The Features disclosure offers twelve job-led destinations. Its footer gives the reader two distinct next actions: inspect those destinations as one seeded event in the guided product tour, or open the exhaustive shipped-feature index. This keeps the fast path visible without turning the tour into another capability item.
+
+## Revision — direct product-tour link (2026-08-29)
+
+The guided tour is now a first-class destination in the shared navigation. On wide screens, “Product tour” sits beside Pricing so a visitor can start the seeded walkthrough without first opening Features. At tighter widths, the established Features disclosure remains the route into the tour and protects the header’s limited space. The footer carries the direct link at every width, preserving a second recovery path without inventing new language or another workflow.
+
+## Revision — Coming group count (2026-08-30)
+
+All eleven steps remain complete. The Features hub and Pricing page now say that three **feature groups** contain Coming work. They no longer imply that CostCook has only three individual Coming capabilities. The detailed rows remain the authoritative inventory, preserving the same scan path, snap line, and final handoff.
+
+## Revision — phone menu as a contained sheet (2026-08-30)
+
+All eleven steps remain complete and every destination keeps the same words and order. Below the tablet breakpoint, the long Features disclosure now opens as a bottom-anchored sheet with its own vertical scroll, safe-area clearance, and tighter phone spacing. The reader can reach the final tour and overview actions without scrolling the landing page out from under the menu; tablet and desktop keep the anchored two-column panel.
+
+## Revision — demo action and calmer header (2026-08-31)
+
+All eleven steps remain complete. A visitor deciding between seeing CostCook and starting it now gets two visibly different actions: **Book a demo** is the outlined secondary action and **Start CostCook** remains the filled primary action. Adding another flat tab would turn every destination into equal-weight header noise, so Blog and the lower-frequency decision and help routes—Product tour, Who it’s for, How we compare, FAQ, and Contact—sit under one **Resources** disclosure. Features and Pricing stay direct on desktop because they answer the two most frequent evaluation questions.
+
+From 360px through narrow-tablet widths, **Features** keeps its own contained two-group sheet while a separate **Menu** sheet carries Pricing, every Resources destination, and Sign in. **Demo** and **Start** remain outside both sheets. Below 360px, the direct Features trigger yields the row and a Features overview link moves into Menu; the feature hub preserves the route into the same job-led inventory. This keeps every destination reachable without forcing the wordmark, five navigation links, account access, and two conversion actions onto one row. The hierarchy changes from crowded → deliberate; Blog is the only new destination.

@@ -93,6 +93,6 @@ Sunday, 9 p.m., forty containers cooling, a roll of label stock, and a customer 
 
 ### Step 11 — Revise and Finish
 
-- Cut: "compliant" everywhere; "accurate"; a line about dietary tags (not assessed, RC-47).
+- Cut: "compliant" everywhere and "accurate". Dietary characteristics remain unassessed today, but owner confirmation on 2026-08-30 moved them from No to Coming; public boundaries now state both facts together.
 - The printed-label status was moved from Coming to Yes on evidence (RC-50), and every surface that argued the old status was rewritten rather than left to contradict.
 - Ending: the feature-area link, then the hand-off to PaperIn.

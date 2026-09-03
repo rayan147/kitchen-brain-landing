@@ -1,14 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LabelsPrintingFeature from '../../components/sections/LabelsPrintingFeature.astro';
+import { labelsAvailability } from '../../lib/labels';
 
 // Considered Strategy; not used because this route is one deliberate editorial
 // composition selected at build time, not a runtime-swappable layout family.
 const directionContract = [
 	'THESIS: A date label is a food-safety claim on a container, so the app asks the cook what it cannot know, never guesses a date, and freezes what the sticker said.',
 	'OWN-WORLD: CostCook Kitchen Ticket paper, hairline rules, mono micro-labels, amber Coming chip; captures inside the ticket frame only.',
-	'STORY: A cook at the prep bench labels a batch in six taps; the owner reads that it is built, behind a flag, and marked Coming until the ledger changes.',
-	'FIRST VIEWPORT: The status word beside the eyebrow, one headline, the honest status sentence, and the real dialog capture at reading size.',
+	'STORY: A cook at the prep bench labels a batch in six steps; the owner reads that it is built, behind a flag, and marked Coming until the ledger changes.',
+	'FIRST VIEWPORT: The status word, headline, honest status sentence, actions, and opening of the proof. Desktop shows the real dialog; phones show its legible sticker with a full-dialog link.',
 	'FORM: Utility-class composition matching the homepage stops; authentic captures outrank generated imagery.',
 	'FINISH: Status pinned by the claim guard; the page guard checks the status sentence, the boundary lines and the captures.'
 ].join(' ');
@@ -16,7 +17,7 @@ const directionContract = [
 
 <Base
 	title="Kitchen label printing for caterers | CostCook"
-	description="Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record. Built behind a flag and marked Coming."
+	description={labelsAvailability.seoDescription}
 	path="/features/labels-and-printing"
 	directionContract={directionContract}
 >

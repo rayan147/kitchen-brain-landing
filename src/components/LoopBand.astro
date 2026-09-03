@@ -36,76 +36,89 @@
  * never silently applied. See the forbidden-claims list in
  * scripts/check-landing-claims.mjs for why that distinction is guarded.
  */
+// Considered Composite; not used because this is one fixed, flat sequence whose
+// variation is data, not a tree of parts with shared behaviour.
 const stops = [
-	{ tag: 'PRICE IN', label: 'A vendor price sheet or invoice' },
-	{ tag: 'COST IT', label: 'Recipes and menus cost themselves' },
-	{ tag: 'ORDER', label: 'A menu plus a head count' },
-	{ tag: 'SHOP', label: 'By supplier, in whole packs' },
-	{ tag: 'PREP', label: 'Scaled batches, whole pots' },
-	{ tag: 'PACK', label: 'Portions, equipment, notes' }
+	{
+		tag: 'PRICE IN',
+		label: 'A vendor price sheet or invoice',
+		iconPaths: ['M7 3h7l4 4v14H7z', 'M14 3v5h5', 'M10 12h5', 'M10 16h5']
+	},
+	{
+		tag: 'COST IT',
+		label: 'Recipes and menus cost themselves',
+		iconPaths: ['M6 3h12v18H6z', 'M9 7h6', 'M9 12h2', 'M14 12h1', 'M9 16h2', 'M14 16h1']
+	},
+	{
+		tag: 'ORDER',
+		label: 'A menu plus a head count',
+		iconPaths: ['M8 4h8v4H8z', 'M6 6H4v15h16V6h-2', 'M8 12h8', 'M8 16h5']
+	},
+	{
+		tag: 'SHOP',
+		label: 'By supplier, in whole packs',
+		iconPaths: ['M3 4h2l2.2 10h9.8l2-7H6', 'M10 19a1 1 0 1 1-2 0 1 1 0 0 1 2 0', 'M18 19a1 1 0 1 1-2 0 1 1 0 0 1 2 0']
+	},
+	{
+		tag: 'PREP',
+		label: 'Scaled batches, whole pots',
+		iconPaths: ['M5 9h14v8a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z', 'M3 11h2', 'M19 11h2', 'M9 6h6']
+	},
+	{
+		tag: 'PACK',
+		label: 'Portions, equipment, notes',
+		iconPaths: ['M4 8l8-4 8 4-8 4z', 'M4 8v9l8 4 8-4V8', 'M12 12v9']
+	}
 ];
 ---
 
+<!-- story: docs/stories/homepage-loop-visual-guide.story.md -->
 <figure class="mt-12 lg:mt-16">
 	<div class="border-y border-ticket-rule bg-cream px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
-		<!-- The diagram is decorative in its arrows only; the chain itself is a
-		     real ordered list, so a screen reader gets the sequence rather than a
-		     wall of disconnected labels. -->
-		<p class="sr-only">
-			The CostCook loop, in order: a vendor price sheet or invoice comes in, recipes and
-			menus cost themselves, a menu plus a head count becomes an order, the order becomes a
-			shopping list by supplier in whole packs, then scaled prep batches, then the pack
-			plan. Receiving what you bought returns to the start, so the price you actually paid
-			becomes the price the next quote is costed from.
-		</p>
-
+		<!-- The arrows and icons are decorative. The ordered list itself stays in
+		     the accessibility tree, so the visual order and reading order agree. -->
 		<ol
 			role="list"
-			class="grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-x-5 gap-y-7 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-7"
-			aria-hidden="true"
+			class="loop-flow"
+			aria-label="From supplier price to packed order"
+			data-homepage-loop
 		>
 			{
-				stops.map((stop, i) => (
-					<li class="relative">
-						{/* The connector is drawn on the item that FOLLOWS the gap, so the
-						    last stop never trails an arrow into empty space. It is hidden
-						    wherever the grid wraps (2- and 3-column), because a horizontal
-						    arrow across a line break points at the wrong neighbour.
-
-						    A glyph, not a hairline. The first cut drew a 12px dashed rule
-						    here and at label size it read as a hyphen stuck to the front of
-						    the word: "---COST IT". An arrow cannot be misread as
-						    punctuation. */}
-						{i > 0 && (
-							<span
-								class="pointer-events-none absolute -top-px -left-[1.35rem] hidden text-sm leading-none text-ink-soft/55 lg:block"
-								aria-hidden="true"
-							>
-								&#8594;
-							</span>
-						)}
-						<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-							{stop.tag}
-						</p>
-						<p class="mt-2 text-sm leading-snug text-ink-soft">{stop.label}</p>
+				stops.map((stop) => (
+					<li class="loop-step" data-loop-step={stop.tag}>
+						<span class="loop-icon" aria-hidden="true">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+								{stop.iconPaths.map((path) => <path d={path} />)}
+							</svg>
+						</span>
+						<div class="loop-copy">
+							<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+								{stop.tag}
+							</p>
+							<p class="mt-1.5 text-sm leading-snug text-ink-soft">{stop.label}</p>
+						</div>
 					</li>
 				))
 			}
 		</ol>
 
-		<!-- The return path. On large screens it reads as a line coming back
-		     under the chain; below that the arrow glyph would point across a
-		     wrapped grid, so it degrades to the same sentence without the rule. -->
-		<div class="mt-8 flex flex-wrap items-center gap-4 border-t border-dashed border-ink-rule/45 pt-5">
-			<span
-				class="font-mono text-eyebrow font-semibold tracking-wide whitespace-nowrap text-ink-soft"
-			>
-				<span aria-hidden="true">&#8629;</span> RECEIVE
+		<!-- Receiving closes the cycle rather than advancing the current order,
+		     so its green return mark is offset from the amber forward rail. -->
+		<div class="receive-row">
+			<span class="receive-icon" aria-hidden="true">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+					<path d="M20 7v5h-5" />
+					<path d="M18.4 16.5A8 8 0 1 1 20 12" />
+					<path d="M9 12l2 2 4-5" />
+				</svg>
 			</span>
-			<p class="text-sm leading-snug text-ink-soft">
-				Tick off what actually arrived, and the price you paid becomes the price the next
-				quote is costed from. You approve it; nothing changes behind your back.
-			</p>
+			<div>
+				<p class="font-mono text-eyebrow font-semibold tracking-wide text-ink-soft">RECEIVE</p>
+				<p class="mt-1.5 text-sm leading-snug text-ink-soft">
+					Tick off what actually arrived, and the price you paid becomes the price the next
+					quote is costed from. You approve it; nothing changes behind your back.
+				</p>
+			</div>
 		</div>
 	</div>
 	<figcaption class="mt-4 text-sm text-ink-soft">
@@ -113,3 +126,146 @@ const stops = [
 		screen you already work in. The numbers move between them so you do not.
 	</figcaption>
 </figure>
+
+<style>
+	.loop-flow {
+		display: grid;
+		gap: 0;
+	}
+
+	.loop-step {
+		position: relative;
+		display: grid;
+		grid-template-columns: 3rem minmax(0, 1fr);
+		gap: 1rem;
+		padding-bottom: 1.75rem;
+	}
+
+	.loop-step:not(:last-child)::after {
+		position: absolute;
+		top: 3rem;
+		bottom: 0;
+		left: calc(1.5rem - 0.5px);
+		width: 1px;
+		background: var(--color-ticket-rule);
+		content: '';
+	}
+
+	.loop-step:not(:last-child)::before {
+		position: absolute;
+		bottom: 0.25rem;
+		left: calc(1.5rem - 3.5px);
+		z-index: 1;
+		width: 7px;
+		height: 7px;
+		border-right: 1.5px solid var(--color-amber-deep);
+		border-bottom: 1.5px solid var(--color-amber-deep);
+		content: '';
+		transform: rotate(45deg);
+	}
+
+	.loop-icon,
+	.receive-icon {
+		display: grid;
+		place-items: center;
+		width: 3rem;
+		height: 3rem;
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 999px;
+		background: var(--color-paper);
+		color: var(--color-amber-deep);
+	}
+
+	.loop-icon {
+		position: relative;
+		z-index: 2;
+	}
+
+	.loop-icon svg,
+	.receive-icon svg {
+		width: 1.4rem;
+		height: 1.4rem;
+		stroke: currentColor;
+		stroke-width: 1.7;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.loop-copy {
+		padding-top: 0.2rem;
+	}
+
+	.receive-row {
+		display: grid;
+		grid-template-columns: 2.5rem minmax(0, 1fr);
+		gap: 1rem;
+		align-items: start;
+		margin-top: 0.25rem;
+		padding-top: 1.25rem;
+		border-top: 1px dashed color-mix(in srgb, var(--color-ink-rule) 45%, transparent);
+	}
+
+	.receive-icon {
+		width: 2.5rem;
+		height: 2.5rem;
+		border-color: var(--color-hairline-strong);
+		background: var(--color-softgreen);
+		color: var(--color-green-deep);
+	}
+
+	.receive-icon svg {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+
+	@media (min-width: 64rem) {
+		.loop-flow {
+			grid-template-columns: repeat(6, minmax(0, 1fr));
+			gap: 1.5rem;
+		}
+
+		.loop-step {
+			display: block;
+			min-width: 0;
+			padding-bottom: 0;
+			text-align: center;
+		}
+
+		.loop-step:not(:last-child)::after {
+			top: calc(1.5rem - 0.5px);
+			right: calc(-50% + 1.5rem);
+			bottom: auto;
+			left: calc(50% + 1.5rem);
+			width: auto;
+			height: 1px;
+		}
+
+		.loop-step:not(:last-child)::before {
+			top: calc(1.5rem - 3.5px);
+			right: calc(-50% + 1.55rem);
+			bottom: auto;
+			left: auto;
+			transform: rotate(-45deg);
+		}
+
+		.loop-icon {
+			margin-inline: auto;
+		}
+
+		.loop-copy {
+			padding-top: 0.9rem;
+		}
+
+		.loop-copy > :last-child {
+			max-width: 11rem;
+			margin-inline: auto;
+		}
+
+		.receive-row {
+			grid-template-columns: 2.5rem minmax(0, 1fr);
+			margin-top: 2rem;
+			padding-top: 1.25rem;
+			text-align: left;
+		}
+	}
+</style>

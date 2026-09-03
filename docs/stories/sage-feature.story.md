@@ -45,7 +45,7 @@
 | 5 Debate | Will it know the setup stage, expose missing evidence and let the chef return? |
 | 6 Break into Two | Sage offers questions fitted to the records entered so far and keeps a Back to setup route. |
 | 7 B Story | The chef's judgment remains the authority; the assistant is a reader and preparer. |
-| 8 Fun and Games | Six supported questions cover attention, dates, recipe cost, price moves, receiving and a shopping-list draft. |
+| 8 Fun and Games | Eleven read-only checks cover the shift, recipes, stock, buying and setup; one shopping-list proposal waits for approval. |
 | 9 Midpoint | A cucumber answer shows $24.00 → $33.00, 37.5%, two purchases and the source record. |
 | 10 Bad Guys Close In | Roles, missing evidence, stale drafts, run limits and the kill switch test the promise. |
 | 11 All Is Lost | Without a source or approval boundary, a faster answer would only be a faster risk. |
@@ -59,7 +59,7 @@
 | — | On-this-page orientation | — | long guide → three explicit entry points (not a story scene) |
 | 2 | Video | 3–6 | claim → visible workflow |
 | 3 | During setup | 3–7 | stuck in setup → ask, understand, return |
-| 4 | Six questions | 8 | vague capability → six bounded jobs |
+| 4 | Twelve bounded jobs | 8 | vague capability → eleven checks and one reviewed proposal |
 | 5 | One sourced answer | 9 | sentence → evidence trail |
 | 6 | Guardrails and recovery | 10–11 | speed without control → help with boundaries |
 | 7 | FAQ | 5, 10 | objections → plain answers |
@@ -75,7 +75,7 @@
 - Hero: suspicion → a bounded promise with authentic proof.
 - Video: abstract availability → a visible setup/question/source sequence.
 - Setup: leaving the stage feels risky → progress is saved and Back to setup is explicit.
-- Questions: “what does it actually do?” → six exact jobs.
+- Questions: “what does it actually do?” → eleven exact checks and one reviewed proposal.
 - Proof: number → record, calculation and evidence count.
 - Guardrails: helpful → safely useful because uncertainty and approval remain visible.
 - FAQ: reasonable doubt → precise boundary.
@@ -105,6 +105,6 @@
 
 ### Step 11 — Revise and Finish
 
-- **Word count before → after:** 1,430 planned words → 1,073 rendered article words, including the orientation links, video chapters, FAQs, and onward navigation.
-- **Claims removed because they could not be shown:** perfect answers, learning the business, memory, autonomous actions, time savings, a seventh tool, provider/model identity.
+- **Word count before → after:** 1,430 planned words → 1,172 rendered article words, including the orientation links, 12 bounded jobs, video chapters, FAQs, and onward navigation.
+- **Claims removed because they could not be shown:** perfect answers, learning the business, memory, autonomous actions, time savings, write access beyond the one reviewed proposal, provider/model identity.
 - **Final Image:** Ask the next kitchen question, check the record underneath it, and keep moving.

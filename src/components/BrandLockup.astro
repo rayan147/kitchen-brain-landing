@@ -4,6 +4,9 @@
 // public/brand/costcook-icon.svg.
 import { site } from '../lib/site';
 
+// Considered Decorator; not used because link and inert rendering differ only
+// by native semantics and target size, not stackable responsibilities.
+
 type Props = {
 	/** Render as a link (nav) or inert mark (footer). */
 	href?: string;
@@ -14,7 +17,7 @@ const { href, iconClass = 'size-[1.375em]' } = Astro.props;
 const Tag = href ? 'a' : 'p';
 ---
 
-<Tag {href} class="flex items-center gap-1.5 font-display text-lg font-semibold whitespace-nowrap">
+<Tag {href} class:list={['flex items-center gap-1.5 font-display text-lg font-semibold whitespace-nowrap', href && 'min-h-11']}>
 	<!-- width/height: intrinsic fallback (1.375em at text-lg ≈ 25px) so the
 	     icon can never paint at container width before the stylesheet
 	     applies (issue #54). The class overrides them once CSS is live. -->

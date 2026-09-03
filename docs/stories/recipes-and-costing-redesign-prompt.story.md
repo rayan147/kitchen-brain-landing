@@ -45,7 +45,7 @@
 | 5 Debate — “can it be different?” | The reader worries that organizing everything will become another setup project. |
 | 6 Break into Two — they try the new way | CostCook becomes one working recipe record, shown through the product rather than described abstractly. |
 | 7 B Story — the person/relationship it's really about | The handoff between the person who writes the recipe and the person who must prep, price, or repeat it. |
-| 8 Fun and Games — the promise of the premise | Recipe Management shows capture, organization, scaling, sharing, and kitchen-ready viewing; Recipe Costing shows ingredient math, yield, portion cost, and decision support. |
+| 8 Fun and Games — the promise of the premise | Recipe Management shows drafts, readiness, publishing, earlier versions, filing, structured methods and kitchen view; Recipe Costing shows ingredient math, yield, portion cost and decision support. |
 | 9 Midpoint — first real win, with a number | A real or explicitly illustrative recipe example changes batch size and exposes the resulting cost per portion. |
 | 10 Bad Guys Close In — the edge cases, the doubts | A price changes, a sub-recipe is reused, the screen shrinks to a phone, or data is incomplete; the interface shows what updates and what still needs attention. |
 | 11 All Is Lost / Dark Night — the risk if nothing changes | Another busy week leaves the kitchen following one version while the quote uses another. |
@@ -58,7 +58,7 @@
 | 1 | Hero: one recipe, two jobs | 1–2 | scattered → one dependable record |
 | 2 | The split workflow today | 3–4 | familiar workaround → visible operational cost |
 | 3 | Product selector / story fork | 5–6 | “too much setup” → choose the job that matters now |
-| 4 | Recipe Management feature story | 7–8 | tribal knowledge → repeatable execution |
+| 4 | Recipe lifecycle feature story | 7–8 | tribal knowledge and version drift → a publishable, recoverable kitchen record |
 | 5 | Recipe Costing feature story | 8–9 | old spreadsheet → inspectable cost |
 | 6 | Connected proof and edge cases | 9–10 | first win → earned trust |
 | 7 | Frequently asked questions | 5, 10 | unresolved objections → specific answers |
@@ -75,7 +75,7 @@
 1. The hero moves from two disconnected jobs to one shared recipe record.
 2. The familiar workaround turns from manageable to visibly fragile.
 3. A dense feature category becomes two clear paths the reader can choose between.
-4. Recipe knowledge moves from memory and loose documents to a repeatable kitchen handoff.
+4. Recipe knowledge moves from memory and loose documents to a draft, readiness check, published kitchen view and readable history.
 5. Cost moves from a static total to arithmetic the reader can inspect.
 6. A promising first result is tested by missing prices, reused sub-recipes, and scaling, then holds.
 7. The remaining practical objections move from implied uncertainty to concise, inspectable answers grounded in shipped behavior.
@@ -112,8 +112,8 @@
 
 ### Step 11 — Revise and Finish
 
-- **Word count before → after:** 2,087 words in the implementation prompt → 374 rendered article words in the finished route, including capability labels, FAQs, and onward navigation.
-- **Claims removed because they could not be shown:** generic time savings, invented ROI, customer outcomes, “real-time” integrations, AI import, multimedia training, version control, and multi-location publishing. The prompt tells the implementer to use only claim-ledger-backed CostCook behavior.
+- **Word count before → after:** 2,087 words in the implementation prompt → 386 rendered article words in the finished route, including capability labels, lifecycle guidance, FAQs, and onward navigation.
+- **Claims removed because they could not be shown:** generic time savings, invented ROI, customer outcomes, “real-time” integrations, AI import, multimedia training and multi-location publishing. Version history is now included because the marketed app exposes earlier published recipe versions.
 - **Browser revision:** The desktop and mobile passes kept both product chapters in one reading flow, removed mobile horizontal scrolling from the recipe builder, retained the actual CostCook screenshots in the costing chapter, and added a clear entry from the existing Features hub.
 - **FAQ revision:** Six concise disclosures answer the last practical objections about scaling, sub-recipes, missing prices, visible arithmetic, print/export, and confirmed quote prices. Every answer stays inside the shipped feature register.
 - **Final Image:** The recipe is ready for the line, the price is ready for the quote, and the next step asks the visitor to bring one real menu.

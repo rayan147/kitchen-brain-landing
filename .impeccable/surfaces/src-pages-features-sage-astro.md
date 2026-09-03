@@ -25,7 +25,7 @@ Use an asymmetrical editorial split. The statement and actions sit at left with 
 
 ## Information architecture
 
-Use one specialist route. Lead with availability and the answer/source contract, then show a short product video, explain the setup hand-off, present the six supported kitchen questions, show one sourced answer, explain guardrails and recovery, answer six practical FAQs, and close with a start/demo choice.
+Use one specialist route. Lead with availability and the answer/source contract, then show a short product video, explain the setup hand-off, present all eleven read-only kitchen checks and the one approval-bound shopping-list proposal, show one sourced answer, explain guardrails and recovery, answer six practical FAQs, and close with a start/demo choice. The homepage introduces the same twelve-tool contract in five kitchen-decision groups; the specialist page carries the inspectable list.
 
 ## Workflow decision
 
@@ -37,12 +37,12 @@ The video is a concise silent product walkthrough made only from authentic captu
 
 ## Claim discipline
 
-Sage is available now by release-owner confirmation on 2026-08-29. Describe only the six implemented tools, setup-aware suggestions and return path, source collection, role checks, limits, kill switch and explicit shopping-list proposal approval. Do not name a model or provider, say Sage learns or remembers the business, promise perfect answers, imply autonomous changes, or add an unsupported seventh tool.
+Sage is available now by release-owner confirmation on 2026-08-29. Describe only the eleven implemented read checks, one approval-bound shopping-list proposal, setup-aware suggestions and return path, source collection, role checks, limits and kill switch. Do not name a model or provider, say Sage learns or remembers the business, promise perfect answers, imply autonomous changes, or invent a thirteenth tool.
 
 ## Mobile behavior
 
-Stack copy before evidence, keep status and actions visible, use the mobile Sage capture, preserve readable video captions, reflow the six questions into a single list, and keep answer/source/approval relationships explicit without horizontal scrolling.
+Stack copy before evidence, keep status and actions visible, use the mobile Sage capture, preserve readable video captions, reflow the eleven checks and one proposal into a single list, and keep answer/source/approval relationships explicit without horizontal scrolling.
 
 ## Finish contract
 
-The route is finished when Sage reads as available across every shared source, onboarding assistance is factual and visible, the dedicated video works in MP4 and WebM, six supported questions and six FAQs are present, controls and disclosures work by keyboard, and the page passes the full five-width route-family browser matrix.
+The route is finished when Sage reads as available across every shared source, onboarding assistance is factual and visible, the dedicated video works in MP4 and WebM, eleven read checks, one approval-bound proposal and six FAQs are present, controls and disclosures work by keyboard, and the page passes the full five-width route-family browser matrix.

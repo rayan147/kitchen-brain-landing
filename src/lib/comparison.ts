@@ -1,5 +1,6 @@
 /**
  * The comparison table, as data.
+ * Coming-plan revision: docs/stories/homepage-coming-plans.story.md
  *
  * WHY THIS FILE EXISTS AT ALL. docs/release-claim-ledger.md excludes
  * "competitor comparisons ... without owner-approved evidence". The owner asked
@@ -13,7 +14,7 @@
  *
  *   'yes'      CostCook only. It ships in the build you would start today.
  *   'coming'   CostCook only. Being built, not in that build. Never a tick.
- *   'no'       CostCook only. We do not do this. There are six of them and
+ *   'no'       CostCook only. We do not do this. The remaining rows stay,
  *              they stay, because a table where one column is ticks all the way
  *              down reads as marketing to the exact reader we want.
  *
@@ -34,7 +35,7 @@
  * ($24, $119, $199) and the column header says so. Putting $49 monthly beside
  * $179 annual-prepay would be the first thing a skeptical caterer caught.
  *
- * VERIFIED 2026-08-23 against https://www.parsleysoftware.com/pricing and
+ * VERIFIED 2026-08-30 against https://www.parsleysoftware.com/pricing and
  * https://www.getmeez.com/pricing. Both are living pages. RC-40's release check
  * is to re-read both and update VERIFIED_ON before this ships or ships again.
  *
@@ -46,14 +47,16 @@
  * local branch, and develop are all the wrong answer here: the only question a
  * cell answers is whether a visitor who starts today gets the thing.
  *
- * NOTE FOR THE RELEASE OWNER: the ledger's demo-base pin is 6a29e88e and
- * sandbox/demo is now at b858a483. The pin needs refreshing before deployment,
- * per the release-check rule at the top of the ledger.
+ * The release ledger records the application SHA used for this truth pass.
+ * Deployed feature flags and billing-portal configuration still require the
+ * release-owner checks named there.
  */
 
 import { SAGE_STATUS } from './sage';
+import { labelsAvailability } from './labels';
+import { comingPlans } from './coming-plans';
 
-export const VERIFIED_ON = 'August 23, 2026';
+export const VERIFIED_ON = 'August 30, 2026';
 
 export const NOT_LISTED = 'Not listed';
 
@@ -78,6 +81,8 @@ export type Verdict = 'yes' | 'no' | 'coming';
 
 export interface Row {
 	label: string;
+	/** Optional product identity mark used beside a visible capability label. */
+	icon?: 'sage';
 	costcook: Verdict;
 	/** Shown under the label. Required wherever a tick or a dash needs its edge. */
 	note?: string;
@@ -242,8 +247,8 @@ export const comparison: RowGroup[] = [
 				   catalog and nutrition rows were both wrong off a stale local
 				   branch. Par levels ship: core/inventory-planning.ts carries
 				   below-par / at-or-above-par / unevaluable / no-par, judged
-				   only from a trusted count. Buying does not read them, so the
-				   two halves are separate rows. RC-43. */
+				   only from a trusted count. Buying does not read them today; the
+				   separate replenishment row is Coming. RC-43. */
 				label: 'Par levels per ingredient',
 				costcook: 'yes',
 				note: 'A floor you set, and the shelf is flagged when it falls under. Judged only from a count it can trust, never from a guess.',
@@ -251,9 +256,9 @@ export const comparison: RowGroup[] = [
 				meez: NOT_LISTED
 			},
 			{
-				label: 'Buying that tops up to par',
-				costcook: 'no',
-				note: 'Shopping is what the jobs on the books need minus what the shelf can be trusted for. It will not order you back up to a par level.',
+				label: comingPlans.parBuying.comparisonLabel,
+				costcook: comingPlans.parBuying.verdict,
+				note: comingPlans.parBuying.comparisonNote,
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			}
@@ -293,9 +298,9 @@ export const comparison: RowGroup[] = [
 				meez: 'Enterprise, custom'
 			},
 			{
-				label: 'Dietary characteristics',
-				costcook: 'no',
-				note: 'A recipe shows the heading and tells you plainly that it has not been assessed. Nothing is inferred from an ingredient name.',
+				label: comingPlans.dietary.comparisonLabel,
+				costcook: comingPlans.dietary.verdict,
+				note: comingPlans.dietary.comparisonNote,
 				parsley: 'Chef Plus, $189',
 				meez: NOT_LISTED
 			},
@@ -308,9 +313,9 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Kitchen label printing',
-				costcook: 'coming',
-				note: 'Built in the app behind a release flag and not included at launch: storage condition, a use-by date the cook settles, one numbered label per container, printed through the browser onto sheet or roll stock and frozen for reprints. No direct printer connection.',
-				parsley: NOT_LISTED,
+				costcook: labelsAvailability.verdict,
+				note: labelsAvailability.comparisonNote,
+				parsley: '$59/month add-on',
 				meez: NOT_LISTED
 			}
 		]
@@ -326,15 +331,23 @@ export const comparison: RowGroup[] = [
 				meez: 'Pro, $119, five active devices'
 			},
 			{
-				label: 'Tiered user access',
+				label: 'Role-aware sensitive actions',
+				costcook: 'yes',
+				note: 'Owner, Manager and Staff boundaries protect billing, team and setup work, recipe lifecycle decisions, and selected Sage actions.',
+				parsley: 'Business, $379',
+				meez: 'Starter, $24'
+			},
+			{
+				label: 'Fine-grained screen permissions',
 				costcook: 'no',
-				note: 'Owner and manager roles gate setup. There is no fine-grained permission grid.',
+				note: 'No custom roles or per-screen permission grid. A workspace teammate can open cost screens.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},
 			{
-				label: 'English and Spanish',
-				costcook: 'no',
+				label: comingPlans.spanish.comparisonLabel,
+				costcook: comingPlans.spanish.verdict,
+				note: comingPlans.spanish.comparisonNote,
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},
@@ -343,7 +356,7 @@ export const comparison: RowGroup[] = [
 				costcook: 'no',
 				note: 'One kitchen workspace.',
 				parsley: 'Enterprise, call for quote',
-				meez: NOT_LISTED
+				meez: 'Starter, $24; added recipe-viewer locations $60/month each'
 			},
 			{
 				label: 'Point of sale',
@@ -357,7 +370,7 @@ export const comparison: RowGroup[] = [
 				costcook: 'coming',
 				note: 'QuickBooks is being built.',
 				parsley: NOT_LISTED,
-				meez: NOT_LISTED
+				meez: 'Restaurant365 sync, $199/month plus setup fee'
 			},
 			{
 				label: 'An API to build against',
@@ -367,6 +380,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'An assistant that answers from your numbers',
+				icon: 'sage',
 				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
 				costcook: SAGE_STATUS,
 				note: 'Sage is available now. It reads your records, shows its sources, helps during setup and can prepare a shopping-list draft for you to approve.',

@@ -8,7 +8,8 @@
  * (`src/lib/server/features/access.ts`, env `FEATURE_LABEL_PRINTING_ENABLED`,
  * default off, per-business override), and RC-35 is the owner's decision that
  * it is not included at launch. So every surface prints Coming from the one
- * word below, exactly as Sage did, and the captures say SANDBOX BUILD.
+ * word below, exactly as Sage did. Internal provenance stays in this file and
+ * the release ledger instead of appearing in public capture labels.
  *
  * WHAT MAY NOT BE SAID. That a label reaches a printer on its own: the only
  * output today is the browser's print dialog (`src/lib/labels/transport.ts`,
@@ -26,11 +27,55 @@
  *
  * No pattern: a table the sections render.
  */
+import { comingPlans } from './coming-plans';
+
 import type { Verdict } from './comparison';
 
 export const LABELS_STATUS = 'coming' as Verdict;
 
 export const labelsStatusWord = LABELS_STATUS === 'yes' ? 'Available now' : 'Coming';
+const labelsAreComing = LABELS_STATUS !== 'yes';
+
+/** One status flip, with each public surface receiving copy for its own job. */
+export const labelsAvailability = {
+	isComing: labelsAreComing,
+	verdict: LABELS_STATUS,
+	word: labelsStatusWord,
+	featureLead: labelsAreComing ? 'Built, behind a flag, marked Coming.' : 'Available now.',
+	pageSentence: labelsAreComing
+		? 'Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.'
+		: 'Available now in the CostCook subscription you would start today.',
+	featureDetail: labelsAreComing
+		? 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. The feature is built behind a release flag and not included at launch, so it remains marked Coming.'
+		: 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints.',
+	sectionBlurb: labelsAreComing
+		? 'The fifteen numbers an FDA panel carries, per recipe, and a sheet to print them on. Kitchen date labels are built and marked Coming.'
+		: 'Nutrition panels and kitchen date labels, calculated or settled from the recipe and ready for the browser to print.',
+	sectionLede: labelsAreComing
+		? 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels are built in the app behind a release flag and not included at launch, so they are marked Coming below rather than folded into the shipped list.'
+		: 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels ask you to settle the storage and use-by facts before the browser prints them.',
+	nutritionFaqCrosslink: labelsAreComing
+		? `Kitchen date and allergen stickers are a separate thing, built behind a release flag and marked Coming; see the next answer. ${comingPlans.dietary.faq}`
+		: `Kitchen date and allergen stickers are a separate feature; see the next answer. ${comingPlans.dietary.faq}`,
+	seoDescription: labelsAreComing
+		? 'Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record. Built behind a flag and marked Coming.'
+		: 'Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record.',
+	comparisonNote: labelsAreComing
+		? 'Not included at launch. The feature is built behind a release flag: choose storage, settle the use-by date, print one numbered label per container through the browser, and keep the frozen record for reprints. No direct printer connection.'
+		: 'Choose storage, settle the use-by date, print one numbered label per container through the browser, and keep the frozen record for reprints. No direct printer connection.',
+	faqStatus: labelsAreComing
+		? [
+				'Not in the app you would start today. The feature is built behind a release flag and remains marked Coming. Tap Label on the prep list, pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.',
+				'It is not included in the launch subscription. There is no direct connection to a label printer; the output is the browser print dialog.'
+			]
+		: [
+				'Yes. Tap Label on the prep list, pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.',
+				'There is no direct connection to a label printer; the output is the browser print dialog.'
+			],
+	homepageTradeoff: labelsAreComing
+		? 'Date and allergen stickers from the prep list are built behind a release flag and not in the launch plan, so they remain marked Coming. Nutrition sheets print from the recipe today.'
+		: null
+} as const;
 
 export const labels = {
 	name: 'Kitchen labels',
@@ -75,18 +120,19 @@ export const labels = {
 	],
 	/** Boundaries, each from the app's own code or screen. */
 	notClaimed: [
-		'It is behind a release flag and is not included in the launch subscription. Every mention on this site says Coming until that changes.',
-		'The only output is the browser’s print dialog. A direct connection to a label printer is designed as a seam in the code and is not built; the app cannot confirm that paper moved.',
+		labelsAvailability.pageSentence,
+		'The only output is the browser’s print dialog. A direct connection to a label printer is not built; the app cannot confirm that paper moved.',
 		'A blank allergen line is not an all-clear, and the sticker preview says so. Allergens print only from confirmed evidence on the ingredient.',
 		'The app never picks a use-by date. A saved shelf life, a number you enter, an exact date, or the made date only.'
 	],
 	proof: {
+		heroAlt: 'Label preview for Braised Short Rib, refrigerated, with use-by and made dates and two numbered containers.',
 		/** The top of the Label dialog on a desktop. On phones the page shows the sticker instead. */
 		dialog: {
 			src: '/proof/labels/dialog-wide.png',
 			width: 2080,
 			height: 616,
-			alt: 'The top of the Label Braised Short Rib dialog. Storage condition: the one thing the app can’t know, no default, this is a real choice. Four choices: Refrigerated, into the walk-in, selected with a tick; Frozen, into the freezer; Thawed, out of the freezer; Opened, bag or tub broken into. Beside it, The sticker: exactly what will print, 2 stickers, numbered. The sticker reads Braised Short Rib, 360 portions batch total, refrigerated, USE BY SEP 4, 2026, made Aug 29, 2026, Alvarez-Whitman Wedding, Tue Sep 1, Maple and Main Catering, M. Vega, 1 of 2. Under it: no allergen data for this recipe, so the sticker states none; a blank label is not an all-clear. Stickers 2 to 2 are identical apart from their number.'
+			alt: 'Label dialog for Braised Short Rib showing four storage choices, Refrigerated selected, and a two-sticker preview.'
 		},
 		sticker: {
 			src: '/proof/labels/sticker.png',
@@ -104,9 +150,9 @@ export const labels = {
 			src: '/proof/labels/stock-picker.png',
 			width: 1732,
 			height: 906,
-			alt: 'The label stock picker in Settings, five radio choices. 30-up sheet, 66 by 25.4 mm, 30 to a sheet, selected: 66 by 25 mm, 30 to a letter sheet, works with a standard office printer. 58 mm continuous roll, 58 mm wide, cut to length, one at a time: receipt-width thermal stock, prints one sticker at a time at the bench. 62 mm continuous roll: a wider desktop thermal roll with more room for long dish names. 2 by 1 inch die-cut roll, 50.8 by 25.4 mm: pre-cut thermal labels sized for most shipping-label printers. Describe your own: measure the label you buy; any stock works, nothing here is tied to a brand.'
+			alt: 'Label stock settings showing five measured sheet, roll, and custom stock choices.'
 		},
 		caption:
-			'Captured from the running app in the tour’s demo kitchen on the sandbox build, 2026-08-29, with the label_printing flag turned on for the demo business (scripts/capture-labels-proof.mjs). Braised Short Rib for the Alvarez-Whitman wedding, refrigerated, the FDA Food Code seven-day suggestion accepted, two containers.'
+			'Braised Short Rib for the Alvarez-Whitman wedding, refrigerated, with the FDA Food Code seven-day suggestion accepted and two containers recorded.'
 	}
 } as const;

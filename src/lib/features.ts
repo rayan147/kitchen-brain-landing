@@ -1,5 +1,5 @@
 import { SAGE_STATUS } from './sage';
-import { LABELS_STATUS } from './labels';
+import { labelsAvailability } from './labels';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -85,9 +85,9 @@ export const SECTION_META: Readonly<
 	},
 	'Compliance and labels': {
 		slug: 'compliance-and-labels',
-		blurb: 'The fifteen numbers an FDA panel carries, per recipe, and a sheet to print them on. Kitchen date labels are built and marked Coming.',
+		blurb: labelsAvailability.sectionBlurb,
 		wall: 'Somebody asks for the numbers on a dish. Roughly is not an answer, and neither is a figure you worked out once and cannot show your working for.',
-		lede: 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels are built in the app behind a release flag and not included at launch, so they are marked Coming below rather than folded into the shipped list.'
+		lede: labelsAvailability.sectionLede
 	},
 	'Team, and what it connects to': {
 		slug: 'team-and-connections',
@@ -104,6 +104,7 @@ export type FeatureItem = {
 
 export type FeatureGroup = {
 	id: string;
+	icon?: 'sage';
 	/**
 	 * Which of the five plain-language sections this group reads under. The
 	 * strings are the /compare row-group titles VERBATIM (src/lib/comparison.ts).
@@ -188,7 +189,11 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Live pricing.', detail: 'Set the selling price and the food-cost percent moves as you type, with a nudge when you are over target.' },
 			{ lead: 'Private drafts.', detail: 'A blank recipe stays out of the catalog until its first valid save.' },
 			{ lead: 'Duplicate.', detail: 'Copy a recipe with its costing facts intact.' },
-			{ lead: 'Full lifecycle.', detail: 'Switch dish and sub-recipe kinds, publish, rename, and change batch yield without starting over.' },
+			{ lead: 'Draft to kitchen view.', detail: 'Readiness checks stand between a private draft and the published version the kitchen opens.' },
+			{ lead: 'Earlier published versions.', detail: 'Read the recipe history and open an earlier published version without replacing the current one.' },
+			{ lead: 'Filed for the kitchen.', detail: 'Collections, tags, stations and shelves keep a growing recipe book findable.' },
+			{ lead: 'Structured methods.', detail: 'Write and reorder method steps instead of burying the working sequence in one paragraph.' },
+			{ lead: 'Archive with recovery.', detail: 'Owners can archive, restore and control the published recipe lifecycle.' },
 			{ lead: 'Learned yield.', detail: 'CostCook proposes yield corrections from your own buying evidence. You apply or reverse, and the evidence is kept.' },
 			{ lead: 'Inherited defaults.', detail: 'New lines take the ingredient’s usual yield. Old lines never rewrite.' },
 			{ lead: 'CSV export.', detail: 'The whole book or one recipe, in columns that round-trip through the importer.' },
@@ -345,9 +350,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		/* Built behind the label_printing flag and not in the launch plan (RC-35,
 		   RC-51). The word comes from src/lib/labels.ts; while it is Coming the
 		   area page renders only items[0].detail, so that line is the summary. */
-		status: LABELS_STATUS === 'yes' ? 'available' : 'in-development',
+		status: labelsAvailability.isComing ? 'in-development' : 'available',
 		items: [
-			{ lead: 'Built, behind a flag, marked Coming.', detail: 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. It is behind a release flag and not included at launch, so it is marked Coming until that changes.' },
+			{ lead: labelsAvailability.featureLead, detail: labelsAvailability.featureDetail },
 			{ lead: 'Storage condition first.', detail: 'Refrigerated, frozen, thawed or opened, with no default.' },
 			{ lead: 'A date you settle.', detail: 'A saved shelf life, a number of days, an exact date, or the made date only.' },
 			{ lead: 'One label per container.', detail: 'Numbered, with the event and the kitchen on an order-tied label.' },
@@ -367,6 +372,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Vendor manager.', detail: 'Contacts, per-vendor purchasing method, and insight into what you actually buy from each.' },
 			{ lead: 'Metric or imperial.', detail: 'A per-kitchen choice, read on every request.' },
 			{ lead: 'Magic-link invites.', detail: 'Invite teammates by email, with expiry and revoke.' },
+			{ lead: 'Three role boundaries.', detail: 'Owner, Manager and Staff protect specific sensitive actions without pretending to be a custom permission grid.' },
 			{ lead: 'Isolation by construction.', detail: 'Every kitchen’s data is scoped per request. Cross-kitchen reads are refused, and unscoped writes fail loudly.' },
 			{ lead: 'No guessed ownership.', detail: 'Records from before a kitchen existed stay marked unowned rather than being assigned to one.' }
 		]
@@ -411,6 +417,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'assistant',
+		icon: 'sage',
 		section: 'Team, and what it connects to',
 		kicker: 'Sage, the in-app assistant',
 		title: 'Sage, answering from your own numbers.',
@@ -418,9 +425,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		status: SAGE_STATUS === 'yes' ? 'available' : 'in-development',
 		items: [
 			{ lead: 'Ask during setup.', detail: 'Setup keeps an Ask Sage entry, offers questions that fit the stage and records entered so far, and gives you a direct route back.' },
-			{ lead: 'Six bounded kitchen jobs.', detail: 'Ask what needs attention, what is on a date, why a dish costs what it costs, which prices moved, or what came up short in receiving. Sage can also prepare a shopping-list draft for a manager or owner to approve.' },
+			{ lead: 'Eleven checks, one proposal.', detail: 'Ask about the shift, recipes, stock, buying or setup. Sage can also prepare a shopping-list proposal for a manager or owner to approve.' },
 			{ lead: 'Sources under the answer.', detail: 'Each answer shows the records and checks behind its numbers, and says when evidence is missing.' },
-			{ lead: 'A draft is not a change.', detail: 'Five tools read. One prepares a shopping-list draft. The underlying records are checked again before a person approves it.' }
+			{ lead: 'A proposal is not a change.', detail: 'Eleven tools read. One prepares a shopping-list proposal. The underlying records are checked again before a person approves it.' }
 		]
 	},
 	{
@@ -467,7 +474,7 @@ export const inDevelopmentFeatureGroups = featureGroups.filter((group) => group.
 export const featureCount = availableFeatureGroups.reduce((sum, group) => sum + group.items.length, 0);
 
 export type FeatureMenuIcon =
-	| 'assistant'
+	| 'sage'
 	| 'labels'
 	| 'nutrition'
 	| 'recipe'
@@ -477,7 +484,8 @@ export type FeatureMenuIcon =
 	| 'orders'
 	| 'purchasing'
 	| 'inventory'
-	| 'ledger';
+	| 'ledger'
+	| 'team';
 
 export type FeatureMenuItem = {
 	label: string;
@@ -542,7 +550,7 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				description: 'Date and allergen stickers from the prep list, frozen for reprints.',
 				featureId: 'labels',
 				icon: 'labels',
-				...(LABELS_STATUS === 'yes' ? {} : { coming: true as const })
+				...(labelsAvailability.isComing ? { coming: true as const } : {})
 			}
 		]
 	},
@@ -580,8 +588,14 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				label: 'Sage, the assistant',
 				description: 'Ask a question, get an answer from your own records, with its sources.',
 				featureId: 'assistant',
-				icon: 'assistant',
+				icon: 'sage',
 				...(SAGE_STATUS === 'yes' ? {} : { coming: true })
+			},
+			{
+				label: 'Team & access',
+				description: 'See the real Owner, Manager and Staff boundaries before you invite the crew.',
+				featureId: 'team',
+				icon: 'team'
 			}
 		]
 	}
@@ -595,7 +609,9 @@ const shippedFeatureGroupsById = new Map(
 );
 const featureGroupsById = new Map(featureGroups.map((group) => [group.id, group] as const));
 
-// Considered Strategy; not used because ten fixed editorial destinations
+// Considered Factory Method; not used because these fixed editorial
+// destinations vary as route data, not as object-creation behavior.
+// Considered Strategy; not used because the destinations
 // are static route data, not interchangeable navigation algorithms.
 const dedicatedFeatureRoutes = new Map<string, string>([
 	['math', '/features/recipes-and-costing'],
@@ -608,7 +624,8 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['nutrition', '/features/nutrition-facts-and-allergens'],
 	['labels', '/features/labels-and-printing'],
 	['inventory', '/features/inventory'],
-	['assistant', '/features/sage']
+	['assistant', '/features/sage'],
+	['team', '/features/team-and-access']
 ]);
 
 export const featureMenuHref = (featureId: string, coming = false) => {

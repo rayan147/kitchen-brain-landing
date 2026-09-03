@@ -59,6 +59,11 @@ components:
     textColor: "#ffffff"
     rounded: "{rounded.pill}"
     padding: "1rem 1.75rem"
+  button-outline:
+    backgroundColor: "transparent"
+    textColor: "{colors.green-deep}"
+    rounded: "{rounded.pill}"
+    padding: "0.9rem 1.5rem"
 ---
 
 # Design System: CostCook
@@ -71,6 +76,10 @@ CostCook's incumbent marketing identity is practical, warm, and quiet: an off-wh
 
 Contact follows the same founder-direct voice. Public visitors get a dedicated `/contact` destination with email, phone, and demo actions; existing users are directed to authenticated **Contact support** inside CostCook, where account context can accompany the message.
 
+When marketing needs to show connected product evidence, the same visual world can tighten into a calm, seeded workspace. Editorial Fraunces remains outside and at key explanatory handoffs; dense product labels, tables, statuses, and tabular numbers use Instrument Sans inside a bounded paper surface. This is product proof within the marketing system, not a separate dashboard identity.
+
+Read surfaces extend the ticket into a ruled working notebook. They lead with a real kitchen question, keep arithmetic and assumptions visible, and finish by naming the next operational job. Editorial structure should help a working chef reach a defensible number; it should not turn into a generic publication grid or a product pitch disguised as instruction.
+
 **Key Characteristics:**
 
 - Warm off-white, green, and amber palette
@@ -78,6 +87,9 @@ Contact follows the same founder-direct voice. Public visitors get a dedicated `
 - Quiet border rules and sparse, purposeful elevation
 - Direct actions with explicit outcomes and accessible touch targets
 - Founder-direct contact language without an anonymous form
+- Calm, bounded product-proof workspaces with explicit data provenance
+- Priority-led shared navigation with resilient native disclosures
+- Question-led read surfaces with visible working and a practical handoff
 
 ## Colors
 
@@ -127,15 +139,21 @@ Pages use a centered container capped at 72rem with fluid horizontal gutters. Se
 
 Contact entry points remain discoverable beside the homepage price, on the pricing page, and in shared navigation and footer destinations. These links converge on `/contact`; they do not duplicate the page's content in place.
 
+Dense product proof keeps one working frame active inside a bounded shell rather than shrinking several frames into thumbnails or repeating them as equal cards. Wide layouts may hold stable local navigation beside the evidence. When that rail no longer leaves the evidence legible, replace it with a native compact control and preserve the same choices and sequence. Wide tables may scroll inside their own frame; the page itself must not overflow.
+
+Read surfaces use a hybrid route-family shape. The index is denormalized for quick comparison: topic, reading time, title, description, and date stay together in ruled rows. Each article is a focused reading screen with a bounded main measure and an adjacent guide path only when width permits. On narrow screens, that path returns to source order before the article; no article content or navigation disappears behind client-side behavior.
+
+**The Worked-Number Rule.** Order practical reading as question, arithmetic, boundary or exception, then next job. Keep the calculation and its assumptions visually attached to the decision they support.
+
 ## Elevation & Depth
 
-The system is flat by default. Borders, background bands, and paper contrast create most separation; compact ticket imagery may use a restrained two-layer shadow. The contact workflow itself uses rules and a soft-green band rather than floating cards.
+The system is flat by default. Borders, background bands, and paper contrast create most separation; compact ticket imagery may use a restrained two-layer shadow. A large, interactive product-proof shell may use a broader two-layer shadow to read as one contained artifact, while its internal metrics, tables, and asides remain border-led and flat. The contact workflow itself uses rules and a soft-green band rather than floating cards.
 
-**The Flat-by-Default Rule.** Use elevation for physical ticket-like artifacts, not routine contact information or navigation.
+**The Flat-by-Default Rule.** Use elevation for physical ticket-like artifacts and bounded product proof, not routine contact information, navigation, or every internal panel.
 
 ## Shapes
 
-Primary actions are full pills, a warm counterpoint to the serif display face. Most content containers remain square and are separated with thin rules instead of rounded cards. Focus outlines follow each element's existing shape.
+Primary actions are full pills, a warm counterpoint to the serif display face. Most content containers remain square and are separated with thin rules instead of rounded cards. A bounded product-proof shell may use gently rounded outer corners while the data surfaces inside it stay square and rule-separated. Focus outlines follow each element's existing shape.
 
 ## Components
 
@@ -144,6 +162,7 @@ Primary actions are full pills, a warm counterpoint to the serif display face. M
 - **Shape:** Full pill for primary actions.
 - **Primary:** Working-green fill, white semibold text, and generous horizontal padding.
 - **Hover / Focus:** Deep-green hover; a two-pixel green focus outline with a two-pixel offset; active state moves down one pixel.
+- **Outline:** Transparent paper-compatible ground, a Working-green border, Deep Working Green text, and the same pill silhouette; hover uses Soft Green without competing with the primary action.
 - **Quiet link:** Deep-green semibold underlined text. Vertical padding expands the hit area to at least 44px without disrupting inline rhythm.
 
 The homepage contact action beside the price keeps the quiet-link treatment and a minimum 44px target. Contact-page email and demo actions use the primary button; phone, sign-in, and contextual links use the quieter link language according to hierarchy.
@@ -157,11 +176,35 @@ The homepage contact action beside the price keeps the quiet-link treatment and 
 
 ### Navigation
 
-Shared navigation uses compact Instrument Sans links with 44px minimum targets. `Contact` is part of the same shared navigation source as the other destinations, so header and footer placement do not drift. The persistent start action remains visually primary.
+Shared navigation uses compact Instrument Sans links with 44px minimum targets. Keep the most frequent evaluation destinations direct and group lower-frequency decision and help routes under a plainly labelled disclosure rather than rendering every destination as an equal tab. `Contact` remains in the same shared navigation source as the other destinations, so header and footer placement do not drift.
+
+The grouped disclosure label is `Resources`. Blog and other lower-frequency reading and evaluation destinations live beneath it on wide layouts, while the contained mobile menu exposes those same destinations directly. The disclosure stays visibly active on nested resource routes such as an individual blog article.
+
+Account access stays a quiet text action. `Book a demo` uses the outlined pill and sits beside the filled `Start CostCook` action; the difference communicates evaluation versus commitment without creating two primary buttons. Both conversion paths remain directly visible when the navigation condenses, while lower-priority links move into contained disclosures according to available width.
+
+Navigation disclosures use native `details` and `summary` so click, touch, keyboard, and no-JavaScript access share one reliable base. Enhancement may enforce one open disclosure at a time and close on Escape, focus-out, link activation, or click-away; Escape returns focus to the trigger. Enhancement must not own whether the destinations can be reached.
+
+**The Priority Ladder Rule.** Direct links answer the most frequent evaluation questions; grouped links support deeper exploration; quiet account access and distinct demo/start actions retain their own semantic weight.
+
+**The Native Disclosure Rule.** Navigation remains complete with JavaScript disabled. Script may improve closure and focus recovery, but never supply the only path to a destination.
+
+### Blog and article reading
+
+Blog indexes use flat, full-width ruled rows rather than floating cards. Preserve a stable metadata hierarchy—topic and reading time first, editorial title and summary second, date last—and let Fraunces carry the decision while Instrument Sans and tabular numerals carry the evidence.
+
+Long-form articles begin with page identity and useful context rather than a decorative hero. Keep body copy within a comfortable reading measure, render formulas and worked examples as plain, horizontally safe working blocks, and keep exceptions close enough to the arithmetic that the answer cannot be mistaken for a guarantee. A guide path may be sticky beside the article on wide screens, but it returns to source order on small screens and every target remains directly linkable.
+
+**The Working-Sheet Rule.** A practical article shows one kitchen question all the way through: formula, bounded example, exceptions, and the next job. Product handoffs follow the instruction; they do not interrupt or masquerade as it.
+
+### Embedded product proof
+
+Product proof is a bounded, paper-like workspace inside the marketing page. Use Instrument Sans, compact labels, tabular numerals, pale rules, and restrained green or amber status emphasis inside the frame. Keep one primary evidence frame visible, preserve direct access to the available views, and keep explanatory copy attached to the evidence it interprets. Synthetic records and amounts must carry a persistent, plainly worded illustrative label; a one-time disclaimer elsewhere on the page is insufficient.
 
 ### Contact workflow
 
-The public contact surface offers email, phone, and demo actions. It does not present an anonymous form or promise a response time. Existing users are sent to authenticated in-app **Contact support** rather than the public path. Safety copy must continue to warn visitors not to send passwords, payment card details, or other sensitive information.
+The public contact surface offers email, phone, and demo actions. It does not present an anonymous form or promise a response time. A dedicated demo-request surface may gather named business, workflow, and contact context when each field makes the working session more useful, but the handoff remains founder-direct and visitor-controlled rather than entering an implied sales queue. Existing users are sent to authenticated in-app **Contact support** rather than the public path. Safety copy must continue to warn visitors not to send passwords, payment card details, or other sensitive information.
+
+**The Prepared-Handoff Rule.** A static marketing form may prepare a visitor-owned email, but it must distinguish “ready to send” from “sent,” keep the message inspectable in the visitor's email app, and never imply receipt before the visitor sends it.
 
 ## Do's and Don'ts
 
@@ -172,9 +215,21 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Do** route existing users to authenticated in-app **Contact support**.
 - **Do** maintain at least a 44px target for the homepage contact action and shared navigation actions.
 - **Do** retain the warning against sharing sensitive information.
+- **Do** label seeded or constructed product records and amounts as illustrative beside the product proof where the values remain visible.
+- **Do** use tabular numerals and quiet rules when presenting operational amounts for comparison.
+- **Do** tell visitors when a contact or demo action prepares an email rather than sending data from the site.
+- **Do** keep demo and start actions visible and visually distinct when shared navigation condenses.
+- **Do** build navigation disclosures on native `details` and `summary`, then enhance mutual exclusion and focus recovery.
+- **Do** keep `Resources` as the grouped label for Blog and other lower-frequency reading destinations, with nested resource routes reflected in its active state.
+- **Do** keep blog metadata, arithmetic, assumptions, and next-job handoffs visually inspectable with rules, restrained color, and tabular numerals.
 
 ### Don't:
 
 - **Don't** add an anonymous public contact form without a new product decision.
 - **Don't** invent response-time, availability, or service-level claims.
 - **Don't** turn contact guidance into a floating SaaS card or introduce a new visual identity for the route.
+- **Don't** present a seeded product workspace as a live account or let decorative dashboard chrome outrank the evidence.
+- **Don't** show a sent, received, or confirmed state until the underlying system can prove that state.
+- **Don't** flatten every destination, account action, and conversion action into equal-weight header links.
+- **Don't** make JavaScript responsible for opening the only route to navigation destinations.
+- **Don't** turn practical guides into image-led card grids, decorative hero essays, or product pitches that delay the first useful explanation.

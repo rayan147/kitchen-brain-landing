@@ -23,6 +23,7 @@ export const stops = [
 	{ id: 'nutrition', label: 'Nutrition facts' },
 	{ id: 'intake', label: 'Before any of that' },
 	{ id: 'sage', label: 'Sage, the assistant' },
+	{ id: 'access', label: 'Team & access' },
 	{ id: 'alternatives', label: 'The other tools' },
 	{ id: 'trust', label: 'Who made it' },
 	{ id: 'start', label: 'Start here' }

@@ -1,19 +1,21 @@
 ---
-import { featureMenuHref, featureMenuSections } from '../lib/features';
-import { cta, featuresMenu, nav, signIn } from '../lib/site';
+import { cta, demoCta, featuresMenu, mobileMenu, nav, resourcesMenu, signIn } from '../lib/site';
 import BrandLockup from './BrandLockup.astro';
+import FeatureMenuContents from './FeatureMenuContents.astro';
 
 // The native disclosure is the reliable base: click, Enter, touch, and no-JS
 // all use the same mechanism. The script adds only the recovery behavior a
 // navigation panel needs: Escape, click-away, link activation, and focus-out.
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const pricingItem = nav.find((item) => item.header === 'direct');
+const resourcesActive = resourcesMenu.items.some((item) => item.href === path || path.startsWith(`${item.href}/`));
 // Considered State; not used because the active destination is derived from
-// the current URL and the navigation owns no self-transitioning behavior.
+// the current URL while native details own each open/closed state.
 ---
 
 <!-- story: docs/stories/features-navigation.story.md -->
-<header class="container-page relative flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
-	<!-- One sprite keeps eight destination icons on the same 20px grid and
+<header class="site-header container-page relative flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
+	<!-- One sprite keeps every destination icon on the same 20px grid and
 	     stroke weight. Visible titles and descriptions carry their meaning. -->
 	<svg width="0" height="0" class="absolute overflow-hidden" aria-hidden="true">
 		<defs>
@@ -52,23 +54,24 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 				<path d="M3.5 5.25h13v9.5h-13v-9.5Z" />
 				<path d="M6 8.25h8M6 11h5M13.25 11.75h.5" />
 			</symbol>
-			<symbol id="feature-menu-assistant" viewBox="0 0 20 20">
-				<path d="M3.5 4.75h13v8.5H9.25L5.5 16.5v-3.25h-2v-8.5Z" />
-				<path d="M7 8h6M7 10.5h4" />
-			</symbol>
 			<symbol id="feature-menu-ledger" viewBox="0 0 20 20">
 				<path d="M4.5 2.75h11v14.5l-2-1.25-2 1.25-2-1.25-2 1.25-3-1.75V2.75Z" />
 				<path d="M7 7h6M7 10h6M7 13h3.5" />
+			</symbol>
+			<symbol id="feature-menu-team" viewBox="0 0 20 20">
+				<circle cx="7" cy="7" r="2.5" />
+				<circle cx="14" cy="8" r="2" />
+				<path d="M2.75 16c.3-3 1.75-4.5 4.25-4.5s3.95 1.5 4.25 4.5M11.25 12.25c.7-.8 1.65-1.2 2.75-1.2 2.05 0 3.15 1.15 3.4 3.45" />
 			</symbol>
 		</defs>
 	</svg>
 
 	<BrandLockup href="/" />
-	<div class="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 lg:gap-x-8">
+	<div class="header-actions flex flex-wrap items-center justify-end gap-2 sm:gap-3 lg:gap-4">
 		<nav aria-label="Main">
-			<ul role="list" class="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 lg:gap-x-8">
-				<li>
-					<details data-features-menu>
+			<ul role="list" class="flex items-center gap-3 lg:gap-5">
+				<li class="feature-disclosure relative">
+					<details data-nav-disclosure data-features-menu>
 						<summary
 							aria-label={featuresMenu.ariaLabel}
 							class:list={[
@@ -90,95 +93,88 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 						</summary>
 
 						<div
-							class="absolute inset-x-[clamp(1.25rem,4vw,3rem)] top-full z-40 mt-2 overflow-hidden rounded-lg border border-ticket-rule bg-paper md:right-auto md:left-1/2 md:w-[min(50rem,calc(100vw-2.5rem))] md:-translate-x-1/2"
+							class="fixed inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-40 max-h-[min(78dvh,44rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift lg:absolute lg:inset-x-auto lg:top-full lg:right-auto lg:bottom-auto lg:left-1/2 lg:mt-2 lg:max-h-[calc(100dvh-9rem)] lg:w-[min(50rem,calc(100vw-2.5rem))] lg:-translate-x-1/2"
 						>
-							<div class="grid md:grid-cols-2">
-								{
-									featureMenuSections.map((section, sectionIndex) => (
-										<section
-											aria-labelledby={`feature-menu-section-${sectionIndex}`}
-											class:list={[
-												'p-3 sm:p-4',
-												sectionIndex > 0 && 'border-t border-ticket-rule md:border-t-0 md:border-l'
-											]}
-										>
-											<p id={`feature-menu-section-${sectionIndex}`} class="px-3 pt-1 pb-2 text-sm font-semibold text-ink">
-												{section.label}
-											</p>
-											<ul role="list">
-												{section.items.map((item) => (
-													<li>
-														<a
-															href={featureMenuHref(item.featureId, item.coming === true)}
-															class="grid min-h-11 grid-cols-[1.25rem_minmax(0,1fr)] gap-3 rounded-md px-3 py-2.5 transition-colors duration-150 hover:bg-cream"
-														>
-															<svg
-																width="20"
-																height="20"
-																viewBox="0 0 20 20"
-																fill="none"
-																stroke="currentColor"
-																stroke-width="1.5"
-																stroke-linecap="round"
-																stroke-linejoin="round"
-																class="mt-0.5 text-amber-deep"
-																aria-hidden="true"
-															>
-																<use href={`#feature-menu-${item.icon}`} />
-															</svg>
-															<span class="min-w-0">
-																<span class="flex flex-wrap items-baseline gap-x-2 text-sm font-semibold text-ink">
-																	{item.label}
-																	{item.coming && (
-																		<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2 py-0.5 font-mono text-xs font-semibold tracking-wide text-amber-deep">
-																			Coming
-																		</span>
-																	)}
-																</span>
-																<span class="mt-0.5 block text-xs leading-snug text-ink-soft">{item.description}</span>
-															</span>
-														</a>
-													</li>
-												))}
-											</ul>
-										</section>
-									))
-								}
-							</div>
-
-							<div class="flex flex-wrap items-center justify-between gap-x-6 border-t border-ticket-rule bg-cream px-6 py-2.5">
-								<a
-									href={featuresMenu.href}
-									aria-current={path === featuresMenu.href ? 'page' : undefined}
-									class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 transition-colors duration-150 hover:decoration-green"
-								>
-									{featuresMenu.overviewLabel}
-									<svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-										<path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-									</svg>
-								</a>
-								<p class="text-xs text-ink-soft">Every line is shipped unless it is marked Coming.</p>
-							</div>
+							<FeatureMenuContents {path} idPrefix="global-features" />
 						</div>
 					</details>
 				</li>
 
-				{
-					nav.map((item) => (
-						<li class={item.earlyVisible ? 'block' : 'hidden md:block'}>
-							<a
-								href={item.href}
-								aria-current={path === item.href ? 'page' : undefined}
-								class:list={[
-									'inline-flex min-h-11 items-center text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink',
-									path === item.href && 'text-ink underline decoration-ticket-rule underline-offset-8'
-								]}
-							>
-								{item.label}
-							</a>
-						</li>
-					))
-				}
+				{pricingItem && (
+					<li class="hidden lg:block">
+						<a
+							href={pricingItem.href}
+							aria-current={path === pricingItem.href ? 'page' : undefined}
+							class:list={[
+								'inline-flex min-h-11 items-center text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink',
+								path === pricingItem.href && 'text-ink underline decoration-ticket-rule underline-offset-8'
+							]}
+						>
+							{pricingItem.label}
+						</a>
+					</li>
+				)}
+
+				<li class="relative hidden lg:block">
+					<details data-nav-disclosure data-resources-menu>
+						<summary
+							aria-label={resourcesMenu.ariaLabel}
+							class:list={[
+								'inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink [&::-webkit-details-marker]:hidden',
+								resourcesActive && 'text-ink'
+							]}
+						>
+							{resourcesMenu.label}
+							<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="nav-chevron transition-transform duration-150 [details[open]_&]:rotate-180">
+								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</summary>
+						<div class="absolute top-full right-0 z-40 mt-2 w-60 border border-ticket-rule bg-paper p-2 shadow-lift">
+							<ul role="list">
+								{resourcesMenu.items.map((item) => (
+									<li>
+										<a
+											href={item.href}
+											aria-current={path === item.href ? 'page' : undefined}
+											class="flex min-h-11 items-center px-3 py-2 text-sm font-medium text-ink-soft transition-colors duration-150 hover:bg-cream hover:text-ink"
+										>
+											{item.label}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					</details>
+				</li>
+				<li class="lg:hidden">
+					<details data-nav-disclosure data-mobile-menu>
+						<summary
+							aria-label={mobileMenu.ariaLabel}
+							class="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-semibold text-ink-soft transition-colors duration-150 hover:text-ink [&::-webkit-details-marker]:hidden"
+						>
+							{mobileMenu.label}
+							<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="nav-chevron transition-transform duration-150 [details[open]_&]:rotate-180">
+								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</summary>
+						<div class="fixed inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-40 max-h-[min(78dvh,44rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift">
+							<div class="border-b border-ticket-rule bg-cream px-4 py-3">
+								<p class="font-display text-lg font-semibold">Navigate CostCook</p>
+							</div>
+
+							<div class="p-2">
+								<ul role="list">
+									<li class="tiny-features-link"><a href={featuresMenu.href} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{featuresMenu.label}</a></li>
+									{pricingItem && <li><a href={pricingItem.href} aria-current={path === pricingItem.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{pricingItem.label}</a></li>}
+									{resourcesMenu.items.map((item) => (
+										<li><a href={item.href} aria-current={path === item.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{item.label}</a></li>
+									))}
+									<li><a href={signIn.href} target={signIn.target} aria-label={signIn.ariaLabel} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{signIn.label}</a></li>
+								</ul>
+							</div>
+						</div>
+					</details>
+				</li>
 			</ul>
 		</nav>
 
@@ -186,43 +182,78 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 			href={signIn.href}
 			target={signIn.target}
 			aria-label={signIn.ariaLabel}
-			class="inline-flex min-h-11 items-center whitespace-nowrap text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink"
+			class="hidden min-h-11 items-center whitespace-nowrap text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink lg:inline-flex"
 		>
 			{signIn.label}
+		</a>
+		<a
+			href={demoCta.href}
+			target={demoCta.target}
+			rel={demoCta.rel}
+			aria-label={demoCta.ariaLabel}
+			aria-current={path === demoCta.href ? 'page' : undefined}
+			class="nav-demo inline-flex min-h-11 items-center whitespace-nowrap rounded-full border border-green px-3 text-sm font-semibold text-green-deep transition-colors duration-150 hover:bg-softgreen sm:px-4"
+		>
+			<span class="md:hidden">Demo</span>
+			<span class="hidden md:inline">Book a demo</span>
 		</a>
 		<a
 			href={cta.href}
 			target={cta.target}
 			rel={cta.rel}
 			aria-label={cta.ariaLabel}
-			class="btn-primary whitespace-nowrap px-4 py-3 text-sm sm:px-5"
+			class="btn-primary min-h-11 whitespace-nowrap px-4 py-3 text-sm sm:px-5"
 		>
-			<span class="sm:hidden">Start</span>
-			<span class="hidden sm:inline">{cta.label}</span>
+			<span class="xl:hidden">Start</span>
+			<span class="hidden xl:inline">{cta.label}</span>
 		</a>
 	</div>
 </header>
 
 <style>
+	.tiny-features-link {
+		display: none;
+	}
+
+	@media (max-width: 359px) {
+		.feature-disclosure {
+			display: none;
+		}
+
+		.tiny-features-link {
+			display: block;
+		}
+	}
+
+	@media (max-width: 639px) {
+		.site-header {
+			display: grid;
+		}
+
+		.header-actions {
+			width: 100%;
+			justify-content: space-between;
+		}
+	}
+
 	@media (prefers-reduced-motion: reduce) {
+		.nav-chevron,
 		[data-features-menu] summary svg {
+			transition: none;
+		}
+
+		.nav-demo {
 			transition: none;
 		}
 	}
 </style>
 
 <script>
-	const menu = document.querySelector<HTMLDetailsElement>('[data-features-menu]');
-	if (menu) {
-		document.addEventListener('click', (event) => {
-			if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
-		});
-
-		document.addEventListener('keydown', (event) => {
-			if (event.key === 'Escape' && menu.open) {
-				menu.open = false;
-				menu.querySelector('summary')?.focus();
-			}
+	const menus = [...document.querySelectorAll<HTMLDetailsElement>('[data-nav-disclosure]')];
+	for (const menu of menus) {
+		menu.addEventListener('toggle', () => {
+			if (!menu.open) return;
+			for (const other of menus) if (other !== menu) other.open = false;
 		});
 
 		menu.addEventListener('click', (event) => {
@@ -234,4 +265,16 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 			if (menu.open && next && !menu.contains(next)) menu.open = false;
 		});
 	}
+
+	document.addEventListener('click', (event) => {
+		for (const menu of menus) if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key !== 'Escape') return;
+		const openMenu = menus.find((menu) => menu.open);
+		if (!openMenu) return;
+		openMenu.open = false;
+		openMenu.querySelector<HTMLElement>(':scope > summary')?.focus();
+	});
 </script>

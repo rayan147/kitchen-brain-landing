@@ -114,3 +114,69 @@ The key scene is the fold on a phone, one thumb in, screen dimmed by a walk-in l
 - Nothing claimed that was not already on the ledger. RC-48 added for the frame rule, not for a capability.
 - Ending unchanged: the CTA is the Final Image and the phone bar carries the same words to it.
 - Positioning correction: restaurant owners who cater, run special dinners, or build changing menus are explicitly included; only unsupported requirements remain in the limits ticket.
+
+---
+
+# Revision — “What it does instead” becomes one guided order
+
+## My story
+
+- **Piece:** The homepage CustomerOutcomes section, revised as a visual handoff guide
+- **Title / headline:** What it does instead: keeps one order moving.
+- **My hero's name:** The chef-owner checking whether the product replaces the four copies they rebuild for every changed event
+- **Content file(s):** `src/components/sections/CustomerOutcomes.astro`
+
+## The 11 steps
+
+| # | Step | What changed | Done |
+|---|------|--------------|------|
+| 1 | The Idea | A chef-owner wants one event to carry from quote through costing, but every operational handoff restarts from a copied sheet. | ☒ |
+| 2 | Your Character | The reader wants a plan the kitchen can run, needs each handoff to preserve the last decision, remembers a short delivery discovered too late, and copes by rebuilding from the last job. | ☒ |
+| 3 | The Plot | The old copied handoffs become one order moving through Quote → Plan → Buy → Cost again. | ☒ |
+| 4 | From Beats to Scenes | Four equal cards become four connected scenes with one value turn and one proof screen each. | ☒ |
+| 5 | Character Voices | Reader: old price, guest count, whole packs, what we paid. Product: calm, exact, kitchen-literate. Banned: seamless, automatic, effortless. | ☒ |
+| 6 | Writing Dialogue | Each scene turns a broken handoff into the record that replaces it: old price→checked cost, rebuilt lists→one count, copied emails→supplier packs, filed invoice→future cost. | ☒ |
+| 7 | Sorkin Dialogue | Intention: keep the order moving. Obstacle: each step currently starts again. Headline and lede put those forces in the same sentence. | ☒ |
+| 8 | Cool Talk | The page keeps its existing snap line, “Charge at least $89.78 per guest to meet the 30% target”; this section adds no competing flourish. | ☒ |
+| 9 | Bringing a Scene to Life | The reader is between the office and prep table, following the order down the page as the count changes and the truck arrives. | ☒ |
+| 10 | Connecting Your Scenes | Second-person point of view stays locked; the route key previews the order, the vertical rail preserves sequence, and the closing loop hands the paid price back to the next quote. | ☒ |
+| 11 | Revise and Finish | Replaced repeated card scaffolds and generic numbering with a readable path, larger proof frames, explicit before/instead handoffs, and one closing loop. No capability claim was added. | ☒ |
+
+## Beat map
+
+| Beat | In this section |
+|------|-----------------|
+| Opening image | Four disconnected sheets have to be rebuilt. |
+| Theme stated | One order should keep moving. |
+| Set-up | An old price, four rebuilt lists, copied emails, and a filed invoice. |
+| Catalyst | The quote is checked against the current food cost. |
+| Debate | Will the next screen still use the same decision? |
+| Break into two | The guest count carries into the plan. |
+| B story | The crew gets one plan rather than the owner's reconstruction. |
+| Fun and games | Whole packs group by supplier and the real delivery is recorded. |
+| Midpoint | The product screens show each handoff rather than asking for trust. |
+| Bad guys close in | Short, over, substituted, and missing deliveries stay visible. |
+| All is lost | File the paid price away and the next quote starts old again. |
+| Finale / final image | The paid price returns to future costing while the confirmed event stays frozen. |
+
+## Scene map
+
+| § | Scene | Beats | Value turn |
+|---|-------|-------|------------|
+| 1 | Route key | Opening, theme, set-up | disconnected copies → one visible path |
+| 2 | Quote | Catalyst | old supplier price → checked cost |
+| 3 | Plan | Debate, break into two, B story | four rebuilt lists → one guest count carried through |
+| 4 | Buy | Fun and games, midpoint | copied email → whole packs by supplier |
+| 5 | Cost again | Bad guys, all is lost | filed invoice → paid price in future costing |
+| 6 | Loop close | Finale | finished event → a truer starting point for the next quote |
+
+## Revision record
+
+- **Word count:** 116 visible explanatory words before → 169 after; the extra words are compact input/output labels that replace inference rather than add a new paragraph.
+- **Claims removed because they could not be shown:** none added; automatic purchasing, automatic supplier synchronization, guaranteed savings, and changed confirmed-event pricing remain excluded.
+- **Final image:** “The next quote starts with what you paid.”
+- 2026-08-30: the fold's audience line and the trust section's "Built for event production" now name restaurants too ("restaurants that cater"; "catering, meal-prep, and restaurant kitchens that plan work from menus and guest counts"). Both had still said caterers and meal-prep only, so the Opening Image excluded the reader the Who scene later welcomed. RC-01 amended; the claim guard pins both lines.
+
+## Revision — phone-first verification (2026-08-30)
+
+All eleven steps remain complete and the visible story is unchanged. The 320px and 390px folds still place the reader, the promise, the trial action, its billing boundary, the tour link, and the first product proof in that order. The persistent trial action now keeps a 44px touch target, and the document opts into phone safe areas so the fixed action clears the home indicator. No new copy, claim, section, or competing snap line was added.

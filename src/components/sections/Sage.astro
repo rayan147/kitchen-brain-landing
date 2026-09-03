@@ -1,11 +1,12 @@
 ---
 /**
- * Sage on the homepage. story: docs/stories/sage.story.md
+ * Sage on the homepage. Foundation: docs/stories/sage.story.md
+ * Visual redesign: docs/stories/homepage-sage-redesign.story.md
  *
- * EIGHTH STOP, between PaperIn and TheOtherTools. It sits with the mechanics
+ * Between PaperIn and TeamAccess. It sits with the mechanics
  * (yield, intake) rather than with the proof or the ask, because it is a
  * thing the product does, and it sits BEFORE the rival beat so the reader
- * meets it before the give-ups list, which is where the assistant appears on
+ * meets it before the access boundary and give-ups list, where the assistant appears on
  * /compare. It is not a fifth CustomerOutcomes card: that
  * pairing has to stay 1:1 with TheProblem.
  *
@@ -17,18 +18,52 @@
  * link goes to the dedicated feature guide and video.
  */
 import SectionHandoff from '../SectionHandoff.astro';
+import SageIcon from '../SageIcon.astro';
 import { sage, sageStatusWord } from '../../lib/sage';
+
+// Considered State; not used because read, prepare and approve are fixed
+// editorial stages here, not runtime modes that transition their own behaviour.
+const groupIcons = [
+	['M5 4h14v16H5z', 'M8 8h8', 'M8 12h5', 'M8 16h7'],
+	['M8 4h8v4H8z', 'M6 6H4v15h16V6h-2', 'M8 12h8', 'M8 16h5'],
+	['M4 17l5-5 4 3 7-8', 'M15 7h5v5', 'M5 20h14'],
+	['M5 5h14v14H5z', 'M8 9h8', 'M8 13h5', 'M8 17h3'],
+	['M3 4h2l2.2 10h9.8l2-7H6', 'M10 19a1 1 0 1 1-2 0 1 1 0 0 1 2 0', 'M18 19a1 1 0 1 1-2 0 1 1 0 0 1 2 0']
+] as const;
+
+const [sourceRule, changeRule, kitchenRule, roleRule, missingRule, limitRule] = sage.guardrails;
+const guardrailGroups = [
+	{
+		name: 'Evidence',
+		iconPaths: ['M7 3h7l4 4v14H7z', 'M14 3v5h5', 'M10 12h5', 'M10 16h3'],
+		rules: [sourceRule, missingRule]
+	},
+	{
+		name: 'Access',
+		iconPaths: ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z', 'M9 12l2 2 4-5'],
+		rules: [kitchenRule, roleRule]
+	},
+	{
+		name: 'Action',
+		iconPaths: ['M5 12h14', 'M15 8l4 4-4 4', 'M7 5v14'],
+		rules: [changeRule, limitRule]
+	}
+] as const;
 ---
 
+<!-- story: docs/stories/homepage-sage-redesign.story.md -->
 <section id="sage" class="border-t border-hairline bg-softgreen" aria-labelledby="sage-heading">
-	<div class="container-page py-section">
-		<div class="grid gap-12 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
+	<div class="container-page py-section" data-sage-home>
+		<div class="sage-intro-grid">
 			<div class="max-w-3xl" data-reveal>
-				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-					<p class="eyebrow">{sage.name}, the assistant</p>
-					<span class="inline-flex items-center rounded-full border border-green bg-paper px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-green-deep">
-						{sageStatusWord}
-					</span>
+				<div class="sage-identity">
+					<SageIcon size={44} context="homepage" />
+					<div>
+						<strong>{sage.name}</strong>
+						<span class="inline-flex items-center rounded-full border border-green bg-paper px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-green-deep">
+							{sageStatusWord}
+						</span>
+					</div>
 				</div>
 				<h2 id="sage-heading" class="mt-4 text-h2 font-semibold">
 					Ask your kitchen a question. See where the answer came from.
@@ -39,73 +74,125 @@ import { sage, sageStatusWord } from '../../lib/sage';
 					it can prepare, a shopping list, waits for you to approve it.
 				</p>
 
-				<!-- The six things it can do, as the questions a reader would type.
-				     Six because there are six tools; see src/lib/sage.ts. -->
-				<ol role="list" class="mt-8 border-t border-ticket-rule">
-					{
-						sage.abilities.map((ability, index) => (
-							<li class="grid gap-x-4 gap-y-1 border-b border-dashed border-ticket-rule py-3 sm:grid-cols-[2.5rem_minmax(0,1fr)]">
-								<p class="font-mono text-eyebrow font-semibold tabular-nums text-amber-deep">
-									{String(index + 1).padStart(2, '0')}
-								</p>
-								<div class="min-w-0">
-									<p class="font-semibold">&ldquo;{ability.ask}&rdquo;</p>
-									<p class="mt-1 max-w-[52ch] text-sm leading-relaxed text-ink-soft">{ability.does}</p>
-								</div>
-							</li>
-						))
-					}
-				</ol>
+				<div class="sage-promise">
+					<span>Eleven checks read</span>
+					<span>One proposal waits</span>
+				</div>
 			</div>
 
-			<!-- The capture. Two crops of one thread, shown at half their 2x size
-			     and never wider. The label names the build; the caption names the
-			     kitchen. Neither is the wedding from the tour and the copy says so,
-			     because a reader who watches the film and then sees a different
-			     supplier here would be right to ask. -->
-			<figure data-reveal>
+			<figure class="answer-proof" data-sage-answer data-reveal>
 				<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-					SANDBOX BUILD · {sage.verified.branch} · {sage.verified.on}
+					SAGE ANSWER · SOURCE LINKED
 				</p>
 				<div class="mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2">
-					<img
-						src={sage.proof.mobile.src}
-						alt={sage.proof.mobile.alt}
-						width={sage.proof.mobile.width}
-						height={sage.proof.mobile.height}
-						loading="lazy"
-						decoding="async"
-						class="mx-auto h-auto w-full max-w-[354px] sm:hidden"
-					/>
-					<img
-						src={sage.proof.desktop.src}
-						alt={sage.proof.desktop.alt}
-						width={sage.proof.desktop.width}
-						height={sage.proof.desktop.height}
-						loading="lazy"
-						decoding="async"
-						style="width: 713px; max-width: 100%"
-						class="hidden h-auto sm:block"
-					/>
+					<picture>
+						<source media="(max-width: 639px)" srcset={sage.proof.mobile.src} />
+						<img
+							src={sage.proof.desktop.src}
+							alt={sage.proof.desktop.alt}
+							width={sage.proof.desktop.width}
+							height={sage.proof.desktop.height}
+							loading="lazy"
+							decoding="async"
+							class="h-auto w-full"
+						/>
+					</picture>
 				</div>
 				<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">{sage.proof.caption}</figcaption>
 			</figure>
 		</div>
 
-		<div class="mt-12 border-t border-ticket-rule pt-8" data-reveal>
-			<h3 class="text-h3 font-semibold">What it will not do.</h3>
-			<ul role="list" class="mt-6 grid gap-x-12 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+		<div class="approval-path" aria-label="Eleven checks read, one tool prepares a proposal, and you approve or discard" data-reveal>
+			<div data-sage-stage="read">
+				<span>11 checks</span>
+				<strong>Read records</strong>
+				<small>Answers keep their source.</small>
+			</div>
+			<i aria-hidden="true"></i>
+			<div data-sage-stage="prepare">
+				<span>1 tool</span>
+				<strong>Prepares a proposal</strong>
+				<small>Nothing changes yet.</small>
+			</div>
+			<i aria-hidden="true"></i>
+			<div class="approval-person" data-sage-stage="approve">
+				<span>You</span>
+				<strong>Approve or discard</strong>
+				<small>The final say stays human.</small>
+			</div>
+		</div>
+
+		<div class="scope-setup-grid">
+			<div class="sage-scope" data-reveal>
+				<div class="scope-heading">
+					<h3 class="text-h3 font-semibold">Five kitchen jobs.</h3>
+					<p>Eleven bounded checks sit inside them.</p>
+				</div>
+				<ul role="list" class="scope-list">
+					{
+						sage.homepageGroups.map((group, index) => (
+							<li data-sage-scope={group.name}>
+								<span aria-hidden="true">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+										{groupIcons[index].map((path) => <path d={path} />)}
+									</svg>
+								</span>
+								<div><strong>{group.name}</strong><small>{group.detail}</small></div>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<figure class="setup-proof" data-sage-onboarding data-reveal>
+				<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
+					ASK DURING SETUP
+				</p>
+				<div>
+					<img
+						src="/proof/sage-onboarding.png"
+						alt="CostCook setup on the Ingredients stage. Progress saves after each stage, and Ask Sage is available in the setup header beside Support and Save and exit."
+						width="1280"
+						height="720"
+						loading="lazy"
+						decoding="async"
+					/>
+				</div>
+				<figcaption>
+					Progress saves. Sage starts from the stage and records you have, then Back to setup
+					returns you to the unfinished work.
+				</figcaption>
+			</figure>
+		</div>
+
+		<div class="sage-boundaries" data-reveal>
+			<div class="boundaries-heading">
+				<h3 class="text-h3 font-semibold">Useful because the boundaries are visible.</h3>
+				<p>Evidence, access and action stay separate.</p>
+			</div>
+			<div class="boundary-grid">
 				{
-					sage.guardrails.map((rule) => (
-						<li class="border-t border-hairline pt-4">
-							<p class="font-semibold">{rule.lead}</p>
-							<p class="mt-2 max-w-[44ch] text-sm leading-relaxed text-ink-soft">{rule.detail}</p>
-						</li>
+					guardrailGroups.map((group) => (
+						<section data-sage-boundary={group.name}>
+							<div class="boundary-label">
+								<span aria-hidden="true">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+										{group.iconPaths.map((path) => <path d={path} />)}
+									</svg>
+								</span>
+								<strong>{group.name}</strong>
+							</div>
+							{group.rules.map((rule) => (
+								<div class="boundary-rule">
+									<h4>{rule.lead}</h4>
+									<p>{rule.detail}</p>
+								</div>
+							))}
+						</section>
 					))
 				}
-			</ul>
-			<!-- The status is a sentence as well as a badge, so nobody has to decode it. -->
-			<p class="mt-8 max-w-[66ch] text-ink-soft">
+			</div>
+			<p class="sage-availability">
 				<strong class="font-semibold text-ink">{sageStatusWord}.</strong> Ask from the kitchen
 				records you already keep, including while you are setting them up. <a href={sage.href} class="btn-quiet">Watch Sage at work</a>.
 			</p>
@@ -114,3 +201,303 @@ import { sage, sageStatusWord } from '../../lib/sage';
 		<SectionHandoff from="sage" />
 	</div>
 </section>
+
+<style>
+	.sage-identity {
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		color: var(--color-green-deep);
+	}
+
+	.sage-identity > div {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.55rem 0.75rem;
+	}
+
+	.sage-identity strong {
+		font-family: var(--font-display);
+		font-size: var(--text-record);
+		font-weight: 600;
+		color: var(--color-ink);
+	}
+
+	.sage-intro-grid,
+	.scope-setup-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 29rem), 1fr));
+		gap: clamp(3rem, 5vw, 4rem);
+		align-items: start;
+	}
+
+	.sage-promise {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 1.5rem;
+		margin-top: 2rem;
+		border-block: 1px solid var(--color-hairline-strong);
+	}
+
+	.sage-promise span {
+		padding-block: 0.65rem;
+		font-size: var(--text-body-sm);
+		font-weight: 700;
+		color: var(--color-green-deep);
+	}
+
+	.answer-proof img,
+	.setup-proof img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.approval-path {
+		display: grid;
+		gap: 1rem;
+		margin-top: clamp(3rem, 6vw, 5rem);
+		padding-block: 1.25rem;
+		border-block: 1px solid var(--color-hairline-strong);
+	}
+
+	.approval-path > div {
+		display: grid;
+		grid-template-columns: minmax(5rem, auto) minmax(0, 1fr);
+		gap: 0.2rem 1rem;
+		align-items: baseline;
+	}
+
+	.approval-path span {
+		grid-row: 1 / span 2;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: var(--text-label-sm);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-amber-deep);
+	}
+
+	.approval-path strong,
+	.approval-path small {
+		display: block;
+	}
+
+	.approval-path small {
+		font-size: var(--text-caption);
+		color: var(--color-ink-soft);
+	}
+
+	.approval-path > i {
+		position: relative;
+		display: block;
+		width: 1px;
+		height: 1.25rem;
+		margin-left: 2.5rem;
+		background: var(--color-amber-deep);
+	}
+
+	.approval-path > i::after {
+		position: absolute;
+		bottom: 0;
+		left: -3px;
+		width: 7px;
+		height: 7px;
+		border-right: 1.5px solid var(--color-amber-deep);
+		border-bottom: 1.5px solid var(--color-amber-deep);
+		content: '';
+		transform: rotate(45deg);
+	}
+
+	.approval-person {
+		padding: 0.85rem 1rem;
+		background: var(--color-paper);
+		color: var(--color-green-deep);
+	}
+
+	.approval-person span,
+	.approval-person small {
+		color: var(--color-green-deep);
+	}
+
+	.scope-setup-grid {
+		margin-top: clamp(3rem, 6vw, 5rem);
+	}
+
+	.scope-heading {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+		justify-content: space-between;
+		align-items: baseline;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid var(--color-hairline-strong);
+	}
+
+	.scope-heading p,
+	.setup-proof figcaption,
+	.boundaries-heading p {
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
+		color: var(--color-ink-soft);
+	}
+
+	.scope-list {
+		display: grid;
+	}
+
+	.scope-list li {
+		display: grid;
+		grid-template-columns: 2.5rem minmax(0, 1fr);
+		gap: 0.9rem;
+		align-items: start;
+		padding-block: 0.85rem;
+		border-bottom: 1px solid var(--color-hairline-strong);
+	}
+
+	.scope-list li > span,
+	.boundary-label > span {
+		display: grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border: 1px solid var(--color-hairline-strong);
+		border-radius: 999px;
+		background: var(--color-paper);
+		color: var(--color-green-deep);
+	}
+
+	.scope-list svg,
+	.boundary-label svg {
+		stroke: currentColor;
+		stroke-width: 1.7;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.scope-list strong,
+	.scope-list small {
+		display: block;
+	}
+
+	.scope-list small {
+		margin-top: 0.2rem;
+		font-size: var(--text-caption);
+		line-height: 1.45;
+		color: var(--color-ink-soft);
+	}
+
+	.setup-proof > div {
+		margin-top: 0.75rem;
+		border: 1px solid var(--color-hairline-strong);
+		background: var(--color-paper);
+		padding: 0.4rem;
+		box-shadow: var(--shadow-ticket);
+	}
+
+	.setup-proof figcaption {
+		margin-top: 0.75rem;
+	}
+
+	.sage-boundaries {
+		margin-top: clamp(3rem, 6vw, 5rem);
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-hairline-strong);
+	}
+
+	.boundaries-heading {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 2rem;
+		justify-content: space-between;
+		align-items: baseline;
+	}
+
+	.boundary-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+		gap: 2rem;
+		margin-top: 1.5rem;
+	}
+
+	.boundary-grid > section {
+		border-top: 1px solid var(--color-hairline-strong);
+	}
+
+	.boundary-label {
+		display: flex;
+		gap: 0.75rem;
+		align-items: center;
+		padding-block: 0.9rem;
+	}
+
+	.boundary-label > span {
+		width: 2.25rem;
+		height: 2.25rem;
+	}
+
+	.boundary-rule {
+		padding-block: 0.9rem;
+		border-top: 1px solid var(--color-hairline-strong);
+	}
+
+	.boundary-rule h4 {
+		font-weight: 700;
+	}
+
+	.boundary-rule p {
+		margin-top: 0.35rem;
+		font-size: var(--text-caption);
+		line-height: 1.5;
+		color: var(--color-ink-soft);
+	}
+
+	.sage-availability {
+		max-width: 66ch;
+		margin-top: 2rem;
+		color: var(--color-ink-soft);
+	}
+
+	@media (min-width: 48rem) {
+		.approval-path {
+			grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1fr) 2.5rem minmax(0, 1fr);
+			gap: 0;
+			align-items: center;
+		}
+
+		.approval-path > div {
+			display: block;
+			min-width: 0;
+			padding-inline: 0.5rem;
+		}
+
+		.approval-path span,
+		.approval-path strong,
+		.approval-path small {
+			display: block;
+		}
+
+		.approval-path strong {
+			margin-top: 0.3rem;
+		}
+
+		.approval-path small {
+			margin-top: 0.2rem;
+		}
+
+		.approval-path > i {
+			width: 100%;
+			height: 1px;
+			margin-left: 0;
+		}
+
+		.approval-path > i::after {
+			top: -3px;
+			right: 0;
+			bottom: auto;
+			left: auto;
+			transform: rotate(-45deg);
+		}
+	}
+</style>

@@ -42,7 +42,7 @@
 | 2 Theme Stated | "Where the answer is no, it says no." |
 | 3 Set-Up | Group 1: the money. Trial, card, cancel, price, seats, export. |
 | 4 Catalyst | "Can I take my work with me?" answered with a yes and a plain "not yet". |
-| 5 Debate | Group 2: fit. Restaurant owners get a precise yes for event-driven work; actual limits still get flat noes. |
+| 5 Debate | Group 2: fit. Restaurant owners get a precise yes for event-driven work; role boundaries and actual limits still get flat, specific answers. |
 | 6 Break into Two | The reader believes the noes, so the yeses in group 3 land. |
 | 7 B Story | The founder answering in first person ("that one is on me to build", "I do"). |
 | 8 Fun and Games | Group 3: how the work moves, one mechanic per question, each on a ledger row. |
@@ -97,3 +97,9 @@ Phone, one bar, the walk-in door propped with a foot. The reader is not going to
 - Every answer names its rows; `check-landing-claims.mjs` fails on a row that does not exist and on a no answer that stops opening with "No."
 - Ending: the homepage's close, in its words, once.
 - Positioning correction: a restaurant owner is not a misfit. The answer now distinguishes repeating daily service from the catering, special-dinner, and changing-menu work CostCook is built to plan.
+- Access correction: the FAQ names Owner, Manager and Staff boundaries without claiming a permission grid, and links the dedicated Team & Access guide.
+- Sage correction: the answer now reflects eleven read-only checks and one approval-bound shopping-list proposal rather than the stale six-tool summary.
+
+## Revision — trial and offline boundaries (2026-08-30)
+
+All eleven steps remain complete. The trial answer promises only what the product and Stripe setup establish: $0 charged during the 15-day trial, with billing beginning on day sixteen unless cancelled. It no longer promises that Stripe creates no invoice. The walk-in answer separates three states that used to be collapsed into “works offline”: previously loaded order pages remain readable from their cache and show its time; unseen pages fall back offline; writes need a connection. Server-rendered reading with JavaScript disabled remains a separate capability, not an offline guarantee. The page’s snap line and final image remain unchanged.

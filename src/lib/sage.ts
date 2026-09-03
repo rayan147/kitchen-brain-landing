@@ -19,7 +19,7 @@
  * remembers a kitchen; the absolute form of the honesty claim (the ledger
  * softens it to: answers from records, says when evidence is missing); a
  * per-record entry point from an order page (designed, not built); anything
- * beyond the six tools listed below. The claim check scans whole files for the
+ * beyond the twelve tools listed below. The claim check scans whole files for the
  * first three, comments included, which is why none is spelled out here.
  */
 import type { Verdict } from './comparison';
@@ -31,8 +31,8 @@ export const sage = {
 	/** The app's own one-line description, verbatim from its page header. */
 	tagline:
 		'Ask about your kitchen. Sage reads your records, shows where every number came from, and can prepare a draft for you to approve.',
-	/** Where the app repo was read. Printed beside the captures. */
-	verified: { sha: 'e8b69fe4', branch: 'sandbox/demo', on: '2026-08-29' },
+	/** Internal provenance for release review; never printed beside the captures. */
+	verified: { sha: '99321170', branch: 'sandbox/demo', on: '2026-08-29' },
 	href: '/features/sage',
 	onboarding: {
 		entry: 'Ask Sage stays available in the setup header after Sage is enabled.',
@@ -41,23 +41,33 @@ export const sage = {
 		return:
 			'Progress saves after each setup stage, and Back to setup returns to the unfinished stage.'
 	},
-	/**
-	 * The six tools, one line each, in the reader's words. Five read, one
-	 * drafts. There is no seventh; a line here without a tool behind it is a
-	 * promise the answer breaks.
-	 */
+	/** Eleven read tools and one approval-bound proposal, in kitchen words. */
 	abilities: [
 		{ ask: 'What needs my attention for Saturday?', does: 'Reads the same attention list the Today screen shows, for one date or all of them.' },
 		{ ask: 'What else is on that date?', does: 'Lists the orders on a day: name, guests, status, drafts included.' },
+		{ ask: 'What should we prep for Saturday?', does: 'Builds the prep view for one date from the orders already on the books.' },
+		{ ask: 'Which ingredients are below par?', does: 'Reads trusted inventory counts and names ingredients below the par you set.' },
 		{ ask: 'Why does this dish cost what it costs?', does: 'Walks the recipe line by line, with each line’s share of the plate.' },
+		{ ask: 'Find the chicken recipes', does: 'Searches recipes by name and the ingredients they use.' },
+		{ ask: 'Which recipes contain sesame?', does: 'Finds recipes carrying a reviewed allergen through their ingredients.' },
+		{ ask: 'What is the nutrition for this recipe?', does: 'Reads the recipe nutrition calculation and names incomplete profile or conversion evidence.' },
 		{ ask: 'Which prices went up?', does: 'Reads the purchase ledger for price moves and says how many purchases the move rests on. Managers and owners only.' },
 		{ ask: 'What came up short in receiving?', does: 'Lists the open receiving follow-ups, without the supplier’s contact details.' },
+		{ ask: 'What is left in setup?', does: 'Reads setup progress and points to the unfinished stage. Managers and owners only.' },
 		{ ask: 'Prepare the shopping list', does: 'Drafts one. You see what it creates and what it does not touch, then you approve or discard it. Managers and owners only.' }
+	],
+	/** The homepage introduces the breadth without repeating a twelve-line diligence list. */
+	homepageGroups: [
+		{ name: 'Run the shift', detail: 'Attention, orders, prep and receiving follow-ups for a date.' },
+		{ name: 'Check a recipe', detail: 'Search, cost, nutrition and reviewed allergen facts.' },
+		{ name: 'Check stock and buying', detail: 'Below-par ingredients and recent price moves.' },
+		{ name: 'Finish setup', detail: 'Progress and the unfinished stage, for managers and owners.' },
+		{ name: 'Prepare one change', detail: 'A shopping-list proposal that a manager or owner approves or discards.' }
 	],
 	/** Read off the code, not the prompt. Each is enforced in a test. */
 	guardrails: [
 		{ lead: 'Every number has a source.', detail: 'Sources are collected from the checks that actually ran, and links are built by the app, so an answer cannot cite a record it did not read.' },
-		{ lead: 'It never changes a record on its own.', detail: 'Five checks read. One prepares a draft. Nothing sends, buys, reprices or adjusts, and the draft waits for a person.' },
+		{ lead: 'It never changes a record on its own.', detail: 'Eleven checks read. One prepares a proposal. Nothing sends, buys, reprices or adjusts, and the proposal waits for a person.' },
 		{ lead: 'It cannot reach another kitchen.', detail: 'No check takes a kitchen as an argument. Your session decides what it can see, and a record it does not own resolves to nothing.' },
 		{ lead: 'It reads what your role can read.', detail: 'Price moves are for managers and owners. An answer built on them is redacted for staff in a shared thread.' },
 		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.' },
@@ -77,7 +87,7 @@ export const sage = {
 			alt: 'A Sage answer on a phone. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record.'
 		},
 		caption:
-			'Captured on the sandbox build on 2026-08-29, in a fixture kitchen made for testing Sage, not the wedding in the tour. The cucumber, the supplier and the prices are the fixture’s.'
+			'An example from a different kitchen than the wedding in the tour: cucumber from Coastline Produce rose from $24.00 to $33.00 across two linked purchases.'
 	}
 } as const;
 

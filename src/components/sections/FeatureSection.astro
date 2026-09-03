@@ -4,6 +4,7 @@ import { spellCapital } from '../../lib/words';
 import { demoCta } from '../../lib/site';
 import FeatureAreaIcon from '../FeatureAreaIcon.astro';
 import FeatureAreaFigure from '../FeatureAreaFigure.astro';
+import SageIcon from '../SageIcon.astro';
 
 type Entry = (typeof featureSections)[number];
 interface Props {
@@ -80,6 +81,7 @@ const siblings = featureSections.filter((other) => other.slug !== entry.slug);
 				entry.groups.map((group) => (
 					<div id={`features-${group.id}`} class="scroll-mt-8 border-t border-ticket-rule pt-6">
 						<div class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+							{group.icon === 'sage' && <SageIcon size={24} context="feature-area" class="self-center text-green-deep" />}
 							<p class="eyebrow">{group.kicker}</p>
 							{group.status === 'in-development' && (
 								<span class="inline-flex items-center rounded-full border border-ticket-rule bg-softamber px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wide text-amber-deep">

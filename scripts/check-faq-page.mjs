@@ -23,7 +23,7 @@ for (const [text, label] of [
 ]) requireText(text, label);
 
 const entryCount = (html.match(/data-faq-entry/g) ?? []).length;
-if (entryCount !== 32) failures.push(`expected 32 FAQ answers, received ${entryCount}`);
+if (entryCount !== 33) failures.push(`expected 33 FAQ answers, received ${entryCount}`);
 
 if (faqMarkup.includes('<details')) failures.push('FAQ answers must remain open; found a details disclosure');
 
@@ -31,9 +31,19 @@ for (const id of ['trial', 'cancel', 'guests', 'phone', 'demo']) {
 	requireText(`id="${id}"`, `stable #${id} deep link`);
 }
 
+for (const [text, label] of [
+	['charges $0 during the trial', 'bounded trial charge'],
+	['Previously loaded order pages remain readable with no signal', 'bounded offline behavior'],
+	['actions that write data need a connection', 'offline write boundary']
+]) requireText(text, label);
+
+for (const staleClaim of ['there is no invoice for the 15 days', 'works with no signal and with JavaScript off']) {
+	if (html.includes(staleClaim)) failures.push(`stale claim remains: ${staleClaim}`);
+}
+
 if (failures.length > 0) {
 	console.error(`FAQ page contract failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
 }
 
-console.log('FAQ page contract passed: 32 open answers, stable anchors, decision ticket, snap answer, and structured data.');
+console.log('FAQ page contract passed: 33 open answers, stable anchors, decision ticket, snap answer, and structured data.');

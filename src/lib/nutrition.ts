@@ -16,12 +16,14 @@
  *
  * WHAT MAY NOT BE SAID, from the app's own screens: that the estimate is a
  * regulatory-compliance claim (the print says it is not); that dietary
- * characteristics are assessed (they are not, RC-47); that the ingredient
+ * characteristics ship today (they are Coming, RC-47); that the ingredient
  * order is a weight-order claim (the screen says it is not); that anything
  * is allergen-free (the screen says no such claim is made).
  *
  * No pattern: a table the section renders once.
  */
+import { comingPlans } from './coming-plans';
+
 export const nutrition = {
 	verified: { sha: 'dff9469c', branch: 'sandbox/demo', on: '2026-08-29' },
 	href: '/features/nutrition-facts-and-allergens',
@@ -50,7 +52,7 @@ export const nutrition = {
 	],
 	notClaimed: [
 		'The estimate is not a retail-label regulatory compliance claim, and the printed sheet says so on the sheet.',
-		'Dietary characteristics (vegan, gluten-free and the like) are not assessed. Nothing is inferred from an ingredient name.',
+		comingPlans.dietary.faq,
 		'The ingredient statement is in recipe order, not a regulatory weight order.',
 		'A label printer integration is being built and carries no date. Today the sheet prints from the browser.'
 	],

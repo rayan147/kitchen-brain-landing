@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
-const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4327';
+const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const route = `${baseUrl}/faq`;
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
 await mkdir(reviewDir, { recursive: true });
@@ -110,7 +110,7 @@ try {
 		};
 	})()`);
 	assert(desktop.title === 'Know the catch before you hand over the card.', 'desktop: page identity is missing');
-	assert(desktop.entryCount === 31, `desktop: expected 31 answers, received ${desktop.entryCount}`);
+	assert(desktop.entryCount === 33, `desktop: expected 33 answers, received ${desktop.entryCount}`);
 	assert(desktop.disclosureCount === 0, `desktop: found ${desktop.disclosureCount} hidden disclosures`);
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
@@ -165,7 +165,7 @@ try {
 		jsonLd: document.querySelector('script[type="application/ld+json"]')?.textContent.length ?? 0
 	}))()`);
 	assert(noScript.heading === 'Know the catch before you hand over the card.', 'no JavaScript: page identity is missing');
-	assert(noScript.entryCount === 31, `no JavaScript: expected 31 answers, received ${noScript.entryCount}`);
+	assert(noScript.entryCount === 33, `no JavaScript: expected 33 answers, received ${noScript.entryCount}`);
 	assert(noScript.jsonLd > 100, 'no JavaScript: FAQ structured data is missing');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

@@ -1,6 +1,7 @@
 ---
 import { sage, sageStatusWord } from '../../lib/sage';
 import { cta, demoCta } from '../../lib/site';
+import SageIcon from '../SageIcon.astro';
 
 // Considered Strategy; not used because the page selects one fixed editorial
 // view of Sage's static product contract; no behavior is swapped at runtime.
@@ -18,12 +19,12 @@ const faqItems = [
 	{
 		question: 'What can I ask Sage?',
 		answer:
-			'Sage supports six bounded jobs: attention across upcoming work, orders on a date, a recipe-cost explanation, recent ingredient price moves, receiving follow-ups, and a shopping-list draft for an owner or manager to review.'
+			'Sage supports eleven read-only checks across the shift, recipes, stock, buying and setup. It can also prepare one shopping-list proposal for an owner or manager to review.'
 	},
 	{
 		question: 'Can Sage change my kitchen records?',
 		answer:
-			'Not on its own. Five checks read records. The sixth can prepare a shopping-list draft. A person reviews the impact, and CostCook checks the underlying records again before an approved draft is created.'
+			'Not on its own. Eleven checks read records. The twelfth tool can prepare a shopping-list proposal. A person reviews the impact, and CostCook checks the underlying records again before an approved proposal is created.'
 	},
 	{
 		question: 'What happens when the evidence is missing?',
@@ -41,7 +42,7 @@ const videoChapters = [
 	{ at: '0:00', title: 'Ask during setup', detail: 'The setup stage stays saved while Sage is one action away.' },
 	{ at: '0:05', title: 'Fit the records', detail: 'Starting questions follow what your kitchen has entered so far.' },
 	{ at: '0:10', title: 'Check the source', detail: 'The answer keeps its evidence and record link in view.' },
-	{ at: '0:15', title: 'Keep the final say', detail: 'Five checks read. One prepares a draft. You approve.' }
+	{ at: '0:15', title: 'Keep the final say', detail: 'Checks read. One proposal waits for you.' }
 ] as const;
 ---
 
@@ -55,7 +56,10 @@ const videoChapters = [
 					<span aria-hidden="true">/</span>
 					<span>Sage</span>
 				</nav>
-				<p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p>
+				<div class="sage-identity">
+					<SageIcon size={32} context="specialist" />
+					<div><strong>Sage</strong><p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p></div>
+				</div>
 				<h1 id="sage-feature-heading" class="feature-display">Ask your kitchen. Check the answer.</h1>
 				<p class="hero-lede">
 					Sage is inside CostCook, including during setup. It reads the records you have,
@@ -161,7 +165,7 @@ const videoChapters = [
 	<section id="sage-jobs" class="questions" aria-labelledby="questions-heading">
 		<div class="container-page questions-grid">
 			<div class="questions-intro" data-reveal>
-				<h2 id="questions-heading">Six kitchen jobs. No vague seventh.</h2>
+				<h2 id="questions-heading">Eleven kitchen checks. One reviewed proposal.</h2>
 				<p>Each question reaches a bounded CostCook check. The assistant does not get a general door into your data.</p>
 			</div>
 			<ol class="question-list">
@@ -212,10 +216,10 @@ const videoChapters = [
 				<h2 id="guardrails-heading">Useful because the boundaries are visible.</h2>
 				<p>An answer stays separate from an action. A prepared draft stays separate from approval.</p>
 			</div>
-			<div class="approval-path" data-reveal aria-label="Five checks read records, one tool prepares a draft, and a person approves">
-				<div><span>5 checks</span><strong>Read records</strong></div>
+			<div class="approval-path" data-reveal aria-label="Eleven checks read records, one tool prepares a proposal, and a person approves">
+				<div><span>11 checks</span><strong>Read records</strong></div>
 				<i aria-hidden="true"></i>
-				<div><span>1 tool</span><strong>Prepares a draft</strong></div>
+				<div><span>1 tool</span><strong>Prepares a proposal</strong></div>
 				<i aria-hidden="true"></i>
 				<div class="person"><span>You</span><strong>Approve or discard</strong></div>
 			</div>
@@ -266,8 +270,11 @@ const videoChapters = [
 <style>
 	.sage-page { --rule: color-mix(in srgb, var(--color-ink) 17%, transparent); overflow: clip; }
 	.hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
-	.hero-grid { display: grid; gap: clamp(3.5rem, 7vw, 7rem); align-items: center; padding-block: clamp(4rem, 7vw, 7.5rem); }
-	.availability { display: inline-flex; align-items: center; gap: 0.55rem; margin-bottom: 1.25rem; color: var(--color-green-deep); font-size: var(--text-caption); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+	.hero-grid { display: grid; gap: clamp(3.5rem, 7vw, 7rem); align-items: center; padding-block: clamp(3.5rem, 6vw, 7rem); }
+	.sage-identity { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; color: var(--color-green-deep); }
+	.sage-identity > div { display: flex; min-width: 0; flex-wrap: wrap; align-items: center; gap: .3rem .7rem; }
+	.sage-identity strong { color: var(--color-ink); font-family: var(--font-display); font-size: var(--text-record); font-weight: 600; line-height: 1.1; }
+	.availability { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--color-green-deep); font-size: var(--text-caption); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 	.availability span { width: 0.65rem; height: 0.65rem; border-radius: 999px; background: var(--color-green); box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-green) 13%, transparent); }
 	.hero h1 { max-width: 10ch; }
 	.hero-lede { max-width: 40ch; margin-top: 1.75rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
@@ -292,7 +299,7 @@ const videoChapters = [
 	.feature-chapters a:hover strong { color: var(--color-green-deep); }
 
 	.video-section { background: var(--color-ink); color: var(--color-offwhite); }
-	.video-grid { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; padding-block: var(--space-section); }
+	.video-grid { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; padding-block: var(--spacing-section); }
 	.video-copy h2, .setup-copy h2, .questions-intro h2, .proof-copy h2, .guardrails-heading h2, .faq-intro h2, .closing h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
 	.video-copy > p { max-width: 43ch; margin-top: 1.25rem; color: color-mix(in srgb, var(--color-offwhite) 75%, transparent); line-height: 1.65; }
 	.chapter-list { margin-top: 2rem; border-top: 1px solid color-mix(in srgb, white 20%, transparent); }
@@ -305,7 +312,7 @@ const videoChapters = [
 	.video-frame figcaption { margin-top: 0.8rem; color: color-mix(in srgb, var(--color-offwhite) 68%, transparent); font-size: var(--text-label-sm); line-height: 1.5; }
 
 	.setup-section, .proof-section, .faq { background: var(--color-offwhite); }
-	.setup-grid, .proof-grid, .faq-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--space-section); }
+	.setup-grid, .proof-grid, .faq-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--spacing-section); }
 	.setup-capture { min-width: 0; }
 	.setup-capture img { display: block; width: 100%; height: auto; border-top: 4px solid var(--color-green); box-shadow: 0 15px 28px color-mix(in srgb, var(--color-ink) 10%, transparent); }
 	.setup-capture figcaption, .proof-capture figcaption { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
@@ -316,7 +323,7 @@ const videoChapters = [
 	.setup-copy dd { margin-top: 0.35rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.55; }
 
 	.questions { background: var(--color-softgreen); }
-	.questions-grid { display: grid; gap: clamp(3rem, 6vw, 6rem); align-items: start; padding-block: var(--space-section); }
+	.questions-grid { display: grid; gap: clamp(3rem, 6vw, 6rem); align-items: start; padding-block: var(--spacing-section); }
 	.questions-intro { position: sticky; top: 7rem; }
 	.question-list { border-top: 1px solid var(--rule); }
 	.question-list li { display: grid; grid-template-columns: 2.8rem minmax(0, 1fr); gap: clamp(1rem, 3vw, 2rem); padding-block: clamp(1.25rem, 2.5vw, 2rem); border-bottom: 1px solid var(--rule); }
@@ -335,7 +342,7 @@ const videoChapters = [
 	.proof-capture img { display: block; width: 100%; height: auto; box-shadow: 0 15px 28px color-mix(in srgb, var(--color-ink) 10%, transparent); }
 
 	.guardrails { background: var(--color-cream); }
-	.guardrails > .container-page { padding-block: var(--space-section); }
+	.guardrails > .container-page { padding-block: var(--spacing-section); }
 	.guardrails-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem 4rem; align-items: end; }
 	.approval-path { display: grid; grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1fr) 2.5rem minmax(0, 1fr); gap: 0.75rem; align-items: center; margin-top: clamp(2.5rem, 5vw, 4.5rem); padding: clamp(1rem, 2.5vw, 1.8rem); border-block: 1px solid var(--rule); background: var(--color-paper); }
 	.approval-path div { min-width: 0; }
@@ -361,7 +368,7 @@ const videoChapters = [
 	.faq-list details > p { max-width: 62ch; padding: 0 3rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.65; }
 
 	.closing { border-top: 1px solid var(--color-hairline); background: var(--color-softgreen); }
-	.closing-grid { display: grid; gap: 2rem 5rem; align-items: end; padding-block: var(--space-section-tight); }
+	.closing-grid { display: grid; gap: 2rem 5rem; align-items: end; padding-block: var(--spacing-section-tight); }
 	.onward { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; padding-bottom: 2.5rem; font-size: var(--text-body-sm); }
 
 	@media (min-width: 900px) {

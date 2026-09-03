@@ -92,6 +92,13 @@
 		font-synthesis-style: none;
 	}
 
+	a,
+	button,
+	summary {
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: color-mix(in srgb, var(--color-green) 22%, transparent);
+	}
+
 	::selection {
 		background: var(--color-softgreen);
 		color: var(--color-ink);

@@ -20,6 +20,14 @@ const costPath = [
 
 const dishes = ['Roast chicken', 'Grain bowl', 'Lunch box', 'Canapé tray', 'Family meal'];
 
+const recipeLifecycle = [
+	{ name: 'Draft', detail: 'Private while the recipe is still being built.' },
+	{ name: 'Ready', detail: 'Required recipe facts are checked before publishing.' },
+	{ name: 'Published', detail: 'The current approved version is explicit.' },
+	{ name: 'Kitchen view', detail: 'The crew reads the working method without edit controls.' },
+	{ name: 'History', detail: 'Earlier published versions stay available to read.' }
+] as const;
+
 // Considered Strategy; not used because the FAQ varies as static content data,
 // not as interchangeable behavior selected at runtime.
 const faqItems = [
@@ -47,6 +55,11 @@ const faqItems = [
 		question: 'Can I reuse sub-recipes and hand recipes to the kitchen?',
 		answer:
 			'Yes. A sauce or other sub-recipe can feed several dishes without copying its costing facts into each one. Recipes can also be exported to CSV or printed as clean kitchen sheets stamped with the print time.'
+	},
+	{
+		question: 'Can I see an earlier published recipe?',
+		answer:
+			'Yes. Recipe history keeps earlier published versions available to read. The current published version remains clear, so opening history does not silently replace what the kitchen uses.'
 	},
 	{
 		question: 'Will a later price change rewrite a confirmed quote?',
@@ -184,6 +197,11 @@ const faqItems = [
 			<small>Build it once. Find it, scale it, and hand it to the kitchen.</small>
 			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
 		</a>
+		<a href="#recipe-lifecycle">
+			<span>Recipe lifecycle</span>
+			<small>Move from a private draft to kitchen view, with earlier versions still readable.</small>
+			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
+		</a>
 		<a href="#recipe-costing">
 			<span>Recipe costing</span>
 			<small>Follow the price from the case to the plate and the quote.</small>
@@ -195,7 +213,6 @@ const faqItems = [
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
 				<h2 id="management-heading">
-					<span>Recipe management software</span>
 					One working recipe, from first draft to prep sheet.
 				</h2>
 				<p>
@@ -270,11 +287,32 @@ const faqItems = [
 		</div>
 	</section>
 
+	<section id="recipe-lifecycle" class="product-section lifecycle" aria-labelledby="lifecycle-heading">
+		<div class="container-page">
+			<div class="section-intro" data-reveal>
+				<h2 id="lifecycle-heading">The kitchen version is a decision, not the last tab left open.</h2>
+				<p>Build in private, check readiness, publish deliberately, and give the crew a read-only kitchen view. Earlier published versions remain available when you need to see what changed.</p>
+			</div>
+			<figure class="lifecycle-path" data-reveal>
+				<ol role="list">
+					{recipeLifecycle.map((step, index) => (
+						<li><span>{String(index + 1).padStart(2, '0')}</span><strong>{step.name}</strong><p>{step.detail}</p></li>
+					))}
+				</ol>
+				<figcaption>Archive and restore sit beside this path for owners; they do not erase the published history.</figcaption>
+			</figure>
+			<div class="filing-strip" data-reveal>
+				<div><h3>File it the way the kitchen looks for it.</h3><p>Collections, tags, stations and shelves give a growing recipe book more than one useful way back in.</p></div>
+				<ul role="list"><li>Collections</li><li>Tags</li><li>Stations</li><li>Shelves</li></ul>
+				<div><h3>Keep the method in working order.</h3><p>Structured method steps can be reordered without turning the full procedure into one loose paragraph.</p></div>
+			</div>
+		</div>
+	</section>
+
 	<section id="recipe-costing" class="product-section costing" aria-labelledby="costing-heading">
 		<div class="container-page">
 			<div class="section-intro costing-intro" data-reveal>
 				<h2 id="costing-heading">
-					<span>Recipe costing software</span>
 					See the cost change before the quote does.
 				</h2>
 				<p>
@@ -783,6 +821,8 @@ const faqItems = [
 		background: var(--color-softgreen);
 	}
 
+	.lifecycle { background: var(--color-paper); }
+
 	.costing {
 		background: var(--color-cream);
 	}
@@ -795,21 +835,6 @@ const faqItems = [
 
 	.section-intro h2 {
 		max-width: 19ch;
-	}
-
-	.section-intro h2 span {
-		display: block;
-		margin-bottom: 0.8rem;
-		font-family: var(--font-body);
-		font-size: var(--text-caption);
-		font-weight: 700;
-		line-height: 1.2;
-		letter-spacing: 0.04em;
-		color: var(--color-green-deep);
-	}
-
-	.costing-intro h2 span {
-		color: var(--color-amber-deep);
 	}
 
 	.section-intro > p {
@@ -1009,12 +1034,26 @@ const faqItems = [
 	}
 
 	.feature-scenes p,
+	.filing-strip p,
 	.costing-evidence p,
 	.quote-evidence p {
 		margin-top: 0.75rem;
 		line-height: 1.65;
 		color: var(--color-ink-soft);
 	}
+
+	.lifecycle-path { margin-top: clamp(3rem, 6vw, 5rem); padding: clamp(1.25rem, 3vw, 2rem); border-block: 1px solid var(--color-ticket-rule); background: var(--color-cream); }
+	.lifecycle-path ol { display: grid; gap: 1rem; }
+	.lifecycle-path li { padding-top: 1rem; border-top: 1px solid var(--record-rule); }
+	.lifecycle-path li > span { color: var(--color-amber-deep); font-size: .72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+	.lifecycle-path strong { display: block; margin-top: .4rem; font-family: var(--font-display); font-size: 1.35rem; }
+	.lifecycle-path li p { margin-top: .45rem; color: var(--color-ink-soft); font-size: .84rem; line-height: 1.5; }
+	.lifecycle-path figcaption { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--record-rule); color: var(--color-ink-soft); font-size: .82rem; }
+	.filing-strip { display: grid; gap: 2rem; margin-top: clamp(3rem, 6vw, 5rem); }
+	.filing-strip > div { padding-top: 1.2rem; border-top: 1px solid var(--color-hairline-strong); }
+	.filing-strip h3 { font-size: var(--text-h3); font-weight: 600; }
+	.filing-strip ul { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid var(--color-ticket-rule); }
+	.filing-strip li { padding: .9rem .75rem .9rem 0; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-green-deep); font-weight: 700; }
 
 	.cost-path {
 		margin-top: clamp(3rem, 6vw, 5rem);
@@ -1398,10 +1437,10 @@ const faqItems = [
 
 	@media (min-width: 640px) {
 		.product-nav {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-columns: repeat(3, minmax(0, 1fr));
 		}
 
-		.product-nav a:first-child {
+		.product-nav a:not(:last-child) {
 			border-right: 1px solid var(--color-ticket-rule);
 		}
 
@@ -1412,6 +1451,8 @@ const faqItems = [
 		.cost-path ol {
 			grid-template-columns: repeat(5, minmax(0, 1fr));
 		}
+
+		.lifecycle-path ol { grid-template-columns: repeat(5,minmax(0,1fr)); }
 
 		.disclosures ul {
 			columns: 2;
@@ -1441,6 +1482,8 @@ const faqItems = [
 		.management-workspace {
 			grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
 		}
+
+		.filing-strip { grid-template-columns: 1fr .8fr 1fr; }
 
 		.management-workspace > figcaption {
 			grid-column: 1 / -1;

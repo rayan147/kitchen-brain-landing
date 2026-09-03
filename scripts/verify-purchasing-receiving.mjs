@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
-const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4326';
+const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const route = `${baseUrl}/features/purchasing-and-receiving`;
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
 await mkdir(reviewDir, { recursive: true });
@@ -94,14 +94,15 @@ try {
 		const metrics = await send('Page.getLayoutMetrics');
 		const { width, height } = metrics.cssContentSize;
 		const shot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true, captureBeyondViewport: true, clip: { x: 0, y: 0, width, height, scale: 1 } });
-		await writeFile(join(reviewDir, `${name}.png`), Buffer.from(shot.data, 'base64'));
+		await writeFile(join(reviewDir, `purchasing-${name}.png`), Buffer.from(shot.data, 'base64'));
 	};
 
 	await Promise.all([send('Page.enable'), send('Runtime.enable'), send('Network.enable')]);
 	await viewport(1440, 900);
 	await navigate();
 	const desktop = await evaluate(`(() => {
-		const actions = [...document.querySelectorAll('.hero-actions a, .story-nav a, .closing-actions a')];
+		const actions = [...document.querySelectorAll('.hero-actions a, .story-nav a, .closing-actions a, .breadcrumb a, .onward a')];
+		const heroActions = [...document.querySelectorAll('.hero-actions a')];
 		return {
 			title: document.querySelector('h1')?.textContent.trim(),
 			overflow: document.documentElement.scrollWidth - innerWidth,
@@ -109,7 +110,11 @@ try {
 			chapters: ['send-the-order', 'receive-the-delivery', 'features-purchasing', 'faq-heading'].every((id) => document.getElementById(id)),
 			menuHref: [...document.querySelectorAll('[data-features-menu] a')].find((link) => link.textContent.trim().startsWith('Purchasing'))?.getAttribute('href'),
 			motionName: getComputedStyle(document.querySelector('.purchasing-enter .handoff-flow > *')).animationName,
-			genericRevealCount: document.querySelectorAll('.purchasing-page [data-reveal]').length
+			genericRevealCount: document.querySelectorAll('.purchasing-page [data-reveal]').length,
+			heroActionBottoms: heroActions.map((action) => Math.round(action.getBoundingClientRect().bottom)),
+			viewportHeight: innerHeight,
+			capabilitiesOpen: document.querySelector('#features-purchasing').open,
+			receivedPrice: document.querySelector('.receiving-line .price')?.textContent.replace(/\s+/g, ' ').trim()
 		};
 	})()`);
 	assert(desktop.title === 'The order you sent should meet the delivery at the back door.', 'desktop: page identity is missing');
@@ -119,6 +124,9 @@ try {
 	assert(desktop.menuHref === '/features/purchasing-and-receiving', 'desktop: dropdown destination is wrong');
 	assert(desktop.motionName === 'purchasing-handoff-step', `desktop: purchasing motion owner is ${desktop.motionName}`);
 	assert(desktop.genericRevealCount === 0, `desktop: ${desktop.genericRevealCount} generic reveal hook(s) remain`);
+	assert(desktop.heroActionBottoms.every((bottom) => bottom <= desktop.viewportHeight), `desktop: hero actions end at ${desktop.heroActionBottoms.join('px and ')}px in a ${desktop.viewportHeight}px viewport`);
+	assert(desktop.capabilitiesOpen === false, 'desktop: full capability inventory is open by default');
+	assert(desktop.receivedPrice?.includes('$45.00') && desktop.receivedPrice?.includes('$47.00'), `desktop: received price provenance is ${desktop.receivedPrice}`);
 	await capture('desktop');
 
 	await viewport(390, 844, true);
@@ -138,8 +146,16 @@ try {
 
 	await viewport(320, 844, true);
 	await navigate();
-	const zoomOverflow = await evaluate(`(() => { document.documentElement.style.fontSize = '200%'; return new Promise((resolve) => requestAnimationFrame(() => resolve(document.documentElement.scrollWidth - innerWidth))); })()`);
-	assert(zoomOverflow === 0, `200% text at 320px: horizontal overflow is ${zoomOverflow}px`);
+	const zoomLayout = await evaluate(`(() => { document.documentElement.style.fontSize = '200%'; return new Promise((resolve) => requestAnimationFrame(() => {
+		const viewportWidth = document.documentElement.clientWidth;
+		const escaped = [...document.querySelectorAll('.purchasing-page *')].filter((element) => {
+			const rect = element.getBoundingClientRect();
+			return rect.left < -1 || rect.right > viewportWidth + 1;
+		}).length;
+		resolve({ overflow: document.documentElement.scrollWidth - innerWidth, escaped });
+	})); })()`);
+	assert(zoomLayout.overflow === 0, `200% text at 320px: horizontal overflow is ${zoomLayout.overflow}px`);
+	assert(zoomLayout.escaped === 0, `200% text at 320px: ${zoomLayout.escaped} element(s) escape the viewport`);
 
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 	await viewport(390, 844, true);

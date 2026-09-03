@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
-const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4327';
+const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const url = `${baseUrl}/features/sage`;
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
 await mkdir(reviewDir, { recursive: true });
@@ -116,7 +116,7 @@ try {
 		if (!state.title.includes('Sage kitchen assistant')) throw new Error(`${width}: wrong title`);
 		if (state.h1 !== 'Ask your kitchen. Check the answer.') throw new Error(`${width}: wrong H1`);
 		if (state.status !== 'Available now') throw new Error(`${width}: availability drifted`);
-		if (state.faqCount !== 6 || state.abilityCount !== 6) throw new Error(`${width}: list count drifted`);
+		if (state.faqCount !== 6 || state.abilityCount !== 12) throw new Error(`${width}: list count drifted`);
 		if (state.videoSources.join(',') !== 'video/webm,video/mp4') throw new Error(`${width}: video fallbacks drifted`);
 		if (state.videoTrack !== '/proof/sage-walkthrough.vtt') throw new Error(`${width}: caption track drifted`);
 		if (state.scrollWidth !== state.innerWidth) throw new Error(`${width}: horizontal overflow ${state.scrollWidth}/${state.innerWidth}`);

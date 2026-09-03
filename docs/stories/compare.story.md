@@ -49,7 +49,7 @@
 | 7 B Story — the person/relationship it's really about | The owner needs a number they can give a customer and a plan the crew can use. |
 | 8 Fun and Games — the promise of the premise | Compare five kitchen jobs row by row, on one monthly billing basis. |
 | 9 Midpoint — first real win, with a number | CostCook is one $49/month plan; Parsley's cited tiers run $129–$379 and meez's $24–$199. |
-| 10 Bad Guys Close In — the edge cases, the doubts | Six requirements still make CostCook the wrong fit, and competitor pages can change. |
+| 10 Bad Guys Close In — the edge cases, the doubts | Requirements still make CostCook the wrong fit, role boundaries are not a permission grid, and competitor pages can change. |
 | 11 All Is Lost / Dark Night — the risk if nothing changes | Choosing from checkmarks alone leaves the hard gap to appear during a real event. |
 | 12 Finale + Final Image — life after; the CTA in their words | Bring the next real menu and leave with an answer. |
 
@@ -106,5 +106,7 @@
 ### Step 11 — Revise and Finish
 
 - **Word count before → after:** Hero paragraphs, 79 → 52 words; the fit decision moved into its own scannable frame and the exhaustive evidence stayed intact.
-- **Claims removed because they couldn't be shown:** “the whole board”; “the rows neither of them has.”
+- **Claims removed because they couldn't be shown:** “the whole board”; “the rows neither of them has”; full tiered access. The team section separates shipped role-aware boundaries from the missing fine-grained permission grid.
 - **Final Image:** Bring the next menu you need to cost and leave with an answer.
+- **2026-08-30 status revision:** Owner confirmation moved buying-to-par, dietary characteristics and Spanish from No to Coming. Kitchen label printing was already Coming. All four remain outside today’s app and carry no promised date; the detailed rows now read from `src/lib/coming-plans.ts` or the label release status.
+- **2026-08-30 competitor evidence refresh:** All eleven steps remain complete. The dated board now reflects the current official pricing pages: Parsley lists label printing as a $59/month add-on; meez lists view/editor/manager access, location-level access with additional recipe-viewer locations at $60/month/location, and Restaurant365 sync at $199/month plus a setup fee. These cells report only what those pages list on the verification date. The headline, snap line, and final image remain unchanged.

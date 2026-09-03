@@ -44,9 +44,17 @@ const surfaceFiles = [
 	// Dedicated Inventory story. Trust-state and gap-planning claims are high
 	// risk because stale counts must never read as safe to subtract.
 	'src/components/sections/InventoryFeature.astro',
+	'src/components/sections/RecipesCostingFeature.astro',
+	// Menus and the guided tour contain public financial labels and illustrative
+	// arithmetic. They were previously outside this scan, which let a gross-
+	// margin claim and a stale-count subtraction pass while the guard stayed green.
+	'src/components/sections/MenusQuotesFeature.astro',
+	'src/components/sections/ProductTour.astro',
+	'src/lib/tour.ts',
 	// Sage specialist page. Availability, onboarding and assistant boundaries
 	// are release claims and must stay inside RC-46/RC-49.
 	'src/components/sections/SageFeature.astro',
+	'src/components/sections/TeamAccessFeature.astro',
 	// Dedicated Purchasing & Receiving story. Its send, posting, and price-write
 	// boundaries are financial claims, so the full public explanation is scanned.
 	'src/components/sections/PurchasingReceivingFeature.astro',
@@ -68,6 +76,9 @@ const surfaceFiles = [
 	// public copy on the site, so it is scanned like every other surface and
 	// its cell contract is pinned below.
 	'src/lib/comparison.ts',
+	// Owner-confirmed 2026-08-30. These three Coming corrections feed the
+	// homepage, comparison, FAQ, inventory and nutrition surfaces.
+	'src/lib/coming-plans.ts',
 	// The mega-menu descriptions are capability copy, so they pass through the
 	// same forbidden-claim scan as the feature pages they link into.
 	'src/components/SiteNav.astro',
@@ -85,6 +96,11 @@ const surfaceFiles = [
 	'src/lib/faq.ts',
 	'src/pages/faq.astro',
 	'src/components/sections/FaqPage.astro',
+	// 2026-08-29. The audience route explains fit across catering, meal prep,
+	// special dinners, and restaurant event work; all capability and limit copy
+	// stays inside RC-01/03/21/22/24/25/26/30/44.
+	'src/pages/who-its-for.astro',
+	'src/components/sections/WhoItsForPage.astro',
 	// 2026-08-29. Sage: the data file carries every capability sentence, the
 	// section renders it. Both are scanned, and the model-name guard below is
 	// aimed squarely at them.
@@ -92,9 +108,14 @@ const surfaceFiles = [
 	'src/lib/labels.ts',
 	'src/components/sections/LabelsPrintingFeature.astro',
 	'src/components/sections/Sage.astro',
+	'src/components/sections/TeamAccess.astro',
 	// 2026-08-29. Nutrition: the data file and the section, both claim copy.
 	'src/lib/nutrition.ts',
 	'src/components/sections/NutritionFacts.astro',
+	// 2026-08-31. The demo route qualifies one working session, describes the
+	// static email handoff honestly, and owns the direct calendar boundary.
+	'src/pages/demo.astro',
+	'src/components/sections/DemoRequest.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -111,12 +132,18 @@ const comparePage = await read('src/pages/compare.astro');
 // The header is not public claim copy, but it owns the sign-in destination, so
 // it is read for the pins below rather than added to the forbidden-claims scan.
 const navSource = await read('src/components/SiteNav.astro');
+const featureMenuContentsSource = await read('src/components/FeatureMenuContents.astro');
 const publicCopy = [...surfaces, comparePage].join('\n');
 const siteSource = surfaces[0];
 const heroSource = surfaces[1];
 const startHereSource = surfaces[surfaceFiles.indexOf('src/components/sections/StartHere.astro')];
 const whoSource = surfaces[surfaceFiles.indexOf('src/components/sections/WhoThisIsFor.astro')];
+const trustSource = surfaces[surfaceFiles.indexOf('src/components/sections/BuiltForKitchens.astro')];
 const alternativesSource = surfaces[surfaceFiles.indexOf('src/components/sections/TheOtherTools.astro')];
+
+// Considered Facade; not used because these surfaces are static claim data,
+// not a complex subsystem callers need to operate. One explicit evidence list
+// and focused invariants make omissions visible without hiding file ownership.
 
 const failures = [];
 const requireText = (source, value, label) => {
@@ -132,6 +159,7 @@ for (const component of [
 	'NutritionFacts',
 	'PaperIn',
 	'Sage',
+	'TeamAccess',
 	'BuiltForKitchens',
 	'StartHere',
 ]) {
@@ -147,6 +175,15 @@ requireText(
 	'restaurant event-work fit',
 );
 requireText(alternativesSource, 'A restaurant can run both.', 'restaurant dual-workflow fit');
+// The fold must name the same audience the Who section does. Until 2026-08-30
+// it named caterers and meal-prep kitchens only, contradicting RC-44 on the
+// same page. Scope stays event work, so the words are "restaurants that cater".
+requireText(heroSource, 'restaurants that cater', 'hero audience includes restaurants (RC-01, RC-44)');
+requireText(
+	trustSource,
+	'catering, meal-prep, and restaurant kitchens that plan work from menus and guest counts',
+	'trust section audience includes restaurants (RC-01, RC-44)',
+);
 if (/one restaurant on a fixed daily menu|shape is wrong for you|tool built for it will fit you better/i.test(publicCopy)) {
 	failures.push('restaurant positioning: a restaurant owner is still framed as the wrong fit');
 }
@@ -161,9 +198,16 @@ requireText(featureAreaPage, 'getStaticPaths', 'feature area routes are generate
 requireText(featureAreaPage, '<Integrations />', 'connections render on an area page');
 requireText(siteSource, "href: '/features'", 'features page nav link');
 requireText(navSource, 'data-features-menu', 'features menu disclosure');
-requireText(navSource, 'featureMenuSections', 'features menu data source');
+requireText(featureMenuContentsSource, 'featureMenuSections', 'features menu data source');
 requireText(navSource, 'docs/stories/features-navigation.story.md', 'features menu story pointer');
+requireText(navSource, 'data-resources-menu', 'secondary navigation disclosure');
+requireText(navSource, 'resourcesMenu', 'shared Resources navigation source');
+requireText(siteSource, "href: '/blog'", 'blog reachable from shared navigation');
+requireText(navSource, 'data-mobile-menu', 'contained mobile navigation');
+requireText(navSource, 'demoCta.href', 'header demo action');
+requireText(navSource, 'Book a demo', 'header demo label');
 requireText(siteSource, "href: '/contact'", 'contact page nav link');
+requireText(siteSource, "href: '/who-its-for'", 'who-it-is-for navigation link');
 // The homepage link used to promise "every shipped feature" and point at a
 // page that listed them. /features is now a hub of five areas, so the promise
 // moved with the page rather than the pin being quietly relocated.
@@ -198,7 +242,8 @@ const expectedSectionOrder = [
 	// Eighth since 2026-08-29: a mechanic, with the mechanics, ahead of the
 	// rival beat whose /compare link lists it as a Coming row.
 	'<Sage />',
-	// Ninth since 2026-08-27: the rival beat lands after the reader wants the
+	'<TeamAccess />',
+	// The rival beat lands after the reader wants the
 	// thing, and before the maker signs it. See src/pages/index.astro.
 	'<TheOtherTools />',
 	'<BuiltForKitchens />',
@@ -223,6 +268,7 @@ for (const component of expectedSectionOrder) {
 // and must be rendered on the page, and the CostCook column must still contain
 // real "no" rows. A table that ticks all the way down is the failure mode.
 const comparisonSource = surfaces[surfaceFiles.indexOf('src/lib/comparison.ts')];
+const comingPlansSource = surfaces[surfaceFiles.indexOf('src/lib/coming-plans.ts')];
 const featuresSource = surfaces[surfaceFiles.indexOf('src/lib/features.ts')];
 const featureIndexSource =
 	surfaces[surfaceFiles.indexOf('src/components/sections/FeatureIndex.astro')];
@@ -232,6 +278,7 @@ const integrationsSource =
 	surfaces[surfaceFiles.indexOf('src/components/sections/Integrations.astro')];
 requireText(comparePage, 'It does not mean their product cannot do it.', 'comparison legend');
 requireText(comparisonSource, 'export const VERIFIED_ON', 'comparison verification date');
+requireText(comparisonSource, "VERIFIED_ON = 'August 30, 2026'", 'current comparison verification date');
 requireText(comparePage, 'VERIFIED_ON', 'comparison verification date on the page');
 requireText(comparePage, 'costcookNo', 'comparison must count its own no rows');
 requireText(
@@ -240,14 +287,36 @@ requireText(
 	'comparison surfaces every CostCook no row before the detailed table',
 );
 const costcookNoRows = (comparisonSource.match(/costcook: 'no'/g) ?? []).length;
-if (costcookNoRows < 4) {
+if (costcookNoRows < 3) {
 	failures.push(
 		`comparison honesty: only ${costcookNoRows} row(s) say CostCook does not do something. ` +
 			'A comparison that wins every row does not survive a demo call. If capability really ' +
 			'changed, move the row and say so in RC-40 rather than lowering this floor.',
 	);
 }
-// A prior version contradicted its own six No rows in the close and turned a
+for (const key of ['parBuying', 'dietary', 'spanish']) {
+	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
+}
+for (const phrase of [
+	"title: 'Buying that tops you back up to par'",
+	"title: 'Dietary characteristics'",
+	"title: 'Spanish'"
+]) {
+	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
+}
+if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 3) {
+	failures.push('owner-confirmed Coming plans: all three corrected capabilities must remain Coming');
+}
+for (const key of ['parBuying', 'dietary', 'spanish']) {
+	requireText(
+		comparisonSource,
+		`costcook: comingPlans.${key}.verdict`,
+		`comparison consumes the shared ${key} status`,
+	);
+}
+requireText(alternativesSource, 'data-coming-plans', 'homepage Coming plan group');
+requireText(alternativesSource, 'Coming soon', 'homepage Coming status');
+// A prior version contradicted its own No rows in the close and turned a
 // pricing-page omission into a claim about competitors' products. Keep both
 // failure phrases out instead of trusting future copy edits to remember RC-40.
 if (/the rows neither of them has|the whole board|the two rows we do not have/i.test(comparePage)) {
@@ -284,9 +353,16 @@ for (const [name, source] of [['src/lib/labels.ts', labelsSource], ['src/compone
 	if (/direct(ly)? to (the |a |your )?(label )?printer|sends? (it |them |labels )?to (the |a |your )?printer/i.test(source)) failures.push(`${name}: may not say a label reaches a printer on its own`);
 }
 const printerRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Kitchen label printing'"));
-if (!printerRow.slice(0, 200).includes("costcook: 'coming'")) {
+if (!printerRow.slice(0, 220).includes('costcook: labelsAvailability.verdict')) {
 	failures.push('comparison honesty: the label printer is not connected (RC-35); that row may not claim yes');
 }
+requireText(printerRow.slice(0, 260), "parsley: '$59/month add-on'", 'current Parsley label-printing add-on');
+const roleRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Role-aware sensitive actions'"));
+requireText(roleRow.slice(0, 420), "meez: 'Starter, $24'", 'current meez access listing');
+const locationsRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Several locations'"));
+requireText(locationsRow.slice(0, 360), 'added recipe-viewer locations $60/month each', 'current meez location add-on');
+const accountingRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Accounting'"));
+requireText(accountingRow.slice(0, 320), 'Restaurant365 sync, $199/month plus setup fee', 'current meez accounting integration');
 // Every surface that says the sheet prints must say what the sheet says of itself.
 const nutritionSource = surfaces[surfaceFiles.indexOf('src/lib/nutrition.ts')];
 requireText(nutritionSource, 'not a retail-label compliance claim', 'nutrition copy carries the boundary');
@@ -450,23 +526,28 @@ requireText(navSource, '<details', 'features menu is a native disclosure');
 // The header reads the curated menu list (featureMenuSections), which features.ts
 // derives from the same SECTIONS the hub renders. Renamed 2026-08-29 with the
 // mega-menu merge; the pin follows the identifier the header really uses.
-requireText(navSource, 'featureMenuSections.map', 'features menu lists the areas from one source');
+requireText(featureMenuContentsSource, 'featureMenuSections.map', 'features menu lists the areas from one source');
 if (/hover:(?:block|flex|opacity)/.test(navSource) || /group-hover/.test(navSource)) {
 	failures.push('features menu opens on hover. It must open on click, at every width.');
 }
 
-requireText(ledger, '6a29e88e36445b74ba5d057fe0461196e39b5c35', 'release ledger');
+requireText(ledger, 'f44c9393973244b8b7f62edaf98c1bd0362162ce', 'release ledger truth-pass baseline');
 requireText(ledger, 'dfb71efc524da94efc6cec2f354751ce69d424e2', 'release ledger');
 requireText(ledger, '7ceb02dbb67034e507aeb279abb421ddd90df87f', 'release ledger');
-requireText(siteSource, 'href: booking.url', 'booking CTA');
-requireText(siteSource, "target: '_blank'", 'booking CTA');
-requireText(siteSource, "rel: 'noopener noreferrer'", 'booking CTA');
+requireText(siteSource, "href: '/demo'", 'demo preparation CTA');
+requireText(siteSource, "target: '_self'", 'demo preparation CTA');
+const demoRequestSource = surfaces[surfaceFiles.indexOf('src/components/sections/DemoRequest.astro')];
+requireText(demoRequestSource, 'href={booking.url}', 'owner-supplied demo calendar handoff');
+requireText(demoRequestSource, 'target="_blank"', 'demo calendar new-tab boundary');
+requireText(demoRequestSource, 'rel="noopener noreferrer"', 'demo calendar safe external link');
+requireText(demoRequestSource, 'CostCook has not claimed your request was sent', 'demo request truth state');
+requireText(demoRequestSource, 'docs/stories/request-demo.story.md', 'demo story pointer');
 requireText(publicCopy, 'Watch the 2:30 product tour', 'hero proof link');
 requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 50; claim += 1) {
+for (let claim = 1; claim <= 54; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -485,6 +566,7 @@ const expectedStopIds = [
 	'nutrition',
 	'intake',
 	'sage',
+	'access',
 	'alternatives',
 	'trust',
 	'start',
@@ -524,16 +606,42 @@ if (!/answer: \[\s*'Yes, for the part of your business/.test(restaurantAnswer.sl
 	failures.push('faq: the restaurant answer must open with the event-work fit, not a blanket misfit');
 }
 // A "no" row on /compare may not become a "yes" in an answer. The three RC-44
-// product limits and the RC-47 give-ups are the ones a friendly answer is most
-// tempted to soften, so their answers are pinned to open with the word.
-for (const id of ['locations', 'permissions', 'fsma', 'spanish']) {
+// product limits are the ones a friendly answer is most tempted to soften, so
+// their answers are pinned to open with the word. Spanish moved to Coming in
+// the owner-confirmed 2026-08-30 RC-47 revision.
+for (const id of ['locations', 'permissions', 'fsma']) {
 	const entry = faqSource.slice(faqSource.indexOf(`id: '${id}'`));
 	if (!/answer: \[\s*'(?:No\.|Not yet\.)/.test(entry.slice(0, 400))) {
 		failures.push(`faq: #${id} must open with "No." (it is a no row on /compare)`);
 	}
 }
+const spanishAnswer = faqSource.slice(faqSource.indexOf("id: 'spanish'"));
+if (!spanishAnswer.slice(0, 400).includes('comingPlans.spanish.faq')) {
+	failures.push('faq: #spanish must read the shared Coming plan');
+}
 requireText(siteSource, "href: '/faq'", 'faq reachable from nav and footer');
 requireText(startHereSource, 'href="/faq"', 'close links to the faq');
+requireText(faqSource, "claims: ['RC-54']", 'offline FAQ cites its resilience boundary');
+requireText(faqSource, 'Previously loaded order pages remain readable with no signal', 'bounded offline FAQ answer');
+requireText(faqSource, 'actions that write data need a connection', 'offline write boundary');
+
+// The tour is illustrative, but its language must still obey the same product
+// invariants as a feature page: food cost is not business margin, stale stock
+// cannot reduce buying, and the total month difference is not all unexplained.
+const tourSource = surfaces[surfaceFiles.indexOf('src/lib/tour.ts')];
+const productTourSource = surfaces[surfaceFiles.indexOf('src/components/sections/ProductTour.astro')];
+requireText(tourSource, "label: 'Revenue after food cost'", 'tour food-cost remainder label');
+requireText(tourSource, "value: '4.1 kg · count first'", 'tour stale-count buying boundary');
+requireText(tourSource, "label: 'Difference to explain'", 'tour month difference label');
+requireText(tourSource, 'Garden wedding supper', 'tour illustrative event identity');
+requireText(productTourSource, '<strong>Garden wedding supper</strong>', 'tour visible event identity');
+
+const purchasingSource = surfaces[surfaceFiles.indexOf('src/components/sections/PurchasingReceivingFeature.astro')];
+requireText(purchasingSource, 'recorded as queued before CostCook attempts the email', 'purchase-order queued lifecycle');
+requireText(purchasingSource, 'same record keeps the failure and remains safe to retry', 'purchase-order retry lifecycle');
+
+requireText(featureIndexSource, 'feature groups below contain work marked Coming', 'features Coming group count');
+requireText(pricingSource, 'feature groups contain work marked Coming', 'pricing Coming group count');
 
 if (/href:\s*['"]#book['"]/.test(siteSource)) {
 	failures.push('booking CTA still points to the inline booking section');
@@ -576,6 +684,10 @@ if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start to
 
 const forbiddenClaims = [
 	[/\bknow the margin\b/i, 'full-margin language'],
+	[/\bgross margin\b|\binspect the margin\b/i, 'unsupported margin label'],
+	[/\bwritten only after a successful send\b/i, 'incorrect purchase-order send lifecycle'],
+	[/\bthere is no invoice for the\b/i, 'unsupported no-invoice trial promise'],
+	[/\bworks with no signal and with JavaScript off\b/i, 'collapsed offline and no-JavaScript promise'],
 	[/\bno data entry\b/i, 'no-data-entry promise'],
 	[/\bnothing is re-keyed\b/i, 'no-rekeying promise'],
 	[/\bfree while/i, 'unapproved pricing promise'],

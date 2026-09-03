@@ -9,7 +9,7 @@ related_targets: ["src/components/sections/RecipesCostingFeature.astro", "docs/p
 
 ## Thesis
 
-One working recipe should serve the person cooking from it and the person pricing it. Present Recipe Management Software and Recipe Costing as two distinct product chapters connected by the same recipe record, not as a catalogue of interchangeable feature cards.
+One working recipe should serve the person building it, the crew cooking from the published version and the person pricing it. Present recipe management, recipe lifecycle and recipe costing as three distinct product chapters connected by the same recipe record, not as a catalogue of interchangeable feature cards.
 
 ## Audience and job
 
@@ -25,7 +25,7 @@ Show the line-versus-quote tension immediately, alongside two connected paper re
 
 ## Information architecture
 
-Use one overview route with anchored Recipe Management and Recipe Costing chapters. Keep the core story visible in the page flow; place the exhaustive capability inventory in semantic disclosures, then resolve the remaining practical objections in a concise FAQ before the final CTA. Do not add tabs, carousels, or child routes unless the product structure later requires them.
+Use one overview route with anchored Recipe Management, Recipe Lifecycle and Recipe Costing chapters. Keep the core story visible in the page flow: build and hand off the recipe; move deliberately from private draft through readiness, publish, read-only kitchen view and readable history; then inspect the costing arithmetic. Keep filing by collections, tags, stations and shelves, reorderable method steps, and owner archive/restore alongside the lifecycle path. Place the exhaustive capability inventory in semantic disclosures, then resolve the remaining practical objections in a concise FAQ before the final CTA. Do not add tabs, carousels, or child routes unless the product structure later requires them.
 
 ## Mobile behavior
 
@@ -33,8 +33,8 @@ Preserve the story order, stack the connected records, keep calls to action full
 
 ## Claim discipline
 
-Use only claim-ledger-backed behavior. Do not invent integrations, AI import, real-time synchronization, version control, customer outcomes, ROI, or time-saving metrics.
+Use only claim-ledger-backed behavior. Describe the shipped lifecycle precisely: private draft, readiness checks, explicit publish, read-only kitchen view, readable earlier published versions, kitchen filing, structured methods, and owner-controlled archive/restore. Do not turn readable history into generic version control or invent integrations, AI import, real-time synchronization, customer outcomes, ROI, or time-saving metrics.
 
 ## Finish contract
 
-The page is finished when its last section states that the recipe is ready for the line and the price is ready for the quote, and when desktop and mobile browser captures show both chapters, real evidence, capability and FAQ disclosures, and the final action without horizontal overflow.
+The page is finished when its last section states that the recipe is ready for the line and the price is ready for the quote, and when desktop and mobile browser captures show all three chapters, the draft-to-kitchen lifecycle, real evidence, capability and FAQ disclosures, and the final action without horizontal overflow.

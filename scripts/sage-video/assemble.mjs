@@ -35,7 +35,7 @@ const cardResult = spawnSync(
 		'-size', '1920x1080', `xc:#${green.slice(2)}`,
 		'-font', bold, '-fill', 'white', '-pointsize', '94', '-annotate', '+150+360', 'Ask your kitchen.',
 		'-annotate', '+150+485', 'Check the answer.',
-		'-font', font, '-pointsize', '38', '-annotate', '+155+650', 'Five checks read. One prepares a draft. You approve.',
+		'-font', font, '-pointsize', '38', '-annotate', '+155+650', 'Eleven checks read. One proposal waits for you.',
 		'-pointsize', '32', '-annotate', '+155+790', 'Available now in CostCook',
 		finalCard.pathname
 	],
@@ -47,9 +47,9 @@ const filter = [
 	`[0:v]scale=1550:872:force_original_aspect_ratio=decrease,pad=1550:872:(ow-iw)/2:(oh-ih)/2:white,` +
 		`drawbox=x=0:y=0:w=1550:h=8:color=${green}:t=fill,` +
 		`pad=1920:1080:(ow-iw)/2:52:color=${cream}[s0]`,
-	`[1:v]scale=1520:-2,crop=1510:872:(iw-ow)/2:170,` +
+	`[1:v]scale=1510:872:force_original_aspect_ratio=increase,crop=1510:872:(iw-ow)/2:(ih-oh)/2,` +
 		`pad=1920:1080:(ow-iw)/2:52:color=${cream}[s1]`,
-	`[2:v]scale=1520:-2,crop=1510:872:(iw-ow)/2:0,` +
+	`[2:v]scale=1510:872:force_original_aspect_ratio=increase,crop=1510:872:(iw-ow)/2:(ih-oh)/2,` +
 		`pad=1920:1080:(ow-iw)/2:52:color=${cream}[s2]`,
 	`[3:v]scale=1920:1080[final]`,
 	`[s0][s1][s2][final]concat=n=4:v=1:a=0,format=yuv420p[out]`

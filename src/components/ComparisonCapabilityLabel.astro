@@ -1,0 +1,15 @@
+---
+import SageIcon from './SageIcon.astro';
+
+interface Props {
+	label: string;
+	icon?: 'sage';
+}
+
+const { label, icon } = Astro.props;
+---
+
+<span class="font-semibold">
+	{icon === 'sage' && <SageIcon size={20} context="comparison" class="mr-2 inline-block align-text-bottom text-green-deep" />}
+	{label}
+</span>

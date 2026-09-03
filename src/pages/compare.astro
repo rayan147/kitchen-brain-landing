@@ -4,6 +4,8 @@ import { comparison, competitors, costcookNo, NOT_LISTED, VERIFIED_ON } from '..
 import { spell } from '../lib/words';
 import CellMark from '../components/CellMark.astro';
 import { cta, demoCta, launchPlan } from '../lib/site';
+import { comingDefinition } from '../lib/availability';
+import ComparisonCapabilityLabel from '../components/ComparisonCapabilityLabel.astro';
 
 const costcookLimits = comparison.flatMap((group) =>
 	group.rows.filter((row) => row.costcook === 'no').map((row) => row.label)
@@ -14,7 +16,7 @@ const costcookLimits = comparison.flatMap((group) =>
 // the rule that keeps this page honest is that a competitor cell reports what
 // THEIR pricing page said on a date, never what their product can or cannot do.
 //
-// THE PAGE IS NOT ALLOWED TO WIN EVERY ROW. Six rows say no, and they stay in
+// THE PAGE IS NOT ALLOWED TO WIN EVERY ROW. The remaining No rows stay in
 // the task area where a reader expects to find them rather than being buried at
 // the bottom. A table that ticks all the way down is read as marketing by
 // exactly the reader this page is for, and every claim here has to survive a
@@ -28,7 +30,7 @@ const costcookLimits = comparison.flatMap((group) =>
 // rather than as the hedge it is. Four rows, three marks. See CellMark.astro.
 const legend = [
 	['yes', 'It ships in the CostCook you would start today.'],
-	['coming', 'Being built. Not in the app you would start today, so it is not a yes.'],
+	['coming', comingDefinition],
 	['no', 'CostCook does not do this.'],
 	[null, 'Not named on their own pricing page on the date below. It does not mean their product cannot do it.']
 ] as const;
@@ -152,7 +154,7 @@ const legend = [
 				<ul role="list" class="mt-5 space-y-5 sm:hidden">
 					{group.rows.map((row) => (
 						<li class="border-t border-hairline pt-4">
-							<p class="font-semibold">{row.label}</p>
+							<p><ComparisonCapabilityLabel label={row.label} icon={row.icon} /></p>
 							{row.note && <p class="mt-1 text-sm text-ink-soft">{row.note}</p>}
 							{/* flex-wrap, not flex. MEASURED at 390px with the root font forced
 							    to 32px (200% text): the fixed w-24 label column plus a value
@@ -209,7 +211,7 @@ const legend = [
 							{group.rows.map((row) => (
 								<tr class="border-b border-hairline align-top">
 									<th scope="row" class="max-w-[34ch] py-4 pr-4 font-normal">
-										<span class="font-semibold">{row.label}</span>
+										<ComparisonCapabilityLabel label={row.label} icon={row.icon} />
 										{row.note && <span class="mt-1 block text-sm font-normal text-ink-soft">{row.note}</span>}
 									</th>
 									{/* Tinted the whole way down: one anchor the eye can run
