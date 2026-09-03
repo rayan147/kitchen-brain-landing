@@ -98,13 +98,13 @@ const productTourHref = '/tour/main';
  * whole flat list, while narrow screens expose the same destinations through
  * one contained Menu disclosure so no route disappears with the breakpoint.
  */
-export const nav: readonly { label: string; href: string; header: 'direct' | 'resources' }[] = [
+export const nav: readonly { label: string; href: string; header: 'direct' | 'blog' | 'resources' }[] = [
 	// Root-relative so the same links resolve from /features too.
 	{ label: 'Pricing', href: '/pricing', header: 'direct' },
 	// Considered Composite; not used because this remains a flat destination
 	// list with placement metadata. The nested feature inventory has its own
 	// shared renderer; recursive navigation nodes would add no useful node type.
-	{ label: 'Blog', href: '/blog', header: 'resources' },
+	{ label: 'Blog', href: '/blog', header: 'blog' },
 	{ label: 'Product tour', href: productTourHref, header: 'resources' },
 	// The fit question is a bookmarkable read, not an ARIA tabs widget. It is
 	// deliberately not earlyVisible: pricing still owns the one phone slot,
@@ -127,6 +127,13 @@ export const resourcesMenu = {
 	label: 'Resources',
 	ariaLabel: 'CostCook resources',
 	items: nav.filter((item) => item.header === 'resources')
+} as const;
+
+export const blogMenu = {
+	label: 'Blog',
+	href: '/blog',
+	overviewLabel: 'Read every guide',
+	ariaLabel: 'Blog guides, broken down by kitchen question'
 } as const;
 
 export const mobileMenu = {

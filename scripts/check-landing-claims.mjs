@@ -82,6 +82,7 @@ const surfaceFiles = [
 	// The mega-menu descriptions are capability copy, so they pass through the
 	// same forbidden-claim scan as the feature pages they link into.
 	'src/components/SiteNav.astro',
+	'src/components/BlogMenuContents.astro',
 	'src/components/sections/StartHere.astro',
 	// Added 2026-08-23. It carries the price and the in-development boundary
 	// (RC-34, RC-35, RC-45, RC-46), which is claim copy by any reading, and it
@@ -133,6 +134,7 @@ const comparePage = await read('src/pages/compare.astro');
 // it is read for the pins below rather than added to the forbidden-claims scan.
 const navSource = await read('src/components/SiteNav.astro');
 const featureMenuContentsSource = await read('src/components/FeatureMenuContents.astro');
+const blogMenuContentsSource = await read('src/components/BlogMenuContents.astro');
 const publicCopy = [...surfaces, comparePage].join('\n');
 const siteSource = surfaces[0];
 const heroSource = surfaces[1];
@@ -203,6 +205,10 @@ requireText(navSource, 'docs/stories/features-navigation.story.md', 'features me
 requireText(navSource, 'data-resources-menu', 'secondary navigation disclosure');
 requireText(navSource, 'resourcesMenu', 'shared Resources navigation source');
 requireText(siteSource, "href: '/blog'", 'blog reachable from shared navigation');
+requireText(navSource, 'data-blog-menu', 'blog navigation disclosure');
+requireText(navSource, '<BlogMenuContents {path} />', 'blog menu renderer');
+requireText(blogMenuContentsSource, "getCollection('blog')", 'blog menu article source');
+requireText(blogMenuContentsSource, 'post.data.description', 'blog menu article descriptions');
 requireText(navSource, 'data-mobile-menu', 'contained mobile navigation');
 requireText(navSource, 'demoCta.href', 'header demo action');
 requireText(navSource, 'Book a demo', 'header demo label');

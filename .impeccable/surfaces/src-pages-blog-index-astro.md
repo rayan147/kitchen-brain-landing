@@ -50,7 +50,7 @@ There are no loading or destructive states in this static route family. A missin
 
 ## Verification and finish contract
 
-Static checks cover content schema, unique routes, index/article metadata, article structure, structured data, Resources navigation, direction contracts, and no-JavaScript output. Browser checks cover the index and a representative article at desktop and mobile widths, keyboard focus, direct anchors, responsive stacking, internal working-block overflow, page overflow, reduced motion, and console/network health.
+Static checks cover content schema, unique routes, index/article metadata, article structure, structured data, Blog navigation, direction contracts, and no-JavaScript output. Browser checks cover the six-guide Blog disclosure, the index and a representative article at desktop and mobile widths, keyboard focus, direct anchors, responsive stacking, internal working-block overflow, page overflow, reduced motion, and console/network health.
 
 The independent finish reviewer disposition is **ship**, with no material fixes remaining. The route family is finished when its durable read-surface rules are recorded in `DESIGN.md` and `.impeccable/design.json` without changing the approved feature code or article content.
 

@@ -13,6 +13,8 @@ const blog = defineCollection({
 		publishedDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		category: z.enum(['Costing & pricing', 'Recipes & yield', 'Running the event', 'Buying & suppliers']),
+		menuGroup: z.enum(['Cost the work', 'Plan and buy']),
+		menuIcon: z.enum(['calculator', 'percent', 'yield', 'guests', 'packs', 'prices']),
 		featured: z.boolean().default(false),
 		order: z.number().int().positive(),
 		readMinutes: z.number().int().positive(),
@@ -22,4 +24,3 @@ const blog = defineCollection({
 });
 
 export const collections = { blog };
-

@@ -154,19 +154,48 @@ try {
 	assert(desktop.sectionTops[0] === desktop.sectionTops[1], 'desktop: menu groups are not aligned');
 	assert(desktop.sectionLefts[0] < desktop.sectionLefts[1], 'desktop: menu groups did not form two columns');
 	await capture('desktop-open');
+	const blog = await evaluate(`(() => new Promise((resolve) => {
+		const features = document.querySelector('[data-features-menu]');
+		const details = document.querySelector('[data-blog-menu]');
+		details.open = true;
+		requestAnimationFrame(() => {
+			const panel = details.querySelector('summary + div');
+			const rect = panel.getBoundingClientRect();
+			resolve({
+				articleLinks: details.querySelectorAll('a[href^="/blog/"]').length,
+				icons: details.querySelectorAll('a[href^="/blog/"] svg').length,
+				descriptions: details.querySelectorAll('a[href^="/blog/"] span span + span').length,
+				hasOverview: Boolean(details.querySelector('a[href="/blog"]')),
+				featuresClosed: !features.open,
+				left: rect.left,
+				right: rect.right,
+				innerWidth
+			});
+		});
+	}))()`);
+	assert(blog.articleLinks === 6, `desktop Blog: expected 6 article links, received ${blog.articleLinks}`);
+	assert(blog.icons === 6, `desktop Blog: expected 6 icons, received ${blog.icons}`);
+	assert(blog.descriptions === 6, `desktop Blog: expected 6 descriptions, received ${blog.descriptions}`);
+	assert(blog.hasOverview, 'desktop Blog: overview link is missing');
+	assert(blog.featuresClosed, 'desktop Blog: opening it did not close Features');
+	assert(blog.left >= 0 && blog.right <= blog.innerWidth, 'desktop Blog: panel leaves the viewport');
+	await capture('desktop-blog-open');
 	const resources = await evaluate(`(() => new Promise((resolve) => {
 		const features = document.querySelector('[data-features-menu]');
+		const blog = document.querySelector('[data-blog-menu]');
 		const details = document.querySelector('[data-resources-menu]');
 		details.open = true;
 		requestAnimationFrame(() => resolve({
 			linkCount: details.querySelectorAll('a').length,
 			hasTour: Boolean(details.querySelector('a[href="/tour/main"]')),
-			featuresClosed: !features.open
+			featuresClosed: !features.open,
+			blogClosed: !blog.open
 		}));
 	}))()`);
-	assert(resources.linkCount === 6, `desktop Resources: expected 6 links, received ${resources.linkCount}`);
+	assert(resources.linkCount === 5, `desktop Resources: expected 5 links, received ${resources.linkCount}`);
 	assert(resources.hasTour, 'desktop Resources: product tour is missing');
 	assert(resources.featuresClosed, 'desktop Resources: opening it did not close Features');
+	assert(resources.blogClosed, 'desktop Resources: opening it did not close Blog');
 	await capture('desktop-resources-open');
 
 	for (const [width, height] of [[1280, 800], [1024, 768]]) {

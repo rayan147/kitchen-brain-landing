@@ -1,5 +1,24 @@
 # Story Tracker — Features navigation
 
+## Revision — Blog as a working-guide menu (2026-09-03)
+
+All eleven steps remain complete. The visitor is still the chef-owner with one
+number or production question in front of them; the wall is now that “Blog”
+reveals no useful choice until after another page load. On wide screens, Blog
+becomes its own native disclosure and the six launch guides form two scenes:
+**Cost the work** moves from event price to recipe portion cost, then **Plan and
+buy** moves from a changed guest count to whole-pack buying and current supplier
+prices. Each guide keeps its article title and evidence-led description, paired
+with a distinct line icon. The value turns from “a publication exists” to “this
+guide answers the question on my desk.”
+
+The dialogue stays in the reader's kitchen language, uses the existing article
+copy without new claims, and ends with **Read every guide**. At tablet and phone
+widths, the established Menu sheet keeps one compact Blog route; duplicating six
+article summaries there would bury Pricing, account access, and recovery links.
+The final image is one recognized question and one direct article link, while
+the full index remains the deliberate browsing path.
+
 ## Revision — Resources and Blog (2026-09-03)
 
 The secondary `Explore` disclosure becomes `Resources` and gains one first item: `Blog`.

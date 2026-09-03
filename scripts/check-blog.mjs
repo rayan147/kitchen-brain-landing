@@ -24,6 +24,8 @@ for (const [text, label] of [
 	['Running the event', 'event topic'],
 	['Buying &amp; suppliers', 'supplier topic']
 ]) requireText(indexHtml, text, label);
+requireText(indexHtml, 'data-blog-menu', 'Blog navigation disclosure');
+requireText(indexHtml, 'Six worked guides. The assumptions stay beside the arithmetic.', 'Blog menu evidence boundary');
 requirePattern(indexHtml, /<h4[^>]*><a href="\/blog\/food-cost-per-guest"/, 'post title nested beneath its topic heading');
 
 const expectedPosts = [
@@ -39,6 +41,7 @@ const builtPosts = readdirSync(blogRoot, { withFileTypes: true })
 	.map((entry) => entry.name);
 
 for (const slug of expectedPosts) {
+	requireText(indexHtml, `href="/blog/${slug}"`, `${slug} Blog menu link`);
 	if (!builtPosts.includes(slug)) failures.push(`missing built article route: /blog/${slug}`);
 	else {
 		const html = readFileSync(join(blogRoot, slug, 'index.html'), 'utf8');

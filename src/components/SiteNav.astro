@@ -1,6 +1,7 @@
 ---
-import { cta, demoCta, featuresMenu, mobileMenu, nav, resourcesMenu, signIn } from '../lib/site';
+import { blogMenu, cta, demoCta, featuresMenu, mobileMenu, nav, resourcesMenu, signIn } from '../lib/site';
 import BrandLockup from './BrandLockup.astro';
+import BlogMenuContents from './BlogMenuContents.astro';
 import FeatureMenuContents from './FeatureMenuContents.astro';
 
 // The native disclosure is the reliable base: click, Enter, touch, and no-JS
@@ -8,6 +9,7 @@ import FeatureMenuContents from './FeatureMenuContents.astro';
 // navigation panel needs: Escape, click-away, link activation, and focus-out.
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const pricingItem = nav.find((item) => item.header === 'direct');
+const blogActive = path === blogMenu.href || path.startsWith(`${blogMenu.href}/`);
 const resourcesActive = resourcesMenu.items.some((item) => item.href === path || path.startsWith(`${item.href}/`));
 // Considered State; not used because the active destination is derived from
 // the current URL while native details own each open/closed state.
@@ -63,6 +65,30 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 				<circle cx="14" cy="8" r="2" />
 				<path d="M2.75 16c.3-3 1.75-4.5 4.25-4.5s3.95 1.5 4.25 4.5M11.25 12.25c.7-.8 1.65-1.2 2.75-1.2 2.05 0 3.15 1.15 3.4 3.45" />
 			</symbol>
+			<symbol id="blog-menu-calculator" viewBox="0 0 20 20">
+				<rect x="4" y="2.75" width="12" height="14.5" rx="1" />
+				<path d="M6.5 5.5h7M7 9h1M12 9h1M7 12.5h1M12 12.5h1" />
+			</symbol>
+			<symbol id="blog-menu-percent" viewBox="0 0 20 20">
+				<circle cx="6" cy="6" r="2" /><circle cx="14" cy="14" r="2" />
+				<path d="m5 15 10-10" />
+			</symbol>
+			<symbol id="blog-menu-yield" viewBox="0 0 20 20">
+				<path d="M5.25 14.75c2.25-4.5 4.75-7.25 9.5-9.5-.75 5-3.25 8.5-7.25 9.75-1.25.4-2.1.2-2.25-.25Z" />
+				<path d="M4 17c1.75-3.5 4.25-6 7.75-8.25" />
+			</symbol>
+			<symbol id="blog-menu-guests" viewBox="0 0 20 20">
+				<circle cx="7" cy="7" r="2.5" /><circle cx="14" cy="8" r="2" />
+				<path d="M2.75 16c.3-3 1.75-4.5 4.25-4.5s3.95 1.5 4.25 4.5M11.25 12.25c.7-.8 1.65-1.2 2.75-1.2 2.05 0 3.15 1.15 3.4 3.45" />
+			</symbol>
+			<symbol id="blog-menu-packs" viewBox="0 0 20 20">
+				<path d="m3.5 6 6.5-3 6.5 3v8L10 17l-6.5-3V6Z" />
+				<path d="m3.5 6 6.5 3 6.5-3M10 9v8" />
+			</symbol>
+			<symbol id="blog-menu-prices" viewBox="0 0 20 20">
+				<path d="M3.5 4h6.75l6.25 6.25-6.25 6.25L4 10.25V4Z" />
+				<circle cx="7" cy="7.25" r="1" />
+			</symbol>
 		</defs>
 	</svg>
 
@@ -115,7 +141,27 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 					</li>
 				)}
 
-				<li class="relative hidden lg:block">
+				<li class="relative hidden xl:block">
+					<details data-nav-disclosure data-blog-menu>
+						<summary
+							aria-label={blogMenu.ariaLabel}
+							class:list={[
+								'inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink [&::-webkit-details-marker]:hidden',
+								blogActive && 'text-ink'
+							]}
+						>
+							{blogMenu.label}
+							<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="nav-chevron transition-transform duration-150 [details[open]_&]:rotate-180">
+								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</summary>
+						<div class="absolute top-full left-1/2 z-40 mt-2 w-[min(52rem,calc(100vw-2.5rem))] -translate-x-1/2 overflow-hidden rounded-lg border border-ticket-rule bg-paper shadow-lift">
+							<BlogMenuContents {path} />
+						</div>
+					</details>
+				</li>
+
+				<li class="relative hidden xl:block">
 					<details data-nav-disclosure data-resources-menu>
 						<summary
 							aria-label={resourcesMenu.ariaLabel}
@@ -146,7 +192,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 						</div>
 					</details>
 				</li>
-				<li class="lg:hidden">
+				<li class="xl:hidden">
 					<details data-nav-disclosure data-mobile-menu>
 						<summary
 							aria-label={mobileMenu.ariaLabel}
@@ -166,6 +212,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 								<ul role="list">
 									<li class="tiny-features-link"><a href={featuresMenu.href} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{featuresMenu.label}</a></li>
 									{pricingItem && <li><a href={pricingItem.href} aria-current={path === pricingItem.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{pricingItem.label}</a></li>}
+									<li><a href={blogMenu.href} aria-current={blogActive ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{blogMenu.label}</a></li>
 									{resourcesMenu.items.map((item) => (
 										<li><a href={item.href} aria-current={path === item.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{item.label}</a></li>
 									))}

@@ -104,15 +104,18 @@ try {
 	await navigate('/blog');
 	const desktop = await evaluate(`(() => {
 		const links = [...document.querySelectorAll('main a')].filter((link) => link.getClientRects().length > 0);
-		const resources = document.querySelector('[data-resources-menu]');
-		resources.open = true;
+		const blog = document.querySelector('[data-blog-menu]');
+		blog.open = true;
 		return {
 			title: document.querySelector('h1')?.textContent.trim(),
 			overflow: document.documentElement.scrollWidth - innerWidth,
 			minTarget: Math.min(...links.map((link) => link.getBoundingClientRect().height)),
 			posts: document.querySelectorAll('article.blog-row').length,
-			blogNav: resources.querySelector('a[href="/blog"]')?.textContent.trim(),
-			activeResources: resources.querySelector('summary')?.classList.contains('text-ink'),
+			menuLinks: blog.querySelectorAll('a[href^="/blog/"]').length,
+			menuIcons: blog.querySelectorAll('a[href^="/blog/"] svg').length,
+			menuDescriptions: blog.querySelectorAll('a[href^="/blog/"] span span + span').length,
+			blogOverview: blog.querySelector('a[href="/blog"]')?.textContent.trim(),
+			activeBlog: blog.querySelector('summary')?.classList.contains('text-ink'),
 			contract: document.documentElement.innerHTML.includes('blog-working-through-the-number')
 		};
 	})()`);
@@ -120,10 +123,13 @@ try {
 	assert(desktop.overflow === 0, `desktop index: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop index: smallest action is ${desktop.minTarget}px`);
 	assert(desktop.posts === 6, `desktop index: expected 6 article rows, received ${desktop.posts}`);
-	assert(desktop.blogNav === 'Blog', 'desktop index: Blog is missing from Resources');
-	assert(desktop.activeResources, 'desktop index: Resources is not active');
+	assert(desktop.menuLinks === 6, `desktop index: expected 6 Blog menu articles, received ${desktop.menuLinks}`);
+	assert(desktop.menuIcons === 6, `desktop index: expected 6 Blog menu icons, received ${desktop.menuIcons}`);
+	assert(desktop.menuDescriptions === 6, `desktop index: expected 6 Blog menu descriptions, received ${desktop.menuDescriptions}`);
+	assert(desktop.blogOverview === 'Read every guide', 'desktop index: Blog overview action is missing');
+	assert(desktop.activeBlog, 'desktop index: Blog is not active');
 	assert(desktop.contract, 'desktop index: direction contract did not survive the build');
-	await evaluate(`document.querySelector('[data-resources-menu]').open = false`);
+	await evaluate(`document.querySelector('[data-blog-menu]').open = false`);
 	await capture('blog-desktop');
 
 	await navigate('/blog/food-cost-per-guest');
@@ -147,10 +153,14 @@ try {
 		await navigate('/blog');
 		const responsive = await evaluate(`(() => ({
 			overflow: document.documentElement.scrollWidth - innerWidth,
-			headerHeight: Math.round(document.querySelector('header').getBoundingClientRect().height)
+			headerHeight: Math.round(document.querySelector('header').getBoundingClientRect().height),
+			blogDisclosureVisible: Boolean(document.querySelector('[data-blog-menu]').getClientRects().length),
+			compactMenuVisible: Boolean(document.querySelector('[data-mobile-menu]').getClientRects().length)
 		}))()`);
 		assert(responsive.overflow === 0, `${width}x${height}: horizontal overflow is ${responsive.overflow}px`);
 		assert(responsive.headerHeight < 170, `${width}x${height}: header is ${responsive.headerHeight}px tall`);
+		assert(responsive.blogDisclosureVisible === (width >= 1280), `${width}x${height}: Blog disclosure breakpoint is wrong`);
+		assert(responsive.compactMenuVisible === (width < 1280), `${width}x${height}: compact Menu breakpoint is wrong`);
 	}
 
 	await viewport(390, 844, true);
@@ -218,4 +228,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('Blog browser verification passed: Resources navigation, index, article, intermediate widths, mobile, 200% text, reduced motion, and no-JavaScript.');
+console.log('Blog browser verification passed: article dropdown, index, article, intermediate widths, mobile, 200% text, reduced motion, and no-JavaScript.');
