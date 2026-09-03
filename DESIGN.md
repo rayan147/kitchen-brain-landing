@@ -178,7 +178,7 @@ The homepage contact action beside the price keeps the quiet-link treatment and 
 
 Shared navigation uses compact Instrument Sans links with 44px minimum targets. Keep the most frequent evaluation destinations direct and group lower-frequency decision and help routes under a plainly labelled disclosure rather than rendering every destination as an equal tab. `Contact` remains in the same shared navigation source as the other destinations, so header and footer placement do not drift.
 
-On wide layouts, `Blog` is a question-led disclosure: two compact groups expose each published guide with a distinct line icon, its article title, and its evidence-led description. `Resources` remains the smaller disclosure for Product tour, Who it’s for, comparison, FAQ, and Contact. At tighter widths, the contained Menu exposes Blog and those resource destinations as direct routes so article summaries do not bury Pricing or account access. Blog stays visibly active on the index and nested article routes.
+On wide layouts, `Blog` is a question-led disclosure: two compact groups expose each published guide with a distinct line icon, its article title, and its evidence-led description. `Resources` uses the same icon–name–description grammar in a smaller two-group panel for Product tour, Who it’s for, comparison, FAQ, and Contact. At tighter widths, the contained Menu exposes Blog and those resource destinations as direct routes so descriptive panels do not bury Pricing or account access. Blog stays visibly active on the index and nested article routes.
 
 Account access stays a quiet text action. `Book a demo` uses the outlined pill and sits beside the filled `Start CostCook` action; the difference communicates evaluation versus commitment without creating two primary buttons. Both conversion paths remain directly visible when the navigation condenses, while lower-priority links move into contained disclosures according to available width.
 
@@ -221,6 +221,7 @@ The public contact surface offers email, phone, and demo actions. It does not pr
 - **Do** keep demo and start actions visible and visually distinct when shared navigation condenses.
 - **Do** build navigation disclosures on native `details` and `summary`, then enhance mutual exclusion and focus recovery.
 - **Do** let the wide-layout Blog disclosure expose article names, descriptions, and one consistent line-icon family while the compact Menu links to the Blog index once.
+- **Do** distinguish every wide-layout Resources destination with a line icon and one sentence naming the decision or evidence on the target page.
 - **Do** keep blog metadata, arithmetic, assumptions, and next-job handoffs visually inspectable with rules, restrained color, and tabular numerals.
 
 ### Don't:

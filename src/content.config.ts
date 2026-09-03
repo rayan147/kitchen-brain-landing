@@ -14,7 +14,10 @@ const blog = defineCollection({
 		updatedDate: z.coerce.date().optional(),
 		category: z.enum(['Costing & pricing', 'Recipes & yield', 'Running the event', 'Buying & suppliers']),
 		menuGroup: z.enum(['Cost the work', 'Plan and buy']),
-		menuIcon: z.enum(['calculator', 'percent', 'yield', 'guests', 'packs', 'prices']),
+		menuIcon: z.enum([
+			'calculator', 'percent', 'yield', 'guests', 'packs', 'prices',
+			'receiving', 'variance', 'prep', 'invoice'
+		]),
 		featured: z.boolean().default(false),
 		order: z.number().int().positive(),
 		readMinutes: z.number().int().positive(),

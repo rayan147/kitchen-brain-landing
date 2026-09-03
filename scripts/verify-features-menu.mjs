@@ -173,9 +173,9 @@ try {
 			});
 		});
 	}))()`);
-	assert(blog.articleLinks === 6, `desktop Blog: expected 6 article links, received ${blog.articleLinks}`);
-	assert(blog.icons === 6, `desktop Blog: expected 6 icons, received ${blog.icons}`);
-	assert(blog.descriptions === 6, `desktop Blog: expected 6 descriptions, received ${blog.descriptions}`);
+	assert(blog.articleLinks === 10, `desktop Blog: expected 10 article links, received ${blog.articleLinks}`);
+	assert(blog.icons === 10, `desktop Blog: expected 10 icons, received ${blog.icons}`);
+	assert(blog.descriptions === 10, `desktop Blog: expected 10 descriptions, received ${blog.descriptions}`);
 	assert(blog.hasOverview, 'desktop Blog: overview link is missing');
 	assert(blog.featuresClosed, 'desktop Blog: opening it did not close Features');
 	assert(blog.left >= 0 && blog.right <= blog.innerWidth, 'desktop Blog: panel leaves the viewport');
@@ -184,18 +184,37 @@ try {
 		const features = document.querySelector('[data-features-menu]');
 		const blog = document.querySelector('[data-blog-menu]');
 		const details = document.querySelector('[data-resources-menu]');
-		details.open = true;
-		requestAnimationFrame(() => resolve({
-			linkCount: details.querySelectorAll('a').length,
-			hasTour: Boolean(details.querySelector('a[href="/tour/main"]')),
-			featuresClosed: !features.open,
-			blogClosed: !blog.open
-		}));
+		details.querySelector('summary').click();
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				const panel = details.querySelector('summary + div');
+				const rect = panel.getBoundingClientRect();
+				const sections = [...panel.querySelectorAll(':scope > div:first-child > section')];
+				resolve({
+					linkCount: details.querySelectorAll('a').length,
+					icons: details.querySelectorAll('a svg').length,
+					descriptions: details.querySelectorAll('a span span + span').length,
+					hasTour: Boolean(details.querySelector('a[href="/tour/main"]')),
+					featuresClosed: !features.open,
+					blogClosed: !blog.open,
+					left: rect.left,
+					right: rect.right,
+					innerWidth,
+					sectionTops: sections.map((section) => section.getBoundingClientRect().top),
+					sectionLefts: sections.map((section) => section.getBoundingClientRect().left)
+				});
+			});
+		});
 	}))()`);
 	assert(resources.linkCount === 5, `desktop Resources: expected 5 links, received ${resources.linkCount}`);
+	assert(resources.icons === 5, `desktop Resources: expected 5 icons, received ${resources.icons}`);
+	assert(resources.descriptions === 5, `desktop Resources: expected 5 descriptions, received ${resources.descriptions}`);
 	assert(resources.hasTour, 'desktop Resources: product tour is missing');
 	assert(resources.featuresClosed, 'desktop Resources: opening it did not close Features');
 	assert(resources.blogClosed, 'desktop Resources: opening it did not close Blog');
+	assert(resources.left >= 0 && resources.right <= resources.innerWidth, 'desktop Resources: panel leaves the viewport');
+	assert(resources.sectionTops[0] === resources.sectionTops[1], 'desktop Resources: menu groups are not aligned');
+	assert(resources.sectionLefts[0] < resources.sectionLefts[1], 'desktop Resources: menu groups did not form two columns');
 	await capture('desktop-resources-open');
 
 	for (const [width, height] of [[1280, 800], [1024, 768]]) {
@@ -309,13 +328,13 @@ try {
 	const mobileMenu = await evaluate(`(() => new Promise((resolve) => {
 		const features = document.querySelector('[data-features-menu]');
 		const details = document.querySelector('[data-mobile-menu]');
-		details.open = true;
-		requestAnimationFrame(() => resolve({
+		details.querySelector('summary').click();
+		requestAnimationFrame(() => requestAnimationFrame(() => resolve({
 			visibleLinks: [...details.querySelectorAll('a')].filter((link) => link.getClientRects().length > 0).length,
 			hasPricing: Boolean(details.querySelector('a[href="/pricing"]')),
 			hasSignIn: Boolean(details.querySelector('a[href="https://app.costcook.io/login"]')),
 			featuresClosed: !features.open
-		}));
+		})));
 	}))()`);
 	assert(mobileMenu.visibleLinks === 8, `mobile Menu: expected 8 visible links, received ${mobileMenu.visibleLinks}`);
 	assert(mobileMenu.hasPricing, 'mobile Menu: Pricing is missing');

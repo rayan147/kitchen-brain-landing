@@ -3,6 +3,7 @@ import { blogMenu, cta, demoCta, featuresMenu, mobileMenu, nav, resourcesMenu, s
 import BrandLockup from './BrandLockup.astro';
 import BlogMenuContents from './BlogMenuContents.astro';
 import FeatureMenuContents from './FeatureMenuContents.astro';
+import ResourcesMenuContents from './ResourcesMenuContents.astro';
 
 // The native disclosure is the reliable base: click, Enter, touch, and no-JS
 // all use the same mechanism. The script adds only the recovery behavior a
@@ -89,6 +90,37 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 				<path d="M3.5 4h6.75l6.25 6.25-6.25 6.25L4 10.25V4Z" />
 				<circle cx="7" cy="7.25" r="1" />
 			</symbol>
+			<symbol id="blog-menu-receiving" viewBox="0 0 20 20">
+				<path d="M2.75 5.5h9.5v8h-9.5v-8ZM12.25 8h2.25l2.75 3v2.5h-5" />
+				<path d="m5.5 9.5 1.5 1.5 2.75-3" /><circle cx="6" cy="15" r="1.5" /><circle cx="14.75" cy="15" r="1.5" />
+			</symbol>
+			<symbol id="blog-menu-variance" viewBox="0 0 20 20">
+				<path d="M3.25 15.5h13.5M5 13V8M10 13V4M15 13v-2.5" />
+				<path d="m4.5 5.5 3-2 3 2 4.5-3" />
+			</symbol>
+			<symbol id="blog-menu-prep" viewBox="0 0 20 20">
+				<path d="M4 8h12l-1 7.5H5L4 8ZM6 8V5.5h8V8M7 3.5h6" />
+				<path d="M7.25 11.25h5.5" />
+			</symbol>
+			<symbol id="blog-menu-invoice" viewBox="0 0 20 20">
+				<path d="M5 2.75h7l3 3v11.5l-2-1.25-2 1.25L9 16l-2 1.25-2-1.25V2.75Z" />
+				<path d="M8 7h4M8 10h4M8 13h2" />
+			</symbol>
+			<symbol id="resource-menu-tour" viewBox="0 0 20 20">
+				<rect x="3" y="4" width="14" height="12" rx="1" /><path d="m8 7 5 3-5 3V7Z" />
+			</symbol>
+			<symbol id="resource-menu-audience" viewBox="0 0 20 20">
+				<circle cx="10" cy="7" r="3" /><path d="M4.5 16c.4-3.1 2.25-4.75 5.5-4.75s5.1 1.65 5.5 4.75" />
+			</symbol>
+			<symbol id="resource-menu-compare" viewBox="0 0 20 20">
+				<path d="M4 4h12M4 10h12M4 16h12" /><circle cx="7" cy="4" r="1.5" fill="currentColor" stroke="none" /><circle cx="13" cy="10" r="1.5" fill="currentColor" stroke="none" /><circle cx="9" cy="16" r="1.5" fill="currentColor" stroke="none" />
+			</symbol>
+			<symbol id="resource-menu-faq" viewBox="0 0 20 20">
+				<circle cx="10" cy="10" r="7" /><path d="M7.75 7.5a2.35 2.35 0 0 1 4.5.8c0 1.7-2.25 1.7-2.25 3.2M10 14.25h.01" />
+			</symbol>
+			<symbol id="resource-menu-contact" viewBox="0 0 20 20">
+				<path d="M3.25 4.5h13.5v10H8l-3.5 2v-2h-1.25v-10Z" /><path d="M6.5 8h7M6.5 11h4.5" />
+			</symbol>
 		</defs>
 	</svg>
 
@@ -155,7 +187,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
 						</summary>
-						<div class="absolute top-full left-1/2 z-40 mt-2 w-[min(52rem,calc(100vw-2.5rem))] -translate-x-1/2 overflow-hidden rounded-lg border border-ticket-rule bg-paper shadow-lift">
+						<div class="absolute top-full left-1/2 z-40 mt-2 max-h-[calc(100dvh-7rem)] w-[min(52rem,calc(100vw-2.5rem))] -translate-x-1/2 overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift">
 							<BlogMenuContents {path} />
 						</div>
 					</details>
@@ -175,20 +207,8 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
 						</summary>
-						<div class="absolute top-full right-0 z-40 mt-2 w-60 border border-ticket-rule bg-paper p-2 shadow-lift">
-							<ul role="list">
-								{resourcesMenu.items.map((item) => (
-									<li>
-										<a
-											href={item.href}
-											aria-current={path === item.href ? 'page' : undefined}
-											class="flex min-h-11 items-center px-3 py-2 text-sm font-medium text-ink-soft transition-colors duration-150 hover:bg-cream hover:text-ink"
-										>
-											{item.label}
-										</a>
-									</li>
-								))}
-							</ul>
+						<div class="absolute top-full right-0 z-40 mt-2 w-[min(44rem,calc(100vw-2.5rem))] overflow-hidden rounded-lg border border-ticket-rule bg-paper shadow-lift">
+							<ResourcesMenuContents {path} />
 						</div>
 					</details>
 				</li>

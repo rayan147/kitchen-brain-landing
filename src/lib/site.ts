@@ -98,6 +98,50 @@ const productTourHref = '/tour/main';
  * whole flat list, while narrow screens expose the same destinations through
  * one contained Menu disclosure so no route disappears with the breakpoint.
  */
+// story: docs/stories/resources-navigation.story.md
+const resourceNav = [
+	{
+		label: 'Product tour',
+		href: productTourHref,
+		header: 'resources',
+		group: 'See it work',
+		icon: 'tour',
+		description: 'Follow one 180-guest wedding from quote to shelf.'
+	},
+	{
+		label: 'Who it\'s for',
+		href: '/who-its-for',
+		header: 'resources',
+		group: 'See it work',
+		icon: 'audience',
+		description: 'Check the kitchens, events, and working styles CostCook fits.'
+	},
+	{
+		label: 'How we compare',
+		href: '/compare',
+		header: 'resources',
+		group: 'Make the decision',
+		icon: 'compare',
+		description: 'Compare workflows, shipped capabilities, and published pricing.'
+	},
+	{
+		label: 'FAQ',
+		href: '/faq',
+		header: 'resources',
+		group: 'Make the decision',
+		icon: 'faq',
+		description: 'Get direct answers about setup, pricing, data, and leaving.'
+	},
+	{
+		label: 'Contact',
+		href: contactCta.href,
+		header: 'resources',
+		group: 'Make the decision',
+		icon: 'contact',
+		description: 'Email or call Rayan when your question needs a person.'
+	}
+] as const;
+
 export const nav: readonly { label: string; href: string; header: 'direct' | 'blog' | 'resources' }[] = [
 	// Root-relative so the same links resolve from /features too.
 	{ label: 'Pricing', href: '/pricing', header: 'direct' },
@@ -105,28 +149,14 @@ export const nav: readonly { label: string; href: string; header: 'direct' | 'bl
 	// list with placement metadata. The nested feature inventory has its own
 	// shared renderer; recursive navigation nodes would add no useful node type.
 	{ label: 'Blog', href: '/blog', header: 'blog' },
-	{ label: 'Product tour', href: productTourHref, header: 'resources' },
-	// The fit question is a bookmarkable read, not an ARIA tabs widget. It is
-	// deliberately not earlyVisible: pricing still owns the one phone slot,
-	// while the full footer keeps this destination available at every width.
-	{ label: 'Who it\'s for', href: '/who-its-for', header: 'resources' },
-	// 'Every feature' left this array on 2026-08-23. /features is now a hub
-	// over five area pages, and a flat link to it hid that structure one click
-	// deep; the header renders it as a disclosure instead (see featuresMenu and
-	// SiteNav). It stays in the FOOTER as a plain link, because a footer is a
-	// list, not a menu, and a second disclosure down there would be worse.
-	{ label: 'How we compare', href: '/compare', header: 'resources' },
-	// Added 2026-08-29. Not earlyVisible: pricing keeps the one phone slot, and
-	// the FAQ's first group IS the pricing questions, reachable from /pricing
-	// and from the close. The header carries it from md up, the footer always.
-	{ label: 'FAQ', href: '/faq', header: 'resources' },
-	{ label: 'Contact', href: contactCta.href, header: 'resources' }
+	...resourceNav
 ];
 
 export const resourcesMenu = {
 	label: 'Resources',
 	ariaLabel: 'CostCook resources',
-	items: nav.filter((item) => item.header === 'resources')
+	groups: ['See it work', 'Make the decision'] as const,
+	items: resourceNav
 } as const;
 
 export const blogMenu = {
