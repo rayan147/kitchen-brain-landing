@@ -50,6 +50,15 @@ const sourcePosts = readdirSync(content, { withFileTypes: true })
 for (const entry of sourcePosts) {
 	const source = readFileSync(join(content, entry.name), 'utf8');
 	if (source.includes('—')) failures.push(`${entry.name} contains an em dash in user-facing copy`);
+	const body = source.replace(/^---\n[\s\S]*?\n---\n/, '');
+	const wordCount = body.match(/[\p{L}\p{N}$%]+(?:[.’'-][\p{L}\p{N}]+)*/gu)?.length ?? 0;
+	const expectedReadMinutes = Math.max(1, Math.ceil(wordCount / 200));
+	const declaredReadMinutes = Number(source.match(/^readMinutes: (\d+)$/m)?.[1]);
+	if (declaredReadMinutes !== expectedReadMinutes) {
+		failures.push(
+			`${entry.name} readMinutes is ${declaredReadMinutes}; expected ${expectedReadMinutes} at 200 words per minute`,
+		);
+	}
 }
 
 for (const slug of expectedPosts) {
@@ -81,6 +90,16 @@ for (const slug of ['food-cost-per-guest', 'catering-menu-pricing']) {
 		'$26.9808 ÷ 0.30 ≈ $89.94 per guest',
 		`${slug} unrounded target-price equation`
 	);
+}
+
+for (const [slug, text, label] of [
+	['food-cost-per-guest', 'event shown on the CostCook homepage', 'current example provenance'],
+	['shopping-list-whole-packs', 'You cannot order 3.3 sealed cases.', 'whole-pack value'],
+	['scale-catering-prep-list', 'eight complete batches', 'batch and equipment-run boundary'],
+	['expected-vs-actual-food-cost', 'Attributed food cost =', 'event attribution boundary'],
+	['supplier-price-changes', 'The risk starts when a draft quote still carries the old cost.', 'draft quote risk'],
+]) {
+	requireText(readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'), text, `${slug} ${label}`);
 }
 
 if (builtPosts.length !== expectedPosts.length) {

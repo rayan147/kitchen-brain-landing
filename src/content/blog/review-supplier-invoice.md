@@ -7,7 +7,7 @@ menuGroup: Plan and buy
 menuIcon: invoice
 featured: false
 order: 10
-readMinutes: 7
+readMinutes: 3
 featureHref: /features/invoices-and-price-list-import
 featureLabel: See invoices staged for review in CostCook
 ---
@@ -115,4 +115,3 @@ Reviewer decision: accepted
 ```
 
 Only then should $38.40 become current. The invoice remains beside the new price, and the next recipe cost has a source you can inspect instead of a number that appeared behind you.
-

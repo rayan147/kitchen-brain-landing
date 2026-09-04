@@ -97,5 +97,5 @@ Hurry becomes attention; a case count becomes a line check; a confusing substitu
 
 - Cut generic receiving advice in favor of one complete line-level example.
 - Removed any claim that software can judge food quality or allergen suitability.
+- Recalculated the reading time at 200 words per minute.
 - **Final image:** The driver leaves; the shelf shows what is actually there and tomorrow's cook is not surprised.
-

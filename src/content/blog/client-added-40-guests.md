@@ -7,7 +7,7 @@ menuGroup: Plan and buy
 menuIcon: guests
 featured: false
 order: 4
-readMinutes: 6
+readMinutes: 3
 featureHref: /features/order-shop-prep-pack
 featureLabel: See one event become shop, prep, and pack work
 ---

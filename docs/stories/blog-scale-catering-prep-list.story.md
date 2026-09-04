@@ -25,13 +25,13 @@
 
 ### Step 1 — The Idea
 
-A kitchen lead who wants to prep a 180-guest wedding with a five-percent service buffer but the recipe yields 24 portions and the braise is cooked only in whole pots.
+A kitchen lead who wants to prep a 180-guest wedding with a five-percent service buffer but the recipe yields 24 portions and production uses complete batches and bounded kettle runs.
 
 ### Step 2 — Your Character
 
 - **Want:** Hand the crew a prep list they can execute.
 - **Need:** Separate required portions, recipe batches, equipment runs, and supplier packs.
-- **Wound:** The fractional batch that became an improvised pot and an inconsistent yield.
+- **Wound:** The fractional batch that became an improvised run and an inconsistent yield.
 - **Flaw:** Multiplying every ingredient by the guest count without respecting recipe yield or kitchen equipment.
 
 ### Step 3 — The Plot
@@ -41,8 +41,8 @@ A kitchen lead who wants to prep a 180-guest wedding with a five-percent service
 | Opening Image | A 180-guest order and a recipe card that serves 24. |
 | Theme Stated | Guests scale portions; the kitchen still cooks batches. |
 | Set-Up | A simple multiplier produces 7.875 batches. |
-| Catalyst | No cook can braise 0.875 of the established pot consistently. |
-| Debate | Round ingredients, portions, pots, or supplier cases? |
+| Catalyst | No cook can braise 0.875 of the established batch consistently. |
+| Debate | Round ingredients, portions, batches, equipment runs, or supplier cases? |
 | Break into Two | Add the service buffer, then round at each real operating boundary. |
 | B Story | The prep crew needs whole runs and the buyer needs whole packs. |
 | Fun and Games | Convert 189 portions to eight batches and four two-batch kettle runs. |
@@ -64,7 +64,7 @@ A kitchen lead who wants to prep a 180-guest wedding with a five-percent service
 
 ### Step 5 — Character Voices
 
-- **Reader:** “How many pots?”, “What do I pull?”, “How much extra are we making?”
+- **Reader:** “How many batches?”, “How many kettle runs?”, “How much extra are we making?”
 - **Product:** direct, concrete, kitchen-literate. Banned: workflow, automate, optimize.
 
 ### Step 6 — Dialogue turns
@@ -75,12 +75,12 @@ Guest count becomes portion requirement; a fraction becomes a deliberate batch; 
 
 - **Intention:** Prep enough food for 180 guests and a small service cushion.
 - **Obstacle:** The recipe, pot, and supplier case round at different places.
-- **Headline:** Scale the wedding. Keep the pots whole.
+- **Headline:** Scale the wedding. Keep the production units whole.
 - **Subhead:** Convert guests into portions, portions into recipe batches, and batches into equipment runs before the shopping list rounds anything to a supplier case.
 
 ### Step 8 — The one snap line
 
-> A cook can make eight pots. A cook cannot make 7.875 pots on purpose.
+> The kitchen can prepare eight complete batches. It cannot prepare 7.875 validated batches on purpose.
 
 ### Step 9 — Bringing the scene to life
 
@@ -97,5 +97,5 @@ Guest count becomes portion requirement; a fraction becomes a deliberate batch; 
 
 - Kept one braised-beef example and labelled the buffer illustrative.
 - Removed the suggestion that every recipe must be rounded; the operating unit determines it.
+- Kept recipe batches distinct from two-batch kettle runs and recalculated the reading time at 200 words per minute.
 - **Final image:** Tomorrow's board shows four full kettle runs and three planned spare portions, not a mystery fraction.
-

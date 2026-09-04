@@ -7,8 +7,7 @@
 - **Voice:** Second person; evidence-led and restrained; no silent-write or guaranteed-margin claims.
 - **Dialogue:** A changed case price stops being an isolated invoice line and becomes a visible decision path.
 - **Headline:** How supplier price changes reach the recipes you already costed
-- **Snap:** The new price is not expensive until the old quote is still using it.
+- **Snap:** The risk starts when a draft quote still carries the old cost.
 - **Life:** Friday's price list arrives after Monday's wedding quote was sent.
 - **Connection:** Supplier changes hand off to invoice review and quoted-versus-current costing.
-- **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish
-
+- **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — clarified the draft-quote risk and recalculated the reading time at 200 words per minute.

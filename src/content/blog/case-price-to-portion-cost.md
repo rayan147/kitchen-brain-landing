@@ -7,7 +7,7 @@ menuGroup: Cost the work
 menuIcon: yield
 featured: false
 order: 3
-readMinutes: 7
+readMinutes: 3
 featureHref: /features/recipes-and-costing
 featureLabel: See recipe costing with the working shown
 ---

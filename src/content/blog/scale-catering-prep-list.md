@@ -7,7 +7,7 @@ menuGroup: Plan and buy
 menuIcon: prep
 featured: false
 order: 9
-readMinutes: 7
+readMinutes: 3
 featureHref: /features/order-shop-prep-pack
 featureLabel: See one order become shop, prep, and pack work
 ---
@@ -41,7 +41,7 @@ Batches required = required portions ÷ portions per batch
 189 ÷ 24 = 7.875 batches
 ```
 
-A cook can make eight pots. A cook cannot make 7.875 pots on purpose.
+The kitchen can prepare eight complete batches. It cannot prepare 7.875 validated batches on purpose.
 
 If the braise is produced only as a complete validated batch, round the production quantity up:
 

@@ -7,7 +7,7 @@ menuGroup: Cost the work
 menuIcon: calculator
 featured: true
 order: 1
-readMinutes: 6
+readMinutes: 3
 featureHref: /features/menus-and-quotes
 featureLabel: See menus and quotes in CostCook
 ---
@@ -36,7 +36,7 @@ Food cost per guest = total food cost ÷ guests
 Food-cost percentage = total food cost ÷ revenue × 100
 ```
 
-Consider the illustrative 180-guest event used in the CostCook product tour:
+Consider the illustrative 180-guest event shown on the CostCook homepage:
 
 ```text
 180 guests × $68.00 = $12,240.00 revenue
@@ -44,7 +44,7 @@ $4,856.55 ÷ 180 ≈ $26.98 food cost per guest
 $4,856.55 ÷ $12,240.00 ≈ 39.7% food cost
 ```
 
-The $68 price sounds tidy. The food says something less tidy: 39.7 cents of every food-sales dollar is already assigned to ingredients.
+The $68 price sounds tidy. The food says something less tidy: 39.7 cents of every dollar of event revenue shown here is already assigned to ingredients.
 
 ## Compare it with the target
 

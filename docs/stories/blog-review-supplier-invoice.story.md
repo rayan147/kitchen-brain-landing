@@ -97,5 +97,5 @@ An extracted line becomes a staged claim; shorthand becomes a pack; a case price
 
 - Preserved higher precision until displayed currency values are rounded.
 - Removed any promise that OCR confidence proves business meaning.
+- Recalculated the reading time at 200 words per minute.
 - **Final image:** The invoice remains beside the new price, and the next recipe cost has a source you can inspect.
-
