@@ -1,8 +1,15 @@
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname;
 const read = (path) => readFile(join(root, path), 'utf8');
+
+// Considered Iterator; not used because the blog is one flat directory and
+// native array iteration already scans every article without a custom traversal.
+const blogSurfaceFiles = (await readdir(join(root, 'src/content/blog'), { withFileTypes: true }))
+	.filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
+	.map((entry) => `src/content/blog/${entry.name}`)
+	.sort();
 
 // THIS FILE IS HAND-FORMATTED: tabs, single quotes, and the repo carries no
 // prettier config. `npx prettier --write` on it therefore applies the defaults
@@ -93,13 +100,10 @@ const surfaceFiles = [
 	// the sticky bar carries a primary, so both go through the scan.
 	'src/components/StickyCta.astro',
 	'src/components/SectionHandoff.astro',
-	// These new worked guides contain costing, purchasing, and product-boundary
-	// claims. Scan their public copy without pulling the older educational guide
-	// that explicitly defines the otherwise-forbidden “food-only gross margin”.
-	'src/content/blog/delivery-arrived-wrong.md',
-	'src/content/blog/expected-vs-actual-food-cost.md',
-	'src/content/blog/scale-catering-prep-list.md',
-	'src/content/blog/review-supplier-invoice.md',
+	// Every worked guide contains costing, purchasing, or product-boundary
+	// claims. Discover the complete directory so a new article cannot bypass the
+	// same forbidden-claim scan as the product page it links to.
+	...blogSurfaceFiles,
 	// 2026-08-29. Every FAQ answer is public claim copy and names its rows.
 	'src/lib/faq.ts',
 	'src/pages/faq.astro',
@@ -699,7 +703,7 @@ if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start to
 
 const forbiddenClaims = [
 	[/\bknow the margin\b/i, 'full-margin language'],
-	[/\bgross margin\b|\binspect the margin\b/i, 'unsupported margin label'],
+	[/(?<!food-only )\bgross margin\b|\binspect the margin\b/i, 'unsupported margin label'],
 	[/\bwritten only after a successful send\b/i, 'incorrect purchase-order send lifecycle'],
 	[/\bthere is no invoice for the\b/i, 'unsupported no-invoice trial promise'],
 	[/\bworks with no signal and with JavaScript off\b/i, 'collapsed offline and no-JavaScript promise'],

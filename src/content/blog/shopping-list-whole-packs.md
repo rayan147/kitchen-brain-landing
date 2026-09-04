@@ -7,7 +7,7 @@ menuGroup: Plan and buy
 menuIcon: packs
 featured: false
 order: 5
-readMinutes: 6
+readMinutes: 2
 featureHref: /features/order-shop-prep-pack
 featureLabel: See CostCook shopping, prep, and pack plans
 ---
@@ -32,7 +32,7 @@ Packs needed = required quantity ÷ quantity per pack
 132 lb ÷ 40 lb = 3.3 cases
 ```
 
-You cannot ask the supplier for 2.4 cases, and you cannot order 3.3 sealed cases. Round up to four cases unless the supplier allows a smaller break pack or you deliberately split the order across another approved product.
+You cannot order 3.3 sealed cases. Round up to four cases unless the supplier allows a smaller break pack or you deliberately split the order across another approved product.
 
 ```text
 4 cases × 40 lb = 160 lb purchased

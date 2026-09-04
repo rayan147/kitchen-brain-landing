@@ -10,4 +10,4 @@
 - **Snap:** The skins are in the case price, but they are not on the plate.
 - **Life:** A wet case lands on the scale and the recipe still says “six onions.”
 - **Connection:** Portion cost hands off to per-guest menu cost.
-- **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — retained unrounded yield cost through the worked equation so the displayed result is reproducible.
+- **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — retained unrounded yield cost through the worked equation so the displayed result is reproducible; recalculated the reading time at 200 words per minute.

@@ -29,8 +29,8 @@ An owner-caterer who wants to know whether Saturday's wedding held its food-cost
 
 ### Step 2 — Your Character
 
-- **Want:** Name the event's real food cost.
-- **Need:** Separate purchases from consumption and compare like with like.
+- **Want:** Name the event's attributable food cost.
+- **Need:** Separate purchases, documented stock use, and physical consumption without claiming more than the records prove.
 - **Wound:** A profitable-looking event followed by an empty bank balance.
 - **Flaw:** Treating every invoice bought that week as food consumed by this event.
 
@@ -39,14 +39,14 @@ An owner-caterer who wants to know whether Saturday's wedding held its food-cost
 | Beat | In this guide |
 |------|---------------|
 | Opening Image | Monday, invoices open, wedding done, one total too many. |
-| Theme Stated | What you bought and what the event used are different numbers. |
+| Theme Stated | What you bought, what you can attribute, and what the event physically used are different claims. |
 | Set-Up | The quote carries expected recipe cost while the card statement carries purchases. |
 | Catalyst | Purchases show $2,612 against a $2,466 expected cost. |
 | Debate | Did the event miss by $146? |
-| Break into Two | Add beginning stock used and remove ending stock left. |
+| Break into Two | Add documented beginning stock use and remove closing stock retained from assigned goods. |
 | B Story | The next event should not be charged again for stock it inherits. |
 | Fun and Games | Reconcile expected cost, purchases, assigned stock, leftovers, and known causes. |
-| Midpoint | Actual usage is $2,500, only $34 above expected. |
+| Midpoint | Attributed food cost is $2,500, only $34 above expected. |
 | Bad Guys Close In | Waste, substitutions, count errors, or stale prices can still explain the $34. |
 | All Is Lost | Calling the $146 purchase gap “food cost” sends the next quote in the wrong direction. |
 | Finale + Final Image | The event closes with a named $34 variance and the remaining $184 on the shelf. |
@@ -58,7 +58,7 @@ An owner-caterer who wants to know whether Saturday's wedding held its food-cost
 | 1 | Monday's two totals | Opening + theme | one answer → two meanings |
 | 2 | Expected cost | Set-up | recipe plan → baseline |
 | 3 | Purchases are not usage | Catalyst + debate | apparent miss → open question |
-| 4 | Reconcile the event | Break + promise | invoices → consumption |
+| 4 | Reconcile the event | Break + promise | invoices → bounded attribution |
 | 5 | Explain the remaining variance | Midpoint + pressure | number → cause |
 | 6 | Close the loop | loss + finale | reaction → better next quote |
 
@@ -69,14 +69,14 @@ An owner-caterer who wants to know whether Saturday's wedding held its food-cost
 
 ### Step 6 — Dialogue turns
 
-One alarming total becomes two useful totals; purchase spend becomes consumed value; the remaining variance becomes a short investigation rather than a guess.
+One alarming total becomes two useful totals; purchase spend becomes a bounded attribution; the remaining variance becomes a short investigation rather than a guess.
 
 ### Step 7 — Headline / subhead
 
 - **Intention:** Close the wedding with a trustworthy food cost.
 - **Obstacle:** Purchases and usage do not share the same boundary.
 - **Headline:** The event is over. Now make the food cost tell the truth.
-- **Subhead:** Start with what the menu should have used, then account for what came off the shelf, what you bought, and what remains for the next job.
+- **Subhead:** Start with what the menu should have used, then account for documented stock use, assigned purchases, and what remains for the next job.
 
 ### Step 8 — The one snap line
 
@@ -91,10 +91,11 @@ One alarming total becomes two useful totals; purchase spend becomes consumed va
 ### Step 10 — Connecting the scenes
 
 - **POV:** Second person.
-- **Hand-offs:** expected → purchased → consumed → variance → next decision.
+- **Hand-offs:** expected → purchased → attributed → variance → next decision.
 
 ### Step 11 — Revise and finish
 
 - Kept one internally consistent worked event.
-- Removed claims that the variance proves waste without evidence.
+- Removed claims that allocation alone proves physical consumption or waste.
+- Recalculated the reading time at 200 words per minute.
 - **Final image:** The event is closed, the leftover stock belongs to the shelf, and the next quote starts from a better number.

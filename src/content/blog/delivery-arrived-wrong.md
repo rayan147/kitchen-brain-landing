@@ -7,7 +7,7 @@ menuGroup: Plan and buy
 menuIcon: receiving
 featured: false
 order: 7
-readMinutes: 7
+readMinutes: 4
 featureHref: /features/purchasing-and-receiving
 featureLabel: See purchasing and receiving in CostCook
 ---
@@ -91,4 +91,3 @@ Follow-up: confirm substitute approval and current price
 ```
 
 The driver can leave. The shelf now shows 230 lb, the shortage remains visible, and tomorrow's prep cook is not depending on a fictional sixth 40 lb case.
-

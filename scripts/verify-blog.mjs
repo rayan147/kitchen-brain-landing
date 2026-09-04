@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
@@ -7,6 +7,13 @@ import { setTimeout as delay } from 'node:timers/promises';
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
 await mkdir(reviewDir, { recursive: true });
+
+// Considered Iterator; not used because the article sources form one flat
+// directory and native array iteration covers every rendered route directly.
+const articleSlugs = (await readdir(new URL('../src/content/blog', import.meta.url), { withFileTypes: true }))
+	.filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
+	.map((entry) => entry.name.replace(/\.md$/, ''))
+	.sort();
 
 const profile = await mkdtemp(join(tmpdir(), 'costcook-blog-'));
 const port = 9354;
@@ -132,6 +139,19 @@ try {
 	await evaluate(`document.querySelector('[data-blog-menu]').open = false`);
 	await capture('blog-desktop');
 
+	for (const slug of articleSlugs) {
+		await navigate(`/blog/${slug}`);
+		const route = await evaluate(`(() => ({
+			title: document.querySelector('h1')?.textContent.trim(),
+			overflow: document.documentElement.scrollWidth - innerWidth,
+			sections: document.querySelectorAll('.article-body h2').length,
+			tocLinks: document.querySelectorAll('[aria-labelledby="article-path-title"] a').length
+		}))()`);
+		assert(Boolean(route.title), `desktop ${slug}: page identity is missing`);
+		assert(route.overflow === 0, `desktop ${slug}: horizontal overflow is ${route.overflow}px`);
+		assert(route.sections === route.tocLinks && route.sections >= 4, `desktop ${slug}: table of contents does not match sections`);
+	}
+
 	await navigate('/blog/delivery-arrived-wrong');
 	const article = await evaluate(`(() => ({
 		title: document.querySelector('h1')?.textContent.trim(),
@@ -189,6 +209,17 @@ try {
 	assert(mobile.featuredTop < 1600, `mobile index: featured guide begins too late at ${mobile.featuredTop}px`);
 	assert(mobile.menuBlog === 'Blog', 'mobile index: Blog is missing from Menu');
 	await capture('blog-mobile');
+
+	for (const slug of articleSlugs) {
+		await navigate(`/blog/${slug}`);
+		const route = await evaluate(`(() => ({
+			overflow: document.documentElement.scrollWidth - innerWidth,
+			tocTop: Math.round(document.querySelector('#article-path-title').getBoundingClientRect().top),
+			firstSectionTop: Math.round(document.querySelector('.article-body h2').getBoundingClientRect().top)
+		}))()`);
+		assert(route.overflow === 0, `mobile ${slug}: horizontal overflow is ${route.overflow}px`);
+		assert(route.tocTop < route.firstSectionTop, `mobile ${slug}: guide path does not precede the article body`);
+	}
 
 	await navigate('/blog/delivery-arrived-wrong');
 	const mobileArticle = await evaluate(`(() => ({

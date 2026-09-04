@@ -7,8 +7,7 @@
 - **Voice:** Second person; practical and cautious; no automatic inventory promise.
 - **Dialogue:** Recipe amounts become quantities a supplier can actually send.
 - **Headline:** How to turn a catering menu into a shopping list in whole packs
-- **Snap:** You cannot ask the supplier for 2.4 cases.
+- **Snap:** You cannot order 3.3 sealed cases.
 - **Life:** The order deadline is close and the prep sheet is still written in cups.
 - **Connection:** The buy list hands off to purchase orders and receiving.
-- **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish
-
+- **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — corrected the pack count to match the worked equation and recalculated the reading time at 200 words per minute.

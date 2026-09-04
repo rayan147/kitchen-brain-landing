@@ -10,4 +10,4 @@
 - **Snap:** Thirty percent food cost is not a 30% markup.
 - **Life:** A quote is open and three calculators return three different answers.
 - **Connection:** The chosen target hands off to recipe and menu costing.
-- **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — exposed the unrounded per-guest cost and marked the rounded target price as approximate.
+- **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — exposed the unrounded per-guest cost, marked the rounded target price as approximate, and recalculated the reading time at 200 words per minute.

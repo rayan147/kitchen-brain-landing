@@ -1,13 +1,13 @@
 ---
 title: "The event is over. What should the food have cost, and what did you actually spend?"
-description: "Reconcile expected recipe cost with purchases, stock used, leftovers, and recorded differences before judging an event’s result."
+description: "Reconcile expected recipe cost with attributed purchases, documented stock use, leftovers, and recorded differences before judging an event’s result."
 publishedDate: 2026-09-03
 category: Costing & pricing
 menuGroup: Cost the work
 menuIcon: variance
 featured: false
 order: 8
-readMinutes: 7
+readMinutes: 3
 featureHref: /features/purchases-and-month-cost
 featureLabel: See expected and purchased cost together
 ---
@@ -38,37 +38,37 @@ The supplier invoices for the event week total $2,612. Some of those purchases r
 
 The unopened oil on Monday is not Saturday's food cost.
 
-Use a consistent boundary:
+Start with a consistent attribution boundary:
 
 ```text
-Actual food usage = beginning stock assigned to the event
-                  + purchases assigned to the event
-                  − ending stock remaining from those goods
+Attributed food cost = beginning stock documented as used by the event
+                     + purchases assigned to the event
+                     − closing stock retained from those assigned goods
 ```
 
-“Assigned” matters. If an invoice serves three events, allocate or count the relevant stock instead of charging the entire document to the wedding.
+“Assigned” matters. If an invoice serves three events, allocate or count the relevant stock instead of charging the entire document to the wedding. Call the result actual usage only when physical counts and recorded movements account for all the food inside that boundary.
 
 ## Reconcile the 180-guest wedding
 
 For the worked example:
 
 ```text
-Beginning stock used =    $72.00
-Purchases =             $2,612.00
-Ending stock remaining = −$184.00
-                         ---------
-Actual food usage =     $2,500.00
+Beginning stock documented as used =    $72.00
+Purchases assigned to the event =     $2,612.00
+Closing stock retained =               −$184.00
+                                        ---------
+Attributed food cost =                $2,500.00
 ```
 
-Now compare usage with the plan:
+Now compare the attributed cost with the plan:
 
 ```text
-$2,500.00 actual − $2,466.00 expected = $34.00 unfavorable variance
+$2,500.00 attributed − $2,466.00 expected = $34.00 unfavorable variance
 
-$2,500.00 ÷ 180 ≈ $13.89 actual food cost per guest
+$2,500.00 ÷ 180 ≈ $13.89 attributed food cost per guest
 ```
 
-The purchase total was $146 above the expected cost. Once stock boundaries are respected, the consumption variance is $34.
+The purchase total was $146 above the expected cost. Once the recorded stock boundary is respected, the attributed variance is $34. That is not proof of physical consumption when counts or movements are missing.
 
 ## Put both numbers against the sale
 
@@ -80,7 +80,7 @@ Revenue = 180 × $68.00 = $12,240.00
 Expected food-cost percentage:
 $2,466.00 ÷ $12,240.00 × 100 ≈ 20.1%
 
-Actual food-cost percentage:
+Attributed food-cost percentage:
 $2,500.00 ÷ $12,240.00 × 100 ≈ 20.4%
 ```
 
@@ -104,9 +104,9 @@ Other events may point to changed supplier prices, overproduction, portion drift
 Close the job with both sides intact:
 
 - What the confirmed menu should have cost.
-- What the event actually consumed.
+- What purchases and documented stock use were attributed to the event.
 - What remained on the shelf.
 - Which recorded causes explain the variance.
 - Which recipe, yield, buying, or production assumption needs review.
 
-The wedding closes with a named $34 variance, not a guessed $146 loss. The remaining $184 stays on the shelf, ready to belong to the next job only when that job uses it.
+The wedding closes with a named $34 attributed variance, not a guessed $146 loss. The remaining $184 stays on the shelf, ready to belong to the next job only when that job uses it.

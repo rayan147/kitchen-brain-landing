@@ -7,7 +7,7 @@ menuGroup: Plan and buy
 menuIcon: prices
 featured: false
 order: 6
-readMinutes: 7
+readMinutes: 3
 featureHref: /features/ingredients-and-supplier-prices
 featureLabel: See supplier prices carried into recipes
 ---
@@ -40,7 +40,7 @@ A price list is an offer, not proof that you bought the item at that price. An i
 
 Once the selected ingredient price changes, every active recipe using that ingredient should calculate from the same current record. Sub-recipes carry their updated share into parent dishes, and menus carry the dishes into their per-guest cost.
 
-The new price is not expensive until the old quote is still using it. For a draft event, current prices should inform the estimate before commitment. For a confirmed event, preserve what was quoted and show the current comparison separately rather than rewriting the historical promise.
+The risk starts when a draft quote still carries the old cost. Current prices should inform its estimate before commitment. For a confirmed event, preserve what was quoted and show the current comparison separately rather than rewriting the historical promise.
 
 ## Review the affected decisions
 

@@ -7,7 +7,7 @@ menuGroup: Cost the work
 menuIcon: percent
 featured: false
 order: 2
-readMinutes: 7
+readMinutes: 2
 featureHref: /features/menus-and-quotes
 featureLabel: See menu pricing and quote review
 ---
