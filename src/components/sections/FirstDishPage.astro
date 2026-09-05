@@ -148,6 +148,21 @@ const guards = [
 					</li>
 				))}
 			</ol>
+			<figure class="fd-shot" data-reveal>
+				<img
+					src="/proof/setup/01-kitchen.png"
+					width="2566"
+					height="910"
+					loading="lazy"
+					decoding="async"
+					alt="The CostCook setup screen. A rail down the left lists five stages: Kitchen and suppliers and Ingredients ticked complete, Food facts numbered 3 as the stage in progress, Recipes and Menu and first order still locked. Above them the header reads “Harbor &amp; Hearth Catering, stage 1 of 5, saves after each stage”. The stage is headed “Identify your kitchen”, explains why it exists, then ticks three things off: Name the kitchen, Set the food-cost target, Add one supplier. It ends “Next: attach pack prices and buying sources to the ingredients in one dish.”"
+				/>
+				<figcaption>
+					Stage one in the app: the five stages down the left, what this one wants, and why it
+					wants it. Captured from CostCook running on an empty kitchen.
+				</figcaption>
+			</figure>
+
 			<p class="fd-handoff">Stage four ends on a number.</p>
 		</div>
 	</section>
@@ -446,6 +461,30 @@ const guards = [
 		.fd-stage-body {
 			margin-top: 0;
 		}
+	}
+
+	/* A capture of the running app, stored at 2x and rendered at half its pixel
+	   width or narrower (RC-48). The frame is the ticket rule, not a browser
+	   chrome mockup: the page never pretends a screenshot is a window. */
+	.fd-shot {
+		margin: 2rem 0 0;
+	}
+
+	.fd-shot img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 0.25rem;
+		box-shadow: var(--shadow-ticket);
+	}
+
+	.fd-shot figcaption {
+		max-width: 40rem;
+		padding-top: 0.85rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
 	}
 
 	.fd-handoff {

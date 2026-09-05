@@ -158,6 +158,16 @@ try {
 			mathsScrolls: maths ? maths.scrollWidth > maths.clientWidth : null,
 			mathsFocusable: maths ? maths.tabIndex >= 0 && Boolean(maths.getAttribute('aria-label')) : false,
 			mathsColHeaders: document.querySelectorAll('.fd-maths th[scope="col"]').length,
+			shot: (() => {
+				const img = document.querySelector('.fd-shot img');
+				if (!img) return null;
+				return {
+					loaded: img.complete && img.naturalWidth > 0,
+					natural: img.naturalWidth,
+					rendered: Math.round(img.getBoundingClientRect().width),
+					alt: (img.getAttribute('alt') ?? '').length
+				};
+			})(),
 			mathsFits: maths ? maths.getBoundingClientRect().right <= document.documentElement.clientWidth + 1 : null,
 			minTarget: actions.length ? Math.min(...actions.map((a) => a.getBoundingClientRect().height)) : 0,
 			primaryLabel: document.querySelector('.fd-actions .btn-primary')?.textContent.trim(),
@@ -190,6 +200,17 @@ try {
 	assert(desktop.mathsFits, 'desktop: the arithmetic table escapes the viewport');
 	assert(desktop.mathsFocusable, 'desktop: the arithmetic scroll container is not keyboard focusable');
 	assert(desktop.mathsColHeaders === 3, `desktop: expected 3 column headers on the arithmetic table, received ${desktop.mathsColHeaders}`);
+	// RC-48: stored at 2x, rendered at half its pixel width or narrower, and
+	// it has to actually load — a 404 here is a broken proof, not a missing
+	// decoration.
+	assert(desktop.shot, 'desktop: the setup capture is not on the page');
+	assert(desktop.shot?.loaded, 'desktop: the setup capture did not load');
+	assert((desktop.shot?.natural ?? 0) >= 2304, `desktop: setup capture is only ${desktop.shot?.natural}px wide; a 1152px container would upscale it`);
+	assert(
+		desktop.shot && desktop.shot.rendered <= desktop.shot.natural / 2,
+		`desktop: setup capture renders at ${desktop.shot?.rendered}px, wider than half its ${desktop.shot?.natural}px (RC-48)`
+	);
+	assert((desktop.shot?.alt ?? 0) > 200, 'desktop: the setup capture alt does not read off the pixels');
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
 	assert(desktop.primaryCount === 2, `desktop: expected 2 route primaries (open and close), received ${desktop.primaryCount}`);
 	assert(desktop.activeNav.includes('Your first dish'), `desktop: navigation is not active (${desktop.activeNav.join(', ')})`);
@@ -215,6 +236,11 @@ try {
 	// The claim in this file's docstring and success line. At 390px the table
 	// is wider than its column, so it MUST overflow its own container rather
 	// than the page: if it ever stops scrolling, the values are unreachable.
+	assert(mobile.shot?.loaded, 'mobile: the setup capture did not load');
+	assert(
+		mobile.shot && mobile.shot.rendered <= mobile.shot.natural / 2,
+		`mobile: setup capture renders at ${mobile.shot?.rendered}px, wider than half its natural width`
+	);
 	assert(mobile.mathsScrolls === true, 'mobile: the arithmetic table no longer scrolls inside its own container');
 	// FINDING 1: that scroll must be reachable without a pointer (WCAG 2.1.1).
 	assert(mobile.mathsFocusable, 'mobile: the arithmetic scroll container is not keyboard focusable');

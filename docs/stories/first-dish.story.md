@@ -134,6 +134,15 @@
   - 169px of horizontal overflow at 390px: grid children default to
     `min-width: auto`, so the nowrap arithmetic table widened its column
     instead of scrolling inside it.
+- **Visual added after review:** §4 was the most text-heavy part of the page,
+  so it now carries one capture of the running app: stage one, with the
+  five-stage rail beside it. The rail in the picture reads the same five names
+  as the table above it, which is the point. The 18 existing rehearsal
+  captures could NOT be used: every one shows the superseded six-stage rail
+  (Costing defaults, Business and suppliers, Ingredients, Recipes, Menu, First
+  order), so shipping one would have put a six-stage image beside a
+  five-stage sentence. `scripts/capture-setup-proof.mjs` takes a fresh one off
+  an empty kitchen, and RC-48 records the provenance.
 - **Fixed after code review:**
   - The arithmetic table's scroll container took no keyboard focus and had no
     name. At 390px its whole value column, the $1.62 included, sits off-screen,

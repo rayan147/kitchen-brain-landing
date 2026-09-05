@@ -67,6 +67,44 @@ if ((html.match(/<th scope="col"/g) ?? []).length !== 3) {
 	failures.push('the arithmetic table must name its three columns with scope="col"');
 }
 
+// RC-48: the setup capture. Stored at 2x, rendered at half its pixel width or
+// narrower, and its alt read off the pixels. A figure with no alt, or one
+// rendered at full pixel width, is the failure this catches.
+const shot = html.match(/<img\b[^>]*\/proof\/setup\/01-kitchen\.png[^>]*>/)?.[0] ?? '';
+if (!shot) failures.push('missing the setup capture (RC-48)');
+const shotAlt = shot.match(/alt="([^"]*)"/)?.[1] ?? '';
+if (shotAlt.length < 60) failures.push(`setup capture alt is too thin to read off the pixels: "${shotAlt}"`);
+for (const word of ['five', 'Kitchen and suppliers', 'Menu and first order', 'stage 1 of 5']) {
+	if (!shotAlt.includes(word)) failures.push(`setup capture alt does not name "${word}" (RC-48)`);
+}
+// Read the real dimensions out of the PNG header rather than pinning a
+// number here: a recapture that changes the crop should update the markup,
+// and this is what notices when it did not.
+const png = readFileSync(new URL('../public/proof/setup/01-kitchen.png', import.meta.url));
+const pngWidth = png.readUInt32BE(16);
+const pngHeight = png.readUInt32BE(20);
+const declared = (attribute) => Number(shot.match(new RegExp(`${attribute}="(\\d+)"`))?.[1] ?? 0);
+if (declared('width') !== pngWidth || declared('height') !== pngHeight) {
+	failures.push(
+		`setup capture declares ${declared('width')}x${declared('height')} but the PNG is ${pngWidth}x${pngHeight}`
+	);
+}
+// Stored at 2x and rendered at half its pixel width OR NARROWER (RC-48). The
+// widest the page can ask for is its 72rem container less the gutters, so the
+// failing direction is the container exceeding half the pixels, not the
+// reverse: a capture narrower than 2304px would be upscaled and soft.
+const WIDEST_RENDER = 1152;
+if (WIDEST_RENDER > pngWidth / 2) {
+	failures.push(
+		`setup capture is ${pngWidth}px, so a ${WIDEST_RENDER}px container renders it above half width (RC-48)`
+	);
+}
+if (!/loading="lazy"/.test(shot)) failures.push('setup capture should not block the first screen');
+// No test identity may ship in a capture.
+for (const leak of ['E2E First Kitchen', 'e2e.test', 'sandbox/demo', 'SANDBOX BUILD']) {
+	if (html.includes(leak)) failures.push(`the page leaks internal provenance: ${leak}`);
+}
+
 // One primary per end of the page, both rendering the site's single CTA
 // label, and the demo link never promoted to a second primary here.
 const primaries = (html.match(/class="btn-primary[ "]/g) ?? []).length;
