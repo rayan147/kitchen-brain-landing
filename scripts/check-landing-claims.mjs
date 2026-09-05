@@ -571,7 +571,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 56; claim += 1) {
+for (let claim = 1; claim <= 57; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -761,6 +761,58 @@ for (const [pattern, label] of [
 		'invoice or recipe extraction (stubbed at both test layers)'],
 ]) {
 	if (pattern.test(firstDishSource)) failures.push(`first-dish states ${label}`);
+}
+
+// RC-57: the spreadsheet column on /compare. It is the one column on that page
+// with no pricing page behind it, so the rule that keeps the others honest
+// cannot reach it. What holds it honest instead is that its cells describe the
+// READER'S WORK and nothing else, drawn from a vocabulary closed at two values.
+const comparisonRowLabels = [...comparisonSource.matchAll(/^\t{4}label: (.+),$/gm)].map((m) => m[1]);
+const comparisonSheetValues = [...comparisonSource.matchAll(/^\t{4}sheet: '(.+)',$/gm)].map((m) => m[1]);
+if (comparisonSheetValues.length !== comparisonRowLabels.length) {
+	failures.push(
+		`comparison (RC-57): ${comparisonRowLabels.length} row(s) but ${comparisonSheetValues.length} ` +
+			'spreadsheet cell(s). Every row states what the reader would maintain.',
+	);
+}
+// The vocabulary, closed. A third value is how this column would acquire a
+// verdict, so growing it has to be a decision somebody makes here on purpose.
+const sheetVocabulary = ['build', 'key'];
+const strayValues = [...new Set(comparisonSheetValues)].filter((value) => !sheetVocabulary.includes(value));
+if (strayValues.length > 0) {
+	failures.push(
+		`comparison (RC-57): spreadsheet cell value(s) [${strayValues.join(', ')}] are outside the ` +
+			`closed vocabulary [${sheetVocabulary.join(', ')}]`,
+	);
+}
+requireText(comparisonSource, "build: 'You build it'", 'spreadsheet cell vocabulary (RC-57)');
+requireText(comparisonSource, "key: 'You key it in'", 'spreadsheet cell vocabulary (RC-57)');
+requireText(comparePage, 'what you would maintain', 'spreadsheet column header hedge (RC-57)');
+requireText(
+	comparePage,
+	'It is a description of your work, not of what a spreadsheet is able to do.',
+	'spreadsheet legend row (RC-57)',
+);
+// No glyph in this column, for the reason no competitor cell has one.
+if (/CellMark[^>]*row\.sheet/.test(comparePage)) {
+	failures.push(
+		'comparison honesty: the spreadsheet column is rendering a status mark. Those cells ' +
+			'describe the reader work, and a glyph would read them as a verdict (RC-57)',
+	);
+}
+// The three rows CostCook loses must say so in the spreadsheet column, or the
+// column reads as a clean sweep, which is the failure mode RC-57 names.
+for (const label of ['Lot tracking and FSMA 204', 'Fine-grained screen permissions', 'Several locations']) {
+	const rowText = comparisonSource.slice(
+		comparisonSource.indexOf(`label: '${label}'`),
+		comparisonSource.indexOf(`label: '${label}'`) + 700,
+	);
+	if (!/sheetNote: 'CostCook says No here\. A sheet is the better answer if you need it\.'/.test(rowText)) {
+		failures.push(
+			`comparison (RC-57): "${label}" is a CostCook No row, so its spreadsheet cell must say ` +
+				'the sheet is the better answer there',
+		);
+	}
 }
 
 // RC-56: the spreadsheet pain, named. The heading always carried it; the four

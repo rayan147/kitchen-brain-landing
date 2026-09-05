@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { comparison, competitors, costcookNo, NOT_LISTED, VERIFIED_ON } from '../lib/comparison';
+import { comparison, competitors, costcookNo, NOT_LISTED, sheetWork, VERIFIED_ON } from '../lib/comparison';
 import { spell } from '../lib/words';
 import CellMark from '../components/CellMark.astro';
 import { cta, demoCta, launchPlan } from '../lib/site';
@@ -16,6 +16,17 @@ const costcookLimits = comparison.flatMap((group) =>
 // the rule that keeps this page honest is that a competitor cell reports what
 // THEIR pricing page said on a date, never what their product can or cannot do.
 //
+// THE SPREADSHEET COLUMN IS NOT A FOURTH PRODUCT (RC-57). It has no pricing
+// page, so the rule above cannot reach it and must not be faked for it. Its
+// cells report the reader's labor and nothing else: You build it, or You key it
+// in. No cell there denies a spreadsheet any ability, because such a denial
+// would be untrue and because it is the exact failure the competitor columns
+// exist to prevent. src/lib/comparison.ts holds the full contract.
+//
+// THAT COLUMN READS build OR key ON EVERY ROW, and that is not a sweep. It
+// describes work, not merit, and on the three rows CostCook marks No it is the
+// better cell of the two. Both readings are load-bearing; see the ledger.
+//
 // THE PAGE IS NOT ALLOWED TO WIN EVERY ROW. The remaining No rows stay in
 // the task area where a reader expects to find them rather than being buried at
 // the bottom. A table that ticks all the way down is read as marketing by
@@ -28,18 +39,31 @@ const costcookLimits = comparison.flatMap((group) =>
 // fourth deliberately does NOT: "Not listed" is a competitor cell, and giving
 // it a glyph would teach a reader to take it as a verdict on their product
 // rather than as the hedge it is. Four rows, three marks. See CellMark.astro.
+// A mark-less row carries its own subject, because it is not a status. There
+// are two of them now and they hedge DIFFERENT things: one is about what a
+// company published, the other about what the reader would carry.
 const legend = [
-	['yes', 'It ships in the CostCook you would start today.'],
-	['coming', comingDefinition],
-	['no', 'CostCook does not do this.'],
-	[null, 'Not named on their own pricing page on the date below. It does not mean their product cannot do it.']
+	{ status: 'yes', meaning: 'It ships in the CostCook you would start today.' },
+	{ status: 'coming', meaning: comingDefinition },
+	{ status: 'no', meaning: 'CostCook does not do this.' },
+	{
+		subject: NOT_LISTED,
+		meaning: 'Not named on their own pricing page on the date below. It does not mean their product cannot do it.'
+	},
+	// Added 2026-09-05 with the spreadsheet column (RC-57). No mark, for the same
+	// reason the row above has none: a glyph would turn a description of work
+	// into a verdict.
+	{
+		subject: 'A spreadsheet',
+		meaning: 'A spreadsheet cell says what you would build and maintain yourself. It is a description of your work, not of what a spreadsheet is able to do.'
+	}
 ] as const;
 ---
 
 <!-- story: docs/stories/compare.story.md -->
 <Base
-	title="Compare CostCook, Parsley, and meez"
-	description="A dated, tier-by-tier look at what CostCook ships and what Parsley and meez list on their pricing pages."
+	title="Compare CostCook, Parsley, meez, and a spreadsheet"
+	description="A dated, tier-by-tier look at what CostCook ships, what Parsley and meez list on their pricing pages, and what you would build and maintain yourself in a spreadsheet."
 	path="/compare"
 >
 	<section class="container-page py-section" aria-labelledby="compare-title">
@@ -54,6 +78,16 @@ const legend = [
 			<p class="mt-5 max-w-[62ch] text-ink-soft">
 				This page shows what CostCook ships, what it does not, and what Parsley and meez
 				list on their pricing pages&mdash;at the monthly price that unlocks each row.
+			</p>
+			<!-- The spreadsheet column, 2026-09-05 (RC-57). Most kitchens reading this
+			     page are costing on a sheet today, and it was the one option the table
+			     never showed them. It is not a fourth product: it has no pricing page,
+			     so its cells report the reader's own work instead. -->
+			<p class="mt-5 max-w-[62ch] text-ink-soft">
+				It also shows the option most kitchens are using right now. A spreadsheet
+				will hold almost anything on this list. The column says what you would be
+				building and keeping right for it, because that part is the cost nobody
+				puts a price on.
 			</p>
 		</div>
 
@@ -113,12 +147,14 @@ const legend = [
 		<div class="mt-10 max-w-3xl">
 			<h2 class="text-h3 font-semibold">Read each cell literally</h2>
 			<dl class="mt-4 space-y-3 text-ink-soft">
-				{legend.map(([status, meaning]) => (
+				{legend.map((entry) => (
 					<div class="sm:flex sm:gap-4">
 						<dt class="text-ink sm:w-36 sm:shrink-0">
-							{status ? <CellMark status={status} /> : <span class="font-semibold">{NOT_LISTED}</span>}
+							{'status' in entry
+								? <CellMark status={entry.status} />
+								: <span class="font-semibold">{entry.subject}</span>}
 						</dt>
-						<dd class="max-w-[58ch]">{meaning}</dd>
+						<dd class="max-w-[58ch]">{entry.meaning}</dd>
 					</div>
 				))}
 			</dl>
@@ -176,6 +212,17 @@ const legend = [
 									<dt class="w-24 shrink-0 text-ink-soft">meez</dt>
 									<dd>{row.meez}</dd>
 								</div>
+								{/* RC-57. Inherits the flex-wrap fix above; a fixed label
+								    column plus a value overflows a 390px viewport at 200%
+								    text without it. No CellMark: this cell describes the
+								    reader's work, never a verdict. */}
+								<div class="flex flex-wrap gap-x-2 px-2">
+									<dt class="w-24 shrink-0 text-ink-soft">A spreadsheet</dt>
+									<dd>
+										{sheetWork[row.sheet]}
+										{row.sheetNote && <span class="mt-0.5 block text-ink-soft">{row.sheetNote}</span>}
+									</dd>
+								</div>
 							</dl>
 						</li>
 					))}
@@ -185,7 +232,8 @@ const legend = [
 					<table class="w-full border-collapse text-left">
 						<caption class="sr-only">
 							{group.title}: what CostCook does, against what Parsley and meez list on
-							their pricing pages as of {VERIFIED_ON}.
+							their pricing pages as of {VERIFIED_ON}, and against what you would build
+							and maintain in a spreadsheet.
 						</caption>
 						<thead>
 							{/* The competitor headers repeat the hedge in every group. The
@@ -201,9 +249,17 @@ const legend = [
 									Parsley
 									<span class="mt-1 block font-mono text-xs font-normal tracking-wide text-ink-soft">their pricing page</span>
 								</th>
-								<th scope="col" class="w-48 py-3 font-semibold">
+								<th scope="col" class="w-48 py-3 pr-4 font-semibold">
 									meez
 									<span class="mt-1 block font-mono text-xs font-normal tracking-wide text-ink-soft">their pricing page</span>
+								</th>
+								{/* RC-57. The sub-label rides along in every group for the
+								    same reason the competitor hedge does: the legend that
+								    defines it is at the top of the page, and by group four
+								    the reader has scrolled past it. */}
+								<th scope="col" class="w-40 py-3 font-semibold">
+									A spreadsheet
+									<span class="mt-1 block font-mono text-xs font-normal tracking-wide text-ink-soft">what you would maintain</span>
 								</th>
 							</tr>
 						</thead>
@@ -220,7 +276,11 @@ const legend = [
 										<CellMark status={row.costcook} />
 									</td>
 									<td class="py-4 pr-4 text-ink-soft">{row.parsley}</td>
-									<td class="py-4 text-ink-soft">{row.meez}</td>
+									<td class="py-4 pr-4 text-ink-soft">{row.meez}</td>
+									<td class="py-4 text-ink-soft">
+										{sheetWork[row.sheet]}
+										{row.sheetNote && <span class="mt-1 block text-sm">{row.sheetNote}</span>}
+									</td>
 								</tr>
 							))}
 						</tbody>

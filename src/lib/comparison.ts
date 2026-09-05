@@ -79,6 +79,46 @@ export const competitors = [
 
 export type Verdict = 'yes' | 'no' | 'coming';
 
+/**
+ * THE SPREADSHEET COLUMN (RC-57). It is not a fourth product. A spreadsheet has
+ * no pricing page and no tiers, so the rule that governs every other column
+ * here cannot reach it, and it must not be given a version of that rule it
+ * would fail.
+ *
+ * What this column reports is the READER'S LABOR, and nothing else. A blank
+ * sheet does nothing; anything a sheet holds, somebody built and now maintains.
+ * That is true without exception and it is not a claim about software, so it is
+ * the only thing these cells are allowed to say.
+ *
+ *   'build'  You build it.   Structure and formula: costing, scaling, prep
+ *                            lists, par levels.
+ *   'key'    You key it in.  Data arriving or leaving by hand: the catalog,
+ *                            the USDA figures, an invoice, an order typed into
+ *                            an email.
+ *
+ * NO THIRD VALUE MAY EVER BE ADDED TO DENY A SPREADSHEET AN ABILITY. A sheet can send mail, a sheet can hold permissions,
+ * a sheet has an API. Any cell denying that would be the same untrue claim this
+ * project refused on the homepage, shipped on the one page whose whole
+ * discipline is that no cell asserts a capability. Where a row genuinely costs
+ * the reader nothing, it takes a `sheetNote` saying so, not a new value.
+ *
+ * NO STATUS GLYPH, EVER. CellMark renders in the CostCook column and nowhere
+ * else. A glyph here would turn a description of work into a verdict, which is
+ * the same mistake the competitor columns exist to avoid.
+ *
+ * THIS COLUMN READS build OR key ON ALL 40 ROWS, and that is not a clean sweep.
+ * It describes labor, not merit: "You build it" is a real answer, and for a
+ * kitchen with one repeating menu it is often the right one. On the three rows
+ * CostCook marks No (lot tracking, fine-grained screen permissions, several
+ * locations) the sheet is the BETTER cell, and the page does not hide it.
+ */
+export type SheetWork = 'build' | 'key';
+
+export const sheetWork: Record<SheetWork, string> = {
+	build: 'You build it',
+	key: 'You key it in'
+};
+
 export interface Row {
 	label: string;
 	/** Optional product identity mark used beside a visible capability label. */
@@ -86,6 +126,10 @@ export interface Row {
 	costcook: Verdict;
 	/** Shown under the label. Required wherever a tick or a dash needs its edge. */
 	note?: string;
+	/** What the reader maintains if this lives in a spreadsheet. RC-57. */
+	sheet: SheetWork;
+	/** The edge on a spreadsheet cell, where the row costs the reader nothing. */
+	sheetNote?: string;
 	parsley: string;
 	meez: string;
 }
@@ -103,30 +147,35 @@ export const comparison: RowGroup[] = [
 		rows: [
 			{
 				label: 'Recipe costing and pricing',
+				sheet: 'build',
 				costcook: 'yes',
 				parsley: 'Chef, $129',
 				meez: 'Starter, $24'
 			},
 			{
 				label: 'Recipe scaling and unit conversion',
+				sheet: 'build',
 				costcook: 'yes',
 				parsley: 'Chef, $129',
 				meez: 'Starter, $24'
 			},
 			{
 				label: 'Sub-recipes that cost through to the plate',
+				sheet: 'build',
 				costcook: 'yes',
 				parsley: NOT_LISTED,
 				meez: 'Starter, $24'
 			},
 			{
 				label: 'Menus costed per guest',
+				sheet: 'build',
 				costcook: 'yes',
 				parsley: 'Chef, $129',
 				meez: NOT_LISTED
 			},
 			{
 				label: 'Trim yield on the recipe line',
+				sheet: 'build',
 				costcook: 'yes',
 				note: 'It moves what you buy, not only what it costs.',
 				parsley: NOT_LISTED,
@@ -134,6 +183,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Food cost percent against a target you set',
+				sheet: 'build',
 				costcook: 'yes',
 				note: 'Food cost. Not labor, not overhead, so not business margin.',
 				parsley: 'Chef, $129',
@@ -147,6 +197,8 @@ export const comparison: RowGroup[] = [
 				   with scripts/seed-catalog-embeddings.ts as the embedding
 				   target that intake matches against. RC-41. */
 				label: 'A preloaded ingredient catalog',
+				sheet: 'key',
+				sheetNote: 'Around 1,500 names, plus the vendor abbreviations, typed once and corrected forever after.',
 				costcook: 'yes',
 				note: 'Around 1,500 canonical names with the vendor abbreviations that resolve to them, so an invoice reading chix breast lands on chicken breast. Names and aliases, not prices: a preloaded price would be a number nobody chose sitting on your plate cost.',
 				parsley: 'Chef, $129',
@@ -154,6 +206,8 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'USDA yields, densities and unit weights',
+				sheet: 'key',
+				sheetNote: 'Looked up per ingredient, in the source, and kept beside it.',
 				costcook: 'yes',
 				note: 'Offered as chips you tap to fill, each sourced to its FoodData Central or Handbook 102 entry. Nothing is assumed until you accept it.',
 				parsley: NOT_LISTED,
@@ -166,12 +220,15 @@ export const comparison: RowGroup[] = [
 		rows: [
 			{
 				label: 'AI recipe import',
+				sheet: 'key',
 				costcook: 'yes',
 				parsley: 'Chef, $129',
 				meez: 'Starter, $24'
 			},
 			{
 				label: 'Supplier order guides and price sheets',
+				sheet: 'key',
+				sheetNote: 'Every changed line, read off the sheet they sent and entered against the right pack.',
 				costcook: 'yes',
 				note: 'Applied row by row. A pack-size change refuses to apply quietly.',
 				parsley: 'Chef, $129',
@@ -179,6 +236,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Invoice scanning',
+				sheet: 'key',
 				costcook: 'yes',
 				note: 'Photo, PDF, spreadsheet, Word, or pasted text, all staged for you to confirm.',
 				parsley: 'Enterprise, call for quote',
@@ -186,6 +244,8 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Where a price came from, on the price',
+				sheet: 'build',
+				sheetNote: 'A column beside each price, filled in by whoever changed it.',
 				costcook: 'yes',
 				note: 'Which receiving, which invoice, which date.',
 				parsley: NOT_LISTED,
@@ -198,12 +258,14 @@ export const comparison: RowGroup[] = [
 		rows: [
 			{
 				label: 'Prep lists scaled to the job',
+				sheet: 'build',
 				costcook: 'yes',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},
 			{
 				label: 'Production plans across several events',
+				sheet: 'build',
 				costcook: 'yes',
 				note: 'Two to twelve events plan as one run. Each still confirms and buys on its own.',
 				parsley: 'Business, $379',
@@ -211,18 +273,22 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Shopping by supplier in whole packs',
+				sheet: 'build',
 				costcook: 'yes',
 				parsley: 'Business, $379',
 				meez: 'Starter, $24'
 			},
 			{
 				label: 'Pack lists with equipment',
+				sheet: 'build',
 				costcook: 'yes',
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},
 			{
 				label: 'Purchase orders emailed to your suppliers',
+				sheet: 'key',
+				sheetNote: 'The rows go into one message per supplier.',
 				costcook: 'yes',
 				note: 'You see the exact body that was sent.',
 				parsley: NOT_LISTED,
@@ -230,6 +296,8 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Receiving against what you ordered',
+				sheet: 'key',
+				sheetNote: 'What arrived comes back in by hand, against the order you sent.',
 				costcook: 'yes',
 				note: 'Short, over, substitute, missing, unexpected. Ticking it off writes the purchase.',
 				parsley: 'Business, $379',
@@ -237,6 +305,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Inventory',
+				sheet: 'build',
 				costcook: 'yes',
 				note: 'Computed from dated movements, and it says out loud when a count is stale.',
 				parsley: 'Business, $379',
@@ -250,6 +319,7 @@ export const comparison: RowGroup[] = [
 				   only from a trusted count. Buying does not read them today; the
 				   separate replenishment row is Coming. RC-43. */
 				label: 'Par levels per ingredient',
+				sheet: 'build',
 				costcook: 'yes',
 				note: 'A floor you set, and the shelf is flagged when it falls under. Judged only from a count it can trust, never from a guess.',
 				parsley: 'Business, $379',
@@ -257,6 +327,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: comingPlans.parBuying.comparisonLabel,
+				sheet: 'build',
 				costcook: comingPlans.parBuying.verdict,
 				note: comingPlans.parBuying.comparisonNote,
 				parsley: 'Business, $379',
@@ -269,6 +340,8 @@ export const comparison: RowGroup[] = [
 		rows: [
 			{
 				label: 'Allergen tagging',
+				sheet: 'key',
+				sheetNote: 'Fourteen allergens per ingredient, then rolled up to the recipe yourself.',
 				costcook: 'yes',
 				note: 'Fourteen allergens, rolled up from ingredient to recipe, on the pack list. Catalog entries carry curated allergen facts as an allow-list, so a name match never invents food-safety data. A chef override needs a written reason.',
 				parsley: 'Chef Plus, $189',
@@ -282,6 +355,8 @@ export const comparison: RowGroup[] = [
 				   because the computed facts ship and the printed panel does
 				   not. RC-42. */
 				label: 'Full nutrition facts',
+				sheet: 'key',
+				sheetNote: 'Fifteen nutrients per ingredient before anything totals.',
 				costcook: 'yes',
 				note: 'All fifteen nutrients an FDA label carries, computed per recipe from USDA FoodData Central profiles. It tells you when a profile or a conversion is missing instead of quietly totalling an incomplete dish.',
 				parsley: 'Chef Plus, $189',
@@ -289,6 +364,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Printed USDA nutrition labels',
+				sheet: 'build',
 				/* Moved from coming to yes on 2026-08-29 (RC-50): the print page is on
 				   sandbox/demo with no flag. Browser print; the printer integration is
 				   the "Kitchen label printing" row below and stays coming. */
@@ -299,6 +375,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: comingPlans.dietary.comparisonLabel,
+				sheet: 'key',
 				costcook: comingPlans.dietary.verdict,
 				note: comingPlans.dietary.comparisonNote,
 				parsley: 'Chef Plus, $189',
@@ -306,6 +383,8 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Lot tracking and FSMA 204',
+				sheet: 'build',
+				sheetNote: 'CostCook says No here. A sheet is the better answer if you need it.',
 				costcook: 'no',
 				note: 'Built for caterers, not for a facility under a traceability rule.',
 				parsley: 'Enterprise, call for quote',
@@ -313,6 +392,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Kitchen label printing',
+				sheet: 'build',
 				costcook: labelsAvailability.verdict,
 				note: labelsAvailability.comparisonNote,
 				parsley: '$59/month add-on',
@@ -325,6 +405,8 @@ export const comparison: RowGroup[] = [
 		rows: [
 			{
 				label: 'Unlimited teammates',
+				sheet: 'build',
+				sheetNote: 'The file shares for free. Two people in the same cell at once is the part you manage.',
 				costcook: 'yes',
 				note: 'During launch, on the one plan. No per-device count.',
 				parsley: 'Business, $379',
@@ -332,6 +414,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Role-aware sensitive actions',
+				sheet: 'build',
 				costcook: 'yes',
 				note: 'Owner, Manager and Staff boundaries protect billing, team and setup work, recipe lifecycle decisions, and selected Sage actions.',
 				parsley: 'Business, $379',
@@ -339,6 +422,8 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Fine-grained screen permissions',
+				sheet: 'build',
+				sheetNote: 'CostCook says No here. A sheet is the better answer if you need it.',
 				costcook: 'no',
 				note: 'No custom roles or per-screen permission grid. A workspace teammate can open cost screens.',
 				parsley: 'Business, $379',
@@ -346,6 +431,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: comingPlans.spanish.comparisonLabel,
+				sheet: 'key',
 				costcook: comingPlans.spanish.verdict,
 				note: comingPlans.spanish.comparisonNote,
 				parsley: 'Business, $379',
@@ -353,6 +439,8 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Several locations',
+				sheet: 'build',
+				sheetNote: 'CostCook says No here. A sheet is the better answer if you need it.',
 				costcook: 'no',
 				note: 'One kitchen workspace.',
 				parsley: 'Enterprise, call for quote',
@@ -360,6 +448,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Point of sale',
+				sheet: 'build',
 				costcook: 'coming',
 				note: 'Square is being built.',
 				parsley: 'Business, $379',
@@ -367,6 +456,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Accounting',
+				sheet: 'build',
 				costcook: 'coming',
 				note: 'QuickBooks is being built.',
 				parsley: NOT_LISTED,
@@ -374,12 +464,14 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'An API to build against',
+				sheet: 'build',
 				costcook: 'coming',
 				parsley: 'Business, $379',
 				meez: 'Enterprise, custom'
 			},
 			{
 				label: 'An assistant that answers from your numbers',
+				sheet: 'build',
 				icon: 'sage',
 				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
 				costcook: SAGE_STATUS,
@@ -389,6 +481,7 @@ export const comparison: RowGroup[] = [
 			},
 			{
 				label: 'Works with no signal, and with no JavaScript',
+				sheet: 'build',
 				costcook: 'yes',
 				note: 'Order pages keep working in the walk-in, marked with when they were cached.',
 				parsley: NOT_LISTED,

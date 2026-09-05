@@ -26,6 +26,39 @@ for (const page of pages) {
 		failed = true;
 	}
 }
+// RC-57: the spreadsheet column, read off the emitted /compare HTML. The source
+// pins in check-landing-claims.mjs prove the values are written; only this
+// proves they render, and a five-column table is exactly the kind of change
+// that lands in the desktop path and gets forgotten in the phone one.
+const compareHtml = readFileSync(join(dist, 'compare/index.html'), 'utf8');
+const sheetCellStrings = ['You build it', 'You key it in'];
+const compareGroupCount = (compareHtml.match(/what you would maintain/g) ?? []).length;
+if (compareGroupCount !== 5) {
+	console.error(
+		`check-dist: /compare renders ${compareGroupCount} spreadsheet column header(s); every one of ` +
+			'the five group tables carries the hedge (RC-57)',
+	);
+	failed = true;
+}
+// Every row states what the reader maintains, in BOTH paths: the desktop table
+// and the phone card list each render one cell per row.
+const sheetCellCount = sheetCellStrings.reduce(
+	(sum, value) => sum + (compareHtml.split(value).length - 1),
+	0,
+);
+const compareRowCount = (compareHtml.match(/<th scope="row"/g) ?? []).length;
+if (sheetCellCount !== compareRowCount * 2) {
+	console.error(
+		`check-dist: /compare renders ${sheetCellCount} spreadsheet cell(s) for ${compareRowCount} table ` +
+			`row(s); the table and the phone cards each need one per row, so ${compareRowCount * 2} (RC-57)`,
+	);
+	failed = true;
+}
+if (!compareHtml.includes('not of what a spreadsheet is able to do')) {
+	console.error('check-dist: /compare no longer renders the spreadsheet legend row (RC-57)');
+	failed = true;
+}
+
 if (failed) process.exit(1);
 
 // The Features mega-menu is a curated shortcut into the exhaustive page. Its
@@ -337,6 +370,7 @@ console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve 
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
 console.log(`check-dist: homepage demo retains ${demoGuideSteps.length} readable handoffs and the multi-run boundary`);
 console.log(`check-dist: homepage outcomes retain ${outcomeStages.length} guided handoffs and their proof`);
+console.log(`check-dist: /compare renders a spreadsheet column on ${compareRowCount} rows across 5 group tables`);
 console.log(`check-dist: homepage diagnosis renders ${spreadsheetPains.length} spreadsheet pains mirrored by ${spreadsheetBefores.length} answers`);
 console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);
 console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
