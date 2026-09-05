@@ -123,6 +123,38 @@ const moments = [
 		</ol>
 		</div>
 
+		<div class="wrong-not-slow" data-reveal>
+			<p class="eyebrow">And the quiet one</p>
+			<p class="mt-4 max-w-[72ch] text-lede text-ink-soft">
+				Those four are the slow ones. The one that costs money is quieter than any of them.
+			</p>
+			<p class="mt-5 max-w-[72ch] text-ink-soft">
+				A sheet totals what is in it. Leave the beef blank while you wait on the invoice
+				and the plate cost still prints, short by the price of the beef, looking exactly
+				as confident as a right answer. A conversion does the same thing: the recipe is in
+				grams, the pack is in pounds, and the number bridging them was typed once by
+				somebody who is not in the kitchen today.
+			</p>
+			<p class="mt-5 max-w-[72ch] text-ink-soft">
+				Those two are not slower. They are wrong, and nothing on the screen says so.
+				CostCook stops instead. A missing price or a missing conversion holds the costing
+				and names the line it is waiting on, rather than totalling around it and handing
+				you a number.
+			</p>
+		</div>
+
 		<SectionHandoff from="problem" />
 	</div>
 </section>
+
+<style>
+	/* Rule-and-prose register, deliberately unlike the ticket stack above it:
+	   full width under both columns, one hairline, no number, no tilt, no card.
+	   The reader should feel the subject change rather than read a fifth item. */
+	.wrong-not-slow {
+		margin-top: clamp(2.5rem, 6vw, 4rem);
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-ticket-rule);
+	}
+</style>
+

@@ -112,6 +112,31 @@ paid price back. The sheet noun introduced in `problem` is the same noun the
 four `from` labels in `outcomes` pick up, which is what makes the pairing
 visible rather than merely structural.
 
+### 2026-09-05 revision — the pains that are wrong, not slow
+
+The release owner read the four moments and doubted they were the whole list.
+They were not, and the gap was a category rather than an item: **all four
+describe labor.** Every one says the work is slow. None says the answer was
+wrong, and the second is the one that costs money.
+
+So a fifth element sits after the ticket stack, carrying the two failures RC-20
+names: a price that is not there yet, and a conversion nobody checked. Both
+total silently. Beat-wise it is the Catalyst sharpening, not a fifth Debate
+item, which is why it does not take a fifth answer in `outcomes`.
+
+It is deliberately not a fifth ticket. The four are numbered `01`–`04` in a
+tilted stack, and anything wearing that costume becomes a peer to the eye
+whatever the DOM says. It sits outside the `<ol>`, in the section's
+rule-and-prose register, with no number and no `h3`. `check-dist` fails the
+build if it ever moves inside the list.
+
+Refused, and now guarded: that CostCook catches a price you typed wrong. It
+does not, and neither does a spreadsheet. RC-20 covers a fact that is **absent**,
+and the copy stops exactly there.
+
+Still no rival snap line. The block's closing line, *"They are wrong, and
+nothing on the screen says so"*, carries no number by design.
+
 ### Step 11 — Revise and Finish
 
 Cut twice. The lede lost a sentence; each moment body is one or two sentences

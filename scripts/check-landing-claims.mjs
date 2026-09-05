@@ -828,6 +828,26 @@ requireText(problemSource, 'Most kitchens cost on a spreadsheet', 'homepage spre
 requireText(problemSource, 'docs/stories/homepage-spreadsheet-pain.story.md', 'spreadsheet-pain story pointer');
 requireText(outcomesSource, 'docs/stories/homepage-spreadsheet-pain.story.md', 'spreadsheet-pain story pointer');
 
+// RC-56 / RC-20: the fifth element. It states the two failures that are silent
+// rather than slow, and its own fix, because RC-20 is a shipped safety rule and
+// this block borrows no CustomerOutcomes card. It is pinned so it cannot drift
+// past what RC-20 covers, which is a price or a conversion that is ABSENT.
+requireText(problemSource, 'Those four are the slow ones', 'the wrong-not-slow turn (RC-56)');
+requireText(
+	problemSource,
+	'A missing price or a missing conversion holds the costing',
+	'the missing-fact safety rule the fifth element rests on (RC-20)',
+);
+// A present-but-wrong number is caught by nothing, in either tool. This block
+// is the one place on the page tempted to promise otherwise.
+for (const [pattern, label] of [
+	[/\b(catch|catches|spot|spots|flag|flags)[^.]{0,40}\b(typo|wrong (price|number)|mistyped|fat.finger)/i,
+		'catching a wrong-but-present number (RC-20 covers only a missing one)'],
+	[/\bevery (error|mistake)\b/i, 'an all-errors promise (RC-20 covers missing facts only)'],
+]) {
+	if (pattern.test(problemSource)) failures.push(`homepage diagnosis states ${label}`);
+}
+
 // The four pains and the four befores, in order. Pinning the ORDER, not just
 // the presence, is the point: a reordered answer list silently unpairs the two
 // sections and nothing else in the build can see it.

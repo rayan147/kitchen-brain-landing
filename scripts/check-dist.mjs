@@ -195,6 +195,25 @@ if (renderedBefores.join(' | ') !== spreadsheetBefores.join(' | ')) {
 	);
 	failed = true;
 }
+// The fifth element renders, and stays out of the ticket stack. If it ever
+// lands inside the <ol> it becomes a peer to the eye and the pairing above
+// silently stops meaning anything; the h3 count already catches the obvious
+// version of that, this catches the subtle one.
+if (!problemSectionHtml.includes('Those four are the slow ones')) {
+	console.error('check-dist: homepage diagnosis no longer names the silent failure (RC-56/RC-20)');
+	failed = true;
+}
+const problemListHtml = problemSectionHtml.slice(
+	problemSectionHtml.indexOf('<ol'),
+	problemSectionHtml.indexOf('</ol>'),
+);
+if (problemListHtml.includes('Those four are the slow ones')) {
+	console.error(
+		'check-dist: the fifth element has moved inside the ticket stack, which makes it read as a ' +
+			'fifth pain and unpairs the four from their answers (RC-56)',
+	);
+	failed = true;
+}
 if (!problemSectionHtml.includes('Most kitchens cost on a spreadsheet')) {
 	console.error('check-dist: homepage diagnosis no longer names the spreadsheet in its lede (RC-56)');
 	failed = true;
