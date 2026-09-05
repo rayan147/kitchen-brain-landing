@@ -558,6 +558,24 @@ if (/hover:(?:block|flex|opacity)/.test(navSource) || /group-hover/.test(navSour
 requireText(ledger, 'f44c9393973244b8b7f62edaf98c1bd0362162ce', 'release ledger truth-pass baseline');
 requireText(ledger, 'dfb71efc524da94efc6cec2f354751ce69d424e2', 'release ledger');
 requireText(ledger, '7ceb02dbb67034e507aeb279abb421ddd90df87f', 'release ledger');
+// RC-16..RC-25, the costing core. Until 2026-09-05 these ten were the only rows
+// in the ledger whose evidence named no file, no sha and no artifact, and RC-20
+// had a new homepage claim resting on 31 characters of it. Seven of the ten are
+// now executed against the engine at the sha below; the artifact says plainly
+// which three are not. Pinned so the sha and the artifact cannot quietly part.
+requireText(ledger, 'a34149cb4a1e8bc36c69fbf88da2ef74924d650c', 'costing-core verification sha (RC-16..RC-25)');
+requireText(ledger, 'docs/verification/costing-core/260905a/', 'costing-core verification artifact (RC-16..RC-25)');
+for (const file of [
+	'docs/verification/costing-core/260905a/results.md',
+	'docs/verification/costing-core/260905a/verify-rc20.ts',
+	'docs/verification/costing-core/260905a/verify-costing-block.ts',
+]) {
+	try {
+		await read(file);
+	} catch {
+		failures.push(`costing-core: the ledger cites ${file} and it is not in the repo`);
+	}
+}
 requireText(siteSource, "href: '/demo'", 'demo preparation CTA');
 requireText(siteSource, "target: '_self'", 'demo preparation CTA');
 const demoRequestSource = surfaces[surfaceFiles.indexOf('src/components/sections/DemoRequest.astro')];

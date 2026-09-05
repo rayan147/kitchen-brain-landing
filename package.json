@@ -15,6 +15,7 @@
 		"verify:demo": "node scripts/verify-demo.mjs",
 		"verify:blog": "node scripts/verify-blog.mjs",
 		"verify:first-dish": "node scripts/verify-first-dish.mjs",
+		"verify:compare": "node scripts/verify-compare.mjs",
 		"video:sage": "node scripts/sage-video/assemble.mjs"
 	},
 	"dependencies": {

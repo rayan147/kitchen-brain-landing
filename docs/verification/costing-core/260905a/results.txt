@@ -1,0 +1,12 @@
+PASS  a missing pack price refuses the recipe and names the ingredient
+        Ingredient "Beef tenderloin" has no pack price: add what a whole muscle costs
+PASS  a whole order refuses rather than quoting off free food
+        Ingredient "Beef tenderloin" has no pack price: add what a whole muscle costs
+PASS  the same recipe costs normally once a real price exists
+        1667.666666666667c
+PASS  a volume line on a weight ingredient with no density names the ingredient and the fix
+        Cream: Cannot convert volume to mass for this ingredient without density (g per ml)
+PASS  nothing is flagged when every line can convert
+        null
+
+5/5 RC-20 assertions passed

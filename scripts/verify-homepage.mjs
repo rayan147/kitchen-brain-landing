@@ -205,6 +205,38 @@ try {
 	assert(zoom.overflow === 0, `320px at 200% text: horizontal overflow is ${zoom.overflow}px`);
 	assert(zoom.escaped.length === 0, `320px at 200% text: escaped elements: ${zoom.escaped.join(', ')}`);
 
+	// 390 AT 200% TEXT, ADDED 2026-09-05. 320 was the only width this check ran
+	// at, and 390 is the modal phone for the reader this site is written for: a
+	// caterer on a handset mid-shift. The two are not the same test. Several
+	// sections change grid between them, so a layout can hold at 320 and break
+	// at 390 with nothing in the build able to see it.
+	//
+	// MEASURE AGAINST innerWidth, NEVER documentElement.clientWidth. Under CDP
+	// device emulation Chromium reports innerWidth larger than clientWidth (411
+	// against 390 here), so a clientWidth reference reports a constant ~21px of
+	// phantom overflow on every page and stays constant against a baseline,
+	// which makes it look exactly like a real pre-existing defect. It cost a
+	// wrong bug report on 2026-09-05.
+	await viewport(390, 844, true);
+	await navigate();
+	const zoom390 = await evaluate(`(() => new Promise((resolve) => {
+		document.querySelector('[data-features-menu]').open = false;
+		document.documentElement.style.fontSize = '200%';
+		requestAnimationFrame(() => {
+			const escaped = [...document.body.querySelectorAll('*')].filter((element) => {
+				if (element.closest('details:not([open])')) return false;
+				const rect = element.getBoundingClientRect();
+				return rect.width > 0 && (rect.left < -1 || rect.right > innerWidth + 1);
+			});
+			resolve({
+				overflow: document.documentElement.scrollWidth - innerWidth,
+				escaped: escaped.map((element) => element.tagName.toLowerCase() + '.' + (element.className || ''))
+			});
+		});
+	}))()`);
+	assert(zoom390.overflow === 0, `390px at 200% text: horizontal overflow is ${zoom390.overflow}px`);
+	assert(zoom390.escaped.length === 0, `390px at 200% text: escaped elements: ${zoom390.escaped.join(', ')}`);
+
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 	await viewport(390, 844, true);
 	await navigate();
@@ -235,4 +267,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('Homepage browser verification passed: six viewports, phone-first fold, touch targets, contained mobile navigation, sticky action, 200% text, reduced motion, and no JavaScript.');
+console.log('Homepage browser verification passed: six viewports, phone-first fold, touch targets, contained mobile navigation, sticky action, 200% text at 320 and 390, reduced motion, and no JavaScript.');

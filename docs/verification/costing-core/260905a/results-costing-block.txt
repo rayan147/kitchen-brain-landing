@@ -1,0 +1,16 @@
+PASS  RC-16  an ingredient spec carries pack price, pack size and supplier context
+        pack price, pack size and trim yield all reached the plate: 158.73c
+PASS  RC-18  a sub-recipe costs through to the plate
+        100 g of a 1 kg / 800c sub costs 80c on the plate
+PASS  RC-19  line contributions are reported and sum to the recipe cost
+        2 line contributions summing to 260.00c, matching the recipe cost, no remainder
+PASS  RC-21  menu cost per guest includes portions and a miscellaneous cost
+        2 portions/guest = 40c, and a 10% misc line adds 4c on top as its own line
+PASS  RC-22  buying rounds up to whole packs
+        need 1g -> 1 pack, 1000g -> 1 pack, 1001g -> 2 packs
+PASS  RC-22  the plan groups shopping lines and carries the supplier
+        2 shopping lines across 2 suppliers
+PASS  RC-23  on-hand reduces buying, not the requirement
+        need stays 1000g while buying drops to 600g
+
+7/7 assertions passed across 6 rows
