@@ -14,6 +14,18 @@
  * upscaled. RC-48 records the proof-image rule and provenance.
  *
  * story: docs/stories/homepage-visual-guidance.story.md
+ * story: docs/stories/homepage-spreadsheet-pain.story.md
+ *
+ * THE FOUR "from" LABELS NAME THE SHEET SINCE 2026-09-05 (RC-56). They are the
+ * before side of each handoff and they were tool-agnostic, so the mirror to
+ * TheProblem was structural but invisible: the reader could not see that the
+ * thing being replaced was her spreadsheet. They now pick up the same nouns
+ * that section introduces, in the same order. The "to" labels did not move,
+ * because nothing new is claimed about the app here.
+ *
+ * These four must stay one per pain in TheProblem, in this order. The section
+ * order on the homepage rests on a measurement that is void without it; the
+ * header of src/pages/index.astro has the numbers.
  */
 import SectionHandoff from '../SectionHandoff.astro';
 
@@ -24,7 +36,7 @@ const outcomes = [
 		stage: 'Quote',
 		title: 'Quote with the food cost in front of you',
 		body: 'Pick the menu, enter guests and price per head, and see the job against your food-cost target before you say yes.',
-		from: 'An old supplier price',
+		from: 'A price the copy never got',
 		to: 'Cost checked before the quote',
 		iconPaths: ['M4 5h10l6 6-9 9-7-7z', 'M8.5 9h.01'],
 		proof: {
@@ -38,7 +50,7 @@ const outcomes = [
 		stage: 'Plan',
 		title: 'Change the count once',
 		body: 'Recipes scale, shared ingredients roll together, whole packs recalculate, and Shop, Prep and Pack stay on one plan.',
-		from: 'Four rebuilt lists',
+		from: 'One number, four tabs',
 		to: 'One guest count carried through',
 		iconPaths: ['M6 4h12v16H6z', 'M9 9h6M9 13h6M9 17h4', 'M9 4V2h6v2'],
 		proof: {
@@ -52,7 +64,7 @@ const outcomes = [
 		stage: 'Buy',
 		title: 'Send the buying without retyping it',
 		body: 'The shopping list groups by supplier, and receiving records what actually arrived: short, over, substituted, or missing.',
-		from: 'A list copied into emails',
+		from: 'Rows retyped into emails',
 		to: 'Whole packs grouped by supplier',
 		iconPaths: ['M3 6h11v10H3z', 'M14 9h4l3 3v4h-7z', 'M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'],
 		proof: {
@@ -66,7 +78,7 @@ const outcomes = [
 		stage: 'Cost again',
 		title: 'Bring the real price back to the next quote',
 		body: 'Record what you paid. Approved prices update future costing; the confirmed event stays frozen.',
-		from: 'An invoice filed after service',
+		from: 'An invoice in a folder, not the sheet',
 		to: 'The paid price in future costing',
 		iconPaths: ['M20 11a8 8 0 1 1-2.34-5.66', 'M20 4v7h-7', 'M12 8v4l3 2'],
 		proof: {
@@ -88,7 +100,8 @@ const outcomes = [
 				</h2>
 				<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
 					Price it, scale it, buy it, then bring the paid price back. Each step picks up
-					where the last one finished instead of starting from another copied sheet.
+					where the last one finished, so there is no second copy of the numbers to keep
+					in agreement with the first.
 				</p>
 			</div>
 

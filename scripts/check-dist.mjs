@@ -108,6 +108,65 @@ for (const stage of outcomeStages) {
 	}
 }
 
+// RC-56: the spreadsheet pain and its mirrored answers, read off the EMITTED
+// HTML rather than the component source. check-landing-claims.mjs pins both
+// lists in the .astro files, which proves the strings are written; it cannot
+// prove they render, and it reads them with a regex over the whole file that a
+// stray `title:` elsewhere in the module would poison. This is the same class
+// of hole as the tautological CTA check removed on 2026-09-05.
+//
+// The ORDER is the contract. TheProblem states four pains and CustomerOutcomes
+// answers them one for one; the homepage section order rests on a measurement
+// that is void if that pairing breaks (src/pages/index.astro).
+const stripTags = (html) => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+const spreadsheetPains = [
+	'You quote from an old price',
+	'You rebuild the same order four times',
+	'You retype the list to buy it',
+	'You learn the margin after service',
+];
+const spreadsheetBefores = [
+	'A price the copy never got',
+	'One number, four tabs',
+	'Rows retyped into emails',
+	'An invoice in a folder, not the sheet',
+];
+const problemSectionHtml = homeHtml.slice(
+	homeHtml.indexOf('id="problem"'),
+	homeHtml.indexOf('id="who"'),
+);
+const renderedPains = [...problemSectionHtml.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>/g)].map((match) =>
+	stripTags(match[1]),
+);
+if (renderedPains.join(' | ') !== spreadsheetPains.join(' | ')) {
+	console.error(
+		`check-dist: homepage pains render as [${renderedPains.join(', ')}] but the answers ` +
+			`in outcomes are written against [${spreadsheetPains.join(', ')}] (RC-56)`,
+	);
+	failed = true;
+}
+// The "Before" side of each handoff, in route order. Every handoff renders
+// Before then Instead, so the odd entries are the befores.
+const outcomesSectionHtml = homeHtml.slice(
+	homeHtml.indexOf('data-outcomes-guide'),
+	homeHtml.indexOf('id="yield"'),
+);
+const renderedBefores = [...outcomesSectionHtml.matchAll(/<strong[^>]*>([\s\S]*?)<\/strong>/g)]
+	.map((match) => stripTags(match[1]))
+	.filter((_, index) => index % 2 === 0)
+	.slice(0, spreadsheetBefores.length);
+if (renderedBefores.join(' | ') !== spreadsheetBefores.join(' | ')) {
+	console.error(
+		`check-dist: homepage answers render befores [${renderedBefores.join(', ')}], which no ` +
+			`longer mirror the four pains one for one and in order (RC-56)`,
+	);
+	failed = true;
+}
+if (!problemSectionHtml.includes('Most kitchens cost on a spreadsheet')) {
+	console.error('check-dist: homepage diagnosis no longer names the spreadsheet in its lede (RC-56)');
+	failed = true;
+}
+
 const intakeSources = [
 	'Photograph it',
 	'Drop the PDF or the doc in',
@@ -278,6 +337,7 @@ console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve 
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
 console.log(`check-dist: homepage demo retains ${demoGuideSteps.length} readable handoffs and the multi-run boundary`);
 console.log(`check-dist: homepage outcomes retain ${outcomeStages.length} guided handoffs and their proof`);
+console.log(`check-dist: homepage diagnosis renders ${spreadsheetPains.length} spreadsheet pains mirrored by ${spreadsheetBefores.length} answers`);
 console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);
 console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
 console.log(`check-dist: homepage yield calculation retains ${yieldStages.length} visible stages and proof`);

@@ -571,7 +571,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 55; claim += 1) {
+for (let claim = 1; claim <= 56; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -763,6 +763,49 @@ for (const [pattern, label] of [
 	if (pattern.test(firstDishSource)) failures.push(`first-dish states ${label}`);
 }
 
+// RC-56: the spreadsheet pain, named. The heading always carried it; the four
+// tickets, which is where the eye lands, did not. These pins hold the two
+// halves together. TheProblem states the pain and CustomerOutcomes answers it,
+// one for one and in order, and the homepage section order rests on a
+// measurement that is void if that pairing breaks (src/pages/index.astro).
+const problemSource = surfaces[surfaceFiles.indexOf('src/components/sections/TheProblem.astro')];
+const outcomesSource = surfaces[surfaceFiles.indexOf('src/components/sections/CustomerOutcomes.astro')];
+
+requireText(problemSource, 'The spreadsheet works until the job changes.', 'homepage diagnosis heading (RC-56)');
+requireText(problemSource, 'Most kitchens cost on a spreadsheet', 'homepage spreadsheet lede (RC-56)');
+requireText(problemSource, 'docs/stories/homepage-spreadsheet-pain.story.md', 'spreadsheet-pain story pointer');
+requireText(outcomesSource, 'docs/stories/homepage-spreadsheet-pain.story.md', 'spreadsheet-pain story pointer');
+
+// The four pains and the four befores, in order. Pinning the ORDER, not just
+// the presence, is the point: a reordered answer list silently unpairs the two
+// sections and nothing else in the build can see it.
+const problemMoments = [
+	'You quote from an old price',
+	'You rebuild the same order four times',
+	'You retype the list to buy it',
+	'You learn the margin after service',
+];
+const outcomeBefores = [
+	'A price the copy never got',
+	'One number, four tabs',
+	'Rows retyped into emails',
+	'An invoice in a folder, not the sheet',
+];
+const renderedMoments = [...problemSource.matchAll(/title: '([^']+)'/g)].map((m) => m[1]);
+if (renderedMoments.join('|') !== problemMoments.join('|')) {
+	failures.push(
+		`homepage pains (RC-56): TheProblem reads [${renderedMoments.join(', ')}] but the answers ` +
+			`in CustomerOutcomes are written against [${problemMoments.join(', ')}]`,
+	);
+}
+const renderedBefores = [...outcomesSource.matchAll(/from: '([^']+)'/g)].map((m) => m[1]);
+if (renderedBefores.join('|') !== outcomeBefores.join('|')) {
+	failures.push(
+		`homepage answers (RC-56): CustomerOutcomes befores read [${renderedBefores.join(', ')}], ` +
+			`which no longer mirror the four pains one for one and in order`,
+	);
+}
+
 const forbiddenClaims = [
 	[/\bknow the margin\b/i, 'full-margin language'],
 	[/(?<!food-only )\bgross margin\b|\binspect the margin\b/i, 'unsupported margin label'],
@@ -780,6 +823,15 @@ const forbiddenClaims = [
 	[/\b(gemini|gpt-?\d|openai|anthropic|claude(?!\.md)|sonnet|opus|llama|mistral)\b/i, 'model or provider name'],
 	[/\bnever invents? a number\b/i, 'unqualified never-invents claim (RC-49 softens it)'],
 	[/\blearns? your (business|kitchen)\b/i, 'assistant-learns claim'],
+	// RC-56. A verdict on the tool rather than a description of the reader's
+	// hands. It would also be false: a lookup against a price tab re-costs a
+	// recipe perfectly well. What is true is that her COPY holds the old number.
+	[/\b(spreadsheets?|the sheet|tabs?)\b[^.]{0,45}\b(cannot|can't|can not|is unable|are unable|will never|fails to|is incapable|has no way)\b/i,
+		'verdict on what a spreadsheet cannot do (RC-56 allows only the reader own manual work)'],
+	// RC-40 confines named products to /compare, where a cell reports only what
+	// that company own pricing page listed on a stated date. A spreadsheet suite
+	// is a named product with a pricing page, so the homepage noun stays generic.
+	[/\b(microsoft excel|google sheets|apple numbers|libreoffice)\b/i, 'named spreadsheet product outside /compare (RC-40)'],
 ];
 for (const [pattern, label] of forbiddenClaims) {
 	if (pattern.test(publicCopy)) failures.push(`public copy contains forbidden ${label}`);

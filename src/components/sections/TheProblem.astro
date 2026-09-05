@@ -10,30 +10,47 @@
  *
  * Order matters: it walks PRICE IN -> ORDER -> BUY -> THE MONTH, the same
  * direction as the hero band and src/lib/workflow.ts.
+ *
+ * THE SHEET IS NAMED IN THE TICKETS SINCE 2026-09-05, at the owner's request to
+ * make the spreadsheet pain explicit. The heading already carried it; the four
+ * moments, which is where the eye lands, did not, so the diagnosis read as
+ * generic kitchen admin. Each body now names the artifact: the copy, the four
+ * tabs, the rows retyped, the folder. RC-56.
+ *
+ * WHAT NO LINE HERE MAY DO IS DELIVER A VERDICT ON THE TOOL. Denying a
+ * spreadsheet the ability to re-cost a recipe would be simply untrue: a lookup
+ * against a price tab does exactly that. What is true is that the reader's COPY
+ * holds the old number and that she retypes it. Every sentence therefore
+ * describes her own hands, never the software's limits. RC-40 and RC-47 add the
+ * second boundary: no product is named outside /compare, so the noun stays
+ * generic. check-landing-claims.mjs enforces both. The phrasing of this note is
+ * deliberate: the scan reads comments as well as copy, so spelling the banned
+ * sentence out here, even as an example, would fail the build.
  */
 import SectionHandoff from '../SectionHandoff.astro';
 
 const moments = [
 	{
 		title: 'You quote from an old price',
-		body: 'The vendor changed the case price. The copied recipe and the event sheet never heard about it.'
+		body: 'The vendor moved the case price and you changed it where you saw it. The sheet you quoted this job from is a copy of last month’s, and it still holds the old one.'
 	},
 	{
 		title: 'You rebuild the same order four times',
-		body: 'Forty more guests means new recipe math, a new shopping list, a new prep plan, another pack check.'
+		body: 'Forty more guests, and the same number has to change in the recipe math, the shopping list, the prep plan and the pack check. Four edits, and the one you miss turns up at the dock.'
 	},
 	{
 		title: 'You retype the list to buy it',
-		body: 'The list becomes an email to each supplier, then a checklist at the dock, then whatever the truck was short.'
+		body: 'You copy the rows out by hand: one message per supplier, then a checklist at the dock, then whatever the truck was short, typed back in.'
 	},
 	{
 		title: 'You learn the margin after service',
-		body: 'The event looked busy. The invoices decide, weeks later, whether the price worked.'
+		body: 'The invoices arrive after the event and go in a folder, not in the sheet you quoted from. Weeks later, if you go and check, they decide whether the price worked.'
 	}
 ];
 ---
 
 <!-- story: docs/stories/homepage-visual-guidance.story.md -->
+<!-- story: docs/stories/homepage-spreadsheet-pain.story.md -->
 <!-- TWO COLUMNS SINCE 2026-08-29. This section was a text column on the left
      and forty percent of the viewport empty on the right at 1440, then four
      more text columns under it. The four moments now sit in the right column
@@ -50,8 +67,10 @@ const moments = [
 			<p class="eyebrow">What goes wrong</p>
 			<h2 class="mt-4 text-h2 font-semibold">The spreadsheet works until the job changes.</h2>
 			<p class="mt-5 max-w-[68ch] text-lede text-ink-soft">
-				A supplier price moves. The client adds forty guests. A case arrives short. Every
-				change is another place to retype the math, and another sheet that can disagree.
+				Most kitchens cost on a spreadsheet, and it holds until something moves. A supplier
+				price changes. The client adds forty guests. A case arrives short. Each one is a
+				number somebody has to find and change by hand, in every copy of the sheet that
+				still holds the old one.
 			</p>
 			<!-- THE FLAW, added 2026-08-27. Everything above this line diagnoses the
 			     TOOL; this line describes the reader, which is the difference between a
