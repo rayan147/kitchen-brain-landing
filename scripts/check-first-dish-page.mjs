@@ -74,17 +74,34 @@ const shot = html.match(/<img\b[^>]*\/proof\/setup\/01-kitchen\.png[^>]*>/)?.[0]
 if (!shot) failures.push('missing the setup capture (RC-48)');
 const shotAlt = shot.match(/alt="([^"]*)"/)?.[1] ?? '';
 if (shotAlt.length < 60) failures.push(`setup capture alt is too thin to read off the pixels: "${shotAlt}"`);
-for (const word of ['five', 'Kitchen and suppliers', 'Menu and first order', 'stage 1 of 5']) {
+// 'Harbor &amp; Hearth' as authored: the source writes the entity literally and
+// it survives into the emitted HTML.
+for (const word of [
+	'five',
+	'Kitchen and suppliers',
+	'Menu and first order',
+	'stage 1 of 5',
+	'Harbor &amp; Hearth',
+	'Ask Sage'
+]) {
 	if (!shotAlt.includes(word)) failures.push(`setup capture alt does not name "${word}" (RC-48)`);
 }
 // Read the real dimensions out of the PNG header rather than pinning a
 // number here: a recapture that changes the crop should update the markup,
 // and this is what notices when it did not.
-const png = readFileSync(new URL('../public/proof/setup/01-kitchen.png', import.meta.url));
-const pngWidth = png.readUInt32BE(16);
-const pngHeight = png.readUInt32BE(20);
+// Guarded: every other assertion here reports through `failures` so one run
+// lists them all. An unguarded read threw ENOENT and took the checks below
+// it, including the primary-CTA contract, down with it.
+let png = null;
+try {
+	png = readFileSync(new URL('../public/proof/setup/01-kitchen.png', import.meta.url));
+} catch {
+	failures.push('missing public/proof/setup/01-kitchen.png');
+}
+const pngWidth = png ? png.readUInt32BE(16) : 0;
+const pngHeight = png ? png.readUInt32BE(20) : 0;
 const declared = (attribute) => Number(shot.match(new RegExp(`${attribute}="(\\d+)"`))?.[1] ?? 0);
-if (declared('width') !== pngWidth || declared('height') !== pngHeight) {
+if (png && (declared('width') !== pngWidth || declared('height') !== pngHeight)) {
 	failures.push(
 		`setup capture declares ${declared('width')}x${declared('height')} but the PNG is ${pngWidth}x${pngHeight}`
 	);
@@ -93,8 +110,12 @@ if (declared('width') !== pngWidth || declared('height') !== pngHeight) {
 // widest the page can ask for is its 72rem container less the gutters, so the
 // failing direction is the container exceeding half the pixels, not the
 // reverse: a capture narrower than 2304px would be upscaled and soft.
+// FINDING 4: container-page is max-width:72rem, which is REM. At a 200% root
+// the container is 2304px, so a rem-only cap lets the image render above half
+// its pixels and go soft. .fd-shot img therefore carries a PX max-width, and
+// this is the number it must not exceed.
 const WIDEST_RENDER = 1152;
-if (WIDEST_RENDER > pngWidth / 2) {
+if (png && WIDEST_RENDER > pngWidth / 2) {
 	failures.push(
 		`setup capture is ${pngWidth}px, so a ${WIDEST_RENDER}px container renders it above half width (RC-48)`
 	);

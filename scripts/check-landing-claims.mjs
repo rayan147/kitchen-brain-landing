@@ -729,6 +729,21 @@ requireText(firstDishSource, '2% misc (the default)', 'first-dish misc default b
 // RC-55: an unreviewed ingredient reads "check", never "clear". The page is
 // the only surface that says so, so the wording is pinned to the app's.
 requireText(firstDishSource, '\u201ccheck\u201d, never \u201cclear\u201d', 'first-dish unknown-is-not-clear boundary (RC-55)');
+// RC-10: the duration is the owner's approximation, and the page must say so
+// in those words rather than as a measurement.
+requireText(firstDishSource, 'about fifteen minutes', 'first-dish owner-confirmed setup duration (RC-10)');
+// RC-49/RC-55: Sage reads, it never writes. A page that sells setup as
+// AI-assisted drifts straight at this line, so the disclaimer is pinned to
+// the same paragraph that makes the claim.
+requireText(firstDishSource, 'Sage stays open beside', 'first-dish Sage-in-setup claim (RC-55)');
+requireText(firstDishSource, 'never fills a stage in for you', 'first-dish Sage read-only boundary (RC-49)');
+for (const [pattern, label] of [
+	[/Sage[^.]{0,80}\b(fills|enters|fixes|completes|writes|sets up)\b/i, 'Sage doing the work (RC-49 forbids autonomous changes)'],
+	[/\b(rarely|barely|hardly|never) (have to )?typ/i, 'a no-typing promise (the five-stage walk is typed)'],
+	[/\bfixes (it|any|every|the) (issue|problem|error)/i, 'the app repairing a problem (the guards stop and name the fix)'],
+]) {
+	if (pattern.test(firstDishSource)) failures.push(`first-dish states ${label}`);
+}
 if (!/5 stages/.test(firstDishSource)) {
 	failures.push('first-dish: the setup ticket no longer states the shipped stage count (RC-10)');
 }
@@ -737,7 +752,11 @@ if (!/5 stages/.test(firstDishSource)) {
 // ran with IMPORT_AI_PROVIDER pinned to 'stub' at both layers.
 for (const [pattern, label] of [
 	[/\bsample data\b/i, 'sample-data path (untested at both layers)'],
-	[/\bset up in\b|\bin (under|about|less than) \w+ minutes\b/i, 'a setup duration (no artifact measures one)'],
+	// A duration was forbidden outright until 2026-09-05, when the release
+	// owner confirmed about fifteen minutes. It is an owner's figure, not a
+	// measured one, so the page may approximate it and may not harden it: no
+	// tighter number, no "guaranteed", no minutes attached to a stage.
+	[/\bset up in\b|\bin (under|less than) \w+ minutes\b|\bguaranteed\b/i, 'a hardened setup duration (RC-10 allows only the owner-confirmed approximation)'],
 	[/\b(photograph|snap|upload|drop in|scan)\b[^.]{0,60}\b(invoice|price list|price sheet|recipe)\b/i,
 		'invoice or recipe extraction (stubbed at both test layers)'],
 ]) {

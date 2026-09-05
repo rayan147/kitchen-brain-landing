@@ -55,6 +55,24 @@ const shots = [];
 
 const settle = async () => {
 	await page.mouse.move(0, 0);
+	// Any panel that auto-scrolled to its newest content goes back to the top,
+	// so a capture never begins mid-sentence. The Sage panel re-pins itself to
+	// the bottom for a beat after it settles, so this retries until the reset
+	// actually holds rather than assuming one pass wins the race.
+	for (let attempt = 0; attempt < 12; attempt += 1) {
+		const remaining = await page.evaluate(() => {
+			let worst = 0;
+			for (const node of document.querySelectorAll('*')) {
+				if (!/auto|scroll/.test(getComputedStyle(node).overflowY)) continue;
+				if (node.scrollTop > 0) node.scrollTop = 0;
+				worst = Math.max(worst, node.scrollTop);
+			}
+			return worst;
+		});
+		if (remaining === 0) break;
+		await page.waitForTimeout(200);
+	}
+	await page.waitForTimeout(120);
 	await page.evaluate(() => {
 		document.activeElement instanceof HTMLElement && document.activeElement.blur();
 		document.querySelectorAll('[data-ui-role="toast"], .toast').forEach((n) => n.remove());
@@ -107,26 +125,22 @@ const shootClip = async (name, selectors) => {
 			}
 			return edge;
 		};
-		bottom = Math.max(bottom, lowest(/^Menu and first order/), lowest(/^Next:/));
-		// The stage's copy column stops well short of 1440, and the empty third
-		// on the right only shrinks the type once the landing page scales the
-		// image down. Clip to the widest thing that carries meaning.
-		// Measure INK, never containers: header, nav and main all span the full
-		// 1440 whatever their contents do, so including them keeps the empty
-		// third the crop exists to remove.
-		let right = 0;
-		for (const node of document.querySelectorAll('p, li, h1, h2, a, button, span')) {
-			const text = (node.textContent ?? '').trim();
-			if (!text || node.getBoundingClientRect().top > bottom) continue;
-			if (node.querySelector('p, li, h1, h2, a, button, span')) continue;
-			const range = document.createRange();
-			range.selectNodeContents(node);
-			const box = range.getBoundingClientRect();
-			if (box.width > 0) right = Math.max(right, box.right);
-		}
+		bottom = Math.max(
+			bottom,
+			lowest(/^Menu and first order/),
+			lowest(/^Next:/),
+			// Enough of Sage's stage-aware suggestions to read several.
+			lowest(/^Do I need a supplier to cost a recipe/)
+		);
+		// Full width on purpose: the Sage panel occupies the right edge, so
+		// there is no empty third left to crop. An earlier version measured
+		// "ink" to trim it, but the header's own Save and exit button sits at
+		// x≈1266 and pinned the result near 1440 anyway.
 		return {
-			height: bottom ? bottom + window.scrollY + 28 : document.body.scrollHeight,
-			width: Math.min(1440, Math.ceil(right) + 32)
+			// +14, not +28: the Sage suggestions are a continuing list, so the
+			// clip should end just past one card rather than open the next.
+			height: bottom ? bottom + window.scrollY + 14 : document.body.scrollHeight,
+			width: 1440
 		};
 	}, selectors);
 	await page.screenshot({
@@ -185,8 +199,50 @@ try {
 
 	await page.goto(`${APP}/setup?stage=kitchen`);
 	await page.getByRole('heading', { level: 1, name: 'Identify your kitchen' }).waitFor();
+
+	// Sage is part of what setup offers, so the shot has to show it: the app
+	// needs SAGE_ENABLED=enabled, and the panel opens from the stage header.
+	// Its suggestions are derived from the stage and the records entered so
+	// far (RC-49), so opening it costs no model call and the capture stays
+	// deterministic. Asking a question would not be either.
+	const askSage = page.getByRole('button', { name: 'Ask Sage' });
+	if (!(await askSage.isVisible().catch(() => false))) {
+		throw new Error('Ask Sage is not in the setup header; start the app with SAGE_ENABLED=enabled');
+	}
+	await askSage.click();
+	await page.getByText('This stays open beside the screen you are on', { exact: false }).waitFor();
+	// The panel opens scrolled to its newest turn, which starts its intro
+	// mid-sentence ("far. Setup is not finished..."). Resetting right after the
+	// click does not hold: it re-pins to the bottom once the suggestions
+	// settle, so the reset belongs in settle(), immediately before the shot.
+
+	// THE SHOT IS ONLY VALID IN ONE STATE. This script does not reset the
+	// fixture, so a second run against the same database carries the previous
+	// run's progress and silently produces a different rail: the first shipped
+	// capture showed Ingredients ticked and Food facts in progress, which this
+	// walk never creates. Assert the state the alt text describes, and say how
+	// to get back to it rather than shooting whatever is there.
+	const rail = await page.evaluate(() =>
+		[...document.querySelectorAll('a, li')]
+			.map((node) => (node.textContent ?? '').replace(/\s+/g, ' ').trim())
+			.filter((text) => /^(\d |✓ )?(Kitchen and suppliers|Ingredients|Food facts|Recipes|Menu and first order)/.test(text))
+	);
+	const expected = 'Kitchen and suppliers : complete';
+	if (!rail.some((text) => text.includes('Kitchen and suppliers') && /complete/i.test(text))) {
+		throw new Error(`stage 1 is not complete; rail reads: ${JSON.stringify(rail)}`);
+	}
+	if (rail.some((text) => /Ingredients/.test(text) && /complete/i.test(text))) {
+		throw new Error(
+			'the fixture already has ingredients, so this run would shoot a later state than the alt describes.\n' +
+				'Reset it first, from the app repo:\n' +
+				'  DATABASE_URL=file:e2e/.scratch/capture.db node e2e/prepare-db.mjs\n' +
+				'  npx tsx e2e/provision-owner.ts   # then rename the business off "E2E First Kitchen"'
+		);
+	}
+	void expected;
+
 	// The argument, not the whole form: the five-stage rail, the stage heading,
-	// why the stage exists, and what it wants. A full-page clip of this screen
+	// what it wants, and Sage open beside it. A full-page clip of this screen
 	// is 3,256px tall and unreadable at any width the landing page can give it.
 	await shootClip('01-kitchen', ['[data-ui-role="setup-stage-why"]']);
 

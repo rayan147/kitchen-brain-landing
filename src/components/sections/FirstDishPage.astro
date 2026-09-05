@@ -71,8 +71,9 @@ const guards = [
 				<p class="eyebrow">Before you start</p>
 				<h1 id="fd-heading" class="feature-display">You do not need to enter your whole walk-in.</h1>
 				<p class="fd-lede">
-					Setup asks for one dish you already cook. Four stages in, it prints that dish&rsquo;s
-					plate cost with the arithmetic beside it. The fifth turns it into a shopping list.
+					Setup asks for one dish you already cook, and takes about fifteen minutes.
+					Four stages in, it prints that dish&rsquo;s plate cost with the arithmetic beside it.
+					The fifth turns it into a shopping list.
 				</p>
 				<div class="fd-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
@@ -151,17 +152,24 @@ const guards = [
 			<figure class="fd-shot" data-reveal>
 				<img
 					src="/proof/setup/01-kitchen.png"
-					width="2566"
-					height="910"
+					width="2880"
+					height="1062"
 					loading="lazy"
 					decoding="async"
-					alt="The CostCook setup screen. A rail down the left lists five stages: Kitchen and suppliers and Ingredients ticked complete, Food facts numbered 3 as the stage in progress, Recipes and Menu and first order still locked. Above them the header reads “Harbor &amp; Hearth Catering, stage 1 of 5, saves after each stage”. The stage is headed “Identify your kitchen”, explains why it exists, then ticks three things off: Name the kitchen, Set the food-cost target, Add one supplier. It ends “Next: attach pack prices and buying sources to the ingredients in one dish.”"
+					alt="The CostCook setup screen with Sage open beside it. A rail down the left lists five stages: Kitchen and suppliers ticked complete, Ingredients numbered 2 as the stage in progress, Food facts, Recipes and Menu and first order still locked. The header reads “Harbor &amp; Hearth Catering, stage 1 of 5, saves after each stage” and carries an Ask Sage action. The stage is headed “Identify your kitchen”, explains why it exists, then ticks three things off: Name the kitchen, Set the food-cost target, Add one supplier. On the right, a panel headed “Ask your first question” offers “What does the Kitchen and suppliers stage need from me?”, “Why does setup ask for kitchen and suppliers now?”, “What is left to finish setup?”, “What is a target food cost percentage?” and “Do I need a supplier to cost a recipe?”."
 				/>
 				<figcaption>
-					Stage one in the app: the five stages down the left, what this one wants, and why it
-					wants it. Captured from CostCook running on an empty kitchen.
+					Stage one in the app: the five stages down the left, what this one wants, and Sage
+					open beside it with the questions that stage raises. Captured from CostCook running
+					on an empty kitchen.
 				</figcaption>
 			</figure>
+
+			<p class="fd-sage">
+				Sage stays open beside whichever stage you are on. Its questions are the ones that
+				stage raises, and it answers from the records you have entered so far. It reads them;
+				it never fills a stage in for you.
+			</p>
 
 			<p class="fd-handoff">Stage four ends on a number.</p>
 		</div>
@@ -472,7 +480,12 @@ const guards = [
 
 	.fd-shot img {
 		display: block;
+		/* PX, not rem, and not width:100% alone. container-page is 72rem, so at
+		   a 200% root it is 2304px wide and a fluid image would render above
+		   half its 2880 pixels and go soft. The cap is the geometry rule
+		   FeatureAreaFigure states: drawings are sized in pixels. */
 		width: 100%;
+		max-width: 1152px;
 		height: auto;
 		border: 1px solid var(--color-ticket-rule);
 		border-radius: 0.25rem;
@@ -485,6 +498,15 @@ const guards = [
 		color: var(--color-ink-soft);
 		font-size: var(--text-body-sm);
 		line-height: 1.5;
+	}
+
+	.fd-sage {
+		max-width: 40rem;
+		margin-top: 1.5rem;
+		padding-left: 1.15rem;
+		border-left: 2px solid var(--color-softamber);
+		color: var(--color-ink-soft);
+		line-height: 1.6;
 	}
 
 	.fd-handoff {

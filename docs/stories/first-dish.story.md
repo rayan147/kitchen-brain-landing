@@ -143,6 +143,19 @@
   order), so shipping one would have put a six-stage image beside a
   five-stage sentence. `scripts/capture-setup-proof.mjs` takes a fresh one off
   an empty kitchen, and RC-48 records the provenance.
+- **Sage and the fifteen minutes (owner, 2026-09-05):** the owner confirmed
+  setup takes about fifteen minutes and asked for Sage in the shot, since it
+  is part of what setup offers. Both are in. The duration is recorded in RC-10
+  as a RELEASE-OWNER CONFIRMATION, not a measurement, and the guard now allows
+  the approximation while failing a hardened one ("in under 10 minutes",
+  "guaranteed"). Two things the owner said are NOT on the page, because RC-49
+  forbids them and the evidence does not support them: that you rarely type
+  (the five-stage walk is typed throughout, and import extraction is stubbed
+  in every test), and that the app fixes issues so you do not get stuck (the
+  guards STOP you and NAME the fix; Sage reads records and never writes one).
+  The honest version of both is §6 plus the new Sage paragraph: the questions
+  that stage raises, answered from what you have entered, and a screen that
+  says what is wrong and where.
 - **Fixed after code review:**
   - The arithmetic table's scroll container took no keyboard focus and had no
     name. At 390px its whole value column, the $1.62 included, sits off-screen,

@@ -111,6 +111,19 @@ try {
 	 * of the page stay pending and the run reports a defect the page does not
 	 * have. scrollIntoView plus three animation frames is the honest walk.
 	 */
+	/**
+	 * The capture is lazy-loaded and 2880px wide. Reading img.complete a couple
+	 * of frames after scrolling it into view passes on a warm box and flakes on
+	 * a cold one, so wait for the decode instead of racing it.
+	 */
+	const awaitShot = async () => {
+		await evaluate(`(async () => {
+			const img = document.querySelector('.fd-shot img');
+			if (!img) return;
+			img.loading = 'eager';
+			try { await img.decode(); } catch { /* a broken src fails the assert below */ }
+		})()`);
+	};
 	const walkPage = async () => {
 		await evaluate(`(async () => {
 			const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
@@ -186,6 +199,7 @@ try {
 	await viewport(1440, 900);
 	await navigate();
 	await walkPage();
+	await awaitShot();
 	const desktop = await evaluate(probe);
 	await capture('1440x900');
 
@@ -225,6 +239,7 @@ try {
 	await viewport(390, 844, true);
 	await navigate();
 	await walkPage();
+	await awaitShot();
 	const mobile = await evaluate(probe);
 	await capture('390x844');
 
@@ -269,10 +284,18 @@ try {
 	await navigate();
 	await evaluate("document.documentElement.style.fontSize = '32px'");
 	await delay(200);
+	await walkPage();
+	await awaitShot();
 	const zoomed = await evaluate(probe);
 	await capture('200-percent-text');
 	assert(zoomed.bodyOverflow === 0, `200% text: horizontal overflow is ${zoomed.bodyOverflow}px`);
 	assert(zoomed.mathsFits, '200% text: the arithmetic table escapes the viewport');
+	// The container is rem-based and doubles here; the image must not follow it
+	// past half its pixel width (RC-48).
+	assert(
+		zoomed.shot && zoomed.shot.rendered <= zoomed.shot.natural / 2,
+		`200% text: setup capture renders at ${zoomed.shot?.rendered}px, above half its ${zoomed.shot?.natural}px`
+	);
 
 	// Reduced motion: nothing may stay hidden when the animation register is off.
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
