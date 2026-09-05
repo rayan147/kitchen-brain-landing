@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import FirstDishPage from '../components/sections/FirstDishPage.astro';
+
+// Considered Template Method; not used because this route shares the existing
+// Base shell and its setup argument is one fixed composition, not a page
+// algorithm with overridable steps.
+const directionContract = [
+	'THESIS: Setup asks for one dish you already cook, not the whole walk-in; refuse any duration claim, because no rehearsal artifact supports one.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and offwhite fields, ink type, amber eyebrows and dashed rules, green actions.',
+	'STORY: Data-entry dread becomes a named shape, then an optional welcome, five stages, a checkable $1.62, guards that refuse bad input, and one start.',
+	'FIRST VIEWPORT: The refusal of the wall at left; the five-stage setup ticket at right.',
+	'FORM: Code-led editorial route; first-dish-onboarding; one settling setup ticket owns motion and ruled sections carry the read.',
+	'FINISH: Navigation, no-JS, reduced motion, keyboard, 200% text, desktop, mobile, claim guard, build, and documentation all close.'
+].join(' ');
+---
+
+<Base
+	title="Your first dish in CostCook | What setup actually asks for"
+	description="Setup asks for one dish you already cook, not your whole walk-in. See the five stages, the plate cost they end on, and the arithmetic behind it."
+	path="/first-dish"
+	directionContract={directionContract}
+>
+	<FirstDishPage />
+</Base>

@@ -1,0 +1,581 @@
+---
+import { cta } from '../../lib/site';
+
+// Considered Template Method; not used because this route reuses the Base
+// shell and its setup argument is one fixed composition, not a page algorithm
+// with overridable steps. The stage table is data, not a variant hierarchy.
+
+/**
+ * The five stages, in the app's own labels (`SETUP_STAGE_LABELS` and
+ * `SETUP_STAGE_GUIDE` in kitchen-brain `src/lib/features/onboarding/`). A
+ * reader who starts must recognise every screen by the name used here, so
+ * these strings track the app, never a nicer paraphrase.
+ */
+const stages = [
+	{
+		n: '1',
+		label: 'Kitchen and suppliers',
+		body: 'Your kitchen’s name, one supplier so prices have a buying source, and the food-cost target every plate is judged against.'
+	},
+	{
+		n: '2',
+		label: 'Ingredients',
+		body: 'The ingredients of that one dish: what you buy, how big the pack is, what it costs, and what survives the knife.'
+	},
+	{
+		n: '3',
+		label: 'Food facts',
+		body: 'Nutrition, allergens and diet facts, drafted where CostCook could and yours to confirm. Skip one you are unsure of and every order using it reads “check”, never “clear”.'
+	},
+	{
+		n: '4',
+		label: 'Recipes',
+		body: 'The dish itself: its lines in costing units, and how many portions the batch makes.'
+	},
+	{
+		n: '5',
+		label: 'Menu and first order',
+		body: 'A date and a guest count. The order becomes shopping, prep, packing, and a food-cost result.'
+	}
+] as const;
+
+/**
+ * Verified 2026-08-17 against an empty kitchen on `sandbox/demo`
+ * (`artifacts/onboarding-rehearsal/260817a/results.md`, case D-NOSUB). The
+ * misc line is the 2% default and is labelled as such: it is a business-wide
+ * setting, so the total is conditional on nobody having changed it.
+ */
+const arithmetic = [
+	{ left: '$32.00 ÷ 4,535.92 g', right: '$0.0070548 / g', note: 'as purchased' },
+	{ left: '÷ 0.80 trim yield', right: '$0.0088185 / g', note: 'usable' },
+	{ left: '× 180 g on the plate', right: '$1.59', note: 'ingredient lines' },
+	{ left: '+ 2% misc (the default)', right: '$0.03', note: 'its own line' }
+] as const;
+
+const guards = [
+	'Leave a pack price blank and the ingredient does not go on. The screen says what it needs and puts your cursor in the field.',
+	'Ask for 100 ml of something sold by weight and it stops, and it names the fix: pick a weight unit, or give the ingredient a density.',
+	'Press “Start over” by mistake and your ingredients, recipes, menus and orders stay. Only the guide’s progress resets.',
+	'Lose the wifi mid-save and nothing is written and nothing is claimed. What you typed is still on screen, and the same button retries.'
+] as const;
+---
+
+<!-- story: docs/stories/first-dish.story.md -->
+<article class="first-dish">
+	<section class="fd-hero" aria-labelledby="fd-heading">
+		<div class="container-page fd-hero-layout">
+			<div class="fd-hero-copy">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
+					<a href="/">Home</a><span aria-hidden="true">/</span><span>Your first dish</span>
+				</nav>
+				<p class="eyebrow">Before you start</p>
+				<h1 id="fd-heading" class="feature-display">You do not need to enter your whole walk-in.</h1>
+				<p class="fd-lede">
+					Setup asks for one dish you already cook. Four stages in, it prints that dish&rsquo;s
+					plate cost with the arithmetic beside it. The fifth turns it into a shopping list.
+				</p>
+				<div class="fd-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href="#the-number" class="btn-quiet">See the number it ends on</a>
+				</div>
+			</div>
+
+			<figure class="fd-ticket anim-enter" aria-labelledby="fd-ticket-title">
+				<div class="fd-ticket-head">
+					<p id="fd-ticket-title">Setup</p>
+					<span>5 stages &middot; 1 dish</span>
+				</div>
+				<ol class="fd-ticket-stages" role="list">
+					{stages.map((stage) => (
+						<li><span class="fd-ticket-n">{stage.n}</span>{stage.label}</li>
+					))}
+				</ol>
+				<figcaption>Every stage asks for the next thing that one dish needs.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="fd-band" aria-labelledby="fd-empty-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">The empty screen</p>
+				<h2 id="fd-empty-heading">The dread is not irrational. It has a shape.</h2>
+				<p>
+					You have done this before. The last tool wanted your whole catalog before it would do
+					anything, and the half-filled spreadsheet is still on the desktop, proof of an evening you
+					do not get back.
+				</p>
+				<p>
+					So the fear has a name: an empty kitchen on screen at nine at night, after service, and no
+					idea which end to start from.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="fd-band fd-band-cream" aria-labelledby="fd-welcome-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">What it asks you for</p>
+				<h2 id="fd-welcome-heading">The guide opens on a question, not a form.</h2>
+				<p>
+					What kind of kitchen you run, what you want out of it first, and the name of one dish you
+					already cook.
+				</p>
+				<p>
+					Every answer is optional. A blank welcome is a skip and setup works either way. Name the
+					dish and the screens after it say its name back to you.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="fd-band" aria-labelledby="fd-stages-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">Five stages</p>
+				<h2 id="fd-stages-heading">Those answers are optional. These five are the work.</h2>
+				<p>Each one asks for the next thing that one dish needs, and nothing else.</p>
+			</div>
+			<ol class="fd-stage-list" role="list">
+				{stages.map((stage) => (
+					<li class="fd-stage">
+						<p class="fd-stage-head">
+							<span class="fd-stage-n" aria-hidden="true">{stage.n}</span>
+							<span class="fd-stage-label">{stage.label}</span>
+						</p>
+						<p class="fd-stage-body">{stage.body}</p>
+					</li>
+				))}
+			</ol>
+			<p class="fd-handoff">Stage four ends on a number.</p>
+		</div>
+	</section>
+
+	<section class="fd-band fd-band-cream" id="the-number" aria-labelledby="fd-number-heading">
+		<div class="container-page fd-number-layout" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">The number</p>
+				<h2 id="fd-number-heading">One line of one dish, costed from the case price you actually pay.</h2>
+				<p>
+					180 g of chicken thigh, bought at $32.00 for a 10 lb case, 80% of it surviving the trim.
+				</p>
+				<p class="fd-snap">
+					A $32 case of thighs, 80% of it surviving the knife, 180 g on the plate: $1.62. Check it
+					on paper. We would rather you did.
+				</p>
+			</div>
+
+			<figure class="fd-maths" aria-labelledby="fd-maths-title">
+				<p id="fd-maths-title" class="fd-maths-title">Plate cost, as the screen prints it</p>
+				<div
+					class="fd-maths-scroll"
+					tabindex="0"
+					role="group"
+					aria-label="Plate cost arithmetic, scrollable"
+				>
+					<table>
+						<caption class="sr-only">
+							How a $32.00 ten-pound case of chicken thigh becomes a $1.62 plate cost.
+						</caption>
+						<thead>
+							<tr>
+								<th scope="col">Step</th>
+								<th scope="col">Result</th>
+								<th scope="col">Reading</th>
+							</tr>
+						</thead>
+						<tbody>
+							{arithmetic.map((row) => (
+								<tr>
+									<th scope="row">{row.left}</th>
+									<td class="fd-maths-value">{row.right}</td>
+									<td class="fd-maths-note">{row.note}</td>
+								</tr>
+							))}
+							<tr class="fd-maths-total">
+								<th scope="row">Plate cost</th>
+								<td class="fd-maths-value">$1.62</td>
+								<td class="fd-maths-note">per portion</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<figcaption>
+					Misc is a business-wide percentage, 2% until you change it, and it stays on its own line.
+				</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="fd-band" aria-labelledby="fd-guards-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">What it refuses to do</p>
+				<h2 id="fd-guards-heading">A number you can check is only half of it.</h2>
+				<p>The other half is what happens when you get something wrong.</p>
+			</div>
+			<ul class="fd-guards" role="list">
+				{guards.map((guard) => <li>{guard}</li>)}
+			</ul>
+		</div>
+	</section>
+
+	<section class="fd-band fd-close" aria-labelledby="fd-close-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">Where stage five leaves you</p>
+				<h2 id="fd-close-heading">One dish you already knew how to cook, with a price on it.</h2>
+				<p>
+					A menu holding that dish, an order on a date, and a shopping list in whole packs. That last
+					screen is where the <a href="/tour/main">product tour</a> picks up.
+				</p>
+				<p>
+					The alternative is another season where the number in your head and the number on the
+					invoice are two different numbers.
+				</p>
+				<p class="fd-final">One dish, and you will know.</p>
+				<div class="fd-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</article>
+
+<style>
+	.fd-hero {
+		padding-block: clamp(2.5rem, 6vw, 4.5rem);
+	}
+
+	.fd-hero-layout {
+		display: grid;
+		gap: clamp(2rem, 5vw, 3.5rem);
+		align-items: start;
+	}
+
+	/* Grid and flex children default to min-width:auto, so the nowrap
+	   arithmetic table widened its column instead of scrolling inside it:
+	   169px of body overflow at 390px. Both layouts get the floor. */
+	.fd-hero-layout > *,
+	.fd-number-layout > * {
+		min-width: 0;
+	}
+
+	@media (min-width: 60rem) {
+		.fd-hero-layout {
+			grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+		}
+	}
+
+	.fd-hero-copy > * + * {
+		margin-top: 1rem;
+	}
+
+	.fd-lede {
+		max-width: 34rem;
+		color: var(--color-ink-soft);
+		font-size: 1.125rem;
+		line-height: 1.6;
+	}
+
+	.fd-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem 1.75rem;
+		margin-top: 1.75rem;
+	}
+
+	/* The kitchen-ticket motif: cream paper, dashed rules, a 1.5deg tilt. */
+	.fd-ticket {
+		margin: 0;
+		background: var(--color-cream);
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 0.25rem;
+		box-shadow: var(--shadow-ticket);
+		padding: 1.25rem 1.25rem 1rem;
+		rotate: -1.5deg;
+	}
+
+	.fd-ticket-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px dashed var(--color-ticket-rule);
+		font-family: var(--font-body);
+		font-size: var(--text-eyebrow);
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.fd-ticket-head p {
+		margin: 0;
+		color: var(--color-ink);
+	}
+
+	.fd-ticket-head span {
+		color: var(--color-amber-deep);
+	}
+
+	.fd-ticket-stages {
+		margin: 0;
+		padding: 0.5rem 0 0;
+		list-style: none;
+	}
+
+	.fd-ticket-stages li {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		padding-block: 0.6rem;
+		border-bottom: 1px dashed var(--color-ticket-rule);
+		color: var(--color-ink);
+		font-weight: 600;
+	}
+
+	.fd-ticket-n {
+		flex: none;
+		width: 1.5rem;
+		color: var(--color-amber-deep);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.fd-ticket figcaption {
+		padding-top: 0.85rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
+	}
+
+	.fd-band {
+		padding-block: clamp(2.5rem, 6vw, 4rem);
+		border-top: 1px solid var(--color-hairline);
+	}
+
+	.fd-band-cream {
+		background: var(--color-offwhite);
+	}
+
+	.fd-prose {
+		max-width: 40rem;
+	}
+
+	.fd-prose h2 {
+		margin-top: 0.5rem;
+		font-family: var(--font-display);
+		font-size: clamp(1.5rem, 3.2vw, 2rem);
+		font-weight: 600;
+		line-height: 1.2;
+		text-wrap: balance;
+	}
+
+	.fd-prose p + p,
+	.fd-prose h2 + p {
+		margin-top: 1rem;
+	}
+
+	.fd-prose p:not(.eyebrow):not(.fd-final) {
+		color: var(--color-ink-soft);
+		line-height: 1.65;
+	}
+
+	.fd-prose a:not(.btn-primary):not(.btn-quiet) {
+		color: var(--color-green-deep);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		text-decoration-color: var(--color-hairline-strong);
+	}
+
+	.fd-stage-list {
+		display: grid;
+		gap: 0;
+		margin: 2rem 0 0;
+		padding: 0;
+		list-style: none;
+		border-top: 1px solid var(--color-hairline);
+	}
+
+	.fd-stage {
+		padding-block: 1.1rem;
+		border-bottom: 1px solid var(--color-hairline);
+	}
+
+	@media (min-width: 48rem) {
+		.fd-stage {
+			display: grid;
+			grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+			gap: 1.5rem;
+			align-items: baseline;
+		}
+	}
+
+	.fd-stage-head {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		margin: 0;
+	}
+
+	.fd-stage-n {
+		color: var(--color-amber-deep);
+		font-family: var(--font-body);
+		font-size: var(--text-eyebrow);
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		letter-spacing: 0.14em;
+	}
+
+	.fd-stage-label {
+		color: var(--color-ink);
+		font-weight: 600;
+	}
+
+	.fd-stage-body {
+		margin: 0.4rem 0 0;
+		color: var(--color-ink-soft);
+		line-height: 1.6;
+	}
+
+	@media (min-width: 48rem) {
+		.fd-stage-body {
+			margin-top: 0;
+		}
+	}
+
+	.fd-handoff {
+		margin-top: 1.75rem;
+		color: var(--color-ink);
+		font-family: var(--font-display);
+		font-size: 1.125rem;
+		font-weight: 600;
+	}
+
+	.fd-number-layout {
+		display: grid;
+		gap: clamp(1.75rem, 4vw, 3rem);
+		align-items: start;
+	}
+
+	@media (min-width: 62rem) {
+		.fd-number-layout {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		}
+	}
+
+	.fd-snap {
+		margin-top: 1.25rem;
+		padding-left: 1rem;
+		border-left: 2px solid var(--color-amber-light);
+		color: var(--color-ink);
+		font-family: var(--font-display);
+		font-size: 1.1rem;
+		line-height: 1.45;
+	}
+
+	.fd-maths {
+		margin: 0;
+		background: var(--color-paper);
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 0.25rem;
+		box-shadow: var(--shadow-ticket);
+		padding: 1.25rem;
+	}
+
+	.fd-maths-title {
+		margin: 0 0 0.75rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px dashed var(--color-ticket-rule);
+		font-family: var(--font-body);
+		font-size: var(--text-eyebrow);
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-amber-deep);
+	}
+
+	/* Wide content scrolls inside its own container; the page body never does. */
+	.fd-maths-scroll {
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+	}
+
+	.fd-maths table {
+		width: 100%;
+		border-collapse: collapse;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.fd-maths th,
+	.fd-maths td {
+		padding: 0.55rem 0.5rem;
+		text-align: left;
+		vertical-align: baseline;
+		border-bottom: 1px dashed var(--color-ticket-rule);
+		font-weight: 400;
+		white-space: nowrap;
+	}
+
+	.fd-maths th {
+		color: var(--color-ink);
+	}
+
+	.fd-maths-value {
+		color: var(--color-ink);
+		font-weight: 600;
+		text-align: right;
+	}
+
+	.fd-maths-note {
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		white-space: normal;
+	}
+
+	.fd-maths-total th,
+	.fd-maths-total td {
+		border-bottom: 0;
+		border-top: 1px solid var(--color-ink-rule);
+		font-weight: 600;
+	}
+
+	.fd-maths figcaption {
+		padding-top: 0.85rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
+	}
+
+	.fd-guards {
+		display: grid;
+		gap: 0.85rem;
+		max-width: 44rem;
+		margin: 1.75rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.fd-guards li {
+		padding-left: 1.15rem;
+		border-left: 2px solid var(--color-softamber);
+		color: var(--color-ink-soft);
+		line-height: 1.6;
+	}
+
+	.fd-close {
+		background: var(--color-softgreen);
+	}
+
+	.fd-final {
+		margin-top: 1.5rem;
+		color: var(--color-ink);
+		font-family: var(--font-display);
+		font-size: clamp(1.25rem, 2.6vw, 1.5rem);
+		font-weight: 600;
+	}
+</style>

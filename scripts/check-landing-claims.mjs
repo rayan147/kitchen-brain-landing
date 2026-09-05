@@ -128,6 +128,11 @@ const surfaceFiles = [
 	// static email handoff honestly, and owns the direct calendar boundary.
 	'src/pages/demo.astro',
 	'src/components/sections/DemoRequest.astro',
+	// 2026-09-05. The setup route states the stage count, the plate-cost
+	// arithmetic and the input guards (RC-10, RC-14, RC-55). APPENDED, never
+	// inserted: siteSource and heroSource above resolve by position.
+	'src/pages/first-dish.astro',
+	'src/components/sections/FirstDishPage.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -566,7 +571,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 54; claim += 1) {
+for (let claim = 1; claim <= 55; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -699,6 +704,44 @@ if (/SAGE_STATUS = 'coming'/.test(sageSource) && !/not in the app you would star
 }
 if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start today|not in the launch price/.test(`${sageSection}\n${comparisonSource}\n${featuresSource}`)) {
 	failures.push('sage: status is available but a shared product surface still describes it as unavailable');
+}
+
+// RC-10 / RC-55: the setup route. The stage count and the plate-cost
+// arithmetic are the two things a reader can check against the running app,
+// so both are pinned here rather than left to a careful editor. If the app
+// adds a stage or changes DEFAULT_ONBOARDING_MISC_COST_PCT, this fails first.
+const firstDishSource = surfaces[surfaceFiles.indexOf('src/components/sections/FirstDishPage.astro')];
+requireText(firstDishSource, 'docs/stories/first-dish.story.md', 'first-dish story pointer');
+requireText(firstDishSource, 'Four stages in, it prints', 'first-dish plate-cost stage (RC-10)');
+// F1 again, on a decision route: both primaries must render cta.label from
+// site.ts rather than a literal, so the label cannot drift page by page. The
+// browser cannot catch this — the template interpolates the same value it
+// would be compared against — so the pin has to sit on the source.
+if ((firstDishSource.match(/class="btn-primary"[^>]*>\{cta\.label\}/g) ?? []).length !== 2) {
+	failures.push('first-dish: both primaries must render {cta.label} from site.ts');
+}
+for (const value of ['$32.00', '4,535.92 g', '0.80 trim yield', '180 g', '$1.59', '$0.03', '$1.62']) {
+	requireText(firstDishSource, value, 'first-dish plate-cost arithmetic (RC-55)');
+}
+// The misc line is a default, not a constant. Saying 2% without saying it is
+// the default overstates it for any kitchen that changed the setting.
+requireText(firstDishSource, '2% misc (the default)', 'first-dish misc default boundary (RC-55)');
+// RC-55: an unreviewed ingredient reads "check", never "clear". The page is
+// the only surface that says so, so the wording is pinned to the app's.
+requireText(firstDishSource, '\u201ccheck\u201d, never \u201cclear\u201d', 'first-dish unknown-is-not-clear boundary (RC-55)');
+if (!/5 stages/.test(firstDishSource)) {
+	failures.push('first-dish: the setup ticket no longer states the shipped stage count (RC-10)');
+}
+// RC-55 forbids these three on this evidence. They are the claims the page
+// would drift toward, and none is covered by the rehearsal artifact, which
+// ran with IMPORT_AI_PROVIDER pinned to 'stub' at both layers.
+for (const [pattern, label] of [
+	[/\bsample data\b/i, 'sample-data path (untested at both layers)'],
+	[/\bset up in\b|\bin (under|about|less than) \w+ minutes\b/i, 'a setup duration (no artifact measures one)'],
+	[/\b(photograph|snap|upload|drop in|scan)\b[^.]{0,60}\b(invoice|price list|price sheet|recipe)\b/i,
+		'invoice or recipe extraction (stubbed at both test layers)'],
+]) {
+	if (pattern.test(firstDishSource)) failures.push(`first-dish states ${label}`);
 }
 
 const forbiddenClaims = [
