@@ -100,21 +100,38 @@ const guideSteps = [
 		<div data-reveal>
 			<!-- Eyebrow added 2026-08-26 with the page-wide role register (see
 			     src/pages/index.astro). This one names the register itself: the
-			     section either side of it argues, and this one shows. -->
-			<p class="eyebrow">See it run</p>
+			     section either side of it argues, and this one shows.
+
+			     IT IS THE SECTION'S h2 SINCE 2026-09-06, when this section moved to
+			     second and its two h3 would otherwise have been the first headings
+			     under the page h1, with no h2 anywhere between them. The heading
+			     removed on 2026-09-06 is NOT restored: its line lives in the hero
+			     now, and putting it back here would say the same thing twice one
+			     screen apart. Promoting the eyebrow costs nothing visually (the
+			     utility sets its own family, size and colour) and names the section
+			     in the same three words the hand-off arrows and src/lib/stops.ts
+			     use. This is the fix the note below anticipated. -->
+			<h2 class="eyebrow">See it run</h2>
 			<!-- HEADING REMOVED 2026-09-06. Its line moved into the hero, where the
 			     fold now carries the promise this section used to make. Removing it
 			     was asked for explicitly, so the section runs on its eyebrow and
 			     lede. Known cost, recorded here so it is not mistaken for an
 			     oversight: the two h3 below (the written guide, and "Three events.
-			     One production run.") now follow the page h1 with no h2 between
-			     them. Restoring a heading here, or promoting those two to h2, is
-			     the fix if the heading order is ever put back.
+			     One production run.") were left following the page h1 with no h2
+			     between them. RESOLVED 2026-09-06 by the eyebrow above, which is
+			     now this section's h2; see the note on it. The line itself stays
+			     in the hero.
 			     story: docs/stories/homepage-fold-promise.story.md -->
+			<!-- THE DURATION CAME OUT OF THIS LEDE 2026-09-06, when the section moved
+			     to second. The hero's proof link ("Watch the 2:30 product tour", pinned
+			     in check-landing-claims.mjs) and the play chip ("2 min 30 sec") now sit
+			     within a screen and a half of it, so the running time was being stated
+			     three times in that stretch. It is still stated twice, in the two places
+			     a reader looks for it. Nothing else in the sentence changed. -->
 			<p class="mt-4 max-w-[68ch] text-lede text-ink-soft">
-				This is the working product, not a mockup. Two and a half minutes: the food cost
-				before the quote goes out, the shopping and prep lists it turns into, purchase
-				orders that really send, a delivery that arrives wrong, and the price carried back.
+				This is the working product, not a mockup. The food cost before the quote goes
+				out, the shopping and prep lists it turns into, purchase orders that really send,
+				a delivery that arrives wrong, and the price carried back.
 			</p>
 			<a
 				href="#demo-guide-heading"

@@ -219,6 +219,49 @@ if (!problemSectionHtml.includes('Most kitchens cost on a spreadsheet')) {
 	failed = true;
 }
 
+// The quiet-one block reads as a guide, not as three paragraphs: the shape
+// stated once, the two failures as two labelled rows, the rule at the end.
+// Pinned because the rows are <p> rather than <h3> on purpose (a heading here
+// would join the four-pain list above and unpair it from its four answers), so
+// nothing else in the build can see them go missing.
+for (const [text, label] of [
+	['A price you have not got yet', 'the missing-price row (RC-20)'],
+	['A conversion nobody checked', 'the missing-conversion row (RC-20)'],
+]) {
+	if (!problemSectionHtml.includes(text)) {
+		console.error(`check-dist: homepage diagnosis no longer names ${label}`);
+		failed = true;
+	}
+}
+
+// SECTION ORDER, at the rendered level. src/lib/stops.ts and index.astro are
+// pinned to each other in check-landing-claims.mjs, but nothing checked that
+// the HTML actually comes out in that order. The proof video runs SECOND since
+// 2026-09-06, ahead of the diagnosis; see the note in src/pages/index.astro.
+const homeSectionIds = [...homeHtml.matchAll(/<section[^>]*\sid="([a-z-]+)"/g)].map((m) => m[1]);
+const demoIndex = homeSectionIds.indexOf('demo');
+const problemIndex = homeSectionIds.indexOf('problem');
+if (demoIndex === -1 || problemIndex === -1 || demoIndex > problemIndex) {
+	console.error(
+		`check-dist: homepage renders sections [${homeSectionIds.join(', ')}]; the proof video ` +
+			`must run before the diagnosis (2026-09-06 owner decision, src/pages/index.astro)`,
+	);
+	failed = true;
+}
+
+// HEADING ORDER. The demo section lost its h2 on 2026-09-06 and regained one as
+// its eyebrow when it moved to second. If it loses it again, the first heading
+// under the page h1 becomes an h3 and the page skips a level at the top, which
+// no other check on this page would notice.
+const firstHeadingAfterH1 = homeHtml.slice(homeHtml.indexOf('</h1>')).match(/<(h[2-6])\b/);
+if (firstHeadingAfterH1?.[1] !== 'h2') {
+	console.error(
+		`check-dist: the first heading after the homepage h1 is ` +
+			`<${firstHeadingAfterH1?.[1] ?? 'none'}>, so the page skips a heading level at the top`,
+	);
+	failed = true;
+}
+
 const intakeSources = [
 	'Photograph it',
 	'Drop the PDF or the doc in',

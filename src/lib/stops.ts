@@ -15,9 +15,9 @@
  * same words the reader will see when they arrive.
  */
 export const stops = [
+	{ id: 'demo', label: 'See it run' },
 	{ id: 'problem', label: 'What goes wrong' },
 	{ id: 'who', label: 'Who this is for' },
-	{ id: 'demo', label: 'See it run' },
 	{ id: 'outcomes', label: 'What it does instead' },
 	{ id: 'yield', label: 'The hard part' },
 	{ id: 'nutrition', label: 'Nutrition facts' },

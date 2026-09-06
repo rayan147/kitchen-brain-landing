@@ -137,6 +137,73 @@ and the copy stops exactly there.
 Still no rival snap line. The block's closing line, *"They are wrong, and
 nothing on the screen says so"*, carries no number by design.
 
+### 2026-09-06 revision — the quiet one, read as a guide
+
+The release owner read the block back and said what it was: *"this part has a
+lot of word and it is not easy to state the issue."* Both halves of that are
+true, and the second is the real one. Three stacked paragraphs of equal weight
+give the eye nothing to land on, so a reader cannot say what the failure IS
+without reading all of them, and a reader mid-shift on a phone will not.
+
+Nothing was added and no claim moved. The block now runs in three moves instead
+of three paragraphs:
+
+1. **The shape, once.** "A sheet totals what is in it, so a missing fact does
+   not stop the number. It shrinks it." That is the whole diagnosis in two
+   sentences, ahead of any example.
+2. **The two failures, as two labelled rows.** `A PRICE YOU HAVE NOT GOT YET`
+   and `A CONVERSION NOBODY CHECKED`, side by side under their own hairlines.
+   The label is the issue stated; the body is the evidence for it. A reader who
+   reads only the two labels has the point.
+3. **The rule.** CostCook holds the costing and names the line it is waiting on.
+
+Shorter as well as clearer: roughly 118 words where there were about 120, but
+the eye now has four landing points instead of one.
+
+Form constraints kept, all of them from the 2026-09-05 revision above. The rows
+are `<p>`, never `<h3>`, because `check-dist` reads every `<h3>` in `#problem`
+as one of the four pains and would silently make that list six. They sit side
+by side rather than stacked, so the pair does not read as a continuation of the
+four tilted tickets. No number, no tilt, no card. The mono label is the page's
+own micro-label voice, set in ink rather than the eyebrow's amber, so it reads
+as a label inside an aside and not as a new section opening.
+
+The closing line changed shape and not meaning: *"They are wrong, and nothing on
+the screen says so"* is now *"They are wrong, and the screen does not say so."*
+Still no number, still no rival snap line.
+
+Two new pins in `check-dist.mjs`, both force-failed before they were kept: the
+two row labels must render, and the section-order and heading-level checks that
+came with the same day's reorder (below).
+
+### 2026-09-06 revision — the footage runs before the diagnosis
+
+Owner decision, same sitting: **See it run moved to the second stop**, ahead of
+this section. Scene order, so it belongs in Step 10 as much as here.
+
+What it does to this story. The Catalyst no longer opens the page. The reader
+now watches the working product for two and a half minutes and then meets her
+own week, which means this section is read by someone who has already settled
+"is this real" rather than by someone still deciding. That is a different
+reader, and it makes the diagnosis land as recognition rather than as a pitch.
+The 1:1 pairing with `outcomes` is untouched: `problem` and `who` keep their
+order relative to each other, and `outcomes` still follows them.
+
+What it voids. The 2026-08-21 measurement recorded in `src/pages/index.astro`
+traded 604px of recall distance for 1,258px of depth off the video; the video is
+now at the top of the scroll, so those figures are history. The 2026-08-23 note
+argued the misfit list must settle "is this aimed at me" before the footage
+plays; this reverses that. Both are marked superseded in that file rather than
+left standing. **No new measurement was run** — this records a decision, not a
+number, and the note says so.
+
+One thing the move forced. `SeeItRun` had no `h2` (its heading moved into the
+hero on 2026-09-06), so at the second stop its two `h3` would have been the
+first headings under the page `h1`. The eyebrow is now that section's `h2`,
+which costs nothing visually and names the section in the same three words the
+hand-off arrows use. The removed line stays in the hero; putting it back here
+would say the same thing twice one screen apart.
+
 ### Step 11 — Revise and Finish
 
 Cut twice. The lede lost a sentence; each moment body is one or two sentences
