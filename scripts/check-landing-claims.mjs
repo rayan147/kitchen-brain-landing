@@ -597,10 +597,26 @@ for (const file of [
 requireText(siteSource, "href: '/demo'", 'demo preparation CTA');
 requireText(siteSource, "target: '_self'", 'demo preparation CTA');
 const demoRequestSource = surfaces[surfaceFiles.indexOf('src/components/sections/DemoRequest.astro')];
+// THE TRUTH STATE MOVED, 2026-09-06, because the underlying truth did.
+//
+// This used to pin the sentence "CostCook has not claimed your request was
+// sent", and that sentence was correct: the form built a mailto: and hoped, so
+// saying anything else would have been a lie. The form now posts to
+// /api/demo-request and reaches two mailboxes, so the honest sentence is the
+// opposite one, and it is pinned here in its place.
+//
+// What has NOT changed is the boundary the old line was really protecting: the
+// page must not claim something it cannot know. It cannot know a time was
+// booked. The calendar is Google's, inside a frame that reports nothing back,
+// so "sent" and "booked" stay two different sentences.
 requireText(demoRequestSource, 'href={booking.url}', 'owner-supplied demo calendar handoff');
 requireText(demoRequestSource, 'target="_blank"', 'demo calendar new-tab boundary');
 requireText(demoRequestSource, 'rel="noopener noreferrer"', 'demo calendar safe external link');
-requireText(demoRequestSource, 'CostCook has not claimed your request was sent', 'demo request truth state');
+requireText(demoRequestSource, 'data-booking-src={booking.embedUrl}', 'demo calendar embedded on the page');
+requireText(demoRequestSource, 'A time is booked only once you choose one above and Google confirms it', 'demo booking truth state');
+if (/CostCook has not claimed your request was sent/.test(demoRequestSource)) {
+	failures.push('demo page still says it has not sent the request, which is no longer true');
+}
 requireText(demoRequestSource, 'docs/stories/request-demo.story.md', 'demo story pointer');
 requireText(publicCopy, 'Watch the 2:30 product tour', 'hero proof link');
 requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');

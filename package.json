@@ -18,6 +18,7 @@
 		"verify:compare": "node scripts/verify-compare.mjs",
 		"video:sage": "node scripts/sage-video/assemble.mjs",
 		"test:support": "node scripts/test-support-endpoint.mjs",
+		"test:demo": "node scripts/test-demo-endpoint.mjs",
 		"verify:contact": "node scripts/verify-contact.mjs",
 		"dev:api": "vercel dev"
 	},

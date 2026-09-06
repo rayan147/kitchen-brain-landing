@@ -5,7 +5,21 @@
 - **Piece:** Demo-request landing page and qualification flow
 - **Title / headline:** Put one real job on the screen.
 - **My hero's name:** A chef-owner or catering operator deciding whether CostCook fits their kitchen
-- **Content file(s):** `src/components/sections/DemoRequest.astro`, `src/pages/demo.astro`
+- **Content file(s):** `src/components/sections/DemoRequest.astro`, `src/pages/demo.astro`, `src/pages/demo/sent.astro`, `src/pages/demo/not-sent.astro`
+
+### Revision, 2026-09-06 — the send became real
+
+The page's last scene used to turn nothing. Step 3 said "Your request is ready
+to send", handed the visitor's own mail client a draft, and then told the truth
+about itself: "CostCook has not claimed your request was sent." Beat 12 was not
+a Final Image, it was a to-do list. The one thing the hero came to do, they
+still had to go and do somewhere else.
+
+The form now posts to `/api/demo-request`, both mailboxes receive it, and the
+booking calendar is on the page rather than in a new tab beside an "Email Rayan
+directly" exit. Steps 3, 4, 6, 10 and 11 are revised below. Nothing above them
+changed: the hero, the wound and the flaw are the same, which is why the fix
+was to the ending and not to the argument.
 
 ## The 11 steps
 
@@ -48,10 +62,10 @@
 | 6 Break into Two — they try the new way | You tell Rayan what kind of kitchen and workflow to put on screen. |
 | 7 B Story — the relationship it protects | The conversation stays chef-to-chef and your judgment remains the decision point. |
 | 8 Fun and Games — promise of the premise | Follow the chosen job from menu and head count to cost, shopping, prep, and pack work. |
-| 9 Midpoint — first real win, with a number | The 15-minute slot is real and owner supplied; you choose it after preparing the request. |
-| 10 Bad Guys Close In — edge cases, doubts | The page says exactly what happens to the form, gives an email fallback, and never claims a message was sent. |
+| 9 Midpoint — first real win, with a number | You press send and it is sent. Rayan has the job you named before you have looked away from the page. |
+| 10 Bad Guys Close In — edge cases, doubts | If the send fails you are told so, and everything you typed is still in front of you. If the calendar will not load, one link opens it in a tab. Neither is dressed up. |
 | 11 All Is Lost / Dark Night | Another generic demo would leave the real job untouched and tomorrow's deadline unchanged. |
-| 12 Finale + Final Image | You choose a time with one real job already named for the call. |
+| 12 Finale + Final Image | The 15 minutes are on your calendar, booked on the same page you started on, with one real job already named for the call. |
 
 ### Step 4 — From Beats to Scenes (6 sections)
 
@@ -60,7 +74,7 @@
 | 1 | Put one real job on the screen | 1–2 | generic pitch → specific working session |
 | 2 | Prepare the demo request | 3–6 | guarded research → controlled first step |
 | 3 | What we will follow | 7–8 | feature list → one connected kitchen job |
-| 4 | Your prepared handoff | 9–10 | uncertain submission → explicit email and calendar actions |
+| 4 | Sent, and the calendar | 9–10, 12 | asked → sent, and a time you can pick without leaving |
 | 5 | What happens in 15 minutes | 8–10 | vague meeting → known agenda and boundaries |
 | 6 | Choose the useful next step | 11–12 | another tab open → a time chosen or a self-serve route taken |
 
@@ -75,7 +89,7 @@
 - You expect a generic walkthrough → the page asks for one real kitchen job.
 - You expect a lead form → the first frame asks only what makes the demo useful.
 - You expect disconnected features → the agenda follows one event end to end.
-- You expect a mystery submit → the interface tells you it prepares an email, then hands you the calendar.
+- You expect a mystery submit → it says "Sent" only after it is, and the calendar opens under that sentence.
 - You expect a long pitch → the agenda is bounded to 15 minutes and names what it can cover.
 - You expect pressure → you can book, tour the product, or start without a call.
 
@@ -99,12 +113,24 @@
 ### Step 10 — Connecting Your Scenes
 
 - **POV:** Second person (“you”) throughout.
-- **Hand-offs:** “Start with the job.” → “Now name the person bringing it.” → “Your email app keeps the handoff visible.” → “Then choose the time.” → “If a call is not the next step, keep moving.”
+- **Hand-offs:** “Start with the job.” → “Now name the person bringing it.” → “This goes to Rayan's inbox when you send it.” → “Sent. Now take your 15 minutes.” → “If a call is not the next step, keep moving.”
 
 ### Step 11 — Revise and Finish
 
-- **Word count before → after:** 612 → 327 words of visible explanatory copy.
-- **Claims removed because they could not be shown:** response-time promises, qualification guarantees, customer counts, conversion claims, and an assertion that the static site sends form data itself.
-- **Final Image (the CTA sentence):** Choose a 15-minute time with the real job already named.
+- **Word count before → after:** 612 → 327 words of visible explanatory copy. The
+  2026-09-06 revision is net neutral: the hedging in step 3 came out, one
+  sentence of "sent, now pick a time" went in.
+- **Claims removed because they could not be shown:** response-time promises,
+  qualification guarantees, customer counts, conversion claims.
+- **The claim that came BACK, 2026-09-06:** "an assertion that the static site
+  sends form data itself" was on the removed list, and it was right to be: the
+  site could not. The truth pass is a check on the copy, not a licence to leave
+  the product not doing the thing. The page now sends, so the sentence is now
+  showable, and it is the sentence the whole page was missing.
+- **Claims still refused:** the page never says a time is booked. It cannot know:
+  the calendar is Google's, inside a frame that tells us nothing, so "your
+  request is sent" and "a time is booked only once you choose one and Google
+  confirms it" are two different sentences and stay that way.
+- **Final Image (the CTA sentence):** Sent. Now take your 15 minutes.
 
 **Snap line:** “Bring the menu you would otherwise price twice.”
