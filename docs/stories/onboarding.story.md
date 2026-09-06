@@ -242,3 +242,21 @@
   accuracy, and the built-page contract pins every quoted label.
 - **Still one snap line.** The walkthrough is deliberately unquotable; the
   $1.62 keeps the page's only snap.
+- **Scenes, not a manual (revision, 2026-09-06, owner direction):** the
+  walkthrough above was true and unreadable: five stages times five numbered
+  taps, "on screen / have ready / done when" on every row. The owner's note:
+  too much, people want visuals, it should read like a story, did you use the
+  skill. Step 11 had been skipped (cut half, then half again) and Step 6 had
+  been broken (a list of taps does not turn a value). Part 2 is now five
+  scenes. Each is one paragraph in the second person that turns one thing
+  (the walk-in screen becomes a card that says "Import an invoice"; the
+  recipe card goes in the way the invoice did) and the app's own screen
+  beside it, captured from an empty kitchen by
+  `scripts/capture-setup-proof.mjs`: stage two's three cards, the dropzone
+  with "Choose files", the food-facts chips, stage four's two cards. The
+  reader sees the button instead of reading its label in a list. What the
+  captures may not show is any extraction result (RC-55), so the dropzone is
+  empty and the review panel reads "Your import batch will appear here"; the
+  claim stays "upload, then confirm what came back", with the labels the
+  claims guard pins. Part 1 lost the sign-up paragraph's detail for the same
+  reason.

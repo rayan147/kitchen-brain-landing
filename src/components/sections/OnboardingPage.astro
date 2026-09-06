@@ -30,79 +30,79 @@ const haveReady = [
 ] as const;
 
 /**
- * The five stages, in the app's own labels (`SETUP_STAGE_LABELS`) with the
- * screen heading each one opens on (`SETUP_STAGE_GUIDE[...].title`), the
- * exact controls the reader taps, and the app's own last checkmark. Every
- * quoted label is read off `sandbox/demo` `src/routes/setup/+page.svelte`,
- * `src/lib/components/setup/*`, and `src/lib/components/import/*` on
- * 2026-09-06. A reader who starts must recognise every screen and button by
- * the name used here, so these strings track the app, never a nicer
- * paraphrase.
+ * The five stages as scenes. Each is one short paragraph in the reader's
+ * second person, the app's own capture beside it, and the app's own last
+ * checkmark. Labels are read off `sandbox/demo` on 2026-09-06 and every
+ * capture is taken by `scripts/capture-setup-proof.mjs` from an empty
+ * kitchen on that branch (RC-48): the reader sees the button, they do not
+ * read a list of taps.
  */
 const stages = [
 	{
 		n: '1',
 		label: 'Kitchen and suppliers',
-		screen: 'Identify your kitchen',
-		have: 'The name of the supplier you buy the most from. A name is enough.',
-		steps: [
-			'Check the business name. It is the one you gave at sign-up, so this line is already ticked.',
-			'Set the target food-cost percentage: the share of a selling price food should take. 30 means a $10 plate should carry $3 of food.',
-			'Type the supplier’s name under “Supplier name”, then tap “Save and continue”. The invoice you upload next fills in the rest of that supplier for you.'
-		],
-		done: 'Add one supplier'
+		body: 'The first screen wants three things you already know: the kitchen’s name, which it has from sign-up, the supplier you buy the most from, and the share of a selling price food should take. Type the supplier’s name. The invoice you are about to upload fills in the rest of them.',
+		done: 'Add one supplier',
+		shot: {
+			src: '/proof/setup/01-kitchen.png',
+			width: 2880,
+			height: 1062,
+			alt: 'The CostCook setup screen with Sage open beside it. A rail down the left lists five stages: Kitchen and suppliers ticked complete, Ingredients numbered 2 as the stage in progress, Food facts, Recipes and Menu and first order still locked. The header reads “Harbor & Hearth Catering, stage 1 of 5, saves after each stage” and carries an Ask Sage action. The stage is headed “Identify your kitchen”, explains why it exists, then ticks three things off: Name the kitchen, Set the food-cost target, Add one supplier. On the right, a panel headed “Ask your first question” offers “What does the Kitchen and suppliers stage need from me?”, “Why does setup ask for kitchen and suppliers now?”, “What is left to finish setup?”, “What is a target food cost percentage?” and “Do I need a supplier to cost a recipe?”.',
+			caption: 'Stage one, with the five stages down the left and Sage open beside it. The stages stay there the whole way, ticking off as you go.'
+		}
 	},
 	{
 		n: '2',
 		label: 'Ingredients',
-		screen: 'Add the ingredients for your dish',
-		have: 'The invoice. You do not type its lines in.',
-		steps: [
-			'The screen opens on three choices. Tap the first one, “Import an invoice or price sheet”.',
-			'Tap “Choose files” and pick the photo or the PDF. On a phone that opens your camera roll. There is also “Paste text instead”.',
-			'Wait while the screen says “Uploading”, then “Reading document”, then “Preparing review”. This takes a moment, not an evening.',
-			'On “Review extracted records”, read what came back: the supplier, and each line with its pack, size and price. Change anything that is wrong. A line CostCook could not read is quoted back to you exactly as it appeared, for you to fill in.',
-			'Confirm the lines. Nothing is written to your kitchen until you do. Then tap “Back to Ingredients” and your list is there, each ingredient with a usable cost beside it.'
-		],
-		aside: 'No invoice handy? The second choice, “Import an ingredient list”, takes a spreadsheet or a typed list. The third, “Add ingredients manually”, is the form, one ingredient at a time. It is the fallback, not the plan.',
-		done: 'Review the food facts CostCook found'
+		body: 'This is the screen where the old tools wanted your walk-in. This one opens on a choice, and the first card is “Import an invoice or price sheet”. Tap it, tap “Choose files”, and pick the photo of the invoice off your phone. What comes back is the supplier, the packs and the prices, laid out on a screen called “Review extracted records” for you to confirm, not type. A line it could not read is quoted back to you as it appeared. Tap “Back to Ingredients” and your list is there, each ingredient with a usable cost beside it.',
+		aside: 'No invoice handy? “Import an ingredient list” takes a spreadsheet or a typed list, and “Add ingredients manually” is the form. It is the fallback, not the plan.',
+		done: 'Review the food facts CostCook found',
+		shot: {
+			src: '/proof/setup/02-choices.png',
+			width: 2880,
+			height: 1494,
+			alt: 'The Ingredients stage, headed “Add the ingredients for Roast chicken plate”, stage 2 of 5, with Kitchen and suppliers ticked in the rail. Under “On this screen”: Add the ingredients for one dish, Review the food facts CostCook found. Then three cards. “Import an invoice or price sheet: Upload or photograph one. Supplier, packs, and prices come back for you to confirm, not type.” “Import an ingredient list: A spreadsheet or a typed list. Sage reads it into one review batch.” “Add ingredients manually: Best when you know one dish and its pack prices by heart.”',
+			caption: 'Stage two on an empty kitchen. The first card is the invoice; the form is the third.'
+		},
+		shot2: {
+			src: '/proof/setup/02-dropzone.png',
+			width: 2880,
+			height: 1304,
+			alt: 'The import screen behind that first card, headed “Import and review”. A bar above it reads “Adding ingredients for setup. Review the document here, then return to build your first recipe” with a “Back to Ingredients” button. A card headed “Add sources” holds a dashed box: “Drop files here. PDF, photo, CSV, Excel, or DOCX”, a “Choose files” button and “Paste text instead”. Beside it, “Review import batch: Your import batch will appear here.”',
+			caption: 'Behind the first card. “Choose files” opens your camera roll on a phone; the review lands in the panel on the right.'
+		}
 	},
 	{
 		n: '3',
 		label: 'Food facts',
-		screen: 'Review food facts',
-		have: 'Nothing new. The pack labels help if you want to check a “may contain”.',
-		steps: [
-			'CostCook has already drafted each ingredient’s nutrition match, allergens and diet facts where it could. Your job is to confirm them, one ingredient at a time.',
-			'For each allergen, tap one chip: contains, may contain, free from, or don’t know. Tick the diet facts that apply: animal product, meat, pork, shellfish, alcohol. Then save.',
-			'Not sure about one? Tap “Skip for now”. Every order that uses it will read “check”, never “clear”.'
-		],
-		done: 'Answer every ingredient once'
+		body: 'Allergens and diet facts, drafted for each ingredient where CostCook could, and yours to confirm with one tap per chip. Not sure about one? “Skip for now”, and every order that uses it reads “check”, never “clear”.',
+		done: 'Answer every ingredient once',
+		shot: {
+			src: '/proof/setup/03-chips.png',
+			width: 1668,
+			height: 1216,
+			alt: 'One ingredient on the Food facts stage: Chicken thigh, badged “Draft, review needed”, with the line “Drafted from the ingredient name only. Don’t know stays a check until you confirm the package or source.” A Nutrition box shows the match and a Preparation form set to Raw. Under Allergens, ten chips from Crustacean shellfish to Wheat, each reading “don’t know”. Under Diet facts, five chips: Animal product, Meat, poultry or fish, Pork, Shellfish, Alcohol. Two buttons close it: “Confirm Chicken thigh” and “Skip for now”.',
+			caption: 'One ingredient’s card. Every chip starts at “don’t know”, and don’t know is never read as clear.'
+		}
 	},
 	{
 		n: '4',
 		label: 'Recipes',
-		screen: 'Build your first dish',
-		have: 'The recipe. Again, you do not type it in.',
-		steps: [
-			'The screen asks how you want to build your first dish. Tap “Build with Sage”.',
-			'Tap “Choose files” and pick the photo of the card or the PDF. Or “Paste text instead”, or “Paste a link”.',
-			'Read the draft that comes back: the dish name, its lines and amounts. Each line is matched to an ingredient from stage two, and where the match is unsure the row asks you to confirm it.',
-			'Create the recipe. The stage now shows your dish with its plate cost, and “Review dish” opens the arithmetic behind it.'
-		],
-		aside: 'Or tap “Build the dish by hand” and type the lines yourself. Best when you know the amounts by heart.',
-		done: 'Check the plate cost'
+		body: 'The recipe card goes in the way the invoice did. Tap “Build with Sage”, then “Choose files”, then the photo of the card. Read the draft: the dish, its lines, each one matched to an ingredient from stage two, and where a match is unsure the row asks you. Then the plate cost, with the arithmetic behind it.',
+		aside: 'Or “Build the dish by hand”, if you know the amounts by heart.',
+		done: 'Check the plate cost',
+		shot: {
+			src: '/proof/setup/04-choices.png',
+			width: 2880,
+			height: 1534,
+			alt: 'The Recipes stage, headed “Build your first dish”, stage 4 of 5, with the first three stages ticked in the rail. It asks “How do you want to build your first dish?” and offers two cards. “Build with Sage: Add a recipe card, photo, PDF, pasted text, or link. Sage drafts dishes, batch components, ingredients, yields, and links for you to review.” “Build the dish by hand: Best when you know the ingredients and amounts for one dish.”',
+			caption: 'Stage four opens on the same shape as stage two. Sage first, the form second.'
+		}
 	},
 	{
 		n: '5',
 		label: 'Menu and first order',
-		screen: 'Cost your first order',
-		have: 'A date and a guest count. Real ones or a guess, either works.',
-		steps: [
-			'The menu is already named after your dish and already holds it. Leave the menu name or change it.',
-			'Fill in “Client or event”, “Event date” and “Guests”. A per-guest price is optional; add one and the order is judged against your target.',
-			'Cost the order. It becomes a shopping list, a prep list, a pack list, and a food-cost result for the event.'
-		],
+		body: 'A date and a guest count. The menu is already named after your dish and already holds it. Cost the order, and it becomes a shopping list, a prep list, a pack list, and a food-cost result for the event.',
 		done: 'Add guests and a date, then cost the order'
 	}
 ] as const;
@@ -255,10 +255,9 @@ const crewTrack = [
 					would do anything, and the half-filled spreadsheet is still on the desktop.
 				</p>
 				<p>
-					CostCook does not want your catalog typed in. It wants what is already written down:
-					one invoice, one recipe. Everything setup needs about your first dish is on those two,
-					and you confirm what it read instead of typing it. So before you press Start, have
-					these ready.
+					CostCook wants what is already written down: one invoice, one recipe. Everything
+					setup needs about your first dish is on those two, and you confirm what it read
+					instead of typing it.
 				</p>
 			</div>
 			<ul class="fd-doors-list fd-have" role="list" aria-label="What to have ready">
@@ -271,13 +270,11 @@ const crewTrack = [
 			</ul>
 			<div class="fd-prose">
 				<p>
-					Sign-up asks for your kitchen&rsquo;s name and nothing else. The first screen after
-					it is a welcome with two questions: what kind of kitchen you run, and the name of one
-					dish you know well. A third asks what you most want to know, and it is optional. Name
-					the dish and every screen after says its name back to you. Then tap &ldquo;Start
-					setup&rdquo;.
+					Sign-up asks for your kitchen&rsquo;s name and nothing else. Then a welcome asks
+					what kind of kitchen you run and the name of one dish you know well. Name it, and
+					every screen after says its name back to you.
 				</p>
-				<p class="fd-handoff">Those answers take a minute. These five stages are the work, and here is every tap.</p>
+				<p class="fd-handoff">Those answers take a minute. These five stages are the work.</p>
 			</div>
 		</div>
 	</section>
@@ -288,28 +285,34 @@ const crewTrack = [
 				<p class="eyebrow fd-part-label">Part 2 of 3 &middot; The five stages</p>
 				<h2 id="fd-stages-heading">Five stages is one dish&rsquo;s worth of facts, and two of them are uploads.</h2>
 				<p>
-					Each stage asks for the next thing that one dish needs, and nothing else. The five
-					stages sit down the left of the screen the whole time, ticking off as you go, and the
-					stage you are on says what it wants at the top. Below is each screen by the name it
-					carries, what to have ready, and what to tap.
+					Each stage asks for the next thing that one dish needs, and nothing else. Here is
+					each one as you will meet it.
 				</p>
 			</div>
 			<ol class="fd-stage-list" role="list">
 				{stages.map((stage) => (
-					<li class="fd-stage">
+					<li class="fd-stage fd-scene">
 						<p class="fd-stage-head">
 							<span class="fd-stage-n" aria-hidden="true">{stage.n}</span>
 							<span class="fd-stage-label">{stage.label}</span>
 						</p>
 						<div class="fd-stage-copy">
-							<p class="fd-stage-line"><span class="fd-stage-k">On screen</span> &ldquo;{stage.screen}&rdquo;</p>
-							<p class="fd-stage-line"><span class="fd-stage-k">Have ready</span> {stage.have}</p>
-							<ol class="fd-stage-steps">
-								{stage.steps.map((step) => <li>{step}</li>)}
-							</ol>
+							<p class="fd-stage-body">{stage.body}</p>
 							{'aside' in stage && <p class="fd-stage-aside">{stage.aside}</p>}
 							<p class="fd-stage-done"><span class="fd-stage-done-k">Done when</span> {stage.done}.</p>
 						</div>
+						{'shot' in stage && (
+							<figure class="fd-shot fd-scene-shot">
+								<img src={stage.shot.src} width={stage.shot.width} height={stage.shot.height} loading="lazy" decoding="async" alt={stage.shot.alt} />
+								<figcaption>{stage.shot.caption}</figcaption>
+							</figure>
+						)}
+						{'shot2' in stage && (
+							<figure class="fd-shot fd-scene-shot">
+								<img src={stage.shot2.src} width={stage.shot2.width} height={stage.shot2.height} loading="lazy" decoding="async" alt={stage.shot2.alt} />
+								<figcaption>{stage.shot2.caption}</figcaption>
+							</figure>
+						)}
 					</li>
 				))}
 			</ol>
@@ -320,22 +323,6 @@ const crewTrack = [
 				at. Reading a screen of lines is still work. It is a different kind of work from a hundred
 				packs and a form at nine at night.
 			</p>
-
-			<figure class="fd-shot" data-reveal>
-				<img
-					src="/proof/setup/01-kitchen.png"
-					width="2880"
-					height="1062"
-					loading="lazy"
-					decoding="async"
-					alt="The CostCook setup screen with Sage open beside it. A rail down the left lists five stages: Kitchen and suppliers ticked complete, Ingredients numbered 2 as the stage in progress, Food facts, Recipes and Menu and first order still locked. The header reads “Harbor &amp; Hearth Catering, stage 1 of 5, saves after each stage” and carries an Ask Sage action. The stage is headed “Identify your kitchen”, explains why it exists, then ticks three things off: Name the kitchen, Set the food-cost target, Add one supplier. On the right, a panel headed “Ask your first question” offers “What does the Kitchen and suppliers stage need from me?”, “Why does setup ask for kitchen and suppliers now?”, “What is left to finish setup?”, “What is a target food cost percentage?” and “Do I need a supplier to cost a recipe?”."
-				/>
-				<figcaption>
-					Stage one in the app: the five stages down the left, what this one wants, and Sage
-					open beside it with the questions that stage raises. Captured from CostCook running
-					on an empty kitchen.
-				</figcaption>
-			</figure>
 
 			<p class="fd-sage">
 				Sage stays open beside whichever stage you are on. Its questions are the ones that
@@ -755,62 +742,20 @@ const crewTrack = [
 		}
 	}
 
-	.fd-stage-line {
+	.fd-stage-body {
 		margin: 0;
-		color: var(--color-ink);
-		line-height: 1.6;
-	}
-
-	.fd-stage-line + .fd-stage-line {
-		margin-top: 0.3rem;
-	}
-
-	.fd-stage-k {
-		display: inline-block;
-		min-width: 6.5rem;
-		color: var(--color-amber-deep);
-		font-family: var(--font-body);
-		font-size: var(--text-eyebrow);
-		font-weight: 600;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-	}
-
-	/* The taps, numbered the way the reader will count them on the screen.
-	   Quoted labels are the app's own; the number is amber like the stage
-	   number so the two counts read as one system. */
-	.fd-stage-steps {
-		margin: 0.9rem 0 0;
-		padding: 0;
-		list-style: none;
-		counter-reset: tap;
-	}
-
-	.fd-stage-steps li {
-		position: relative;
-		padding-left: 2rem;
 		color: var(--color-ink-soft);
-		line-height: 1.6;
-		counter-increment: tap;
+		line-height: 1.65;
 	}
 
-	.fd-stage-steps li + li {
-		margin-top: 0.55rem;
+	.fd-scene-shot {
+		margin-top: 1.4rem;
 	}
 
-	.fd-stage-steps li::before {
-		content: counter(tap);
-		position: absolute;
-		left: 0;
-		top: 0.15em;
-		width: 1.4rem;
-		color: var(--color-amber-deep);
-		font-family: var(--font-body);
-		font-size: var(--text-eyebrow);
-		font-weight: 600;
-		font-variant-numeric: tabular-nums;
-		letter-spacing: 0.06em;
-		text-align: right;
+	@media (min-width: 48rem) {
+		.fd-scene-shot {
+			grid-column: 1 / -1;
+		}
 	}
 
 	.fd-stage-aside {

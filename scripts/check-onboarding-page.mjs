@@ -42,7 +42,7 @@ for (const [text, label] of [
 	['docs/stories/onboarding.story.md', 'story pointer']
 ]) requireText(text, label);
 
-const stageRows = (html.match(/class="fd-stage"/g) ?? []).length;
+const stageRows = (html.match(/class="fd-stage[ "]/g) ?? []).length;
 if (stageRows !== 5) failures.push(`expected 5 rendered stage rows, received ${stageRows}`);
 
 // The ticket now maps three parts; the five stage rows are counted above.
@@ -68,17 +68,35 @@ for (const text of ['Add one supplier', 'Review the food facts', 'Answer every i
 	requireText(text, `stage done-when line from SETUP_STAGE_GUIDE (${text})`);
 }
 
-// Every stage is a walkthrough: the screen's own heading, what to have ready,
-// and the taps in order (Krug: the reader never works out what the next
-// screen wants). Five screen lines, five have-ready lines, five tap lists.
-const screenLines = (html.match(/class="fd-stage-k"[^>]*>On screen</g) ?? []).length;
-if (screenLines !== 5) failures.push(`expected 5 on-screen lines, received ${screenLines}`);
-const haveLines = (html.match(/class="fd-stage-k"[^>]*>Have ready</g) ?? []).length;
-if (haveLines !== 5) failures.push(`expected 5 have-ready lines, received ${haveLines}`);
-const tapLists = (html.match(/class="fd-stage-steps"/g) ?? []).length;
-if (tapLists !== 5) failures.push(`expected 5 tap lists, received ${tapLists}`);
-for (const text of ['Identify your kitchen', 'Review food facts', 'Build your first dish', 'Cost your first order']) {
-	requireText(text, `stage screen heading from SETUP_STAGE_GUIDE (${text})`);
+// Every stage is a scene: one paragraph and the app's own screen. Five
+// scenes, five captures behind them (stage two carries two, stage five none),
+// each with a declared size that matches its PNG and an alt long enough to
+// have been read off the pixels (RC-48). The reader sees the button; they
+// do not read a list of taps.
+const scenes = (html.match(/class="fd-stage fd-scene"/g) ?? []).length;
+if (scenes !== 5) failures.push(`expected 5 scenes, received ${scenes}`);
+const sceneShots = html.match(/<img\b[^>]*\/proof\/setup\/[^>]*>/g) ?? [];
+if (sceneShots.length !== 5) failures.push(`expected 5 setup captures in the scenes, received ${sceneShots.length}`);
+for (const tag of sceneShots) {
+	const src = tag.match(/src="([^"]+)"/)?.[1] ?? '';
+	const alt = tag.match(/alt="([^"]*)"/)?.[1] ?? '';
+	if (alt.length < 120) failures.push(`${src}: alt is too thin to have been read off the pixels`);
+	let bytes = null;
+	try {
+		bytes = readFileSync(new URL(`../public${src}`, import.meta.url));
+	} catch {
+		failures.push(`missing public${src}`);
+	}
+	if (!bytes) continue;
+	const w = bytes.readUInt32BE(16);
+	const h = bytes.readUInt32BE(20);
+	const declaredOf = (attribute) => Number(tag.match(new RegExp(`${attribute}="(\\d+)"`))?.[1] ?? 0);
+	if (declaredOf('width') !== w || declaredOf('height') !== h) {
+		failures.push(`${src} declares ${declaredOf('width')}x${declaredOf('height')} but the PNG is ${w}x${h}`);
+	}
+}
+for (const src of ['02-choices', '02-dropzone', '03-chips', '04-choices']) {
+	if (!html.includes(`/proof/setup/${src}.png`)) failures.push(`scene capture ${src} is missing`);
 }
 // RC-58: the three choices stage two opens on and the two at stage four, by
 // the app's own labels, with the upload control and the staging gate they
