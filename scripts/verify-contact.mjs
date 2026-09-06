@@ -220,8 +220,12 @@ try {
 	assert(refusal.draftKept, 'a failed send threw away the visitor\'s draft');
 	assert(refusal.buttonUsable, 'a failed send left the send button disabled');
 
-	// A success must clear the draft only once it is somewhere else.
+	// A SUCCESS IS A SEQUENCE, NOT A LINE OF TEXT. These assert the boundaries
+	// that make an auto-closing confirmation honest: the acknowledgement is still
+	// readable after a real hold, the box does leave, focus comes back, and the
+	// page keeps proof once the box has gone.
 	const success = await evaluate(`(async () => {
+		const started = performance.now();
 		document.querySelector('[data-support-open]').click();
 		const form = document.querySelector('[data-support-form]');
 		form.querySelector('#support-email').value = 'someone@kitchen.com';
@@ -230,20 +234,114 @@ try {
 		window.fetch = async () => new Response(JSON.stringify({ ok: true }), {
 			status: 200, headers: { 'content-type': 'application/json' }
 		});
+		const dialog = document.querySelector('dialog.ask-dialog');
+		const confirmPanel = document.querySelector('[data-support-confirm]');
 		form.requestSubmit();
-		for (let attempt = 0; attempt < 60; attempt += 1) {
-			if (document.querySelector('[data-support-status]')?.dataset.tone === 'sent') break;
+
+		for (let attempt = 0; attempt < 120; attempt += 1) {
+			if (confirmPanel.hidden === false) break;
 			await new Promise(requestAnimationFrame);
 		}
+		const acknowledgedAt = performance.now();
+		const acknowledged = {
+			confirmShown: confirmPanel.hidden === false,
+			formHidden: form.hidden === true,
+			said: document.querySelector('[data-support-confirm-text]').textContent.trim(),
+			announced: document.querySelector('[data-support-confirm-text]').getAttribute('role'),
+			state: dialog.dataset.state,
+			stillOpen: dialog.open === true
+		};
+
+		// Still readable one second in: the confirmation must not be a flash.
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+		const readableAtOneSecond = dialog.open === true && confirmPanel.hidden === false;
+
+		// And it must actually leave, well inside a sane upper bound.
+		let closedAt = null;
+		for (let attempt = 0; attempt < 100; attempt += 1) {
+			if (dialog.open === false) { closedAt = performance.now(); break; }
+			await new Promise((resolve) => setTimeout(resolve, 100));
+		}
 		window.fetch = originalFetch;
-		const status = document.querySelector('[data-support-status]');
+		const receipt = document.querySelector('[data-support-receipt]');
 		return {
-			told: status.textContent.trim(),
-			cleared: form.querySelector('#support-message').value === ''
+			...acknowledged,
+			readableAtOneSecond,
+			closed: dialog.open === false,
+			msFromAcknowledgedToClosed: closedAt ? Math.round(closedAt - acknowledgedAt) : null,
+			msTotal: closedAt ? Math.round(closedAt - started) : null,
+			focusReturnedToOpener: document.activeElement === document.querySelector('[data-support-open]'),
+			receiptShown: receipt.hidden === false,
+			receiptNamesAddress: receipt.textContent.includes('someone@kitchen.com'),
+			formRestoredForNextTime: form.hidden === false && confirmPanel.hidden === true,
+			draftCleared: form.querySelector('#support-message').value === ''
 		};
 	})()`);
-	assert(/sent/i.test(success.told), `a successful send said "${success.told}"`);
-	assert(success.cleared, 'a successful send kept the draft in the box');
+
+	assert(success.confirmShown, 'a successful send never showed a confirmation');
+	assert(success.formHidden, 'the form stayed on screen behind the confirmation');
+	assert(/sent/i.test(success.said), `the confirmation said "${success.said}"`);
+	assert(success.said.includes('someone@kitchen.com'), 'the confirmation does not name the address that was used');
+	assert(success.announced === 'status', 'the confirmation is not announced to screen readers');
+	assert(success.readableAtOneSecond, 'the confirmation vanished within a second, too fast to read');
+	assert(success.closed, 'the dialog never closed after a successful send');
+	assert(
+		success.msFromAcknowledgedToClosed >= 1800,
+		`the dialog closed ${success.msFromAcknowledgedToClosed}ms after acknowledging, under the 1800ms readable hold`
+	);
+	assert(
+		success.msFromAcknowledgedToClosed <= 4000,
+		`the dialog took ${success.msFromAcknowledgedToClosed}ms to close, past a reasonable upper bound`
+	);
+	assert(success.focusReturnedToOpener, 'closing after a send did not return focus to the button that opened it');
+	// Without this the visitor is left looking at the button they just pressed
+	// with no evidence anything happened.
+	assert(success.receiptShown, 'nothing on the page records that a message was sent');
+	assert(success.receiptNamesAddress, 'the receipt does not name the address that will be replied to');
+	assert(success.formRestoredForNextTime, 'the dialog cannot be used again: it reopens on the confirmation');
+	assert(success.draftCleared, 'a successful send kept the draft in the box');
+
+	// Reduced motion must reach the same states, without the movement.
+	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+	await navigate();
+	const calm = await evaluate(`(async () => {
+		document.querySelector('[data-support-open]').click();
+		const form = document.querySelector('[data-support-form]');
+		form.querySelector('#support-email').value = 'calm@kitchen.com';
+		form.querySelector('#support-message').value = 'A real question about costing a wedding.';
+		const originalFetch = window.fetch;
+		window.fetch = async () => new Response(JSON.stringify({ ok: true }), {
+			status: 200, headers: { 'content-type': 'application/json' }
+		});
+		const dialog = document.querySelector('dialog.ask-dialog');
+		form.requestSubmit();
+		for (let attempt = 0; attempt < 120; attempt += 1) {
+			if (document.querySelector('[data-support-confirm]').hidden === false) break;
+			await new Promise(requestAnimationFrame);
+		}
+		const leavingTransform = (() => {
+			dialog.dataset.state = 'leaving';
+			return getComputedStyle(dialog).transform;
+		})();
+		for (let attempt = 0; attempt < 100; attempt += 1) {
+			if (dialog.open === false) break;
+			await new Promise((resolve) => setTimeout(resolve, 100));
+		}
+		window.fetch = originalFetch;
+		return {
+			leavingTransform,
+			closed: dialog.open === false,
+			receiptShown: document.querySelector('[data-support-receipt]').hidden === false
+		};
+	})()`);
+	assert(
+		calm.leavingTransform === 'none',
+		`reduced motion still moves the dialog on the way out (transform: ${calm.leavingTransform})`
+	);
+	assert(calm.closed, 'reduced motion: the dialog never closed');
+	assert(calm.receiptShown, 'reduced motion: the page kept no record of the send');
+	await send('Emulation.setEmulatedMedia', { features: [] });
+	await navigate();
 
 	await capture('desktop');
 
@@ -308,5 +406,5 @@ if (failures.length > 0) {
 	console.error(failures.map((failure) => `- ${failure}`).join('\n'));
 	process.exitCode = 1;
 } else {
-	console.log('Contact page verified: no-JavaScript form, dialog focus and return, refusal keeps the draft, success clears it, touch targets, phone, and 200% text.');
+	console.log('Contact page verified: no-JavaScript form, dialog focus and return, refusal keeps the draft, success acknowledges then closes within its readable hold and leaves a receipt, reduced motion reaches the same states without movement, touch targets, phone, and 200% text.');
 }
