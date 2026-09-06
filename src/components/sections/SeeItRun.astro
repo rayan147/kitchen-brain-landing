@@ -3,7 +3,12 @@ import { cta, launchPlan } from '../../lib/site';
 import SectionHandoff from '../SectionHandoff.astro';
 
 // Considered Composite; not used because this guide is a fixed, shallow sequence:
-// six handoffs and one scale note have no recursive child behaviour.
+// eight handoffs and one scale note have no recursive child behaviour.
+//
+// EIGHT SINCE 2026-09-06, not six. The film gained a nutrition beat and a Sage
+// beat (walkthrough v5), and this list is the film in writing: a step here that
+// the footage does not show, or a beat the footage shows and this list does not,
+// is the same defect in two directions. check-dist.mjs holds the ids.
 const guideSteps = [
 	{
 		id: 'quote',
@@ -30,6 +35,14 @@ const guideSteps = [
 		to: 'Scaled prep list'
 	},
 	{
+		id: 'nutrition',
+		label: 'Nutrition',
+		title: 'Answer the nutrition question off the same recipe',
+		body: 'Calories and protein per portion sit on the dish you already costed, computed from the sources you matched. Rows the source will not report stay blank, with the ingredient named.',
+		from: 'Same costed recipe',
+		to: 'Panel, blanks named'
+	},
+	{
 		id: 'send',
 		label: 'Buy',
 		title: 'Send each supplier its purchase order',
@@ -52,6 +65,14 @@ const guideSteps = [
 		body: 'The received price becomes the current ingredient cost. The confirmed quote stays held while today’s comparison moves.',
 		from: 'What actually arrived',
 		to: 'Current cost for next time'
+	},
+	{
+		id: 'ask',
+		label: 'Ask',
+		title: 'Ask about the job and check the answer',
+		body: 'Sage reads the records this order has built and answers in plain words. The film asks what needs attention, and the answer carries the same 39.6 percent food cost the pricing panel worked out, with the orders it read listed under it.',
+		from: 'The records so far',
+		to: 'Answer with its sources'
 	}
 ];
 
@@ -76,11 +97,51 @@ const guideSteps = [
 // Braised Short Rib carries Mirepoix Base and House Beef Stock as sub-recipes,
 // so the claims and the through-line stay on the same dish.
 //
-// SIX THINGS HERE MOVE WITH THE FOOTAGE, EVERY TIME: the chip's duration, the
-// sr-only transcript, the video's aria-label, the poster, the h2, and the hero
-// link's duration (guard-pinned in check-landing-claims.mjs). They have
-// drifted twice — commit 3e8d136 left the chip reading 48 sec over a 39.5s
-// cut, and an earlier cut narrated a different menu than the order it quoted.
+// WALKTHROUGH v5 (2026-09-06): two beats added for the two things the app
+// shipped after v4, and the cut ran from 2:30 to 2:53 to hold them.
+//
+// The nutrition panel, straight after the prep list, on the Wild Mushroom
+// Polenta from the SAME Wedding Plated Dinner menu: 531 calories a portion off
+// a recipe the film has already costed, with seven label rows left blank and
+// the ingredient whose source will not report each one named beside it. Not
+// the Braised Short Rib the rest of the cut follows, and that was a truth
+// decision: the short rib's stock enters by volume, which leaves the portion
+// weight unknown, and the stock's nutrients are the sum of its inputs
+// including the beef bones that get strained out. The polenta's four lines are
+// all weighed in grams. Nothing on the panel is a compliance claim and no card
+// makes it one; the printed sheet says so on the sheet.
+//
+// Sage, between the price carrying back and the quoted-versus-today result,
+// asked in plain words what needs attention for the wedding. The answer reads
+// back 39.6 percent against a 30 percent target, which is what the pricing
+// panel worked out ninety seconds earlier, and the records it read are listed
+// under it. Sage's PROSE is not deterministic; its figures are, because they
+// are read off the order. The capture asserts the figures this transcript
+// names and refuses to keep a frame without them (SAGE_MUST_SHOW in beats.mjs).
+//
+// The written guide below gained a step for each. The app's own demo world had
+// no nutrition data at all until the app repo's seed was given four verified
+// USDA FoodData Central sources; see demo/nutrition-curation.ts there.
+//
+// THESE MOVE WITH THE FOOTAGE, EVERY TIME. The list said six and was short by
+// three, which is how the duration has now drifted twice: commit 3e8d136 left
+// the chip reading 48 sec over a 39.5s cut, and an earlier cut narrated a
+// different menu than the order it quoted.
+//
+//   1. the play chip's duration, below
+//   2. the sr-only transcript, below, IN ORDER and carrying every card's figure
+//   3. the video's aria-label, below
+//   4. `guideSteps` above: one step per beat, or the writing and the film differ
+//   5. `public/demo-poster.jpg`, which the assembler writes
+//   6. `public/demo-poster-mobile.jpg`, which it does NOT: rebuild it with
+//      `python3 scripts/build-mobile-poster.py` or the phone keeps the old one
+//   7. the hero link's duration in `Hero.astro`
+//   8. the same link on `/compare` and on the features index
+//   9. the guard literal in `check-landing-claims.mjs`, asserted three times
+//
+// After a re-record: `grep -rn "2:53\|2 min 53" src scripts --exclude-dir=venv`
+// should find all five copies of the running time. scripts/demo-video/README.md
+// carries the same table.
 //
 // THE MULTI-EVENT INSET CLAIMS PLANNING ONLY (RC-36). /orders/batch exposes
 // on-hand entry and nothing else: confirming an order, freezing its prices and
@@ -123,15 +184,16 @@ const guideSteps = [
 			     in the hero.
 			     story: docs/stories/homepage-fold-promise.story.md -->
 			<!-- THE DURATION CAME OUT OF THIS LEDE 2026-09-06, when the section moved
-			     to second. The hero's proof link ("Watch the 2:30 product tour", pinned
-			     in check-landing-claims.mjs) and the play chip ("2 min 30 sec") now sit
+			     to second. The hero's proof link ("Watch the 2:53 product tour", pinned
+			     in check-landing-claims.mjs) and the play chip ("2 min 53 sec") now sit
 			     within a screen and a half of it, so the running time was being stated
 			     three times in that stretch. It is still stated twice, in the two places
 			     a reader looks for it. Nothing else in the sentence changed. -->
 			<p class="mt-4 max-w-[68ch] text-lede text-ink-soft">
 				This is the working product, not a mockup. The food cost before the quote goes
-				out, the shopping and prep lists it turns into, purchase orders that really send,
-				a delivery that arrives wrong, and the price carried back.
+				out, the shopping and prep lists it turns into, the nutrition panel on the same
+				recipe, purchase orders that really send, a delivery that arrives wrong, the price
+				carried back, and Sage answering a question about the job.
 			</p>
 			<a
 				href="#demo-guide-heading"
@@ -165,7 +227,13 @@ const guideSteps = [
 				purchasing when you have already made some. The same order&rsquo;s prep list:
 				thirty-four items scaled to the job, 75.6 kilograms of boneless beef short rib
 				among them, sub-recipes carried as their own tagged lines, and a check-off box
-				on every row that keeps its state. An aside: three events in the same week,
+				on every row that keeps its state. The Wild Mushroom Polenta from the same
+				wedding menu, opened on its Nutrition section: a calculated estimate per
+				portion of 531 calories, 18.5 grams of protein, 77.2 grams of carbohydrate and
+				18.6 grams of fat, computed from the USDA FoodData Central records matched to
+				its four ingredients, with seven label rows left blank rather than counted as
+				zero because the matched source does not report them, each blank naming the
+				ingredient responsible. An aside: three events in the same week,
 				280 guests between them,
 				planned as one production run and submitted together as three orders, opening
 				on a combined Shop, Prep and Pack workspace that totals the shopping and the
@@ -181,7 +249,12 @@ const guideSteps = [
 				delivered as sixteen, $477.16 of received value against the $410.40 ordered.
 				The ingredient&rsquo;s cost panel showing the price actually paid as the
 				current cost, $21.91 a kilogram, with the receiving it came from on record.
-				Finally the order&rsquo;s comparison band: quoted at $26.93 a guest, $27.13 at
+				Sage, the in-app assistant, asked in plain words what needs attention for the
+				Alvarez-Whitman Wedding, answering from the records: the food cost is 39.6
+				percent against the 30 percent target, the same figure the pricing panel worked
+				out at the start of the film, and 22 ingredients are still unreviewed for
+				dietary checks. Under the answer, a &ldquo;Where this came from&rdquo; list of
+				the order records it read, the wedding among them. Finally the order&rsquo;s comparison band: quoted at $26.93 a guest, $27.13 at
 				today&rsquo;s prices, a 0.7 percent rise with the quote still holding. An end card: one job, quote to shelf, the same numbers
 				the whole way.
 			</p>
@@ -216,7 +289,7 @@ const guideSteps = [
 				width="1600"
 				height="1000"
 				class="w-full border border-hairline bg-paper shadow-ticket"
-				aria-label="Silent, captioned screen recording: CostCook prices a 180-guest wedding before the quote goes out, turns it into a vendor shopping list and a scaled prep list, plans three events as one production run, emails its purchase orders, and records a delivery that arrived wrong"
+				aria-label="Silent, captioned screen recording: CostCook prices a 180-guest wedding before the quote goes out, turns it into a vendor shopping list and a scaled prep list, computes the nutrition panel on a dish from the same menu, plans three events as one production run, emails its purchase orders, records a delivery that arrived wrong, and answers a question about the job from its own records"
 				aria-describedby="demo-transcript"
 			>
 				<source src="/demo.webm" type="video/webm" />
@@ -247,7 +320,7 @@ const guideSteps = [
 				<svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor" aria-hidden="true">
 					<path d="M0 0l10 6-10 6z"></path>
 				</svg>
-				Watch · 2 min 30 sec
+				Watch · 2 min 53 sec
 			</span>
 		</div>
 

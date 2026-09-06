@@ -526,8 +526,8 @@ requireText(pricingSource, 'href="/compare"', 'pricing links to the comparison')
 // D1: the one piece of moving proof, reachable from the two pages that ask a
 // reader to judge capability off a list. Same literal as the hero, which the
 // assembler prints and which has drifted twice.
-requireText(featureIndexSource, 'Watch the 2:30 product tour', 'features page proof link');
-requireText(comparePage, 'Watch the 2:30 product tour', 'comparison page proof link');
+requireText(featureIndexSource, 'Watch the 2:53 product tour', 'features page proof link');
+requireText(comparePage, 'Watch the 2:53 product tour', 'comparison page proof link');
 
 // B3: the five area slugs are PUBLIC URLS and are typed, not derived from the
 // headings. Deriving them would mean any reworded heading silently 404s every
@@ -618,7 +618,7 @@ if (/CostCook has not claimed your request was sent/.test(demoRequestSource)) {
 	failures.push('demo page still says it has not sent the request, which is no longer true');
 }
 requireText(demoRequestSource, 'docs/stories/request-demo.story.md', 'demo story pointer');
-requireText(publicCopy, 'Watch the 2:30 product tour', 'hero proof link');
+requireText(publicCopy, 'Watch the 2:53 product tour', 'hero proof link');
 requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping

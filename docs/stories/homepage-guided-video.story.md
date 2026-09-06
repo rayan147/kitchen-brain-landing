@@ -141,3 +141,94 @@ is ever below `h2` again.
 
 Full record, including what the move voids: `docs/stories/homepage-spreadsheet-pain.story.md`
 and the note at the head of `src/pages/index.astro`.
+
+### 2026-09-06 revision — two beats the footage never had
+
+The app shipped two things after this cut was recorded, and the film has been
+arguing without them since. Both are on the page already: the nutrition panel
+has a feature route and a homepage section, and Sage carries an "Available now"
+chip. Neither had a frame behind it.
+
+**Step 3 consequence: two beats join Fun and Games, and neither is a new story.**
+The rule this tracker has held since August is that the cut follows one job.
+A second storyline competing for the same three minutes costs more than it
+buys, so both new beats stay on the Alvarez-Whitman wedding:
+
+| Beat | Where it sits | What it carries |
+|------|---------------|-----------------|
+| Nutrition panel | Straight after the prep list, still on the wedding menu | The other question a caterer gets asked, answered off the recipe she already costed |
+| Sage | After the price carries back, before the quoted-versus-today result | The records she has spent three minutes watching accumulate, asked a question |
+
+The nutrition beat is on **Wild Mushroom Polenta**, not on the Braised Short Rib
+the rest of the cut follows, and that was a truth decision rather than a
+staging one. The short rib's own lines are two sub-recipes and a cut of beef:
+its stock enters by volume, which leaves the per-portion weight unknown, and
+the stock's nutrients are the sum of its inputs including two and a half kilos
+of beef bones that are strained out and thrown away. A plated portion carrying
+bone-derived nutrients is not a number this kitchen could defend to the
+customer who asked. The polenta is on the same Wedding Plated Dinner menu, in
+the same order, and its four lines are all weighed in grams. The chain holds.
+
+**Step 4: two scenes, and what each one turns.**
+
+| § | Section | Beats it carries | Value turn (− → +) |
+|---|---------|------------------|--------------------|
+| 3b | Answer the other question | 8 | a customer's question you look up somewhere else → the same recipe answers it |
+| 6b | Ask the kitchen | 9, 12 | records you have to go and read → records that answer you, with their sources |
+
+**Step 6: the turn in each.**
+
+- Nutrition: *"I would have to work that out or guess it"* → *"it is on the
+  recipe I already costed, and what it does not know is written down."* The
+  turn is not the four numbers. It is the blanks: seven label rows are empty
+  and each one names the ingredient whose source will not report it. A
+  spreadsheet cannot make that distinction, and a competitor who fills the
+  blanks with zeros is telling a customer something false.
+- Sage: *"a fluent sentence I cannot check"* → *"a number I watched this app
+  work out ninety seconds ago, with the record under it."* The answer reads back
+  39.6 percent against a 30 percent target, which is what the pricing panel
+  showed in the money beat. That is the whole beat: the assistant and the panel
+  are reading the same records.
+
+**Step 5, and one thing that had to change about how this cut is written.**
+Every other beat's cards are written off a frame that is the same on every
+capture. Sage's prose is not: three runs of the same question against the same
+records produced three different sentences around the same figure. So the
+figure is the claim and the sentence is not, the rings target the figure and
+the source row rather than a sentence, and the capture now refuses to keep a
+frame whose answer does not contain what the cards say (`SAGE_MUST_SHOW` in
+`beats.mjs`). A card that names a figure its own frame might not carry is the
+one thing this cut has never shipped.
+
+**Step 8 is untouched.** The snap line stays where it is, in the pricing proof.
+Two candidates were written for these beats and both were cut: one snap per
+page, and the money beat's is stronger than either.
+
+**Step 11 addendum: one card cut after it was recorded.** The nutrition beat
+was written with a third card, "Every value names the record behind it", over
+the four USDA records the panel cites. The claim is true and the evidence is
+real, but Sources sits about 1,300px below the panel at the bottom of a page
+that stops scrolling before the beat asks it to, and in two delivered cuts the
+ring landed on a stale box: it cut the record list in half and took two lines of
+the dietary block above it. Ringing nothing was worse, because the frame that
+far down is mostly Filing, Collections and Tags. The beat kept the claims it
+could frame. The sr-only transcript lost the four record ids with it, because
+that transcript describes what the film shows and the film no longer shows
+them; the written guide still says the panel is computed from the sources you
+matched, and the feature page still carries the capture.
+
+**Step 11: what these two beats cost, said plainly.** The cut runs **2:53**, up
+from 2:30. Holding it under 2:45 would mean re-timing the move schedules of
+four already-verified beats, because a card's hold and a ring's cue time are
+independent numbers and shortening the first desyncs the second. This rig has
+shipped a desynced schedule twice and the failure is invisible until somebody
+watches that exact beat. The twenty-seven seconds is the cheaper risk. The trim
+candidates, if the owner wants them, are in
+`docs/demo-video-sage-nutrition-prompt.md`.
+
+**Claims removed because they could not be shown.** No compliance claim: the
+panel calls itself a calculated estimate and the printed sheet says so on the
+sheet. No allergen claim, and no dietary-characteristics claim: the beat had
+room for one idea and it spent it on the blanks. No card says what Sage does
+not do on screen in this beat, which means the "it changes nothing on its own"
+line stays on the feature page where the screen supports it.
