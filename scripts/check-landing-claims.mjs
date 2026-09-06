@@ -635,6 +635,7 @@ for (const id of expectedStopIds.slice(0, -1)) {
 // of those rows must exist. An answer that cites nothing, or cites a row that
 // is not in the ledger, is an unbacked claim wearing a citation.
 const faqSource = surfaces[surfaceFiles.indexOf('src/lib/faq.ts')];
+requireText(faqSource, 'href="/onboarding#after-crew"', 'faq: after-setup crew answer links to the guide');
 const faqEntries = [...faqSource.matchAll(/id: '([a-z-]+)',\s*question:[\s\S]*?claims: \[([^\]]*)\]/g)];
 if (faqEntries.length === 0) failures.push('faq: could not read any entries to check');
 for (const [, id, claimList] of faqEntries) {

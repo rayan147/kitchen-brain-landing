@@ -290,6 +290,15 @@ export const faq: readonly FaqGroup[] = [
 				claims: ['RC-10', 'RC-14', 'RC-55']
 			},
 			{
+				id: 'after-setup',
+				question: 'What do I do after setup, and how does my crew get in?',
+				answer: [
+					'Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, staged for you to confirm.',
+					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
+				],
+				claims: ['RC-38', 'RC-39', 'RC-52']
+			},
+			{
 				id: 'prices-in',
 				question: 'How do my supplier prices get in?',
 				answer: [

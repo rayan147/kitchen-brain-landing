@@ -209,3 +209,10 @@
   duration. Parts 1 and 2 were cut (Krug: omit needless words); the page
   gained a three-row map in the hero ticket so a reader picks the question
   they came with.
+- **Counts after the 2026-09-06 revision:** 1,503 words inside the article
+  including the stage table, the doors, the arithmetic, the completion
+  figure and both tracks. Parts 1 and 2 lost two bands and about a third of
+  their prose; Part 3 added three short bands. Verified in the browser at
+  1440x900, 390x844 and 200% text: zero horizontal overflow, the three map
+  anchors resolve, the Part 3 label passes the trunk test after an anchor
+  scroll on both viewports, and the smallest route action is at least 44px.
