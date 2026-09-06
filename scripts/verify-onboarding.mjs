@@ -227,7 +227,7 @@ try {
 	assert((desktop.shot?.alt ?? 0) > 200, 'desktop: the setup capture alt does not read off the pixels');
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
 	assert(desktop.primaryCount === 2, `desktop: expected 2 route primaries (open and close), received ${desktop.primaryCount}`);
-	assert(desktop.activeNav.includes('Your first dish'), `desktop: navigation is not active (${desktop.activeNav.join(', ')})`);
+	assert(desktop.activeNav.includes('Your initial setup'), `desktop: navigation is not active (${desktop.activeNav.join(', ')})`);
 	assert(desktop.revealHidden === 0, `desktop: ${desktop.revealHidden} reveal section(s) never settled`);
 
 	// The primary's LABEL is pinned in check-landing-claims.mjs, on the source,

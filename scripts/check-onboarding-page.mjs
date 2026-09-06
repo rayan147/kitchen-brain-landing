@@ -36,7 +36,7 @@ for (const [text, label] of [
 	['Only the guide', 'start-over guard (RC-55 A-STARTOVER)'],
 	['the same button retries', 'offline-save guard (RC-55 finding 1)'],
 	['never \u201cclear\u201d', 'unknown-is-not-clear boundary (RC-55)'],
-	['first-dish-onboarding', 'emitted direction contract'],
+	['initial-setup-guide', 'emitted direction contract'],
 	['href="/onboarding"', 'shared navigation destination'],
 	['aria-current="page"', 'active navigation state'],
 	['docs/stories/onboarding.story.md', 'story pointer']

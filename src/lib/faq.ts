@@ -285,7 +285,7 @@ export const faq: readonly FaqGroup[] = [
 				question: 'What does setup actually involve?',
 				answer: [
 					'One dish you already cook, not your whole walk-in. A skippable welcome asks what kind of kitchen you run and the name of that dish, then five stages ask for the next thing the dish needs: your kitchen and one supplier, the dish’s ingredients and their pack prices, their food facts, the dish itself, then a menu with a date and a guest count.',
-					'It ends on that dish’s plate cost with the arithmetic beside it, and a shopping list in whole packs. <a href="/onboarding">See the five stages and the number they end on</a>.'
+					'It ends on that dish’s plate cost with the arithmetic beside it, and a shopping list in whole packs. <a href="/onboarding">See the five stages, the number they end on, and what comes after</a>.'
 				],
 				claims: ['RC-10', 'RC-14', 'RC-55']
 			},
