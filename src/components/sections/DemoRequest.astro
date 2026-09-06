@@ -299,14 +299,28 @@ import { DEMO_TRAP_FIELD } from '../../lib/demo-request';
 			form.dataset.phase = 'leaving';
 			form.setAttribute('aria-busy', 'true');
 
+			// Every animation started here is collected so it can be cancelled once
+			// the step has settled. A finished animation with a fill keeps holding
+			// the property it animated, and the animations origin outranks the style
+			// attribute, so `form.style.removeProperty('height')` below cannot undo
+			// it. MEASURED before this fix: after a failed send the form was pinned
+			// at the 577px it needed when step 2 first drew, the error sentence grew
+			// the fieldset to 637px, and the button row hung 22.6px below the
+			// ticket's bottom border. Cancelling is not a pattern, it is the API's
+			// own undo; considered dropping the fills instead, but a fill is what
+			// keeps the last frame from flashing back before this code runs.
+			const settling: Animation[] = [];
+
 			if (!reducedMotion.matches) {
-				await outgoing.animate(
+				const leaveAnimation = outgoing.animate(
 					[
 						{ opacity: 1, transform: 'translateY(0)' },
 						{ opacity: 0, transform: 'translateY(-6px)' }
 					],
 					{ duration: 160, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'forwards' }
-				).finished;
+				);
+				settling.push(leaveAnimation);
+				await leaveAnimation.finished;
 			}
 
 			const fromHeight = form.getBoundingClientRect().height;
@@ -331,9 +345,14 @@ import { DEMO_TRAP_FIELD } from '../../lib/demo-request';
 						{ duration: 220, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'both' }
 					)
 				];
+				settling.push(heightAnimation, enterAnimation);
 				await Promise.all([heightAnimation.finished, enterAnimation.finished]);
 			}
 
+			// Cancel and unset in the same synchronous block: no frame is painted
+			// between them, so the box never flashes back to the height it started
+			// from before layout takes over again.
+			for (const animation of settling) animation.cancel();
 			form.style.removeProperty('height');
 			form.style.removeProperty('overflow');
 			form.dataset.phase = 'idle';
