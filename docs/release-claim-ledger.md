@@ -134,8 +134,8 @@ Do not add these without a new ledger review:
 | What it connects to | RC-09, RC-38, RC-39, RC-45 |
 | Comparison | RC-40 through RC-43; RC-57 for the spreadsheet column and its two-value cell contract |
 | Labels and printing (`/features/labels-and-printing`, feature menu item, `/features` group, `/compare` row note, FAQ, homepage give-up) | RC-35 for the launch boundary and the Coming word; RC-51 for what is built and the captures. |
-| Nutrition facts (homepage section, feature menu item, `/features` group, `/compare` rows, FAQ) | RC-42 for the computed panel; RC-50 for the printed sheet and the captures; RC-47 for what is not assessed; RC-35 for the printer that is still coming. |
-| Sage (homepage, feature menu, `/features` group, `/compare`, `/pricing`, FAQ, specialist page and video) | RC-46 for availability and onboarding; RC-49 for every capability sentence and the captures. One status word, `src/lib/sage.ts`. |
+| Nutrition facts (homepage section, the homepage film's nutrition beat, feature menu item, `/features` group, `/compare` rows, FAQ) | RC-42 for the computed panel; RC-50 for the printed sheet and the captures; RC-47 for what is not assessed; RC-35 for the printer that is still coming. |
+| Sage (homepage, the homepage film's Sage beat, feature menu, `/features` group, `/compare`, `/pricing`, FAQ, specialist page and video) | RC-46 for availability and onboarding; RC-49 for every capability sentence and the captures. One status word, `src/lib/sage.ts`. |
 | FAQ (`/faq`, `src/lib/faq.ts`) | Every row an answer's `claims` field names; `check-landing-claims.mjs` requires each to exist. The no answers rest on RC-44 and RC-47 and are pinned to open with the word. |
 | Features hub (`/features`) | RC-40 (the five area titles are the comparison's row groups, verbatim) |
 | Feature areas (`/features/[section]`) | Every RC the group items rest on, unchanged by the 2026-08-23 split; RC-45 for the Coming integration groups and RC-46/RC-49 for shipped Sage |

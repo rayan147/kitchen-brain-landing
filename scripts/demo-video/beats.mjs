@@ -368,9 +368,9 @@ export const BEATS = [
 		// Measured against the live page at 1600x1000 with this anchor, bar floor
 		// y=768: the four-figure summary strip y=141..223, the "Some label
 		// nutrients are unavailable" block y=239..543 with the cremini line inside
-		// it at y=390..434. The Sources list sits at y=1495, far below the frame,
-		// which is why the third card scrolls to it rather than ringing it in
-		// place.
+		// it at y=390..434. Everything this beat rings is inside one screen, which
+		// is why it has no scroll move: the one card that needed one was cut. See
+		// the note on the cards.
 		id: 'b03c',
 		useRecipe: 'Wild Mushroom Polenta',
 		// Not 'Nutrition Facts', which is the panel further down. Anchoring there
@@ -379,26 +379,36 @@ export const BEATS = [
 		cards: [
 			// The screen: Calories 531, Protein 18.5 g, Carbs 77.2 g, Fat 18.6 g,
 			// under a line reading "Calculated estimate for per portion".
-			// THREE CARDS, NOT FOUR. A second card for the protein figure was
-			// written and cut: the ring on the summary strip already frames all four
-			// numbers, so the card added three and a half seconds and no new
-			// picture. The cut is at three minutes with these two beats in it and
-			// every second has to buy something.
+			// TWO CARDS, AND THE THIRD WAS CUT AFTER IT WAS RECORDED TWICE. It read
+			// "Every value names the record behind it." over the Sources list, which
+			// is a true claim with real evidence: four USDA FoodData Central ids on
+			// screen. It came out anyway, and the reason is worth keeping.
+			//
+			// Sources sits about 1,300px below the panel, at the bottom of a page
+			// that stops scrolling before the offset asks it to, so the card needed a
+			// scroll and the ring landed on a box measured before the scroll settled:
+			// in the delivered frame it cut the list in half and took two lines of
+			// the dietary block above it instead. Ringing nothing was worse, because
+			// the frame that far down is mostly Filing, Collections and Tags, and a
+			// card claiming evidence with no evidence framed is the shape of the
+			// defect this rig exists to catch.
+			//
+			// The claim is not lost: the sr-only transcript describes what the film
+			// shows and the written guide says the panel is computed from the sources
+			// you matched, and /features/nutrition-facts-and-allergens carries the
+			// capture. A beat gets the claims it can frame.
 			{ text: '531 calories a portion, off the recipe you costed.', hold: 4.2 },
 			// The screen: "A dash on the label is a value the matched source does not
 			// report. It is never counted as zero." This is the claim the page makes
-			// hardest and the one a spreadsheet cannot make at all, so it gets the
-			// longest hold and two rings: the block, then the ingredient named in it.
-			{ text: 'What the source will not report stays blank.', hold: 4.2 },
-			{ text: 'Every value names the record behind it.', hold: 3.6 }
+			// hardest and the one a spreadsheet cannot make at all, so it gets two
+			// rings: the block, then the ingredient named in it.
+			{ text: 'What the source will not report stays blank.', hold: 4.2 }
 		],
 		moves: [
 			{ at: 1.2, act: 'ring', text: '^Calories$', up: 2, pad: 8 },
 			{ at: 5.4, act: 'ringOnly', text: 'Some label nutrients are unavailable', up: 1, pad: 8 },
 			{ at: 7.2, act: 'ringOnly', text: 'Mushroom, cremini: no saturated fat', pad: 6 },
-			{ at: 9.8, act: 'scroll', text: '^Sources$', offset: -160, ms: 900 },
-			{ at: 11.0, act: 'ringOnly', text: 'USDA FoodData Central', up: 1, pad: 8 },
-			{ at: 12.9, act: 'ringOff' }
+			{ at: 8.9, act: 'ringOff' }
 		]
 	},
 	{
@@ -672,7 +682,13 @@ export const BEATS = [
 			// header sets out. The tie back to b02 survives the trim: it is the same
 			// figure, and the viewer watched the panel work it out ninety seconds ago.
 			{ text: 'The same 39.6 percent the panel found.', hold: 4.2 },
-			{ text: 'Every line says which record it read.', hold: 3.6 }
+			// WAS "Every line says which record it read." Read off the delivered frame,
+			// that is a claim the screen does not quite make: each ANSWER line carries
+			// its evidence class ("Confirmed:"), and the records are listed once,
+			// underneath, as "Where this came from". That list is in frame under this
+			// card with the wedding's own row ringed inside it, so the card is now
+			// about the list. Close enough is not a standard this cut has ever used.
+			{ text: 'It lists every record it read.', hold: 3.6 }
 		],
 		moves: [
 			// The thread's own question block, label and all. NOT the question text:
