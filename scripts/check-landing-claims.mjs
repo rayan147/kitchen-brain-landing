@@ -150,6 +150,11 @@ const comparePage = await read('src/pages/compare.astro');
 // it is read for the pins below rather than added to the forbidden-claims scan.
 const navSource = await read('src/components/SiteNav.astro');
 const featureMenuContentsSource = await read('src/components/FeatureMenuContents.astro');
+// The contact page's actions live in this component now, and the endpoint and
+// its shared validator are public-behaviour surfaces like any other claim.
+const askSupportSource = await read('src/components/sections/AskSupport.astro');
+const supportEndpointSource = await read('api/support.ts');
+const supportLibSource = await read('src/lib/support.ts');
 const blogMenuContentsSource = await read('src/components/BlogMenuContents.astro');
 const publicCopy = [...surfaces, comparePage].join('\n');
 const siteSource = surfaces[0];
@@ -243,10 +248,22 @@ requireText(siteSource, 'contactCta.href', 'contact reachable from nav');
 requireText(siteSource, 'import.meta.env.PUBLIC_APP_URL', 'environment-aware app handoff');
 requireText(siteSource, '/start?plan=launch', 'launch-plan handoff');
 requireText(siteSource, "url.protocol !== 'http:' && url.protocol !== 'https:'", 'app origin protocol guard');
-requireText(contactPage, 'mailto:${site.email}', 'contact email action');
-requireText(contactPage, 'site.phoneHref', 'contact phone action');
+// CONTACT MOVED FROM A HANDOFF TO A FORM (2026-09-06). The page used to offer
+// `mailto:` as its primary action; the ask now posts to /api/support, the same
+// shape as Contact support in the app. So the email and phone actions are
+// asserted where they now live, in the component, and the mailto is pinned as
+// what it became: the way out when the form cannot send, not the way in. Pinning
+// it against contact.astro would have passed on a leftover unused const.
+requireText(askSupportSource, 'mailto:${site.email}', 'contact email fallback still offered');
+requireText(askSupportSource, 'site.phoneHref', 'contact phone action');
+requireText(askSupportSource, "action=\"/api/support\"", 'contact form posts to the support endpoint');
+requireText(askSupportSource, 'method="post"', 'contact form submits without JavaScript');
+requireText(askSupportSource, 'name="company"', 'contact form keeps its bot trap');
+requireText(supportEndpointSource, 'replyTo: supportRequest.email', 'support mail replies to the visitor');
+requireText(supportEndpointSource, "SUPPORT_EMAIL", 'support mail reaches the support mailbox');
+requireText(supportLibSource, "SUPPORT_EMAIL = 'support@costcook.io'", 'support mailbox matches the app');
 requireText(contactPage, 'demoCta.href', 'contact demo action');
-requireText(contactPage, 'Do not include passwords, payment card details', 'contact safety copy');
+requireText(askSupportSource, 'Do not include passwords, payment card details', 'contact safety copy');
 requireText(await read('src/layouts/Base.astro'), 'import.meta.env.PROD', 'deployment-only analytics');
 
 // Ten stops, one claim each. SeeItRun sits ahead of CustomerOutcomes so the
