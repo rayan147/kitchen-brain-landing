@@ -27,8 +27,10 @@
 //     hidden, fonts loaded
 //   - the alt text on the page is read off the pixels, by hand, afterwards
 //
-// Pattern: none. It is a linear walk through one workflow; the only shared
-// state is the signed-in page.
+// Considered Template Method (one walk, per-stage hooks); not used because
+// the walk is linear and runs once, so the only shared state is the
+// signed-in page and a shared-hook skeleton would add a seam nothing varies
+// across. Plain sequential code.
 import { chromium } from '/home/rayan147/kitchen-brain/node_modules/playwright/index.mjs';
 import { mkdir } from 'node:fs/promises';
 
@@ -154,82 +156,74 @@ const shootClip = async (name, selectors) => {
 };
 
 /**
- * A clip from the top of the page to the bottom of the deepest element whose
- * text matches `pattern`, full width. The same element-bounded rule as
- * shootClip, for the screens where the argument ends on a button label
- * rather than a stage checklist. These ship: they are the visuals the
- * story's Part 2 is built on.
+ * The one text matcher every bounded clip uses. For each pattern, the box
+ * of the DEEPEST element whose normalised text matches it (an ancestor's box
+ * would overshoot), in document coordinates, plus the box of the card it
+ * sits in. Element-bounded in the sense the brief means: every clip edge is
+ * an element's own box, never a rectangle chosen by eye.
  */
-const shootTo = async (name, pattern) => {
-	await settle();
-	const height = await page.evaluate((source) => {
-		const test = new RegExp(source);
-		let edge = 0;
-		for (const node of document.querySelectorAll('a, button, li, p, span')) {
-			const text = (node.textContent ?? '').replace(/\s+/g, ' ').trim();
-			if (!test.test(text)) continue;
-			if (node.querySelector('a, button, li, p, span')) continue;
-			edge = Math.max(edge, node.getBoundingClientRect().bottom);
-		}
-		if (!edge) throw new Error(`no element matches ${source}`);
-		// The card the label sits in has its own padding and border below the
-		// text; +36 closes the card without opening whatever follows it.
-		return Math.round(edge + window.scrollY + 36);
-	}, pattern.source);
-	await page.screenshot({
-		path: `${OUT}${name}.png`,
-		caret: 'hide',
-		animations: 'disabled',
-		clip: { x: 0, y: 0, width: 1440, height }
-	});
-	shots.push(name);
-	console.log(`captured ${name} (1440x${height} CSS px)`);
-};
-
-/** A clip bounded by two labels: the top of the first, the bottom of the second. */
-const shootBetween = async (name, topPattern, bottomPattern) => {
-	await settle();
-	const box = await page.evaluate(([topSource, bottomSource]) => {
-		const edge = (source, side) => {
+const boxesFor = (patterns) =>
+	page.evaluate((sources) => {
+		const LEAF = 'a, button, li, p, span, h1, h2, h3, label';
+		return sources.map((source) => {
 			const test = new RegExp(source);
-			let found = null;
-			for (const node of document.querySelectorAll('a, button, li, p, span, h1, h2, h3, label')) {
+			let leaf = null;
+			for (const node of document.querySelectorAll(LEAF)) {
 				const text = (node.textContent ?? '').replace(/\s+/g, ' ').trim();
 				if (!test.test(text)) continue;
-				if (node.querySelector('a, button, li, p, span, h2, h3, label')) continue;
-				const rect = node.getBoundingClientRect();
-				const value = side === 'top' ? rect.top : rect.bottom;
-				found = found === null ? value : side === 'top' ? Math.min(found, value) : Math.max(found, value);
+				if (node.querySelector(LEAF)) continue;
+				leaf = node;
+				break;
 			}
-			if (found === null) throw new Error(`no element matches ${source}`);
-			return found + window.scrollY;
-		};
-		const top = Math.max(0, Math.round(edge(topSource, 'top') - 28));
-		const bottom = Math.round(edge(bottomSource, 'bottom') + 28);
-		// Horizontally, the card the top label sits in: its own box, so the
-		// empty rail column to the left never ships as picture.
-		const card = (() => {
-			const test = new RegExp(topSource);
-			for (const node of document.querySelectorAll('h2, h3, p, span')) {
-				if (!test.test((node.textContent ?? '').replace(/\s+/g, ' ').trim())) continue;
-				const box = node.closest('section, article, li, fieldset, form') ?? node.parentElement;
-				return box.getBoundingClientRect();
-			}
-			return { left: 0, right: 1440 };
-		})();
-		const left = Math.max(0, Math.round(card.left - 8));
-		const right = Math.min(1440, Math.round(card.right + 8));
-		return { top, height: bottom - top, left, width: right - left };
-	}, [topPattern.source, bottomPattern.source]);
+			if (!leaf) throw new Error(`no element matches ${source}`);
+			const rect = (el) => {
+				const r = el.getBoundingClientRect();
+				return {
+					top: r.top + window.scrollY,
+					bottom: r.bottom + window.scrollY,
+					left: r.left,
+					right: r.right
+				};
+			};
+			const card = leaf.closest('section, article, li, fieldset, form') ?? leaf.parentElement;
+			return { leaf: rect(leaf), card: rect(card) };
+		});
+	}, patterns.map((pattern) => pattern.source));
+
+const clip = async (name, box) => {
 	await page.screenshot({
 		path: `${OUT}${name}.png`,
 		caret: 'hide',
 		animations: 'disabled',
 		fullPage: true,
-		clip: { x: box.left, y: box.top, width: box.width, height: box.height }
+		clip: {
+			x: Math.round(box.x),
+			y: Math.round(box.y),
+			width: Math.round(box.width),
+			height: Math.round(box.height)
+		}
 	});
 	shots.push(name);
-	console.log(`captured ${name} (${box.width}x${box.height} CSS px from ${box.left},${box.top})`);
+	console.log(`captured ${name} (${Math.round(box.width)}x${Math.round(box.height)} CSS px)`);
+};
+
+/** From the top of the page to the bottom of `pattern`'s element, full width. */
+const shootTo = async (name, pattern) => {
+	await settle();
+	const [{ leaf }] = await boxesFor([pattern]);
+	// The card the label sits in has its own padding and border below the
+	// text; +36 closes the card without opening whatever follows it.
+	await clip(name, { x: 0, y: 0, width: 1440, height: leaf.bottom + 36 });
+};
+
+/** From `topPattern`'s element to `bottomPattern`'s, bounded to the top one's card. */
+const shootBetween = async (name, topPattern, bottomPattern) => {
+	await settle();
+	const [top, bottom] = await boxesFor([topPattern, bottomPattern]);
+	const y = Math.max(0, top.leaf.top - 28);
+	const left = Math.max(0, top.card.left - 8);
+	const right = Math.min(1440, top.card.right + 8);
+	await clip(name, { x: left, y, width: right - left, height: bottom.leaf.bottom + 28 - y });
 };
 
 try {
@@ -252,6 +246,18 @@ try {
 	await page.goto(`${APP}${captured.pathname}${captured.search}`);
 	await page.getByRole('main').getByRole('heading', { level: 1 }).first().waitFor();
 
+	// RESUME=first-order re-shoots stage five on a fixture that already has
+	// the dish, without walking (and re-asserting) the earlier stages.
+	if (process.env.RESUME === 'first-order') {
+		await page.goto(`${APP}/setup?stage=first-order`);
+		await page.getByRole('heading', { level: 1, name: 'Cost your first order' }).waitFor();
+		await page.getByLabel('Guests').fill('80');
+		await shootBetween('05-first-order', /^Order details$/, /^\$1\.59 per portion$/);
+		console.log(`\n${shots.length} capture written to public/proof/setup/`);
+		await browser.close();
+		process.exit(0);
+	}
+
 	// The welcome lives at the kitchen stage, not at bare /setup: /setup with
 	// progress shows the stage map instead.
 	await page.goto(`${APP}/setup?stage=kitchen`);
@@ -260,7 +266,9 @@ try {
 		await page.getByRole('radio', { name: 'Catering' }).check();
 		await page.getByLabel('One dish you know well').fill(DISH);
 		await page.getByRole('radio', { name: 'What an event really costs' }).check();
-		await shoot('00-welcome', page.getByRole('main'));
+		// The first screen after sign-up: two questions, one dish. Part 1 of
+		// the guide shows it so the reader sees the welcome before they meet it.
+		await shootBetween('00-welcome', /^Welcome/, /^Skip these questions$/);
 		await page.getByRole('button', { name: 'Start setup' }).click();
 	}
 	const resume = page.getByRole('button', { name: 'Continue setup' });
@@ -375,10 +383,39 @@ try {
 	// recipe card goes in the way the invoice did. Food facts must be
 	// answered first, so confirm the one draft as shown.
 	await page.getByRole('button', { name: /^Confirm all 1 draft as shown$/ }).click();
-	await page.waitForTimeout(600);
+	await page.getByText('1 of 1 ingredients complete', { exact: false }).waitFor();
 	await page.goto(`${APP}/setup?stage=recipes`);
 	await page.getByRole('link', { name: /Build with Sage/ }).waitFor();
 	await shootTo('04-choices', /^Best when you know the ingredients and amounts for one dish\.$/);
+
+	// The dish, built by hand so stage five has something to cost: the same
+	// one line the page's $1.62 trace is built from (e2e/setup-wizard.spec.ts
+	// walks these controls).
+	await page.getByRole('button', { name: 'Build the dish by hand' }).click();
+	await page.waitForURL(/\/setup\/recipes\/\d+/);
+	await page.getByLabel('Recipe name').fill(DISH);
+	await page.getByRole('button', { name: 'Save name' }).click();
+	await page.getByText('Name saved', { exact: true }).waitFor();
+	const combo = page.getByLabel('Ingredient or sub-recipe');
+	await combo.fill(INGREDIENT);
+	await combo.press('ArrowDown');
+	await combo.press('Enter');
+	await page.getByLabel('Quantity', { exact: true }).fill('180');
+	await page.getByLabel('Unit', { exact: true }).selectOption('g');
+	await page.getByRole('button', { name: 'Add line', exact: true }).click();
+	await page.getByText('Line added', { exact: false }).waitFor();
+	await page.getByRole('button', { name: 'Save dish and continue' }).click();
+	await page.waitForURL(/stage=first-order/);
+
+	// Stage 5 — Menu and first order: the menu already named after the dish,
+	// a date, a guest count, and the one button.
+	await page.getByRole('heading', { level: 1, name: 'Cost your first order' }).waitFor();
+	await page.getByLabel('Guests').fill('80');
+	// The order card down to the dish row: the menu already named after the
+	// dish, the guest count, and the per-portion cost. The button below it is
+	// named in the copy; the whole form is 1,700px tall and unreadable at any
+	// width the page can give it.
+	await shootBetween('05-first-order', /^Order details$/, /^\$1\.59 per portion$/);
 
 	// The stage map, once real progress exists: "N of 5 stages complete".
 	await page.goto(`${APP}/setup`);
@@ -386,7 +423,7 @@ try {
 	await shoot('00-stage-map', page.locator('body'));
 
 	console.log(`\n${shots.length} captures written to public/proof/setup/`);
-	console.log('Stages 4 and 5 need the dish and the order built; extend this walk when they are wanted.');
+	console.log('The order itself is not created: the completion screen is rendered on the page as a ticket, not shown as a capture.');
 } finally {
 	await browser.close();
 }

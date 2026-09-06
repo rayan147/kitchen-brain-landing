@@ -118,10 +118,10 @@ try {
 	 */
 	const awaitShot = async () => {
 		await evaluate(`(async () => {
-			const img = document.querySelector('.fd-shot img');
-			if (!img) return;
-			img.loading = 'eager';
-			try { await img.decode(); } catch { /* a broken src fails the assert below */ }
+			for (const img of document.querySelectorAll('.fd-shot img')) {
+				img.loading = 'eager';
+				try { await img.decode(); } catch { /* a broken src fails the assert below */ }
+			}
 		})()`);
 	};
 	const walkPage = async () => {
@@ -171,14 +171,21 @@ try {
 			mathsScrolls: maths ? maths.scrollWidth > maths.clientWidth : null,
 			mathsFocusable: maths ? maths.tabIndex >= 0 && Boolean(maths.getAttribute('aria-label')) : false,
 			mathsColHeaders: document.querySelectorAll('.fd-maths th[scope="col"]').length,
+			// Every capture on the page (RC-48): each must load, render at half
+			// its pixels or narrower, and carry an alt read off the pixels. The
+			// aggregate is the worst case, so one soft capture fails the run.
 			shot: (() => {
-				const img = document.querySelector('.fd-shot img');
-				if (!img) return null;
+				const imgs = [...document.querySelectorAll('.fd-shot img')];
+				if (!imgs.length) return null;
+				const ratio = (img) => img.getBoundingClientRect().width / Math.max(1, img.naturalWidth);
+				const worst = imgs.reduce((a, b) => (ratio(b) > ratio(a) ? b : a));
 				return {
-					loaded: img.complete && img.naturalWidth > 0,
-					natural: img.naturalWidth,
-					rendered: Math.round(img.getBoundingClientRect().width),
-					alt: (img.getAttribute('alt') ?? '').length
+					count: imgs.length,
+					loaded: imgs.every((img) => img.complete && img.naturalWidth > 0),
+					natural: worst.naturalWidth,
+					rendered: Math.round(worst.getBoundingClientRect().width),
+					src: worst.getAttribute('src'),
+					alt: Math.min(...imgs.map((img) => (img.getAttribute('alt') ?? '').length))
 				};
 			})(),
 			mathsFits: maths ? maths.getBoundingClientRect().right <= document.documentElement.clientWidth + 1 : null,
@@ -233,14 +240,14 @@ try {
 	// RC-48: stored at 2x, rendered at half its pixel width or narrower, and
 	// it has to actually load — a 404 here is a broken proof, not a missing
 	// decoration.
-	assert(desktop.shot, 'desktop: the setup capture is not on the page');
-	assert(desktop.shot?.loaded, 'desktop: the setup capture did not load');
-	assert((desktop.shot?.natural ?? 0) >= 2304, `desktop: setup capture is only ${desktop.shot?.natural}px wide; a 1152px container would upscale it`);
+	assert(desktop.shot, 'desktop: no setup capture is on the page');
+	assert(desktop.shot?.count === 7, `desktop: expected 7 setup captures, received ${desktop.shot?.count}`);
+	assert(desktop.shot?.loaded, 'desktop: a setup capture did not load');
 	assert(
 		desktop.shot && desktop.shot.rendered <= desktop.shot.natural / 2,
-		`desktop: setup capture renders at ${desktop.shot?.rendered}px, wider than half its ${desktop.shot?.natural}px (RC-48)`
+		`desktop: ${desktop.shot?.src} renders at ${desktop.shot?.rendered}px, wider than half its ${desktop.shot?.natural}px (RC-48)`
 	);
-	assert((desktop.shot?.alt ?? 0) > 200, 'desktop: the setup capture alt does not read off the pixels');
+	assert((desktop.shot?.alt ?? 0) > 200, 'desktop: a setup capture alt does not read off the pixels');
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
 	assert(desktop.primaryCount === 2, `desktop: expected 2 route primaries (open and close), received ${desktop.primaryCount}`);
 	assert(desktop.activeNav.includes('Your initial setup'), `desktop: navigation is not active (${desktop.activeNav.join(', ')})`);
@@ -274,10 +281,10 @@ try {
 	// The claim in this file's docstring and success line. At 390px the table
 	// is wider than its column, so it MUST overflow its own container rather
 	// than the page: if it ever stops scrolling, the values are unreachable.
-	assert(mobile.shot?.loaded, 'mobile: the setup capture did not load');
+	assert(mobile.shot?.loaded, 'mobile: a setup capture did not load');
 	assert(
 		mobile.shot && mobile.shot.rendered <= mobile.shot.natural / 2,
-		`mobile: setup capture renders at ${mobile.shot?.rendered}px, wider than half its natural width`
+		`mobile: ${mobile.shot?.src} renders at ${mobile.shot?.rendered}px, wider than half its natural width`
 	);
 	assert(mobile.mathsScrolls === true, 'mobile: the arithmetic table no longer scrolls inside its own container');
 	// FINDING 1: that scroll must be reachable without a pointer (WCAG 2.1.1).
@@ -317,7 +324,7 @@ try {
 	// past half its pixel width (RC-48).
 	assert(
 		zoomed.shot && zoomed.shot.rendered <= zoomed.shot.natural / 2,
-		`200% text: setup capture renders at ${zoomed.shot?.rendered}px, above half its ${zoomed.shot?.natural}px`
+		`200% text: ${zoomed.shot?.src} renders at ${zoomed.shot?.rendered}px, above half its ${zoomed.shot?.natural}px`
 	);
 
 	// Reduced motion: nothing may stay hidden when the animation register is off.

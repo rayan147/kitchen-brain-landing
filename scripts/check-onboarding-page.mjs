@@ -75,8 +75,10 @@ for (const text of ['Add one supplier', 'Review the food facts', 'Answer every i
 // do not read a list of taps.
 const scenes = (html.match(/class="fd-stage fd-scene"/g) ?? []).length;
 if (scenes !== 5) failures.push(`expected 5 scenes, received ${scenes}`);
+// Seven captures: the welcome in Part 1, then one per stage with two on
+// stage two (the cards and the dropzone behind them).
 const sceneShots = html.match(/<img\b[^>]*\/proof\/setup\/[^>]*>/g) ?? [];
-if (sceneShots.length !== 5) failures.push(`expected 5 setup captures in the scenes, received ${sceneShots.length}`);
+if (sceneShots.length !== 7) failures.push(`expected 7 setup captures on the page, received ${sceneShots.length}`);
 for (const tag of sceneShots) {
 	const src = tag.match(/src="([^"]+)"/)?.[1] ?? '';
 	const alt = tag.match(/alt="([^"]*)"/)?.[1] ?? '';
@@ -95,7 +97,7 @@ for (const tag of sceneShots) {
 		failures.push(`${src} declares ${declaredOf('width')}x${declaredOf('height')} but the PNG is ${w}x${h}`);
 	}
 }
-for (const src of ['02-choices', '02-dropzone', '03-chips', '04-choices']) {
+for (const src of ['00-welcome', '02-choices', '02-dropzone', '03-chips', '04-choices', '05-first-order']) {
 	if (!html.includes(`/proof/setup/${src}.png`)) failures.push(`scene capture ${src} is missing`);
 }
 // RC-58: the three choices stage two opens on and the two at stage four, by
@@ -113,9 +115,10 @@ for (const [text, label] of [
 	['quoted back to you rather than guessed at', 'the unreadable-is-not-guessed boundary (RC-39)']
 ]) requireText(text, label);
 // Part 1 tells the reader what to have within reach: the invoice and the
-// recipe, before the phone. Three rows, in that order.
-const haveReady = (html.match(/class="fd-doors-list fd-have"/g) ?? []).length;
-if (haveReady !== 1) failures.push(`expected the have-ready list once, received ${haveReady}`);
+// recipe, before the phone, as a ticket beside the welcome capture rather
+// than a bulleted list (owner, 2026-09-06: visuals, not lists).
+const haveReady = (html.match(/class="fd-ticket fd-have"/g) ?? []).length;
+if (haveReady !== 1) failures.push(`expected the have-ready ticket once, received ${haveReady}`);
 for (const text of ['One invoice from the supplier', 'The recipe for one dish']) {
 	requireText(text, `have-ready row (${text})`);
 }
@@ -199,7 +202,7 @@ for (const leak of ['E2E First Kitchen', 'e2e.test', 'sandbox/demo', 'SANDBOX BU
 }
 
 // Part 3 must survive the build with both tracks and their boundaries.
-const tracks = (html.match(/class="fd-doors-list fd-after-track"/g) ?? []).length;
+const tracks = (html.match(/class="fd-ticket-list fd-after-track"/g) ?? []).length;
 if (tracks !== 2) failures.push(`expected 2 after-setup tracks (menu, crew), received ${tracks}`);
 for (const [text, label] of [
 	['Your kitchen is ready', 'completion heading'],

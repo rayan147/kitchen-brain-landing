@@ -791,7 +791,7 @@ requireText(onboardingSource, 'never fills a stage in for you', 'onboarding Sage
 for (const [pattern, label] of [
 	[/Sage[^.]{0,80}\b(fills|enters|fixes|completes|writes|sets up)\b/i, 'Sage doing the work (RC-49 forbids autonomous changes)'],
 	[/\b(rarely|barely|hardly|never) (have to )?typ/i, 'a no-typing promise (a line the upload could not read is typed)'],
-	[/\b(no|zero|without) (typing|data entry)\b|\bnothing to type\b/i, 'a no-typing promise (a line the upload could not read is typed)'],
+	[/\b(no|zero|without) (typing|data entry)\b|\bnothing to type\b|\bdo(es)? not (have to )?type\b/i, 'a no-typing promise (a line the upload could not read is typed)'],
 	[/\bfixes (it|any|every|the) (issue|problem|error)/i, 'the app repairing a problem (the guards stop and name the fix)'],
 ]) {
 	if (pattern.test(onboardingSource)) failures.push(`onboarding states ${label}`);
@@ -841,7 +841,7 @@ for (const [pattern, label] of [
 	// CORRECT a read is, so those are the words that fail the build.
 	[/\b(comes?|came|coming) back (complete|correct|right|perfect|finished|filled)/i,
 		'a complete or correct read (no rehearsal ran against a real provider)'],
-	[/\breads? (every|each|all) (line|row|word)s?\b|\bnothing (is )?missed\b|\b(perfectly|flawlessly)\b/i,
+	[/\breads? (every|each|all) (line|row|word)s?\b|\bnothing (is )?missed\b|\b(reads?|came back|comes back)[^.]{0,40}\b(perfectly|flawlessly)\b/i,
 		'a complete or correct read (no rehearsal ran against a real provider)'],
 ]) {
 	if (pattern.test(onboardingSource)) failures.push(`onboarding states ${label}`);

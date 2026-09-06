@@ -56,8 +56,8 @@
 | § | Section | id | Beats | Value turn |
 |---|---------|----|-------|------------|
 | 0 | Hero: You do not need to enter your whole walk-in | — | 1–2 | wall → doorway, with a map of three parts |
-| 1 | Part 1 · Before you start | `before` | 3–6 | vague dread → two pieces of paper within reach → one optional question |
-| 2 | Part 2 · The five stages | `stages` | 7–10 | "I will be typing all night" → screen name, have ready, numbered taps → checkable → tested |
+| 1 | Part 1 · Before you start | `before` | 3–6 | vague dread → a have-ready ticket (two papers, one phone) beside the welcome screen → one optional question |
+| 2 | Part 2 · The five stages | `stages` | 7–10 | "I will be typing all night" → five scenes, each one paragraph beside the real screen → checkable → tested |
 | 3 | Part 3 · After setup: where the app leaves you | `after` | 10 | done → next action named |
 | 3b | The rest of your menu | `after-menu` | 12 | "now the other 40 dishes by hand" → same doors, staged review |
 | 3c | The rest of your crew | `after-crew` | 12 | "I roll this out alone" → a link, no password, a list waiting |
@@ -66,17 +66,17 @@
 ### Step 5 — Character Voices
 
 - **Reader's words:** my whole walk-in, a week of data entry, where do I start, do I really type all this, the invoice is in the folder, the recipe is on a card, one dish, what I actually pay, case, trim, per head, the number in my head, then what, my crew, roll it out, who can see the costs, one login for everyone.
-- **Product voice (from the app's own setup copy, `stage-guide.ts`, and its buttons):** honest, warm, unhurried. In Part 2 the voice holds the reader's hand: every screen by its own heading, every control by its own label in quotes, every stage with a "have ready" and a "done when". It assumes the reader has never seen the app.
+- **Product voice (from the app's own setup copy, `stage-guide.ts`, and its buttons):** honest, warm, unhurried. In Part 2 the voice holds the reader's hand by showing, not listing: one paragraph per stage that names the one or two controls the reader will press, in the app's own words, with the screen itself beside it and the app's own "done when". It assumes the reader has never seen the app.
 - **Banned:** seamless, effortless, powerful, instantly, in one click, and the three the claim guard fails the build on — "no data entry", "nothing is re-keyed", "handles it automatically". Any duration ("set up in 20 minutes") is banned too: no artifact supports one. Also banned: custom role, permission, automatically, extracts, reads it correctly, roll out in a day.
 
 ### Step 6 — Dialogue (McKee): the turn in each section
 
 - §0 "This will want everything I have" → "It wants one dish, and here are the three questions this page answers."
 - §1 "I am bad at this, and I will be typing all night" → "Have the invoice and the recipe within reach. You confirm what it read; you do not type it."
-- §2 "Five stages sounds like a week" → "Two of them are uploads, here is every tap by name, and I can check the number."
+- §2 "Five stages sounds like a week" → "Two of them are uploads, here is each screen as I will meet it, and I can check the number."
 - §3 "It says ready. Now what?" → "It names the next screen: the shopping list."
-- §3b "So I key the other forty dishes by hand" → "Same doors as the first: paper in, staged facts back, my last word on every line."
-- §3c "Rolling this out is on me" → "Two emails, two links, no passwords, and they land on a list, not an empty kitchen."
+- §3b "So I key the other forty dishes by hand" → "The rest of the menu comes in the same way: paper in, staged facts back, my last word on every line."
+- §3c "Rolling this out is on me" → "They join from a link, no password, and land on the list I built, not an empty kitchen."
 - §3d "Is this worth an evening?" → "One dish, and you will know. Then the crew will too."
 
 ### Step 7 — Sorkin: headline / subhead
@@ -84,7 +84,8 @@
 - **Intention:** Find out whether this is worth one evening.
 - **Obstacle:** She believes she has to enter everything before it does anything.
 - **Headline:** You do not need to enter your whole walk-in.
-- **Subhead:** Setup asks for one dish you already cook and takes about fifteen minutes. You do not type its ingredients in: you upload one invoice and one recipe, as a photo or a PDF, and confirm what CostCook read. Four stages in, it prints that dish's plate cost with the arithmetic beside it. This page walks every screen, then says what comes after, and how the rest of your kitchen gets in.
+- **Subhead:** Setup asks for one dish you already cook and takes about fifteen minutes. Its ingredients come off one invoice and one recipe, uploaded as a photo or a PDF, and you confirm what CostCook read. Four stages in, it prints that dish's plate cost with the arithmetic beside it. This page shows every screen, then says what comes after, and how the rest of your kitchen gets in.
+  ("You do not type its ingredients in" was cut in code review: RC-58 forbids saying typing is gone, and the guard now fails on "do not type" too.)
   (The subhead first read "Five stages later it prints that dish's plate cost",
   which contradicted §4's hand-off, "Stage four ends on a number." The dish is
   costed at stage four; stage five is the menu, the date and the shopping list.
@@ -105,7 +106,7 @@
 - **POV:** Second person, "you". Locked. No first-person founder voice on this page; `BuiltForKitchens` owns that register.
 - **Hand-off lines:**
   - §0 → §1: the map's first row, "Before you start".
-  - §1 → §2: "Those answers take a minute. These five stages are the work, and here is every tap."
+  - §1 → §2: "Those answers take a minute. These five stages are the work."
   - §2 → §3: "Stage five ends on a screen that says your kitchen is ready. Here is what it offers next."
   - §3 → §3b: "The first dish was the hard one. The rest come in the same way."
   - §3b → §3c: "A catalog nobody else opens is a spreadsheet with a login. This is how the crew gets one."
@@ -260,3 +261,16 @@
   claim stays "upload, then confirm what came back", with the labels the
   claims guard pins. Part 1 lost the sign-up paragraph's detail for the same
   reason.
+- **Code review, same day (fixed):** two lines stated claims RC-58 forbids
+  while passing the guard: the lede's "You do not type its ingredients in"
+  (typing is not gone; a quoted-back line is typed) and stage two's "each
+  ingredient with a usable cost beside it" (a complete read). Both cut; the
+  no-typing regex now catches "do not type". Stage one implied the invoice
+  sets the food-cost target; it adds the supplier's details only. Stage one
+  and five now name their one control ("Save and continue", "Create first
+  order") and stage five has its capture. Part 1's have-ready list became a
+  ticket beside the welcome capture. Two headings that read as second snap
+  lines ("The next forty dishes are not forty evenings", "Two emails, two
+  links, no passwords") are now plain statements; the $1.62 is the page's
+  one snap. Steps 4, 5, 6, 7 and 10 above were stale from the tap-list
+  version and are corrected in place.
