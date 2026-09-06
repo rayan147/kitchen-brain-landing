@@ -131,8 +131,8 @@ const surfaceFiles = [
 	// 2026-09-05. The setup route states the stage count, the plate-cost
 	// arithmetic and the input guards (RC-10, RC-14, RC-55). APPENDED, never
 	// inserted: siteSource and heroSource above resolve by position.
-	'src/pages/first-dish.astro',
-	'src/components/sections/FirstDishPage.astro',
+	'src/pages/onboarding.astro',
+	'src/components/sections/OnboardingPage.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -728,42 +728,42 @@ if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start to
 // arithmetic are the two things a reader can check against the running app,
 // so both are pinned here rather than left to a careful editor. If the app
 // adds a stage or changes DEFAULT_ONBOARDING_MISC_COST_PCT, this fails first.
-const firstDishSource = surfaces[surfaceFiles.indexOf('src/components/sections/FirstDishPage.astro')];
-requireText(firstDishSource, 'docs/stories/first-dish.story.md', 'first-dish story pointer');
-requireText(firstDishSource, 'Four stages in, it prints', 'first-dish plate-cost stage (RC-10)');
+const onboardingSource = surfaces[surfaceFiles.indexOf('src/components/sections/OnboardingPage.astro')];
+requireText(onboardingSource, 'docs/stories/onboarding.story.md', 'onboarding story pointer');
+requireText(onboardingSource, 'Four stages in, it prints', 'onboarding plate-cost stage (RC-10)');
 // F1 again, on a decision route: both primaries must render cta.label from
 // site.ts rather than a literal, so the label cannot drift page by page. The
 // browser cannot catch this — the template interpolates the same value it
 // would be compared against — so the pin has to sit on the source.
-if ((firstDishSource.match(/class="btn-primary"[^>]*>\{cta\.label\}/g) ?? []).length !== 2) {
-	failures.push('first-dish: both primaries must render {cta.label} from site.ts');
+if ((onboardingSource.match(/class="btn-primary"[^>]*>\{cta\.label\}/g) ?? []).length !== 2) {
+	failures.push('onboarding: both primaries must render {cta.label} from site.ts');
 }
 for (const value of ['$32.00', '4,535.92 g', '0.80 trim yield', '180 g', '$1.59', '$0.03', '$1.62']) {
-	requireText(firstDishSource, value, 'first-dish plate-cost arithmetic (RC-55)');
+	requireText(onboardingSource, value, 'onboarding plate-cost arithmetic (RC-55)');
 }
 // The misc line is a default, not a constant. Saying 2% without saying it is
 // the default overstates it for any kitchen that changed the setting.
-requireText(firstDishSource, '2% misc (the default)', 'first-dish misc default boundary (RC-55)');
+requireText(onboardingSource, '2% misc (the default)', 'onboarding misc default boundary (RC-55)');
 // RC-55: an unreviewed ingredient reads "check", never "clear". The page is
 // the only surface that says so, so the wording is pinned to the app's.
-requireText(firstDishSource, '\u201ccheck\u201d, never \u201cclear\u201d', 'first-dish unknown-is-not-clear boundary (RC-55)');
+requireText(onboardingSource, '\u201ccheck\u201d, never \u201cclear\u201d', 'onboarding unknown-is-not-clear boundary (RC-55)');
 // RC-10: the duration is the owner's approximation, and the page must say so
 // in those words rather than as a measurement.
-requireText(firstDishSource, 'about fifteen minutes', 'first-dish owner-confirmed setup duration (RC-10)');
+requireText(onboardingSource, 'about fifteen minutes', 'onboarding owner-confirmed setup duration (RC-10)');
 // RC-49/RC-55: Sage reads, it never writes. A page that sells setup as
 // AI-assisted drifts straight at this line, so the disclaimer is pinned to
 // the same paragraph that makes the claim.
-requireText(firstDishSource, 'Sage stays open beside', 'first-dish Sage-in-setup claim (RC-55)');
-requireText(firstDishSource, 'never fills a stage in for you', 'first-dish Sage read-only boundary (RC-49)');
+requireText(onboardingSource, 'Sage stays open beside', 'onboarding Sage-in-setup claim (RC-55)');
+requireText(onboardingSource, 'never fills a stage in for you', 'onboarding Sage read-only boundary (RC-49)');
 for (const [pattern, label] of [
 	[/Sage[^.]{0,80}\b(fills|enters|fixes|completes|writes|sets up)\b/i, 'Sage doing the work (RC-49 forbids autonomous changes)'],
 	[/\b(rarely|barely|hardly|never) (have to )?typ/i, 'a no-typing promise (the five-stage walk is typed)'],
 	[/\bfixes (it|any|every|the) (issue|problem|error)/i, 'the app repairing a problem (the guards stop and name the fix)'],
 ]) {
-	if (pattern.test(firstDishSource)) failures.push(`first-dish states ${label}`);
+	if (pattern.test(onboardingSource)) failures.push(`onboarding states ${label}`);
 }
-if (!/5 stages/.test(firstDishSource)) {
-	failures.push('first-dish: the setup ticket no longer states the shipped stage count (RC-10)');
+if (!/5 stages/.test(onboardingSource)) {
+	failures.push('onboarding: the setup ticket no longer states the shipped stage count (RC-10)');
 }
 // RC-55 forbids these three on this evidence. They are the claims the page
 // would drift toward, and none is covered by the rehearsal artifact, which
@@ -778,7 +778,7 @@ for (const [pattern, label] of [
 	[/\b(photograph|snap|upload|drop in|scan)\b[^.]{0,60}\b(invoice|price list|price sheet|recipe)\b/i,
 		'invoice or recipe extraction (stubbed at both test layers)'],
 ]) {
-	if (pattern.test(firstDishSource)) failures.push(`first-dish states ${label}`);
+	if (pattern.test(onboardingSource)) failures.push(`onboarding states ${label}`);
 }
 
 // RC-57: the spreadsheet column on /compare. It is the one column on that page

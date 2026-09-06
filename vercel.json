@@ -1,5 +1,8 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"redirects": [
+		{ "source": "/first-dish", "destination": "/onboarding", "permanent": true }
+	],
 	"headers": [
 		{
 			"source": "/(.*)",

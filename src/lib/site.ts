@@ -122,7 +122,7 @@ const resourceNav = [
 	},
 	{
 		label: 'Your first dish',
-		href: '/first-dish',
+		href: '/onboarding',
 		header: 'resources',
 		group: 'See it work',
 		icon: 'dish',

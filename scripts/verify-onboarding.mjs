@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
 /**
- * Browser verification for /first-dish. Same CDP harness as verify-faq.mjs:
+ * Browser verification for /onboarding. Same CDP harness as verify-faq.mjs:
  * one headless Chromium driven over DevTools, no Playwright dependency.
  *
  * What this route can get wrong that a static contract cannot see: the
@@ -15,11 +15,11 @@ import { setTimeout as delay } from 'node:timers/promises';
  * motion, no-JavaScript).
  */
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
-const route = `${baseUrl}/first-dish`;
+const route = `${baseUrl}/onboarding`;
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
 await mkdir(reviewDir, { recursive: true });
 
-const profile = await mkdtemp(join(tmpdir(), 'costcook-first-dish-'));
+const profile = await mkdtemp(join(tmpdir(), 'costcook-onboarding-'));
 const port = 9346;
 const browser = spawn('chromium', [
 	'--headless', '--no-sandbox', '--disable-gpu', '--hide-scrollbars',
@@ -68,7 +68,7 @@ try {
 			// is never in dist and always 404s against `astro preview`. It 404s on
 			// costcook.io too (checked 2026-09-05), which is a project-level
 			// analytics-configuration matter and predates this route: filtering it
-			// here keeps a real missing asset on /first-dish loud.
+			// here keeps a real missing asset on /onboarding loud.
 			if (!message.params.response.url.includes('/_vercel/insights/')) {
 				failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
 			}
@@ -151,7 +151,7 @@ try {
 			format: 'png', fromSurface: true, captureBeyondViewport: true,
 			clip: { x: 0, y: 0, width, height, scale: 1 }
 		});
-		await writeFile(join(reviewDir, `first-dish-${name}.png`), Buffer.from(shot.data, 'base64'));
+		await writeFile(join(reviewDir, `onboarding-${name}.png`), Buffer.from(shot.data, 'base64'));
 	};
 
 	// The reveal register hides content until JS runs. Whatever this reads must
@@ -334,12 +334,19 @@ try {
 } finally {
 	if (socket?.readyState === WebSocket.OPEN) socket.close();
 	browser.kill('SIGTERM');
-	await rm(profile, { recursive: true, force: true });
+	// Chromium can still be flushing its profile when we get here, and an
+	// ENOTEMPTY thrown from the finally block replaces the assertion results
+	// with a teardown stack trace, which is how a failing run reads as a crash.
+	try {
+		await rm(profile, { recursive: true, force: true });
+	} catch {
+		// A leftover temp profile is not a verification result.
+	}
 }
 
 if (failures.length > 0) {
-	console.error(`First-dish browser verification failed:\n- ${failures.join('\n- ')}`);
+	console.error(`Onboarding browser verification failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
 }
 
-console.log('First-dish browser verification passed: desktop, mobile, 200% text, reduced motion, keyboard, no-JavaScript, and the arithmetic scrolls in its own container.');
+console.log('Onboarding browser verification passed: desktop, mobile, 200% text, reduced motion, keyboard, no-JavaScript, and the arithmetic scrolls in its own container.');

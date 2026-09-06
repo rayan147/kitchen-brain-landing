@@ -1,5 +1,5 @@
 // Captures the five setup stages from the running app, on a genuinely EMPTY
-// kitchen. story: docs/stories/first-dish.story.md
+// kitchen. story: docs/stories/onboarding.story.md
 //
 //   APP=http://localhost:4188 node scripts/capture-setup-proof.mjs
 //

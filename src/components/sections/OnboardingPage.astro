@@ -20,7 +20,7 @@ const stages = [
 	{
 		n: '2',
 		label: 'Ingredients',
-		body: 'The ingredients of that one dish: what you buy, how big the pack is, what it costs, and what survives the knife.'
+		body: 'The ingredients of that one dish: what you buy, how big the pack is, what it costs, and what survives the knife. On an empty kitchen this stage opens on three doors, and only one of them is a form.'
 	},
 	{
 		n: '3',
@@ -36,6 +36,30 @@ const stages = [
 		n: '5',
 		label: 'Menu and first order',
 		body: 'A date and a guest count. The order becomes shopping, prep, packing, and a food-cost result.'
+	}
+] as const;
+
+/**
+ * The three doors stage two opens on, read off `sandbox/demo`
+ * `src/routes/setup/+page.svelte` on 2026-09-06: with `data.ingredients.length
+ * === 0` the stage renders `SetupChoiceCard`s for `/import?kind=invoice`,
+ * `/import?kind=ingredients`, and the manual dialog. The claim here is the
+ * DOOR and the review gate, never what extraction returns: RC-55 pins
+ * `IMPORT_AI_PROVIDER: 'stub'` at both test layers, so no page may promise a
+ * document read correctly. RC-09 carries the staging rule these lines rest on.
+ */
+const doors = [
+	{
+		lead: 'An invoice or a price sheet.',
+		body: 'The paperwork your supplier already sent you. It goes to the same review screen the rest of CostCook uses, beside the original, so a doubtful line is checked against the paper and not against memory.'
+	},
+	{
+		lead: 'An ingredient list.',
+		body: 'A spreadsheet or a typed list. It arrives as one review batch rather than one form, one ingredient, one evening.'
+	},
+	{
+		lead: 'The form.',
+		body: 'Still here, and best when you know that one dish and its pack prices by heart. It is the fallback, not the assumption.'
 	}
 ] as const;
 
@@ -60,7 +84,7 @@ const guards = [
 ] as const;
 ---
 
-<!-- story: docs/stories/first-dish.story.md -->
+<!-- story: docs/stories/onboarding.story.md -->
 <article class="first-dish">
 	<section class="fd-hero" aria-labelledby="fd-heading">
 		<div class="container-page fd-hero-layout">
@@ -72,6 +96,7 @@ const guards = [
 				<h1 id="fd-heading" class="feature-display">You do not need to enter your whole walk-in.</h1>
 				<p class="fd-lede">
 					Setup asks for one dish you already cook, and takes about fifteen minutes.
+					Its ingredients can come in from an invoice or a spreadsheet, not just the keyboard.
 					Four stages in, it prints that dish&rsquo;s plate cost with the arithmetic beside it.
 					The fifth turns it into a shopping list.
 				</p>
@@ -149,6 +174,28 @@ const guards = [
 					</li>
 				))}
 			</ol>
+			<div class="fd-doors" data-reveal>
+				<h3 id="fd-doors-heading" class="fd-doors-heading">Stage two does not assume a keyboard.</h3>
+				<p class="fd-doors-lede">
+					The prices you need are already written down somewhere: an invoice in the folder, an
+					order guide in your inbox. On an empty kitchen, stage two opens on three doors.
+				</p>
+				<ul class="fd-doors-list" role="list" aria-labelledby="fd-doors-heading">
+					{doors.map((door) => (
+						<li>
+							<p class="fd-door-lead">{door.lead}</p>
+							<p class="fd-door-body">{door.body}</p>
+						</li>
+					))}
+				</ul>
+				<p class="fd-doors-gate">
+					Nothing that arrives through the first two doors is written to your catalog. It stays
+					staged until you confirm it, line by line, and what CostCook could not read is quoted
+					back to you rather than guessed at. Reading a document is still work. It is a different
+					kind of work from a hundred packs and a form at nine at night.
+				</p>
+			</div>
+
 			<figure class="fd-shot" data-reveal>
 				<img
 					src="/proof/setup/01-kitchen.png"
@@ -164,6 +211,12 @@ const guards = [
 					on an empty kitchen.
 				</figcaption>
 			</figure>
+
+			<p class="fd-doors-four">
+				Stage four has a door of its own. Hand Sage a recipe card, a photo, a PDF, pasted text or a
+				link and read the draft it makes; or build the dish by hand. Either way the dish is yours
+				before it is costed.
+			</p>
 
 			<p class="fd-sage">
 				Sage stays open beside whichever stage you are on. Its questions are the ones that
@@ -498,6 +551,66 @@ const guards = [
 		color: var(--color-ink-soft);
 		font-size: var(--text-body-sm);
 		line-height: 1.5;
+	}
+
+	.fd-doors {
+		max-width: 46rem;
+		margin-top: 2.25rem;
+		padding: 1.4rem 1.5rem 1.5rem;
+		background: var(--color-cream);
+		border: 1px dashed var(--color-ticket-rule);
+		border-radius: 0.25rem;
+	}
+
+	.fd-doors-heading {
+		font-family: var(--font-display);
+		font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+		font-weight: 600;
+		line-height: 1.25;
+		text-wrap: balance;
+	}
+
+	.fd-doors-lede {
+		margin-top: 0.6rem;
+		color: var(--color-ink-soft);
+		line-height: 1.6;
+	}
+
+	.fd-doors-list {
+		display: grid;
+		gap: 0;
+		margin: 1.25rem 0 0;
+		padding: 0;
+		list-style: none;
+		border-top: 1px dashed var(--color-ticket-rule);
+	}
+
+	.fd-doors-list li {
+		padding-block: 0.9rem;
+		border-bottom: 1px dashed var(--color-ticket-rule);
+	}
+
+	.fd-door-lead {
+		font-weight: 600;
+	}
+
+	.fd-door-body {
+		margin-top: 0.25rem;
+		color: var(--color-ink-soft);
+		line-height: 1.6;
+	}
+
+	.fd-doors-gate {
+		margin-top: 1.25rem;
+		color: var(--color-ink-soft);
+		line-height: 1.6;
+	}
+
+	.fd-doors-four {
+		max-width: 40rem;
+		margin-top: 1.75rem;
+		color: var(--color-ink-soft);
+		line-height: 1.6;
 	}
 
 	.fd-sage {

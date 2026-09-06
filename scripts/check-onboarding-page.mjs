@@ -1,14 +1,14 @@
 import { readFileSync } from 'node:fs';
 
 /**
- * Built-output contract for /first-dish.
+ * Built-output contract for /onboarding.
  *
  * check-landing-claims.mjs greps the SOURCE, so a page whose `arithmetic.map`
  * or stage loop stopped rendering would still pass it: the strings live in
  * the frontmatter either way. This reads the emitted HTML, so the claim has
  * to survive the build to count.
  */
-const html = readFileSync(new URL('../dist/first-dish/index.html', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../dist/onboarding/index.html', import.meta.url), 'utf8');
 const failures = [];
 
 // Considered Chain of Responsibility; not used because this is one fixed
@@ -37,9 +37,9 @@ for (const [text, label] of [
 	['the same button retries', 'offline-save guard (RC-55 finding 1)'],
 	['never \u201cclear\u201d', 'unknown-is-not-clear boundary (RC-55)'],
 	['first-dish-onboarding', 'emitted direction contract'],
-	['href="/first-dish"', 'shared navigation destination'],
+	['href="/onboarding"', 'shared navigation destination'],
 	['aria-current="page"', 'active navigation state'],
-	['docs/stories/first-dish.story.md', 'story pointer']
+	['docs/stories/onboarding.story.md', 'story pointer']
 ]) requireText(text, label);
 
 const stageRows = (html.match(/class="fd-stage"/g) ?? []).length;
@@ -47,6 +47,20 @@ if (stageRows !== 5) failures.push(`expected 5 rendered stage rows, received ${s
 
 const ticketStages = (html.match(/class="fd-ticket-n"/g) ?? []).length;
 if (ticketStages !== 5) failures.push(`expected 5 setup-ticket stages, received ${ticketStages}`);
+
+// RC-58: the three doors into stage two. The row's verification step says the
+// ledger moves before the page does when a door is added or removed, and this
+// is what makes that true. The gate sentence is pinned with them: naming the
+// doors without the staging rule would be the overclaim RC-55 forbids.
+const doorRows = (html.match(/class="fd-door-lead"/g) ?? []).length;
+if (doorRows !== 3) failures.push(`expected 3 rendered stage-two doors, received ${doorRows}`);
+for (const [text, label] of [
+	['An invoice or a price sheet.', 'the invoice door (RC-58)'],
+	['An ingredient list.', 'the ingredient-list door (RC-58)'],
+	['The form.', 'the manual door (RC-58)'],
+	['is written to your catalog', 'the staging gate the doors end at (RC-09)'],
+	['quoted back to you rather than guessed at', 'the unreadable-is-not-guessed boundary (RC-39)']
+]) requireText(text, label);
 
 const guardLines = (html.match(/<li[^>]*>[^<]*(?:does not go on|density|progress resets|button retries)/g) ?? []).length;
 if (guardLines !== 4) failures.push(`expected 4 rendered guard lines, received ${guardLines}`);
@@ -132,8 +146,8 @@ const primaries = (html.match(/class="btn-primary[ "]/g) ?? []).length;
 if (primaries !== 3) failures.push(`expected 3 primaries (hero, close, sticky bar), received ${primaries}`);
 
 if (failures.length > 0) {
-	console.error(`First-dish page contract failed:\n- ${failures.join('\n- ')}`);
+	console.error(`Onboarding page contract failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
 }
 
-console.log('First-dish page contract passed: five stages, the full plate-cost trace, four guards, a reachable arithmetic table, and active navigation.');
+console.log('Onboarding page contract passed: five stages, the full plate-cost trace, four guards, a reachable arithmetic table, and active navigation.');

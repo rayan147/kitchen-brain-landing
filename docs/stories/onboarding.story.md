@@ -2,10 +2,10 @@
 
 ## My story
 
-- **Piece:** Resource route explaining what setup actually asks for (`/first-dish`)
+- **Piece:** Resource route explaining what setup actually asks for (`/onboarding`)
 - **Title / headline:** You do not need to enter your whole walk-in
 - **My hero's name:** The owner-caterer with the trial page open in one tab, not pressing Start
-- **Content file(s):** `src/pages/first-dish.astro`, `src/components/sections/FirstDishPage.astro`
+- **Content file(s):** `src/pages/onboarding.astro`, `src/components/sections/OnboardingPage.astro`
 
 ## The 11 steps
 
@@ -59,6 +59,7 @@
 | 2 | The empty screen | 3–4 | vague dread → named fear |
 | 3 | What it asks you for | 5–6 | resistant → curious |
 | 4 | Five stages, one dish's worth | 6, 8 | vague → concrete |
+| 4a | Stage two does not assume a keyboard (inside §4) | 5, 8 | "a week of keying" → three doors, one gate |
 | 5 | The number, and where it came from | 9 | guessing → checkable |
 | 6 | What it refuses to do | 10 | trust → tested → held |
 | 7 | Where stage five leaves you | 11–12 | undecided → started |
@@ -75,6 +76,7 @@
 - §2 "I am bad at this" → "The empty screen is the problem, and it has a shape."
 - §3 "I do not have the answers it needs" → "It asks for what I already know, and every question is optional."
 - §4 "Five stages sounds like a week" → "Five stages is one dish's worth of facts."
+- §4a "So I key my supplier catalog in by hand" → "The paperwork I already have is a door in, and I still get the last word on every line."
 - §5 "Software numbers are a black box" → "I can check this one on paper."
 - §6 "I will break it, or it will let me" → "It stops me, and it says why."
 - §7 "Is this worth an evening?" → "One dish, and I will know."
@@ -107,6 +109,8 @@
   - §1 → §2: "The dread is not irrational. It has a shape, and it is worth naming."
   - §2 → §3: "So here is what the guide actually asks you for."
   - §3 → §4: "Those answers are optional. The five stages after them are not."
+  - §4 → §4a: the stage table's own stage-two line ends "this stage opens on three doors, and only one of them is a form", which the block below it then opens.
+  - §4a → §4: "Reading a document is still work" hands back to the stage-one capture and the Sage paragraph, both of which are about reading rather than typing.
   - §4 → §5: "Stage four ends on a number."
   - §5 → §6: "A number you can check is only half of it. The other half is what happens when you get something wrong."
   - §6 → §7: "Which leaves one question: what do you have at the end?"
@@ -120,7 +124,7 @@
   skimmer takes the seven headings and the $1.62 and leaves.
 - **Claims removed because they could not be shown:**
   - Any setup duration. Nothing in the rehearsal artifacts supports a number.
-  - "Upload an invoice and your ingredients fill in." Both test layers pin `IMPORT_AI_PROVIDER: 'stub'`; no PDF was ever extracted for real.
+  - "Upload an invoice and your ingredients fill in." Both test layers pin `IMPORT_AI_PROVIDER: 'stub'`; no PDF was ever extracted for real. STILL REMOVED after the 2026-09-06 revision below: the page now names the door and the gate, and says nothing about what extraction returns.
   - "Load sample data to look around first." Presence checked, behaviour untested at both layers.
   - "Try it without signing up." `app.costcook.io/demo` returns 404 in production; there is no public sandbox.
 - **Final Image (the CTA sentence):** The CTA renders `cta.label` from `site.ts` verbatim. The line above it is the reader's new evening: "One dish, and you will know."
@@ -167,3 +171,32 @@
   - The food-facts sentence ("reads 'check', never 'clear'") was true of the
     app but traced to no ledger row. RC-55 now carries the boundary and the
     guard pins the wording.
+
+- **The three doors (revision, 2026-09-06):** the page answered "what does setup
+  ask for" but not "how does my kitchen get in", and the owner named the second
+  as a sale the page was leaving on the table. The honest half of it is now §4a.
+  What went in is a ROUTE fact, read that day off `sandbox/demo`
+  `src/routes/setup/+page.svelte`: with no ingredients yet, stage two renders
+  three choices, not a form, and stage four offers Sage a recipe card, photo,
+  PDF, pasted text or link. RC-58 records it. What stayed out is everything
+  about what a document comes back as, because RC-55 still pins
+  `IMPORT_AI_PROVIDER: 'stub'` at both test layers of the rehearsal, and the
+  `check-landing-claims.mjs` regex that fails the build on photograph, upload or
+  scan beside invoice, price sheet or recipe was deliberately NOT relaxed. So
+  the block sells the door and the review gate (RC-09, RC-39) and then says the
+  quiet part itself: reading a document is still work. The app's own line,
+  "Supplier, packs, and prices come back for you to confirm, not type", is the
+  copy this page may use the day a rehearsal runs against a real provider.
+  The hero lede gained one sentence for the same reason and no more, because
+  the hero is the one slot a skimmer reads: "Its ingredients can come in from an
+  invoice or a spreadsheet, not just the keyboard."
+- **No second snap line.** §4a is deliberately unquotable. The page's one snap
+  line is still the $1.62 in §5, and a second would have cost it.
+- **Direction contract corrected:** the page shell still carried "refuse any
+  duration claim, because no rehearsal artifact supports one", which RC-10
+  superseded on 2026-09-05 and which the build's own guard contradicts (it
+  REQUIRES "about fifteen minutes"). The contract now states the RC-10 boundary
+  it should have carried since, and names the doors in the story line.
+- **Verified in the browser, 2026-09-06:** 1440x900 and 390x844, zero horizontal
+  overflow at both, dashed ticket rules and cream paper consistent with the
+  hero ticket, build and all page contracts green.
