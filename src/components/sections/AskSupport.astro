@@ -39,6 +39,17 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 		<a href={site.phoneHref} class="btn-quiet">Call {site.phone}</a>
 	</p>
 
+	<!-- The receipt outlives the dialog. If the modal closed and left nothing
+	     behind, the visitor would be looking at the same "Ask a question" button
+	     they pressed a moment ago with no evidence anything happened, and the
+	     honest reading of that is "it did not send". -->
+	<p class="ask-receipt" data-support-receipt hidden>
+		<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+			<path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+		</svg>
+		<span>Sent. I reply to <strong data-support-receipt-email></strong>, usually the same day.</span>
+	</p>
+
 	<!-- The dialog is a plain container until script promotes it. Without
 	     script this section stays open on the page and the form below works. -->
 	<div class="ask-panel" id="ask-form" data-support-panel>
@@ -112,6 +123,19 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 					<button type="submit" class="btn-primary" data-support-send>Send question</button>
 				</p>
 			</form>
+
+			<!-- Success is acknowledged HERE, where the form was, rather than as a
+			     line appended under an empty form. It is in the DOM from the start
+			     so that role="status" is registered before its text changes, which
+			     is what makes the announcement reliable. -->
+			<div class="ask-confirm" data-support-confirm hidden>
+				<svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+					<circle cx="17" cy="17" r="16" stroke="currentColor" stroke-width="1.5" opacity="0.35" />
+					<path class="ask-tick" d="M10 17.5l4.5 4.5L24 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+				<p class="ask-confirm-title" role="status" data-support-confirm-text></p>
+				<p class="ask-confirm-note">Closing this box. Nothing else to do.</p>
+			</div>
 		</div>
 	</div>
 
@@ -136,8 +160,25 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 	const cancelButton = root?.querySelector<HTMLButtonElement>('[data-support-cancel]');
 	const sendButton = root?.querySelector<HTMLButtonElement>('[data-support-send]');
 	const status = root?.querySelector<HTMLElement>('[data-support-status]');
+	const confirmPanel = root?.querySelector<HTMLElement>('[data-support-confirm]');
+	const confirmText = root?.querySelector<HTMLElement>('[data-support-confirm-text]');
+	const receipt = root?.querySelector<HTMLElement>('[data-support-receipt]');
+	const receiptEmail = root?.querySelector<HTMLElement>('[data-support-receipt-email]');
 
-	if (root && panel && form && openButton && inlineLink && cancelButton && sendButton && status) {
+	if (
+		root &&
+		panel &&
+		form &&
+		openButton &&
+		inlineLink &&
+		cancelButton &&
+		sendButton &&
+		status &&
+		confirmPanel &&
+		confirmText &&
+		receipt &&
+		receiptEmail
+	) {
 		// Promote the panel to a modal only now that script is running. Until this
 		// line the panel is an ordinary open section and the anchor above scrolls
 		// to it, which is exactly the no-script experience.
@@ -157,17 +198,56 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 
 		let lastFocused: HTMLElement | null = null;
 
-		const open = (): void => {
-			lastFocused = document.activeElement as HTMLElement | null;
+		/**
+		 * editing -> submitting -> acknowledged -> leaving -> closed
+		 *                      \-> error -> editing
+		 *
+		 * The hold is acknowledgement time, not animation time: the sentence sits
+		 * still long enough to be read, and only then does the box leave. Both
+		 * numbers are separate on purpose, because tying them together is how a
+		 * confirmation ends up either unreadable or slow.
+		 */
+		const HOLD_MS = 2200;
+		const EXIT_MS = 240;
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+		let holdTimer: number | undefined;
+		let exitTimer: number | undefined;
+
+		// Two sends in quick succession would otherwise leave two timers racing to
+		// close the same dialog, and the second would close it out from under a
+		// message the visitor had not finished reading.
+		const clearTimers = (): void => {
+			window.clearTimeout(holdTimer);
+			window.clearTimeout(exitTimer);
+			holdTimer = undefined;
+			exitTimer = undefined;
+		};
+
+		const toEditing = (): void => {
+			clearTimers();
+			dialog.dataset.state = 'editing';
+			confirmPanel.hidden = true;
+			confirmText.textContent = '';
+			form.hidden = false;
 			status.textContent = '';
 			status.dataset.tone = '';
+		};
+
+		const open = (): void => {
+			lastFocused = document.activeElement as HTMLElement | null;
+			toEditing();
 			dialog.showModal();
 			panel.querySelector<HTMLInputElement>('#support-email')?.focus();
 		};
 
 		const close = (): void => {
+			clearTimers();
 			dialog.close();
+			// Focus moves only after the dialog has gone, never in the same step
+			// that unmounts what the visitor was reading.
 			lastFocused?.focus();
+			toEditing();
 		};
 
 		openButton.addEventListener('click', open);
@@ -213,14 +293,42 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 				}
 
 				// The draft is only cleared once it is somewhere else.
+				const sentTo = payload.email;
 				form.reset();
-				status.dataset.tone = 'sent';
-				status.textContent = 'Sent. I reply to every message myself, usually the same day.';
+
+				// acknowledged: the form leaves, the confirmation takes its place in
+				// the same region, and the text is set AFTER the panel is shown so
+				// role="status" announces it.
+				form.hidden = true;
+				confirmPanel.hidden = false;
+				dialog.dataset.state = 'acknowledged';
+				confirmText.textContent = `Message sent to ${sentTo}.`;
+
+				// The receipt is written now, not on the way out, so it is already
+				// on the page behind the dialog whichever way this box closes.
+				receiptEmail.textContent = sentTo;
+				receipt.hidden = false;
+
+				clearTimers();
+				holdTimer = window.setTimeout(() => {
+					dialog.dataset.state = 'leaving';
+					exitTimer = window.setTimeout(
+						() => {
+							dialog.close();
+							lastFocused?.focus();
+							toEditing();
+						},
+						reducedMotion.matches ? 0 : EXIT_MS
+					);
+				}, HOLD_MS);
+				return;
 			} catch {
 				status.dataset.tone = 'error';
 				status.textContent =
 					'Your message could not be sent. Your draft is still here, so please try again.';
 			} finally {
+				// Only meaningful on the error path; the success path has already
+				// returned and replaced the form with the acknowledgement.
 				sendButton.disabled = false;
 				sendButton.removeAttribute('aria-busy');
 				sendButton.textContent = idleLabel;
@@ -322,4 +430,61 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 	}
 	.ask-support :global(dialog.ask-dialog)::backdrop { background: rgba(31, 36, 33, 0.45); }
 	.ask-support :global(dialog.ask-dialog) .ask-panel { margin-top: 0; }
+
+	/* LEAVING. Only the box that actually leaves is animated, and only with
+	   transform and opacity. 240ms out against a 2200ms hold: the exit is quick
+	   because the reading already happened. */
+	.ask-support :global(dialog.ask-dialog[data-state='leaving']) {
+		opacity: 0;
+		transform: translateY(-6px) scale(0.985);
+		transition: opacity 240ms ease-in, transform 240ms ease-in;
+	}
+
+	.ask-confirm {
+		display: grid;
+		justify-items: center;
+		gap: 0.6rem;
+		border-top: 1px dashed var(--color-ticket-rule);
+		padding: 2.5rem 1rem 2rem;
+		text-align: center;
+		color: var(--color-green-deep);
+	}
+	.ask-confirm-title {
+		font-family: var(--font-display);
+		font-size: 1.35rem;
+		font-weight: 650;
+		line-height: 1.25;
+	}
+	.ask-confirm-note { color: var(--color-ink-soft); font-size: 0.9rem; }
+	/* The tick draws itself once. It is decoration on top of a sentence that
+	   already says the same thing, never the only signal that this worked. */
+	.ask-tick {
+		stroke-dasharray: 24;
+		stroke-dashoffset: 24;
+		animation: ask-tick-draw 420ms cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
+	}
+	@keyframes ask-tick-draw {
+		to { stroke-dashoffset: 0; }
+	}
+
+	.ask-receipt {
+		display: flex;
+		align-items: center;
+		gap: 0.55rem;
+		margin-top: 1rem;
+		color: var(--color-green-deep);
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+	.ask-receipt svg { flex: none; }
+
+	@media (prefers-reduced-motion: reduce) {
+		/* The states still happen and the words still say so; only the movement
+		   goes. The hold is untouched, because reading time is not motion. */
+		.ask-support :global(dialog.ask-dialog[data-state='leaving']) {
+			transform: none;
+			transition-duration: 1ms;
+		}
+		.ask-tick { animation: none; stroke-dashoffset: 0; }
+	}
 </style>

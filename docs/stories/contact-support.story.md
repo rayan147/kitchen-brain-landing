@@ -54,6 +54,39 @@
 | 12 Break Into Three | The draft is kept, the failure is said out loud, and the email address is offered as the way out. |
 | 13–15 Finale / Final Image | "Sent. I reply to every message myself, usually the same day." The reader is still on the page they were reading, question asked. |
 
+### Revision, 2026-09-06 — the ending did not land
+
+The first version stopped at beat 12. On success it cleared the form, left the
+modal open, and appended a line of status text under an empty box. The reader's
+own words: *"once the email is sent why does this modal is still open?"* They
+were right, and the fault is a story fault before it is a motion fault: a scene
+that has finished has to leave, or the reader cannot tell it finished.
+
+The ending is now a sequence rather than a sentence, following the
+`editing → submitting → acknowledged → leaving → next` model:
+
+| Phase | What the reader sees | Copy |
+|---|---|---|
+| `submitting` | The button holds its place and says what it is doing | "Sending…" |
+| `acknowledged` | The form leaves, a tick draws, and the confirmation takes the same space | "Message sent to *their address*." / "Closing this box. Nothing else to do." |
+| `leaving` | 240ms out, transform and opacity only | — |
+| `next` | The box is gone, focus is back on the button, and the page keeps the proof | "Sent. I reply to *their address*, usually the same day." |
+
+**The hold is 2,200ms and it is not the animation.** Acknowledgement time is
+reading time; the exit is 240ms because the reading already happened. Tying the
+two together is how a confirmation ends up either unreadable or slow.
+
+**The receipt is the point, not a nicety.** If the modal closed and left
+nothing, the reader would be looking at the same "Ask a question" button they
+pressed a second ago with no evidence anything happened, and the honest reading
+of that is "it did not send". The final image of this story is not the modal
+closing. It is the line on the page naming the address the answer will go to.
+
+**The tick never carries the meaning.** It is decoration over a sentence that
+already says the same thing, and under `prefers-reduced-motion` it is simply
+drawn, the dialog does not move, and every state and the focus order are
+unchanged.
+
 ### Step 4 — From Beats to Scenes
 
 Four surfaces, one beat-group each:
