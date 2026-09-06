@@ -136,21 +136,53 @@ export default async function handler(
 		return;
 	}
 
+	const email = composeDemoEmail(demoRequest);
+	const from = process.env.EMAIL_FROM || RESEND_FROM;
+
+	// LOCAL CAPTURE FIRST, ON PURPOSE. Same two knobs as /api/support and as the
+	// app: EMAIL_TRANSPORT=smtp AND SMTP_URL, both required, so no single ambient
+	// variable can reroute mail on its own. Checked before Resend so a developer
+	// holding a real key and a capture server still captures. The transport
+	// refuses any target that is not loopback, so this cannot become a delivery
+	// path. Without it `npm run dev:api` cannot exercise this form at all, and
+	// `astro dev` does not serve a root api/ directory in the first place: it
+	// answers /api/demo-request with its own 404 page, which the browser handler
+	// reads as a failed send.
+	const smtpUrl = process.env.SMTP_URL;
+	if (process.env.EMAIL_TRANSPORT === 'smtp' && smtpUrl) {
+		try {
+			const { sendViaLoopbackSmtp } = await import('../src/lib/smtp.js');
+			await sendViaLoopbackSmtp(smtpUrl, {
+				from,
+				to: [...DEMO_RECIPIENTS],
+				subject: email.subject,
+				text: email.body,
+				replyTo: demoRequest.email
+			});
+		} catch (error) {
+			console.error('demo.request.failed (smtp capture)', error);
+			send(request, response, 503, { ok: false, message: DEMO_FAILED_MESSAGE });
+			return;
+		}
+		send(request, response, 200, { ok: true });
+		return;
+	}
+
 	const apiKey = process.env.RESEND_API_KEY;
 	if (!apiKey) {
 		// Loud on the server, honest to the visitor. The failure this endpoint
 		// exists to end is a request that looks sent and is not, so it must never
 		// answer ok because it could not try.
-		console.error('demo.request.misconfigured: RESEND_API_KEY is not set');
+		console.error(
+			'demo.request.misconfigured: set RESEND_API_KEY, or EMAIL_TRANSPORT=smtp with SMTP_URL for local capture'
+		);
 		send(request, response, 503, { ok: false, message: DEMO_FAILED_MESSAGE });
 		return;
 	}
 
-	const email = composeDemoEmail(demoRequest);
-
 	try {
 		const { error } = await new Resend(apiKey).emails.send({
-			from: process.env.EMAIL_FROM || RESEND_FROM,
+			from,
 			// Both mailboxes in one send: two sends would mean a half-delivered
 			// request that this handler would have to describe to the visitor.
 			to: [...DEMO_RECIPIENTS],

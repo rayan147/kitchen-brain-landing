@@ -29,7 +29,13 @@ const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1']);
 
 export interface SmtpMessage {
 	from: string;
-	to: string;
+	/**
+	 * One address or several. The demo request goes to two mailboxes in one
+	 * message, so a single RCPT TO would have quietly dropped the second: the
+	 * To: header would still have listed both and the capture would have looked
+	 * complete. One conversation, one RCPT TO per recipient.
+	 */
+	to: string | string[];
 	subject: string;
 	text: string;
 	replyTo?: string;
@@ -45,10 +51,13 @@ const extractSmtpEnvelopeAddress = (value: string): string => {
 const encodeSmtpMessageBody = (raw: string): string =>
 	raw.replace(/\r?\n/g, '\r\n').replace(/^\./gm, '..');
 
+/** Every recipient, in header order, for both the header and the envelope. */
+const recipientsOf = (to: SmtpMessage['to']): string[] => (Array.isArray(to) ? to : [to]);
+
 const buildMimeMessage = (message: SmtpMessage): string => {
 	const headers = [
 		`From: ${message.from}`,
-		`To: ${message.to}`,
+		`To: ${recipientsOf(message.to).join(', ')}`,
 		`Subject: ${message.subject}`,
 		...(message.replyTo ? [`Reply-To: ${message.replyTo}`] : []),
 		'MIME-Version: 1.0',
@@ -142,7 +151,9 @@ export async function sendViaLoopbackSmtp(url: string, message: SmtpMessage): Pr
 		if (!greeting.startsWith('220')) throw new Error(`SMTP greeting failed: ${greeting}`);
 		await command('HELO costcook.local', /^250/);
 		await command(`MAIL FROM:<${extractSmtpEnvelopeAddress(message.from)}>`, /^250/);
-		await command(`RCPT TO:<${extractSmtpEnvelopeAddress(message.to)}>`, /^250/);
+		for (const recipient of recipientsOf(message.to)) {
+			await command(`RCPT TO:<${extractSmtpEnvelopeAddress(recipient)}>`, /^250/);
+		}
 		await command('DATA', /^354/);
 		await command(`${buildMimeMessage(message)}\r\n.`, /^250/);
 		await command('QUIT', /^221/);

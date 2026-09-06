@@ -9,6 +9,7 @@
  * Run: npm run test:demo
  */
 import { spawnSync } from 'node:child_process';
+import { createServer } from 'node:net';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -223,6 +224,102 @@ await handler(request({ headers: { accept: 'application/json', 'x-forwarded-for'
 check('one sender being throttled does not throttle another', res.statusCode !== 429, `got ${res.statusCode}`);
 unstubResend();
 
+// ---------------------------------------------------------------------------
+// LOCAL CAPTURE. `astro dev` does not serve a root api/ directory, so the demo
+// form can only be exercised locally under `npm run dev:api`, and that needs a
+// transport that is not Resend. A real SMTP conversation against a real socket,
+// so this proves the transport rather than the intention.
+// ---------------------------------------------------------------------------
+const capturedMail = [];
+const captureServer = createServer((socket) => {
+	let inData = false;
+	let message = '';
+	const recipients = [];
+	socket.setEncoding('utf8');
+	socket.write('220 stub ESMTP\r\n');
+	socket.on('data', (chunk) => {
+		for (const line of chunk.split('\r\n')) {
+			if (line === '' && !inData) continue;
+			if (inData) {
+				if (line === '.') {
+					inData = false;
+					capturedMail.push({ message, recipients: [...recipients] });
+					message = '';
+					recipients.length = 0;
+					socket.write('250 Ok: queued\r\n');
+				} else {
+					message += `${line}\n`;
+				}
+				continue;
+			}
+			if (/^HELO|^EHLO/i.test(line)) socket.write('250 stub\r\n');
+			else if (/^MAIL FROM:/i.test(line)) socket.write('250 Ok\r\n');
+			// Recorded, not just answered: two recipients in the To: header while
+			// only one is in the envelope is a message half the mailboxes never
+			// see, and the header alone would hide it.
+			else if (/^RCPT TO:/i.test(line)) { recipients.push(line.replace(/^RCPT TO:\s*/i, '')); socket.write('250 Ok\r\n'); }
+			else if (/^DATA/i.test(line)) { inData = true; socket.write('354 End data with <CR><LF>.<CR><LF>\r\n'); }
+			else if (/^QUIT/i.test(line)) { socket.write('221 Bye\r\n'); socket.end(); }
+		}
+	});
+	socket.on('error', () => {});
+});
+const capturePort = await new Promise((resolve) => {
+	captureServer.listen(0, '127.0.0.1', () => resolve(captureServer.address().port));
+});
+
+// Both knobs, as the app and /api/support require. A real key is set at the
+// same time on purpose: capture must win over delivery, not merely fill in.
+process.env.EMAIL_TRANSPORT = 'smtp';
+process.env.SMTP_URL = `smtp://127.0.0.1:${capturePort}`;
+process.env.RESEND_API_KEY = 'test-key-not-real';
+let resendWasCalled = false;
+globalThis.fetch = async () => {
+	resendWasCalled = true;
+	return new Response(JSON.stringify({ id: 'stub' }), { status: 200, headers: { 'content-type': 'application/json' } });
+};
+
+res = mockResponse();
+await handler(request({ headers: { accept: 'application/json', 'x-forwarded-for': '7.7.7.7' }, body: valid }), res);
+check('a capture send is reported as sent', res.statusCode === 200, `got ${res.statusCode}`);
+check('capture beats delivery when both are configured', resendWasCalled === false);
+check('exactly one message reached the capture server', capturedMail.length === 1, `got ${capturedMail.length}`);
+const captured = capturedMail[0] ?? { message: '', recipients: [] };
+check('the captured mail is addressed to both mailboxes', /To: rayan@costcook\.io, support@costcook\.io/.test(captured.message), captured.message.slice(0, 120));
+check('both mailboxes are in the SMTP envelope, not only the header', captured.recipients.length === 2, captured.recipients.join(' '));
+check('the captured mail replies to the visitor', captured.message.includes('Reply-To: sam@harbourroad.com'));
+check('the captured mail names the business', captured.message.includes('Harbour Road Catering'));
+
+// The guard that makes this safe to ship beside the production sender.
+const smtpBuild = spawnSync(
+	'npx',
+	['esbuild', 'src/lib/smtp.ts', '--bundle', '--platform=node', '--format=esm', `--outfile=${join(outDir, 'smtp.mjs')}`],
+	{ cwd: root, encoding: 'utf8' }
+);
+if (smtpBuild.status === 0) {
+	const { sendViaLoopbackSmtp } = await import(join(outDir, 'smtp.mjs'));
+	let refused = false;
+	try {
+		await sendViaLoopbackSmtp('smtp://smtp.sendgrid.net:25', { from: 'a@b.com', to: 'c@d.com', subject: 's', text: 't' });
+	} catch (error) {
+		refused = /never delivers real mail/.test(String(error));
+	}
+	check('a non-loopback SMTP_URL is refused before a socket opens', refused);
+}
+
+// And with the transport knob missing, a stray SMTP_URL must not divert mail.
+process.env.EMAIL_TRANSPORT = '';
+resendWasCalled = false;
+res = mockResponse();
+await handler(request({ headers: { accept: 'application/json', 'x-forwarded-for': '6.6.6.6' }, body: valid }), res);
+check('SMTP_URL alone does not reroute mail away from Resend', resendWasCalled === true && capturedMail.length === 1);
+
+captureServer.close();
+globalThis.fetch = undefined;
+delete process.env.EMAIL_TRANSPORT;
+delete process.env.SMTP_URL;
+delete process.env.RESEND_API_KEY;
+
 rmSync(outDir, { recursive: true, force: true });
 
 if (failures.length > 0) {
@@ -230,4 +327,4 @@ if (failures.length > 0) {
 	console.error(failures.map((failure) => `- ${failure}`).join('\n'));
 	process.exit(1);
 }
-console.log(`Demo endpoint verified: ${passed} checks across method, validation, header injection, both recipients, the autofill-safe bot trap, misconfiguration, Resend errors, no-script redirects, and rate limiting.`);
+console.log(`Demo endpoint verified: ${passed} checks across method, validation, header injection, both recipients, the autofill-safe bot trap, misconfiguration, Resend errors, no-script redirects, rate limiting, and local Mailpit capture to both mailboxes.`);
