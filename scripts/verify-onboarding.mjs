@@ -118,10 +118,10 @@ try {
 	 */
 	const awaitShot = async () => {
 		await evaluate(`(async () => {
-			const img = document.querySelector('.fd-shot img');
-			if (!img) return;
-			img.loading = 'eager';
-			try { await img.decode(); } catch { /* a broken src fails the assert below */ }
+			for (const img of document.querySelectorAll('.fd-shot img')) {
+				img.loading = 'eager';
+				try { await img.decode(); } catch { /* a broken src fails the assert below */ }
+			}
 		})()`);
 	};
 	const walkPage = async () => {
@@ -132,7 +132,7 @@ try {
 				await frame();
 				await frame();
 			}
-			window.scrollTo(0, 0);
+			window.scrollTo({ top: 0, behavior: 'instant' });
 			await frame();
 			// Settle the entrance so opacity is read at its final value, not
 			// mid-transition.
@@ -157,7 +157,7 @@ try {
 	// The reveal register hides content until JS runs. Whatever this reads must
 	// be visible to a no-JS reader too, which the no-JavaScript pass asserts.
 	const probe = `(() => {
-		const actions = [...document.querySelectorAll('.fd-actions a, .feature-breadcrumb a')];
+		const actions = [...document.querySelectorAll('.fd-actions a, .feature-breadcrumb a, .fd-map-link')];
 		const maths = document.querySelector('.fd-maths-scroll');
 		return {
 			title: document.querySelector('#fd-heading')?.textContent.trim(),
@@ -171,14 +171,21 @@ try {
 			mathsScrolls: maths ? maths.scrollWidth > maths.clientWidth : null,
 			mathsFocusable: maths ? maths.tabIndex >= 0 && Boolean(maths.getAttribute('aria-label')) : false,
 			mathsColHeaders: document.querySelectorAll('.fd-maths th[scope="col"]').length,
+			// Every capture on the page (RC-48): each must load, render at half
+			// its pixels or narrower, and carry an alt read off the pixels. The
+			// aggregate is the worst case, so one soft capture fails the run.
 			shot: (() => {
-				const img = document.querySelector('.fd-shot img');
-				if (!img) return null;
+				const imgs = [...document.querySelectorAll('.fd-shot img')];
+				if (!imgs.length) return null;
+				const ratio = (img) => img.getBoundingClientRect().width / Math.max(1, img.naturalWidth);
+				const worst = imgs.reduce((a, b) => (ratio(b) > ratio(a) ? b : a));
 				return {
-					loaded: img.complete && img.naturalWidth > 0,
-					natural: img.naturalWidth,
-					rendered: Math.round(img.getBoundingClientRect().width),
-					alt: (img.getAttribute('alt') ?? '').length
+					count: imgs.length,
+					loaded: imgs.every((img) => img.complete && img.naturalWidth > 0),
+					natural: worst.naturalWidth,
+					rendered: Math.round(worst.getBoundingClientRect().width),
+					src: worst.getAttribute('src'),
+					alt: Math.min(...imgs.map((img) => (img.getAttribute('alt') ?? '').length))
 				};
 			})(),
 			mathsFits: maths ? maths.getBoundingClientRect().right <= document.documentElement.clientWidth + 1 : null,
@@ -186,6 +193,22 @@ try {
 			primaryLabel: document.querySelector('.fd-actions .btn-primary')?.textContent.trim(),
 			primaryCount: document.querySelectorAll('.fd-actions .btn-primary').length,
 			activeNav: [...document.querySelectorAll('nav a[aria-current="page"]')].map((a) => a.textContent.trim()),
+			mapLinks: [...document.querySelectorAll('.fd-map-link')].map((a) => a.getAttribute('href')),
+			mapTargets: [...document.querySelectorAll('.fd-map-link')].every((a) => !!document.querySelector(a.getAttribute('href'))),
+			parts: document.querySelectorAll('.fd-part-label').length,
+			tracks: document.querySelectorAll('.fd-after-scene').length,
+			trunk: (() => {
+				// Trunk test from Part 3: scrolled to #after, the part label must sit
+				// inside the viewport so a reader knows the page, the part, and what
+				// comes next without scrolling back up.
+				const after = document.querySelector('#after');
+				if (!after) return false;
+				after.scrollIntoView({ behavior: 'instant', block: 'start' });
+				const label = after.querySelector('.fd-part-label')?.getBoundingClientRect();
+				const ok = !!label && label.top >= 0 && label.top < window.innerHeight;
+				window.scrollTo({ top: 0, behavior: 'instant' });
+				return ok;
+			})(),
 			revealHidden: [...document.querySelectorAll('[data-reveal]')]
 				.filter((n) => getComputedStyle(n).opacity !== '1').length
 		};
@@ -206,7 +229,7 @@ try {
 	assert(desktop.title === 'You do not need to enter your whole walk-in.', `desktop: page identity is "${desktop.title}"`);
 	assert(desktop.h1Count === 1, `desktop: found ${desktop.h1Count} h1 elements`);
 	assert(desktop.stages === 5, `desktop: expected 5 stage rows, received ${desktop.stages}`);
-	assert(desktop.ticketStages === 5, `desktop: expected 5 ticket stages, received ${desktop.ticketStages}`);
+	assert(desktop.ticketStages === 3, `desktop: expected 3 ticket map rows, received ${desktop.ticketStages}`);
 	assert(desktop.guards === 4, `desktop: expected 4 guard lines, received ${desktop.guards}`);
 	assert(desktop.plateCost === '$1.62', `desktop: plate cost reads ${desktop.plateCost}`);
 	assert(desktop.snap, 'desktop: the snap line no longer carries $1.62');
@@ -217,17 +240,22 @@ try {
 	// RC-48: stored at 2x, rendered at half its pixel width or narrower, and
 	// it has to actually load — a 404 here is a broken proof, not a missing
 	// decoration.
-	assert(desktop.shot, 'desktop: the setup capture is not on the page');
-	assert(desktop.shot?.loaded, 'desktop: the setup capture did not load');
-	assert((desktop.shot?.natural ?? 0) >= 2304, `desktop: setup capture is only ${desktop.shot?.natural}px wide; a 1152px container would upscale it`);
+	assert(desktop.shot, 'desktop: no setup capture is on the page');
+	assert(desktop.shot?.count === 11, `desktop: expected 11 setup captures, received ${desktop.shot?.count}`);
+	assert(desktop.shot?.loaded, 'desktop: a setup capture did not load');
 	assert(
 		desktop.shot && desktop.shot.rendered <= desktop.shot.natural / 2,
-		`desktop: setup capture renders at ${desktop.shot?.rendered}px, wider than half its ${desktop.shot?.natural}px (RC-48)`
+		`desktop: ${desktop.shot?.src} renders at ${desktop.shot?.rendered}px, wider than half its ${desktop.shot?.natural}px (RC-48)`
 	);
-	assert((desktop.shot?.alt ?? 0) > 200, 'desktop: the setup capture alt does not read off the pixels');
+	assert((desktop.shot?.alt ?? 0) > 200, 'desktop: a setup capture alt does not read off the pixels');
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
 	assert(desktop.primaryCount === 2, `desktop: expected 2 route primaries (open and close), received ${desktop.primaryCount}`);
-	assert(desktop.activeNav.includes('Your first dish'), `desktop: navigation is not active (${desktop.activeNav.join(', ')})`);
+	assert(desktop.activeNav.includes('Your initial setup'), `desktop: navigation is not active (${desktop.activeNav.join(', ')})`);
+	assert(desktop.mapLinks.length === 3, `desktop: expected 3 map links, received ${desktop.mapLinks.length}`);
+	assert(desktop.mapTargets, 'desktop: a map link points at a missing section');
+	assert(desktop.parts === 3, `desktop: expected 3 part labels, received ${desktop.parts}`);
+	assert(desktop.tracks === 3, `desktop: expected 3 after-setup scenes, received ${desktop.tracks}`);
+	assert(desktop.trunk, 'desktop: Part 3 fails the trunk test (part label not visible after anchor scroll)');
 	assert(desktop.revealHidden === 0, `desktop: ${desktop.revealHidden} reveal section(s) never settled`);
 
 	// The primary's LABEL is pinned in check-landing-claims.mjs, on the source,
@@ -246,15 +274,17 @@ try {
 	assert(mobile.bodyOverflow === 0, `mobile: horizontal overflow is ${mobile.bodyOverflow}px`);
 	assert(mobile.mathsFits, 'mobile: the arithmetic table escapes the viewport');
 	assert(mobile.minTarget >= 44, `mobile: smallest route action is ${mobile.minTarget}px`);
+	assert(mobile.mapTargets, 'mobile: a map link points at a missing section');
+	assert(mobile.trunk, 'mobile: Part 3 fails the trunk test at 390px');
 	assert(mobile.plateCost === '$1.62', `mobile: plate cost reads ${mobile.plateCost}`);
 	assert(mobile.stages === 5, `mobile: expected 5 stage rows, received ${mobile.stages}`);
 	// The claim in this file's docstring and success line. At 390px the table
 	// is wider than its column, so it MUST overflow its own container rather
 	// than the page: if it ever stops scrolling, the values are unreachable.
-	assert(mobile.shot?.loaded, 'mobile: the setup capture did not load');
+	assert(mobile.shot?.loaded, 'mobile: a setup capture did not load');
 	assert(
 		mobile.shot && mobile.shot.rendered <= mobile.shot.natural / 2,
-		`mobile: setup capture renders at ${mobile.shot?.rendered}px, wider than half its natural width`
+		`mobile: ${mobile.shot?.src} renders at ${mobile.shot?.rendered}px, wider than half its natural width`
 	);
 	assert(mobile.mathsScrolls === true, 'mobile: the arithmetic table no longer scrolls inside its own container');
 	// FINDING 1: that scroll must be reachable without a pointer (WCAG 2.1.1).
@@ -294,7 +324,7 @@ try {
 	// past half its pixel width (RC-48).
 	assert(
 		zoomed.shot && zoomed.shot.rendered <= zoomed.shot.natural / 2,
-		`200% text: setup capture renders at ${zoomed.shot?.rendered}px, above half its ${zoomed.shot?.natural}px`
+		`200% text: ${zoomed.shot?.src} renders at ${zoomed.shot?.rendered}px, above half its ${zoomed.shot?.natural}px`
 	);
 
 	// Reduced motion: nothing may stay hidden when the animation register is off.

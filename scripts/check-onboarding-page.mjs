@@ -20,7 +20,7 @@ const requireText = (text, label) => {
 for (const [text, label] of [
 	['You do not need to enter your whole walk-in.', 'page identity'],
 	['Four stages in, it prints', 'plate-cost stage (RC-10)'],
-	['5 stages &middot; 1 dish', 'setup ticket stage count (RC-10)'],
+	['3 parts &middot; 5 stages &middot; 1 dish', 'setup ticket stage count (RC-10)'],
 	// The whole trace, not just the total: a reader checks it by hand.
 	['$32.00', 'case price (RC-55)'],
 	['4,535.92', 'pound-to-gram conversion (RC-55)'],
@@ -36,31 +36,92 @@ for (const [text, label] of [
 	['Only the guide', 'start-over guard (RC-55 A-STARTOVER)'],
 	['the same button retries', 'offline-save guard (RC-55 finding 1)'],
 	['never \u201cclear\u201d', 'unknown-is-not-clear boundary (RC-55)'],
-	['first-dish-onboarding', 'emitted direction contract'],
+	['initial-setup-guide', 'emitted direction contract'],
 	['href="/onboarding"', 'shared navigation destination'],
 	['aria-current="page"', 'active navigation state'],
 	['docs/stories/onboarding.story.md', 'story pointer']
 ]) requireText(text, label);
 
-const stageRows = (html.match(/class="fd-stage"/g) ?? []).length;
+const stageRows = (html.match(/class="fd-stage[ "]/g) ?? []).length;
 if (stageRows !== 5) failures.push(`expected 5 rendered stage rows, received ${stageRows}`);
 
-const ticketStages = (html.match(/class="fd-ticket-n"/g) ?? []).length;
-if (ticketStages !== 5) failures.push(`expected 5 setup-ticket stages, received ${ticketStages}`);
+// The ticket now maps three parts; the five stage rows are counted above.
+const ticketStages = (html.match(/class="fd-ticket-n/g) ?? []).length;
+if (ticketStages !== 3) failures.push(`expected 3 setup-ticket map rows, received ${ticketStages}`);
+// The hero ticket is the page map: three parts, each an in-page anchor, each
+// with a done-when line. A reader picks the question they came with (Krug:
+// a mindless choice) and every anchor must resolve to a section id.
+const mapRows = (html.match(/class="fd-ticket-n fd-map-n"/g) ?? []).length;
+if (mapRows !== 3) failures.push(`expected 3 map rows in the setup ticket, received ${mapRows}`);
+for (const id of ['before', 'stages', 'after']) {
+	if (!html.includes(`href="#${id}"`)) failures.push(`map does not link to #${id}`);
+	if (!new RegExp(`<section[^>]*\\bid="${id}"`).test(html)) failures.push(`no section carries id="${id}"`);
+}
+const partLabels = (html.match(/class="eyebrow fd-part-label"/g) ?? []).length;
+if (partLabels !== 3) failures.push(`expected 3 part labels (Part N of 3), received ${partLabels}`);
+// Each stage row names the app's own last checkmark for that stage, so a
+// reader inside the app knows when the stage is finished (research pattern
+// 2: a countable done-marker per step).
+const doneLines = (html.match(/class="fd-stage-done"/g) ?? []).length;
+if (doneLines !== 5) failures.push(`expected 5 done-when lines, received ${doneLines}`);
+for (const text of ['Add one supplier', 'Review the food facts', 'Answer every ingredient once', 'Check the plate cost', 'cost the order']) {
+	requireText(text, `stage done-when line from SETUP_STAGE_GUIDE (${text})`);
+}
 
-// RC-58: the three doors into stage two. The row's verification step says the
-// ledger moves before the page does when a door is added or removed, and this
-// is what makes that true. The gate sentence is pinned with them: naming the
-// doors without the staging rule would be the overclaim RC-55 forbids.
-const doorRows = (html.match(/class="fd-door-lead"/g) ?? []).length;
-if (doorRows !== 3) failures.push(`expected 3 rendered stage-two doors, received ${doorRows}`);
+// Every stage is a scene: one paragraph and the app's own screen. Five
+// scenes, five captures behind them (stage two carries two, stage five none),
+// each with a declared size that matches its PNG and an alt long enough to
+// have been read off the pixels (RC-48). The reader sees the button; they
+// do not read a list of taps.
+const scenes = (html.match(/class="fd-stage fd-scene"/g) ?? []).length;
+if (scenes !== 5) failures.push(`expected 5 scenes, received ${scenes}`);
+// Seven captures: the welcome in Part 1, then one per stage with two on
+// stage two (the cards and the dropzone behind them).
+const sceneShots = html.match(/<img\b[^>]*\/proof\/setup\/[^>]*>/g) ?? [];
+if (sceneShots.length !== 11) failures.push(`expected 11 setup captures on the page, received ${sceneShots.length}`);
+for (const tag of sceneShots) {
+	const src = tag.match(/src="([^"]+)"/)?.[1] ?? '';
+	const alt = tag.match(/alt="([^"]*)"/)?.[1] ?? '';
+	if (alt.length < 120) failures.push(`${src}: alt is too thin to have been read off the pixels`);
+	let bytes = null;
+	try {
+		bytes = readFileSync(new URL(`../public${src}`, import.meta.url));
+	} catch {
+		failures.push(`missing public${src}`);
+	}
+	if (!bytes) continue;
+	const w = bytes.readUInt32BE(16);
+	const h = bytes.readUInt32BE(20);
+	const declaredOf = (attribute) => Number(tag.match(new RegExp(`${attribute}="(\\d+)"`))?.[1] ?? 0);
+	if (declaredOf('width') !== w || declaredOf('height') !== h) {
+		failures.push(`${src} declares ${declaredOf('width')}x${declaredOf('height')} but the PNG is ${w}x${h}`);
+	}
+}
+for (const src of ['00-welcome', '02-choices', '02-dropzone', '03-chips', '04-choices', '05-first-order', '06-ready', '07-records', '08-import', '09-team']) {
+	if (!html.includes(`/proof/setup/${src}.png`)) failures.push(`scene capture ${src} is missing`);
+}
+// RC-58: the three choices stage two opens on and the two at stage four, by
+// the app's own labels, with the upload control and the staging gate they
+// end at (RC-09, RC-39). Naming the upload without the gate would be the
+// overclaim RC-55 forbids.
 for (const [text, label] of [
-	['An invoice or a price sheet.', 'the invoice door (RC-58)'],
-	['An ingredient list.', 'the ingredient-list door (RC-58)'],
-	['The form.', 'the manual door (RC-58)'],
-	['is written to your catalog', 'the staging gate the doors end at (RC-09)'],
+	['Import an invoice or price sheet', 'the invoice choice (RC-58)'],
+	['Import an ingredient list', 'the ingredient-list choice (RC-58)'],
+	['Add ingredients manually', 'the manual choice (RC-58)'],
+	['Choose files', 'the dropzone control (RC-58)'],
+	['Build with Sage', 'the stage-four Sage choice (RC-58)'],
+	['Build the dish by hand', 'the stage-four manual choice (RC-58)'],
+	['is written to your kitchen until you confirm it', 'the staging gate the uploads end at (RC-09)'],
 	['quoted back to you rather than guessed at', 'the unreadable-is-not-guessed boundary (RC-39)']
 ]) requireText(text, label);
+// Part 1 tells the reader what to have within reach: the invoice and the
+// recipe, before the phone, as a ticket beside the welcome capture rather
+// than a bulleted list (owner, 2026-09-06: visuals, not lists).
+const haveReady = (html.match(/class="fd-ticket fd-have"/g) ?? []).length;
+if (haveReady !== 1) failures.push(`expected the have-ready ticket once, received ${haveReady}`);
+for (const text of ['One invoice from the supplier', 'The recipe for one dish']) {
+	requireText(text, `have-ready row (${text})`);
+}
 
 const guardLines = (html.match(/<li[^>]*>[^<]*(?:does not go on|density|progress resets|button retries)/g) ?? []).length;
 if (guardLines !== 4) failures.push(`expected 4 rendered guard lines, received ${guardLines}`);
@@ -139,6 +200,31 @@ if (!/loading="lazy"/.test(shot)) failures.push('setup capture should not block 
 for (const leak of ['E2E First Kitchen', 'e2e.test', 'sandbox/demo', 'SANDBOX BUILD']) {
 	if (html.includes(leak)) failures.push(`the page leaks internal provenance: ${leak}`);
 }
+
+// Part 3 must survive the build as three scenes (next invoice, next dish,
+// two emails) with their boundaries. One sentence each (owner, 2026-09-06).
+const afterScenes = (html.match(/class="fd-after-scene fd-scene"/g) ?? []).length;
+if (afterScenes !== 3) failures.push(`expected 3 after-setup scenes, received ${afterScenes}`);
+// Every explanation on the page is one sentence: a stage body or an
+// after-scene body with a second full stop is the novel nobody reads.
+const bodies = [...html.matchAll(/class="fd-stage-body"[^>]*>([^<]*)</g)].map((m) => m[1]);
+for (const body of bodies) {
+	const stops = (body.replace(/[“”][^“”]*[“”]/g, '').match(/[.!?](\s|$)/g) ?? []).length;
+	if (stops > 1) failures.push(`explanation runs past one sentence: "${body.slice(0, 60)}…"`);
+}
+for (const [text, label] of [
+	['Your kitchen is ready', 'completion heading'],
+	['Open shopping list', 'completion first action'],
+	['Go to Today', 'completion second action'],
+	['pasted text', 'the five doors (RC-38)'],
+	['quoted back', 'unreadable-is-not-guessed (RC-39)'],
+	['one-time link', 'invite mechanism (RC-52)'],
+	['join as Staff', 'invited role (RC-52)'],
+	['Staff can open cost screens', 'Staff-sees-costs caveat (RC-52)'],
+	['href="/features/team-and-access"', 'link to the Team and Access guide'],
+	['id="after-menu"', 'menu track anchor'],
+	['id="after-crew"', 'crew track anchor']
+]) requireText(text, label);
 
 // One primary per end of the page, both rendering the site's single CTA
 // label, and the demo link never promoted to a second primary here.

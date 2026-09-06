@@ -139,12 +139,12 @@ const resourceNav = [
 		description: 'Check the kitchens, events, and working styles CostCook fits.'
 	},
 	{
-		label: 'Your first dish',
+		label: 'Your initial setup',
 		href: '/onboarding',
 		header: 'resources',
 		group: 'See it work',
 		icon: 'dish',
-		description: 'See what setup asks for: one dish you already cook, not your walk-in.'
+		description: 'One dish to start, then how the rest of your menu and your crew get in.'
 	},
 	{
 		label: 'How we compare',

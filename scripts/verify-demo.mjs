@@ -248,6 +248,10 @@ try {
 	// only in the endpoint's unit checks.
 	apiStub.status = 503;
 	apiStub.body = { ok: false, message: 'Your request could not be sent. Everything you typed is still here, so please try again.' };
+	// Both widths, because the error sentence wraps to more lines on a phone and
+	// the containment check below is the one this walk exists to make.
+	for (const [failWidth, failHeight] of [[1280, 800], [390, 844]]) {
+	await viewport(failWidth, failHeight, failWidth < 700);
 	await navigate();
 	const failedSend = await evaluate(`(async () => {
 		const form = document.querySelector('[data-demo-form]');
@@ -273,7 +277,20 @@ try {
 			statusWasInTheTree: liveRegionDisplay,
 			status: document.querySelector('[data-send-status]')?.textContent.trim(),
 			draftSurvived: form.elements.email.value,
-			buttonEnabled: !document.querySelector('[data-send]').disabled
+			buttonEnabled: !document.querySelector('[data-send]').disabled,
+			// The step transition animates the form's height with a fill. A
+			// finished filling animation keeps holding that height, and the
+			// animations origin outranks the style attribute, so clearing the
+			// inline height does not release it. Left uncancelled, the form stays
+			// at the height it needed before the error sentence existed and the
+			// button row hangs outside the ticket's bottom border. Relationships,
+			// not numbers: the row is inside the card and the fieldset fits the
+			// form it lives in.
+			actionsBottom: document.querySelector('.form-actions-split').getBoundingClientRect().bottom,
+			ticketBottom: document.querySelector('.demo-ticket').getBoundingClientRect().bottom,
+			fieldsetBottom: document.querySelector('[data-step="2"]').getBoundingClientRect().bottom,
+			formBottom: form.getBoundingClientRect().bottom,
+			heldAnimations: form.getAnimations().length
 		};
 	})()`);
 	assert(failedSend.step === '2', `failed send: advanced to step ${failedSend.step} anyway`);
@@ -282,6 +299,19 @@ try {
 	assert(failedSend.statusWasInTheTree !== 'none', 'failed send: the live region was display:none before it was written to, so the message may never be announced');
 	assert(failedSend.draftSurvived === 'maya@example.com', 'failed send: the visitor lost what they typed');
 	assert(failedSend.buttonEnabled, 'failed send: the send button stayed disabled, so they cannot retry');
+	assert(
+		failedSend.actionsBottom <= failedSend.ticketBottom + 1,
+		`failed send at ${failWidth}px: the button row hangs ${Math.round(failedSend.actionsBottom - failedSend.ticketBottom)}px below the ticket`
+	);
+	assert(
+		failedSend.fieldsetBottom <= failedSend.formBottom + 1,
+		`failed send at ${failWidth}px: the step overflows its form by ${Math.round(failedSend.fieldsetBottom - failedSend.formBottom)}px`
+	);
+	assert(
+		failedSend.heldAnimations === 0,
+		`failed send at ${failWidth}px: ${failedSend.heldAnimations} finished animation(s) still hold the form's box`
+	);
+	}
 	apiStub.status = 200;
 	apiStub.body = { ok: true };
 

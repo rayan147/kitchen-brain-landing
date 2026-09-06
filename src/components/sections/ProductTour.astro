@@ -208,25 +208,37 @@ import SageIcon from '../SageIcon.astro';
   producer and one render path, so direct calls are the honest description.
 -->
 <script>
-	const root = document.querySelector('[data-tour]');
-	if (root instanceof HTMLElement) {
-		// These are typed because `astro check` type-checks a bundled <script> and
-		// does not type-check an `is:inline` one. This block was inline until the
-		// CSP fix, so twenty-two real type errors in it were never once reported.
+	/**
+	 * TYPED BECAUSE IT IS BUNDLED. This block moved from is:inline to a bundled
+	 * script so the CSP would stop blocking it, and a bundled script is
+	 * typechecked. Untyped queries returned Element, so every .dataset, .value,
+	 * .hidden and .disabled below was an error and `astro check` reported 22 of
+	 * them. Generics on the queries and one guard for the controls fix all of
+	 * them at the source. No behaviour changed here: same elements, same calls,
+	 * same order.
+	 */
+	const root = document.querySelector<HTMLElement>('[data-tour]');
+	const select = root?.querySelector<HTMLSelectElement>('[data-tour-select]') ?? null;
+	const previous = root?.querySelector<HTMLButtonElement>('[data-tour-prev]');
+	const next = root?.querySelector<HTMLButtonElement>('[data-tour-next]');
+	const progress = root?.querySelector<HTMLElement>('[data-tour-progress]');
+	const progressBar = root?.querySelector<HTMLElement>('[data-tour-progress-bar]');
+
+	// The select is genuinely optional: it is the mobile control and is absent
+	// above the breakpoint. Everything else is required for the tour to run at
+	// all, so one guard here replaces a null check at every use below.
+	if (root && previous && next && progress && progressBar) {
 		const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-tour-tab]'));
 		const scenes = Array.from(root.querySelectorAll<HTMLElement>('[data-tour-scene]'));
 		const stopIds = scenes.map((scene) => scene.dataset.stopId);
 		const stopLabels = scenes.map((scene) => scene.dataset.stopLabel);
-		const select = root.querySelector<HTMLSelectElement>('[data-tour-select]');
-		const previous = root.querySelector<HTMLButtonElement>('[data-tour-prev]');
-		const next = root.querySelector<HTMLButtonElement>('[data-tour-next]');
-		const progress = root.querySelector<HTMLElement>('[data-tour-progress]');
-		const progressBar = root.querySelector<HTMLElement>('[data-tour-progress-bar]');
 		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 		let current = 0;
-		let activeSceneTransition: ViewTransition | undefined;
+		// Structural rather than the ViewTransition lib type: this only ever needs
+		// the two members it uses, and the API is still behind a feature check.
+		let activeSceneTransition: { skipTransition: () => void; finished: Promise<unknown> } | undefined;
 
-		const renderStop = (requestedIndex: number, moveFocus = false) => {
+		const renderStop = (requestedIndex: number, moveFocus = false): void => {
 			const index = Math.max(0, Math.min(tabs.length - 1, requestedIndex));
 			current = index;
 			tabs.forEach((tab, tabIndex) => {
@@ -235,17 +247,17 @@ import SageIcon from '../SageIcon.astro';
 			});
 			scenes.forEach((scene, sceneIndex) => { scene.hidden = sceneIndex !== index; });
 			if (select) select.value = String(index);
-			if (previous) previous.disabled = index === 0;
-			if (next) next.textContent = index === tabs.length - 1 ? 'Finish the tour' : `Next: ${stopLabels[index + 1]}`;
-			if (progress) progress.textContent = `Stop ${index + 1} of ${tabs.length}: ${stopLabels[index]}`;
-			progressBar?.style.setProperty('--tour-progress-scale', String((index + 1) / tabs.length));
+			previous.disabled = index === 0;
+			next.textContent = index === tabs.length - 1 ? 'Finish the tour' : `Next: ${stopLabels[index + 1]}`;
+			progress.textContent = `Stop ${index + 1} of ${tabs.length}: ${stopLabels[index]}`;
+			progressBar.style.setProperty('--tour-progress-scale', String((index + 1) / tabs.length));
 			history.replaceState(null, '', `#tour-${stopIds[index]}`);
 			if (moveFocus) tabs[index].focus();
 		};
 
 		// Considered State; not used because every stop follows one stable render
 		// path and differs only by data, so separate state objects would add indirection.
-		const show = (requestedIndex: number, moveFocus = false) => {
+		const show = (requestedIndex: number, moveFocus = false): void => {
 			const index = Math.max(0, Math.min(tabs.length - 1, requestedIndex));
 			if (index === current) {
 				if (moveFocus) tabs[index].focus();

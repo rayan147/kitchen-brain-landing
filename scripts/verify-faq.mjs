@@ -54,7 +54,18 @@ try {
 		}
 		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
 		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
-			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
+			const response = message.params.response;
+			const url = new URL(response.url);
+			// The Vercel analytics script only exists once deployed, so a local
+			// preview always 404s it and this suite always failed on a machine.
+			// Sixteen of the seventeen verifiers already carry this exception;
+			// this one was simply missed.
+			// Considered Strategy; not used because this is one exact local-preview
+			// exception, not a family of interchangeable request classifiers.
+			const localAnalytics404 = response.status === 404 &&
+				(url.hostname === '127.0.0.1' || url.hostname === 'localhost') &&
+				url.pathname === '/_vercel/insights/script.js';
+			if (!localAnalytics404) failedRequests.push(`${response.status} ${response.url}`);
 		}
 	});
 
@@ -104,13 +115,21 @@ try {
 			disclosureCount: document.querySelectorAll('.faq-page details').length,
 			overflow: document.documentElement.scrollWidth - innerWidth,
 			minTarget: Math.min(...scopedActions.map((action) => action.getBoundingClientRect().height)),
-			activeNav: document.querySelector('a[href="/faq"][aria-current="page"]')?.textContent.trim(),
+			// Two links point at /faq and both are marked current: the header item,
+			// whose label is exactly "FAQ", and the Resources mega-menu item, whose
+			// text is the title followed by its description. querySelector returned
+			// whichever came first in the DOM, so this asserted the mega-menu's
+			// paragraph and failed. What matters is that the header entry is marked,
+			// so look for it among all of them rather than at whichever is first.
+			activeNav: [...document.querySelectorAll('a[href="/faq"][aria-current="page"]')]
+				.map((link) => link.textContent.trim())
+				.find((label) => label === 'FAQ'),
 			chapters: ['money', 'fit', 'how', 'start'].every((id) => document.getElementById(id)),
 			contract: document.documentElement.innerHTML.includes('faq-answer-sheet')
 		};
 	})()`);
 	assert(desktop.title === 'Know the catch before you hand over the card.', 'desktop: page identity is missing');
-	assert(desktop.entryCount === 34, `desktop: expected 34 answers, received ${desktop.entryCount}`);
+	assert(desktop.entryCount === 35, `desktop: expected 35 answers, received ${desktop.entryCount}`);
 	assert(desktop.disclosureCount === 0, `desktop: found ${desktop.disclosureCount} hidden disclosures`);
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
@@ -165,7 +184,7 @@ try {
 		jsonLd: document.querySelector('script[type="application/ld+json"]')?.textContent.length ?? 0
 	}))()`);
 	assert(noScript.heading === 'Know the catch before you hand over the card.', 'no JavaScript: page identity is missing');
-	assert(noScript.entryCount === 34, `no JavaScript: expected 34 answers, received ${noScript.entryCount}`);
+	assert(noScript.entryCount === 35, `no JavaScript: expected 35 answers, received ${noScript.entryCount}`);
 	assert(noScript.jsonLd > 100, 'no JavaScript: FAQ structured data is missing');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

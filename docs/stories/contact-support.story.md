@@ -6,7 +6,8 @@
 - **Title / headline:** Ask about your kitchen
 - **My hero's name:** An owner-caterer on a phone, mid-shift, who has a question they will not sign up to ask
 - **Content file(s):** `src/components/sections/AskSupport.astro`, `src/pages/contact.astro`, `src/pages/contact/sent.astro`, `src/pages/contact/not-sent.astro`, `src/lib/faq.ts`
-- **Behaviour:** `api/support.ts`, `src/lib/support.ts`
+- **Behaviour:** `api/support.ts`, `src/lib/support.ts`, `src/lib/smtp.ts`
+- **Running it locally:** [contact-form-local.md](../contact-form-local.md)
 - **Mirrors:** kitchen-brain `src/lib/components/shell/SupportDialog.svelte` and `src/routes/api/support/+server.ts`
 
 ## The 11 steps
