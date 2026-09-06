@@ -106,3 +106,38 @@
 - **Word count before → after:** Initial seven-step draft 228 words → final target under 170 words.
 - **Claims removed because they couldn't be shown:** No time-saved, margin-improvement, error-reduction, or automatic-confirmation claims. The multi-event step says planning only; confirmation and purchase orders remain per order.
 - **Final Image:** You can follow one order all the way through, then see three events stay separate while the kitchen plans the run together.
+
+### 2026-09-06 revision — this section runs second
+
+Owner decision: **See it run moved from the fourth stop to the second**, so the
+footage plays before the page argues anything. The reader this page is written
+for arrives cold from an email and gives it under a minute; that minute now
+goes on the working product rather than on a diagnosis she has to take on
+faith.
+
+Step 10 consequence, the only one that touches this tracker's copy: the hand-off
+line at the foot of this section now points at **What goes wrong** rather than
+at **What it does instead**. It is looked up from `src/lib/stops.ts`, so it
+moved on its own; recorded here so the next writer does not read the old order
+into the lede.
+
+Step 6 consequence: the turn this section makes changes register. It used to
+confirm a promise the diagnosis had already set up (doubt → proof). It now makes
+the promise itself (curiosity → proof), and the diagnosis that follows reads as
+recognition rather than as setup. The lede still opens on the right footing
+("This is the working product, not a mockup"), so its argument was left alone.
+
+Step 11 consequence, the one cut the move forced: the running time came out of
+that lede. The hero's proof link says *2:30* and the play chip says *2 min 30
+sec*, and at the second stop all three sit inside a screen and a half. It is
+still stated twice, in the two places a reader looks for it. No claim left with
+it.
+
+The section regained an `h2`: its eyebrow, `See it run`. At the second stop its
+two `h3` would otherwise have been the first headings under the page `h1`. The
+heading removed earlier the same day is not restored; that line lives in the
+hero now. `check-dist.mjs` fails the build if the first heading after the `h1`
+is ever below `h2` again.
+
+Full record, including what the move voids: `docs/stories/homepage-spreadsheet-pain.story.md`
+and the note at the head of `src/pages/index.astro`.

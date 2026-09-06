@@ -92,3 +92,29 @@ The reader is holding a phone with one hand, standing up, between prep and servi
   Measured after: **320px → 795px** (clears by 49px), **390px → 671px** (clears by 173px, better than the 712px it measured *before* the line was added). `verify:homepage` passes at six viewports.
 - **Known defect shipped deliberately, on request:** removing the `<h2>` from "See it run" leaves that section's two `<h3>` following the page `<h1>` with no `<h2>` between them. This is a heading-order break against the AA floor in CLAUDE.md. It was asked for explicitly after the consequence was named. The remedy, if it is ever put back, is recorded in `SeeItRun.astro`: restore a heading there, or promote those two `<h3>` to `<h2>`.
 - Truth pass: the line makes no claim the app does not ship. The 180-guest wedding and the three-event run are both on camera in `public/demo.mp4` and both are covered by the sr-only transcript in `SeeItRun.astro`.
+
+### 2026-09-06 — the heading-order defect above is discharged
+
+The deliberate defect recorded in Step 11 no longer ships. Later the same day
+**See it run moved to the second stop**, which made the break worse rather than
+tolerable: its two `<h3>` would have been the first headings under the page
+`<h1>`, at the top of the scroll rather than three sections down.
+
+Neither remedy the note offered was taken, because a third one costs less. The
+section's amber eyebrow, `See it run`, is now its `<h2>`. Nothing changes
+visually (the `eyebrow` utility sets its own family, size, weight and colour, so
+the element renders identically), and the section is named in the same three
+words the hand-off arrows and `src/lib/stops.ts` already use.
+
+**The line this tracker is about stays in the hero.** Restoring a heading in
+`SeeItRun` would have put the same promise on screen twice, one screen apart,
+which is exactly what moving it here was meant to stop. The one-snap-per-page
+check in Step 8 is unaffected: an eyebrow promoted to `h2` adds no line to the
+page.
+
+Guarded now rather than remembered: `check-dist.mjs` fails the build if the
+first heading after the homepage `<h1>` is anything below `<h2>`. Force-failed
+before it was kept.
+
+Full record of the reorder: `docs/stories/homepage-spreadsheet-pain.story.md`
+and `docs/stories/homepage-guided-video.story.md`.

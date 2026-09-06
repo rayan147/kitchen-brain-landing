@@ -19,6 +19,44 @@ import StickyCta from '../components/StickyCta.astro';
 <!--
   One claim per scroll stop.
 
+  SEE IT RUN MOVED TO SECOND ON 2026-09-06, at the owner's request: the footage
+  now runs before the page argues anything. The reader this page is written for
+  arrives cold from an email and gives it under a minute, and the question that
+  minute is spent on is "is this a real product". Everything below that line was
+  written while the answer sat at the fourth stop.
+
+  WHAT THIS VOIDS, stated rather than left standing. The 2026-08-21 measurement
+  below traded 604px of recall distance for 1,258px of depth off the video; the
+  video is now at the top of the scroll, so that trade no longer describes the
+  page and its pixel figures are history, not the current geometry. The
+  2026-08-23 note below argues that WhoThisIsFor has to settle "is this aimed at
+  me" BEFORE the footage plays; the owner's decision reverses that ordering. The
+  two argue-then-show stops keep their order relative to each other, so the
+  problem still sets up the answers that mirror it one for one, and that pairing
+  (the one thing the sections must not lose) is untouched.
+
+  NO NEW MEASUREMENT WAS RUN for this move. It records a decision, not a number.
+  If it is ever re-litigated, the figures to take are the ones the 2026-08-21
+  note took, at 390x844 with every [data-reveal] forced revealed.
+
+  KNOWN CONSEQUENCE, StickyCta, MEASURED at 390x844 on this build with every
+  [data-reveal] forced revealed. The phone bar appears once #demo has scrolled
+  off the top and hides once #start is in view. Its rule is "the stretch where
+  the reader has no primary within reach", and that is still exactly the stretch
+  it covers; the stretch is simply longer.
+
+    Scroll range 30,488px. The bar now appears at 5,299px and hides at 27,446px:
+    22,147px, or 72.6% of the scroll.
+
+    Before the move it would have appeared at 8,745px on this same build, since
+    the only thing that changed is that #demo no longer sits behind #problem
+    (2,238px) and #who (1,208px). That is 18,701px, or 61.3%.
+
+  So the bar was already carrying most of the page. The move adds 11.3 points,
+  not a category change. The trigger is deliberately left on #demo: moving it to
+  a later section would invent a threshold nobody measured, and the rule it
+  implements has not changed.
+
   SeeItRun moved from fourth to third on 2026-08-21. SETTLED BY MEASUREMENT at
   390x844, so nobody has to re-litigate it:
 
@@ -119,9 +157,9 @@ import StickyCta from '../components/StickyCta.astro';
 -->
 <Base>
 	<Hero />
+	<SeeItRun />
 	<TheProblem />
 	<WhoThisIsFor />
-	<SeeItRun />
 	<CustomerOutcomes />
 	<TheYield />
 	<NutritionFacts />

@@ -123,23 +123,50 @@ const moments = [
 		</ol>
 		</div>
 
+		<!-- READ AS A GUIDE SINCE 2026-09-06, at the owner's request: the block was
+		     three stacked paragraphs and a reader could not say what the issue WAS
+		     without reading all of them. It now states the shape once, names the two
+		     failures as two labelled rows the eye can land on, and ends on the rule.
+		     Shorter than what it replaces, and no new claim.
+
+		     THE ROWS ARE <p>, NOT <h3>, ON PURPOSE. check-dist.mjs reads every <h3>
+		     inside #problem as one of the four pains and pairs them with the four
+		     answers in CustomerOutcomes; a heading here would make that list six and
+		     unpair it. They also sit side by side rather than stacked, so the pair
+		     does not read as a continuation of the four tickets above.
+
+		     RC-20 is about a fact that is ABSENT. Nothing here may widen to a number
+		     that is present and merely wrong: neither tool sees that one. -->
 		<div class="wrong-not-slow" data-reveal>
 			<p class="eyebrow">And the quiet one</p>
 			<p class="mt-4 max-w-[72ch] text-lede text-ink-soft">
-				Those four are the slow ones. The one that costs money is quieter than any of them.
+				Those four are the slow ones. The one that costs money is quieter. A sheet totals
+				what is in it, so a missing fact does not stop the number. It shrinks it.
 			</p>
-			<p class="mt-5 max-w-[72ch] text-ink-soft">
-				A sheet totals what is in it. Leave the beef blank while you wait on the invoice
-				and the plate cost still prints, short by the price of the beef, looking exactly
-				as confident as a right answer. A conversion does the same thing: the recipe is in
-				grams, the pack is in pounds, and the number bridging them was typed once by
-				somebody who is not in the kitchen today.
-			</p>
-			<p class="mt-5 max-w-[72ch] text-ink-soft">
-				Those two are not slower. They are wrong, and nothing on the screen says so.
-				CostCook stops instead. A missing price or a missing conversion holds the costing
-				and names the line it is waiting on, rather than totalling around it and handing
-				you a number.
+			<ul role="list" class="quiet-pair">
+				<li>
+					<p class="font-mono text-eyebrow font-semibold uppercase tracking-wide text-ink">
+						A price you have not got yet
+					</p>
+					<p class="mt-2 text-sm leading-relaxed text-ink-soft">
+						The beef is blank while you wait on the invoice. The plate cost still prints,
+						short by the beef and looking just as confident as a right answer.
+					</p>
+				</li>
+				<li>
+					<p class="font-mono text-eyebrow font-semibold uppercase tracking-wide text-ink">
+						A conversion nobody checked
+					</p>
+					<p class="mt-2 text-sm leading-relaxed text-ink-soft">
+						The recipe is in grams, the pack is in pounds, and whoever typed the number
+						between them is not in the kitchen today.
+					</p>
+				</li>
+			</ul>
+			<p class="mt-8 max-w-[72ch] text-ink-soft">
+				Neither is slower. They are wrong, and the screen does not say so. CostCook stops
+				instead. A missing price or a missing conversion holds the costing and names the
+				line it is waiting on.
 			</p>
 		</div>
 
@@ -154,6 +181,29 @@ const moments = [
 	.wrong-not-slow {
 		margin-top: clamp(2.5rem, 6vw, 4rem);
 		padding-top: 2rem;
+		border-top: 1px solid var(--color-ticket-rule);
+	}
+
+	/* The two quiet failures, side by side under their own hairlines. Two
+	   columns rather than a stack so the pair reads as one aside, not as a
+	   fifth and sixth ticket; one column on a phone, where side by side would
+	   leave each row too narrow to hold a sentence. */
+	.quiet-pair {
+		display: grid;
+		gap: 1.75rem;
+		margin-top: 2rem;
+		max-width: 76ch;
+	}
+
+	@media (min-width: 40rem) {
+		.quiet-pair {
+			grid-template-columns: 1fr 1fr;
+			gap: 2.5rem;
+		}
+	}
+
+	.quiet-pair > li {
+		padding-top: 0.875rem;
 		border-top: 1px solid var(--color-ticket-rule);
 	}
 </style>

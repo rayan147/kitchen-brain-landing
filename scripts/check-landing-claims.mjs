@@ -266,15 +266,16 @@ requireText(contactPage, 'demoCta.href', 'contact demo action');
 requireText(askSupportSource, 'Do not include passwords, payment card details', 'contact safety copy');
 requireText(await read('src/layouts/Base.astro'), 'import.meta.env.PROD', 'deployment-only analytics');
 
-// Ten stops, one claim each. SeeItRun sits ahead of CustomerOutcomes so the
-// cold visitor settles "is this real" before being asked to believe outcomes,
-// and WhoThisIsFor sits ahead of SeeItRun so the reader has settled "is this
-// aimed at me" before the footage plays.
+// Ten stops, one claim each. SeeItRun sits SECOND since 2026-09-06, at the
+// owner's request: the footage runs before the page argues anything, so a
+// reader arriving cold from an email settles "is this real" on the first
+// scroll instead of on the fourth. TheProblem and WhoThisIsFor keep their
+// order relative to each other and still land before the answers they set up.
 const expectedSectionOrder = [
 	'<Hero />',
+	'<SeeItRun />',
 	'<TheProblem />',
 	'<WhoThisIsFor />',
-	'<SeeItRun />',
 	'<CustomerOutcomes />',
 	'<TheYield />',
 	// Seventh since 2026-08-29: recipe-level, after yield, before intake.
@@ -617,9 +618,9 @@ for (let claim = 1; claim <= 57; claim += 1) {
 const stopsSource = await read('src/lib/stops.ts');
 const stopIds = [...stopsSource.matchAll(/\{ id: '([a-z]+)'/g)].map((m) => m[1]);
 const expectedStopIds = [
+	'demo',
 	'problem',
 	'who',
-	'demo',
 	'outcomes',
 	'yield',
 	'nutrition',
