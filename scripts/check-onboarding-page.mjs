@@ -68,19 +68,39 @@ for (const text of ['Add one supplier', 'Review the food facts', 'Answer every i
 	requireText(text, `stage done-when line from SETUP_STAGE_GUIDE (${text})`);
 }
 
-// RC-58: the three doors into stage two. The row's verification step says the
-// ledger moves before the page does when a door is added or removed, and this
-// is what makes that true. The gate sentence is pinned with them: naming the
-// doors without the staging rule would be the overclaim RC-55 forbids.
-const doorRows = (html.match(/class="fd-door-lead"/g) ?? []).length;
-if (doorRows !== 3) failures.push(`expected 3 rendered stage-two doors, received ${doorRows}`);
+// Every stage is a walkthrough: the screen's own heading, what to have ready,
+// and the taps in order (Krug: the reader never works out what the next
+// screen wants). Five screen lines, five have-ready lines, five tap lists.
+const screenLines = (html.match(/class="fd-stage-k"[^>]*>On screen</g) ?? []).length;
+if (screenLines !== 5) failures.push(`expected 5 on-screen lines, received ${screenLines}`);
+const haveLines = (html.match(/class="fd-stage-k"[^>]*>Have ready</g) ?? []).length;
+if (haveLines !== 5) failures.push(`expected 5 have-ready lines, received ${haveLines}`);
+const tapLists = (html.match(/class="fd-stage-steps"/g) ?? []).length;
+if (tapLists !== 5) failures.push(`expected 5 tap lists, received ${tapLists}`);
+for (const text of ['Identify your kitchen', 'Review food facts', 'Build your first dish', 'Cost your first order']) {
+	requireText(text, `stage screen heading from SETUP_STAGE_GUIDE (${text})`);
+}
+// RC-58: the three choices stage two opens on and the two at stage four, by
+// the app's own labels, with the upload control and the staging gate they
+// end at (RC-09, RC-39). Naming the upload without the gate would be the
+// overclaim RC-55 forbids.
 for (const [text, label] of [
-	['An invoice or a price sheet.', 'the invoice door (RC-58)'],
-	['An ingredient list.', 'the ingredient-list door (RC-58)'],
-	['The form.', 'the manual door (RC-58)'],
-	['is written to your catalog', 'the staging gate the doors end at (RC-09)'],
+	['Import an invoice or price sheet', 'the invoice choice (RC-58)'],
+	['Import an ingredient list', 'the ingredient-list choice (RC-58)'],
+	['Add ingredients manually', 'the manual choice (RC-58)'],
+	['Choose files', 'the dropzone control (RC-58)'],
+	['Build with Sage', 'the stage-four Sage choice (RC-58)'],
+	['Build the dish by hand', 'the stage-four manual choice (RC-58)'],
+	['is written to your kitchen until you confirm it', 'the staging gate the uploads end at (RC-09)'],
 	['quoted back to you rather than guessed at', 'the unreadable-is-not-guessed boundary (RC-39)']
 ]) requireText(text, label);
+// Part 1 tells the reader what to have within reach: the invoice and the
+// recipe, before the phone. Three rows, in that order.
+const haveReady = (html.match(/class="fd-doors-list fd-have"/g) ?? []).length;
+if (haveReady !== 1) failures.push(`expected the have-ready list once, received ${haveReady}`);
+for (const text of ['One invoice from the supplier', 'The recipe for one dish']) {
+	requireText(text, `have-ready row (${text})`);
+}
 
 const guardLines = (html.match(/<li[^>]*>[^<]*(?:does not go on|density|progress resets|button retries)/g) ?? []).length;
 if (guardLines !== 4) failures.push(`expected 4 rendered guard lines, received ${guardLines}`);

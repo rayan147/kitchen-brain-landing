@@ -25,11 +25,11 @@
 
 ### Step 1 — The Idea
 
-> An owner-caterer who wants to know whether CostCook is worth one evening, but believes she has to enter her entire walk-in first, and even if she gets one dish in, cannot picture the day her crew uses it without her.
+> An owner-caterer who wants to know whether CostCook is worth one evening, but believes she has to type her entire walk-in in first, has never been told that the invoice in her folder and the recipe card on the shelf are the data, and even if she gets one dish in, cannot picture the day her crew uses it without her.
 
 ### Step 2 — Your Character
 
-- **Want:** Know what setup will cost her in time, and what she is supposed to do the morning after.
+- **Want:** Know what setup will cost her in time, what she needs in her hand before she presses Start, and what she is supposed to do the morning after.
 - **Need:** One real number out of her own kitchen, and a Shop list her crew can work from without her standing over them.
 - **Wound:** The last tool wanted her whole catalog before it did anything. The one before that she set up alone, and nobody else ever logged in.
 - **Flaw:** She judges software by how much it asks of her up front, so she never gets far enough to find out whether it works, and she assumes rolling it out to the crew is her job alone.
@@ -43,9 +43,9 @@
 | 3 Set-Up | Every tool before this wanted the whole catalog first, and every one was set up alone. |
 | 4 Catalyst | She opens the app. Empty kitchen, and the old dread: where do I even start. |
 | 5 Debate | "I do not have a week for data entry." "Even if I do it, then what?" "My crew will never use it." |
-| 6 Break into Two | The guide opens on a question, not a form. One dish. |
+| 6 Break into Two | The guide opens on a question, not a form. One dish, and the two pieces of paper she already has: an invoice and a recipe. |
 | 7 B Story | The roast chicken plate she has cooked four hundred times. Her own knowledge is the data. |
-| 8 Fun and Games | Five stages, each asking for the next thing that one dish needs. |
+| 8 Fun and Games | Five stages walked tap by tap in the app's own labels. Two of them are uploads: photograph the invoice, photograph the recipe, confirm what came back. |
 | 9 Midpoint | $1.62. The plate cost, with the case price and the trim beside it. |
 | 10 Bad Guys Close In | The guards: blank price, wrong unit, Start over, wifi drop. Then the harder one: "Your kitchen is ready", and she is alone on the completion screen. |
 | 11 All Is Lost | The alternative is another season where the number in her head and the number on the invoice differ, and the crew works from a text message. |
@@ -56,8 +56,8 @@
 | § | Section | id | Beats | Value turn |
 |---|---------|----|-------|------------|
 | 0 | Hero: You do not need to enter your whole walk-in | — | 1–2 | wall → doorway, with a map of three parts |
-| 1 | Part 1 · Before you start | `before` | 3–6 | vague dread → named fear → one optional question |
-| 2 | Part 2 · The five stages | `stages` | 7–10 | vague → concrete → checkable → tested |
+| 1 | Part 1 · Before you start | `before` | 3–6 | vague dread → two pieces of paper within reach → one optional question |
+| 2 | Part 2 · The five stages | `stages` | 7–10 | "I will be typing all night" → screen name, have ready, numbered taps → checkable → tested |
 | 3 | Part 3 · After setup: where the app leaves you | `after` | 10 | done → next action named |
 | 3b | The rest of your menu | `after-menu` | 12 | "now the other 40 dishes by hand" → same doors, staged review |
 | 3c | The rest of your crew | `after-crew` | 12 | "I roll this out alone" → a link, no password, a list waiting |
@@ -65,15 +65,15 @@
 
 ### Step 5 — Character Voices
 
-- **Reader's words:** my whole walk-in, a week of data entry, where do I start, one dish, what I actually pay, case, trim, per head, the number in my head, then what, my crew, roll it out, who can see the costs, one login for everyone.
-- **Product voice (from the app's own setup copy, `stage-guide.ts`):** honest, warm, unhurried. Sentences that are facts about the costed chain, never descriptions of a screen.
+- **Reader's words:** my whole walk-in, a week of data entry, where do I start, do I really type all this, the invoice is in the folder, the recipe is on a card, one dish, what I actually pay, case, trim, per head, the number in my head, then what, my crew, roll it out, who can see the costs, one login for everyone.
+- **Product voice (from the app's own setup copy, `stage-guide.ts`, and its buttons):** honest, warm, unhurried. In Part 2 the voice holds the reader's hand: every screen by its own heading, every control by its own label in quotes, every stage with a "have ready" and a "done when". It assumes the reader has never seen the app.
 - **Banned:** seamless, effortless, powerful, instantly, in one click, and the three the claim guard fails the build on — "no data entry", "nothing is re-keyed", "handles it automatically". Any duration ("set up in 20 minutes") is banned too: no artifact supports one. Also banned: custom role, permission, automatically, extracts, reads it correctly, roll out in a day.
 
 ### Step 6 — Dialogue (McKee): the turn in each section
 
 - §0 "This will want everything I have" → "It wants one dish, and here are the three questions this page answers."
-- §1 "I am bad at this" → "The empty screen is the problem, and it asks one optional question."
-- §2 "Five stages sounds like a week" → "Five stages is one dish's worth of facts, and I can check the number."
+- §1 "I am bad at this, and I will be typing all night" → "Have the invoice and the recipe within reach. You confirm what it read; you do not type it."
+- §2 "Five stages sounds like a week" → "Two of them are uploads, here is every tap by name, and I can check the number."
 - §3 "It says ready. Now what?" → "It names the next screen: the shopping list."
 - §3b "So I key the other forty dishes by hand" → "Same doors as the first: paper in, staged facts back, my last word on every line."
 - §3c "Rolling this out is on me" → "Two emails, two links, no passwords, and they land on a list, not an empty kitchen."
@@ -84,7 +84,7 @@
 - **Intention:** Find out whether this is worth one evening.
 - **Obstacle:** She believes she has to enter everything before it does anything.
 - **Headline:** You do not need to enter your whole walk-in.
-- **Subhead:** Setup asks for one dish you already cook and takes about fifteen minutes. Four stages in, it prints that dish's plate cost with the arithmetic beside it. This page also says what comes after, and how the rest of your kitchen gets in.
+- **Subhead:** Setup asks for one dish you already cook and takes about fifteen minutes. You do not type its ingredients in: you upload one invoice and one recipe, as a photo or a PDF, and confirm what CostCook read. Four stages in, it prints that dish's plate cost with the arithmetic beside it. This page walks every screen, then says what comes after, and how the rest of your kitchen gets in.
   (The subhead first read "Five stages later it prints that dish's plate cost",
   which contradicted §4's hand-off, "Stage four ends on a number." The dish is
   costed at stage four; stage five is the menu, the date and the shopping list.
@@ -97,7 +97,7 @@
 ### Step 9 — Bringing a Scene to Life
 
 - **Where they are:** §2. The office corner of her own kitchen, laptop on stainless, walk-in humming behind her.
-- **What they see / hear / feel:** The last tool's half-filled spreadsheet still on the desktop. An empty kitchen on screen with nothing in it. Forty minutes left before she stops making sense.
+- **What they see / hear / feel:** The last tool's half-filled spreadsheet still on the desktop. An empty kitchen on screen with nothing in it. The supplier's invoice in the folder by the phone and the recipe card on the shelf, both of which she was about to retype. Forty minutes left before she stops making sense.
 - **Time of day:** Nine at night, after service.
 
 ### Step 10 — Connecting Your Scenes
@@ -105,7 +105,7 @@
 - **POV:** Second person, "you". Locked. No first-person founder voice on this page; `BuiltForKitchens` owns that register.
 - **Hand-off lines:**
   - §0 → §1: the map's first row, "Before you start".
-  - §1 → §2: "Those answers are optional. These five are the work."
+  - §1 → §2: "Those answers take a minute. These five stages are the work, and here is every tap."
   - §2 → §3: "Stage five ends on a screen that says your kitchen is ready. Here is what it offers next."
   - §3 → §3b: "The first dish was the hard one. The rest come in the same way."
   - §3b → §3c: "A catalog nobody else opens is a spreadsheet with a login. This is how the crew gets one."
@@ -216,3 +216,29 @@
   1440x900, 390x844 and 200% text: zero horizontal overflow, the three map
   anchors resolve, the Part 3 label passes the trunk test after an anchor
   scroll on both viewports, and the smallest route action is at least 44px.
+- **The upload, said plainly (revision, 2026-09-06, owner direction):** the
+  owner read the page against `kitchen-brain-develop-demo` and named the
+  failure: the guide never states that you upload a file, so a reader arrives
+  expecting to type her kitchen in, and the page assumed she already knew the
+  app. Both were true. The "three doors" block was a metaphor for a button
+  labelled "Import an invoice or price sheet", and every stage row described
+  the FACTS a stage wants ("what you buy, how big the pack is, what it costs")
+  as if she would enter them. Part 1 is now "have these two pieces of paper
+  within reach" and Part 2 is a hand-holding walkthrough: each stage carries
+  the screen's own heading (`SETUP_STAGE_GUIDE[...].title`), a "have ready"
+  line, the taps in order with every control quoted by its label
+  (`SetupChoiceCard` titles, `ImportDropzone` "Choose files" / "Paste text
+  instead" / "Paste a link", `ImportProgressStages` "Uploading / Reading
+  document / Preparing review", the review route's "Review extracted
+  records", `SetupImportShell` "Back to Ingredients", `SetupKitchenStage`
+  "Save and continue", `SetupFoodFactsReview` "Skip for now"), and the app's
+  own done marker. The claim boundary moved with the owner's authority and is
+  recorded in RC-58: the upload is a route fact and the deployed app runs a
+  real provider (`docs/provisioning.md`), so the page may say upload and
+  confirm; it may still not say how complete or correct a read is, and it may
+  not say typing is gone, because a line the read could not resolve is quoted
+  back for her to type (RC-39). The regex that failed the build on "upload"
+  beside "invoice" was replaced by regexes that fail on completeness and
+  accuracy, and the built-page contract pins every quoted label.
+- **Still one snap line.** The walkthrough is deliberately unquotable; the
+  $1.62 keeps the page's only snap.

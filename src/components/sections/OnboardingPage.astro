@@ -3,44 +3,106 @@ import { cta } from '../../lib/site';
 
 // Considered Template Method and Strategy for the three parts; not used
 // because the parts are one fixed composition with no runtime variation.
-// The stage, door, guard and after-setup tables are data, not a variant
+// The stage, guard and after-setup tables are data, not a variant
 // hierarchy.
 
 /**
- * The five stages, in the app's own labels (`SETUP_STAGE_LABELS` and
- * `SETUP_STAGE_GUIDE` in kitchen-brain `src/lib/features/onboarding/`). A
- * reader who starts must recognise every screen by the name used here, so
- * these strings track the app, never a nicer paraphrase.
+ * What the reader should have within reach before pressing Start. Read off
+ * `sandbox/demo` on 2026-09-06: stage two opens on "Import an invoice or
+ * price sheet" and stage four on "Build with Sage", and both take a photo
+ * or a PDF (`ImportDropzone.svelte` accepts jpeg, png, webp, pdf, csv, xlsx,
+ * docx). The point of this list is Krug's: the reader should never have to
+ * work out what the next screen wants from them.
+ */
+const haveReady = [
+	{
+		lead: 'One invoice from the supplier you buy the most from.',
+		body: 'A photo of the paper is fine. So is the PDF they emailed you. A price sheet works the same way.'
+	},
+	{
+		lead: 'The recipe for one dish you know well.',
+		body: 'The card, a photo of the card, a PDF, a link to it, or the text. It does not need to be tidy.'
+	},
+	{
+		lead: 'Your phone, or the laptop you are reading this on.',
+		body: 'Setup works on either. The photo can come straight off the phone.'
+	}
+] as const;
+
+/**
+ * The five stages, in the app's own labels (`SETUP_STAGE_LABELS`) with the
+ * screen heading each one opens on (`SETUP_STAGE_GUIDE[...].title`), the
+ * exact controls the reader taps, and the app's own last checkmark. Every
+ * quoted label is read off `sandbox/demo` `src/routes/setup/+page.svelte`,
+ * `src/lib/components/setup/*`, and `src/lib/components/import/*` on
+ * 2026-09-06. A reader who starts must recognise every screen and button by
+ * the name used here, so these strings track the app, never a nicer
+ * paraphrase.
  */
 const stages = [
 	{
 		n: '1',
 		label: 'Kitchen and suppliers',
-		body: 'Your kitchen’s name, one supplier so prices have a buying source, and the food-cost target every plate is judged against.',
+		screen: 'Identify your kitchen',
+		have: 'The name of the supplier you buy the most from. A name is enough.',
+		steps: [
+			'Check the business name. It is the one you gave at sign-up, so this line is already ticked.',
+			'Set the target food-cost percentage: the share of a selling price food should take. 30 means a $10 plate should carry $3 of food.',
+			'Type the supplier’s name under “Supplier name”, then tap “Save and continue”. The invoice you upload next fills in the rest of that supplier for you.'
+		],
 		done: 'Add one supplier'
 	},
 	{
 		n: '2',
 		label: 'Ingredients',
-		body: 'The ingredients of that one dish: what you buy, how big the pack is, what it costs, and what survives the knife. On an empty kitchen this stage opens on three doors, and only one of them is a form.',
+		screen: 'Add the ingredients for your dish',
+		have: 'The invoice. You do not type its lines in.',
+		steps: [
+			'The screen opens on three choices. Tap the first one, “Import an invoice or price sheet”.',
+			'Tap “Choose files” and pick the photo or the PDF. On a phone that opens your camera roll. There is also “Paste text instead”.',
+			'Wait while the screen says “Uploading”, then “Reading document”, then “Preparing review”. This takes a moment, not an evening.',
+			'On “Review extracted records”, read what came back: the supplier, and each line with its pack, size and price. Change anything that is wrong. A line CostCook could not read is quoted back to you exactly as it appeared, for you to fill in.',
+			'Confirm the lines. Nothing is written to your kitchen until you do. Then tap “Back to Ingredients” and your list is there, each ingredient with a usable cost beside it.'
+		],
+		aside: 'No invoice handy? The second choice, “Import an ingredient list”, takes a spreadsheet or a typed list. The third, “Add ingredients manually”, is the form, one ingredient at a time. It is the fallback, not the plan.',
 		done: 'Review the food facts CostCook found'
 	},
 	{
 		n: '3',
 		label: 'Food facts',
-		body: 'Nutrition, allergens and diet facts, drafted where CostCook could and yours to confirm. Skip one you are unsure of and every order using it reads “check”, never “clear”.',
+		screen: 'Review food facts',
+		have: 'Nothing new. The pack labels help if you want to check a “may contain”.',
+		steps: [
+			'CostCook has already drafted each ingredient’s nutrition match, allergens and diet facts where it could. Your job is to confirm them, one ingredient at a time.',
+			'For each allergen, tap one chip: contains, may contain, free from, or don’t know. Tick the diet facts that apply: animal product, meat, pork, shellfish, alcohol. Then save.',
+			'Not sure about one? Tap “Skip for now”. Every order that uses it will read “check”, never “clear”.'
+		],
 		done: 'Answer every ingredient once'
 	},
 	{
 		n: '4',
 		label: 'Recipes',
-		body: 'The dish itself: its lines in costing units, and how many portions the batch makes.',
+		screen: 'Build your first dish',
+		have: 'The recipe. Again, you do not type it in.',
+		steps: [
+			'The screen asks how you want to build your first dish. Tap “Build with Sage”.',
+			'Tap “Choose files” and pick the photo of the card or the PDF. Or “Paste text instead”, or “Paste a link”.',
+			'Read the draft that comes back: the dish name, its lines and amounts. Each line is matched to an ingredient from stage two, and where the match is unsure the row asks you to confirm it.',
+			'Create the recipe. The stage now shows your dish with its plate cost, and “Review dish” opens the arithmetic behind it.'
+		],
+		aside: 'Or tap “Build the dish by hand” and type the lines yourself. Best when you know the amounts by heart.',
 		done: 'Check the plate cost'
 	},
 	{
 		n: '5',
 		label: 'Menu and first order',
-		body: 'A date and a guest count. The order becomes shopping, prep, packing, and a food-cost result.',
+		screen: 'Cost your first order',
+		have: 'A date and a guest count. Real ones or a guess, either works.',
+		steps: [
+			'The menu is already named after your dish and already holds it. Leave the menu name or change it.',
+			'Fill in “Client or event”, “Event date” and “Guests”. A per-guest price is optional; add one and the order is judged against your target.',
+			'Cost the order. It becomes a shopping list, a prep list, a pack list, and a food-cost result for the event.'
+		],
 		done: 'Add guests and a date, then cost the order'
 	}
 ] as const;
@@ -55,7 +117,7 @@ const parts = [
 		n: '1',
 		id: 'before',
 		label: 'Before you start',
-		done: 'Done when you know it wants one dish, not your walk-in.'
+		done: 'Done when one invoice and one recipe are within reach.'
 	},
 	{
 		n: '2',
@@ -68,30 +130,6 @@ const parts = [
 		id: 'after',
 		label: 'After setup',
 		done: 'Done when the next dish and the first teammate are in.'
-	}
-] as const;
-
-/**
- * The three doors stage two opens on, read off `sandbox/demo`
- * `src/routes/setup/+page.svelte` on 2026-09-06: with `data.ingredients.length
- * === 0` the stage renders `SetupChoiceCard`s for `/import?kind=invoice`,
- * `/import?kind=ingredients`, and the manual dialog. The claim here is the
- * DOOR and the review gate, never what extraction returns: RC-55 pins
- * `IMPORT_AI_PROVIDER: 'stub'` at both test layers, so no page may promise a
- * document read correctly. RC-09 carries the staging rule these lines rest on.
- */
-const doors = [
-	{
-		lead: 'An invoice or a price sheet.',
-		body: 'The paperwork your supplier already sent you. It goes to the same review screen the rest of CostCook uses, beside the original, so a doubtful line is checked against the paper and not against memory.'
-	},
-	{
-		lead: 'An ingredient list.',
-		body: 'A spreadsheet or a typed list. It arrives as one review batch rather than one form, one ingredient, one evening.'
-	},
-	{
-		lead: 'The form.',
-		body: 'Still here, and best when you know that one dish and its pack prices by heart. It is the fallback, not the assumption.'
 	}
 ] as const;
 
@@ -119,7 +157,7 @@ const guards = [
  * Part 3. Every line read off `sandbox/demo` on 2026-09-06.
  * 3a: `src/lib/components/setup/SetupCompletionSummary.svelte`.
  * 3b: the import queue (RC-38, RC-39), Sage's recipe door (RC-58), later
- *     prices (RC-08). Nothing about what extraction returns (RC-55 stub).
+ *     prices (RC-08). Nothing about how accurate a read is (RC-55).
  * 3c: `src/routes/settings/team/+page.svelte` and `+page.server.ts`
  *     (`INVITED_ROLE = 'STAFF'`), RC-52. No role behaviour beyond that row.
  */
@@ -132,8 +170,8 @@ const completion = {
 
 const menuTrack = [
 	{
-		lead: 'Same doors as the first dish.',
-		body: 'One queue takes a photo, a PDF, a spreadsheet, a Word document or pasted text, and comes back as staged facts for you to confirm. What it could not read is quoted back as it appeared, never guessed.'
+		lead: 'The same way the first dish came in.',
+		body: 'Upload, then confirm. One queue takes a photo, a PDF, a spreadsheet, a Word document or pasted text, and comes back as staged facts for you to confirm. What it could not read is quoted back as it appeared, never guessed.'
 	},
 	{
 		lead: 'A recipe card goes to Sage.',
@@ -172,9 +210,11 @@ const crewTrack = [
 				<p class="eyebrow">Your initial setup</p>
 				<h1 id="fd-heading" class="feature-display">You do not need to enter your whole walk-in.</h1>
 				<p class="fd-lede">
-					Setup asks for one dish you already cook and takes about fifteen minutes.
-					Four stages in, it prints that dish&rsquo;s plate cost with the arithmetic beside it.
-					This page also says what comes after, and how the rest of your kitchen gets in.
+					Setup asks for one dish you already cook and takes about fifteen minutes. You do not
+					type its ingredients in: you upload one invoice and one recipe, as a photo or a PDF,
+					and confirm what CostCook read. Four stages in, it prints that dish&rsquo;s plate cost
+					with the arithmetic beside it. This page walks every screen, then says what comes
+					after, and how the rest of your kitchen gets in.
 				</p>
 				<div class="fd-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
@@ -209,17 +249,35 @@ const crewTrack = [
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow fd-part-label">Part 1 of 3 &middot; Before you start</p>
-				<h2 id="fd-before-heading">The dread has a shape. Setup asks one question instead.</h2>
+				<h2 id="fd-before-heading">Have two pieces of paper within reach. That is the preparation.</h2>
 				<p>
-					You have done this before. The last tool wanted your whole catalog before it would do
-					anything, and the half-filled spreadsheet is still on the desktop.
+					You have done this before. The last tool wanted your whole catalog typed in before it
+					would do anything, and the half-filled spreadsheet is still on the desktop.
 				</p>
 				<p>
-					CostCook opens on a question, not a form: what kind of kitchen you run, what you want
-					out of it first, and the name of one dish you already cook. Every answer is optional.
-					Name the dish and the screens after it say its name back to you.
+					CostCook does not want your catalog typed in. It wants what is already written down:
+					one invoice, one recipe. Everything setup needs about your first dish is on those two,
+					and you confirm what it read instead of typing it. So before you press Start, have
+					these ready.
 				</p>
-				<p class="fd-handoff">Those answers are optional. These five are the work.</p>
+			</div>
+			<ul class="fd-doors-list fd-have" role="list" aria-label="What to have ready">
+				{haveReady.map((item) => (
+					<li>
+						<p class="fd-track-lead">{item.lead}</p>
+						<p class="fd-track-body">{item.body}</p>
+					</li>
+				))}
+			</ul>
+			<div class="fd-prose">
+				<p>
+					Sign-up asks for your kitchen&rsquo;s name and nothing else. The first screen after
+					it is a welcome with two questions: what kind of kitchen you run, and the name of one
+					dish you know well. A third asks what you most want to know, and it is optional. Name
+					the dish and every screen after says its name back to you. Then tap &ldquo;Start
+					setup&rdquo;.
+				</p>
+				<p class="fd-handoff">Those answers take a minute. These five stages are the work, and here is every tap.</p>
 			</div>
 		</div>
 	</section>
@@ -228,8 +286,13 @@ const crewTrack = [
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow fd-part-label">Part 2 of 3 &middot; The five stages</p>
-				<h2 id="fd-stages-heading">Five stages is one dish&rsquo;s worth of facts.</h2>
-				<p>Each one asks for the next thing that one dish needs, and nothing else.</p>
+				<h2 id="fd-stages-heading">Five stages is one dish&rsquo;s worth of facts, and two of them are uploads.</h2>
+				<p>
+					Each stage asks for the next thing that one dish needs, and nothing else. The five
+					stages sit down the left of the screen the whole time, ticking off as you go, and the
+					stage you are on says what it wants at the top. Below is each screen by the name it
+					carries, what to have ready, and what to tap.
+				</p>
 			</div>
 			<ol class="fd-stage-list" role="list">
 				{stages.map((stage) => (
@@ -238,32 +301,25 @@ const crewTrack = [
 							<span class="fd-stage-n" aria-hidden="true">{stage.n}</span>
 							<span class="fd-stage-label">{stage.label}</span>
 						</p>
-						<p class="fd-stage-body">{stage.body}</p>
-						<p class="fd-stage-done"><span class="fd-stage-done-k">Done when</span> {stage.done}.</p>
+						<div class="fd-stage-copy">
+							<p class="fd-stage-line"><span class="fd-stage-k">On screen</span> &ldquo;{stage.screen}&rdquo;</p>
+							<p class="fd-stage-line"><span class="fd-stage-k">Have ready</span> {stage.have}</p>
+							<ol class="fd-stage-steps">
+								{stage.steps.map((step) => <li>{step}</li>)}
+							</ol>
+							{'aside' in stage && <p class="fd-stage-aside">{stage.aside}</p>}
+							<p class="fd-stage-done"><span class="fd-stage-done-k">Done when</span> {stage.done}.</p>
+						</div>
 					</li>
 				))}
 			</ol>
-			<div class="fd-doors" data-reveal>
-				<h3 id="fd-doors-heading" class="fd-doors-heading">Stage two does not assume a keyboard.</h3>
-				<p class="fd-doors-lede">
-					The prices you need are already written down somewhere: an invoice in the folder, an
-					order guide in your inbox. On an empty kitchen, stage two opens on three doors.
-				</p>
-				<ul class="fd-doors-list" role="list" aria-labelledby="fd-doors-heading">
-					{doors.map((door) => (
-						<li>
-							<p class="fd-door-lead">{door.lead}</p>
-							<p class="fd-door-body">{door.body}</p>
-						</li>
-					))}
-				</ul>
-				<p class="fd-doors-gate">
-					Nothing that arrives through the first two doors is written to your catalog. It stays
-					staged until you confirm it, line by line, and what CostCook could not read is quoted
-					back to you rather than guessed at. Reading a document is still work. It is a different
-					kind of work from a hundred packs and a form at nine at night.
-				</p>
-			</div>
+
+			<p class="fd-doors-gate">
+				Nothing that comes in through an upload is written to your kitchen until you confirm it,
+				line by line, and what CostCook could not read is quoted back to you rather than guessed
+				at. Reading a screen of lines is still work. It is a different kind of work from a hundred
+				packs and a form at nine at night.
+			</p>
 
 			<figure class="fd-shot" data-reveal>
 				<img
@@ -280,12 +336,6 @@ const crewTrack = [
 					on an empty kitchen.
 				</figcaption>
 			</figure>
-
-			<p class="fd-doors-four">
-				Stage four has a door of its own. Hand Sage a recipe card, a photo, a PDF, pasted text or a
-				link and read the draft it makes; or build the dish by hand. Either way the dish is yours
-				before it is costed.
-			</p>
 
 			<p class="fd-sage">
 				Sage stays open beside whichever stage you are on. Its questions are the ones that
@@ -391,7 +441,7 @@ const crewTrack = [
 					a price change hurt you.
 				</figcaption>
 			</figure>
-			<p class="fd-handoff">The first dish was the hard one. The rest come in the same way.</p>
+			<p class="fd-handoff">The first dish was the hard one. The rest come in the same way: upload, then confirm.</p>
 		</div>
 	</section>
 
@@ -664,9 +714,9 @@ const crewTrack = [
 	@media (min-width: 48rem) {
 		.fd-stage {
 			display: grid;
-			grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+			grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
 			gap: 1.5rem;
-			align-items: baseline;
+			align-items: start;
 		}
 	}
 
@@ -691,29 +741,92 @@ const crewTrack = [
 		font-weight: 600;
 	}
 
-	.fd-stage-body {
-		margin: 0.4rem 0 0;
-		color: var(--color-ink-soft);
-		line-height: 1.6;
+	/* The right column of a stage row: the screen's name, what to have ready,
+	   the taps in order, then the app's own done marker. One column, read top
+	   to bottom, so a phone and a desk read the same walk. */
+	.fd-stage-copy {
+		margin-top: 0.6rem;
+		max-width: 44rem;
 	}
 
 	@media (min-width: 48rem) {
-		.fd-stage-body {
+		.fd-stage-copy {
 			margin-top: 0;
 		}
 	}
 
+	.fd-stage-line {
+		margin: 0;
+		color: var(--color-ink);
+		line-height: 1.6;
+	}
+
+	.fd-stage-line + .fd-stage-line {
+		margin-top: 0.3rem;
+	}
+
+	.fd-stage-k {
+		display: inline-block;
+		min-width: 6.5rem;
+		color: var(--color-amber-deep);
+		font-family: var(--font-body);
+		font-size: var(--text-eyebrow);
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	/* The taps, numbered the way the reader will count them on the screen.
+	   Quoted labels are the app's own; the number is amber like the stage
+	   number so the two counts read as one system. */
+	.fd-stage-steps {
+		margin: 0.9rem 0 0;
+		padding: 0;
+		list-style: none;
+		counter-reset: tap;
+	}
+
+	.fd-stage-steps li {
+		position: relative;
+		padding-left: 2rem;
+		color: var(--color-ink-soft);
+		line-height: 1.6;
+		counter-increment: tap;
+	}
+
+	.fd-stage-steps li + li {
+		margin-top: 0.55rem;
+	}
+
+	.fd-stage-steps li::before {
+		content: counter(tap);
+		position: absolute;
+		left: 0;
+		top: 0.15em;
+		width: 1.4rem;
+		color: var(--color-amber-deep);
+		font-family: var(--font-body);
+		font-size: var(--text-eyebrow);
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		letter-spacing: 0.06em;
+		text-align: right;
+	}
+
+	.fd-stage-aside {
+		margin: 0.9rem 0 0;
+		padding-left: 1rem;
+		border-left: 2px solid var(--color-softamber);
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		line-height: 1.55;
+	}
+
 	.fd-stage-done {
-		margin: 0.35rem 0 0;
+		margin: 0.9rem 0 0;
 		color: var(--color-ink);
 		font-size: var(--text-body-sm);
 		line-height: 1.5;
-	}
-
-	@media (min-width: 48rem) {
-		.fd-stage-done {
-			grid-column: 2;
-		}
 	}
 
 	.fd-stage-done-k {
@@ -754,29 +867,8 @@ const crewTrack = [
 		line-height: 1.5;
 	}
 
-	.fd-doors {
-		max-width: 46rem;
-		margin-top: 2.25rem;
-		padding: 1.4rem 1.5rem 1.5rem;
-		background: var(--color-cream);
-		border: 1px dashed var(--color-ticket-rule);
-		border-radius: 0.25rem;
-	}
-
-	.fd-doors-heading {
-		font-family: var(--font-display);
-		font-size: clamp(1.15rem, 2.4vw, 1.4rem);
-		font-weight: 600;
-		line-height: 1.25;
-		text-wrap: balance;
-	}
-
-	.fd-doors-lede {
-		margin-top: 0.6rem;
-		color: var(--color-ink-soft);
-		line-height: 1.6;
-	}
-
+	/* The dashed list is the ticket motif: Part 1's have-ready list and the two
+	   after-setup tracks share it, one semantic role, one treatment. */
 	.fd-doors-list {
 		display: grid;
 		gap: 0;
@@ -791,12 +883,10 @@ const crewTrack = [
 		border-bottom: 1px dashed var(--color-ticket-rule);
 	}
 
-	.fd-door-lead,
 	.fd-track-lead {
 		font-weight: 600;
 	}
 
-	.fd-door-body,
 	.fd-track-body {
 		margin-top: 0.25rem;
 		color: var(--color-ink-soft);
@@ -804,14 +894,8 @@ const crewTrack = [
 	}
 
 	.fd-doors-gate {
-		margin-top: 1.25rem;
-		color: var(--color-ink-soft);
-		line-height: 1.6;
-	}
-
-	.fd-doors-four {
-		max-width: 40rem;
-		margin-top: 1.75rem;
+		max-width: 44rem;
+		margin-top: 1.5rem;
 		color: var(--color-ink-soft);
 		line-height: 1.6;
 	}
@@ -1012,8 +1096,14 @@ const crewTrack = [
 		line-height: 1.5;
 	}
 
-	.fd-after-track {
+	.fd-after-track,
+	.fd-have {
 		max-width: 44rem;
+	}
+
+	.fd-have {
+		margin-top: 1.75rem;
+		margin-bottom: 1.75rem;
 	}
 
 	.fd-close {
