@@ -136,21 +136,50 @@ export default async function handler(
 		return;
 	}
 
+	const email = composeSupportEmail(supportRequest);
+	const from = process.env.EMAIL_FROM || RESEND_FROM;
+
+	// LOCAL CAPTURE FIRST, ON PURPOSE. Two knobs are required, exactly as in the
+	// app: EMAIL_TRANSPORT=smtp AND SMTP_URL. One ambient variable must never be
+	// able to reroute mail on its own, and checking this branch before Resend
+	// means a developer who has both a real key and a capture server set still
+	// captures rather than delivers. The transport itself refuses any target
+	// that is not loopback, so this cannot become a delivery path.
+	const smtpUrl = process.env.SMTP_URL;
+	if (process.env.EMAIL_TRANSPORT === 'smtp' && smtpUrl) {
+		try {
+			const { sendViaLoopbackSmtp } = await import('../src/lib/smtp.js');
+			await sendViaLoopbackSmtp(smtpUrl, {
+				from,
+				to: SUPPORT_EMAIL,
+				subject: email.subject,
+				text: email.body,
+				replyTo: supportRequest.email
+			});
+		} catch (error) {
+			console.error('support.request.failed (smtp capture)', error);
+			send(request, response, 503, { ok: false, message: SUPPORT_FAILED_MESSAGE });
+			return;
+		}
+		send(request, response, 200, { ok: true });
+		return;
+	}
+
 	const apiKey = process.env.RESEND_API_KEY;
 	if (!apiKey) {
 		// Loud on the server, honest to the visitor. A contact form that silently
 		// swallows a message is worse than one that admits it is down, because the
 		// visitor walks away believing someone will reply.
-		console.error('support.request.misconfigured: RESEND_API_KEY is not set');
+		console.error(
+			'support.request.misconfigured: set RESEND_API_KEY, or EMAIL_TRANSPORT=smtp with SMTP_URL for local capture'
+		);
 		send(request, response, 503, { ok: false, message: SUPPORT_FAILED_MESSAGE });
 		return;
 	}
 
-	const email = composeSupportEmail(supportRequest);
-
 	try {
 		const { error } = await new Resend(apiKey).emails.send({
-			from: process.env.EMAIL_FROM || RESEND_FROM,
+			from,
 			to: SUPPORT_EMAIL,
 			subject: email.subject,
 			text: email.body,
