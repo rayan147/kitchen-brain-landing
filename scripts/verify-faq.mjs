@@ -54,7 +54,18 @@ try {
 		}
 		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
 		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
-			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
+			const response = message.params.response;
+			const url = new URL(response.url);
+			// The Vercel analytics script only exists once deployed, so a local
+			// preview always 404s it and this suite always failed on a machine.
+			// Sixteen of the seventeen verifiers already carry this exception;
+			// this one was simply missed.
+			// Considered Strategy; not used because this is one exact local-preview
+			// exception, not a family of interchangeable request classifiers.
+			const localAnalytics404 = response.status === 404 &&
+				(url.hostname === '127.0.0.1' || url.hostname === 'localhost') &&
+				url.pathname === '/_vercel/insights/script.js';
+			if (!localAnalytics404) failedRequests.push(`${response.status} ${response.url}`);
 		}
 	});
 
@@ -104,7 +115,15 @@ try {
 			disclosureCount: document.querySelectorAll('.faq-page details').length,
 			overflow: document.documentElement.scrollWidth - innerWidth,
 			minTarget: Math.min(...scopedActions.map((action) => action.getBoundingClientRect().height)),
-			activeNav: document.querySelector('a[href="/faq"][aria-current="page"]')?.textContent.trim(),
+			// Two links point at /faq and both are marked current: the header item,
+			// whose label is exactly "FAQ", and the Resources mega-menu item, whose
+			// text is the title followed by its description. querySelector returned
+			// whichever came first in the DOM, so this asserted the mega-menu's
+			// paragraph and failed. What matters is that the header entry is marked,
+			// so look for it among all of them rather than at whichever is first.
+			activeNav: [...document.querySelectorAll('a[href="/faq"][aria-current="page"]')]
+				.map((link) => link.textContent.trim())
+				.find((label) => label === 'FAQ'),
 			chapters: ['money', 'fit', 'how', 'start'].every((id) => document.getElementById(id)),
 			contract: document.documentElement.innerHTML.includes('faq-answer-sheet')
 		};
