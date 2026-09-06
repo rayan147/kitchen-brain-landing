@@ -41,10 +41,14 @@ function appOrigin(configuredOrigin: string | undefined): string {
 }
 
 /** The one CTA, referenced everywhere it appears so its label and destination cannot drift. */
+// Every link into the app derives from this one origin so a local override
+// (PUBLIC_APP_URL in .env) moves Start and Sign in together.
+const app = appOrigin(import.meta.env.PUBLIC_APP_URL);
+
 export const cta = {
 	label: 'Start CostCook',
 	ariaLabel: 'Start CostCook',
-	href: `${appOrigin(import.meta.env.PUBLIC_APP_URL)}/start?plan=launch`,
+	href: `${app}/start?plan=launch`,
 	target: '_self',
 	rel: undefined
 } as const;
@@ -61,7 +65,7 @@ export const cta = {
 export const signIn = {
 	label: 'Sign in',
 	ariaLabel: 'Sign in to CostCook',
-	href: 'https://app.costcook.io/login',
+	href: `${app}/login`,
 	target: '_self'
 } as const;
 

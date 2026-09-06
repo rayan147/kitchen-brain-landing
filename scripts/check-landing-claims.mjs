@@ -414,7 +414,7 @@ requireText(comparisonSource, 'Names and aliases, not prices', 'comparison catal
 // login page is titled "Sign in | CostCook", so the label is pinned to that
 // word: "Log in" here against "Sign in" there is a small lie about how
 // carefully the rest was built.
-requireText(siteSource, 'app.costcook.io/login', 'sign-in destination');
+requireText(siteSource, '`${app}/login`', 'sign-in destination derives from the app origin');
 requireText(siteSource, "label: 'Sign in'", 'sign-in label matches the app');
 requireText(navSource, 'signIn.href', 'header renders the sign-in link');
 requireText(navSource, '{signIn.label}', 'header renders the sign-in label');

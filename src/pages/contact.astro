@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { demoCta, site } from '../lib/site';
+import { demoCta, signIn, site } from '../lib/site';
 
 const emailHref = `mailto:${site.email}?subject=${encodeURIComponent('Question about CostCook')}`;
 ---
@@ -24,7 +24,7 @@ const emailHref = `mailto:${site.email}?subject=${encodeURIComponent('Question a
 				</div>
 				<p class="mt-6 max-w-[60ch] text-sm leading-6 text-ink-soft">
 					Already using CostCook? <a
-						href="https://app.costcook.io/login"
+						href={signIn.href}
 						class="font-medium text-green-deep underline decoration-hairline underline-offset-4 hover:decoration-green"
 						>Sign in to CostCook</a
 					>{' '}and choose <strong class="font-semibold text-ink">Contact support</strong> inside the app so your
