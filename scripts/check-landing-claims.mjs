@@ -755,11 +755,26 @@ requireText(onboardingSource, 'about fifteen minutes', 'onboarding owner-confirm
 // RC-49/RC-55: Sage reads, it never writes. A page that sells setup as
 // AI-assisted drifts straight at this line, so the disclaimer is pinned to
 // the same paragraph that makes the claim.
+// RC-58: the walkthrough names the upload by the app's own labels, and the
+// review gate (RC-09, RC-39) travels with it or the walkthrough comes off.
+for (const [text, label] of [
+	['Import an invoice or price sheet', 'stage-two first choice (RC-58)'],
+	['Import an ingredient list', 'stage-two second choice (RC-58)'],
+	['Add ingredients manually', 'stage-two third choice (RC-58)'],
+	['Choose files', 'the dropzone control (RC-58)'],
+	['Review extracted records', 'the review screen heading (RC-09)'],
+	['Back to Ingredients', 'the way back into setup (RC-58)'],
+	['Build with Sage', 'stage-four Sage door (RC-58)'],
+	['Build the dish by hand', 'stage-four manual door (RC-58)'],
+	['confirm what CostCook read', 'confirm-not-type framing (RC-09)'],
+	['quoted back to you', 'unreadable-is-not-guessed (RC-39)'],
+]) requireText(onboardingSource, text, `onboarding ${label}`);
 requireText(onboardingSource, 'Sage stays open beside', 'onboarding Sage-in-setup claim (RC-55)');
 requireText(onboardingSource, 'never fills a stage in for you', 'onboarding Sage read-only boundary (RC-49)');
 for (const [pattern, label] of [
 	[/Sage[^.]{0,80}\b(fills|enters|fixes|completes|writes|sets up)\b/i, 'Sage doing the work (RC-49 forbids autonomous changes)'],
-	[/\b(rarely|barely|hardly|never) (have to )?typ/i, 'a no-typing promise (the five-stage walk is typed)'],
+	[/\b(rarely|barely|hardly|never) (have to )?typ/i, 'a no-typing promise (a line the upload could not read is typed)'],
+	[/\b(no|zero|without) (typing|data entry)\b|\bnothing to type\b/i, 'a no-typing promise (a line the upload could not read is typed)'],
 	[/\bfixes (it|any|every|the) (issue|problem|error)/i, 'the app repairing a problem (the guards stop and name the fix)'],
 ]) {
 	if (pattern.test(onboardingSource)) failures.push(`onboarding states ${label}`);
@@ -803,8 +818,14 @@ for (const [pattern, label] of [
 	// measured one, so the page may approximate it and may not harden it: no
 	// tighter number, no "guaranteed", no minutes attached to a stage.
 	[/\bset up in\b|\bin (under|less than) \w+ minutes\b|\bguaranteed\b/i, 'a hardened setup duration (RC-10 allows only the owner-confirmed approximation)'],
-	[/\b(photograph|snap|upload|drop in|scan)\b[^.]{0,60}\b(invoice|price list|price sheet|recipe)\b/i,
-		'invoice or recipe extraction (stubbed at both test layers)'],
+	// The upload itself is a shipped route fact (RC-58, and the deployed app
+	// runs a real provider: kitchen-brain docs/provisioning.md reserves the
+	// stub for the E2E harness). What no rehearsal shows is how COMPLETE or
+	// CORRECT a read is, so those are the words that fail the build.
+	[/\b(comes?|came|coming) back (complete|correct|right|perfect|finished|filled)/i,
+		'a complete or correct read (no rehearsal ran against a real provider)'],
+	[/\breads? (every|each|all) (line|row|word)s?\b|\bnothing (is )?missed\b|\b(perfectly|flawlessly)\b/i,
+		'a complete or correct read (no rehearsal ran against a real provider)'],
 ]) {
 	if (pattern.test(onboardingSource)) failures.push(`onboarding states ${label}`);
 }

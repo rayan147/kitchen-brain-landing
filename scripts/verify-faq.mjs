@@ -110,7 +110,7 @@ try {
 		};
 	})()`);
 	assert(desktop.title === 'Know the catch before you hand over the card.', 'desktop: page identity is missing');
-	assert(desktop.entryCount === 34, `desktop: expected 34 answers, received ${desktop.entryCount}`);
+	assert(desktop.entryCount === 35, `desktop: expected 35 answers, received ${desktop.entryCount}`);
 	assert(desktop.disclosureCount === 0, `desktop: found ${desktop.disclosureCount} hidden disclosures`);
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
@@ -165,7 +165,7 @@ try {
 		jsonLd: document.querySelector('script[type="application/ld+json"]')?.textContent.length ?? 0
 	}))()`);
 	assert(noScript.heading === 'Know the catch before you hand over the card.', 'no JavaScript: page identity is missing');
-	assert(noScript.entryCount === 34, `no JavaScript: expected 34 answers, received ${noScript.entryCount}`);
+	assert(noScript.entryCount === 35, `no JavaScript: expected 35 answers, received ${noScript.entryCount}`);
 	assert(noScript.jsonLd > 100, 'no JavaScript: FAQ structured data is missing');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);
