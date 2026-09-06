@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import { booking, site } from '../../lib/site';
+
+/**
+ * The honest other half of /demo/sent. A form that loses a request in silence
+ * is worse than one that admits it failed, because the visitor walks away
+ * believing someone will call them. This page never pretends.
+ *
+ * The mailto: here is not the one this work removed. That one was the ONLY way
+ * a request could ever arrive; this one is what is left when the sending path
+ * is down, and it is offered beside a phone number and a calendar rather than
+ * as the design.
+ * story: docs/stories/request-demo.story.md
+ */
+const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('CostCook demo request')}`;
+---
+
+<Base
+	title="Demo request not sent | CostCook"
+	description="The CostCook demo form could not send your request. Book a time, email, or call instead."
+	path="/demo/not-sent"
+>
+	<section class="container-page py-section" aria-labelledby="not-sent-title">
+		<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">DEMO · NOT SENT</p>
+		<h1 id="not-sent-title" class="mt-4 max-w-[24ch] text-display font-semibold">
+			That did not send. Here are three things that will.
+		</h1>
+		<p class="mt-6 max-w-[58ch] text-lede text-ink-soft">
+			Something on my side stopped it, so nothing reached me. Rather than ask you to retype it into
+			the same form, book a time straight away, email it, or call.
+		</p>
+		<!-- Same shape as /contact/not-sent: the primary is the thing that is
+		     certainly working. "Book 15 minutes" stays a quiet secondary, which is
+		     the role CLAUDE.md gives that label; this page invents no new one. -->
+		<p class="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+			<a href={mailtoHref} class="btn-primary">Email {site.email}</a>
+			<a href={booking.url} target="_blank" rel="noopener noreferrer" class="btn-quiet"
+				>Book 15 minutes</a
+			>
+			<a href={site.phoneHref} class="btn-quiet">Call {site.phone}</a>
+		</p>
+		<p class="mt-6 max-w-[58ch] text-sm text-ink-soft">
+			Or <a
+				href="/demo"
+				class="font-medium text-green-deep underline decoration-hairline underline-offset-4"
+				>go back to the form</a
+			> and try once more.
+		</p>
+	</section>
+</Base>

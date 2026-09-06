@@ -1,7 +1,33 @@
 ---
-import { booking, cta, site } from '../../lib/site';
+import { booking, cta } from '../../lib/site';
+import { DEMO_TRAP_FIELD } from '../../lib/demo-request';
 
-const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('CostCook demo request')}`;
+/**
+ * WHAT CHANGED, 2026-09-06. This form used to end in a mailto:. The submit
+ * handler built a draft, waited 1800ms, and set window.location.href, so a
+ * demo request existed only if the visitor had a mail client, saw the draft,
+ * and pressed send. On a phone mid-shift, which is who this page is written
+ * for, that is a coin flip, and support@costcook.io was never a recipient at
+ * all. The old step 3 said so in its own copy, which is honesty about a design
+ * that should not have existed rather than a working form.
+ *
+ * It now posts to /api/demo-request, which mails rayan@ and support@ through
+ * Resend, and step 3 appears ONLY after that send returns ok. The page can
+ * therefore say "sent" and mean it.
+ *
+ * The calendar is embedded rather than linked. Booking used to open
+ * calendar.app.google in a new tab beside an "Email Rayan directly" exit, so
+ * the last thing the page did was hand the visitor two ways to leave. Now the
+ * schedule is on the page. That needs frame-src in vercel.json to name
+ * calendar.google.com; check-demo-page.mjs holds the two together, because a
+ * CSP is a deploy-only header and a blank calendar would reach production
+ * without a single local check noticing.
+ *
+ * Considered Strategy for the scripted and no-script submit paths; not used
+ * because there is one behaviour with one enhancement, not two interchangeable
+ * algorithms. The no-script path is the form element's own default, which is
+ * why the action and method are real attributes in the HTML.
+ */
 ---
 
 <!-- story: docs/stories/request-demo.story.md -->
@@ -57,10 +83,8 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 					data-demo-form
 					data-current-step="1"
 					data-phase="idle"
-					data-recipient={site.email}
-					action={directEmailHref}
-					method="get"
-					enctype="text/plain"
+					action="/api/demo-request"
+					method="post"
 				>
 					<fieldset data-step="1">
 						<legend>Start with the job.</legend>
@@ -120,7 +144,7 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 
 					<fieldset data-step="2">
 						<legend>Now name the person bringing it.</legend>
-						<p class="step-copy">Your browser will prepare an email to Rayan. You review and send it before choosing a time.</p>
+						<p class="step-copy">This goes to Rayan's inbox when you send it. Then you pick your time here, without leaving the page.</p>
 
 						<div class="field-grid">
 							<label class="field">
@@ -141,10 +165,29 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 							</label>
 						</div>
 
+						<!-- A field no human sees and no human fills. Deliberately NOT
+						     named "company": the business-name input above carries
+						     autocomplete="organization", so Chrome treats this form as an
+						     address profile and would autofill a field with that name,
+						     discarding a real caterer's request while telling them it
+						     sent. The name lives in src/lib/demo-request.ts so the form
+						     and the endpoint cannot disagree about it. -->
+						<div class="trap" aria-hidden="true">
+							<label for="demo-ticket-ref">Leave this field empty</label>
+							<input
+								id="demo-ticket-ref"
+								name={DEMO_TRAP_FIELD}
+								type="text"
+								tabindex="-1"
+								autocomplete="off"
+							/>
+						</div>
+
 						<p class="safety-note">Do not include passwords, payment card details, or other sensitive information.</p>
+						<p class="send-status" data-send-status role="status" aria-live="polite"></p>
 						<div class="form-actions form-actions-split">
 							<button type="button" class="btn-quiet" data-back>Back to kitchen</button>
-							<button type="submit" class="btn-primary">Prepare my demo request</button>
+							<button type="submit" class="btn-primary" data-send>Send my demo request</button>
 						</div>
 					</fieldset>
 
@@ -153,17 +196,50 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 							<circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1.5" />
 							<path d="m15.5 24.5 5.5 5.5 11.5-13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 						</svg>
-						<h2 id="prepared-title">Your request is ready to send.</h2>
-						<p>Your email app has the details. Send that message, then choose a time on Rayan’s calendar.</p>
-						<div class="prepared-actions">
-							<a href={booking.url} target="_blank" rel="noopener noreferrer" class="btn-primary">Choose a 15-minute time</a>
-							<a href={directEmailHref} class="btn-quiet">Email Rayan directly</a>
+						<h2 id="prepared-title">Sent. Now take your 15 minutes.</h2>
+						<p>Rayan has what you brought. Pick a time on his calendar below and Google sends you both the invite.</p>
+
+						<!--
+						  THE SRC IS SET BY SCRIPT, AFTER STEP 3 HAS SETTLED, AND THAT IS
+						  NOT AN OPTIMISATION.
+
+						  MEASURED: with src in the markup, the calendar rendered as a
+						  single ~150px column of wrapped text inside a 980px frame. Chrome
+						  deliberately does NOT lazy-load a display:none iframe, it loads it
+						  eagerly, so Google laid its page out against the degenerate
+						  viewport of a hidden panel and never reflowed. Reassigning src
+						  afterwards did not fix it. Waiting until the panel is open and
+						  sized does.
+
+						  It also means nothing reaches Google until the visitor has
+						  actually sent something, which is the behaviour we want anyway.
+						  /demo/sent carries a plain src instead: it is a visible, full-width
+						  page from first paint, and it is where a visitor without
+						  JavaScript lands.
+
+						  The height attribute is not decoration either. transitionTo()
+						  animates the ticket to the incoming step's measured height, and an
+						  empty iframe with no height measures near zero, which collapses the
+						  panel it is supposed to open.
+						-->
+						<div class="booking-frame">
+							<iframe
+								title="Book a 15-minute CostCook demo with Rayan"
+								width="100%"
+								height="700"
+								data-booking-frame
+								data-booking-src={booking.embedUrl}
+							></iframe>
 						</div>
-						<p class="prepared-truth">CostCook has not claimed your request was sent. It is sent only when you send the prepared email.</p>
+
+						<div class="prepared-actions">
+							<a href={booking.url} target="_blank" rel="noopener noreferrer" class="btn-quiet">Calendar not loading? Open it in a new tab</a>
+						</div>
+						<p class="prepared-truth">Your request is sent. A time is booked only once you choose one above and Google confirms it.</p>
 					</section>
 
 					<noscript>
-						<p class="noscript-note">JavaScript is off, so both steps stay open. Completing the form opens your email app; you can then choose a time from Rayan’s reply or email him directly at <a href={directEmailHref}>{site.email}</a>.</p>
+						<p class="noscript-note">JavaScript is off, so both steps stay open and the calendar sits below them. Send the form and you land on a page that confirms it arrived.</p>
 					</noscript>
 				</form>
 			</div>
@@ -282,35 +358,89 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 			void transitionTo(1, '[data-step="1"] input');
 		});
 
+		const sendButton = form.querySelector<HTMLButtonElement>('[data-send]');
+		const sendStatus = form.querySelector<HTMLElement>('[data-send-status]');
+
+		const sayFailed = (message: string) => {
+			if (!sendStatus) return;
+			sendStatus.dataset.tone = 'error';
+			sendStatus.textContent = message;
+		};
+
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			if (!form.reportValidity()) return;
 
 			const data = new FormData(form);
 			const value = (name: string) => String(data.get(name) ?? '').trim();
-			const lines = [
-				`Name: ${value('firstName')} ${value('lastName')}`,
-				`Work email: ${value('email')}`,
-				`Phone: ${value('phone') || 'Not provided'}`,
-				'',
-				`Business: ${value('business')}`,
-				`Role: ${value('role')}`,
-				`Kitchen type: ${value('kitchen')}`,
-				`Locations: ${value('locations')}`,
-				'',
-				'What to put through CostCook:',
-				value('workflow') || 'Not provided'
-			];
-			const recipient = form.dataset.recipient;
-			if (!recipient) return;
-			const mailto = `mailto:${recipient}?subject=${encodeURIComponent(`CostCook demo request · ${value('business')}`)}&body=${encodeURIComponent(lines.join('\n'))}`;
-			const moved = await transitionTo(3, '[data-step="3"]');
-			if (!moved) return;
-			form.dataset.emailHandoff = 'holding';
-			window.setTimeout(() => {
-				form.dataset.emailHandoff = 'opening';
-				window.location.href = mailto;
-			}, 1800);
+			const payload = {
+				business: value('business'),
+				role: value('role'),
+				kitchen: value('kitchen'),
+				locations: value('locations'),
+				workflow: value('workflow'),
+				firstName: value('firstName'),
+				lastName: value('lastName'),
+				email: value('email'),
+				phone: value('phone'),
+				ticketRef: value('ticketRef')
+			};
+
+			if (sendStatus) {
+				sendStatus.dataset.tone = 'sending';
+				sendStatus.textContent = 'Sending your request…';
+			}
+			if (sendButton) {
+				sendButton.disabled = true;
+				sendButton.setAttribute('aria-busy', 'true');
+				sendButton.textContent = 'Sending…';
+			}
+			form.dataset.sendState = 'sending';
+
+			try {
+				const response = await fetch('/api/demo-request', {
+					method: 'POST',
+					headers: { 'content-type': 'application/json', accept: 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				const result = (await response.json()) as { ok: boolean; message?: string };
+				if (!response.ok || !result.ok) {
+					form.dataset.sendState = 'failed';
+					sayFailed(
+						result.message ??
+							'Your request could not be sent. Everything you typed is still here, so please try again.'
+					);
+					return;
+				}
+			} catch {
+				form.dataset.sendState = 'failed';
+				sayFailed(
+					'Your request could not be sent. Everything you typed is still here, so please try again.'
+				);
+				return;
+			} finally {
+				if (sendButton) {
+					sendButton.disabled = false;
+					sendButton.removeAttribute('aria-busy');
+					sendButton.textContent = 'Send my demo request';
+				}
+			}
+
+			// Step 3 says "Sent", so it may not appear until the send has actually
+			// returned ok. Everything the visitor typed stays on screen otherwise.
+			form.dataset.sendState = 'sent';
+			if (sendStatus) {
+				sendStatus.dataset.tone = '';
+				sendStatus.textContent = '';
+			}
+			await transitionTo(3, '[data-step="3"]');
+
+			// Only now, with the panel open and at its final width. See the comment
+			// on the iframe: a hidden iframe is loaded eagerly by Chrome, not
+			// lazily, and Google lays the schedule out once, against whatever
+			// viewport it first sees.
+			const frame = form.querySelector<HTMLIFrameElement>('[data-booking-frame]');
+			if (frame && !frame.src && frame.dataset.bookingSrc) frame.src = frame.dataset.bookingSrc;
 		});
 	}
 </script>
@@ -354,6 +484,29 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 	.form-actions { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
 	.form-actions-split { justify-content: space-between; align-items: center; gap: 1rem; }
 	.safety-note, .prepared-truth { margin-top: 1.1rem; font-size: var(--text-caption); line-height: 1.5; color: var(--color-ink-soft); }
+	/* Off-screen rather than display:none or hidden: a bot reading the DOM sees
+	   an ordinary field, and no sighted or screen-reader user meets it. */
+	.trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+	/* NOT display:none when empty. A display:none element is out of the
+	   accessibility tree, so a live region that is hidden until it has something
+	   to say does not exist at the moment it is given something to say, and the
+	   announcement is unreliable. WCAG 4.1.3 Status Messages is Level AA, and AA
+	   is this site's floor. The box is collapsed instead. */
+	.send-status:empty { margin-top: 0; }
+	.send-status { margin-top: 1.1rem; font-size: var(--text-body-sm); line-height: 1.5; color: var(--color-ink-soft); }
+	.send-status[data-tone='error'] { color: var(--color-amber-deep); font-weight: 600; }
+	/* A min-height rather than nothing, so the step-transition height animation
+	   has something real to measure before Google answers.
+	   MEASURED inside the frame: at ~408px wide Google's schedule stacks and runs
+	   2,582px tall, so 700px on a phone hides the times behind a scrollbar inside
+	   an iframe, which is the worst scroll there is. 1200px shows the month and
+	   the first block of times. On the wide layout the schedule puts the month
+	   beside four days of times and 700px is the whole of it. */
+	.booking-frame { margin-top: 1.5rem; border: 1px solid var(--color-ticket-rule); background: var(--color-cream); min-height: 1200px; }
+	.booking-frame iframe { display: block; width: 100%; min-height: 1200px; border: 0; }
+	@media (min-width: 64rem) {
+		.booking-frame, .booking-frame iframe { min-height: 700px; }
+	}
 	.prepared-step { color: var(--color-green-deep); }
 	.prepared-step h2 { margin-top: 1.1rem; color: var(--color-ink); font-size: var(--text-h3); font-weight: 600; }
 	.prepared-step > p:not(.prepared-truth) { margin-top: 0.65rem; max-width: 46ch; color: var(--color-ink-soft); }
@@ -392,6 +545,23 @@ const directEmailHref = `mailto:${site.email}?subject=${encodeURIComponent('Cost
 	@media (min-width: 64rem) {
 		.demo-hero-grid { grid-template-columns: minmax(0, 5fr) minmax(31rem, 5fr); }
 		.demo-ticket { position: sticky; top: 1.5rem; }
+
+		/* The ticket takes the whole width once the request is sent. MEASURED at
+		   1440: inside the 5fr column the booking calendar gets about 455px, and
+		   Google answers that with its narrow layout, where the day columns and
+		   their times fall below the fold of the frame and have to be found by
+		   scrolling inside an iframe. Full width gives it about 1150px, which is
+		   the layout in the earlier screenshot: seven days of times, visible.
+		   The two questions the column was balancing are also over by then. The
+		   left column argues; step 3 is not an argument, it is a calendar. */
+		.demo-hero-grid:has([data-current-step='3']) { grid-template-columns: minmax(0, 1fr); }
+		.demo-hero-grid:has([data-current-step='3']) .demo-ticket { position: static; }
+		/* Without script every step is open at once, so the calendar is on the
+		   page from the start and needs the same room. */
+		@media (scripting: none) {
+			.demo-hero-grid { grid-template-columns: minmax(0, 1fr); }
+			.demo-ticket { position: static; }
+		}
 	}
 
 	@media (max-width: 30rem) {
