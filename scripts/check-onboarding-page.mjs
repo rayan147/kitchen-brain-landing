@@ -20,7 +20,7 @@ const requireText = (text, label) => {
 for (const [text, label] of [
 	['You do not need to enter your whole walk-in.', 'page identity'],
 	['Four stages in, it prints', 'plate-cost stage (RC-10)'],
-	['5 stages &middot; 1 dish', 'setup ticket stage count (RC-10)'],
+	['3 parts &middot; 5 stages &middot; 1 dish', 'setup ticket stage count (RC-10)'],
 	// The whole trace, not just the total: a reader checks it by hand.
 	['$32.00', 'case price (RC-55)'],
 	['4,535.92', 'pound-to-gram conversion (RC-55)'],
@@ -45,8 +45,28 @@ for (const [text, label] of [
 const stageRows = (html.match(/class="fd-stage"/g) ?? []).length;
 if (stageRows !== 5) failures.push(`expected 5 rendered stage rows, received ${stageRows}`);
 
-const ticketStages = (html.match(/class="fd-ticket-n"/g) ?? []).length;
-if (ticketStages !== 5) failures.push(`expected 5 setup-ticket stages, received ${ticketStages}`);
+// The ticket now maps three parts; the five stage rows are counted above.
+const ticketStages = (html.match(/class="fd-ticket-n/g) ?? []).length;
+if (ticketStages !== 3) failures.push(`expected 3 setup-ticket map rows, received ${ticketStages}`);
+// The hero ticket is the page map: three parts, each an in-page anchor, each
+// with a done-when line. A reader picks the question they came with (Krug:
+// a mindless choice) and every anchor must resolve to a section id.
+const mapRows = (html.match(/class="fd-ticket-n fd-map-n"/g) ?? []).length;
+if (mapRows !== 3) failures.push(`expected 3 map rows in the setup ticket, received ${mapRows}`);
+for (const id of ['before', 'stages', 'after']) {
+	if (!html.includes(`href="#${id}"`)) failures.push(`map does not link to #${id}`);
+	if (!new RegExp(`<section[^>]*\\bid="${id}"`).test(html)) failures.push(`no section carries id="${id}"`);
+}
+const partLabels = (html.match(/class="eyebrow fd-part-label"/g) ?? []).length;
+if (partLabels !== 3) failures.push(`expected 3 part labels (Part N of 3), received ${partLabels}`);
+// Each stage row names the app's own last checkmark for that stage, so a
+// reader inside the app knows when the stage is finished (research pattern
+// 2: a countable done-marker per step).
+const doneLines = (html.match(/class="fd-stage-done"/g) ?? []).length;
+if (doneLines !== 5) failures.push(`expected 5 done-when lines, received ${doneLines}`);
+for (const text of ['Add one supplier', 'Review the food facts', 'Answer every ingredient once', 'Check the plate cost', 'cost the order']) {
+	requireText(text, `stage done-when line from SETUP_STAGE_GUIDE (${text})`);
+}
 
 // RC-58: the three doors into stage two. The row's verification step says the
 // ledger moves before the page does when a door is added or removed, and this

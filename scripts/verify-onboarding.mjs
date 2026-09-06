@@ -157,7 +157,7 @@ try {
 	// The reveal register hides content until JS runs. Whatever this reads must
 	// be visible to a no-JS reader too, which the no-JavaScript pass asserts.
 	const probe = `(() => {
-		const actions = [...document.querySelectorAll('.fd-actions a, .feature-breadcrumb a')];
+		const actions = [...document.querySelectorAll('.fd-actions a, .feature-breadcrumb a, .fd-map-link')];
 		const maths = document.querySelector('.fd-maths-scroll');
 		return {
 			title: document.querySelector('#fd-heading')?.textContent.trim(),
@@ -206,7 +206,7 @@ try {
 	assert(desktop.title === 'You do not need to enter your whole walk-in.', `desktop: page identity is "${desktop.title}"`);
 	assert(desktop.h1Count === 1, `desktop: found ${desktop.h1Count} h1 elements`);
 	assert(desktop.stages === 5, `desktop: expected 5 stage rows, received ${desktop.stages}`);
-	assert(desktop.ticketStages === 5, `desktop: expected 5 ticket stages, received ${desktop.ticketStages}`);
+	assert(desktop.ticketStages === 3, `desktop: expected 3 ticket map rows, received ${desktop.ticketStages}`);
 	assert(desktop.guards === 4, `desktop: expected 4 guard lines, received ${desktop.guards}`);
 	assert(desktop.plateCost === '$1.62', `desktop: plate cost reads ${desktop.plateCost}`);
 	assert(desktop.snap, 'desktop: the snap line no longer carries $1.62');

@@ -1,9 +1,10 @@
 ---
 import { cta } from '../../lib/site';
 
-// Considered Template Method; not used because this route reuses the Base
-// shell and its setup argument is one fixed composition, not a page algorithm
-// with overridable steps. The stage table is data, not a variant hierarchy.
+// Considered Template Method and Strategy for the three parts; not used
+// because the parts are one fixed composition with no runtime variation.
+// The stage, door, guard and after-setup tables are data, not a variant
+// hierarchy.
 
 /**
  * The five stages, in the app's own labels (`SETUP_STAGE_LABELS` and
@@ -15,27 +16,58 @@ const stages = [
 	{
 		n: '1',
 		label: 'Kitchen and suppliers',
-		body: 'Your kitchen’s name, one supplier so prices have a buying source, and the food-cost target every plate is judged against.'
+		body: 'Your kitchen’s name, one supplier so prices have a buying source, and the food-cost target every plate is judged against.',
+		done: 'Add one supplier'
 	},
 	{
 		n: '2',
 		label: 'Ingredients',
-		body: 'The ingredients of that one dish: what you buy, how big the pack is, what it costs, and what survives the knife. On an empty kitchen this stage opens on three doors, and only one of them is a form.'
+		body: 'The ingredients of that one dish: what you buy, how big the pack is, what it costs, and what survives the knife. On an empty kitchen this stage opens on three doors, and only one of them is a form.',
+		done: 'Review the food facts CostCook found'
 	},
 	{
 		n: '3',
 		label: 'Food facts',
-		body: 'Nutrition, allergens and diet facts, drafted where CostCook could and yours to confirm. Skip one you are unsure of and every order using it reads “check”, never “clear”.'
+		body: 'Nutrition, allergens and diet facts, drafted where CostCook could and yours to confirm. Skip one you are unsure of and every order using it reads “check”, never “clear”.',
+		done: 'Answer every ingredient once'
 	},
 	{
 		n: '4',
 		label: 'Recipes',
-		body: 'The dish itself: its lines in costing units, and how many portions the batch makes.'
+		body: 'The dish itself: its lines in costing units, and how many portions the batch makes.',
+		done: 'Check the plate cost'
 	},
 	{
 		n: '5',
 		label: 'Menu and first order',
-		body: 'A date and a guest count. The order becomes shopping, prep, packing, and a food-cost result.'
+		body: 'A date and a guest count. The order becomes shopping, prep, packing, and a food-cost result.',
+		done: 'Add guests and a date, then cost the order'
+	}
+] as const;
+
+/**
+ * The page map. Three parts, three questions a reader arrives with, one
+ * finish line each. The hero ticket renders it and every row is an in-page
+ * anchor, so the first choice on the page is a mindless one.
+ */
+const parts = [
+	{
+		n: '1',
+		id: 'before',
+		label: 'Before you start',
+		done: 'Done when you know it wants one dish, not your walk-in.'
+	},
+	{
+		n: '2',
+		id: 'stages',
+		label: 'The five stages',
+		done: 'Done when one dish has a plate cost you can check on paper.'
+	},
+	{
+		n: '3',
+		id: 'after',
+		label: 'After setup',
+		done: 'Done when the next dish and the first teammate are in.'
 	}
 ] as const;
 
@@ -92,13 +124,12 @@ const guards = [
 				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
 					<a href="/">Home</a><span aria-hidden="true">/</span><span>Your initial setup</span>
 				</nav>
-				<p class="eyebrow">Before you start</p>
+				<p class="eyebrow">Your initial setup</p>
 				<h1 id="fd-heading" class="feature-display">You do not need to enter your whole walk-in.</h1>
 				<p class="fd-lede">
-					Setup asks for one dish you already cook, and takes about fifteen minutes.
-					Its ingredients can come in from an invoice or a spreadsheet, not just the keyboard.
+					Setup asks for one dish you already cook and takes about fifteen minutes.
 					Four stages in, it prints that dish&rsquo;s plate cost with the arithmetic beside it.
-					The fifth turns it into a shopping list.
+					This page also says what comes after, and how the rest of your kitchen gets in.
 				</p>
 				<div class="fd-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
@@ -108,59 +139,51 @@ const guards = [
 
 			<figure class="fd-ticket anim-enter" aria-labelledby="fd-ticket-title">
 				<div class="fd-ticket-head">
-					<p id="fd-ticket-title">Setup</p>
-					<span>5 stages &middot; 1 dish</span>
+					<p id="fd-ticket-title">This page</p>
+					<span>3 parts &middot; 5 stages &middot; 1 dish</span>
 				</div>
-				<ol class="fd-ticket-stages" role="list">
-					{stages.map((stage) => (
-						<li><span class="fd-ticket-n">{stage.n}</span>{stage.label}</li>
+				<ol class="fd-ticket-stages fd-map" role="list">
+					{parts.map((part) => (
+						<li>
+							<a href={`#${part.id}`} class="fd-map-link">
+								<span class="fd-ticket-n fd-map-n">{part.n}</span>
+								<span class="fd-map-text">
+									<span class="fd-map-label">{part.label}</span>
+									<span class="fd-map-done">{part.done}</span>
+								</span>
+							</a>
+						</li>
 					))}
 				</ol>
-				<figcaption>Every stage asks for the next thing that one dish needs.</figcaption>
+				<figcaption>Pick the question you came with. Each part ends with one next step.</figcaption>
 			</figure>
 		</div>
 	</section>
 
-	<section class="fd-band" aria-labelledby="fd-empty-heading">
+	<section class="fd-band fd-part" id="before" aria-labelledby="fd-before-heading">
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
-				<p class="eyebrow">The empty screen</p>
-				<h2 id="fd-empty-heading">The dread is not irrational. It has a shape.</h2>
+				<p class="eyebrow fd-part-label">Part 1 of 3 &middot; Before you start</p>
+				<h2 id="fd-before-heading">The dread has a shape. Setup asks one question instead.</h2>
 				<p>
 					You have done this before. The last tool wanted your whole catalog before it would do
-					anything, and the half-filled spreadsheet is still on the desktop, proof of an evening you
-					do not get back.
+					anything, and the half-filled spreadsheet is still on the desktop.
 				</p>
 				<p>
-					So the fear has a name: an empty kitchen on screen at nine at night, after service, and no
-					idea which end to start from.
+					CostCook opens on a question, not a form: what kind of kitchen you run, what you want
+					out of it first, and the name of one dish you already cook. Every answer is optional.
+					Name the dish and the screens after it say its name back to you.
 				</p>
+				<p class="fd-handoff">Those answers are optional. These five are the work.</p>
 			</div>
 		</div>
 	</section>
 
-	<section class="fd-band fd-band-cream" aria-labelledby="fd-welcome-heading">
+	<section class="fd-band fd-part" id="stages" aria-labelledby="fd-stages-heading">
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
-				<p class="eyebrow">What it asks you for</p>
-				<h2 id="fd-welcome-heading">The guide opens on a question, not a form.</h2>
-				<p>
-					What kind of kitchen you run, what you want out of it first, and the name of one dish you
-					already cook.
-				</p>
-				<p>
-					Every answer is optional. A blank welcome is a skip and setup works either way. Name the
-					dish and the screens after it say its name back to you.
-				</p>
-			</div>
-		</div>
-	</section>
-
-	<section class="fd-band" aria-labelledby="fd-stages-heading">
-		<div class="container-page" data-reveal>
-			<div class="fd-prose">
-				<p class="eyebrow">Five stages</p>
-				<h2 id="fd-stages-heading">Those answers are optional. These five are the work.</h2>
+				<p class="eyebrow fd-part-label">Part 2 of 3 &middot; The five stages</p>
+				<h2 id="fd-stages-heading">Five stages is one dish&rsquo;s worth of facts.</h2>
 				<p>Each one asks for the next thing that one dish needs, and nothing else.</p>
 			</div>
 			<ol class="fd-stage-list" role="list">
@@ -171,6 +194,7 @@ const guards = [
 							<span class="fd-stage-label">{stage.label}</span>
 						</p>
 						<p class="fd-stage-body">{stage.body}</p>
+						<p class="fd-stage-done"><span class="fd-stage-done-k">Done when</span> {stage.done}.</p>
 					</li>
 				))}
 			</ol>
@@ -428,6 +452,47 @@ const guards = [
 		line-height: 1.5;
 	}
 
+	/* The map rows are links: underline on the label, a hit area of at least
+	   44px, and no reliance on hover (Krug ch. 10: no cursor, no hover). */
+	.fd-map-link {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		width: 100%;
+		min-height: 2.75rem;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.fd-map-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.fd-map-label {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		text-decoration-color: var(--color-hairline-strong);
+	}
+
+	.fd-map-link:hover .fd-map-label,
+	.fd-map-link:focus-visible .fd-map-label {
+		text-decoration-color: var(--color-green-deep);
+	}
+
+	.fd-map-done {
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		font-weight: 400;
+		line-height: 1.45;
+	}
+
+	/* Anchored parts land with the part label visible under the sticky header. */
+	.fd-part {
+		scroll-margin-top: 5rem;
+	}
+
 	.fd-band {
 		padding-block: clamp(2.5rem, 6vw, 4rem);
 		border-top: 1px solid var(--color-hairline);
@@ -522,6 +587,28 @@ const guards = [
 		.fd-stage-body {
 			margin-top: 0;
 		}
+	}
+
+	.fd-stage-done {
+		margin: 0.35rem 0 0;
+		color: var(--color-ink);
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
+	}
+
+	@media (min-width: 48rem) {
+		.fd-stage-done {
+			grid-column: 2;
+		}
+	}
+
+	.fd-stage-done-k {
+		color: var(--color-amber-deep);
+		font-family: var(--font-body);
+		font-size: var(--text-eyebrow);
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
 	}
 
 	/* A capture of the running app, stored at 2x and rendered at half its pixel
