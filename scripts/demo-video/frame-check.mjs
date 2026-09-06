@@ -266,7 +266,22 @@ if (MODE === 'boxes') {
 	// the beat's ingredient is baby spinach, not the arugula from the beat before.
 	const orderHref = await named('/orders/list', '^/orders/\\d+$', 'Alvarez-Whitman');
 	const ingredientHref = await named('/catalog/ingredients', '/ingredients/\\d+', 'Baby spinach');
-	console.log(`order ${orderHref}  ingredient ${ingredientHref}\n`);
+	// Recipes come off the list's own `q=` filter, for the same reason
+	// capture-silent.mjs resolves them that way: the bare list is paginated and
+	// alphabetical, so a recipe past the first page is invisible to a resolver
+	// that reads the links on it.
+	const recipeHrefs = new Map();
+	for (const name of new Set(BEATS.map((beat) => beat.useRecipe).filter(Boolean))) {
+		recipeHrefs.set(
+			name,
+			await named(`/catalog/recipes?q=${encodeURIComponent(name)}`, '^/catalog/recipes/[^/]+$', name)
+		);
+	}
+	console.log(
+		`order ${orderHref}  ingredient ${ingredientHref}  ` +
+			[...recipeHrefs].map(([name, href]) => `${name} ${href}`).join('  ') +
+			'\n'
+	);
 
 	const locate = (move) => {
 		if (move.role) return page.getByRole(move.role, { name: new RegExp(move.name, 'i') }).first();
@@ -319,6 +334,7 @@ if (MODE === 'boxes') {
 		let url = beat.path;
 		if (beat.useOrder) url = orderHref + (beat.suffix ?? '');
 		if (beat.useIngredient) url = ingredientHref;
+		if (beat.useRecipe) url = recipeHrefs.get(beat.useRecipe) + (beat.suffix ?? '');
 		if (!url || /^https?:/.test(url)) continue;
 		await page.goto(APP + url, { waitUntil: 'domcontentloaded' });
 		await page.waitForLoadState('networkidle').catch(() => {});

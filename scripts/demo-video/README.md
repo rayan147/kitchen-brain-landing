@@ -31,12 +31,21 @@ docker compose up -d mailpit                          # SMTP capture, UI on :802
 HISTORY_SEED_DATE=2026-08-21 npm run demo:seed        # ~25s, pins date-derived figures
 HISTORY_SEED_DATE=2026-08-21 npm run demo:capture     # ~90s: builds, drives the beat sheet,
                                                       # writes demo/out/screens + demo/out/landing
-DEMO_BUILD=0 ./demo/serve.sh &                        # leave a preview up on :4181
+SAGE_ENABLED=enabled SAGE_AI_PROVIDER=google \
+  SAGE_GOOGLE_API_KEY=$GOOGLE_GEN_AI \
+  DEMO_BUILD=0 ./demo/serve.sh &                      # leave a preview up on :4181
 
 # --- back here ---
 APP=http://localhost:4181 node scripts/demo-video/capture-silent.mjs
 node scripts/demo-video/assemble-silent.mjs
 ```
+
+**The Sage beat needs a real provider and will not settle for the test double.**
+`demo/serve.sh` passes Sage's configuration through and defaults it to off, so
+without those three variables the beat fails at its own assertion rather than
+filming a canned answer. `SAGE_AI_PROVIDER=fake` is a localhost-only test double
+and must never be recorded: a scripted answer on a page that says "this is the
+working product, not a mockup" is the one lie this page cannot tell.
 
 `demo:capture` has to run first and it is not optional: the marquee order is
 created live by that spec, and `capture-silent.mjs` resolves its targets by
@@ -44,11 +53,36 @@ name against the world that spec leaves behind. `demo/serve.sh` exists because
 the app's Playwright harness tears its own preview down when the run ends, and
 this rig needs one that stays up.
 
-The assembler prints the encoded duration and names the three places that have
-to agree with it: the chip in `SeeItRun.astro`, the hero link in `Hero.astro`,
-and the guard literal in `check-landing-claims.mjs`. They have drifted twice.
-`ffprobe` is not installed here and `ffmpeg-static` does not ship one, so the
-assembler's own figure is the source of truth.
+The assembler prints the encoded duration. It names three places that have to
+agree with it and there are **five**, plus a poster the assembler does not
+touch. `ffprobe` is not installed here and `ffmpeg-static` does not ship one, so
+the assembler's own figure is the source of truth. The full list, because the
+duration has drifted twice and the short list is how:
+
+| Where | What it says |
+| --- | --- |
+| `src/components/sections/SeeItRun.astro` | the play chip, `Watch · 2 min 53 sec` |
+| `src/components/sections/Hero.astro` | `Watch the 2:53 product tour` |
+| `src/pages/compare.astro` | the same link |
+| `src/components/sections/FeatureIndex.astro` | the same link |
+| `scripts/check-landing-claims.mjs` | that string, asserted three times |
+
+```sh
+grep -rn "2:53\|2 min 53" src scripts --exclude-dir=venv   # should find all five
+```
+
+**Rebuild the phone poster too, every time.** `assemble-silent.mjs` writes
+`public/demo-poster.jpg` and nothing else; `public/demo-poster-mobile.jpg` is
+built from it by a separate script and is silently stale otherwise, which is
+the poster most of this page's readers actually see:
+
+```sh
+python3 scripts/build-mobile-poster.py
+```
+
+**Playwright is a dependency of this rig and was missing from `package.json`
+until 2026-09-06.** `npm i` covers it now; if `capture-silent.mjs` cannot
+resolve `playwright-core`, that is why.
 
 ## Check the artifact, not the plan
 

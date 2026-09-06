@@ -148,6 +148,38 @@ export const LEAD_IN = 0.9;
 /** Seconds of screen after the last card leaves, before the cut. */
 export const TAIL = 0.5;
 
+/**
+ * The question the Sage beat asks, in one place because two things have to say
+ * it identically: `capture-silent.mjs` types it into the app, and the beat's
+ * own first card puts it on screen.
+ *
+ * It is about the wedding on purpose. Every other beat in this cut follows the
+ * Alvarez-Whitman order, and a Sage beat that asked about something else would
+ * be a feature demonstration dropped into a story. Asking about the job the
+ * viewer has been watching for a minute and a half is what makes the answer
+ * checkable: the food-cost figure it reads back is the same 39.6 percent they
+ * watched the pricing panel work out in b02.
+ */
+export const SAGE_QUESTION = 'What needs my attention for the Alvarez-Whitman Wedding?';
+
+/**
+ * What the Sage answer must contain for this beat's cards to be true.
+ *
+ * SAGE'S PROSE IS NOT DETERMINISTIC AND THE CUT'S RULE IS. Two runs of the same
+ * question against the same records produced "The food cost is 39.6%, which is
+ * over your target of 30%" and "The food cost is at **39.6%**, which is over
+ * your **30%** target". The figure is the same both times because it is read
+ * off the order; the sentence around it is not. A card quoting a figure the
+ * frame might not carry is the exact defect every other beat is written to
+ * avoid, so the capture asserts these before it keeps a frame and fails loudly
+ * if the answer ever comes back without them.
+ *
+ * Rings in this beat target the figure and the source row, never a sentence.
+ * The bolding also splits the sentence across elements, so a sentence matcher
+ * resolves to nothing and sits there retrying: that cost a capture run.
+ */
+export const SAGE_MUST_SHOW = ['39.6%', 'Alvarez-Whitman Wedding', 'Where this came from'];
+
 /** @type {Beat[]} */
 export const BEATS = [
 	{
@@ -310,6 +342,73 @@ export const BEATS = [
 			{ at: 1.4, act: 'ring', text: 'items complete', up: 1, pad: 8 },
 			{ at: 5.0, act: 'ringOnly', row: 'Beef short rib', pad: 6 },
 			{ at: 10.6, act: 'ringOff' }
+		]
+	},
+	{
+		// THE OTHER QUESTION A CATERER GETS ASKED, and until now the cut answered
+		// only the money one. A meal-prep or allergy-aware customer asks for
+		// calories and protein before they ask for a price, and the page has argued
+		// that CostCook answers it off the same recipe. No frame ever showed it.
+		//
+		// NOT THE SHORT RIB, and the reason is arithmetic rather than taste. Its
+		// own lines are two sub-recipes and a cut of beef; the stock enters it by
+		// VOLUME, which leaves the per-portion weight unknown, and the stock's
+		// nutrients are the sum of its inputs including two and a half kilos of
+		// beef bones that get strained out and thrown away. Wild Mushroom Polenta
+		// is on the same Wedding Plated Dinner menu, in the same order the cut has
+		// followed since b01, and its four lines are all weighed in grams. The
+		// dataset chain holds and no number on screen has to be apologised for.
+		//
+		// The sources are real USDA FoodData Central records, matched once in the
+		// app repo's demo seed (demo/nutrition-curation.ts records which record and
+		// why). Nothing here is a compliance claim, and no card may make it one:
+		// the panel calls itself a calculated estimate and the printed sheet says
+		// so on the sheet.
+		//
+		// Measured against the live page at 1600x1000 with this anchor, bar floor
+		// y=768: the four-figure summary strip y=141..223, the "Some label
+		// nutrients are unavailable" block y=239..543 with the cremini line inside
+		// it at y=390..434. Everything this beat rings is inside one screen, which
+		// is why it has no scroll move: the one card that needed one was cut. See
+		// the note on the cards.
+		id: 'b03c',
+		useRecipe: 'Wild Mushroom Polenta',
+		// Not 'Nutrition Facts', which is the panel further down. Anchoring there
+		// would open the beat below the four numbers the first card is about.
+		scrollTop: 'Calculated estimate for',
+		cards: [
+			// The screen: Calories 531, Protein 18.5 g, Carbs 77.2 g, Fat 18.6 g,
+			// under a line reading "Calculated estimate for per portion".
+			// TWO CARDS, AND THE THIRD WAS CUT AFTER IT WAS RECORDED TWICE. It read
+			// "Every value names the record behind it." over the Sources list, which
+			// is a true claim with real evidence: four USDA FoodData Central ids on
+			// screen. It came out anyway, and the reason is worth keeping.
+			//
+			// Sources sits about 1,300px below the panel, at the bottom of a page
+			// that stops scrolling before the offset asks it to, so the card needed a
+			// scroll and the ring landed on a box measured before the scroll settled:
+			// in the delivered frame it cut the list in half and took two lines of
+			// the dietary block above it instead. Ringing nothing was worse, because
+			// the frame that far down is mostly Filing, Collections and Tags, and a
+			// card claiming evidence with no evidence framed is the shape of the
+			// defect this rig exists to catch.
+			//
+			// The claim is not lost: the sr-only transcript describes what the film
+			// shows and the written guide says the panel is computed from the sources
+			// you matched, and /features/nutrition-facts-and-allergens carries the
+			// capture. A beat gets the claims it can frame.
+			{ text: '531 calories a portion, off the recipe you costed.', hold: 4.2 },
+			// The screen: "A dash on the label is a value the matched source does not
+			// report. It is never counted as zero." This is the claim the page makes
+			// hardest and the one a spreadsheet cannot make at all, so it gets two
+			// rings: the block, then the ingredient named in it.
+			{ text: 'What the source will not report stays blank.', hold: 4.2 }
+		],
+		moves: [
+			{ at: 1.2, act: 'ring', text: '^Calories$', up: 2, pad: 8 },
+			{ at: 5.4, act: 'ringOnly', text: 'Some label nutrients are unavailable', up: 1, pad: 8 },
+			{ at: 7.2, act: 'ringOnly', text: 'Mushroom, cremini: no saturated fat', pad: 6 },
+			{ at: 8.9, act: 'ringOff' }
 		]
 	},
 	{
@@ -533,6 +632,72 @@ export const BEATS = [
 			{ at: 1.4, act: 'ring', text: '^Usable cost$', up: 1, pad: 10 },
 			{ at: 5.6, act: 'ringOnly', text: 'Saved price source', up: 1, pad: 10 },
 			{ at: 9.2, act: 'ringOff' }
+		]
+	},
+	{
+		// ASK THE KITCHEN, AND CHECK THE ANSWER. This is the last beat before the
+		// result, and it lands here because by now the viewer has watched the
+		// records accumulate: a quote, a shop list, a prep list, four purchase
+		// orders, a delivery that came in wrong, and a price that moved. A question
+		// about them has something to be about.
+		//
+		// THE CHECKABLE PART IS THE BEAT. An answer with no sources under it is a
+		// chatbot demo, which is the one thing this page cannot ship: its readers
+		// arrive skeptical and the whole argument is that every number traces to a
+		// record. So the rings go on the figure and then on the record it came
+		// from, in that order, and the last card is about the sources rather than
+		// about the answer.
+		//
+		// THE ANSWER REPEATS A NUMBER THE VIEWER ALREADY WATCHED THE APP WORK OUT.
+		// Sage reads back 39.6 percent against a 30 percent target, which is
+		// exactly what the pricing panel showed in b02, a minute and a half
+		// earlier. That is not a coincidence to be smoothed over, it is the proof:
+		// the assistant and the panel are reading the same records.
+		//
+		// The question is asked off camera (`prepare`), because a real answer takes
+		// about twenty-five seconds to settle and that is a progress indicator, not
+		// a product. See the sageAnswer routine in capture-silent.mjs for why it
+		// also starts a new conversation first.
+		//
+		// NOTHING HERE MAY SAY WHAT SRC/LIB/SAGE.TS FORBIDS. Read that file's
+		// limits before touching a card. Two of them a card will reach for on its
+		// own: Sage changes nothing by itself, and the one thing it can prepare
+		// waits for a person. Neither is claimed here, because neither is on
+		// screen in this beat.
+		//
+		// Measured against the live page at 1600x1000 after the prepare routine
+		// puts the question at the top of the thread pane, bar floor y=768: the
+		// question y=160..186, the food-cost line y=288..314 (with the dietary line
+		// under it, y=254..374 as a pair), and the wedding's own source row at
+		// y=698..718. Everything the beat rings clears the bar.
+		id: 'b09b',
+		path: '/sage',
+		prepare: 'sageAnswer',
+		cards: [
+			{ text: 'Ask it about the job, in plain words.', hold: 3.8 },
+			// The screen: "Confirmed: The food cost is 39.6%, which is over your
+			// target of 30%." Same figure as the pricing panel in b02.
+			// ONE IDEA, ONE NUMBER. This card was two sentences ("Food cost 39.6
+			// percent. You have seen that number.") and broke the beat's own rule the
+			// header sets out. The tie back to b02 survives the trim: it is the same
+			// figure, and the viewer watched the panel work it out ninety seconds ago.
+			{ text: 'The same 39.6 percent the panel found.', hold: 4.2 },
+			// WAS "Every line says which record it read." Read off the delivered frame,
+			// that is a claim the screen does not quite make: each ANSWER line carries
+			// its evidence class ("Confirmed:"), and the records are listed once,
+			// underneath, as "Where this came from". That list is in frame under this
+			// card with the wedding's own row ringed inside it, so the card is now
+			// about the list. Close enough is not a standard this cut has ever used.
+			{ text: 'It lists every record it read.', hold: 3.6 }
+		],
+		moves: [
+			// The thread's own question block, label and all. NOT the question text:
+			// the sidebar carries it too, truncated, and .first() takes that one.
+			{ at: 1.2, act: 'ring', text: '^You asked$', up: 1, pad: 8 },
+			// The figure, not the sentence around it. See SAGE_MUST_SHOW.
+			{ at: 5.2, act: 'ringOnly', text: '39\\.6%', pad: 8 },
+			{ at: 9.4, act: 'ringOnly', text: 'Alvarez-Whitman Wedding — 2026', up: 1, pad: 8 },
+			{ at: 12.4, act: 'ringOff' }
 		]
 	},
 	{

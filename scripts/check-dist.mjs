@@ -143,7 +143,11 @@ for (const step of loopSteps) {
 	}
 }
 
-const demoGuideSteps = ['quote', 'shop', 'prep', 'send', 'receive', 'update'];
+// The written guide walks the film in order, so this list is the film's order:
+// the nutrition panel sits with the prep list it follows on screen, and the
+// Sage answer sits after the price carries back. Added 2026-09-06 with the two
+// beats (walkthrough v5).
+const demoGuideSteps = ['quote', 'shop', 'prep', 'nutrition', 'send', 'receive', 'update', 'ask'];
 if (
 	!homeHtml.includes('data-demo-guide') ||
 	!homeHtml.includes('data-demo-guide-jump') ||
