@@ -9,6 +9,7 @@
  * Run: npm run test:support
  */
 import { spawnSync } from 'node:child_process';
+import { createServer } from 'node:net';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -34,6 +35,17 @@ const build = spawnSync(
 	['esbuild', 'api/support.ts', '--bundle', '--platform=node', '--format=esm', `--outfile=${outFile}`],
 	{ cwd: root, encoding: 'utf8' }
 );
+const buildSmtp = spawnSync(
+	'npx',
+	['esbuild', 'src/lib/smtp.ts', '--bundle', '--platform=node', '--format=esm', `--outfile=${join(outDir, 'smtp.mjs')}`],
+	{ cwd: root, encoding: 'utf8' }
+);
+if (buildSmtp.status !== 0) {
+	console.error(buildSmtp.stderr || buildSmtp.stdout);
+	rmSync(outDir, { recursive: true, force: true });
+	process.exit(1);
+}
+
 if (build.status !== 0) {
 	console.error(build.stderr || build.stdout);
 	rmSync(outDir, { recursive: true, force: true });
@@ -161,6 +173,103 @@ await handler(
 );
 check('one sender being throttled does not throttle another', res.statusCode !== 429, `got ${res.statusCode}`);
 
+// ---------------------------------------------------------------------------
+// LOCAL CAPTURE. A real SMTP conversation against a real socket, so this proves
+// the transport rather than the intention. The stub stands in for Mailpit so
+// the suite passes on a machine that has never installed it.
+// ---------------------------------------------------------------------------
+function startCaptureServer() {
+	const captured = [];
+	const server = createServer((socket) => {
+		let inData = false;
+		let message = '';
+		socket.setEncoding('utf8');
+		socket.write('220 stub ESMTP\r\n');
+		socket.on('data', (chunk) => {
+			for (const line of chunk.split('\r\n')) {
+				if (line === '' && !inData) continue;
+				if (inData) {
+					if (line === '.') {
+						inData = false;
+						captured.push(message);
+						message = '';
+						socket.write('250 Ok: queued\r\n');
+					} else {
+						message += `${line}\n`;
+					}
+					continue;
+				}
+				if (/^HELO|^EHLO/i.test(line)) socket.write('250 stub\r\n');
+				else if (/^MAIL FROM:/i.test(line)) socket.write('250 Ok\r\n');
+				else if (/^RCPT TO:/i.test(line)) socket.write('250 Ok\r\n');
+				else if (/^DATA/i.test(line)) { inData = true; socket.write('354 End data with <CR><LF>.<CR><LF>\r\n'); }
+				else if (/^QUIT/i.test(line)) { socket.write('221 Bye\r\n'); socket.end(); }
+			}
+		});
+		socket.on('error', () => {});
+	});
+	return { server, captured };
+}
+
+const { server: captureServer, captured } = startCaptureServer();
+const capturePort = await new Promise((resolve) => {
+	captureServer.listen(0, '127.0.0.1', () => resolve(captureServer.address().port));
+});
+
+// Both knobs, as the app requires. A real key is set at the same time on
+// purpose: capture must win over delivery, not merely fill in for it.
+process.env.EMAIL_TRANSPORT = 'smtp';
+process.env.SMTP_URL = `smtp://127.0.0.1:${capturePort}`;
+process.env.RESEND_API_KEY = 'test-key-not-real';
+let resendWasCalled = false;
+globalThis.fetch = async () => {
+	resendWasCalled = true;
+	return new Response(JSON.stringify({ id: 'stub' }), { status: 200, headers: { 'content-type': 'application/json' } });
+};
+
+res = mockResponse();
+await handler(
+	request({ headers: { accept: 'application/json', 'x-forwarded-for': '7.7.7.7' }, body: { ...valid, name: 'Sam Smith' } }),
+	res
+);
+check('a capture send is reported as sent', res.statusCode === 200, `got ${res.statusCode}`);
+check('capture beats delivery when both are configured', resendWasCalled === false);
+check('exactly one message reached the capture server', captured.length === 1, `got ${captured.length}`);
+const delivered = captured[0] ?? '';
+check('the captured mail goes to the support mailbox', delivered.includes('To: support@costcook.io'), delivered.slice(0, 80));
+check('the captured mail replies to the visitor', delivered.includes('Reply-To: sam@kitchen.com'));
+check('the captured mail carries the question', delivered.includes('How do I cost a 180 guest wedding?'));
+check('the captured mail names the sender', delivered.includes('Name: Sam Smith'));
+
+// The guard that makes this safe to ship beside the production sender.
+const { sendViaLoopbackSmtp } = await import(outFile.replace('support.mjs', 'smtp.mjs')).catch(() => ({}));
+if (sendViaLoopbackSmtp) {
+	let refused = false;
+	try {
+		await sendViaLoopbackSmtp('smtp://smtp.sendgrid.net:25', {
+			from: 'a@b.com', to: 'c@d.com', subject: 's', text: 't'
+		});
+	} catch (error) {
+		refused = /never delivers real mail/.test(String(error));
+	}
+	check('a non-loopback SMTP_URL is refused before a socket opens', refused);
+}
+
+// And with the transport knob missing, a stray SMTP_URL must not divert mail.
+process.env.EMAIL_TRANSPORT = '';
+resendWasCalled = false;
+res = mockResponse();
+await handler(
+	request({ headers: { accept: 'application/json', 'x-forwarded-for': '8.8.8.8' }, body: valid }),
+	res
+);
+check('SMTP_URL alone does not reroute mail away from Resend', resendWasCalled === true && captured.length === 1);
+
+captureServer.close();
+delete process.env.EMAIL_TRANSPORT;
+delete process.env.SMTP_URL;
+delete process.env.RESEND_API_KEY;
+
 rmSync(outDir, { recursive: true, force: true });
 
 if (failures.length > 0) {
@@ -168,4 +277,4 @@ if (failures.length > 0) {
 	console.error(failures.map((failure) => `- ${failure}`).join('\n'));
 	process.exit(1);
 }
-console.log(`Support endpoint verified: ${passed} checks across method, validation, header injection, bot trap, misconfiguration, no-script redirect, and rate limiting.`);
+console.log(`Support endpoint verified: ${passed} checks across method, validation, header injection, bot trap, misconfiguration, no-script redirect, rate limiting, and local Mailpit capture.`);
