@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
 /**
- * Browser verification for /compare. Same CDP harness as verify-first-dish.mjs:
+ * Browser verification for /compare. Same CDP harness as verify-onboarding.mjs:
  * one headless Chromium driven over DevTools, no Playwright dependency.
  *
  * WHY THIS ROUTE HAS ONE AT ALL, FROM 2026-09-05. It did not, and it had just
@@ -264,7 +264,14 @@ try {
 } finally {
 	if (socket?.readyState === WebSocket.OPEN) socket.close();
 	browser.kill('SIGTERM');
-	await rm(profile, { recursive: true, force: true });
+	// Chromium can still be flushing its profile when we get here, and an
+	// ENOTEMPTY thrown from the finally block replaces the assertion results
+	// with a teardown stack trace, which is how a failing run reads as a crash.
+	try {
+		await rm(profile, { recursive: true, force: true });
+	} catch {
+		// A leftover temp profile is not a verification result.
+	}
 }
 
 if (failures.length > 0) {

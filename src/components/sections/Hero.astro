@@ -18,7 +18,7 @@ import { cta, launchPlan } from '../../lib/site';
   whole chain and draws it, because the manual work being replaced is the chain,
   not the quote.
 -->
-<section class="container-page pt-14 pb-section-tight lg:pt-20">
+<section class="container-page pt-10 pb-section-tight sm:pt-14 lg:pt-20">
 	<div class="mx-auto max-w-3xl text-center">
 	<!-- The audience line names restaurants on purpose. Until 2026-08-30 it said
 	     "caterers and meal-prep kitchens" while Who this is for, 2,000px down,
@@ -32,24 +32,51 @@ import { cta, launchPlan } from '../../lib/site';
 	</p>
 
 	<h1
-		class="anim-enter mx-auto mt-5 max-w-[22ch] text-display font-semibold"
+		class="anim-enter mx-auto mt-4 max-w-[22ch] text-display font-semibold sm:mt-5"
 		style="--enter-delay: 70ms"
 	>
 		Cost it, buy it, prep it, pack it. Enter the numbers once.
 	</h1>
 
+	<!-- MOVED HERE 2026-09-06, from the "See it run" h2 further down the page.
+	     The heading above names the chain in the abstract; this names the job the
+	     reader actually has on the calendar, so the fold now says what CostCook
+	     does AND on what. It is the film's promise, and it is the third of the
+	     seven headings in the documented heading-only scan
+	     (docs/demo-video-rebuild-2026-08-21.md), which is why it reads as a claim
+	     and not as a caption.
+
+	     COST, AND WHO PAID IT. This line adds 100px. On its own that put the
+	     pricing figure at 913.9px against the 844px fold at 320x844, and
+	     verify-homepage.mjs failed on it: that suite asserts the proof starts
+	     inside the first viewport on phones, which is the whole scroll cue.
+	     Rather than shave margins to clear the number, both fold paragraphs step
+	     from text-lede to text-base below sm, TOGETHER so their relative weight
+	     is unchanged, and the section's top padding drops to pt-10. Measured
+	     after: 795px at 320, 671px at 390 (it was 712px at 390 before this line
+	     existed, so the fold is tighter than it looks here). Re-measure with
+	     `npm run verify:homepage` before shipping any edit to these two
+	     paragraphs; the 320px fold is the binding constraint, not 390px.
+	     story: docs/stories/homepage-fold-promise.story.md -->
+	<p
+		class="anim-enter mx-auto mt-4 max-w-[54ch] text-base font-medium text-ink sm:mt-6 sm:text-lede"
+		style="--enter-delay: 110ms"
+	>
+		Follow one 180-guest wedding from quote to shelf. Then three events in one run.
+	</p>
+
 	<!-- The lede does NOT re-list the chain: the band below draws it, and saying
 	     it twice pushed the drawing under the fold on a phone. It says why the
 	     chain matters instead. -->
 	<p
-		class="anim-enter mx-auto mt-6 max-w-[54ch] text-lede text-ink-soft"
+		class="anim-enter mx-auto mt-3 max-w-[54ch] text-base text-ink-soft sm:mt-4 sm:text-lede"
 		style="--enter-delay: 150ms"
 	>
 		A catering order is one job pretending to be six. Enter the menu and the head count
 		once. The same numbers run to the pack list and back.
 	</p>
 
-	<div class="anim-enter mt-8" style="--enter-delay: 230ms">
+	<div class="anim-enter mt-6 sm:mt-8" style="--enter-delay: 230ms">
 		<a
 			href={cta.href}
 			target={cta.target}
@@ -62,10 +89,10 @@ import { cta, launchPlan } from '../../lib/site';
 		<!-- The interpolations sit inline: a newline before {expr} is collapsed
 		     away by the compiler, which is how this line shipped reading
 		     "then$49/month" for one build. -->
-		<p class="mx-auto mt-4 max-w-[52ch] text-sm text-ink-soft">
+		<p class="mx-auto mt-3 max-w-[52ch] text-sm text-ink-soft sm:mt-4">
 			<strong class="font-semibold text-ink">{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} per kitchen workspace. Card up front, charged $0 today. Nothing to install.
 		</p>
-		<p class="mt-4 text-sm">
+		<p class="mt-3 text-sm sm:mt-4">
 			<a href="#demo" class="btn-quiet"
 				>Watch the 2:30 product tour <span aria-hidden="true">↓</span></a
 			>
@@ -89,7 +116,7 @@ import { cta, launchPlan } from '../../lib/site';
 
 	     ALT TEXT IS A CLAIM. Both alts read off the crop word for word; if the
 	     crop moves, they move. story: docs/stories/homepage-visual-guidance.story.md -->
-	<figure class="anim-enter mx-auto mt-10 max-w-3xl" style="--enter-delay: 300ms">
+	<figure class="anim-enter mx-auto mt-6 max-w-3xl sm:mt-10" style="--enter-delay: 300ms">
 		<!-- Considered Composite; not used because this is one fixed, three-step
 		     explanation, not a reusable tree of content nodes. -->
 		<div class="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
