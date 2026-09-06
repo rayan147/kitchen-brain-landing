@@ -39,12 +39,23 @@ import StickyCta from '../components/StickyCta.astro';
   If it is ever re-litigated, the figures to take are the ones the 2026-08-21
   note took, at 390x844 with every [data-reveal] forced revealed.
 
-  KNOWN CONSEQUENCE, StickyCta. The phone bar appears once #demo has scrolled
+  KNOWN CONSEQUENCE, StickyCta, MEASURED at 390x844 on this build with every
+  [data-reveal] forced revealed. The phone bar appears once #demo has scrolled
   off the top and hides once #start is in view. Its rule is "the stretch where
   the reader has no primary within reach", and that is still exactly the stretch
-  it covers; what changed is that the stretch is now most of the page rather
-  than the back half of it. The trigger is deliberately left on #demo, because
-  moving it to a later section would invent a threshold nobody measured.
+  it covers; the stretch is simply longer.
+
+    Scroll range 30,488px. The bar now appears at 5,299px and hides at 27,446px:
+    22,147px, or 72.6% of the scroll.
+
+    Before the move it would have appeared at 8,745px on this same build, since
+    the only thing that changed is that #demo no longer sits behind #problem
+    (2,238px) and #who (1,208px). That is 18,701px, or 61.3%.
+
+  So the bar was already carrying most of the page. The move adds 11.3 points,
+  not a category change. The trigger is deliberately left on #demo: moving it to
+  a later section would invent a threshold nobody measured, and the rule it
+  implements has not changed.
 
   SeeItRun moved from fourth to third on 2026-08-21. SETTLED BY MEASUREMENT at
   390x844, so nobody has to re-litigate it:
