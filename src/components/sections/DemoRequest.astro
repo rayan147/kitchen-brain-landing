@@ -487,7 +487,12 @@ import { DEMO_TRAP_FIELD } from '../../lib/demo-request';
 	/* Off-screen rather than display:none or hidden: a bot reading the DOM sees
 	   an ordinary field, and no sighted or screen-reader user meets it. */
 	.trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-	.send-status:empty { display: none; }
+	/* NOT display:none when empty. A display:none element is out of the
+	   accessibility tree, so a live region that is hidden until it has something
+	   to say does not exist at the moment it is given something to say, and the
+	   announcement is unreliable. WCAG 4.1.3 Status Messages is Level AA, and AA
+	   is this site's floor. The box is collapsed instead. */
+	.send-status:empty { margin-top: 0; }
 	.send-status { margin-top: 1.1rem; font-size: var(--text-body-sm); line-height: 1.5; color: var(--color-ink-soft); }
 	.send-status[data-tone='error'] { color: var(--color-amber-deep); font-weight: 600; }
 	/* A min-height rather than nothing, so the step-transition height animation

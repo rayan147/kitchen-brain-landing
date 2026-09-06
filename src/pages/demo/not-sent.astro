@@ -30,11 +30,14 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('CostCook 
 			Something on my side stopped it, so nothing reached me. Rather than ask you to retype it into
 			the same form, book a time straight away, email it, or call.
 		</p>
+		<!-- Same shape as /contact/not-sent: the primary is the thing that is
+		     certainly working. "Book 15 minutes" stays a quiet secondary, which is
+		     the role CLAUDE.md gives that label; this page invents no new one. -->
 		<p class="mt-8 flex flex-wrap gap-x-6 gap-y-3">
-			<a href={booking.url} target="_blank" rel="noopener noreferrer" class="btn-primary"
+			<a href={mailtoHref} class="btn-primary">Email {site.email}</a>
+			<a href={booking.url} target="_blank" rel="noopener noreferrer" class="btn-quiet"
 				>Book 15 minutes</a
 			>
-			<a href={mailtoHref} class="btn-quiet">Email {site.email}</a>
 			<a href={site.phoneHref} class="btn-quiet">Call {site.phone}</a>
 		</p>
 		<p class="mt-6 max-w-[58ch] text-sm text-ink-soft">

@@ -261,11 +261,16 @@ try {
 		set('firstName', 'Maya');
 		set('lastName', 'Ortiz');
 		set('email', 'maya@example.com');
+		const liveRegionDisplay = getComputedStyle(document.querySelector('[data-send-status]')).display;
 		form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 		await new Promise((resolve) => setTimeout(resolve, 900));
 		return {
 			step: form.dataset.currentStep,
 			sendState: form.dataset.sendState,
+			// A live region that is display:none until it has something to say is
+			// not in the accessibility tree when it is given something to say.
+			// WCAG 4.1.3 is AA, and AA is the floor here.
+			statusWasInTheTree: liveRegionDisplay,
 			status: document.querySelector('[data-send-status]')?.textContent.trim(),
 			draftSurvived: form.elements.email.value,
 			buttonEnabled: !document.querySelector('[data-send]').disabled
@@ -274,6 +279,7 @@ try {
 	assert(failedSend.step === '2', `failed send: advanced to step ${failedSend.step} anyway`);
 	assert(failedSend.sendState === 'failed', `failed send: state is ${failedSend.sendState}`);
 	assert(/still here/.test(failedSend.status ?? ''), `failed send: visitor was told "${failedSend.status}"`);
+	assert(failedSend.statusWasInTheTree !== 'none', 'failed send: the live region was display:none before it was written to, so the message may never be announced');
 	assert(failedSend.draftSurvived === 'maya@example.com', 'failed send: the visitor lost what they typed');
 	assert(failedSend.buttonEnabled, 'failed send: the send button stayed disabled, so they cannot retry');
 	apiStub.status = 200;
