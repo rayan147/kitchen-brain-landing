@@ -58,9 +58,9 @@
 | 0 | Hero: You do not need to enter your whole walk-in | — | 1–2 | wall → doorway, with a map of three parts |
 | 1 | Part 1 · Before you start | `before` | 3–6 | vague dread → a have-ready ticket (two papers, one phone) beside the welcome screen → one optional question |
 | 2 | Part 2 · The five stages | `stages` | 7–10 | "I will be typing all night" → five scenes, each one paragraph beside the real screen → checkable → tested |
-| 3 | Part 3 · After setup: where the app leaves you | `after` | 10 | done → next action named |
-| 3b | The rest of your menu | `after-menu` | 12 | "now the other 40 dishes by hand" → same doors, staged review |
-| 3c | The rest of your crew | `after-crew` | 12 | "I roll this out alone" → a link, no password, a list waiting |
+| 3 | Part 3 · After setup: where the app leaves you | `after` | 10 | done → the completion screen itself, and one button to tap |
+| 3b | The rest of your menu | `after-menu` | 12 | "now the other 40 dishes by hand" → two scenes: the Purchases card's Import invoice, and the same import box |
+| 3c | The rest of your crew | `after-crew` | 12 | "I roll this out alone" → one scene: the Invite a teammate card, one field, one button |
 | 3d | Close | — | 12 | undecided → started |
 
 ### Step 5 — Character Voices
@@ -74,10 +74,10 @@
 - §0 "This will want everything I have" → "It wants one dish, and here are the three questions this page answers."
 - §1 "I am bad at this, and I will be typing all night" → "Have the invoice and the recipe within reach. You confirm what it read; you do not type it."
 - §2 "Five stages sounds like a week" → "Two of them are uploads, here is each screen as I will meet it, and I can check the number."
-- §3 "It says ready. Now what?" → "It names the next screen: the shopping list."
-- §3b "So I key the other forty dishes by hand" → "The rest of the menu comes in the same way: paper in, staged facts back, my last word on every line."
-- §3c "Rolling this out is on me" → "They join from a link, no password, and land on the list I built, not an empty kitchen."
-- §3d "Is this worth an evening?" → "One dish, and you will know. Then the crew will too."
+- §3 "It says ready. Now what?" → "Here is the screen; tap Open shopping list."
+- §3b "So I key the other forty dishes by hand" → "Kitchen records, Import invoice on the Purchases card; the recipe card into the same box."
+- §3c "Rolling this out is on me" → "Settings, Team & access, one email field, Send invitation; they land on the list I built."
+- §3d "Is this worth an evening?" → "Tonight one dish with a price; tomorrow the next invoice into the same box, and two emails."
 
 ### Step 7 — Sorkin: headline / subhead
 
@@ -107,7 +107,7 @@
 - **Hand-off lines:**
   - §0 → §1: the map's first row, "Before you start".
   - §1 → §2: "Those answers take a minute. These five stages are the work."
-  - §2 → §3: "Stage five ends on a screen that says your kitchen is ready. Here is what it offers next."
+  - §2 → §3: "Stage five ends on a screen that says your kitchen is ready. Tap Open shopping list."
   - §3 → §3b: "The first dish was the hard one. The rest come in the same way."
   - §3b → §3c: "A catalog nobody else opens is a spreadsheet with a login. This is how the crew gets one."
   - §3c → §3d: "Invite after the first order exists, so they arrive to a list."
@@ -274,3 +274,20 @@
   links, no passwords") are now plain statements; the $1.62 is the page's
   one snap. Steps 4, 5, 6, 7 and 10 above were stale from the tap-list
   version and are corrected in place.
+- **One sentence, and Part 3 as scenes (revision, 2026-09-06, owner
+  direction):** three more notes from the owner. Part 3 was "not clear what
+  to do after your initial onboarding": it described the idea (same doors,
+  staged facts) and never named a screen. It is now three scenes with the
+  real screens: the completion screen with "Open shopping list", the
+  Purchases card on Kitchen records with its "Import invoice" link, the
+  import box outside setup, and the "Invite a teammate" card on Settings,
+  Team & access, each captured after the first order was created. Every
+  explanation on the page, stage or after-scene, is one sentence ("no one
+  wants to read a novel"); the built-page contract counts full stops outside
+  quoted labels and fails on a second one. The captures were retaken twice:
+  once bounded to the main content area instead of the full 1440px frame, so
+  the cards read at phone size ("take better screenshots"), and once against
+  the real AI provider, because the stubbed harness left every food-facts
+  chip at "don't know" and the owner caught it: chicken thigh should carry
+  animal product and meat. It does now, in Sage's own draft, red on the
+  picture. The close is the three next actions in one sentence.

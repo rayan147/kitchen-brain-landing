@@ -78,7 +78,7 @@ if (scenes !== 5) failures.push(`expected 5 scenes, received ${scenes}`);
 // Seven captures: the welcome in Part 1, then one per stage with two on
 // stage two (the cards and the dropzone behind them).
 const sceneShots = html.match(/<img\b[^>]*\/proof\/setup\/[^>]*>/g) ?? [];
-if (sceneShots.length !== 7) failures.push(`expected 7 setup captures on the page, received ${sceneShots.length}`);
+if (sceneShots.length !== 11) failures.push(`expected 11 setup captures on the page, received ${sceneShots.length}`);
 for (const tag of sceneShots) {
 	const src = tag.match(/src="([^"]+)"/)?.[1] ?? '';
 	const alt = tag.match(/alt="([^"]*)"/)?.[1] ?? '';
@@ -97,7 +97,7 @@ for (const tag of sceneShots) {
 		failures.push(`${src} declares ${declaredOf('width')}x${declaredOf('height')} but the PNG is ${w}x${h}`);
 	}
 }
-for (const src of ['00-welcome', '02-choices', '02-dropzone', '03-chips', '04-choices', '05-first-order']) {
+for (const src of ['00-welcome', '02-choices', '02-dropzone', '03-chips', '04-choices', '05-first-order', '06-ready', '07-records', '08-import', '09-team']) {
 	if (!html.includes(`/proof/setup/${src}.png`)) failures.push(`scene capture ${src} is missing`);
 }
 // RC-58: the three choices stage two opens on and the two at stage four, by
@@ -201,9 +201,17 @@ for (const leak of ['E2E First Kitchen', 'e2e.test', 'sandbox/demo', 'SANDBOX BU
 	if (html.includes(leak)) failures.push(`the page leaks internal provenance: ${leak}`);
 }
 
-// Part 3 must survive the build with both tracks and their boundaries.
-const tracks = (html.match(/class="fd-ticket-list fd-after-track"/g) ?? []).length;
-if (tracks !== 2) failures.push(`expected 2 after-setup tracks (menu, crew), received ${tracks}`);
+// Part 3 must survive the build as three scenes (next invoice, next dish,
+// two emails) with their boundaries. One sentence each (owner, 2026-09-06).
+const afterScenes = (html.match(/class="fd-after-scene fd-scene"/g) ?? []).length;
+if (afterScenes !== 3) failures.push(`expected 3 after-setup scenes, received ${afterScenes}`);
+// Every explanation on the page is one sentence: a stage body or an
+// after-scene body with a second full stop is the novel nobody reads.
+const bodies = [...html.matchAll(/class="fd-stage-body"[^>]*>([^<]*)</g)].map((m) => m[1]);
+for (const body of bodies) {
+	const stops = (body.replace(/[“”][^“”]*[“”]/g, '').match(/[.!?](\s|$)/g) ?? []).length;
+	if (stops > 1) failures.push(`explanation runs past one sentence: "${body.slice(0, 60)}…"`);
+}
 for (const [text, label] of [
 	['Your kitchen is ready', 'completion heading'],
 	['Open shopping list', 'completion first action'],

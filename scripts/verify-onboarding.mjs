@@ -196,7 +196,7 @@ try {
 			mapLinks: [...document.querySelectorAll('.fd-map-link')].map((a) => a.getAttribute('href')),
 			mapTargets: [...document.querySelectorAll('.fd-map-link')].every((a) => !!document.querySelector(a.getAttribute('href'))),
 			parts: document.querySelectorAll('.fd-part-label').length,
-			tracks: document.querySelectorAll('.fd-after-track').length,
+			tracks: document.querySelectorAll('.fd-after-scene').length,
 			trunk: (() => {
 				// Trunk test from Part 3: scrolled to #after, the part label must sit
 				// inside the viewport so a reader knows the page, the part, and what
@@ -241,7 +241,7 @@ try {
 	// it has to actually load — a 404 here is a broken proof, not a missing
 	// decoration.
 	assert(desktop.shot, 'desktop: no setup capture is on the page');
-	assert(desktop.shot?.count === 7, `desktop: expected 7 setup captures, received ${desktop.shot?.count}`);
+	assert(desktop.shot?.count === 11, `desktop: expected 11 setup captures, received ${desktop.shot?.count}`);
 	assert(desktop.shot?.loaded, 'desktop: a setup capture did not load');
 	assert(
 		desktop.shot && desktop.shot.rendered <= desktop.shot.natural / 2,
@@ -254,7 +254,7 @@ try {
 	assert(desktop.mapLinks.length === 3, `desktop: expected 3 map links, received ${desktop.mapLinks.length}`);
 	assert(desktop.mapTargets, 'desktop: a map link points at a missing section');
 	assert(desktop.parts === 3, `desktop: expected 3 part labels, received ${desktop.parts}`);
-	assert(desktop.tracks === 2, `desktop: expected 2 after-setup tracks, received ${desktop.tracks}`);
+	assert(desktop.tracks === 3, `desktop: expected 3 after-setup scenes, received ${desktop.tracks}`);
 	assert(desktop.trunk, 'desktop: Part 3 fails the trunk test (part label not visible after anchor scroll)');
 	assert(desktop.revealHidden === 0, `desktop: ${desktop.revealHidden} reveal section(s) never settled`);
 
