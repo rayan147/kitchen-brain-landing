@@ -17,12 +17,45 @@ const pages = readdirSync(dist, { recursive: true, encoding: 'utf8' }).filter((f
 );
 let svgCount = 0;
 let failed = false;
+
+// THE CSP IS A DEPLOY-ONLY HEADER, SO ONLY THE BUILT HTML CAN CATCH THIS.
+// vercel.json serves `script-src 'self'` with no 'unsafe-inline', no nonce and
+// no hash. `astro dev` and `astro preview` send no CSP at all, so an inline
+// script runs in every local check and is refused on costcook.io:
+//
+//   Executing inline script violates the following Content Security Policy
+//   directive 'script-src 'self''. The action has been blocked.
+//
+// That is how the product tour shipped frozen on stop 1 for as long as its
+// handler was `<script is:inline>` (also what `define:vars` compiles to), with
+// verify-product-tour.mjs walking all twelve stops and passing throughout.
+// `type="application/ld+json"` is exempt: it is data the browser never executes,
+// which is why the blog and FAQ structured-data blocks are unaffected.
+// Inline `on*=` handlers are blocked by the same directive and are checked too.
+const scriptTag = /<script\b([^>]*)>/g;
+const inlineHandler = /\son[a-z]+\s*=\s*["']/g;
 for (const page of pages) {
 	const html = readFileSync(join(dist, page), 'utf8');
 	const svgs = html.match(/<svg\b[^>]*>/g) ?? [];
 	svgCount += svgs.length;
 	for (const tag of svgs.filter((t) => !sized(t))) {
 		console.error(`check-dist: ${page}: inline svg missing intrinsic width/height:\n  ${tag}`);
+		failed = true;
+	}
+	for (const [tag, attributes] of html.matchAll(scriptTag)) {
+		if (/\ssrc\s*=/.test(attributes)) continue;
+		if (/type\s*=\s*["']application\/ld\+json["']/.test(attributes)) continue;
+		console.error(
+			`check-dist: ${page}: inline script is blocked by the production CSP ` +
+				`(script-src 'self'), so it never runs on costcook.io:\n  ${tag}`
+		);
+		failed = true;
+	}
+	for (const [handler] of html.matchAll(inlineHandler)) {
+		console.error(
+			`check-dist: ${page}: inline event handler${handler.trimEnd()} is blocked by the ` +
+				"production CSP (script-src 'self')"
+		);
 		failed = true;
 	}
 }
@@ -428,6 +461,7 @@ for (const target of menuTargets) {
 
 if (failed) process.exit(1);
 console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s) all carry intrinsic width/height`);
+console.log(`check-dist: ${pages.length} built page(s) carry no CSP-blocked inline script or event handler`);
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
 console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
 console.log(`check-dist: homepage demo retains ${demoGuideSteps.length} readable handoffs and the multi-run boundary`);
