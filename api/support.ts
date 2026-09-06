@@ -7,7 +7,13 @@ import {
 	SUPPORT_INVALID_MESSAGE,
 	validateSupportRequest,
 	type SupportResponse
-} from '../src/lib/support';
+	// The .js extension is REQUIRED and is not a typo. Vercel compiles this file
+	// to api/support.js and runs it as a real ES module, where Node resolves
+	// specifiers literally: an extensionless '../src/lib/support' throws
+	// ERR_MODULE_NOT_FOUND at runtime. TypeScript understands a .js specifier
+	// pointing at a .ts source. Bundlers hide this, which is why the local
+	// esbuild test passed while the deployed function returned 500.
+} from '../src/lib/support.js';
 
 /**
  * The contact form's transport. Same shape as kitchen-brain's

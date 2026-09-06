@@ -9,9 +9,19 @@
  * Run: npm run test:support
  */
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+
+// Vercel runs api/*.ts as real ES modules, where Node resolves relative
+// specifiers literally and an extensionless one throws ERR_MODULE_NOT_FOUND at
+// runtime. esbuild resolves them happily, so the bundle below can never catch
+// it: this is a source check, and it is the only reason the 500 that shipped to
+// a preview cannot ship again.
+const apiSource = readFileSync(new URL('../api/support.ts', import.meta.url), 'utf8');
+const badSpecifiers = [...apiSource.matchAll(/from\s+'(\.[^']*)'/g)]
+	.map((match) => match[1])
+	.filter((specifier) => !/\.(js|mjs|cjs|json)$/.test(specifier));
 
 const outDir = mkdtempSync(join(tmpdir(), 'costcook-support-'));
 const outFile = join(outDir, 'support.mjs');
@@ -57,6 +67,12 @@ const request = (overrides = {}) => ({
 	...overrides
 });
 const valid = { name: 'Sam', email: 'sam@kitchen.com', message: 'How do I cost a 180 guest wedding?' };
+
+check(
+	'every relative import in api/support.ts carries a file extension',
+	badSpecifiers.length === 0,
+	badSpecifiers.join(', ')
+);
 
 let res = mockResponse();
 await handler(request({ method: 'GET' }), res);
