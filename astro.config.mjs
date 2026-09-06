@@ -3,7 +3,12 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
-// Fully static one-pager — no adapter; Vercel serves the dist/ output.
+// Still fully static, still no adapter: Vercel serves the dist/ output.
+// The one piece of server behaviour on this site, the contact endpoint, is a
+// plain Vercel function in /api rather than an Astro route, precisely so this
+// stays true. An adapter would move the build to .vercel/output/static, and
+// the twenty postbuild guards that read dist/ would stop guarding anything.
+// See the header of api/support.ts.
 export default defineConfig({
 	site: 'https://costcook.io',
 	integrations: [sitemap()],

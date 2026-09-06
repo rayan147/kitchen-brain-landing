@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import AskSupport from '../components/sections/AskSupport.astro';
 import { demoCta, signIn, site } from '../lib/site';
 
-const emailHref = `mailto:${site.email}?subject=${encodeURIComponent('Question about CostCook')}`;
 ---
 
 <Base
@@ -18,17 +18,15 @@ const emailHref = `mailto:${site.email}?subject=${encodeURIComponent('Question a
 					Tell me about your kitchen, the workflow you are trying to fix, or anything you want to
 					understand before starting CostCook.
 				</p>
-				<div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-					<a href={emailHref} class="btn-primary">Email Rayan</a>
-					<a href={site.phoneHref} class="btn-quiet">Call {site.phone}</a>
-				</div>
+				<AskSupport />
 				<p class="mt-6 max-w-[60ch] text-sm leading-6 text-ink-soft">
 					Already using CostCook? <a
 						href={signIn.href}
 						class="font-medium text-green-deep underline decoration-hairline underline-offset-4 hover:decoration-green"
 						>Sign in to CostCook</a
-					>{' '}and choose <strong class="font-semibold text-ink">Contact support</strong> inside the app so your
-					account email and current screen come with your message.
+					>{' '}and use <strong class="font-semibold text-ink">Contact support</strong> inside the app instead:
+					from there your account email and the screen you are on come with the message, so I do not
+					have to ask which kitchen you are.
 				</p>
 			</div>
 

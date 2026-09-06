@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../lib/site';
+
+/**
+ * Where /api/support sends a browser that posted the form without JavaScript.
+ * The site is static, so it cannot read ?sent=1 on the server; a real page is
+ * the only way a no-script visitor gets told their message arrived.
+ * story: docs/stories/contact-support.story.md
+ */
+---
+
+<Base
+	title="Message sent | CostCook"
+	description="Your question reached CostCook. Rayan replies to every message by email."
+	path="/contact/sent"
+>
+	<section class="container-page py-section" aria-labelledby="sent-title">
+		<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">ASK · SENT</p>
+		<h1 id="sent-title" class="mt-4 max-w-[20ch] text-display font-semibold">
+			Your question is with me.
+		</h1>
+		<p class="mt-6 max-w-[58ch] text-lede text-ink-soft">
+			I reply to every message myself, to the address you left, usually the same day. If it is
+			urgent, call {site.phone}.
+		</p>
+		<p class="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+			<a href="/" class="btn-quiet">Back to the homepage</a>
+			<a href={site.phoneHref} class="btn-quiet">Call {site.phone}</a>
+		</p>
+	</section>
+</Base>
