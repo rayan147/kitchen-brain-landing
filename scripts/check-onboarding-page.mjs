@@ -160,6 +160,23 @@ for (const leak of ['E2E First Kitchen', 'e2e.test', 'sandbox/demo', 'SANDBOX BU
 	if (html.includes(leak)) failures.push(`the page leaks internal provenance: ${leak}`);
 }
 
+// Part 3 must survive the build with both tracks and their boundaries.
+const tracks = (html.match(/class="fd-doors-list fd-after-track"/g) ?? []).length;
+if (tracks !== 2) failures.push(`expected 2 after-setup tracks (menu, crew), received ${tracks}`);
+for (const [text, label] of [
+	['Your kitchen is ready', 'completion heading'],
+	['Open shopping list', 'completion first action'],
+	['Go to Today', 'completion second action'],
+	['pasted text', 'the five doors (RC-38)'],
+	['quoted back', 'unreadable-is-not-guessed (RC-39)'],
+	['one-time link', 'invite mechanism (RC-52)'],
+	['join as Staff', 'invited role (RC-52)'],
+	['Staff can open cost screens', 'Staff-sees-costs caveat (RC-52)'],
+	['href="/features/team-and-access"', 'link to the Team and Access guide'],
+	['id="after-menu"', 'menu track anchor'],
+	['id="after-crew"', 'crew track anchor']
+]) requireText(text, label);
+
 // One primary per end of the page, both rendering the site's single CTA
 // label, and the demo link never promoted to a second primary here.
 const primaries = (html.match(/class="btn-primary[ "]/g) ?? []).length;

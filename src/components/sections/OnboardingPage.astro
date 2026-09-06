@@ -114,6 +114,51 @@ const guards = [
 	'Press “Start over” by mistake and your ingredients, recipes, menus and orders stay. Only the guide’s progress resets.',
 	'Lose the wifi mid-save and nothing is written and nothing is claimed. What you typed is still on screen, and the same button retries.'
 ] as const;
+
+/**
+ * Part 3. Every line read off `sandbox/demo` on 2026-09-06.
+ * 3a: `src/lib/components/setup/SetupCompletionSummary.svelte`.
+ * 3b: the import queue (RC-38, RC-39), Sage's recipe door (RC-58), later
+ *     prices (RC-08). Nothing about what extraction returns (RC-55 stub).
+ * 3c: `src/routes/settings/team/+page.svelte` and `+page.server.ts`
+ *     (`INVITED_ROLE = 'STAFF'`), RC-52. No role behaviour beyond that row.
+ */
+const completion = {
+	heading: 'Your kitchen is ready',
+	items: ['Costing settings', 'Business profile', '1 supplier', 'Your ingredients', 'Dish: the one you named', 'Menu', 'Order for your guests'],
+	next: 'Next: check what you need to buy',
+	actions: ['Open shopping list', 'Go to Today']
+} as const;
+
+const menuTrack = [
+	{
+		lead: 'Same doors as the first dish.',
+		body: 'One queue takes a photo, a PDF, a spreadsheet, a Word document or pasted text, and comes back as staged facts for you to confirm. What it could not read is quoted back as it appeared, never guessed.'
+	},
+	{
+		lead: 'A recipe card goes to Sage.',
+		body: 'Hand it a card, a photo, a PDF, text or a link and read the draft it makes. The dish is yours before it is costed.'
+	},
+	{
+		lead: 'Prices keep moving. Orders do not.',
+		body: 'Every purchase you log updates the catalog and any draft costs, without rewriting confirmed orders. The plate cost you checked tonight is still checkable next month.'
+	}
+] as const;
+
+const crewTrack = [
+	{
+		lead: 'Settings, then Team.',
+		body: 'Type an email address. They receive a one-time link to join this kitchen. No password is needed.'
+	},
+	{
+		lead: 'They join as Staff.',
+		body: 'Staff works from the shared kitchen record. Manager adds setup, teammate administration and the Sage checks that show price movement. Owner adds billing and the recipe lifecycle.'
+	},
+	{
+		lead: 'Know the boundary before you send.',
+		body: 'Staff can open cost screens, and there is no custom role. If that is a problem for your kitchen, read the full boundary first.'
+	}
+] as const;
 ---
 
 <!-- story: docs/stories/onboarding.story.md -->
@@ -318,23 +363,92 @@ const guards = [
 			<ul class="fd-guards" role="list">
 				{guards.map((guard) => <li>{guard}</li>)}
 			</ul>
+			<p class="fd-handoff">Which leaves the question the old page never answered: what happens after stage five.</p>
+		</div>
+	</section>
+
+	<section class="fd-band fd-band-cream fd-part" id="after" aria-labelledby="fd-after-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow fd-part-label">Part 3 of 3 &middot; After setup</p>
+				<h2 id="fd-after-heading">Stage five ends on a screen that says your kitchen is ready. Here is what it offers next.</h2>
+			</div>
+			<figure class="fd-completion" aria-labelledby="fd-completion-title">
+				<div class="fd-ticket-head">
+					<p id="fd-completion-title">{completion.heading}</p>
+					<span>Setup &middot; complete</span>
+				</div>
+				<ul class="fd-completion-items" role="list">
+					{completion.items.map((item) => <li>{item}</li>)}
+				</ul>
+				<p class="fd-completion-next">{completion.next}</p>
+				<p class="fd-completion-actions">
+					{completion.actions.map((label) => <span class="fd-completion-action">{label}</span>)}
+				</p>
+				<figcaption>
+					The completion screen as the app prints it. If you named a goal at the welcome, the first
+					line answers it in your words: what the event really costs, what to buy for a date, or whether
+					a price change hurt you.
+				</figcaption>
+			</figure>
+			<p class="fd-handoff">The first dish was the hard one. The rest come in the same way.</p>
+		</div>
+	</section>
+
+	<section class="fd-band fd-part" id="after-menu" aria-labelledby="fd-menu-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">The rest of your menu</p>
+				<h2 id="fd-menu-heading">The next forty dishes are not forty evenings.</h2>
+			</div>
+			<ul class="fd-doors-list fd-after-track" role="list" aria-labelledby="fd-menu-heading">
+				{menuTrack.map((row) => (
+					<li>
+						<p class="fd-track-lead">{row.lead}</p>
+						<p class="fd-track-body">{row.body}</p>
+					</li>
+				))}
+			</ul>
+			<p class="fd-handoff">A catalog nobody else opens is a spreadsheet with a login. This is how the crew gets one.</p>
+		</div>
+	</section>
+
+	<section class="fd-band fd-band-cream fd-part" id="after-crew" aria-labelledby="fd-crew-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">The rest of your crew</p>
+				<h2 id="fd-crew-heading">Two emails, two links, no passwords.</h2>
+				<p>
+					Invite after the first order exists, so they arrive to a shopping list and a prep list,
+					not an empty kitchen. Whoever works this week first; the rest can follow.
+				</p>
+			</div>
+			<ul class="fd-doors-list fd-after-track" role="list" aria-labelledby="fd-crew-heading">
+				{crewTrack.map((row) => (
+					<li>
+						<p class="fd-track-lead">{row.lead}</p>
+						<p class="fd-track-body">{row.body}</p>
+					</li>
+				))}
+			</ul>
+			<p class="fd-doors-gate">
+				Invited teammates join as Staff today. The full Owner, Manager and Staff boundary, and what
+				each can and cannot open, is on the <a href="/features/team-and-access">Team and Access guide</a>.
+			</p>
 		</div>
 	</section>
 
 	<section class="fd-band fd-close" aria-labelledby="fd-close-heading">
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
-				<p class="eyebrow">Where stage five leaves you</p>
-				<h2 id="fd-close-heading">One dish you already knew how to cook, with a price on it.</h2>
+				<p class="eyebrow">Where this leaves you</p>
+				<h2 id="fd-close-heading">One dish with a price on it, and a list your crew can open without you.</h2>
 				<p>
-					A menu holding that dish, an order on a date, and a shopping list in whole packs. That last
-					screen is where the <a href="/tour/main">product tour</a> picks up.
+					The shopping list is where the <a href="/tour/main">product tour</a> picks up. The alternative
+					is another season where the number in your head and the number on the invoice are two
+					different numbers, and the crew works from a text message.
 				</p>
-				<p>
-					The alternative is another season where the number in your head and the number on the
-					invoice are two different numbers.
-				</p>
-				<p class="fd-final">One dish, and you will know.</p>
+				<p class="fd-final">One dish, and you will know. Then they will too.</p>
 				<div class="fd-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				</div>
@@ -677,11 +791,13 @@ const guards = [
 		border-bottom: 1px dashed var(--color-ticket-rule);
 	}
 
-	.fd-door-lead {
+	.fd-door-lead,
+	.fd-track-lead {
 		font-weight: 600;
 	}
 
-	.fd-door-body {
+	.fd-door-body,
+	.fd-track-body {
 		margin-top: 0.25rem;
 		color: var(--color-ink-soft);
 		line-height: 1.6;
@@ -826,6 +942,78 @@ const guards = [
 		border-left: 2px solid var(--color-softamber);
 		color: var(--color-ink-soft);
 		line-height: 1.6;
+	}
+
+	/* The completion screen redrawn on ticket paper: the same head rule as
+	   the hero ticket, so the reader sees the map and the finish line as the
+	   same object. Not a screenshot: the app's chrome would date faster than
+	   its words. */
+	.fd-completion {
+		max-width: 40rem;
+		margin: 1.75rem 0 0;
+		padding: 1.25rem 1.25rem 1rem;
+		background: var(--color-cream);
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 0.25rem;
+		box-shadow: var(--shadow-ticket);
+	}
+
+	.fd-completion-items {
+		display: grid;
+		gap: 0.35rem 1rem;
+		margin: 0.75rem 0 0;
+		padding: 0;
+		list-style: none;
+		color: var(--color-ink);
+		font-size: var(--text-body-sm);
+	}
+
+	@media (min-width: 40rem) {
+		.fd-completion-items {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.fd-completion-items li::before {
+		content: '\2713\00a0';
+		color: var(--color-green-deep);
+	}
+
+	.fd-completion-next {
+		margin-top: 1rem;
+		padding-top: 0.75rem;
+		border-top: 1px dashed var(--color-ticket-rule);
+		color: var(--color-ink);
+		font-weight: 600;
+	}
+
+	.fd-completion-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.6rem;
+	}
+
+	/* Rendered as labels, not buttons: they name the app's actions and go
+	   nowhere on this page, so they must not look clickable (Krug ch. 3). */
+	.fd-completion-action {
+		padding: 0.3rem 0.6rem;
+		border: 1px dashed var(--color-ticket-rule);
+		border-radius: 0.25rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+	}
+
+	.fd-completion figcaption {
+		max-width: 40rem;
+		padding-top: 0.85rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
+	}
+
+	.fd-after-track {
+		max-width: 44rem;
 	}
 
 	.fd-close {
