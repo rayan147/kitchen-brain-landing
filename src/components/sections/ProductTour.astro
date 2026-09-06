@@ -103,6 +103,7 @@ import SageIcon from '../SageIcon.astro';
 							data-tour-scene
 							data-index={index}
 							data-stop-id={stop.id}
+							data-stop-label={stop.label}
 							tabindex="0"
 							hidden={index !== 0}
 						>
@@ -181,11 +182,38 @@ import SageIcon from '../SageIcon.astro';
 	</section>
 </article>
 
-<script is:inline define:vars={{ stopLabels: tourStops.map((stop) => stop.label), stopIds: tourStops.map((stop) => stop.id) }}>
+<!--
+  NOT is:inline, AND NOT define:vars. The production CSP in vercel.json is
+  `script-src 'self'` with no 'unsafe-inline', no nonce and no hash, so Chrome
+  refuses to execute any inline script on costcook.io:
+
+    Executing inline script violates the following Content Security Policy
+    directive 'script-src 'self''. The action has been blocked.
+
+  This script WAS inline, so every rail stop, the Next button, the mobile
+  select and the progress readout were dead in production while passing in dev
+  and in `astro preview`, neither of which sends the header. The tour opened on
+  stop 1 and stayed there, so nobody reading costcook.io ever reached stop 12.
+
+  `define:vars` implies is:inline, so it cannot be kept either. The two arrays
+  it used to inject are read off the DOM instead: every panel already carries
+  data-stop-id, and now carries data-stop-label beside it. Importing
+  src/lib/tour.ts here would work but would ship all twelve stops' table rows
+  to the client for two arrays of strings.
+
+  scripts/check-dist.mjs now fails the build on any executable inline script in
+  dist/, because no local server sends the CSP that would catch this.
+
+  Considered Observer for the tab/panel wiring; not used because there is one
+  producer and one render path, so direct calls are the honest description.
+-->
+<script>
 	const root = document.querySelector('[data-tour]');
-	if (root) {
+	if (root instanceof HTMLElement) {
 		const tabs = Array.from(root.querySelectorAll('[data-tour-tab]'));
 		const scenes = Array.from(root.querySelectorAll('[data-tour-scene]'));
+		const stopIds = scenes.map((scene) => scene.dataset.stopId);
+		const stopLabels = scenes.map((scene) => scene.dataset.stopLabel);
 		const select = root.querySelector('[data-tour-select]');
 		const previous = root.querySelector('[data-tour-prev]');
 		const next = root.querySelector('[data-tour-next]');
