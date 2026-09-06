@@ -1,5 +1,27 @@
 # Prompt — re-record the "See it run" cut with Sage and nutrition facts
 
+> **Executed 2026-09-06.** The cut is 2:53 and both beats are in it. Read this
+> for the reasoning; read the commits for what was actually done. Four things
+> this brief got wrong or could not know, corrected here so the next person
+> does not re-derive them:
+>
+> - **The dish is Wild Mushroom Polenta, not the Braised Short Rib.** The short
+>   rib's stock enters by volume and its nutrients include beef bones that are
+>   strained out. The polenta is on the same wedding menu with four lines all
+>   weighed in grams, so the dataset chain holds without the arithmetic problem.
+> - **The runtime is 2:53, not the 2:45 recommended below.** Trimming would mean
+>   re-timing four verified beats' move schedules, because a card's hold and a
+>   ring's cue time are independent numbers. The trim candidates below still
+>   stand if the owner wants them.
+> - **The Sage beat needs a live model key on every future re-record.** The
+>   canned test double must never be filmed, so `demo/serve.sh` now takes Sage's
+>   provider and key explicitly and defaults them off. A re-record without one
+>   fails at the beat's own assertion rather than shipping a script.
+> - **The seed work in the app repo was larger than "prepare the route".** The
+>   demo world had no nutrition data at all. It now carries four verified USDA
+>   FoodData Central sources through `demo/nutrition-curation.ts`,
+>   `scripts/extract-demo-nutrition.ts` and `demo/nutrition-fixture.json`.
+
 Paste everything below the line into a fresh session opened at
 `/home/rayan147/kitchen-brain-landing`. Written 2026-09-06 against the rig as it
 exists on `hotfix/tour-csp-inline-script`. The format of the cut does not change:
