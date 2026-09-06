@@ -38,7 +38,7 @@ import { mkdir, writeFile, readFile, rm, rename } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { BEATS, beatLength, runtimeLabel, LEAD_IN } from './beats.mjs';
+import { BEATS, beatLength, runtimeLabel, LEAD_IN, SAGE_QUESTION, SAGE_MUST_SHOW } from './beats.mjs';
 
 const APP = process.env.APP ?? 'http://localhost:4181';
 // The demo's capture inbox. Loopback only, and every address it ever holds is
@@ -537,17 +537,44 @@ async function findNamed(listPath, hrefPattern, label) {
 }
 
 const orderHref = await findNamed('/orders/list', '^/orders/\\d+$', 'alvarez');
-const recipeHref = await findNamed('/catalog/recipes', '^/catalog/recipes/[^/]+$', 'braised short rib');
 const ingredientHref = await findNamed('/catalog/ingredients', '/ingredients/\\d+', 'baby spinach');
-if (!orderHref || !recipeHref || !ingredientHref) {
+/**
+ * Recipes are resolved by NAME, one per beat that names one, and through the
+ * list's own `q=` filter rather than off the bare list.
+ *
+ * The bare list is paginated and alphabetical. `Braised Short Rib` happens to
+ * sit on the first page and `Wild Mushroom Polenta` does not, so a resolver
+ * that reads the links on /catalog/recipes finds one and silently returns null
+ * for the other. Filtering first is what makes the resolver indifferent to how
+ * many recipes the seed grows to, which it will.
+ */
+const recipeHrefs = new Map();
+for (const name of new Set(BEATS.map((beat) => beat.useRecipe).filter(Boolean))) {
+	const href = await findNamed(
+		`/catalog/recipes?q=${encodeURIComponent(name)}`,
+		'^/catalog/recipes/[^/]+$',
+		name
+	);
+	if (!href) {
+		throw new Error(
+			`missing target: no recipe named "${name}". ` +
+				`Has the app repo's demo:seed + demo:capture run against this database?`
+		);
+	}
+	recipeHrefs.set(name, href);
+}
+if (!orderHref || !ingredientHref) {
 	throw new Error(
-		`missing target: order=${orderHref} recipe=${recipeHref} ingredient=${ingredientHref}. ` +
+		`missing target: order=${orderHref} ingredient=${ingredientHref}. ` +
 			`Has the app repo's demo:seed + demo:capture run against this database?`
 	);
 }
 const storageState = await warm.storageState();
 await warm.close();
-console.log(`targets: order=${orderHref} recipe=${recipeHref} ingredient=${ingredientHref}`);
+console.log(
+	`targets: order=${orderHref} ingredient=${ingredientHref} ` +
+		[...recipeHrefs].map(([name, href]) => `${name}=${href}`).join(' ')
+);
 
 /**
  * `BEATS_ONLY=b04,b07` re-records just those beats and merges them into the
@@ -689,6 +716,83 @@ const PREPARE = {
 			await pickDay(card, extra.day);
 		}
 		await page.waitForTimeout(900);
+	},
+
+	/**
+	 * Ask Sage the beat's question off camera, and open on the finished answer.
+	 *
+	 * ASKING ON CAMERA IS DEAD AIR. A real answer against this world settles in
+	 * something like twenty-five seconds, which is longer than the whole beat and
+	 * is a progress indicator, not a product. What the beat is about is the
+	 * answer and the records under it, so the question is typed, sent and waited
+	 * out here, and the tape starts on the result.
+	 *
+	 * A NEW CONVERSATION FIRST, AND IT IS NOT COSMETIC. Threads persist, so a
+	 * fixture that has been asked anything before this run holds an earlier
+	 * exchange ABOVE this one, and every `getByText().first()` in the beat then
+	 * resolves into that exchange instead of this one. That is the b08 defect
+	 * exactly: a ring that lands on a real string in the wrong place, off the top
+	 * of the frame, with nothing on screen to show it went wrong.
+	 *
+	 * Settling is measured, not slept: the page text is polled until it stops
+	 * changing, because the answer streams and a fixed wait either cuts it off
+	 * mid-sentence (a card would then name a figure the frame does not carry) or
+	 * wastes half a minute on every capture.
+	 */
+	async sageAnswer(page) {
+		const fresh = page.getByRole('link', { name: /^New conversation$/i }).first();
+		if (await fresh.isVisible().catch(() => false)) {
+			await fresh.click({ timeout: 10_000 });
+			await ready(page);
+			await hideChrome(page);
+		}
+		const box = page.getByRole('textbox').first();
+		await box.click({ timeout: 10_000 });
+		await box.fill(SAGE_QUESTION);
+		await page.getByRole('button', { name: /^Send$/ }).click({ timeout: 10_000 });
+		const started = Date.now();
+		let previous = '';
+		let stableMs = 0;
+		while (Date.now() - started < 180_000) {
+			await page.waitForTimeout(2_000);
+			const text = await page.evaluate(() => document.body.innerText);
+			if (text === previous) {
+				stableMs += 2_000;
+				if (stableMs >= 12_000) break;
+			} else {
+				stableMs = 0;
+				previous = text;
+			}
+		}
+		const absent = SAGE_MUST_SHOW.filter((needle) => !previous.includes(needle));
+		if (absent.length) {
+			throw new Error(
+				`Sage's answer is missing ${absent.map((n) => JSON.stringify(n)).join(', ')}, which ` +
+					"this beat's cards claim. Nothing is kept: a card must never name a figure its own " +
+					'frame does not carry. If Sage answered nothing at all, check SAGE_ENABLED and the ' +
+					'provider key on the app preview. The fake provider is a test double and must never ' +
+					'be filmed.'
+			);
+		}
+		console.log(`    sage: answered in ${Math.round((Date.now() - started) / 1000)}s`);
+		// The thread scrolls inside its own pane, not the window, and it lands at
+		// the bottom. Nothing the beat rings is in frame until the question is put
+		// back at the top, and `scrollTop` in the storyboard moves the WINDOW, so
+		// it cannot do this job.
+		//
+		// SCROLL THE THREAD'S OWN "You asked", NOT THE QUESTION TEXT. The question
+		// appears twice on this page: once as the thread's opening message and once
+		// as the conversation's title in the sidebar list, which is truncated with
+		// CSS and therefore still matches. `.first()` takes the sidebar one, and
+		// scrolling it does nothing while the ring aimed at it lands on a truncated
+		// list row instead of on the question the beat is about. `.last()` on the
+		// thread's own label is in the thread every time.
+		await page
+			.getByText(/^You asked$/i)
+			.filter({ visible: true })
+			.last()
+			.evaluate((el) => el.scrollIntoView({ block: 'start' }));
+		await page.waitForTimeout(600);
 	}
 };
 
@@ -733,7 +837,7 @@ for (const beat of captureOrder.filter((b) => !ONLY.length || ONLY.includes(b.id
 	if (beat.mailpitTo) url = await mailpitViewUrl(beat.mailpitTo);
 	if (beat.useOrder) url = orderHref + (beat.suffix ?? '');
 	if (beat.useIngredient) url = ingredientHref;
-	if (beat.useRecipe) url = recipeHref;
+	if (beat.useRecipe) url = recipeHrefs.get(beat.useRecipe) + (beat.suffix ?? '');
 
 	// Absolute URLs are part of the story too: the Mailpit inbox on :8025 is
 	// where the demo's REAL sends land (never a deliverable address).
