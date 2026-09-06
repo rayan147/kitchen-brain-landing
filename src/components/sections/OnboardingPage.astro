@@ -1,9 +1,10 @@
 ---
 import { cta } from '../../lib/site';
 
-// Considered Template Method; not used because this route reuses the Base
-// shell and its setup argument is one fixed composition, not a page algorithm
-// with overridable steps. The stage table is data, not a variant hierarchy.
+// Considered Template Method and Strategy for the three parts; not used
+// because the parts are one fixed composition with no runtime variation.
+// The stage, door, guard and after-setup tables are data, not a variant
+// hierarchy.
 
 /**
  * The five stages, in the app's own labels (`SETUP_STAGE_LABELS` and
@@ -15,27 +16,58 @@ const stages = [
 	{
 		n: '1',
 		label: 'Kitchen and suppliers',
-		body: 'Your kitchen’s name, one supplier so prices have a buying source, and the food-cost target every plate is judged against.'
+		body: 'Your kitchen’s name, one supplier so prices have a buying source, and the food-cost target every plate is judged against.',
+		done: 'Add one supplier'
 	},
 	{
 		n: '2',
 		label: 'Ingredients',
-		body: 'The ingredients of that one dish: what you buy, how big the pack is, what it costs, and what survives the knife. On an empty kitchen this stage opens on three doors, and only one of them is a form.'
+		body: 'The ingredients of that one dish: what you buy, how big the pack is, what it costs, and what survives the knife. On an empty kitchen this stage opens on three doors, and only one of them is a form.',
+		done: 'Review the food facts CostCook found'
 	},
 	{
 		n: '3',
 		label: 'Food facts',
-		body: 'Nutrition, allergens and diet facts, drafted where CostCook could and yours to confirm. Skip one you are unsure of and every order using it reads “check”, never “clear”.'
+		body: 'Nutrition, allergens and diet facts, drafted where CostCook could and yours to confirm. Skip one you are unsure of and every order using it reads “check”, never “clear”.',
+		done: 'Answer every ingredient once'
 	},
 	{
 		n: '4',
 		label: 'Recipes',
-		body: 'The dish itself: its lines in costing units, and how many portions the batch makes.'
+		body: 'The dish itself: its lines in costing units, and how many portions the batch makes.',
+		done: 'Check the plate cost'
 	},
 	{
 		n: '5',
 		label: 'Menu and first order',
-		body: 'A date and a guest count. The order becomes shopping, prep, packing, and a food-cost result.'
+		body: 'A date and a guest count. The order becomes shopping, prep, packing, and a food-cost result.',
+		done: 'Add guests and a date, then cost the order'
+	}
+] as const;
+
+/**
+ * The page map. Three parts, three questions a reader arrives with, one
+ * finish line each. The hero ticket renders it and every row is an in-page
+ * anchor, so the first choice on the page is a mindless one.
+ */
+const parts = [
+	{
+		n: '1',
+		id: 'before',
+		label: 'Before you start',
+		done: 'Done when you know it wants one dish, not your walk-in.'
+	},
+	{
+		n: '2',
+		id: 'stages',
+		label: 'The five stages',
+		done: 'Done when one dish has a plate cost you can check on paper.'
+	},
+	{
+		n: '3',
+		id: 'after',
+		label: 'After setup',
+		done: 'Done when the next dish and the first teammate are in.'
 	}
 ] as const;
 
@@ -82,6 +114,51 @@ const guards = [
 	'Press “Start over” by mistake and your ingredients, recipes, menus and orders stay. Only the guide’s progress resets.',
 	'Lose the wifi mid-save and nothing is written and nothing is claimed. What you typed is still on screen, and the same button retries.'
 ] as const;
+
+/**
+ * Part 3. Every line read off `sandbox/demo` on 2026-09-06.
+ * 3a: `src/lib/components/setup/SetupCompletionSummary.svelte`.
+ * 3b: the import queue (RC-38, RC-39), Sage's recipe door (RC-58), later
+ *     prices (RC-08). Nothing about what extraction returns (RC-55 stub).
+ * 3c: `src/routes/settings/team/+page.svelte` and `+page.server.ts`
+ *     (`INVITED_ROLE = 'STAFF'`), RC-52. No role behaviour beyond that row.
+ */
+const completion = {
+	heading: 'Your kitchen is ready',
+	items: ['Costing settings', 'Business profile', '1 supplier', 'Your ingredients', 'Dish: the one you named', 'Menu', 'Order for your guests'],
+	next: 'Next: check what you need to buy',
+	actions: ['Open shopping list', 'Go to Today']
+} as const;
+
+const menuTrack = [
+	{
+		lead: 'Same doors as the first dish.',
+		body: 'One queue takes a photo, a PDF, a spreadsheet, a Word document or pasted text, and comes back as staged facts for you to confirm. What it could not read is quoted back as it appeared, never guessed.'
+	},
+	{
+		lead: 'A recipe card goes to Sage.',
+		body: 'Hand it a card, a photo, a PDF, text or a link and read the draft it makes. The dish is yours before it is costed.'
+	},
+	{
+		lead: 'Prices keep moving. Orders do not.',
+		body: 'Every purchase you log updates the catalog and any draft costs, without rewriting confirmed orders. The plate cost you checked tonight is still checkable next month.'
+	}
+] as const;
+
+const crewTrack = [
+	{
+		lead: 'Settings, then Team.',
+		body: 'Type an email address. They receive a one-time link to join this kitchen. No password is needed.'
+	},
+	{
+		lead: 'They join as Staff.',
+		body: 'Staff works from the shared kitchen record. Manager adds setup, teammate administration and the Sage checks that show price movement. Owner adds billing and the recipe lifecycle.'
+	},
+	{
+		lead: 'Know the boundary before you send.',
+		body: 'Staff can open cost screens, and there is no custom role. If that is a problem for your kitchen, read the full boundary first.'
+	}
+] as const;
 ---
 
 <!-- story: docs/stories/onboarding.story.md -->
@@ -90,15 +167,14 @@ const guards = [
 		<div class="container-page fd-hero-layout">
 			<div class="fd-hero-copy">
 				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
-					<a href="/">Home</a><span aria-hidden="true">/</span><span>Your first dish</span>
+					<a href="/">Home</a><span aria-hidden="true">/</span><span>Your initial setup</span>
 				</nav>
-				<p class="eyebrow">Before you start</p>
+				<p class="eyebrow">Your initial setup</p>
 				<h1 id="fd-heading" class="feature-display">You do not need to enter your whole walk-in.</h1>
 				<p class="fd-lede">
-					Setup asks for one dish you already cook, and takes about fifteen minutes.
-					Its ingredients can come in from an invoice or a spreadsheet, not just the keyboard.
+					Setup asks for one dish you already cook and takes about fifteen minutes.
 					Four stages in, it prints that dish&rsquo;s plate cost with the arithmetic beside it.
-					The fifth turns it into a shopping list.
+					This page also says what comes after, and how the rest of your kitchen gets in.
 				</p>
 				<div class="fd-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
@@ -108,59 +184,51 @@ const guards = [
 
 			<figure class="fd-ticket anim-enter" aria-labelledby="fd-ticket-title">
 				<div class="fd-ticket-head">
-					<p id="fd-ticket-title">Setup</p>
-					<span>5 stages &middot; 1 dish</span>
+					<p id="fd-ticket-title">This page</p>
+					<span>3 parts &middot; 5 stages &middot; 1 dish</span>
 				</div>
-				<ol class="fd-ticket-stages" role="list">
-					{stages.map((stage) => (
-						<li><span class="fd-ticket-n">{stage.n}</span>{stage.label}</li>
+				<ol class="fd-ticket-stages fd-map" role="list">
+					{parts.map((part) => (
+						<li>
+							<a href={`#${part.id}`} class="fd-map-link">
+								<span class="fd-ticket-n fd-map-n">{part.n}</span>
+								<span class="fd-map-text">
+									<span class="fd-map-label">{part.label}</span>
+									<span class="fd-map-done">{part.done}</span>
+								</span>
+							</a>
+						</li>
 					))}
 				</ol>
-				<figcaption>Every stage asks for the next thing that one dish needs.</figcaption>
+				<figcaption>Pick the question you came with. Each part ends with one next step.</figcaption>
 			</figure>
 		</div>
 	</section>
 
-	<section class="fd-band" aria-labelledby="fd-empty-heading">
+	<section class="fd-band fd-part" id="before" aria-labelledby="fd-before-heading">
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
-				<p class="eyebrow">The empty screen</p>
-				<h2 id="fd-empty-heading">The dread is not irrational. It has a shape.</h2>
+				<p class="eyebrow fd-part-label">Part 1 of 3 &middot; Before you start</p>
+				<h2 id="fd-before-heading">The dread has a shape. Setup asks one question instead.</h2>
 				<p>
 					You have done this before. The last tool wanted your whole catalog before it would do
-					anything, and the half-filled spreadsheet is still on the desktop, proof of an evening you
-					do not get back.
+					anything, and the half-filled spreadsheet is still on the desktop.
 				</p>
 				<p>
-					So the fear has a name: an empty kitchen on screen at nine at night, after service, and no
-					idea which end to start from.
+					CostCook opens on a question, not a form: what kind of kitchen you run, what you want
+					out of it first, and the name of one dish you already cook. Every answer is optional.
+					Name the dish and the screens after it say its name back to you.
 				</p>
+				<p class="fd-handoff">Those answers are optional. These five are the work.</p>
 			</div>
 		</div>
 	</section>
 
-	<section class="fd-band fd-band-cream" aria-labelledby="fd-welcome-heading">
+	<section class="fd-band fd-part" id="stages" aria-labelledby="fd-stages-heading">
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
-				<p class="eyebrow">What it asks you for</p>
-				<h2 id="fd-welcome-heading">The guide opens on a question, not a form.</h2>
-				<p>
-					What kind of kitchen you run, what you want out of it first, and the name of one dish you
-					already cook.
-				</p>
-				<p>
-					Every answer is optional. A blank welcome is a skip and setup works either way. Name the
-					dish and the screens after it say its name back to you.
-				</p>
-			</div>
-		</div>
-	</section>
-
-	<section class="fd-band" aria-labelledby="fd-stages-heading">
-		<div class="container-page" data-reveal>
-			<div class="fd-prose">
-				<p class="eyebrow">Five stages</p>
-				<h2 id="fd-stages-heading">Those answers are optional. These five are the work.</h2>
+				<p class="eyebrow fd-part-label">Part 2 of 3 &middot; The five stages</p>
+				<h2 id="fd-stages-heading">Five stages is one dish&rsquo;s worth of facts.</h2>
 				<p>Each one asks for the next thing that one dish needs, and nothing else.</p>
 			</div>
 			<ol class="fd-stage-list" role="list">
@@ -171,6 +239,7 @@ const guards = [
 							<span class="fd-stage-label">{stage.label}</span>
 						</p>
 						<p class="fd-stage-body">{stage.body}</p>
+						<p class="fd-stage-done"><span class="fd-stage-done-k">Done when</span> {stage.done}.</p>
 					</li>
 				))}
 			</ol>
@@ -294,23 +363,92 @@ const guards = [
 			<ul class="fd-guards" role="list">
 				{guards.map((guard) => <li>{guard}</li>)}
 			</ul>
+			<p class="fd-handoff">Which leaves the question the old page never answered: what happens after stage five.</p>
+		</div>
+	</section>
+
+	<section class="fd-band fd-band-cream fd-part" id="after" aria-labelledby="fd-after-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow fd-part-label">Part 3 of 3 &middot; After setup</p>
+				<h2 id="fd-after-heading">Stage five ends on a screen that says your kitchen is ready. Here is what it offers next.</h2>
+			</div>
+			<figure class="fd-completion" aria-labelledby="fd-completion-title">
+				<div class="fd-ticket-head">
+					<p id="fd-completion-title">{completion.heading}</p>
+					<span>Setup &middot; complete</span>
+				</div>
+				<ul class="fd-completion-items" role="list">
+					{completion.items.map((item) => <li>{item}</li>)}
+				</ul>
+				<p class="fd-completion-next">{completion.next}</p>
+				<p class="fd-completion-actions">
+					{completion.actions.map((label) => <span class="fd-completion-action">{label}</span>)}
+				</p>
+				<figcaption>
+					The completion screen as the app prints it. If you named a goal at the welcome, the first
+					line answers it in your words: what the event really costs, what to buy for a date, or whether
+					a price change hurt you.
+				</figcaption>
+			</figure>
+			<p class="fd-handoff">The first dish was the hard one. The rest come in the same way.</p>
+		</div>
+	</section>
+
+	<section class="fd-band fd-part" id="after-menu" aria-labelledby="fd-menu-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">The rest of your menu</p>
+				<h2 id="fd-menu-heading">The next forty dishes are not forty evenings.</h2>
+			</div>
+			<ul class="fd-doors-list fd-after-track" role="list" aria-labelledby="fd-menu-heading">
+				{menuTrack.map((row) => (
+					<li>
+						<p class="fd-track-lead">{row.lead}</p>
+						<p class="fd-track-body">{row.body}</p>
+					</li>
+				))}
+			</ul>
+			<p class="fd-handoff">A catalog nobody else opens is a spreadsheet with a login. This is how the crew gets one.</p>
+		</div>
+	</section>
+
+	<section class="fd-band fd-band-cream fd-part" id="after-crew" aria-labelledby="fd-crew-heading">
+		<div class="container-page" data-reveal>
+			<div class="fd-prose">
+				<p class="eyebrow">The rest of your crew</p>
+				<h2 id="fd-crew-heading">Two emails, two links, no passwords.</h2>
+				<p>
+					Invite after the first order exists, so they arrive to a shopping list and a prep list,
+					not an empty kitchen. Whoever works this week first; the rest can follow.
+				</p>
+			</div>
+			<ul class="fd-doors-list fd-after-track" role="list" aria-labelledby="fd-crew-heading">
+				{crewTrack.map((row) => (
+					<li>
+						<p class="fd-track-lead">{row.lead}</p>
+						<p class="fd-track-body">{row.body}</p>
+					</li>
+				))}
+			</ul>
+			<p class="fd-doors-gate">
+				Invited teammates join as Staff today. The full Owner, Manager and Staff boundary, and what
+				each can and cannot open, is on the <a href="/features/team-and-access">Team and Access guide</a>.
+			</p>
 		</div>
 	</section>
 
 	<section class="fd-band fd-close" aria-labelledby="fd-close-heading">
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
-				<p class="eyebrow">Where stage five leaves you</p>
-				<h2 id="fd-close-heading">One dish you already knew how to cook, with a price on it.</h2>
+				<p class="eyebrow">Where this leaves you</p>
+				<h2 id="fd-close-heading">One dish with a price on it, and a list your crew can open without you.</h2>
 				<p>
-					A menu holding that dish, an order on a date, and a shopping list in whole packs. That last
-					screen is where the <a href="/tour/main">product tour</a> picks up.
+					The shopping list is where the <a href="/tour/main">product tour</a> picks up. The alternative
+					is another season where the number in your head and the number on the invoice are two
+					different numbers, and the crew works from a text message.
 				</p>
-				<p>
-					The alternative is another season where the number in your head and the number on the
-					invoice are two different numbers.
-				</p>
-				<p class="fd-final">One dish, and you will know.</p>
+				<p class="fd-final">One dish, and you will know. Then they will too.</p>
 				<div class="fd-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				</div>
@@ -428,6 +566,47 @@ const guards = [
 		line-height: 1.5;
 	}
 
+	/* The map rows are links: underline on the label, a hit area of at least
+	   44px, and no reliance on hover (Krug ch. 10: no cursor, no hover). */
+	.fd-map-link {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		width: 100%;
+		min-height: 2.75rem;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.fd-map-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.fd-map-label {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		text-decoration-color: var(--color-hairline-strong);
+	}
+
+	.fd-map-link:hover .fd-map-label,
+	.fd-map-link:focus-visible .fd-map-label {
+		text-decoration-color: var(--color-green-deep);
+	}
+
+	.fd-map-done {
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		font-weight: 400;
+		line-height: 1.45;
+	}
+
+	/* Anchored parts land with the part label visible under the sticky header. */
+	.fd-part {
+		scroll-margin-top: 5rem;
+	}
+
 	.fd-band {
 		padding-block: clamp(2.5rem, 6vw, 4rem);
 		border-top: 1px solid var(--color-hairline);
@@ -524,6 +703,28 @@ const guards = [
 		}
 	}
 
+	.fd-stage-done {
+		margin: 0.35rem 0 0;
+		color: var(--color-ink);
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
+	}
+
+	@media (min-width: 48rem) {
+		.fd-stage-done {
+			grid-column: 2;
+		}
+	}
+
+	.fd-stage-done-k {
+		color: var(--color-amber-deep);
+		font-family: var(--font-body);
+		font-size: var(--text-eyebrow);
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
 	/* A capture of the running app, stored at 2x and rendered at half its pixel
 	   width or narrower (RC-48). The frame is the ticket rule, not a browser
 	   chrome mockup: the page never pretends a screenshot is a window. */
@@ -590,11 +791,13 @@ const guards = [
 		border-bottom: 1px dashed var(--color-ticket-rule);
 	}
 
-	.fd-door-lead {
+	.fd-door-lead,
+	.fd-track-lead {
 		font-weight: 600;
 	}
 
-	.fd-door-body {
+	.fd-door-body,
+	.fd-track-body {
 		margin-top: 0.25rem;
 		color: var(--color-ink-soft);
 		line-height: 1.6;
@@ -739,6 +942,78 @@ const guards = [
 		border-left: 2px solid var(--color-softamber);
 		color: var(--color-ink-soft);
 		line-height: 1.6;
+	}
+
+	/* The completion screen redrawn on ticket paper: the same head rule as
+	   the hero ticket, so the reader sees the map and the finish line as the
+	   same object. Not a screenshot: the app's chrome would date faster than
+	   its words. */
+	.fd-completion {
+		max-width: 40rem;
+		margin: 1.75rem 0 0;
+		padding: 1.25rem 1.25rem 1rem;
+		background: var(--color-cream);
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 0.25rem;
+		box-shadow: var(--shadow-ticket);
+	}
+
+	.fd-completion-items {
+		display: grid;
+		gap: 0.35rem 1rem;
+		margin: 0.75rem 0 0;
+		padding: 0;
+		list-style: none;
+		color: var(--color-ink);
+		font-size: var(--text-body-sm);
+	}
+
+	@media (min-width: 40rem) {
+		.fd-completion-items {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.fd-completion-items li::before {
+		content: '\2713\00a0';
+		color: var(--color-green-deep);
+	}
+
+	.fd-completion-next {
+		margin-top: 1rem;
+		padding-top: 0.75rem;
+		border-top: 1px dashed var(--color-ticket-rule);
+		color: var(--color-ink);
+		font-weight: 600;
+	}
+
+	.fd-completion-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.6rem;
+	}
+
+	/* Rendered as labels, not buttons: they name the app's actions and go
+	   nowhere on this page, so they must not look clickable (Krug ch. 3). */
+	.fd-completion-action {
+		padding: 0.3rem 0.6rem;
+		border: 1px dashed var(--color-ticket-rule);
+		border-radius: 0.25rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+	}
+
+	.fd-completion figcaption {
+		max-width: 40rem;
+		padding-top: 0.85rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
+	}
+
+	.fd-after-track {
+		max-width: 44rem;
 	}
 
 	.fd-close {

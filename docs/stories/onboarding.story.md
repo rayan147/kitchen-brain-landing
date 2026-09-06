@@ -1,10 +1,10 @@
-# Story Tracker — Your first dish
+# Story Tracker — Your initial setup
 
 ## My story
 
-- **Piece:** Resource route explaining what setup actually asks for (`/onboarding`)
+- **Piece:** Resource route explaining what setup asks for, where it leaves you, and how the rest of the kitchen comes in (`/onboarding`)
 - **Title / headline:** You do not need to enter your whole walk-in
-- **My hero's name:** The owner-caterer with the trial page open in one tab, not pressing Start
+- **My hero's name:** The owner-caterer with the trial page open in one tab, not pressing Start, who has a second question behind the first: and then what?
 - **Content file(s):** `src/pages/onboarding.astro`, `src/components/sections/OnboardingPage.astro`
 
 ## The 11 steps
@@ -25,68 +25,66 @@
 
 ### Step 1 — The Idea
 
-> An owner-caterer who wants to know whether CostCook is worth one evening, but believes she has to enter her entire walk-in before it will tell her anything.
+> An owner-caterer who wants to know whether CostCook is worth one evening, but believes she has to enter her entire walk-in first, and even if she gets one dish in, cannot picture the day her crew uses it without her.
 
 ### Step 2 — Your Character
 
-- **Want:** Know what setup will cost her in time before she commits an evening to it.
-- **Need:** One real number out of her own kitchen, so the decision stops being a leap of faith.
-- **Wound:** The last tool wanted her whole catalog before it would do anything. The half-filled spreadsheet is still on the desktop, a monument to an evening she does not get back.
-- **Flaw:** She judges software by how much it asks of her up front, so she never gets far enough to find out whether it works. The real prices stay in her head, where nothing can check them.
+- **Want:** Know what setup will cost her in time, and what she is supposed to do the morning after.
+- **Need:** One real number out of her own kitchen, and a Shop list her crew can work from without her standing over them.
+- **Wound:** The last tool wanted her whole catalog before it did anything. The one before that she set up alone, and nobody else ever logged in.
+- **Flaw:** She judges software by how much it asks of her up front, so she never gets far enough to find out whether it works, and she assumes rolling it out to the crew is her job alone.
 
 ### Step 3 — The Plot
 
 | Beat | In this piece |
 |------|---------------|
 | 1 Opening Image | Trial page open in one tab, tomorrow's prep list in the other. Thumb over Start. Not pressing it. |
-| 2 Theme Stated | Setup asks for one dish, not your walk-in. |
-| 3 Set-Up | Every tool before this one wanted the whole catalog first. She has the half-filled spreadsheet to prove how that ends. |
+| 2 Theme Stated | Setup asks for one dish, not your walk-in. Then the rest of the kitchen follows the same doors. |
+| 3 Set-Up | Every tool before this wanted the whole catalog first, and every one was set up alone. |
 | 4 Catalyst | She opens the app. Empty kitchen, and the old dread: where do I even start. |
-| 5 Debate | "I do not have a week for data entry." "I do not know my yields." "What if I enter it wrong." |
-| 6 Break into Two | The guide opens on a question, not a form: what kind of kitchen, what you want first, and the name of one dish you already cook. Every answer optional. |
-| 7 B Story | The dish itself. The roast chicken plate she has cooked four hundred times. Her own knowledge is the data, and the app says its name back to her on every screen after. |
-| 8 Fun and Games | Five stages, each asking for the next thing that one dish needs. Kitchen and supplier. Its ingredients. Its food facts. The dish. A menu and a date. |
-| 9 Midpoint | $1.62. The plate cost, with the case price and the trim it came from sitting beside it. |
-| 10 Bad Guys Close In | She leaves a price blank; it will not go on. She picks ml for something sold by weight; it names the fix. She hits Start over by mistake; her records survive. The wifi drops mid-save; her typing stays on screen. |
-| 11 All Is Lost | The alternative is another season where the number in her head and the number on the invoice are two different numbers. |
-| 12 Finale + Final Image | Stage five ends at the shopping list, which is where the product tour begins. She presses Start. |
+| 5 Debate | "I do not have a week for data entry." "Even if I do it, then what?" "My crew will never use it." |
+| 6 Break into Two | The guide opens on a question, not a form. One dish. |
+| 7 B Story | The roast chicken plate she has cooked four hundred times. Her own knowledge is the data. |
+| 8 Fun and Games | Five stages, each asking for the next thing that one dish needs. |
+| 9 Midpoint | $1.62. The plate cost, with the case price and the trim beside it. |
+| 10 Bad Guys Close In | The guards: blank price, wrong unit, Start over, wifi drop. Then the harder one: "Your kitchen is ready", and she is alone on the completion screen. |
+| 11 All Is Lost | The alternative is another season where the number in her head and the number on the invoice differ, and the crew works from a text message. |
+| 12 Finale + Final Image | The next dish comes in through the same doors. She invites the two people who work this week; they get a link, no password, and open the Shop list she built. On their own phones. |
 
 ### Step 4 — From Beats to Scenes
 
-| § | Section | Beats | Value turn |
-|---|---------|-------|------------|
-| 1 | You do not need to enter your whole walk-in | 1–2 | wall → doorway |
-| 2 | The empty screen | 3–4 | vague dread → named fear |
-| 3 | What it asks you for | 5–6 | resistant → curious |
-| 4 | Five stages, one dish's worth | 6, 8 | vague → concrete |
-| 4a | Stage two does not assume a keyboard (inside §4) | 5, 8 | "a week of keying" → three doors, one gate |
-| 5 | The number, and where it came from | 9 | guessing → checkable |
-| 6 | What it refuses to do | 10 | trust → tested → held |
-| 7 | Where stage five leaves you | 11–12 | undecided → started |
+| § | Section | id | Beats | Value turn |
+|---|---------|----|-------|------------|
+| 0 | Hero: You do not need to enter your whole walk-in | — | 1–2 | wall → doorway, with a map of three parts |
+| 1 | Part 1 · Before you start | `before` | 3–6 | vague dread → named fear → one optional question |
+| 2 | Part 2 · The five stages | `stages` | 7–10 | vague → concrete → checkable → tested |
+| 3 | Part 3 · After setup: where the app leaves you | `after` | 10 | done → next action named |
+| 3b | The rest of your menu | `after-menu` | 12 | "now the other 40 dishes by hand" → same doors, staged review |
+| 3c | The rest of your crew | `after-crew` | 12 | "I roll this out alone" → a link, no password, a list waiting |
+| 3d | Close | — | 12 | undecided → started |
 
 ### Step 5 — Character Voices
 
-- **Reader's words:** my whole walk-in, a week of data entry, where do I start, one dish, what I actually pay, case, trim, per head, the number in my head.
+- **Reader's words:** my whole walk-in, a week of data entry, where do I start, one dish, what I actually pay, case, trim, per head, the number in my head, then what, my crew, roll it out, who can see the costs, one login for everyone.
 - **Product voice (from the app's own setup copy, `stage-guide.ts`):** honest, warm, unhurried. Sentences that are facts about the costed chain, never descriptions of a screen.
-- **Banned:** seamless, effortless, powerful, instantly, in one click, and the three the claim guard fails the build on — "no data entry", "nothing is re-keyed", "handles it automatically". Any duration ("set up in 20 minutes") is banned too: no artifact supports one.
+- **Banned:** seamless, effortless, powerful, instantly, in one click, and the three the claim guard fails the build on — "no data entry", "nothing is re-keyed", "handles it automatically". Any duration ("set up in 20 minutes") is banned too: no artifact supports one. Also banned: custom role, permission, automatically, extracts, reads it correctly, roll out in a day.
 
 ### Step 6 — Dialogue (McKee): the turn in each section
 
-- §1 "This will want everything I have" → "It wants one dish."
-- §2 "I am bad at this" → "The empty screen is the problem, and it has a shape."
-- §3 "I do not have the answers it needs" → "It asks for what I already know, and every question is optional."
-- §4 "Five stages sounds like a week" → "Five stages is one dish's worth of facts."
-- §4a "So I key my supplier catalog in by hand" → "The paperwork I already have is a door in, and I still get the last word on every line."
-- §5 "Software numbers are a black box" → "I can check this one on paper."
-- §6 "I will break it, or it will let me" → "It stops me, and it says why."
-- §7 "Is this worth an evening?" → "One dish, and I will know."
+- §0 "This will want everything I have" → "It wants one dish, and here are the three questions this page answers."
+- §1 "I am bad at this" → "The empty screen is the problem, and it asks one optional question."
+- §2 "Five stages sounds like a week" → "Five stages is one dish's worth of facts, and I can check the number."
+- §3 "It says ready. Now what?" → "It names the next screen: the shopping list."
+- §3b "So I key the other forty dishes by hand" → "Same doors as the first: paper in, staged facts back, my last word on every line."
+- §3c "Rolling this out is on me" → "Two emails, two links, no passwords, and they land on a list, not an empty kitchen."
+- §3d "Is this worth an evening?" → "One dish, and you will know. Then the crew will too."
 
 ### Step 7 — Sorkin: headline / subhead
 
 - **Intention:** Find out whether this is worth one evening.
 - **Obstacle:** She believes she has to enter everything before it does anything.
 - **Headline:** You do not need to enter your whole walk-in.
-- **Subhead:** Setup asks for one dish you already cook. Four stages in, it prints that dish's plate cost with the arithmetic beside it. The fifth turns it into a shopping list.
+- **Subhead:** Setup asks for one dish you already cook and takes about fifteen minutes. Four stages in, it prints that dish's plate cost with the arithmetic beside it. This page also says what comes after, and how the rest of your kitchen gets in.
   (The subhead first read "Five stages later it prints that dish's plate cost",
   which contradicted §4's hand-off, "Stage four ends on a number." The dish is
   costed at stage four; stage five is the menu, the date and the shopping list.
@@ -106,14 +104,12 @@
 
 - **POV:** Second person, "you". Locked. No first-person founder voice on this page; `BuiltForKitchens` owns that register.
 - **Hand-off lines:**
-  - §1 → §2: "The dread is not irrational. It has a shape, and it is worth naming."
-  - §2 → §3: "So here is what the guide actually asks you for."
-  - §3 → §4: "Those answers are optional. The five stages after them are not."
-  - §4 → §4a: the stage table's own stage-two line ends "this stage opens on three doors, and only one of them is a form", which the block below it then opens.
-  - §4a → §4: "Reading a document is still work" hands back to the stage-one capture and the Sage paragraph, both of which are about reading rather than typing.
-  - §4 → §5: "Stage four ends on a number."
-  - §5 → §6: "A number you can check is only half of it. The other half is what happens when you get something wrong."
-  - §6 → §7: "Which leaves one question: what do you have at the end?"
+  - §0 → §1: the map's first row, "Before you start".
+  - §1 → §2: "Those answers are optional. These five are the work."
+  - §2 → §3: "Stage five ends on a screen that says your kitchen is ready. Here is what it offers next."
+  - §3 → §3b: "The first dish was the hard one. The rest come in the same way."
+  - §3b → §3c: "A catalog nobody else opens is a spreadsheet with a login. This is how the crew gets one."
+  - §3c → §3d: "Invite after the first order exists, so they arrive to a list."
 
 ### Step 11 — Revise and Finish
 
@@ -200,3 +196,23 @@
 - **Verified in the browser, 2026-09-06:** 1440x900 and 390x844, zero horizontal
   overflow at both, dashed ticket rules and cream paper consistent with the
   hero ticket, build and all page contracts green.
+- **After-setup revision (2026-09-06):** the owner named the two questions the
+  page left open: what do I do next, and how do I onboard the rest of my
+  kitchen. Both have shipped answers and both are now Part 3. What went in is
+  read off `sandbox/demo` that day: `SetupCompletionSummary.svelte` (heading
+  "Your kitchen is ready", actions "Open shopping list" and "Go to Today"),
+  the import queue (RC-38, RC-39), Sage's recipe door (RC-58), later prices
+  (RC-08), and Settings > Team (`settings/team/+page.svelte`: invite by email,
+  "They will receive a one-time link to join this kitchen. No password is
+  needed.", `INVITED_ROLE = 'STAFF'`, RC-52). What stayed out: any word on
+  what extraction returns, any role behaviour beyond RC-52, any rollout
+  duration. Parts 1 and 2 were cut (Krug: omit needless words); the page
+  gained a three-row map in the hero ticket so a reader picks the question
+  they came with.
+- **Counts after the 2026-09-06 revision:** 1,503 words inside the article
+  including the stage table, the doors, the arithmetic, the completion
+  figure and both tracks. Parts 1 and 2 lost two bands and about a third of
+  their prose; Part 3 added three short bands. Verified in the browser at
+  1440x900, 390x844 and 200% text: zero horizontal overflow, the three map
+  anchors resolve, the Part 3 label passes the trunk test after an anchor
+  scroll on both viewports, and the smallest route action is at least 44px.

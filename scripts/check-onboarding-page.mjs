@@ -20,7 +20,7 @@ const requireText = (text, label) => {
 for (const [text, label] of [
 	['You do not need to enter your whole walk-in.', 'page identity'],
 	['Four stages in, it prints', 'plate-cost stage (RC-10)'],
-	['5 stages &middot; 1 dish', 'setup ticket stage count (RC-10)'],
+	['3 parts &middot; 5 stages &middot; 1 dish', 'setup ticket stage count (RC-10)'],
 	// The whole trace, not just the total: a reader checks it by hand.
 	['$32.00', 'case price (RC-55)'],
 	['4,535.92', 'pound-to-gram conversion (RC-55)'],
@@ -36,7 +36,7 @@ for (const [text, label] of [
 	['Only the guide', 'start-over guard (RC-55 A-STARTOVER)'],
 	['the same button retries', 'offline-save guard (RC-55 finding 1)'],
 	['never \u201cclear\u201d', 'unknown-is-not-clear boundary (RC-55)'],
-	['first-dish-onboarding', 'emitted direction contract'],
+	['initial-setup-guide', 'emitted direction contract'],
 	['href="/onboarding"', 'shared navigation destination'],
 	['aria-current="page"', 'active navigation state'],
 	['docs/stories/onboarding.story.md', 'story pointer']
@@ -45,8 +45,28 @@ for (const [text, label] of [
 const stageRows = (html.match(/class="fd-stage"/g) ?? []).length;
 if (stageRows !== 5) failures.push(`expected 5 rendered stage rows, received ${stageRows}`);
 
-const ticketStages = (html.match(/class="fd-ticket-n"/g) ?? []).length;
-if (ticketStages !== 5) failures.push(`expected 5 setup-ticket stages, received ${ticketStages}`);
+// The ticket now maps three parts; the five stage rows are counted above.
+const ticketStages = (html.match(/class="fd-ticket-n/g) ?? []).length;
+if (ticketStages !== 3) failures.push(`expected 3 setup-ticket map rows, received ${ticketStages}`);
+// The hero ticket is the page map: three parts, each an in-page anchor, each
+// with a done-when line. A reader picks the question they came with (Krug:
+// a mindless choice) and every anchor must resolve to a section id.
+const mapRows = (html.match(/class="fd-ticket-n fd-map-n"/g) ?? []).length;
+if (mapRows !== 3) failures.push(`expected 3 map rows in the setup ticket, received ${mapRows}`);
+for (const id of ['before', 'stages', 'after']) {
+	if (!html.includes(`href="#${id}"`)) failures.push(`map does not link to #${id}`);
+	if (!new RegExp(`<section[^>]*\\bid="${id}"`).test(html)) failures.push(`no section carries id="${id}"`);
+}
+const partLabels = (html.match(/class="eyebrow fd-part-label"/g) ?? []).length;
+if (partLabels !== 3) failures.push(`expected 3 part labels (Part N of 3), received ${partLabels}`);
+// Each stage row names the app's own last checkmark for that stage, so a
+// reader inside the app knows when the stage is finished (research pattern
+// 2: a countable done-marker per step).
+const doneLines = (html.match(/class="fd-stage-done"/g) ?? []).length;
+if (doneLines !== 5) failures.push(`expected 5 done-when lines, received ${doneLines}`);
+for (const text of ['Add one supplier', 'Review the food facts', 'Answer every ingredient once', 'Check the plate cost', 'cost the order']) {
+	requireText(text, `stage done-when line from SETUP_STAGE_GUIDE (${text})`);
+}
 
 // RC-58: the three doors into stage two. The row's verification step says the
 // ledger moves before the page does when a door is added or removed, and this
@@ -139,6 +159,23 @@ if (!/loading="lazy"/.test(shot)) failures.push('setup capture should not block 
 for (const leak of ['E2E First Kitchen', 'e2e.test', 'sandbox/demo', 'SANDBOX BUILD']) {
 	if (html.includes(leak)) failures.push(`the page leaks internal provenance: ${leak}`);
 }
+
+// Part 3 must survive the build with both tracks and their boundaries.
+const tracks = (html.match(/class="fd-doors-list fd-after-track"/g) ?? []).length;
+if (tracks !== 2) failures.push(`expected 2 after-setup tracks (menu, crew), received ${tracks}`);
+for (const [text, label] of [
+	['Your kitchen is ready', 'completion heading'],
+	['Open shopping list', 'completion first action'],
+	['Go to Today', 'completion second action'],
+	['pasted text', 'the five doors (RC-38)'],
+	['quoted back', 'unreadable-is-not-guessed (RC-39)'],
+	['one-time link', 'invite mechanism (RC-52)'],
+	['join as Staff', 'invited role (RC-52)'],
+	['Staff can open cost screens', 'Staff-sees-costs caveat (RC-52)'],
+	['href="/features/team-and-access"', 'link to the Team and Access guide'],
+	['id="after-menu"', 'menu track anchor'],
+	['id="after-crew"', 'crew track anchor']
+]) requireText(text, label);
 
 // One primary per end of the page, both rendering the site's single CTA
 // label, and the demo link never promoted to a second primary here.

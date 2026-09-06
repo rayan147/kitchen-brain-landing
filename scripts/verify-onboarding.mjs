@@ -132,7 +132,7 @@ try {
 				await frame();
 				await frame();
 			}
-			window.scrollTo(0, 0);
+			window.scrollTo({ top: 0, behavior: 'instant' });
 			await frame();
 			// Settle the entrance so opacity is read at its final value, not
 			// mid-transition.
@@ -157,7 +157,7 @@ try {
 	// The reveal register hides content until JS runs. Whatever this reads must
 	// be visible to a no-JS reader too, which the no-JavaScript pass asserts.
 	const probe = `(() => {
-		const actions = [...document.querySelectorAll('.fd-actions a, .feature-breadcrumb a')];
+		const actions = [...document.querySelectorAll('.fd-actions a, .feature-breadcrumb a, .fd-map-link')];
 		const maths = document.querySelector('.fd-maths-scroll');
 		return {
 			title: document.querySelector('#fd-heading')?.textContent.trim(),
@@ -186,6 +186,22 @@ try {
 			primaryLabel: document.querySelector('.fd-actions .btn-primary')?.textContent.trim(),
 			primaryCount: document.querySelectorAll('.fd-actions .btn-primary').length,
 			activeNav: [...document.querySelectorAll('nav a[aria-current="page"]')].map((a) => a.textContent.trim()),
+			mapLinks: [...document.querySelectorAll('.fd-map-link')].map((a) => a.getAttribute('href')),
+			mapTargets: [...document.querySelectorAll('.fd-map-link')].every((a) => !!document.querySelector(a.getAttribute('href'))),
+			parts: document.querySelectorAll('.fd-part-label').length,
+			tracks: document.querySelectorAll('.fd-after-track').length,
+			trunk: (() => {
+				// Trunk test from Part 3: scrolled to #after, the part label must sit
+				// inside the viewport so a reader knows the page, the part, and what
+				// comes next without scrolling back up.
+				const after = document.querySelector('#after');
+				if (!after) return false;
+				after.scrollIntoView({ behavior: 'instant', block: 'start' });
+				const label = after.querySelector('.fd-part-label')?.getBoundingClientRect();
+				const ok = !!label && label.top >= 0 && label.top < window.innerHeight;
+				window.scrollTo({ top: 0, behavior: 'instant' });
+				return ok;
+			})(),
 			revealHidden: [...document.querySelectorAll('[data-reveal]')]
 				.filter((n) => getComputedStyle(n).opacity !== '1').length
 		};
@@ -206,7 +222,7 @@ try {
 	assert(desktop.title === 'You do not need to enter your whole walk-in.', `desktop: page identity is "${desktop.title}"`);
 	assert(desktop.h1Count === 1, `desktop: found ${desktop.h1Count} h1 elements`);
 	assert(desktop.stages === 5, `desktop: expected 5 stage rows, received ${desktop.stages}`);
-	assert(desktop.ticketStages === 5, `desktop: expected 5 ticket stages, received ${desktop.ticketStages}`);
+	assert(desktop.ticketStages === 3, `desktop: expected 3 ticket map rows, received ${desktop.ticketStages}`);
 	assert(desktop.guards === 4, `desktop: expected 4 guard lines, received ${desktop.guards}`);
 	assert(desktop.plateCost === '$1.62', `desktop: plate cost reads ${desktop.plateCost}`);
 	assert(desktop.snap, 'desktop: the snap line no longer carries $1.62');
@@ -227,7 +243,12 @@ try {
 	assert((desktop.shot?.alt ?? 0) > 200, 'desktop: the setup capture alt does not read off the pixels');
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
 	assert(desktop.primaryCount === 2, `desktop: expected 2 route primaries (open and close), received ${desktop.primaryCount}`);
-	assert(desktop.activeNav.includes('Your first dish'), `desktop: navigation is not active (${desktop.activeNav.join(', ')})`);
+	assert(desktop.activeNav.includes('Your initial setup'), `desktop: navigation is not active (${desktop.activeNav.join(', ')})`);
+	assert(desktop.mapLinks.length === 3, `desktop: expected 3 map links, received ${desktop.mapLinks.length}`);
+	assert(desktop.mapTargets, 'desktop: a map link points at a missing section');
+	assert(desktop.parts === 3, `desktop: expected 3 part labels, received ${desktop.parts}`);
+	assert(desktop.tracks === 2, `desktop: expected 2 after-setup tracks, received ${desktop.tracks}`);
+	assert(desktop.trunk, 'desktop: Part 3 fails the trunk test (part label not visible after anchor scroll)');
 	assert(desktop.revealHidden === 0, `desktop: ${desktop.revealHidden} reveal section(s) never settled`);
 
 	// The primary's LABEL is pinned in check-landing-claims.mjs, on the source,
@@ -246,6 +267,8 @@ try {
 	assert(mobile.bodyOverflow === 0, `mobile: horizontal overflow is ${mobile.bodyOverflow}px`);
 	assert(mobile.mathsFits, 'mobile: the arithmetic table escapes the viewport');
 	assert(mobile.minTarget >= 44, `mobile: smallest route action is ${mobile.minTarget}px`);
+	assert(mobile.mapTargets, 'mobile: a map link points at a missing section');
+	assert(mobile.trunk, 'mobile: Part 3 fails the trunk test at 390px');
 	assert(mobile.plateCost === '$1.62', `mobile: plate cost reads ${mobile.plateCost}`);
 	assert(mobile.stages === 5, `mobile: expected 5 stage rows, received ${mobile.stages}`);
 	// The claim in this file's docstring and success line. At 390px the table

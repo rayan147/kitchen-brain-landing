@@ -635,6 +635,7 @@ for (const id of expectedStopIds.slice(0, -1)) {
 // of those rows must exist. An answer that cites nothing, or cites a row that
 // is not in the ledger, is an unbacked claim wearing a citation.
 const faqSource = surfaces[surfaceFiles.indexOf('src/lib/faq.ts')];
+requireText(faqSource, 'href="/onboarding#after-crew"', 'faq: after-setup crew answer links to the guide');
 const faqEntries = [...faqSource.matchAll(/id: '([a-z-]+)',\s*question:[\s\S]*?claims: \[([^\]]*)\]/g)];
 if (faqEntries.length === 0) failures.push('faq: could not read any entries to check');
 for (const [, id, claimList] of faqEntries) {
@@ -765,6 +766,32 @@ for (const [pattern, label] of [
 }
 if (!/5 stages/.test(onboardingSource)) {
 	failures.push('onboarding: the setup ticket no longer states the shipped stage count (RC-10)');
+}
+// Part 3, after setup. Each line is read off sandbox/demo on 2026-09-06 and
+// pinned so the page can neither drop the boundary nor sharpen the claim.
+// 3a: the completion screen (SetupCompletionSummary.svelte).
+requireText(onboardingSource, 'Your kitchen is ready', 'after-setup completion heading');
+requireText(onboardingSource, 'Open shopping list', 'after-setup first action');
+requireText(onboardingSource, 'Go to Today', 'after-setup second action');
+// 3b: the import queue (RC-38) and its two boundaries (RC-39, RC-08).
+requireText(onboardingSource, 'a photo, a PDF, a spreadsheet, a Word document or pasted text', 'after-setup five doors (RC-38)');
+requireText(onboardingSource, 'quoted back', 'after-setup unreadable-is-not-guessed (RC-39)');
+requireText(onboardingSource, 'without rewriting confirmed orders', 'after-setup later prices boundary (RC-08)');
+// 3c: Settings > Team (RC-52). The role boundary and the Staff-sees-costs
+// caveat travel with the invite claim or the claim comes off.
+requireText(onboardingSource, 'one-time link', 'after-setup invite mechanism (RC-52)');
+requireText(onboardingSource, 'No password', 'after-setup no-password boundary (RC-52)');
+requireText(onboardingSource, 'join as Staff', 'after-setup invited role (RC-52)');
+requireText(onboardingSource, 'Staff can open cost screens', 'after-setup Staff-sees-costs caveat (RC-52)');
+requireText(onboardingSource, '/features/team-and-access', 'after-setup link to the full boundary (RC-52)');
+for (const [pattern, label] of [
+	[/(?<!\bno )(?<!\bnot a )\bcustom roles?\b(?![^.]{0,40}\b(not|no)\b)/i, 'a custom role (RC-52: none exists)'],
+	[/\bpermission builder\b|\bper-screen\b/i, 'per-screen permissions (RC-52 forbids the grid)'],
+	[/\bextracts?\b|\breads? (it|them|your \w+) (correctly|accurately)\b/i, 'extraction accuracy (stubbed at both test layers)'],
+	[/\bautomatically\b/i, 'automation the ledger does not cover'],
+	[/\b(roll|rolled) out in\b/i, 'a rollout duration (nothing supports one)'],
+]) {
+	if (pattern.test(onboardingSource)) failures.push(`onboarding states ${label}`);
 }
 // RC-55 forbids these three on this evidence. They are the claims the page
 // would drift toward, and none is covered by the rehearsal artifact, which

@@ -285,9 +285,18 @@ export const faq: readonly FaqGroup[] = [
 				question: 'What does setup actually involve?',
 				answer: [
 					'One dish you already cook, not your whole walk-in. A skippable welcome asks what kind of kitchen you run and the name of that dish, then five stages ask for the next thing the dish needs: your kitchen and one supplier, the dish’s ingredients and their pack prices, their food facts, the dish itself, then a menu with a date and a guest count.',
-					'It ends on that dish’s plate cost with the arithmetic beside it, and a shopping list in whole packs. <a href="/onboarding">See the five stages and the number they end on</a>.'
+					'It ends on that dish’s plate cost with the arithmetic beside it, and a shopping list in whole packs. <a href="/onboarding">See the five stages, the number they end on, and what comes after</a>.'
 				],
 				claims: ['RC-10', 'RC-14', 'RC-55']
+			},
+			{
+				id: 'after-setup',
+				question: 'What do I do after setup, and how does my crew get in?',
+				answer: [
+					'Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, staged for you to confirm.',
+					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
+				],
+				claims: ['RC-38', 'RC-39', 'RC-52']
 			},
 			{
 				id: 'prices-in',
