@@ -325,7 +325,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'help',
 				question: 'Who answers when I write?',
 				answer: [
-					`I do. Email <a href="mailto:${site.email}">${site.email}</a> or call ${site.phone}. Inside the app, Contact support sends your account email and the screen you are on with the message.`
+					`I do. Ask on the <a href="/contact#ask-form">contact page</a> and the answer comes back to the address you leave, or call ${site.phone}. Inside the app, Contact support sends your account email and the screen you are on with the message.`
 				],
 				claims: ['RC-01']
 			},
