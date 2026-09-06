@@ -126,3 +126,39 @@ address they typed. Google's own booking confirmation reaches them a moment
 later when they pick a time, so a second CostCook email would be the third
 thing in their inbox saying the same thing. The page's own step 3 is what tells
 them it sent, which is why step 3 must not appear until the send returns ok.
+
+---
+
+## What the step-0 test decided (2026-09-06)
+
+**The embed works.** Driven over CDP behind a server replaying `vercel.json`'s
+own CSP:
+
+- With `frame-src https://calendar.google.com`, the schedule renders, a slot
+  click opens Google's name/email/reCAPTCHA form inside the frame, and the
+  frame document never navigates off `calendar.google.com`. The only other
+  origins touched (`www.gstatic.com`, `play.google.com`) are subresources of
+  Google's own document, governed by Google's CSP, not ours. So the allowlist
+  is exactly one host, measured rather than guessed.
+- With today's `frame-src 'none'` the visitor gets Chrome's "This content is
+  blocked. Contact the site owner to fix the issue." That is the negative
+  control, and it is what the guard now reproduces.
+
+**One thing the test could not settle:** the final submit was not pressed,
+because that books a real slot on Rayan's calendar and emails him. Everything up
+to it renders in-frame.
+
+**A bug the test caught that no header could have.** With `src` in the markup,
+the calendar rendered as a ~150px column of wrapped text inside a 980px frame.
+Chrome deliberately does NOT lazy-load a `display:none` iframe, it loads it
+eagerly, so Google laid its page out against the hidden panel's viewport and
+never reflowed; reassigning `src` afterwards did not fix it. The src is now
+attached by script once step 3 is open and sized. `/demo/sent` keeps a plain
+`src`, because it is visible and full width from first paint.
+
+**Measured, and why the heights are what they are.** Inside the frame at ~408px
+wide, Google's schedule stacks and runs 2,582px tall, so a 700px frame on a
+phone hides every time behind a scrollbar inside an iframe. Mobile gets 1200px;
+the wide layout puts the month beside four days of times and 700px is all of it.
+The ticket also breaks out to full width at step 3, because in the 5fr column
+the calendar had about 455px and Google answered with its narrow layout.

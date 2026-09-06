@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import { booking, site } from '../../lib/site';
+
+/**
+ * Where /api/demo-request sends a browser that posted the form without
+ * JavaScript. The site is static, so it cannot read ?sent=1 on the server; a
+ * real page is the only way a no-script visitor learns their request arrived.
+ *
+ * It carries the same booking calendar the scripted path shows in step 3,
+ * because the point of this work was that nobody has to leave the page to book.
+ * A no-script visitor handed a bare link would be back where the mailto: left
+ * them.
+ * story: docs/stories/request-demo.story.md
+ */
+---
+
+<Base
+	title="Demo request sent | CostCook"
+	description="Your demo request reached Rayan. Pick a 15-minute time on his calendar."
+	path="/demo/sent"
+>
+	<section class="container-page py-section" aria-labelledby="sent-title">
+		<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">DEMO · SENT</p>
+		<h1 id="sent-title" class="mt-4 max-w-[22ch] text-display font-semibold">
+			Sent. Now take your 15 minutes.
+		</h1>
+		<p class="mt-6 max-w-[58ch] text-lede text-ink-soft">
+			Rayan has what you brought. Pick a time below and Google sends you both the invite. If
+			nothing here suits you, call {site.phone}.
+		</p>
+
+		<div class="mt-10 max-w-[56rem] border border-ticket-rule bg-cream">
+			<iframe
+				src={booking.embedUrl}
+				title="Book a 15-minute CostCook demo with Rayan"
+				width="100%"
+				height="700"
+				loading="lazy"
+				class="block min-h-[1200px] w-full border-0 lg:min-h-[700px]"
+				data-booking-frame></iframe>
+		</div>
+
+		<p class="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+			<a href={booking.url} target="_blank" rel="noopener noreferrer" class="btn-quiet"
+				>Calendar not loading? Open it in a new tab</a
+			>
+			<a href="/" class="btn-quiet">Back to the homepage</a>
+		</p>
+		<p class="mt-6 max-w-[58ch] text-sm text-ink-soft">
+			Your request is sent. A time is booked only once you choose one above and Google confirms it.
+		</p>
+	</section>
+</Base>

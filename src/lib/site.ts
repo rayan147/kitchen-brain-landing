@@ -21,9 +21,27 @@ export const site = {
 		'Enter a catering menu and guest count once. CostCook scales recipes, builds shopping, prep, and pack plans, and shows food cost before you quote.'
 } as const;
 
-/** Owner-supplied Google Calendar appointment schedule. */
+/**
+ * Owner-supplied Google Calendar appointment schedule, in its two forms. Both
+ * are public share links, not secrets: anyone who can book can read them.
+ *
+ * `url` is the short link Google hands you. It is a 302 to `embedUrl`, so it
+ * works in a link and CANNOT be framed: an iframe pointed at it navigates to
+ * calendar.google.com, and a CSP allowlist written against calendar.app.google
+ * would block the very redirect it was meant to permit.
+ *
+ * `embedUrl` is the same schedule with Google's `gv=true` embed parameter.
+ * /demo renders it in the page so nobody has to leave to book. That needs
+ * `frame-src https://calendar.google.com` in vercel.json, which is checked
+ * against `embedOrigin` by scripts/check-demo-page.mjs, because a CSP is a
+ * deploy-only header: no local server sends one, so nothing else would notice
+ * the calendar going blank in production.
+ */
 export const booking = {
-	url: 'https://calendar.app.google/CtvTiAXfbNBB4cXE6'
+	url: 'https://calendar.app.google/CtvTiAXfbNBB4cXE6',
+	embedUrl:
+		'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0xfUOfjHtWWy-FW4DGE8Ree6p29tr6zrGH3iZ0oYWhLJWqZhtszmFJqGa-JtB3yJ9bmEoT69Ll?gv=true',
+	embedOrigin: 'https://calendar.google.com'
 } as const;
 
 const productionAppOrigin = 'https://app.costcook.io';
