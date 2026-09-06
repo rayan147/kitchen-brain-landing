@@ -362,7 +362,21 @@ import SageIcon from '../SageIcon.astro';
 	.metric-strip strong { margin-top: .25rem; font-size: clamp(1rem, 1.5vw, 1.125rem); font-variant-numeric: tabular-nums; }
 	.metric-strip [data-tone='good'] strong { color: #226345; }
 	.metric-strip [data-tone='attention'] strong { color: #8f5716; }
-	.app-content-grid { display: grid; gap: 1rem; margin-top: 1rem; }
+	/* THE TABLE SETS THE WIDTH, NOT A BREAKPOINT. This was `display: grid` with
+	   `minmax(0, 1.75fr) minmax(13rem, .8fr)` above 1100px. The 0 minimum let the
+	   table column collapse under its own content: container-page caps the shell
+	   at 1056px and the rail takes 14.5rem, so this grid is 771px at EVERY desktop
+	   width, while the table (38rem) plus the gap plus the aside (13rem) needs
+	   832px. It never fit, at any viewport from 1100px to 2560px, so all twelve
+	   stops scrolled their last column out of sight behind an overflow nobody
+	   looks for on a desktop.
+	   Flex-wrap states the constraint instead of guessing a width: each item asks
+	   for its own minimum as its basis, so the aside drops below the table exactly
+	   when the two no longer fit, and never before. No breakpoint to keep in sync
+	   with the table's min-width. */
+	.app-content-grid { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+	.app-content-grid > .app-table-wrap { flex: 1 1 38rem; min-width: 0; }
+	.app-content-grid > .app-aside { flex: 1 1 13rem; min-width: 0; }
 	.app-table-wrap { overflow-x: auto; border: 1px solid #dce3dd; background: #fff; }
 	.app-table-wrap table { width: 100%; min-width: 38rem; border-collapse: collapse; font-size: var(--text-eyebrow); }
 	.app-table-wrap th, .app-table-wrap td { border-bottom: 1px solid #e3e8e4; padding: .7rem .75rem; text-align: left; }
@@ -402,9 +416,15 @@ import SageIcon from '../SageIcon.astro';
 		.tour-hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(22rem, .85fr); }
 		.tour-heading-row { grid-template-columns: minmax(0, 1fr) minmax(18rem, .55fr); }
 		.tour-shell { display: grid; grid-template-columns: 14.5rem minmax(0, 1fr); }
+		/* The workspace is the one section arguing it is an application, and an
+		   app shell loses a rail to navigation before any content is shown. At the
+		   page's 72rem it had 771px left for a 608px table beside a 208px panel.
+		   80rem here matches the widening NutritionFactsAllergensFeature.astro
+		   already makes for the same reason. The hero and the close above and
+		   below keep 72rem: they are prose, and prose keeps its measure. */
+		.tour-workspace :global(.container-page) { max-width: 80rem; }
 		.tour-rail { display: block; }
 		.metric-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-		.app-content-grid { grid-template-columns: minmax(0, 1.75fr) minmax(13rem, .8fr); }
 		.tour-coach { grid-template-columns: minmax(0, 1fr) auto; }
 		.tour-close-grid { grid-template-columns: minmax(0, 1fr) auto; }
 	}

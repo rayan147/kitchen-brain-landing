@@ -150,6 +150,34 @@ try {
 
 	await viewport(1440, 900);
 	await navigate();
+	// THE TABLE IS THE PAGE. Every stop's numbers live in this table, and the
+	// wrap scrolls, so a column pushed out of it disappears in silence: the suite
+	// passed for months while all twelve stops clipped their last column at every
+	// desktop width from 1100px up. Assert the table fits the pane it sits in.
+	const desktopStopOverflow = await evaluate(`(async () => {
+		const tabs = [...document.querySelectorAll('[data-tour-tab]')];
+		const clipped = [];
+		for (let index = 0; index < tabs.length; index += 1) {
+			tabs[index].click();
+			for (let attempt = 0; attempt < 40; attempt += 1) {
+				const open = [...document.querySelectorAll('[data-tour-scene]')].find((scene) => !scene.hidden);
+				if (open?.dataset.index === String(index)) break;
+				await new Promise(requestAnimationFrame);
+			}
+			const scene = [...document.querySelectorAll('[data-tour-scene]')].find((entry) => !entry.hidden);
+			const wrap = scene.querySelector('.app-table-wrap');
+			const overflow = Math.round(wrap.querySelector('table').scrollWidth - wrap.clientWidth);
+			if (overflow > 0) clipped.push(scene.dataset.stopId + ' +' + overflow + 'px');
+		}
+		return clipped;
+	})()`);
+	assert(
+		desktopStopOverflow?.length === 0,
+		`stops clip their table at 1440px: ${(desktopStopOverflow || []).join(', ')}`
+	);
+	// That walk ends on the last stop, where there is no forward move left to
+	// make. Reload so the motion checks below start from stop 1 as they expect.
+	await navigate();
 	const sceneMotion = await evaluate(`(async () => {
 		const nativeStartViewTransition = document.startViewTransition?.bind(document);
 		if (!nativeStartViewTransition) return { supported: false };
@@ -281,7 +309,14 @@ try {
 } finally {
 	socket?.close();
 	browser.kill('SIGTERM');
-	await rm(profile, { recursive: true, force: true });
+	// Chromium can still be flushing its profile when we get here, and an
+	// ENOTEMPTY thrown from the finally block replaces the assertion results
+	// with a teardown stack trace, which is how a failing run reads as a crash.
+	try {
+		await rm(profile, { recursive: true, force: true });
+	} catch {
+		// A leftover temp profile is not a verification result.
+	}
 }
 
 if (failures.length > 0) {
