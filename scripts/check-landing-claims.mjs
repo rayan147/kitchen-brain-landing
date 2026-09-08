@@ -1022,6 +1022,12 @@ const forbiddenClaims = [
 	// that company own pricing page listed on a stated date. A spreadsheet suite
 	// is a named product with a pricing page, so the homepage noun stays generic.
 	[/\b(microsoft excel|google sheets|apple numbers|libreoffice)\b/i, 'named spreadsheet product outside /compare (RC-40)'],
+	// RC-59. The four sentences an ordering feature makes it easy to write and
+	// impossible to defend on a demo call.
+	[/\bconfirms? the (order|booking) automatically\b/i, 'automatic order confirmation (RC-59: a submission awaits kitchen confirmation)'],
+	[/\b(gets?|getting) you paid\b/i, 'a payment promise (RC-59: Stripe is a handoff, and the app states when no charge occurred)'],
+	[/\bcustomers? sees? (the|their|a) price\b[^.]{0,40}\binstantly\b/i, 'a price computed in the browser (RC-59: selections travel without prices)'],
+	[/\btakes? orders? while you (sleep|cook)\b/i, 'the stock automation promise the confirmation gate contradicts'],
 ];
 for (const [pattern, label] of forbiddenClaims) {
 	if (pattern.test(publicCopy)) failures.push(`public copy contains forbidden ${label}`);
