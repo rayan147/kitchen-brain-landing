@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Give the connection story its own honest page at `/integrations`, and put CostCook's own ordering capability on the site as one status-driven `Coming` feature, without claiming anything a caterer starting today cannot reach.
+**Goal:** Put CostCook's own ordering capability on the site as one status-driven `Coming` feature, and stop the two third-party connections sharing a status they do not share. Nothing claims anything a caterer starting today cannot reach. (Revised 2026-09-08: the `/integrations` page this plan opened with is withdrawn. See the revision note below.)
 
 **Architecture:** Two independent pieces. Piece 2 (`/integrations`) moves the two third-party connection groups out of `src/lib/features.ts` into `src/lib/integrations.ts` and renders them on a footer-linked page. Piece 1 (`src/lib/ordering.ts`) copies the `src/lib/labels.ts` precedent exactly: one exported status constant drives a per-surface copy object, and every public surface reads it so a single edit flips the whole site.
 
@@ -11,6 +11,124 @@
 **Spec:** `docs/plans/ordering-and-integrations-2026-09-08.md`
 
 **Branch:** `develop`.
+
+---
+
+## REVISION 2026-09-08: Piece 2 is withdrawn
+
+Executing Task 2 turned up what the spec and this plan both missed:
+`src/components/sections/Integrations.astro` already exists and renders on
+`/features/team-and-connections`, and its header comment records the decision
+this plan tried to reverse, with reasons:
+
+> WHY NOT A DEDICATED PAGE. Two Coming rows and one shipped argument is not a
+> page; a page of nothing but Coming reads as a roadmap and costs trust with
+> the exact reader this site is built for. It becomes its own route when there
+> are four shipped connections to put on it, not before.
+
+That section also leads with an argument this plan did not have: prices get in
+with no connector at all, because the intake reads the paper the supplier
+already sends, so Square and QuickBooks come second and read as additions
+rather than as the answer.
+
+`/compare` already carries the rows too: `Point of sale`, `Accounting` and
+`An API to build against`, all `costcook: 'coming'`, with Parsley and meez
+cells already researched. `Integrations.astro` reads two of them out of
+`comparison.ts` rather than retyping them, and `check-landing-claims.mjs`
+pins both to `coming` with the flag-not-branch check. The coupling this plan
+proposed to build already exists.
+
+**Tasks 1 to 6 are withdrawn.** They would have duplicated a section,
+contradicted a documented decision, and broken the guard that keeps the
+section and the table agreeing. `docs/stories/integrations.story.md` stays:
+its Step 11 named the exact defect Task 2A now fixes.
+
+**Task 2A replaces them**, below. **Tasks 7 to 12 stand unchanged**: CostCook's
+own storefront and widget appear nowhere on the site, and "The day itself" is
+still the right home for them.
+
+---
+
+## Task 2A: Stop flattening Square and QuickBooks into one status
+
+RC-45 says the two are in genuinely different states: Square is BUILT and
+gated behind a flag that defaults off, while QuickBooks is "genuinely unbuilt
+... exists only as a key in the `ReleaseFeature` union ... there is no
+provider, route or job anywhere under `src/`". Two live surfaces give them the
+same status, and it is the softer one that is wrong.
+
+`src/lib/availability.ts` already has the vocabulary for the distinction:
+`comingDefinition` reads "Each feature names whether it is being built or is
+already behind a release flag." Nothing on either surface uses that second
+half.
+
+**Files:**
+- Modify: `src/lib/comparison.ts` (the `Point of sale` and `Accounting` row notes)
+- Modify: `src/components/sections/Integrations.astro` (the heading and the framing paragraph)
+
+- [ ] **Step 1: Separate the two notes in `comparison.ts`**
+
+`costcook: 'coming'` does not change on either row; the guard pins it and it is
+still true of the app a reader would start today. Only the notes change:
+
+```ts
+			{
+				label: 'Point of sale',
+				sheet: 'build',
+				costcook: 'coming',
+				note: 'Square is built and sits behind a release flag that is switched off, so nothing publishes to your till and no sale comes back today.',
+				parsley: 'Business, $379',
+				meez: 'Enterprise, custom'
+			},
+			{
+				label: 'Accounting',
+				sheet: 'build',
+				costcook: 'coming',
+				note: 'QuickBooks Online is not started. It is a reserved name in the app with nothing behind it yet, queued after Square.',
+				parsley: NOT_LISTED,
+				meez: 'Restaurant365 sync, $199/month plus setup fee'
+			},
+```
+
+`costcook` stays ahead of `note` in the object literal, which matters: the
+guard slices 220 characters from `label: 'Point of sale'` and requires
+`costcook: 'coming'` inside that window.
+
+- [ ] **Step 2: Stop the section saying both are being built**
+
+In `src/components/sections/Integrations.astro`, the heading reads "Two
+connections being built" and the paragraph under it reads "Coming means the
+same here as it does on the comparison page: being built now, and not in the
+app you would start today." Both assert active work on QuickBooks. Replace
+them with:
+
+```astro
+			<h3 class="text-h3 font-semibold">Two connections, at two different distances</h3>
+			<p class="mt-4 max-w-[62ch] text-ink-soft">
+				Coming means the same here as it does on the comparison page: not in the app
+				you would start today. It does not mean these two are at the same stage, and
+				the lines below say which is which. There is no date on either, because a date
+				is a promise and neither has earned one yet.
+			</p>
+```
+
+- [ ] **Step 3: Build and confirm both surfaces moved together**
+
+```bash
+npm run build 2>&1 | tail -5 && npm run check:claims
+grep -o "not started" dist/features/team-and-connections/index.html | head -1
+grep -c "QuickBooks is being built" dist/compare/index.html dist/features/team-and-connections/index.html
+```
+
+Expected: both guards pass, the new wording appears on the feature area, and
+zero hits for the old claim on either page.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add src/lib/comparison.ts src/components/sections/Integrations.astro
+git commit -m "fix(connections): Square is switched off, QuickBooks is not started, and they are not the same"
+```
 
 ---
 
