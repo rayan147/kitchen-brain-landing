@@ -450,7 +450,7 @@ export const comparison: RowGroup[] = [
 				label: 'Point of sale',
 				sheet: 'build',
 				costcook: 'coming',
-				note: 'Square is being built.',
+				note: 'Square is built and sits behind a release flag that is switched off, so nothing publishes to your till and no sale comes back today.',
 				parsley: 'Business, $379',
 				meez: 'Enterprise, custom'
 			},
@@ -458,7 +458,7 @@ export const comparison: RowGroup[] = [
 				label: 'Accounting',
 				sheet: 'build',
 				costcook: 'coming',
-				note: 'QuickBooks is being built.',
+				note: 'QuickBooks Online is not started. It is a reserved name in the app with nothing behind it yet, queued after Square.',
 				parsley: NOT_LISTED,
 				meez: 'Restaurant365 sync, $199/month plus setup fee'
 			},
