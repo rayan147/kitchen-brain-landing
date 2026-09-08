@@ -86,6 +86,10 @@ const surfaceFiles = [
 	// Owner-confirmed 2026-08-30. These three Coming corrections feed the
 	// homepage, comparison, FAQ, inventory and nutrition surfaces.
 	'src/lib/coming-plans.ts',
+	// The ordering status word and every sentence that reads it. Public copy,
+	// and the highest-risk claim on the site: the capability is built and
+	// reachable by nobody, which is the exact shape a reader rounds up.
+	'src/lib/ordering.ts',
 	// The mega-menu descriptions are capability copy, so they pass through the
 	// same forbidden-claim scan as the feature pages they link into.
 	'src/components/SiteNav.astro',
@@ -977,6 +981,20 @@ if (renderedBefores.join('|') !== outcomeBefores.join('|')) {
 			`which no longer mirror the four pains one for one and in order`,
 	);
 }
+
+// Ordering: built in the app, deployed nowhere, marked Coming (RC-59). The one
+// word lives in src/lib/ordering.ts and is pinned here until the ledger row
+// changes with it. The evidence is the deployment, not the branch: there is no
+// Vercel project for the storefront, order.costcook.io does not resolve, and
+// FEATURE_ORDERING_INTEGRATION_ENABLED is unset in production, which
+// featureDefault() reads as off for every workspace.
+const orderingSource = surfaces[surfaceFiles.indexOf('src/lib/ordering.ts')];
+if (!/ORDERING_STATUS = 'coming'/.test(orderingSource)) {
+	failures.push('ordering status: RC-59 says the storefront is not deployed; ORDERING_STATUS must read coming until the ledger row changes');
+}
+requireText(orderingSource, 'awaiting kitchen confirmation', 'ordering copy carries the confirmation boundary');
+requireText(orderingSource, 'without prices', 'ordering copy carries the price-authority boundary');
+requireText(orderingSource, 'no inbound command', 'ordering copy carries the widget protocol boundary');
 
 const forbiddenClaims = [
 	[/\bknow the margin\b/i, 'full-margin language'],
