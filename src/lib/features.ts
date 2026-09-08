@@ -1,5 +1,6 @@
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
+import { orderingAvailability } from './ordering';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -318,6 +319,19 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'It learns your names.', detail: 'Every confirm teaches an alias per kitchen. The review pile shrinks with use.' },
 			{ lead: 'Safe re-runs.', detail: 'Embedding backfill is idempotent. Running it again is safe, not a bill.' },
 			{ lead: 'Caterer scale.', detail: 'Tested with 120-item order guides and 20-invoice batches that stay together.' }
+		]
+	},
+	{
+		id: 'ordering',
+		section: 'The day itself',
+		kicker: 'Taking orders',
+		title: 'The enquiry, arriving as something you can quote from.',
+		// Status is read from src/lib/ordering.ts, the one place it may change
+		// (RC-59). Hardcoding it here would let the menu chip and this badge
+		// disagree the day the storefront is deployed.
+		status: orderingAvailability.isComing ? 'in-development' : 'available',
+		items: [
+			{ lead: orderingAvailability.featureLead, detail: orderingAvailability.featureDetail }
 		]
 	},
 	{
