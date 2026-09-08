@@ -1381,3 +1381,31 @@ Three spec items are deliberately **not** covered, each with its reason stated i
 **Placeholder scan.** No TBD, no "add error handling", no "similar to Task N". Every code step carries the literal code. Every command carries its expected output.
 
 **Type consistency.** `orderingAvailability.isComing` is the single boolean read by both `features.ts` call sites (Task 9 Steps 2 and 3). `orderingAvailability.featureLead` and `.featureDetail` are strings feeding `FeatureItem`, which is `{ lead: string; detail: string }`. `.menuDescription` is a string feeding `FeatureMenuItem.description`. `.faqStatus` is `readonly string[]`, matching `FaqEntry.answer`'s `readonly string[]`. `icon: 'orders'` is a member of the `FeatureMenuIcon` union. `IntegrationStatus` is `'in-development' | 'not-started'` and both members are used, once and twice respectively. `integrationsPage.comingDefinition` re-exports the shared string from `availability.ts` rather than restating it.
+
+---
+
+## As executed, 2026-09-08
+
+Done: Task 0, Task 2A, Tasks 7, 8, 9, 10, 11, 12. Withdrawn: Tasks 1 to 6
+(see the revision note above). `docs/stories/integrations.story.md` was written
+before the withdrawal and is kept: its Step 11 named the defect Task 2A fixed.
+
+Two deviations found during execution, both recorded in their commits:
+
+1. **No feature-menu item for ordering.** Task 9 Step 3 added one and the build
+   refused it: `/tour/main` asserts the product tour covers every Features
+   dropdown destination exactly once, so a menu entry obligates a tour stop.
+   Tour stops are a seeded walk through one 180-guest wedding, and there is no
+   reachable storefront to seed or capture; inventing an order-intake table
+   would be drawing a screen that does not exist. The group is reachable from
+   the features hub and its area page. The menu item lands with the deployment.
+2. **FAQ answer counts are hardcoded in two places.** Adding an answer moved
+   `scripts/check-faq-page.mjs` and `scripts/verify-faq.mjs` from 35 to 36.
+
+Still open, both deliberately:
+
+- The `/compare` row for ordering. Begins with re-reading
+  https://www.parsleysoftware.com/pricing and https://www.getmeez.com/pricing
+  and updating `VERIFIED_ON` (RC-40), not with writing a cell.
+- A dedicated `/features/taking-orders` page, its captures, and the feature-menu
+  item plus tour stop. All four begin with the storefront being deployed.
