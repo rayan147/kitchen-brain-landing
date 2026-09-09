@@ -348,7 +348,9 @@ for (const stage of yieldStages) {
 	}
 }
 
-const comingPlans = ['labels', 'par-buying', 'dietary', 'spanish'];
+// Three since 2026-09-09: dietary characteristics shipped and left the band.
+// RC-60, src/lib/dietary.ts.
+const comingPlans = ['labels', 'par-buying', 'spanish'];
 if (!homeHtml.includes('data-coming-plans')) {
 	console.error('check-dist: homepage is missing the Coming soon plan');
 	failed = true;

@@ -47,7 +47,10 @@
  * both." said a second time, and the lede's "special dinners, and changing
  * menus" was WhoThisIsFor's audience line verbatim.
  *
- * The four Coming bodies were NOT touched: they are shared with /compare and the
+ * THE BAND LOST ONE ON 2026-09-09: dietary characteristics shipped, so it moved
+ * out of coming-plans.ts and into src/lib/dietary.ts. Three left. RC-60.
+ *
+ * The Coming bodies were NOT touched: they are shared with /compare and the
  * FAQ, and a homepage-only trim there would drift three surfaces apart.
  */
 import { labelsAvailability } from '../../lib/labels';
@@ -61,6 +64,15 @@ const comingItems = [
 	}] : []),
 	...comingPlanList.map((plan) => ({ id: plan.id, title: plan.title, body: plan.homepage }))
 ];
+
+// THE COUNT IS READ, NOT TYPED, SINCE 2026-09-09. This heading said "Four
+// additions to the plan" while the list beside it was built from
+// comingPlanList, so the day dietary characteristics shipped and left that list
+// the heading was counting something that was no longer there. A Coming band
+// whose own heading is wrong is the worst possible place on this page for a
+// stale number.
+const countWord = (n: number) =>
+	['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][n] ?? String(n);
 
 const comingIcons: Record<string, readonly string[]> = {
 	labels: ['M7 8V3h10v5', 'M6 17H4v-7h16v7h-2', 'M7 14h10v7H7z', 'M17 11h.01'],
@@ -212,7 +224,9 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 			<div class="coming-heading">
 				<div>
 					<span>Coming soon</span>
-					<h3 class="mt-3 text-h3 font-semibold">Four additions to the plan.</h3>
+					<h3 class="mt-3 text-h3 font-semibold">
+						{comingItems.length === 1 ? 'One addition' : `${countWord(comingItems.length)} additions`} to the plan.
+					</h3>
 				</div>
 				<p>
 					None is in the CostCook you would start today, and no release date is promised.

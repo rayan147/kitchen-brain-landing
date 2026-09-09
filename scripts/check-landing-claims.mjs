@@ -344,25 +344,56 @@ if (costcookNoRows < 3) {
 			'changed, move the row and say so in RC-40 rather than lowering this floor.',
 	);
 }
-for (const key of ['parBuying', 'dietary', 'spanish']) {
+// TWO SINCE 2026-09-09, and it was three. Dietary characteristics left this
+// list by SHIPPING, which is the only way anything is allowed to leave it: a
+// Coming row that quietly disappears is a promise nobody kept. RC-60 records
+// what replaced it, and the pins below moved to src/lib/dietary.ts rather than
+// being deleted.
+for (const key of ['parBuying', 'spanish']) {
 	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
 }
 for (const phrase of [
 	"title: 'Buying that tops you back up to par'",
-	"title: 'Dietary characteristics'",
 	"title: 'Spanish'"
 ]) {
 	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
 }
-if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 3) {
-	failures.push('owner-confirmed Coming plans: all three corrected capabilities must remain Coming');
+if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 2) {
+	failures.push('owner-confirmed Coming plans: both remaining corrected capabilities must stay Coming');
 }
-for (const key of ['parBuying', 'dietary', 'spanish']) {
+for (const key of ['parBuying', 'spanish']) {
 	requireText(
 		comparisonSource,
 		`costcook: comingPlans.${key}.verdict`,
 		`comparison consumes the shared ${key} status`,
 	);
+}
+
+// RC-60. The shipped capability gets the same treatment the unshipped ones get:
+// one file owns the wording and every surface reads it, so a later correction is
+// one edit and not four. The two caps are pinned because they are the sentences
+// a friendly rewrite drops first, and dropping them turns a detection tool into
+// a safety promise.
+const dietarySource = await read('src/lib/dietary.ts');
+requireText(dietarySource, "verdict: 'yes' as const", 'dietary ships as a yes');
+requireText(dietarySource, 'CostCook detects, it never certifies.', 'dietary keeps the product boundary');
+requireText(dietarySource, 'Halal and kosher can only ever come back as a check', 'dietary keeps the halal and kosher cap');
+requireText(dietarySource, 'is never counted as clear', 'dietary keeps the unreviewed cap');
+requireText(dietarySource, 'freezes the reading', 'dietary keeps the frozen-at-confirm boundary');
+requireText(comparisonSource, 'costcook: dietary.verdict', 'comparison consumes the shared dietary status');
+// The four words this capability may never say, scanned over the SHIPPED COPY
+// ONLY: comments are stripped first, because the note at the head of that file
+// has to be able to name what it forbids, and the one legal use of
+// "allergen-free" is the sentence denying it. Everything else in that file is a
+// sentence a prospect reads.
+const dietaryCopy = dietarySource
+	.replace(/\/\*[\s\S]*?\*\//g, ' ')
+	.replace(/\/\/[^\n]*/g, ' ')
+	.replace(/No screen makes an allergen-free claim\./gi, ' ');
+for (const word of ['safe', 'certified', 'guaranteed', 'allergen-free']) {
+	if (new RegExp(`\\b${word}\\b`, 'i').test(dietaryCopy)) {
+		failures.push(`dietary: the shipped wording uses "${word}", which this capability may never claim`);
+	}
 }
 requireText(alternativesSource, 'data-coming-plans', 'homepage Coming plan group');
 requireText(alternativesSource, 'Coming soon', 'homepage Coming status');
@@ -631,7 +662,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 57; claim += 1) {
+for (let claim = 1; claim <= 60; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 

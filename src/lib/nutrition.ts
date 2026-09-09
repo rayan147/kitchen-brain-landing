@@ -45,7 +45,7 @@
  *
  * No pattern: a table the section renders once.
  */
-import { comingPlans } from './coming-plans';
+import { dietary } from './dietary';
 
 export const nutrition = {
 	verified: { sha: 'dff9469c', branch: 'sandbox/demo', on: '2026-08-29' },
@@ -75,7 +75,10 @@ export const nutrition = {
 	],
 	notClaimed: [
 		'The estimate is not a retail-label compliance claim, and the printed sheet says so.',
-		comingPlans.dietary.faq,
+		// WAS THE COMING SENTENCE UNTIL 2026-09-09. Dietary characteristics shipped,
+		// so the boundary this list owes the reader is no longer "we do not do it"
+		// but the two caps on the thing we do. RC-60, src/lib/dietary.ts.
+		`${dietary.boundary} ${dietary.notClaimed[1]}`,
 		'The ingredient statement is in recipe order, not a regulatory weight order.',
 		'A label printer integration is being built and carries no date. Today the sheet prints from the browser.'
 	],

@@ -55,6 +55,7 @@
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
+import { dietary } from './dietary';
 
 export const VERIFIED_ON = 'August 30, 2026';
 
@@ -374,10 +375,15 @@ export const comparison: RowGroup[] = [
 				meez: 'Enterprise, custom'
 			},
 			{
-				label: comingPlans.dietary.comparisonLabel,
+				/* WAS A COMING ROW UNTIL 2026-09-09 and it should not have been by
+				   then: the capability shipped and this row was telling a reader
+				   CostCook cannot do a thing it does. RC-60. The note keeps the two
+				   caps in the same breath as the yes, because a row that only says
+				   yes here is the row a demo call takes apart. */
+				label: dietary.comparisonLabel,
 				sheet: 'key',
-				costcook: comingPlans.dietary.verdict,
-				note: comingPlans.dietary.comparisonNote,
+				costcook: dietary.verdict,
+				note: dietary.comparisonNote,
 				parsley: 'Chef Plus, $189',
 				meez: NOT_LISTED
 			},
