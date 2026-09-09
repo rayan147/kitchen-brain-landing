@@ -104,3 +104,24 @@ This section adds no second snap line. The homepage keeps its established one:
 - **Word count before → after:** Repetition will be replaced by one visible question-to-evidence-to-review path.
 - **Claims removed because they could not be shown:** None added beyond the shipped Sage register and onboarding placement.
 - **Final Image:** The owner opens Sage during setup, checks the source, and approves only the work they want prepared.
+
+---
+
+## REVISED 2026-09-09 — homepage copy-density pass
+
+The homepage copy this tracker describes was shortened. Full working:
+`BRIEF-copy-density-2026-09-09.md`. Tracker for the pass itself:
+`docs/stories/homepage-copy-density.story.md`.
+
+The section said one thing six times: eleven checks read, one tool prepares, a
+person approves. The approval-path band is the one that shows it, so it kept it.
+The .sage-promise rail directly above that band is GONE, markup and styles. The
+lede stopped listing the line-marking states, which the missing-evidence
+guardrail lists in full (the lede's list was short one state). The h3 subhead
+"Evidence, access and action stay separate" went, because it named the three
+group labels that render immediately below it. THE SIX GUARDRAILS THEMSELVES
+WERE NOT CUT, only their mechanism sentences: this section's own h3 is "Useful
+because the boundaries are visible".
+
+No beat, section order, heading or value turn changed. Every cut was a claim
+the page was making twice; nothing was removed for being unprovable.

@@ -103,3 +103,24 @@
 - **Word count before → after:** 640 planned → 362 rendered words
 - **Claims removed because they couldn't be shown:** Any promise that CostCook runs POS, table service, every restaurant workflow, labor margin, or enterprise controls.
 - **Final Image:** Bring one real menu and guest count. See whether the work fits.
+
+---
+
+## REVISED 2026-09-09 — homepage copy-density pass
+
+The homepage copy this tracker describes was shortened. Full working:
+`BRIEF-copy-density-2026-09-09.md`. Tracker for the pass itself:
+`docs/stories/homepage-copy-density.story.md`.
+
+AUDITED, NOT CUT, AND SCOPED TO THE HOMEPAGE. This note is about the homepage's
+#who section (src/components/sections/WhoThisIsFor.astro) only. The /who-its-for
+route was not in this pass and was not opened. The homepage section was in the
+pass's scope and came out unchanged.
+At 168 words it holds the audience line and the three documented limits (RC-44),
+and nothing in it is said anywhere else on the page. The duplication it shared
+with #alternatives ("special dinners and changing menus") was resolved in
+#alternatives, because this stop is where the reader is being sorted and is
+therefore the sentence's home.
+
+No beat, section order, heading or value turn changed. Every cut was a claim
+the page was making twice; nothing was removed for being unprovable.

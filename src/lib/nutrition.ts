@@ -20,6 +20,29 @@
  * order is a weight-order claim (the screen says it is not); that anything
  * is allergen-free (the screen says no such claim is made).
  *
+ * CUT 2026-09-09, copy-density pass. BRIEF-copy-density-2026-09-09.md, and the
+ * tracker at docs/stories/homepage-copy-density.story.md. This section was the
+ * fattest on the homepage, 476 visible words for one mechanic, and the reason
+ * was internal: the cue rail under each point ENUMERATES what that point's
+ * detail paragraph had already spelled out. Point 4's detail listed the panel,
+ * the ingredient statement, the allergen line and the printed time; the cues
+ * beneath it read Panel / Ingredients / Allergens / Printed time. Same for the
+ * three allergen evidence sources, the USDA match, and the blank-not-zero rule.
+ * The details now state the claim once and let the rail do the listing.
+ *
+ * WHAT LEFT THE HOMEPAGE AND WHERE IT STILL LIVES. "raw, cooked or prepared",
+ * "used everywhere the ingredient appears", the sheet's contents and the three
+ * allergen evidence sources are all in NutritionFactsAllergensFeature.astro,
+ * which this section links to. The blank-not-zero rule left the LEDE, not the
+ * page: point 3 is the whole claim and the lede was saying it first.
+ *
+ * THE PINNED PHRASE MOVED HOUSE. check-landing-claims.mjs requires the literal
+ * "not a retail-label compliance claim" in this file. It used to be carried by
+ * point 4's detail, the caption AND notClaimed[0], which said "retail-label
+ * regulatory compliance claim" and so did not match the pin at all. It is now
+ * carried once, by notClaimed[0], in the exact words the guard reads, which is
+ * where a boundary belongs. Do not re-add it to the caption.
+ *
  * No pattern: a table the section renders once.
  */
 import { comingPlans } from './coming-plans';
@@ -30,28 +53,28 @@ export const nutrition = {
 	/** In the order a meal-prep reader asks. */
 	points: [
 		{
-			lead: 'Calories and protein, per portion, on the recipe you already costed.',
-			detail: 'The four numbers a customer asks for sit at the top of every recipe: calories, protein, carbs, fat. Under them, the fifteen an FDA panel carries, computed per portion or per batch.'
+			lead: 'Calories and protein, per portion.',
+			detail: 'The four a customer asks for sit at the top of every recipe. The other eleven sit under them.'
 		},
 		{
 			lead: 'From USDA profiles, matched by you.',
-			detail: 'Each ingredient is matched once to a USDA FoodData Central record, raw, cooked or prepared, and that source is used everywhere the ingredient appears. Sub-recipes roll up to the dish.'
+			detail: 'Each ingredient is matched once to a USDA FoodData Central record, and sub-recipes roll up to the dish.'
 		},
 		{
 			lead: 'Partial is said out loud.',
-			detail: 'A profile that lacks a value leaves the row blank instead of counting it as zero, and the panel says which values are missing. An incomplete dish is never totalled as a complete one.'
+			detail: 'A profile missing a value leaves the row blank instead of counting it as zero. An incomplete dish is never totalled as a complete one.'
 		},
 		{
 			lead: 'Print it from the recipe.',
-			detail: 'Print nutrition label opens a sheet with your kitchen name, the panel, the ingredient statement, the allergen line and the time it was printed, for your browser to put on label stock. It says on the sheet that it is a calculated estimate, not a retail-label compliance claim.'
+			detail: 'Print nutrition label opens a sheet your browser puts on label stock, with your kitchen name at the top.'
 		},
 		{
 			lead: 'Allergens ride along, with evidence.',
-			detail: 'Fourteen-allergen tagging per ingredient, recorded only from a supplier record, a package label or a kitchen review. A recipe with unreviewed ingredients says so, and no screen ever makes an allergen-free claim.'
+			detail: 'Fourteen-allergen tagging per ingredient, recorded only from evidence. A recipe with unreviewed ingredients says so, and no screen ever claims allergen-free.'
 		}
 	],
 	notClaimed: [
-		'The estimate is not a retail-label regulatory compliance claim, and the printed sheet says so on the sheet.',
+		'The estimate is not a retail-label compliance claim, and the printed sheet says so.',
 		comingPlans.dietary.faq,
 		'The ingredient statement is in recipe order, not a regulatory weight order.',
 		'A label printer integration is being built and carries no date. Today the sheet prints from the browser.'
@@ -70,6 +93,6 @@ export const nutrition = {
 			alt: 'The printable nutrition label sheet for Chicken Burrito Bowl from Maple and Main Catering. The complete per-portion Nutrition Facts panel shows 339 calories, 7 grams total fat, 3.5 grams saturated fat, 0 grams trans fat, 50.5 milligrams cholesterol, 561 milligrams sodium, 48.1 grams carbohydrate, 3.9 grams fiber, 6 grams total sugars, 0 grams added sugars, 22 grams protein, 0 micrograms vitamin D, 199 milligrams calcium, 2.6 milligrams iron, and 680 milligrams potassium. The sheet also lists the ingredient, Contains: Milk, Soy, USDA FoodData Central 2704502, and the calculated-estimate disclaimer.'
 		},
 		caption:
-			'Captured at 2× resolution from the live CostCook demo on 2026-08-29. This 297 g Chicken Burrito Bowl uses the manufacturer analytical values published in USDA FoodData Central branded record 2704502, including all fifteen label nutrients and confirmed milk and soy allergens. The sheet remains a calculated estimate, not a retail-label compliance claim.'
+			'Captured from the live CostCook demo on 2026-08-29. A 297 g Chicken Burrito Bowl, on USDA FoodData Central branded record 2704502, with milk and soy confirmed.'
 	}
 } as const;

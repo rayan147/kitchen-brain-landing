@@ -104,3 +104,22 @@ This section adds no second snap line. The homepage keeps its established one:
 - **Word count before → after:** Core explanatory copy preserved; sequence, icons, and evidence states carry the hierarchy instead of extra prose.
 - **Claims removed because they could not be shown:** None added or removed.
 - **Final Image:** A printed calculated estimate whose nutrition gaps and allergen review state are still visible.
+
+---
+
+## REVISED 2026-09-09 — homepage copy-density pass
+
+The homepage copy this tracker describes was shortened. Full working:
+`BRIEF-copy-density-2026-09-09.md`. Tracker for the pass itself:
+`docs/stories/homepage-copy-density.story.md`.
+
+Five detail paragraphs were shortened. Each had spelled out what the cue rail
+rendered directly beneath it (point 4 listed the panel, the ingredient statement,
+the allergen line and the printed time; the cues read Panel / Ingredients /
+Allergens / Printed time). The lede stopped stating the blank-not-zero rule,
+which is point 3's whole claim. The caption dropped the numbers the alt text
+carries and the disclaimer notClaimed[0] now carries in the guard's exact words.
+The five points, the proof captures and the boundary list all remain.
+
+No beat, section order, heading or value turn changed. Every cut was a claim
+the page was making twice; nothing was removed for being unprovable.

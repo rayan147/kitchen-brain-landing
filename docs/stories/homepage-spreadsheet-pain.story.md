@@ -218,3 +218,20 @@ column. Two claims were considered and refused because they are not true:
 Both now fail the claim guard by pattern, as does reordering either list, in
 the component source and again in the emitted HTML. The ending is unchanged and still
 lands where it did: the next quote starts with what you paid.
+
+---
+
+## REVISED 2026-09-09 — homepage copy-density pass
+
+The homepage copy this tracker describes was shortened. Full working:
+`BRIEF-copy-density-2026-09-09.md`. Tracker for the pass itself:
+`docs/stories/homepage-copy-density.story.md`.
+
+Two cuts, both in the lede paragraphs above the ticket stack; the four tickets,
+the quiet-one block and every pinned string are untouched. The first lede
+paragraph dropped "in every copy of the sheet that still holds the old one",
+which the next paragraph states as the flaw beat. The third paragraph gave its
+first sentence back to #trust (see that tracker).
+
+No beat, section order, heading or value turn changed. Every cut was a claim
+the page was making twice; nothing was removed for being unprovable.

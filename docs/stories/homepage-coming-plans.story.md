@@ -101,3 +101,24 @@ The homepage keeps its established snap line—“The numbers move between them 
 - **Before → after:** “Three are not planned” and one long label explanation become four parallel, visible Coming soon rows.
 - **Claims removed:** English only as a permanent boundary; par buying as permanently absent; dietary characteristics as permanently unplanned.
 - **Final image:** You see exactly four additions, each marked Coming soon, with “not included today” and “no date promised” in the same frame.
+
+---
+
+## REVISED 2026-09-09 — homepage copy-density pass
+
+The homepage copy this tracker describes was shortened. Full working:
+`BRIEF-copy-density-2026-09-09.md`. Tracker for the pass itself:
+`docs/stories/homepage-copy-density.story.md`.
+
+The rival turn no longer re-narrates TheProblem's second pain. It still names
+the forty guests and the three lists, because the question is the section's whole
+job and needs a real number; it dropped "what happens to your Saturday when the
+client adds forty guests on Thursday", which the reader had roughly 8,000 phone
+pixels earlier. The lede's "special dinners, and changing menus" was WhoThisIsFor's
+audience line verbatim. The figcaption's second sentence was the lede's pinned
+"A restaurant can run both." said again. THE FOUR COMING BODIES WERE NOT TOUCHED:
+they are shared with /compare and the FAQ, and a homepage-only trim would drift
+three surfaces apart.
+
+No beat, section order, heading or value turn changed. Every cut was a claim
+the page was making twice; nothing was removed for being unprovable.

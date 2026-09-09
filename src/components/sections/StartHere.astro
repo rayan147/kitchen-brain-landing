@@ -59,6 +59,7 @@ const trialFacts = [
 ---
 
 <!-- story: docs/stories/homepage-real-order-close.story.md -->
+<!-- story: docs/stories/homepage-copy-density.story.md -->
 <section id="start" class="border-y border-ticket-rule bg-cream" aria-labelledby="start-heading">
 	<div class="container-page py-section">
 		<div class="start-hero">
@@ -84,8 +85,7 @@ const trialFacts = [
 					{trialFacts.map((fact) => <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>)}
 				</dl>
 				<p class="trial-boundary">
-					Stripe holds the card. The workspace owner can cancel from Settings → Billing
-					before day {launchPlan.trialDays + 1} and pay nothing.
+					Stripe holds the card. Cancel before day {launchPlan.trialDays + 1} and pay nothing.
 				</p>
 				<a
 					href={cta.href}
@@ -112,7 +112,6 @@ const trialFacts = [
 		<figure class="order-test" data-real-order-path data-reveal>
 			<figcaption>
 				<h3 class="text-h3 font-semibold">One order in. Four working plans out.</h3>
-				<p>Missing prices or conversions stop the costing instead of quietly becoming zero.</p>
 			</figcaption>
 			<div class="order-path">
 				<section aria-labelledby="order-inputs-title">

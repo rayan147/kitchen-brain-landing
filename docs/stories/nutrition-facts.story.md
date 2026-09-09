@@ -96,3 +96,21 @@ Sunday, 9 p.m., forty containers cooling, a roll of label stock, and a customer 
 - Cut: "compliant" everywhere and "accurate". Dietary characteristics remain unassessed today, but owner confirmation on 2026-08-30 moved them from No to Coming; public boundaries now state both facts together.
 - The printed-label status was moved from Coming to Yes on evidence (RC-50), and every surface that argued the old status was rewritten rather than left to contradict.
 - Ending: the feature-area link, then the hand-off to PaperIn.
+
+---
+
+## REVISED 2026-09-09 — homepage copy-density pass
+
+The homepage copy this tracker describes was shortened. Full working:
+`BRIEF-copy-density-2026-09-09.md`. Tracker for the pass itself:
+`docs/stories/homepage-copy-density.story.md`.
+
+The homepage's copy for this feature was shortened (see the note above for what
+and why). What left the homepage did not leave the site: "raw, cooked or
+prepared", "used everywhere the ingredient appears", the printed sheet's contents
+and the three allergen evidence sources are all in
+NutritionFactsAllergensFeature.astro, which the homepage section links to.
+Nothing on the feature page changed.
+
+No beat, section order, heading or value turn changed. Every cut was a claim
+the page was making twice; nothing was removed for being unprovable.
