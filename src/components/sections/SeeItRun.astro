@@ -195,9 +195,19 @@ const guideSteps = [
 				recipe, purchase orders that really send, a delivery that arrives wrong, the price
 				carried back, and Sage answering a question about the job.
 			</p>
+			<!-- HIDDEN UNDER lg SINCE 2026-09-09, and only under lg. This link exists
+			     to carry a reader from the player down to a block that used to sit a
+			     long way below it. On a phone the guide is now a control immediately
+			     under the video saying the same four words, so the link and the
+			     summary were the same sentence twice within one screen. It stays in
+			     the served HTML (check-dist.mjs reads data-demo-guide-jump) and it
+			     stays visible at the widths where the guide is open by default and
+			     the intro is a sticky column some distance down the page. Hiding a
+			     duplicate route to adjacent content costs a reader nothing;
+			     principle 3 is about content, and this is not content. -->
 			<a
 				href="#demo-guide-heading"
-				class="demo-guide-jump mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-green-deep underline decoration-hairline-strong decoration-2 underline-offset-4 hover:text-green focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green"
+				class="demo-guide-jump mt-5 hidden min-h-11 items-center gap-2 font-semibold text-green-deep underline decoration-hairline-strong decoration-2 underline-offset-4 hover:text-green focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green lg:inline-flex"
 				data-demo-guide-jump
 			>
 				Follow the order in writing
@@ -324,20 +334,79 @@ const guideSteps = [
 			</span>
 		</div>
 
+		<!-- PHONE-ONLY DISCLOSURE SINCE 2026-09-09. MEASURED at 390x844: this guide
+		     is 2,975px, or 3.5 mobile viewports, of a page that measured 31,999px
+		     (37.9 viewports) whole. It is the one block on the homepage that is
+		     explicitly an ALTERNATIVE to something the reader has just been given -
+		     its own heading says "without pressing play" - so it is the only stop
+		     that can be folded without taking an argument off the page. Folding it
+		     returns roughly 2,400px, about 7.5% of the scroll, to a reader who
+		     watched the film. See BRIEF-mobile-view-2026-09-09.md section 4A.
+
+		     OPEN IN THE MARKUP, CLOSED BY SCRIPT, AND THAT ORDER IS THE POINT.
+		     Principle 3 says nothing is hidden from a no-JS visitor, so the served
+		     HTML carries the guide open and the script below only ever CLOSES it,
+		     and only under 52rem. JS off, or the script failing, leaves the whole
+		     guide readable. The failure direction is "too much content", never
+		     "missing content".
+
+		     WHY THE COLLAPSE IS NOT A VISIBLE JUMP, given the CSP. vercel.json
+		     ships script-src 'self', so the no-flash trick (an is:inline script
+		     right after the element) is not available here and the script is
+		     bundled and deferred like every other one in this repo. It therefore
+		     runs after paint - but this block starts at 2,626px, three viewports
+		     below the fold, so the reflow happens in a part of the document the
+		     reader has not reached and will never see move. Nothing above the fold
+		     shifts.
+
+		     NO NEW COPY. The summary reads the jump link's own words ("Follow the
+		     order in writing"); the hint reads the lede's ("handoffs"). Nothing here
+		     is a sentence that has not already passed the claim scan.
+
+		     THE COUNT IS NOW READ OFF guideSteps, IN BOTH PLACES. It was written
+		     out as "six" in the lede and the array holds eight: the guide gained
+		     nutrition and ask and the sentence above it did not. Caught 2026-09-09
+		     while adding the summary, which would have repeated the wrong number.
+		     A hand-typed count is a claim that drifts silently every time the
+		     array changes, and no guard in this repo counts steps against prose.
+		     Neither string can be wrong again. -->
 		<section
 			id="demo-guide"
 			class="demo-guide mt-12 border-y border-ticket-rule py-10 sm:mt-16 sm:py-12"
 			aria-labelledby="demo-guide-heading"
 			data-demo-guide
 		>
+			<details class="demo-guide-disclosure" open data-demo-guide-disclosure>
+				<summary class="demo-guide-summary">
+					<span class="demo-guide-summary-text">
+						<span class="demo-guide-summary-title">Follow the order in writing</span>
+						<span class="demo-guide-summary-hint">{guideSteps.length} handoffs</span>
+					</span>
+					<svg
+						class="demo-guide-summary-chevron"
+						width="18"
+						height="18"
+						viewBox="0 0 18 18"
+						fill="none"
+						aria-hidden="true"
+					>
+						<path
+							d="M5 7l4 4 4-4"
+							stroke="currentColor"
+							stroke-width="1.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"></path>
+					</svg>
+				</summary>
+
 			<div class="demo-guide-layout">
 				<header class="demo-guide-intro">
 					<h3 id="demo-guide-heading" tabindex="-1" class="max-w-[17ch] text-h3 font-semibold">
 						Follow the order without pressing play.
 					</h3>
 					<p class="mt-4 max-w-[42ch] text-ink-soft">
-						Read the same 180-guest wedding in six handoffs. Each line shows what goes
-						in and what the next part of the job receives.
+						Read the same 180-guest wedding in {guideSteps.length} handoffs. Each line shows
+						what goes in and what the next part of the job receives.
 					</p>
 				</header>
 
@@ -393,6 +462,7 @@ const guideSteps = [
 					</div>
 				</div>
 			</div>
+			</details>
 		</section>
 
 		<!-- One primary, restored 2026-08-23. It was pulled when this section
@@ -449,11 +519,110 @@ const guideSteps = [
 	if (video && window.matchMedia('(min-width: 640px)').matches) {
 		video.setAttribute('poster', '/demo-poster.jpg');
 	}
+
+	// THE GUIDE FOLDS DOWN, IT NEVER FOLDS UP. The served HTML has the <details>
+	// open, so a reader with no JS, or one this script never reaches, gets the
+	// whole guide. All this does is close it under 52rem, which is where its
+	// 2,975px cost 3.5 viewports of a 37.9-viewport page.
+	//
+	// Bundled, never is:inline: the CSP in vercel.json is script-src 'self'.
+	// That means this runs after paint, which is fine here and only here - the
+	// guide begins 2,626px down, so the reflow happens three viewports below the
+	// fold and nothing the reader is looking at moves.
+	const guide = document.querySelector<HTMLDetailsElement>('[data-demo-guide-disclosure]');
+	if (guide && window.matchMedia('(max-width: 51.99rem)').matches) {
+		guide.open = false;
+
+		// The jump link under the player targets the heading INSIDE the guide.
+		// Closed, that anchor resolves to nothing, so open it first and let the
+		// browser's own anchor handling do the rest. Not preventDefault'd: the
+		// hash still lands, focus still moves to the tabindex="-1" heading, and
+		// a reader who then collapses it again keeps that choice.
+		document.querySelector('[data-demo-guide-jump]')?.addEventListener('click', () => {
+			guide.open = true;
+		});
+	}
 </script>
 
 <style>
 	.demo-guide-jump {
 		transition: color 150ms ease-out;
+	}
+
+	/* Considered State (an object that owns open/closed and transitions itself);
+	   not used because <details> already IS that object and the browser runs the
+	   transition. One line of script sets the initial state on one breakpoint.
+	   Alternative rejected: a hand-rolled toggle with aria-expanded, which would
+	   hide content from a no-JS reader and re-implement what the element does. */
+	.demo-guide-summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		/* 44px floor by padding, not by height, so the row grows with the text
+		   at 200% zoom instead of clipping it. */
+		padding-block: 0.75rem;
+		cursor: pointer;
+		list-style: none;
+	}
+
+	/* Safari still paints its own disclosure triangle without this. */
+	.demo-guide-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.demo-guide-summary-text {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.demo-guide-summary-title {
+		font-family: var(--font-display);
+		font-size: var(--text-h3);
+		font-weight: 600;
+		color: var(--color-ink);
+	}
+
+	.demo-guide-summary-hint {
+		font-size: var(--text-caption);
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-amber-deep);
+	}
+
+	.demo-guide-summary-chevron {
+		flex: 0 0 auto;
+		color: var(--color-green-deep);
+	}
+
+	/* Transform only, and gated, like every other motion register on the site. */
+	@media (prefers-reduced-motion: no-preference) {
+		.demo-guide-summary-chevron {
+			transition: transform 150ms ease-out;
+		}
+	}
+
+	.demo-guide-disclosure[open] .demo-guide-summary-chevron {
+		transform: rotate(180deg);
+	}
+
+	/* Open content needs air under the summary; closed needs none. The section
+	   itself carries py-10/py-12 for a block that is 2,975px tall, which reads as
+	   dead space between two rules once that block is one 78px row. Closed, the
+	   row sits on the rules with its own padding and nothing else. */
+	.demo-guide-disclosure[open] .demo-guide-summary {
+		margin-bottom: 1.5rem;
+	}
+
+	/* BOTTOM ONLY, and that is not a detail. Collapsing the section's padding on
+	   BOTH edges moved the summary 32px down at the moment of the click, under
+	   the reader's own finger - MEASURED at 390: top 383px closed, 415px open.
+	   The top padding is what holds that row still, so only the bottom gives. */
+	.demo-guide:has(.demo-guide-disclosure:not([open])) {
+		padding-bottom: 0.5rem;
 	}
 
 	.demo-guide-layout {
@@ -607,6 +776,17 @@ const guideSteps = [
 	}
 
 	@media (min-width: 52rem) {
+		/* Above this width the script never closes the guide, so the control has
+		   nothing to control. The <details> stays open and the section renders
+		   exactly as it did before this change. */
+		.demo-guide-summary {
+			display: none;
+		}
+
+		.demo-guide-disclosure[open] .demo-guide-summary {
+			margin-bottom: 0;
+		}
+
 		.demo-guide-layout {
 			grid-template-columns: minmax(14rem, 4fr) minmax(0, 7fr);
 		}
