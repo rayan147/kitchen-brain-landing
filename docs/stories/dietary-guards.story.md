@@ -139,3 +139,43 @@ prospect-facing copy like every other alt on the site.
 **Ends on:** the reader's life after, in her words. The cook reads it off the
 pan. Nothing on this page promises her a guest is safe, because the product does
 not, and saying so is the reason she might believe the rest.
+
+---
+
+## Delivered 2026-09-09 — the page
+
+`/features/guest-restrictions-and-dietary-guards`, seven sections in the order
+Step 4 sets: the booking as the headline, the wall, who is eating, the three
+answers, coverage, the four limits, the standing book, then the questions and
+the close.
+
+**Measured:** 6,164px at 1440x900 and 7,363px at 390x844, no horizontal overflow
+at 1440, 1280, 1024, 834, 768 or 390, no heading-level skips, both CTAs at 48px.
+
+**Wired:** a feature group of seven items in `features.ts` (which raises the
+derived `featureCount` rather than any typed number), a Features dropdown item, a
+dedicated route, a thirteenth product-tour stop, a `check-dist` feature-area row,
+the built-page contract `scripts/check-guest-restrictions-page.mjs` in
+`postbuild`, and a link both ways with
+`/features/nutrition-facts-and-allergens`.
+
+**What the contract pins, and why each one:** the detect-never-certify boundary;
+the four forbidden words scanned over the rendered prose with the denial sentence
+stripped; the five diets by `data-diet`, because a diet quietly dropped narrows a
+capability claim and nothing else would notice; exactly `Conflict,Check,Clear` in
+order, because a fourth outcome would be invented rather than shipped; the four
+limits still numbering four; the halal and kosher cap, the unreviewed cap and the
+confirm freeze as literal sentences rather than only as data; and the worked
+example still labelled illustrative for as long as no capture exists (RC-48).
+
+**Step 11, the cut.** Two things came out of the draft. A "how it works in four
+steps" section, because it retold the three-answers section with numbers on it.
+And a line in the hero promising the guards run "automatically", which is true of
+the machine and wrong for this reader: her flaw is that the last tool made her
+tag everything and said nothing useful, so the hero earns her attention with the
+booking in her own words and lets the product arrive at the Catalyst, where it
+belongs.
+
+**Ends on:** the cook reading it off the pan, and the text thread staying on the
+phone. Nothing on the page tells her a guest is safe, and that is the reason the
+rest of it is worth believing.

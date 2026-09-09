@@ -265,6 +265,46 @@ export const tourStops: readonly TourStop[] = [
 		}
 	},
 	{
+		/* RC-60, added 2026-09-09 with the capability's feature page. It follows
+		   nutrition because it is the same question from the other end: nutrition
+		   is what is in the dish, this is who is eating it. Every value is the
+		   demo world's garden wedding, and the callout is the boundary, not a
+		   feature: a stop that ended on "all clear" would be the one line on this
+		   tour that promises something the product does not. */
+		id: 'guest-restrictions',
+		featureId: 'guards',
+		label: 'Guests\u2019 restrictions',
+		appArea: 'Orders / Garden wedding supper / Guests\u2019 restrictions',
+		title: 'Check every dish against the guests who asked.',
+		intro: 'Record who is eating by allergen or by diet, then read each dish back as conflict, check or clear with the ingredient that caused it named.',
+		callout: 'An ingredient nobody reviewed is never clear. The order says how many are left.',
+		featureHref: featureMenuHref('guards'),
+		metrics: [
+			{ label: 'Restrictions', value: '4' },
+			{ label: 'Conflicts', value: '1' },
+			{ label: 'Checks', value: '3' },
+			{ label: 'Not reviewed', value: '4' }
+		],
+		columns: ['Dish', 'Restriction', 'Answer', 'Reason'],
+		rows: [
+			['Herb pesto', 'bride, Tree nuts', 'Conflict', 'Walnuts (contains)'],
+			['Braised short rib', 'Halal', 'Check', 'Meat depends on the source'],
+			['Roasted carrots', 'Gluten-free', 'Clear', 'Every ingredient reviewed'],
+			['Garden salad', 'Vegan', 'Check', '2 ingredients not reviewed']
+		],
+		aside: {
+			title: 'Checked at confirm',
+			status: 'Frozen reading',
+			lines: [
+				{ label: 'Order', value: 'Garden wedding supper' },
+				{ label: 'Checked', value: 'At confirm' },
+				{ label: 'Later recipe edits', value: 'Not restated', tone: 'attention' },
+				{ label: 'Re-check', value: 'Appends a new reading' }
+			],
+			footnote: 'Illustrative tour values. CostCook detects and never certifies; a guard is a reason to look at an ingredient.'
+		}
+	},
+	{
 		id: 'labels-printing',
 		featureId: 'labels',
 		label: 'Labels & printing',

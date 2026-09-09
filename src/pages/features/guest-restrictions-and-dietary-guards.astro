@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import DietaryGuardsFeature from '../../components/sections/DietaryGuardsFeature.astro';
+
+// Considered Factory Method; not used because this route is one editorial
+// composition, not a family of objects whose creation varies by subclass.
+const directionContract = [
+	'THESIS: CostCook checks every dish on an order against the guests who asked, from confirmed catalog facts, and it detects rather than certifies.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, a pack-list ticket carrying three outcome lines.',
+	'STORY: A booking arrives by text with four restrictions; the order records them, every dish comes back conflict, check or clear with the ingredient named, and the limits are stated before the reader is asked to trust any of it.',
+	'FIRST VIEWPORT: The booking in the client’s own words as the headline, with the pack-list ticket beside it and the detect-never-certify boundary above the fold.',
+	'FORM: Code-led editorial extension of the established feature family; figure-led rather than capture-led, because no capture of this capability exists yet.',
+	'FINISH: Verify the four boundaries, the five diets, the three outcomes, navigation, keyboard behavior, no-JavaScript reading order and five-width reflow.'
+].join(' ');
+---
+
+<Base
+	title="Guests' restrictions and dietary guards | CostCook"
+	description="Record who is eating on a catering order, by allergen or by diet, and every dish is checked against them from confirmed ingredient facts. Five diets, three answers, and the limits stated."
+	path="/features/guest-restrictions-and-dietary-guards"
+	directionContract={directionContract}
+>
+	<DietaryGuardsFeature />
+</Base>
