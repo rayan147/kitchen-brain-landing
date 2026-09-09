@@ -30,12 +30,14 @@ const surfaceFiles = [
 	// indexOf and is safe to reorder.
 	'src/components/sections/WhoThisIsFor.astro',
 	'src/components/sections/CustomerOutcomes.astro',
+	'src/components/sections/WhatElse.astro',
 	// Beats nine and ten. Its whole risk is saying what another product cannot
 	// do, and its comments argue that at length, so both go through the scan.
 	'src/components/sections/TheOtherTools.astro',
 	'src/components/sections/SeeItRun.astro',
 	'src/components/sections/TheYield.astro',
-	'src/components/sections/PaperIn.astro',
+	// #more's four blocks since 2026-09-09; they were four sections.
+	'src/components/more/IntakeBlock.astro',
 	'src/components/sections/BuiltForKitchens.astro',
 	// /features split into a hub over five area pages on 2026-08-23.
 	// EveryFeature.astro (one page, 145 items) became these two.
@@ -123,11 +125,11 @@ const surfaceFiles = [
 	'src/lib/sage.ts',
 	'src/lib/labels.ts',
 	'src/components/sections/LabelsPrintingFeature.astro',
-	'src/components/sections/Sage.astro',
-	'src/components/sections/TeamAccess.astro',
+	'src/components/more/SageBlock.astro',
+	'src/components/more/AccessBlock.astro',
 	// 2026-08-29. Nutrition: the data file and the section, both claim copy.
 	'src/lib/nutrition.ts',
-	'src/components/sections/NutritionFacts.astro',
+	'src/components/more/NutritionBlock.astro',
 	// 2026-08-31. The demo route qualifies one working session, describes the
 	// static email handoff honestly, and owns the direct calendar boundary.
 	'src/pages/demo.astro',
@@ -183,10 +185,9 @@ for (const component of [
 	'SeeItRun',
 	'CustomerOutcomes',
 	'TheYield',
-	'NutritionFacts',
-	'PaperIn',
-	'Sage',
-	'TeamAccess',
+	// One band since 2026-09-09; it was NutritionFacts, PaperIn, Sage and
+	// TeamAccess, which are now its four blocks in src/components/more.
+	'WhatElse',
 	'BuiltForKitchens',
 	'StartHere',
 ]) {
@@ -282,13 +283,16 @@ const expectedSectionOrder = [
 	'<WhoThisIsFor />',
 	'<CustomerOutcomes />',
 	'<TheYield />',
-	// Seventh since 2026-08-29: recipe-level, after yield, before intake.
-	'<NutritionFacts />',
-	'<PaperIn />',
-	// Eighth since 2026-08-29: a mechanic, with the mechanics, ahead of the
-	// rival beat whose /compare link lists it as a Coming row.
-	'<Sage />',
-	'<TeamAccess />',
+	// ONE STOP SINCE 2026-09-09, and it was four. NutritionFacts, PaperIn, Sage
+	// and TeamAccess are the four blocks of #more, in that order, in
+	// src/components/more. The order they hold inside the band is the order they
+	// held as stops and the reasons are unchanged: nutrition is recipe-level and
+	// follows yield; Sage is a mechanic and sits with the mechanics, ahead of the
+	// rival beat whose /compare link lists it as a Coming row. What the merge
+	// removed is three eyebrows, three h2s, three ledes, three hand-off lines and
+	// three screens of section padding, not a claim. See the note at the head of
+	// src/components/sections/WhatElse.astro.
+	'<WhatElse />',
 	// The rival beat lands after the reader wants the
 	// thing, and before the maker signs it. See src/pages/index.astro.
 	'<TheOtherTools />',
@@ -643,10 +647,8 @@ const expectedStopIds = [
 	'who',
 	'outcomes',
 	'yield',
-	'nutrition',
-	'intake',
-	'sage',
-	'access',
+	// Four stops until 2026-09-09: nutrition, intake, sage, access.
+	'more',
 	'alternatives',
 	'trust',
 	'start',
@@ -751,7 +753,7 @@ if (/class="btn-primary[^"]*"[\s\S]{0,200}demoCta\.label/.test(startHereSource))
 // homepage section, the compare row and the feature group may not carry their
 // own word, and the section must print the word rather than imply it.
 const sageSource = surfaces[surfaceFiles.indexOf('src/lib/sage.ts')];
-const sageSection = surfaces[surfaceFiles.indexOf('src/components/sections/Sage.astro')];
+const sageSection = surfaces[surfaceFiles.indexOf('src/components/more/SageBlock.astro')];
 requireText(sageSource, 'export const SAGE_STATUS', 'sage status lives in sage.ts');
 requireText(comparisonSource, 'costcook: SAGE_STATUS', 'compare reads the sage status');
 requireText(featuresSource, "status: SAGE_STATUS === 'yes'", 'features reads the sage status');

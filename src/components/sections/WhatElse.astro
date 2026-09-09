@@ -1,0 +1,90 @@
+---
+/**
+ * #more: the four areas the page used to spend four stops on.
+ *
+ * WHY THIS EXISTS, WITH THE MEASUREMENT. On 2026-09-09 the homepage was 26,260px
+ * at 390x844, or 31 phone viewports, against a page whose stated job (CLAUDE.md)
+ * is to let an owner-operator decide in under a minute whether a 15-minute demo
+ * is worth her time. The lever is not words. At the marginal rate the copy pass
+ * of the same day actually delivered, 3.41px per word, EVERY word on the page
+ * accounts for about 10,100px of that 26,260; delete all the prose and 21
+ * viewports remain. The other two thirds was twelve stops' worth of eyebrows,
+ * h2s, ledes, figures, hand-off lines and section padding. So the lever is stops.
+ *
+ * Four of them - nutrition, invoices and price lists, Sage, team and access -
+ * were carrying 981 words in 7,316px between them on a phone. Two of the four
+ * had the worst words-to-pixels ratios on the page and neither because the copy
+ * was padded: #access spent 1,290px on 96 words. They are one stop now, with one
+ * eyebrow, one h2, one lede, one hand-off and one screen of section padding
+ * between the four of them instead of four of each.
+ *
+ * NOTHING WAS CUT TO DO IT, and that was the owner's call on 2026-09-09 when the
+ * alternative was put to them: the shorter version of this band replaced the
+ * four areas with four sentences and four links, and would have retired four
+ * documented contracts in scripts/check-dist.mjs that assert the homepage
+ * carries this proof. Every claim, every figure and every one of those contracts
+ * is still here. What changed is how much of it a reader has to scroll past on a
+ * phone before the next claim, and that is what FoldedDetail.astro is doing in
+ * each block: the claim stays on screen, the working folds under 64rem, and it
+ * ships open so a no-JS reader and every build contract still see all of it.
+ *
+ * THE ORDER OF THE FOUR IS THE ORDER THEY HELD AS STOPS. Nutrition follows the
+ * yield section for the reason recorded in NutritionBlock.astro; intake, Sage
+ * and access follow it as they did. A reorder here is a reorder of the argument
+ * and belongs in the note above, not in a diff.
+ *
+ * Considered Composite (a generic block renderer over a data table of areas);
+ * not used because these four blocks share a heading role and nothing else -
+ * one is a diagram, one is a screenshot, one is a role table, one is an evidence
+ * rail - and a renderer with four escape hatches is a pattern costume. Plain
+ * composition: four named components, one shell.
+ * Alternative rejected: leaving them as four sections, which is the thing being
+ * measured here.
+ */
+import SectionHandoff from '../SectionHandoff.astro';
+import NutritionBlock from '../more/NutritionBlock.astro';
+import IntakeBlock from '../more/IntakeBlock.astro';
+import SageBlock from '../more/SageBlock.astro';
+import AccessBlock from '../more/AccessBlock.astro';
+---
+
+<!-- story: docs/stories/homepage-stop-merge.story.md -->
+<section id="more" class="border-t border-hairline bg-cream" aria-labelledby="more-heading">
+	<div class="container-page py-section">
+		<div class="max-w-3xl" data-reveal>
+			<p class="eyebrow">What else is in it</p>
+			<h2 id="more-heading" class="mt-4 text-h2 font-semibold">
+				Four more areas, and where each one stops.
+			</h2>
+			<p class="mt-5 max-w-[64ch] text-lede text-ink-soft">
+				The label numbers, the paperwork coming in, Sage, and who on your crew can do
+				what. All four are in the app today, and each one says what it does not do.
+			</p>
+		</div>
+
+		<div class="more-stack">
+			<NutritionBlock />
+			<IntakeBlock />
+			<SageBlock />
+			<AccessBlock />
+		</div>
+
+		<SectionHandoff from="more" />
+	</div>
+</section>
+
+<style>
+	/* One hairline between blocks and nothing else: the four were four sections
+	   with four backgrounds, and repeating that inside one stop would rebuild the
+	   thing this band replaced. The rule is the same dashed ticket rule the page
+	   uses between a section and its hand-off. */
+	.more-stack {
+		margin-top: clamp(3rem, 7vw, 5rem);
+	}
+
+	.more-stack > * + * {
+		margin-top: clamp(3rem, 7vw, 5rem);
+		padding-top: clamp(3rem, 7vw, 5rem);
+		border-top: 1px solid var(--color-ticket-rule);
+	}
+</style>

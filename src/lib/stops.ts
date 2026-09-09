@@ -10,6 +10,11 @@
  * neighbour after a reorder, and index.astro records that this page has been
  * reordered three times. So the neighbour is looked up, never typed.
  *
+ * FOUR STOPS BECAME ONE ON 2026-09-09. nutrition, intake, sage and access are
+ * one stop, #more, and the four blocks live in src/components/more. The
+ * measurement and the owner decision behind it are in the note at the head of
+ * src/components/sections/WhatElse.astro. Twelve stops, then nine.
+ *
  * TWO LABELS CHANGED ON 2026-09-09. They read "The hard part" and "Before any
  * of that", which name a section's PLACE in the argument rather than its
  * subject. A caterer scanning headings on a phone reads this list and nothing
@@ -28,10 +33,7 @@ export const stops = [
 	{ id: 'who', label: 'Who this is for' },
 	{ id: 'outcomes', label: 'What it does instead' },
 	{ id: 'yield', label: 'Trim and yield' },
-	{ id: 'nutrition', label: 'Nutrition facts' },
-	{ id: 'intake', label: 'Invoices and price lists' },
-	{ id: 'sage', label: 'Sage, the assistant' },
-	{ id: 'access', label: 'Team & access' },
+	{ id: 'more', label: 'What else is in it' },
 	{ id: 'alternatives', label: 'The other tools' },
 	{ id: 'trust', label: 'Who made it' },
 	{ id: 'start', label: 'Start here' }

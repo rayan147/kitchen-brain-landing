@@ -39,7 +39,11 @@ if ((html.match(/<dt[^>]*>Workspace access<\/dt>/g) ?? []).length !== 3
 	|| (html.match(/<dt[^>]*>Boundary<\/dt>/g) ?? []).length !== 3) {
 	throw new Error('Team & Access must compare every role with the same three semantic facts.');
 }
-if (!homeHtml.includes('id="access"') || !homeHtml.includes('href="/features/team-and-access"')) {
+// The homepage stopped being a stop called #access on 2026-09-09 and became a
+// block inside #more; see src/components/sections/WhatElse.astro. What this
+// contract is for is unchanged: the homepage introduces team and access, and it
+// points at the page that carries it in full.
+if (!homeHtml.includes('data-more-block="access"') || !homeHtml.includes('href="/features/team-and-access"')) {
 	throw new Error('Homepage is missing the Team & Access introduction or destination.');
 }
 if (!featureHubHtml.includes('href="/features/team-and-connections"')) {
