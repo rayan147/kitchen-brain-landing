@@ -81,7 +81,7 @@ const doors = [
 <!-- story: docs/stories/homepage-paper-in-visual.story.md -->
 <!-- story: docs/stories/homepage-copy-density.story.md -->
 <section id="intake" class="container-page border-t border-hairline py-section" aria-labelledby="intake-heading">
-	<div class="intake-layout">
+	<div class="split-layout intake-layout">
 		<div class="intake-copy" data-reveal>
 			<p class="eyebrow">Before any of that</p>
 			<h2 id="intake-heading" class="mt-4 text-h2 font-semibold">
@@ -169,11 +169,12 @@ const doors = [
 </section>
 
 <style>
+	/* The grid itself is .split-layout in global.css; this names the gap and the
+	   one alignment that differs: the queue diagram is centred against its prose,
+	   not top-aligned. See the note there on the 27rem track floor. */
 	.intake-layout {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 29rem), 1fr));
-		gap: clamp(2.5rem, 6vw, 5.5rem);
-		align-items: center;
+		--split-gap: clamp(2.5rem, 6vw, 5.5rem);
+		--split-align: center;
 	}
 
 	.intake-copy {

@@ -79,7 +79,7 @@ const guardrailGroups = [
 <!-- story: docs/stories/homepage-copy-density.story.md -->
 <section id="sage" class="border-t border-hairline bg-softgreen" aria-labelledby="sage-heading">
 	<div class="container-page py-section" data-sage-home>
-		<div class="sage-intro-grid">
+		<div class="split-layout sage-intro-grid">
 			<div class="max-w-3xl" data-reveal>
 				<div class="sage-identity">
 					<SageIcon size={44} context="homepage" />
@@ -141,7 +141,7 @@ const guardrailGroups = [
 			</div>
 		</div>
 
-		<div class="scope-setup-grid">
+		<div class="split-layout scope-setup-grid">
 			<div class="sage-scope" data-reveal>
 				<div class="scope-heading">
 					<h3 class="text-h3 font-semibold">Five kitchen jobs.</h3>
@@ -242,12 +242,11 @@ const guardrailGroups = [
 		color: var(--color-ink);
 	}
 
+	/* Both grids are .split-layout in global.css; this only names the gap.
+	   See the note there for why the track floor is 27rem and not 29rem. */
 	.sage-intro-grid,
 	.scope-setup-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 29rem), 1fr));
-		gap: clamp(3rem, 5vw, 4rem);
-		align-items: start;
+		--split-gap: clamp(3rem, 5vw, 4rem);
 	}
 
 	.answer-proof img,

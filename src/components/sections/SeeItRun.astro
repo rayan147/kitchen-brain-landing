@@ -346,7 +346,7 @@ const guideSteps = [
 		     OPEN IN THE MARKUP, CLOSED BY SCRIPT, AND THAT ORDER IS THE POINT.
 		     Principle 3 says nothing is hidden from a no-JS visitor, so the served
 		     HTML carries the guide open and the script below only ever CLOSES it,
-		     and only under 52rem. JS off, or the script failing, leaves the whole
+		     and only under 64rem. JS off, or the script failing, leaves the whole
 		     guide readable. The failure direction is "too much content", never
 		     "missing content".
 
@@ -522,15 +522,24 @@ const guideSteps = [
 
 	// THE GUIDE FOLDS DOWN, IT NEVER FOLDS UP. The served HTML has the <details>
 	// open, so a reader with no JS, or one this script never reaches, gets the
-	// whole guide. All this does is close it under 52rem, which is where its
+	// whole guide. All this does is close it under 64rem, which is where its
 	// 2,975px cost 3.5 viewports of a 37.9-viewport page.
+	//
+	// THE THRESHOLD WAS 52rem UNTIL 2026-09-09, AND 52rem SPLIT THE TABLETS.
+	// 52rem is 832px. Measured: an iPad mini at 768 folded the guide and ran
+	// 1,249px of demo section; an iPad Pro 11 at 834, two pixels the other side
+	// of the line, shipped it open and ran 5,319px. Same device class, same
+	// reading posture, four times the scroll. Nothing chose that; the number did.
+	// 64rem is where the guide's own two-column sticky layout starts earning its
+	// height, and it is the width the jump link above already uses, so the link
+	// and the thing it points at now appear together instead of 192px apart.
 	//
 	// Bundled, never is:inline: the CSP in vercel.json is script-src 'self'.
 	// That means this runs after paint, which is fine here and only here - the
 	// guide begins 2,626px down, so the reflow happens three viewports below the
 	// fold and nothing the reader is looking at moves.
 	const guide = document.querySelector<HTMLDetailsElement>('[data-demo-guide-disclosure]');
-	if (guide && window.matchMedia('(max-width: 51.99rem)').matches) {
+	if (guide && window.matchMedia('(max-width: 63.99rem)').matches) {
 		guide.open = false;
 
 		// The jump link under the player targets the heading INSIDE the guide.
@@ -775,10 +784,13 @@ const guideSteps = [
 		font-size: var(--text-body-sm);
 	}
 
-	@media (min-width: 52rem) {
+	@media (min-width: 64rem) {
 		/* Above this width the script never closes the guide, so the control has
 		   nothing to control. The <details> stays open and the section renders
-		   exactly as it did before this change. */
+		   exactly as it did before this change. Raised from 52rem on 2026-09-09:
+		   at 834px this two-column sticky layout gave the intro a 273px column
+		   and cost tablet portrait 2,082px of open guide, while a 768px tablet
+		   folded it. Both fold now. See the note in the script above. */
 		.demo-guide-summary {
 			display: none;
 		}

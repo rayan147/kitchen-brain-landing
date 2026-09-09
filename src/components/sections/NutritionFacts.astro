@@ -47,7 +47,7 @@ const evidenceGuides = [
 <!-- story: docs/stories/homepage-nutrition-visual.story.md -->
 <!-- story: docs/stories/homepage-copy-density.story.md -->
 <section id="nutrition" class="container-page border-t border-hairline py-section" aria-labelledby="nutrition-heading">
-	<div class="nutrition-layout">
+	<div class="split-layout nutrition-layout">
 		<div class="max-w-3xl" data-reveal>
 			<p class="eyebrow">Nutrition facts</p>
 			<h2 id="nutrition-heading" class="mt-4 text-h2 font-semibold">
@@ -135,11 +135,10 @@ const evidenceGuides = [
 </section>
 
 <style>
+	/* The grid itself is .split-layout in global.css; this only names the gap.
+	   See the note there for why the track floor is 27rem and not 29rem. */
 	.nutrition-layout {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 29rem), 1fr));
-		gap: clamp(3rem, 5vw, 4rem);
-		align-items: start;
+		--split-gap: clamp(3rem, 5vw, 4rem);
 	}
 
 	.evidence-rail {
