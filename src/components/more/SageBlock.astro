@@ -41,7 +41,6 @@
  * subhead naming Evidence, access and action, three words that then rendered
  * immediately below as the three group labels.
  */
-import SectionHandoff from '../SectionHandoff.astro';
 import FoldedDetail from '../FoldedDetail.astro';
 import SageIcon from '../SageIcon.astro';
 import { sage, sageStatusWord } from '../../lib/sage';
@@ -76,11 +75,8 @@ const guardrailGroups = [
 ] as const;
 ---
 
-<!-- story: docs/stories/homepage-sage-redesign.story.md -->
-<!-- story: docs/stories/homepage-copy-density.story.md -->
-<!-- story: docs/stories/homepage-scan-and-depth.story.md -->
-<section id="sage" class="border-t border-hairline bg-softgreen" aria-labelledby="sage-heading">
-	<div class="container-page py-section" data-sage-home>
+<article class="more-block" data-more-block="sage" data-sage-home data-reveal>
+
 		<div class="split-layout sage-intro-grid">
 			<div class="max-w-3xl" data-reveal>
 				<div class="sage-identity">
@@ -92,10 +88,8 @@ const guardrailGroups = [
 						</span>
 					</div>
 				</div>
-				<h2 id="sage-heading" class="mt-4 text-h2 font-semibold">
-					Ask your kitchen a question. See where the answer came from.
-				</h2>
-				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
+				<h3 class="more-title mt-4">Ask your kitchen a question. See where the answer came from.</h3>
+				<p class="more-lede max-w-[60ch]">
 					{sage.name} reads the records you already keep in CostCook and answers in plain
 					lines that carry their source.
 				</p>
@@ -143,6 +137,7 @@ const guardrailGroups = [
 			</div>
 		</div>
 
+		<FoldedDetail summary="The five jobs, and asking during setup" hint="Eleven bounded checks, and Sage in the setup header">
 		<div class="split-layout scope-setup-grid">
 			<div class="sage-scope" data-reveal>
 				<div class="scope-heading">
@@ -185,6 +180,7 @@ const guardrailGroups = [
 				</figcaption>
 			</figure>
 		</div>
+		</FoldedDetail>
 
 		<div class="sage-boundaries" data-reveal>
 			<div class="boundaries-heading">
@@ -230,10 +226,7 @@ const guardrailGroups = [
 				still setting the records up. <a href={sage.href} class="btn-quiet">Watch Sage at work</a>.
 			</p>
 		</div>
-
-		<SectionHandoff from="sage" />
-	</div>
-</section>
+</article>
 
 <style>
 	.sage-identity {

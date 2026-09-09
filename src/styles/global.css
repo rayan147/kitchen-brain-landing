@@ -320,3 +320,34 @@
 		text-decoration-color: var(--color-green);
 	}
 }
+
+/* The three heading roles inside the #more band. They are utilities rather than
+   scoped rules because four block components in src/components/more render them
+   and the whole point of that band is that the four look like one stop. The
+   title is a step down from a section h2 and a step up from an h3 inside a
+   block; the label replaces the eyebrow each of the four used to carry. */
+@utility more-label {
+	font-family: var(--font-body);
+	font-size: var(--text-eyebrow);
+	line-height: var(--text-eyebrow--line-height);
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-amber-deep);
+}
+
+@utility more-title {
+	margin-top: 0.75rem;
+	font-family: var(--font-display);
+	font-size: var(--text-h3);
+	font-weight: 600;
+	line-height: 1.15;
+	text-wrap: balance;
+}
+
+@utility more-lede {
+	margin-top: 1rem;
+	color: var(--color-ink-soft);
+	font-size: var(--text-lede);
+	line-height: var(--text-lede--line-height);
+}

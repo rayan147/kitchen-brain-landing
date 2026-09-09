@@ -6,10 +6,7 @@ import WhoThisIsFor from '../components/sections/WhoThisIsFor.astro';
 import SeeItRun from '../components/sections/SeeItRun.astro';
 import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
 import TheYield from '../components/sections/TheYield.astro';
-import NutritionFacts from '../components/sections/NutritionFacts.astro';
-import PaperIn from '../components/sections/PaperIn.astro';
-import Sage from '../components/sections/Sage.astro';
-import TeamAccess from '../components/sections/TeamAccess.astro';
+import WhatElse from '../components/sections/WhatElse.astro';
 import TheOtherTools from '../components/sections/TheOtherTools.astro';
 import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
 import StartHere from '../components/sections/StartHere.astro';
@@ -278,6 +275,38 @@ import StickyCta from '../components/StickyCta.astro';
   make the page shorter is the same class of decision as the 1,250px trade above:
   what the homepage promises, not how long it is. Not a structural pass's to make.
   Tracker: docs/stories/homepage-scan-and-depth.story.md.
+
+  THAT DECISION WAS TAKEN ON 2026-09-09, and the answer was KEEP EVERYTHING. The
+  four stops are one, #more, and not one word, figure or contract left with them.
+  The alternative was stated and declined: four sentences and four links, worth
+  about 8,000px, retiring four contracts. What the merge actually spends is
+  chrome - three eyebrows, three h2s, three ledes, three hand-off lines, three
+  screens of section padding - plus five FoldedDetail controls folding the
+  working, never the claim, under 64rem.
+
+    1440x900   20,778px   23.1 viewports   was 21,487
+    1280x800   20,607px   25.8             was 21,316
+    1024x768   20,397px   26.6             was 21,052
+     834x1112  19,656px   17.7             was 22,597
+     768x1024  19,907px   19.4             was 22,689
+     390x844   23,242px   27.5             was 26,260, ceiling 30,000
+
+  The band is 4,299px on a phone where the four stops were 7,316px. Desktop moved
+  709px and that is correct: every fold on this page is inert at 64rem and above,
+  so the desktop saving is the chrome alone. The reader this page is written for
+  is on a phone.
+
+  TWELVE STOPS, THEN NINE, AND THE COUNT IS THE BUDGET NOW. Rule 2 above asks a
+  new section to name what it displaces. Read it as a stop count as well as a
+  pixel count: at 390x844 the nine stops average 2,076px, so a tenth is a viewport
+  and a half of somebody's minute. src/lib/stops.ts is the list.
+
+  WHAT IS STILL OPEN, NAMED SO THE NEXT PASS DOES NOT REDISCOVER IT. #outcomes is
+  3,890px carrying 278 words on a phone, the worst ratio left on the page, and it
+  is not padded: it holds four screenshots of the running app and those are the
+  page's core proof. Shortening it means deciding which of the four a reader can
+  do without. Same class of decision as the one above, and it has not been put to
+  anyone. Tracker: docs/stories/homepage-stop-merge.story.md.
 -->
 <Base>
 	<Hero />
@@ -286,10 +315,7 @@ import StickyCta from '../components/StickyCta.astro';
 	<WhoThisIsFor />
 	<CustomerOutcomes />
 	<TheYield />
-	<NutritionFacts />
-	<PaperIn />
-	<Sage />
-	<TeamAccess />
+	<WhatElse />
 	<TheOtherTools />
 	<BuiltForKitchens />
 	<StartHere />
