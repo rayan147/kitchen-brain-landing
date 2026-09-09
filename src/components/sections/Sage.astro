@@ -42,6 +42,7 @@
  * immediately below as the three group labels.
  */
 import SectionHandoff from '../SectionHandoff.astro';
+import FoldedDetail from '../FoldedDetail.astro';
 import SageIcon from '../SageIcon.astro';
 import { sage, sageStatusWord } from '../../lib/sage';
 
@@ -77,6 +78,7 @@ const guardrailGroups = [
 
 <!-- story: docs/stories/homepage-sage-redesign.story.md -->
 <!-- story: docs/stories/homepage-copy-density.story.md -->
+<!-- story: docs/stories/homepage-scan-and-depth.story.md -->
 <section id="sage" class="border-t border-hairline bg-softgreen" aria-labelledby="sage-heading">
 	<div class="container-page py-section" data-sage-home>
 		<div class="split-layout sage-intro-grid">
@@ -188,6 +190,18 @@ const guardrailGroups = [
 			<div class="boundaries-heading">
 				<h3 class="text-h3 font-semibold">Useful because the boundaries are visible.</h3>
 			</div>
+			<!-- THE NINE RULES FOLD ON PHONES SINCE 2026-09-09, AND THE CLAIM ABOVE
+			     THEM DOES NOT. The h3 is the promise a skeptic needs, and it stays on
+			     screen; the grid under it is nine rules across three boundaries and it
+			     measured 871px on a 390px screen. Folding the list is not the same
+			     decision as removing it: the reader is still told the boundaries are
+			     visible, and reaching them is one tap rather than four screens of
+			     scroll. It ships open, so all three data-sage-boundary hooks
+			     check-dist.mjs reads are in the HTML either way. -->
+			<FoldedDetail
+				summary="The nine rules, in full"
+				hint="Three boundaries: evidence, access, action"
+			>
 			<div class="boundary-grid">
 				{
 					guardrailGroups.map((group) => (
@@ -210,6 +224,7 @@ const guardrailGroups = [
 					))
 				}
 			</div>
+			</FoldedDetail>
 			<p class="sage-availability">
 				<strong class="font-semibold text-ink">{sageStatusWord}.</strong> Available while you are
 				still setting the records up. <a href={sage.href} class="btn-quiet">Watch Sage at work</a>.

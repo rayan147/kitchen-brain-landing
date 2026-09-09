@@ -16,6 +16,7 @@
  * NO PRIMARY CTA. The quiet link goes to the feature area.
  */
 import SectionHandoff from '../SectionHandoff.astro';
+import FoldedDetail from '../FoldedDetail.astro';
 import { nutrition } from '../../lib/nutrition';
 
 // Considered Composite; not used because the five nutrition checks form one
@@ -46,6 +47,7 @@ const evidenceGuides = [
 
 <!-- story: docs/stories/homepage-nutrition-visual.story.md -->
 <!-- story: docs/stories/homepage-copy-density.story.md -->
+<!-- story: docs/stories/homepage-scan-and-depth.story.md -->
 <section id="nutrition" class="container-page border-t border-hairline py-section" aria-labelledby="nutrition-heading">
 	<div class="split-layout nutrition-layout">
 		<div class="max-w-3xl" data-reveal>
@@ -59,6 +61,18 @@ const evidenceGuides = [
 				from the lines that already cost the dish.
 			</p>
 
+			<!-- THE RAIL FOLDS ON PHONES SINCE 2026-09-09. What stays visible above it
+			     is the claim: the h2 and the lede, and beside them the printed label
+			     itself. The rail is the WORKING behind that claim, five steps and
+			     fifteen cue chips, and it measured 1,020px on a 390px screen. A
+			     reader deciding whether this is worth fifteen minutes does not read
+			     the working; a reader who has decided it might be, does. It ships
+			     open, so the five data-nutrition-step hooks check-dist.mjs reads are
+			     in the HTML either way. -->
+			<FoldedDetail
+				summary="How the fifteen numbers are arrived at"
+				hint="Five steps, from the supplier record to the printed sheet"
+			>
 			<ol role="list" class="evidence-rail" data-nutrition-evidence>
 				{
 					nutrition.points.map((point, index) => (
@@ -82,6 +96,7 @@ const evidenceGuides = [
 					))
 				}
 			</ol>
+			</FoldedDetail>
 		</div>
 
 		<!-- Two captures of one recipe: the panel on the recipe page, and the sheet

@@ -105,3 +105,25 @@ This section adds no second snap line. The homepage keeps its established one:
 - **Word count before → after:** Existing explanatory copy preserved; repeated meaning is moved into the visual hierarchy rather than restated.
 - **Claims removed because they could not be shown:** None added or removed.
 - **Final Image:** Reading the paper is the fast part. Saying yes to it is yours.
+
+---
+
+## REVISED 2026-09-09 — scan path and depth pass
+
+See [[homepage-scan-and-depth]]. Nothing in the beats above changed. What changed
+in this section:
+
+- **`#yield` and `#intake` eyebrows** now name their subject ("Trim and yield",
+  "Invoices and price lists") instead of their place in the argument ("The hard
+  part", "Before any of that"). Both hand-off lines picked the new words up from
+  `src/lib/stops.ts`, where each label is written once.
+- **`#nutrition`'s five-step evidence rail and `#sage`'s nine boundary rules**
+  fold under 64rem behind `FoldedDetail.astro`. The claim above each stays
+  visible; only the working folds. Both ship open in the served HTML, so a no-JS
+  reader gets all of it and every `data-*` hook the build contracts read is still
+  in `dist/index.html`.
+- **The four split grids** (`yield`, `nutrition`, `intake`, Sage's two) now share
+  `.split-layout` in `global.css` with a 27rem track floor, so iPad landscape
+  gets two columns instead of the phone's stacked layout.
+
+No claim was added, removed or reworded.

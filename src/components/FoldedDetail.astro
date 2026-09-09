@@ -1,0 +1,154 @@
+---
+/**
+ * A block of supporting evidence that ships OPEN and folds itself on phones and
+ * tablet portrait. The claim always stays outside it; only the working behind
+ * the claim goes in.
+ *
+ * WHY THIS EXISTS. Measured 2026-09-09 at 390x844, the homepage is 27,979px, or
+ * 33.2 phone viewports, against a page whose stated job (CLAUDE.md) is to let an
+ * owner-operator "decide in under a minute whether a 15-minute demo is worth
+ * their time". Two thirds of that height is not text: at the marginal rate the
+ * 2026-09-09 copy pass actually delivered, 3.41px per word, every word on the
+ * page accounts for about 10,100px of 27,979. The rest is headings, figures,
+ * cards, rules and section padding. So the lever is not shorter sentences; it is
+ * how much of the working a reader has to scroll past to reach the next claim.
+ *
+ * THE PATTERN IS NOT NEW HERE. SeeItRun.astro has done exactly this to the
+ * written order guide since 2026-09-09 and records the reasoning at length. This
+ * component is that behaviour, extracted, so the third and fourth uses are not a
+ * third and fourth copy of the same twelve lines. SeeItRun keeps its own copy on
+ * purpose: its disclosure is coupled to a jump link that has to force the
+ * element open before the browser resolves the hash, and that coupling is not
+ * shared by anything else.
+ *
+ * Pattern: Decorator. Why: three blocks need the same fold-on-small-screens
+ * behaviour wrapped around markup that already stands on its own, and each has a
+ * different heading, hint and content; a flag threaded through every section
+ * would put the same <details>, <summary> and matchMedia in each of them.
+ * Alternative rejected: a boolean prop on each section, which is where this
+ * started and is how SeeItRun ended up carrying the whole mechanism inline.
+ *
+ * OPEN IN THE MARKUP, CLOSED BY SCRIPT, AND THAT ORDER IS THE POINT. Principle 3
+ * says nothing is hidden from a no-JS visitor, so the served HTML carries this
+ * open and the script only ever CLOSES it, and only under 64rem. JS off, or the
+ * script failing, leaves the whole block readable. The failure direction is
+ * "too much content", never "missing content" - which also means every
+ * data-* hook the build contracts in scripts/check-dist.mjs read is still in
+ * dist/index.html whether or not the fold ever runs.
+ */
+interface Props {
+	/** The control's label. Names what is inside, in the reader's words. */
+	summary: string;
+	/** One short phrase under the label. Never a claim of its own. */
+	hint: string;
+}
+
+const { summary, hint } = Astro.props;
+---
+
+<details class="folded-detail" data-folded-detail open>
+	<summary class="folded-summary">
+		<span>
+			<strong>{summary}</strong>
+			<small>{hint}</small>
+		</span>
+		<span class="folded-chevron" aria-hidden="true">
+			<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+				<path d="M5 8l5 5 5-5" />
+			</svg>
+		</span>
+	</summary>
+	<slot />
+</details>
+
+<script>
+	// Closes down, never up. See the note above: the served HTML is open, so this
+	// only ever removes content the reader has not asked for, on the widths where
+	// the block costs a viewport or more. Bundled and deferred like every script
+	// in this repo, because vercel.json ships script-src 'self'; every one of
+	// these sits well below the fold, so the reflow happens where nobody is
+	// looking.
+	if (window.matchMedia('(max-width: 63.99rem)').matches) {
+		for (const block of document.querySelectorAll<HTMLDetailsElement>('[data-folded-detail]')) {
+			block.open = false;
+		}
+	}
+</script>
+
+<style>
+	.folded-summary {
+		display: flex;
+		gap: 1.5rem;
+		align-items: center;
+		justify-content: space-between;
+		min-height: 44px;
+		margin-top: 2rem;
+		padding-block: 0.85rem;
+		border-block: 1px solid var(--color-hairline-strong);
+		cursor: pointer;
+		list-style: none;
+	}
+
+	.folded-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.folded-summary strong {
+		display: block;
+		color: var(--color-green-deep);
+		font-size: var(--text-body-sm);
+		font-weight: 700;
+	}
+
+	.folded-summary small {
+		display: block;
+		margin-top: 0.15rem;
+		color: var(--color-ink-soft);
+		font-size: var(--text-caption);
+	}
+
+	.folded-summary:focus-visible {
+		outline: 2px solid var(--color-green);
+		outline-offset: 4px;
+	}
+
+	.folded-chevron {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 2rem;
+		height: 2rem;
+		border: 1px solid var(--color-hairline-strong);
+		border-radius: 999px;
+		color: var(--color-green-deep);
+	}
+
+	.folded-chevron svg {
+		stroke: currentColor;
+		stroke-width: 1.8;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		/* Transform only, and it is inert under reduced motion. Principle 3. */
+		transition: transform 160ms ease-out;
+	}
+
+	.folded-detail[open] .folded-chevron svg {
+		transform: rotate(180deg);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.folded-chevron svg {
+			transition: none;
+		}
+	}
+
+	/* Above this width the script never closes anything, so the control has
+	   nothing to control and the block renders exactly as it did before. The
+	   number is the same 64rem SeeItRun's guide uses; one fold threshold for the
+	   page, not two. */
+	@media (min-width: 64rem) {
+		.folded-summary {
+			display: none;
+		}
+	}
+</style>
