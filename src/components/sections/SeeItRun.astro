@@ -539,7 +539,20 @@ const guideSteps = [
 	// guide begins 2,626px down, so the reflow happens three viewports below the
 	// fold and nothing the reader is looking at moves.
 	const guide = document.querySelector<HTMLDetailsElement>('[data-demo-guide-disclosure]');
-	if (guide && window.matchMedia('(max-width: 63.99rem)').matches) {
+	const narrowForGuide = window.matchMedia('(max-width: 63.99rem)');
+
+	// SAME ROTATION TRAP AS FoldedDetail.astro, same fix, and this one had it
+	// first. The summary is display:none from 64rem, and a tablet crosses 64rem
+	// by being turned over with no reload, so a guide folded in portrait became
+	// unreachable in landscape. Reproduced at 1194 on 2026-09-09: 0px tall, no
+	// control. Opens only on the way up.
+	narrowForGuide.addEventListener('change', (event) => {
+		if (!event.matches && guide) {
+			guide.open = true;
+		}
+	});
+
+	if (guide && narrowForGuide.matches) {
 		guide.open = false;
 
 		// The jump link under the player targets the heading INSIDE the guide.

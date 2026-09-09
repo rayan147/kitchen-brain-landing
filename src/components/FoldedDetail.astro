@@ -28,6 +28,11 @@
  * Alternative rejected: a boolean prop on each section, which is where this
  * started and is how SeeItRun ended up carrying the whole mechanism inline.
  *
+ * THIS CONTROL IS DELIBERATELY QUIETER THAN THE DEMO GUIDE'S. SeeItRun's summary
+ * is display type, because it folds a whole stop of the page; these two fold a
+ * block inside a stop whose heading is still on screen above them. Same role,
+ * two levels, and the weight says which. Not an inconsistency to normalise away.
+ *
  * OPEN IN THE MARKUP, CLOSED BY SCRIPT, AND THAT ORDER IS THE POINT. Principle 3
  * says nothing is hidden from a no-JS visitor, so the served HTML carries this
  * open and the script only ever CLOSES it, and only under 64rem. JS off, or the
@@ -68,11 +73,30 @@ const { summary, hint } = Astro.props;
 	// in this repo, because vercel.json ships script-src 'self'; every one of
 	// these sits well below the fold, so the reflow happens where nobody is
 	// looking.
-	if (window.matchMedia('(max-width: 63.99rem)').matches) {
-		for (const block of document.querySelectorAll<HTMLDetailsElement>('[data-folded-detail]')) {
+	const blocks = document.querySelectorAll<HTMLDetailsElement>('[data-folded-detail]');
+	const narrow = window.matchMedia('(max-width: 63.99rem)');
+
+	if (narrow.matches) {
+		for (const block of blocks) {
 			block.open = false;
 		}
 	}
+
+	// AND IT REOPENS ON THE WAY BACK UP, which is not a nicety. The control that
+	// reopens these is display:none from 64rem, and a tablet crosses 64rem by
+	// being turned over: 834 to 1194 on an iPad Pro 11, 768 to 1133 on a mini, no
+	// reload in between. Without this listener a reader who folded the page in
+	// portrait and rotated to landscape got a closed <details> with no summary to
+	// click. REPRODUCED 2026-09-09 before the fix: at 1194 all three folds on the
+	// page measured 0px tall with their controls hidden. It only ever OPENS, on
+	// the way to a width where the fold is not wanted, which keeps the failure
+	// direction the same as everything else here: too much content, never missing.
+	narrow.addEventListener('change', (event) => {
+		if (event.matches) return;
+		for (const block of blocks) {
+			block.open = true;
+		}
+	});
 </script>
 
 <style>
