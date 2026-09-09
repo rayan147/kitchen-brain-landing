@@ -104,3 +104,58 @@ This section adds no second snap line. The homepage keeps its established one:
 - **Word count before → after:** Core explanatory copy preserved; sequence, icons, and evidence states carry the hierarchy instead of extra prose.
 - **Claims removed because they could not be shown:** None added or removed.
 - **Final Image:** A printed calculated estimate whose nutrition gaps and allergen review state are still visible.
+
+---
+
+## REVISED 2026-09-09 — homepage copy-density pass
+
+The homepage copy this tracker describes was shortened. Full working:
+`BRIEF-copy-density-2026-09-09.md`. Tracker for the pass itself:
+`docs/stories/homepage-copy-density.story.md`.
+
+Five detail paragraphs were shortened. Each had spelled out what the cue rail
+rendered directly beneath it (point 4 listed the panel, the ingredient statement,
+the allergen line and the printed time; the cues read Panel / Ingredients /
+Allergens / Printed time). The lede stopped stating the blank-not-zero rule,
+which is point 3's whole claim. The caption dropped the numbers the alt text
+carries and the disclaimer notClaimed[0] now carries in the guard's exact words.
+The five points, the proof captures and the boundary list all remain.
+
+No beat, section order, heading or value turn changed. Every cut was a claim
+the page was making twice; nothing was removed for being unprovable.
+
+---
+
+## REVISED 2026-09-09 — scan path and depth pass
+
+See [[homepage-scan-and-depth]]. Nothing in the beats above changed. What changed
+in this section:
+
+- **`#yield` and `#intake` eyebrows** now name their subject ("Trim and yield",
+  "Invoices and price lists") instead of their place in the argument ("The hard
+  part", "Before any of that"). Both hand-off lines picked the new words up from
+  `src/lib/stops.ts`, where each label is written once.
+- **`#nutrition`'s five-step evidence rail and `#sage`'s nine boundary rules**
+  fold under 64rem behind `FoldedDetail.astro`. The claim above each stays
+  visible; only the working folds. Both ship open in the served HTML, so a no-JS
+  reader gets all of it and every `data-*` hook the build contracts read is still
+  in `dist/index.html`.
+- **The four split grids** (`yield`, `nutrition`, `intake`, Sage's two) now share
+  `.split-layout` in `global.css` with a 27rem track floor, so iPad landscape
+  gets two columns instead of the phone's stacked layout.
+
+No claim was added, removed or reworded.
+
+---
+
+## MOVED 2026-09-09 — this is a block inside `#more`, not a stop
+
+See [[homepage-stop-merge]]. The section this tracker was written for is now one
+of four blocks in `src/components/more/`, under one shared heading, one lede and
+one hand-off in `src/components/sections/WhatElse.astro`. Its own eyebrow, h2,
+lede and hand-off are gone; its h2 text survives as the block's h3.
+
+**No claim, figure or `data-*` hook was cut**, and the build contract asserting
+the homepage carries this proof still passes. What the working parts do now is
+fold under 64rem behind `FoldedDetail.astro`, shipping open in the served HTML.
+Every beat above still applies; only the frame around it changed.

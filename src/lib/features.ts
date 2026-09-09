@@ -1,5 +1,6 @@
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
+import { orderingAvailability } from './ordering';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -321,6 +322,19 @@ export const featureGroups: readonly FeatureGroup[] = [
 		]
 	},
 	{
+		id: 'ordering',
+		section: 'The day itself',
+		kicker: 'Taking orders',
+		title: 'The enquiry, arriving as something you can quote from.',
+		// Status is read from src/lib/ordering.ts, the one place it may change
+		// (RC-59). Hardcoding it here would let the menu chip and this badge
+		// disagree the day the storefront is deployed.
+		status: orderingAvailability.isComing ? 'in-development' : 'available',
+		items: [
+			{ lead: orderingAvailability.featureLead, detail: orderingAvailability.featureDetail }
+		]
+	},
+	{
 		/* RC-42. Shipped on sandbox/demo: src/lib/core/nutrition.ts carries
 		   LABEL_NUTRIENT_CODES and calculateRecipeNutrition() with its
 		   complete/partial/incomplete status. It was missing from this list
@@ -340,6 +354,30 @@ export const featureGroups: readonly FeatureGroup[] = [
 			   with no flag in front of it. Browser print onto label stock; the
 			   printer integration is the labels group below and is still Coming. */
 			{ lead: 'Printed from the recipe.', detail: 'Print nutrition label makes a sheet with the kitchen name, the panel, the ingredient statement, the allergen line and the print time, for the browser to put on label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.' }
+		]
+	},
+	{
+		/* RC-60, 2026-09-09. Shipped and UNFLAGGED, unlike the labels group below:
+		   RELEASE_FEATURE_ENV in the app names label_printing, ordering_integration,
+		   square_integration and quickbooks_integration and nothing dietary. Every
+		   item traces to src/lib/domain/allergens/guards.ts on kitchen-brain main.
+
+		   NOTHING HERE MAY BECOME A SAFETY PROMISE. The engine's own header is the
+		   rule: each outcome is a reason to look at an ingredient, never a promise
+		   to a guest. src/lib/dietary.ts owns the wording and the claim guard fails
+		   the build on safe, certified, guaranteed and allergen-free. */
+		id: 'guards',
+		section: 'Compliance and labels',
+		kicker: 'Guests\u2019 restrictions',
+		title: 'Every dish on the order, checked against who is eating it.',
+		items: [
+			{ lead: 'Who is eating, on the order.', detail: 'Record a restriction by allergen or by diet, with a label like the bride and a count. It stays on that order and is not carried to the next one unless you ask.' },
+			{ lead: 'Five diets.', detail: 'Vegetarian, vegan, halal, kosher and gluten-free, judged from the traits your ingredients carry rather than from their names.' },
+			{ lead: 'Three answers, and no fourth.', detail: 'Every dish comes back conflict, check or clear, and the line names the ingredient that caused it.' },
+			{ lead: 'It reaches the cook.', detail: 'The answer prints on the order, the prep list and the pack list, which is what somebody reads at five in the morning.' },
+			{ lead: 'Coverage is part of the answer.', detail: 'An ingredient nobody has reviewed is never counted as clear, and the order says how many are outstanding.' },
+			{ lead: 'Checked at confirm.', detail: 'Confirming freezes the reading it was checked on and carries the date. A later recipe edit does not restate it; a re-check appends a new one.' },
+			{ lead: 'The book answers too.', detail: 'The recipe carries its own dietary characteristics, the catalog filters by diet with a held-back count, and the allergen matrix prints for the pass.' }
 		]
 	},
 	{
@@ -543,6 +581,15 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				featureId: 'nutrition',
 				icon: 'nutrition'
 			},
+			// Added 2026-09-09. Shipped group (RC-60), so no chip. It sits after
+			// nutrition because it is the same question asked from the other end:
+			// nutrition is what is in the dish, this is who is eating it.
+			{
+				label: 'Guests\u2019 restrictions',
+				description: 'Every dish on the order checked against the guests who asked.',
+				featureId: 'guards',
+				icon: 'nutrition'
+			},
 			// Added 2026-08-29 at the owner's request. Coming (RC-35), so the chip
 			// shows unless src/lib/labels.ts says otherwise.
 			{
@@ -622,6 +669,7 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['purchasing', '/features/purchasing-and-receiving'],
 	['ledger', '/features/purchases-and-month-cost'],
 	['nutrition', '/features/nutrition-facts-and-allergens'],
+	['guards', '/features/guest-restrictions-and-dietary-guards'],
 	['labels', '/features/labels-and-printing'],
 	['inventory', '/features/inventory'],
 	['assistant', '/features/sage'],

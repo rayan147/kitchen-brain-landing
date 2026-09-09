@@ -4,17 +4,25 @@ import SectionHandoff from '../SectionHandoff.astro';
 
 // Considered State; not used because portrait, provenance and product consequences form one
 // fixed editorial scene, not runtime modes that change behaviour.
+
+// CUT 2026-09-09, copy-density pass. BRIEF-copy-density-2026-09-09.md, tracker at
+// docs/stories/homepage-copy-density.story.md. Two of the three consequence bodies
+// were restating something within a screen of themselves: the missing-fact one
+// repeated TheProblem's pinned sentence, and the connected one re-listed the quote
+// / shopping list / prep plan / pack list that this section's own lede names two
+// elements above it. Both now say only the part that is theirs. The third body is
+// untouched: it carries a string check-landing-claims.mjs pins.
 const consequences = [
 	{
 		id: 'missing',
 		title: 'Missing facts stop the total',
-		body: 'A missing price or conversion stays visible. It never quietly becomes zero.',
+		body: 'It never quietly becomes zero.',
 		icon: 'alert'
 	},
 	{
 		id: 'connected',
 		title: 'One event keeps one guest count',
-		body: 'The quote, shopping list, prep plan and pack list stay connected as the order changes.',
+		body: 'All four stay connected as the order changes.',
 		icon: 'route'
 	},
 	{
@@ -27,6 +35,7 @@ const consequences = [
 ---
 
 <!-- story: docs/stories/homepage-founder-trust.story.md -->
+<!-- story: docs/stories/homepage-copy-density.story.md -->
 <section
 	id="trust"
 	class="container-page py-section"

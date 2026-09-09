@@ -30,12 +30,14 @@ const surfaceFiles = [
 	// indexOf and is safe to reorder.
 	'src/components/sections/WhoThisIsFor.astro',
 	'src/components/sections/CustomerOutcomes.astro',
+	'src/components/sections/WhatElse.astro',
 	// Beats nine and ten. Its whole risk is saying what another product cannot
 	// do, and its comments argue that at length, so both go through the scan.
 	'src/components/sections/TheOtherTools.astro',
 	'src/components/sections/SeeItRun.astro',
 	'src/components/sections/TheYield.astro',
-	'src/components/sections/PaperIn.astro',
+	// #more's four blocks since 2026-09-09; they were four sections.
+	'src/components/more/IntakeBlock.astro',
 	'src/components/sections/BuiltForKitchens.astro',
 	// /features split into a hub over five area pages on 2026-08-23.
 	// EveryFeature.astro (one page, 145 items) became these two.
@@ -86,6 +88,10 @@ const surfaceFiles = [
 	// Owner-confirmed 2026-08-30. These three Coming corrections feed the
 	// homepage, comparison, FAQ, inventory and nutrition surfaces.
 	'src/lib/coming-plans.ts',
+	// The ordering status word and every sentence that reads it. Public copy,
+	// and the highest-risk claim on the site: the capability is built and
+	// reachable by nobody, which is the exact shape a reader rounds up.
+	'src/lib/ordering.ts',
 	// The mega-menu descriptions are capability copy, so they pass through the
 	// same forbidden-claim scan as the feature pages they link into.
 	'src/components/SiteNav.astro',
@@ -119,11 +125,11 @@ const surfaceFiles = [
 	'src/lib/sage.ts',
 	'src/lib/labels.ts',
 	'src/components/sections/LabelsPrintingFeature.astro',
-	'src/components/sections/Sage.astro',
-	'src/components/sections/TeamAccess.astro',
+	'src/components/more/SageBlock.astro',
+	'src/components/more/AccessBlock.astro',
 	// 2026-08-29. Nutrition: the data file and the section, both claim copy.
 	'src/lib/nutrition.ts',
-	'src/components/sections/NutritionFacts.astro',
+	'src/components/more/NutritionBlock.astro',
 	// 2026-08-31. The demo route qualifies one working session, describes the
 	// static email handoff honestly, and owns the direct calendar boundary.
 	'src/pages/demo.astro',
@@ -179,10 +185,9 @@ for (const component of [
 	'SeeItRun',
 	'CustomerOutcomes',
 	'TheYield',
-	'NutritionFacts',
-	'PaperIn',
-	'Sage',
-	'TeamAccess',
+	// One band since 2026-09-09; it was NutritionFacts, PaperIn, Sage and
+	// TeamAccess, which are now its four blocks in src/components/more.
+	'WhatElse',
 	'BuiltForKitchens',
 	'StartHere',
 ]) {
@@ -278,13 +283,16 @@ const expectedSectionOrder = [
 	'<WhoThisIsFor />',
 	'<CustomerOutcomes />',
 	'<TheYield />',
-	// Seventh since 2026-08-29: recipe-level, after yield, before intake.
-	'<NutritionFacts />',
-	'<PaperIn />',
-	// Eighth since 2026-08-29: a mechanic, with the mechanics, ahead of the
-	// rival beat whose /compare link lists it as a Coming row.
-	'<Sage />',
-	'<TeamAccess />',
+	// ONE STOP SINCE 2026-09-09, and it was four. NutritionFacts, PaperIn, Sage
+	// and TeamAccess are the four blocks of #more, in that order, in
+	// src/components/more. The order they hold inside the band is the order they
+	// held as stops and the reasons are unchanged: nutrition is recipe-level and
+	// follows yield; Sage is a mechanic and sits with the mechanics, ahead of the
+	// rival beat whose /compare link lists it as a Coming row. What the merge
+	// removed is three eyebrows, three h2s, three ledes, three hand-off lines and
+	// three screens of section padding, not a claim. See the note at the head of
+	// src/components/sections/WhatElse.astro.
+	'<WhatElse />',
 	// The rival beat lands after the reader wants the
 	// thing, and before the maker signs it. See src/pages/index.astro.
 	'<TheOtherTools />',
@@ -336,25 +344,56 @@ if (costcookNoRows < 3) {
 			'changed, move the row and say so in RC-40 rather than lowering this floor.',
 	);
 }
-for (const key of ['parBuying', 'dietary', 'spanish']) {
+// TWO SINCE 2026-09-09, and it was three. Dietary characteristics left this
+// list by SHIPPING, which is the only way anything is allowed to leave it: a
+// Coming row that quietly disappears is a promise nobody kept. RC-60 records
+// what replaced it, and the pins below moved to src/lib/dietary.ts rather than
+// being deleted.
+for (const key of ['parBuying', 'spanish']) {
 	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
 }
 for (const phrase of [
 	"title: 'Buying that tops you back up to par'",
-	"title: 'Dietary characteristics'",
 	"title: 'Spanish'"
 ]) {
 	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
 }
-if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 3) {
-	failures.push('owner-confirmed Coming plans: all three corrected capabilities must remain Coming');
+if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 2) {
+	failures.push('owner-confirmed Coming plans: both remaining corrected capabilities must stay Coming');
 }
-for (const key of ['parBuying', 'dietary', 'spanish']) {
+for (const key of ['parBuying', 'spanish']) {
 	requireText(
 		comparisonSource,
 		`costcook: comingPlans.${key}.verdict`,
 		`comparison consumes the shared ${key} status`,
 	);
+}
+
+// RC-60. The shipped capability gets the same treatment the unshipped ones get:
+// one file owns the wording and every surface reads it, so a later correction is
+// one edit and not four. The two caps are pinned because they are the sentences
+// a friendly rewrite drops first, and dropping them turns a detection tool into
+// a safety promise.
+const dietarySource = await read('src/lib/dietary.ts');
+requireText(dietarySource, "verdict: 'yes' as const", 'dietary ships as a yes');
+requireText(dietarySource, 'CostCook detects, it never certifies.', 'dietary keeps the product boundary');
+requireText(dietarySource, 'Halal and kosher can only ever come back as a check', 'dietary keeps the halal and kosher cap');
+requireText(dietarySource, 'is never counted as clear', 'dietary keeps the unreviewed cap');
+requireText(dietarySource, 'freezes the reading', 'dietary keeps the frozen-at-confirm boundary');
+requireText(comparisonSource, 'costcook: dietary.verdict', 'comparison consumes the shared dietary status');
+// The four words this capability may never say, scanned over the SHIPPED COPY
+// ONLY: comments are stripped first, because the note at the head of that file
+// has to be able to name what it forbids, and the one legal use of
+// "allergen-free" is the sentence denying it. Everything else in that file is a
+// sentence a prospect reads.
+const dietaryCopy = dietarySource
+	.replace(/\/\*[\s\S]*?\*\//g, ' ')
+	.replace(/\/\/[^\n]*/g, ' ')
+	.replace(/No screen makes an allergen-free claim\./gi, ' ');
+for (const word of ['safe', 'certified', 'guaranteed', 'allergen-free']) {
+	if (new RegExp(`\\b${word}\\b`, 'i').test(dietaryCopy)) {
+		failures.push(`dietary: the shipped wording uses "${word}", which this capability may never claim`);
+	}
 }
 requireText(alternativesSource, 'data-coming-plans', 'homepage Coming plan group');
 requireText(alternativesSource, 'Coming soon', 'homepage Coming status');
@@ -623,7 +662,7 @@ requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
 // unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 57; claim += 1) {
+for (let claim = 1; claim <= 60; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -639,10 +678,8 @@ const expectedStopIds = [
 	'who',
 	'outcomes',
 	'yield',
-	'nutrition',
-	'intake',
-	'sage',
-	'access',
+	// Four stops until 2026-09-09: nutrition, intake, sage, access.
+	'more',
 	'alternatives',
 	'trust',
 	'start',
@@ -747,7 +784,7 @@ if (/class="btn-primary[^"]*"[\s\S]{0,200}demoCta\.label/.test(startHereSource))
 // homepage section, the compare row and the feature group may not carry their
 // own word, and the section must print the word rather than imply it.
 const sageSource = surfaces[surfaceFiles.indexOf('src/lib/sage.ts')];
-const sageSection = surfaces[surfaceFiles.indexOf('src/components/sections/Sage.astro')];
+const sageSection = surfaces[surfaceFiles.indexOf('src/components/more/SageBlock.astro')];
 requireText(sageSource, 'export const SAGE_STATUS', 'sage status lives in sage.ts');
 requireText(comparisonSource, 'costcook: SAGE_STATUS', 'compare reads the sage status');
 requireText(featuresSource, "status: SAGE_STATUS === 'yes'", 'features reads the sage status');
@@ -978,6 +1015,20 @@ if (renderedBefores.join('|') !== outcomeBefores.join('|')) {
 	);
 }
 
+// Ordering: built in the app, deployed nowhere, marked Coming (RC-59). The one
+// word lives in src/lib/ordering.ts and is pinned here until the ledger row
+// changes with it. The evidence is the deployment, not the branch: there is no
+// Vercel project for the storefront, order.costcook.io does not resolve, and
+// FEATURE_ORDERING_INTEGRATION_ENABLED is unset in production, which
+// featureDefault() reads as off for every workspace.
+const orderingSource = surfaces[surfaceFiles.indexOf('src/lib/ordering.ts')];
+if (!/ORDERING_STATUS = 'coming'/.test(orderingSource)) {
+	failures.push('ordering status: RC-59 says the storefront is not deployed; ORDERING_STATUS must read coming until the ledger row changes');
+}
+requireText(orderingSource, 'awaiting kitchen confirmation', 'ordering copy carries the confirmation boundary');
+requireText(orderingSource, 'without prices', 'ordering copy carries the price-authority boundary');
+requireText(orderingSource, 'no inbound command', 'ordering copy carries the widget protocol boundary');
+
 const forbiddenClaims = [
 	[/\bknow the margin\b/i, 'full-margin language'],
 	[/(?<!food-only )\bgross margin\b|\binspect the margin\b/i, 'unsupported margin label'],
@@ -1004,6 +1055,12 @@ const forbiddenClaims = [
 	// that company own pricing page listed on a stated date. A spreadsheet suite
 	// is a named product with a pricing page, so the homepage noun stays generic.
 	[/\b(microsoft excel|google sheets|apple numbers|libreoffice)\b/i, 'named spreadsheet product outside /compare (RC-40)'],
+	// RC-59. The four sentences an ordering feature makes it easy to write and
+	// impossible to defend on a demo call.
+	[/\bconfirms? the (order|booking) automatically\b/i, 'automatic order confirmation (RC-59: a submission awaits kitchen confirmation)'],
+	[/\b(gets?|getting) you paid\b/i, 'a payment promise (RC-59: Stripe is a handoff, and the app states when no charge occurred)'],
+	[/\bcustomers? sees? (the|their|a) price\b[^.]{0,40}\binstantly\b/i, 'a price computed in the browser (RC-59: selections travel without prices)'],
+	[/\btakes? orders? while you (sleep|cook)\b/i, 'the stock automation promise the confirmation gate contradicts'],
 ];
 for (const [pattern, label] of forbiddenClaims) {
 	if (pattern.test(publicCopy)) failures.push(`public copy contains forbidden ${label}`);

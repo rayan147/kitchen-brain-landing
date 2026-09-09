@@ -1,5 +1,5 @@
 ---
-import SectionHandoff from '../SectionHandoff.astro';
+import FoldedDetail from '../FoldedDetail.astro';
 // The one thing the page never said out loud: how the prices get IN.
 //
 // WHY THIS SECTION EXISTS. Every other stop argues the chain (cost it, buy it,
@@ -45,10 +45,12 @@ import SectionHandoff from '../SectionHandoff.astro';
 // here and the alt text is prospect-facing copy like every other alt in
 // src/components/sections.
 //
-// THE ANCHOR IS UNREFERENCED ON PURPOSE. Nothing enumerates section anchors
-// (Hero links #demo and that is the only cross-section href on the page), so
-// id="intake" exists for deep links and for parity with its neighbours, not
-// for a nav that does not exist.
+// NO LONGER A STOP OF ITS OWN, SINCE 2026-09-09. The anchor id="intake" is gone
+// with the section wrapper; this is a block inside #more, whose note in
+// src/components/sections/WhatElse.astro carries the measurement. Nothing here
+// was cut and no sentence changed. The h2 is an h3 because the band owns the h2,
+// and the diagram folds under 64rem because it is the working behind the claim,
+// not the claim.
 //
 // NO CTA HERE. The primary lives once, at the close. Quiet secondaries are at
 // their cap of two already.
@@ -78,21 +80,20 @@ const doors = [
 ];
 ---
 
-<!-- story: docs/stories/homepage-paper-in-visual.story.md -->
-<section id="intake" class="container-page border-t border-hairline py-section" aria-labelledby="intake-heading">
-	<div class="intake-layout">
-		<div class="intake-copy" data-reveal>
-			<p class="eyebrow">Before any of that</p>
-			<h2 id="intake-heading" class="mt-4 text-h2 font-semibold">
-				Paper in, staged facts out, you confirm.
-			</h2>
-			<p class="mt-5 text-lede text-ink-soft">
+<article class="more-block" data-more-block="intake" data-reveal>
+
+	<div class="split-layout intake-layout">
+		<div class="intake-copy">
+			<p class="more-label">Invoices and price lists</p>
+			<h3 class="more-title">Paper in, staged facts out, you confirm.</h3>
+			<p class="more-lede">
 				All of this runs on what your food costs this week, so something has to get the
 				price board, the order guide and the invoices in. Four doors, one queue.
 			</p>
 		</div>
 
-		<figure class="intake-map" data-paper-intake data-reveal>
+		<FoldedDetail summary="The four doors and the one queue" hint="Photograph, PDF or doc, spreadsheet, pasted text">
+		<figure class="intake-map" data-paper-intake>
 			<figcaption class="sr-only">
 				A photograph, document, spreadsheet or pasted text enters one staging queue. The
 				queue lists differences, quotes unclear text and waits for your confirmation.
@@ -141,13 +142,17 @@ const doors = [
 				</div>
 			</div>
 		</figure>
+		</FoldedDetail>
 	</div>
 
-	<div class="review-copy" data-reveal>
+	<div class="review-copy">
+		<!-- CUT 2026-09-09, copy-density pass. This paragraph said, in prose, the three
+		     things the queue beside it renders as labels: "Differences listed", "Nothing
+		     written yet" with the confirm gate, and "Unclear text quoted / The source is
+		     shown, not guessed". The one clause the diagram cannot draw is the one that
+		     stayed. BRIEF-copy-density-2026-09-09.md -->
 		<p>
-			What comes back is a list of differences to look at, not a catalog that changed
-			behind you. Nothing is written until you commit it, and whatever could not be made
-			out is quoted back as it appeared rather than guessed at.
+			What comes back is a list to look at, not a catalog that changed behind you.
 		</p>
 		<div class="manual-note">
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -160,16 +165,15 @@ const doors = [
 			</p>
 		</div>
 	</div>
-
-	<SectionHandoff from="intake" />
-</section>
+</article>
 
 <style>
+	/* The grid itself is .split-layout in global.css; this names the gap and the
+	   one alignment that differs: the queue diagram is centred against its prose,
+	   not top-aligned. See the note there on the 27rem track floor. */
 	.intake-layout {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 29rem), 1fr));
-		gap: clamp(2.5rem, 6vw, 5.5rem);
-		align-items: center;
+		--split-gap: clamp(2.5rem, 6vw, 5.5rem);
+		--split-align: center;
 	}
 
 	.intake-copy {

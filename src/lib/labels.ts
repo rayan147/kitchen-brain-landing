@@ -27,7 +27,7 @@
  *
  * No pattern: a table the sections render.
  */
-import { comingPlans } from './coming-plans';
+import { dietary } from './dietary';
 
 import type { Verdict } from './comparison';
 
@@ -55,8 +55,8 @@ export const labelsAvailability = {
 		? 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels are built in the app behind a release flag and not included at launch, so they are marked Coming below rather than folded into the shipped list.'
 		: 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels ask you to settle the storage and use-by facts before the browser prints them.',
 	nutritionFaqCrosslink: labelsAreComing
-		? `Kitchen date and allergen stickers are a separate thing, built behind a release flag and marked Coming; see the next answer. ${comingPlans.dietary.faq}`
-		: `Kitchen date and allergen stickers are a separate feature; see the next answer. ${comingPlans.dietary.faq}`,
+		? `Kitchen date and allergen stickers are a separate thing, built behind a release flag and marked Coming; see the next answer. ${dietary.faq}`
+		: `Kitchen date and allergen stickers are a separate feature; see the next answer. ${dietary.faq}`,
 	seoDescription: labelsAreComing
 		? 'Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record. Built behind a flag and marked Coming.'
 		: 'Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record.',

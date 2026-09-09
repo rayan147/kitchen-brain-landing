@@ -108,6 +108,11 @@ const menuTargets = [
 	},
 	{ id: 'import', area: 'invoices-and-price-list-import', href: '/features/invoices-and-price-list-import' },
 	{ id: 'nutrition', area: 'nutrition-facts-and-allergens', href: '/features/nutrition-facts-and-allergens' },
+	{
+		id: 'guards',
+		area: 'guest-restrictions-and-dietary-guards',
+		href: '/features/guest-restrictions-and-dietary-guards'
+	},
 	{ id: 'assistant', area: 'sage', href: '/features/sage' },
 	{ id: 'team', area: 'team-and-access', href: '/features/team-and-access' },
 	{ id: 'orders', area: 'order-shop-prep-pack', href: '/features/order-shop-prep-pack' },
@@ -348,7 +353,9 @@ for (const stage of yieldStages) {
 	}
 }
 
-const comingPlans = ['labels', 'par-buying', 'dietary', 'spanish'];
+// Three since 2026-09-09: dietary characteristics shipped and left the band.
+// RC-60, src/lib/dietary.ts.
+const comingPlans = ['labels', 'par-buying', 'spanish'];
 if (!homeHtml.includes('data-coming-plans')) {
 	console.error('check-dist: homepage is missing the Coming soon plan');
 	failed = true;

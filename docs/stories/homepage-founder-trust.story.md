@@ -101,3 +101,24 @@ The homepage keeps its established snap line—“The numbers move between them 
 - **Before → after:** A thumbnail and two feature rows become a portrait-led provenance scene with three explicit product consequences and direct contact.
 - **Claims removed:** No testimonials, customer counts, logos, or team-size implication are added.
 - **Final image:** The visitor knows Rayan Ramirez made CostCook after twelve professional cooking years and can ask him directly before testing one order.
+
+---
+
+## REVISED 2026-09-09 — homepage copy-density pass
+
+The homepage copy this tracker describes was shortened. Full working:
+`BRIEF-copy-density-2026-09-09.md`. Tracker for the pass itself:
+`docs/stories/homepage-copy-density.story.md`.
+
+This section GAINED from the pass. Its h2, "I cooked professionally for twelve
+years before I built CostCook", was being spoken word for word in #problem at 8%
+depth, which spent the reveal before the portrait could land. #problem now says
+only "my own week, not a survey", which is what that stop needs, and the
+credential arrives once, with the face. Two consequence bodies also stopped
+restating things within a screen of themselves: the missing-fact one repeated
+#problem's pinned sentence, and the connected one re-listed the four plans this
+section's own lede names two elements above. "It never quietly becomes zero" is
+now the whole line, and it is the page's snap.
+
+No beat, section order, heading or value turn changed. Every cut was a claim
+the page was making twice; nothing was removed for being unprovable.

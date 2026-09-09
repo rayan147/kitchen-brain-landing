@@ -23,7 +23,7 @@ for (const [text, label] of [
 ]) requireText(text, label);
 
 const entryCount = (html.match(/data-faq-entry/g) ?? []).length;
-if (entryCount !== 35) failures.push(`expected 35 FAQ answers, received ${entryCount}`);
+if (entryCount !== 36) failures.push(`expected 36 FAQ answers, received ${entryCount}`);
 
 if (faqMarkup.includes('<details')) failures.push('FAQ answers must remain open; found a details disclosure');
 
@@ -46,4 +46,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('FAQ page contract passed: 35 open answers, stable anchors, decision ticket, snap answer, and structured data.');
+console.log('FAQ page contract passed: 36 open answers, stable anchors, decision ticket, snap answer, and structured data.');

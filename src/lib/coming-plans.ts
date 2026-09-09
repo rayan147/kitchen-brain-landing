@@ -4,6 +4,16 @@
  *
  * Kitchen label printing is deliberately absent: its status is release-flag
  * aware and remains owned by src/lib/labels.ts.
+ *
+ * DIETARY CHARACTERISTICS LEFT THIS FILE ON 2026-09-09, because it shipped. It
+ * was here from 2026-08-30 saying the app does not assess vegan or gluten-free
+ * and infers nothing from an ingredient name, and by 2026-09-09 that was a
+ * false negative on four published surfaces and a Coming row on /compare
+ * against products that ship it. What replaced it is RC-60 and
+ * src/lib/dietary.ts, which owns the shipped wording the way this file owns the
+ * unshipped. Two plans left, and the count is pinned in
+ * scripts/check-landing-claims.mjs on purpose: this list only ever shrinks by
+ * something shipping.
  */
 
 // Considered Strategy; not used because availability and wording vary as
@@ -20,18 +30,6 @@ export const comingPlans = {
 			'Coming soon. Today shopping covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par.',
 		faq:
 			'Buying that tops stock back up to the par level you set is Coming soon. Today the shopping list covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par. No date is promised.'
-	},
-	dietary: {
-		id: 'dietary',
-		title: 'Dietary characteristics',
-		comparisonLabel: 'Dietary characteristics',
-		verdict: 'coming' as const,
-		homepage:
-			'Carry characteristics such as vegan or gluten-free on the recipe instead of keeping a separate note.',
-		comparisonNote:
-			'Coming soon. Dietary characteristics are not assessed in the app today, and nothing is inferred from an ingredient name.',
-		faq:
-			'Dietary characteristics such as vegan and gluten-free are Coming soon. They are not assessed in the app today, and nothing is inferred from an ingredient name. No date is promised.'
 	},
 	spanish: {
 		id: 'spanish',

@@ -1,5 +1,6 @@
 /**
  * Sage, the in-app assistant, as data. story: docs/stories/sage.story.md
+ * Copy-density revision: docs/stories/homepage-copy-density.story.md
  *
  * ONE STATUS, READ EVERYWHERE. /compare's row, the /features group (and so
  * /pricing's in-development list), the header menu chip, the homepage section
@@ -62,13 +63,13 @@ export const sage = {
 		{ name: 'Check a recipe', detail: 'Search, cost, nutrition and reviewed allergen facts.' },
 		{ name: 'Check stock and buying', detail: 'Below-par ingredients and recent price moves.' },
 		{ name: 'Finish setup', detail: 'Progress and the unfinished stage, for managers and owners.' },
-		{ name: 'Prepare one change', detail: 'A shopping-list proposal that a manager or owner approves or discards.' }
+		{ name: 'Prepare one change', detail: 'A shopping-list proposal, for a manager or owner.' }
 	],
 	/** Read off the code, not the prompt. Each is enforced in a test. */
 	guardrails: [
-		{ lead: 'Every number has a source.', detail: 'Sources are collected from the checks that actually ran, and links are built by the app, so an answer cannot cite a record it did not read.' },
-		{ lead: 'It never changes a record on its own.', detail: 'Eleven checks read. One prepares a proposal. Nothing sends, buys, reprices or adjusts, and the proposal waits for a person.' },
-		{ lead: 'It cannot reach another kitchen.', detail: 'No check takes a kitchen as an argument. Your session decides what it can see, and a record it does not own resolves to nothing.' },
+		{ lead: 'Every number has a source.', detail: 'Links are built by the app, so an answer cannot cite a record it did not read.' },
+		{ lead: 'It never changes a record on its own.', detail: 'Nothing sends, buys, reprices or adjusts. The one proposal waits for a person.' },
+		{ lead: 'It cannot reach another kitchen.', detail: 'No check takes a kitchen as an argument, so a record your session does not own resolves to nothing.' },
 		{ lead: 'It reads what your role can read.', detail: 'Price moves are for managers and owners. An answer built on them is redacted for staff in a shared thread.' },
 		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.' },
 		{ lead: 'It has limits, and a stop.', detail: 'Eight steps, a minute per answer, a cap per kitchen per day, and a kill switch that leaves every other screen working.' }
@@ -87,7 +88,7 @@ export const sage = {
 			alt: 'A Sage answer on a phone. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record.'
 		},
 		caption:
-			'An example from a different kitchen than the wedding in the tour: cucumber from Coastline Produce rose from $24.00 to $33.00 across two linked purchases.'
+			'A different kitchen from the wedding in the tour: cucumber rose from $24.00 to $33.00 across two linked purchases.'
 	}
 } as const;
 

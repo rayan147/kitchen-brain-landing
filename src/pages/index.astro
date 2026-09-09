@@ -6,10 +6,7 @@ import WhoThisIsFor from '../components/sections/WhoThisIsFor.astro';
 import SeeItRun from '../components/sections/SeeItRun.astro';
 import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
 import TheYield from '../components/sections/TheYield.astro';
-import NutritionFacts from '../components/sections/NutritionFacts.astro';
-import PaperIn from '../components/sections/PaperIn.astro';
-import Sage from '../components/sections/Sage.astro';
-import TeamAccess from '../components/sections/TeamAccess.astro';
+import WhatElse from '../components/sections/WhatElse.astro';
 import TheOtherTools from '../components/sections/TheOtherTools.astro';
 import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
 import StartHere from '../components/sections/StartHere.astro';
@@ -154,6 +151,162 @@ import StickyCta from '../components/StickyCta.astro';
   yield sets up the sentence this one continues (the plate's numbers come from
   the line). Shipped, so no badge; the print page moved "printed labels" from
   Coming to Yes the same day (RC-50). Story: docs/stories/nutrition-facts.story.md
+
+  ============================================================================
+  THE MOBILE BUDGET, 2026-09-09. Every note above this line records what a
+  decision VOIDED. None of them records what it COST, and that is how the page
+  got where it is. This one sets the number the next section has to answer to.
+  Full working: BRIEF-mobile-view-2026-09-09.md.
+
+  HOW IT HAPPENED. Four measurements of this page at 390x844, all in this repo:
+
+    2026-08-26   10,251px   BRIEF-visual-density-2026-08-26.md section 5B
+    2026-08-29  ~12,700px   the header of StickyCta.astro
+    2026-09-06   30,488px   the StickyCta note above
+    2026-09-09   31,999px   BRIEF-mobile-view-2026-09-09.md
+
+  Nine sections became thirteen and the phone column tripled, roughly 18,000px
+  of it inside the single week between 08-29 and 09-06. No section was wrong.
+  Nobody was measuring the total, so nobody had to argue for it.
+
+  WHAT IS AND IS NOT BROKEN, measured 2026-09-09 and worth stating so the next
+  pass does not re-diagnose it. The reading rhythm is FINE: the longest stretch
+  of the page holding no rule, no card edge, no marker and no image is under one
+  viewport everywhere except the demo guide. The 2026-08-26 structural work held
+  and the sections added since inherited it. There is no wall to break. What is
+  wrong is one number and only one: 37.9 mobile viewports and, corrected on
+  2026-09-09, 3,681 visible words. The 4,388 first recorded here counted the
+  sr-only demo transcript (709 words), which no sighted reader sees. The phone
+  reader now sees 3,288, because the demo guide is collapsed. Full reconciliation
+  in BRIEF-copy-density-2026-09-09.md section 1. Either figure is too many for a
+  page CLAUDE.md says has under a minute to be worth a demo, and that brief
+  carries the cut.
+
+  THE BUDGET. Two rules, both about the phone, because the phone is 1.45x the
+  desktop column for the same words and the phone is where the reader is.
+
+    1. 30,000px at 390x844 is the ceiling. Not a target to grow into - the page
+       is under it by 2,400px today and that margin is the whole allowance.
+    2. A new section names what it displaces. Not "this is worth adding", which
+       every one of the thirteen was, but which pixels it is taking and from
+       where. A section that cannot name them is asking for the ceiling to move,
+       and moving the ceiling is its own argument, made here, in writing.
+
+  WHAT WAS SPENT AGAINST IT. The demo guide became a phone-only disclosure on
+  2026-09-09 (see the note in SeeItRun.astro), which returned roughly 2,400px.
+  That is the only fold this page has: the guide is the one stop that is
+  explicitly an alternative to something the reader was just given. Every other
+  section carries an argument, and folding an argument is not a height saving,
+  it is a quieter page. If the ceiling is ever breached again, the honest lever
+  is editorial - fewer claims, not shorter sentences, because the sentences
+  already average 10.5 words - and that is a story-content pass with its own
+  tracker, not a structural one. That pass RAN on 2026-09-09:
+  BRIEF-copy-density-2026-09-09.md, tracker
+  docs/stories/homepage-copy-density.story.md. It took 325 words out for 1,109px
+  back, landing the page at 27,979px and 33.2 mobile viewports, so this ceiling
+  now has just over 2,000px of headroom. Desktop went 22,017 to 21,487.
+
+  THAT PIXEL FIGURE IS A MEASURED RATE, not a derived one, and the difference is
+  worth keeping. Section height over section words averages 5 to 8 px per word,
+  but most of that height is headings, media, card chrome and gaps, none of which
+  move when a sentence goes. Removed in the live DOM at 390x844, a word is worth
+  2.8px when a sentence is trimmed and 4.47px when a whole paragraph goes. So
+  cutting claims pays 60% better than tightening prose, and the honest planning
+  rate is about 4.2. THE DELIVERED RATE WAS 3.41, lower again, because most of what
+  the pass found was a duplicated sentence inside a paragraph that had to stay
+  rather than a whole paragraph that could go. Plan at 3.4.
+
+  AND THE CUT STOPPED SHORT OF ITS 690-WORD TARGET ON PURPOSE, at 325. Every word
+  it removed was a claim the page was already making somewhere else, usually
+  within a screen. The remaining 365 would have to come out of claims the page
+  makes ONCE - Sage's six guardrails, nutrition's "What it is not" - which are the
+  reason a skeptic believes the sections they sit in. Shorter and less believable
+  is design principle 2 read backwards, so that trade is the owner's to make, not
+  a density pass's. It is worth about 1,250px if ever taken.
+
+  THE PAGE NOW HAS THREE FOLDS, NOT ONE, AND THE PARAGRAPH ABOVE NEEDS QUALIFYING.
+  It says folding an argument is not a height saving but a quieter page. That is
+  still true and it is still the rule. What 2026-09-09 added is the distinction it
+  was missing: inside a section, THE CLAIM AND THE WORKING ARE NOT THE SAME
+  THING. #nutrition's h2 and the printed label are the claim; the five-step
+  evidence rail under them is how the claim is arrived at. #sage's h3 promises
+  that the boundaries are visible; the nine rules under it are the boundaries.
+  Folding a claim hides an argument. Folding the working leaves the argument on
+  screen and puts its proof one tap away. Both new folds are the second kind, both
+  ship OPEN in the served HTML and close by script under 64rem, and every data-*
+  hook check-dist.mjs reads is in dist/index.html either way. The mechanism is one
+  component now: src/components/FoldedDetail.astro.
+
+  A FOLD IS STILL NOT FREE, AND THE TEST TO APPLY BEFORE ADDING A FOURTH: read
+  what is left visible when the block is closed, alone, and ask whether the
+  section still makes its promise. If the summary control is the only place a
+  promise appears, that is a hidden claim wearing a disclosure, and principle 3
+  forbids it.
+
+  WHERE THE HOMEPAGE MEASURES, 2026-09-09, AFTER ALL OF THE ABOVE. The ceiling in
+  rule 1 is a phone rule and the phone is still the binding case, but the page had
+  never been measured across the tablet widths, and both accidents that turned up
+  there were accidents rather than decisions.
+
+    1440x900   21,487px   23.9 viewports
+    1280x800   21,316px   26.6
+    1024x768   21,052px   27.4   was 23,628, and taller than the desktop
+     834x1112  22,597px   20.3   was 25,716
+     768x1024  22,689px   22.2
+     390x844   26,260px   31.1   ceiling 30,000
+
+  iPad landscape was rendering 2,141px MORE page than a 1280 desktop because four
+  grids each held their own copy of one auto-fit rule with a 29rem track floor,
+  and 2 x 29rem plus the gap missed the 942px container by 37px. That rule lives
+  once now, as .split-layout in global.css. Separately, 52rem was the width where
+  the demo guide unfolded, which put an iPad mini at 768 on the folded side and an
+  iPad Pro 11 at 834 on the open side: same device class, four times the scroll,
+  and nothing chose it. One threshold, 64rem, for every fold on the page.
+
+  WHAT IS STILL WRONG, AND WHOSE DECISION IT IS. 31 phone viewports against a
+  stated job of deciding in under a minute. The lever is not words: at the
+  delivered 3.41px per word, EVERY word on this page accounts for about 10,100px
+  of 26,260, and the other two thirds is twelve stops' worth of headings, figures,
+  cards, rules and padding. Deleting all the prose would leave 21 viewports.
+  Getting under about 20 means FEWER STOPS, and the four candidates - #nutrition,
+  #intake, #sage, #access, all four of which have a feature page carrying the same
+  argument in full - are each pinned by a documented contract in check-dist.mjs
+  asserting that the homepage carries that proof. Retiring four build contracts to
+  make the page shorter is the same class of decision as the 1,250px trade above:
+  what the homepage promises, not how long it is. Not a structural pass's to make.
+  Tracker: docs/stories/homepage-scan-and-depth.story.md.
+
+  THAT DECISION WAS TAKEN ON 2026-09-09, and the answer was KEEP EVERYTHING. The
+  four stops are one, #more, and not one word, figure or contract left with them.
+  The alternative was stated and declined: four sentences and four links, worth
+  about 8,000px, retiring four contracts. What the merge actually spends is
+  chrome - three eyebrows, three h2s, three ledes, three hand-off lines, three
+  screens of section padding - plus five FoldedDetail controls folding the
+  working, never the claim, under 64rem.
+
+    1440x900   20,778px   23.1 viewports   was 21,487
+    1280x800   20,607px   25.8             was 21,316
+    1024x768   20,397px   26.6             was 21,052
+     834x1112  19,656px   17.7             was 22,597
+     768x1024  19,907px   19.4             was 22,689
+     390x844   23,242px   27.5             was 26,260, ceiling 30,000
+
+  The band is 4,299px on a phone where the four stops were 7,316px. Desktop moved
+  709px and that is correct: every fold on this page is inert at 64rem and above,
+  so the desktop saving is the chrome alone. The reader this page is written for
+  is on a phone.
+
+  TWELVE STOPS, THEN NINE, AND THE COUNT IS THE BUDGET NOW. Rule 2 above asks a
+  new section to name what it displaces. Read it as a stop count as well as a
+  pixel count: at 390x844 the nine stops average 2,076px, so a tenth is a viewport
+  and a half of somebody's minute. src/lib/stops.ts is the list.
+
+  WHAT IS STILL OPEN, NAMED SO THE NEXT PASS DOES NOT REDISCOVER IT. #outcomes is
+  3,890px carrying 278 words on a phone, the worst ratio left on the page, and it
+  is not padded: it holds four screenshots of the running app and those are the
+  page's core proof. Shortening it means deciding which of the four a reader can
+  do without. Same class of decision as the one above, and it has not been put to
+  anyone. Tracker: docs/stories/homepage-stop-merge.story.md.
 -->
 <Base>
 	<Hero />
@@ -162,10 +315,7 @@ import StickyCta from '../components/StickyCta.astro';
 	<WhoThisIsFor />
 	<CustomerOutcomes />
 	<TheYield />
-	<NutritionFacts />
-	<PaperIn />
-	<Sage />
-	<TeamAccess />
+	<WhatElse />
 	<TheOtherTools />
 	<BuiltForKitchens />
 	<StartHere />

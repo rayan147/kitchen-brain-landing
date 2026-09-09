@@ -3,9 +3,15 @@
  * Nutrition facts on the homepage. Foundation: docs/stories/nutrition-facts.story.md
  * Visual evidence revision: docs/stories/homepage-nutrition-visual.story.md
  *
- * SEVENTH STOP, after TheYield and before PaperIn: both are recipe-level
- * mechanics, and yield is the one that sets up "the numbers on the plate are
- * computed from the line", which this section continues. Added 2026-08-29 at
+ * A BLOCK INSIDE #more SINCE 2026-09-09, not a stop of its own. It was the
+ * seventh stop, after TheYield, and the argument for that position still holds:
+ * yield sets up "the numbers on the plate are computed from the line", which
+ * this continues. What changed is the cost of saying so. This carried 352 words
+ * in 3,206px on a phone, and three of its four neighbours were doing the same
+ * thing, which is how the page reached 33 phone viewports. The measurement is in
+ * the note in src/components/sections/WhatElse.astro. Nothing here was cut, the
+ * h2 is an h3 because the band owns the h2, and the evidence rail and the proof
+ * both fold under 64rem because they are the working behind the claim. Added 2026-08-29 at
  * the owner's request, with the meal-prep reader named in the lede because
  * that is who asks for these numbers first (RC-01 covers the audience).
  *
@@ -15,7 +21,7 @@
  *
  * NO PRIMARY CTA. The quiet link goes to the feature area.
  */
-import SectionHandoff from '../SectionHandoff.astro';
+import FoldedDetail from '../FoldedDetail.astro';
 import { nutrition } from '../../lib/nutrition';
 
 // Considered Composite; not used because the five nutrition checks form one
@@ -44,21 +50,30 @@ const evidenceGuides = [
 ] as const;
 ---
 
-<!-- story: docs/stories/homepage-nutrition-visual.story.md -->
-<section id="nutrition" class="container-page border-t border-hairline py-section" aria-labelledby="nutrition-heading">
-	<div class="nutrition-layout">
-		<div class="max-w-3xl" data-reveal>
-			<p class="eyebrow">Nutrition facts</p>
-			<h2 id="nutrition-heading" class="mt-4 text-h2 font-semibold">
-				The numbers on the label, from the recipe you already costed.
-			</h2>
-			<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
+<article class="more-block" data-more-block="nutrition" data-reveal>
+
+	<div class="split-layout nutrition-layout">
+		<div class="max-w-3xl">
+			<p class="more-label">Nutrition facts</p>
+			<h3 class="more-title">The numbers on the label, from the recipe you already costed.</h3>
+			<p class="more-lede max-w-[60ch]">
 				A meal-prep kitchen is asked for calories and protein before it is asked for a
-				price. CostCook computes the fifteen numbers an FDA panel carries for every recipe,
-				per portion, from the same lines that cost it, and says out loud when a value is
-				missing instead of counting it as zero.
+				price. CostCook computes the fifteen numbers an FDA panel carries, per portion,
+				from the lines that already cost the dish.
 			</p>
 
+			<!-- THE RAIL FOLDS ON PHONES SINCE 2026-09-09. What stays visible above it
+			     is the claim: the h2 and the lede, and beside them the printed label
+			     itself. The rail is the WORKING behind that claim, five steps and
+			     fifteen cue chips, and it measured 1,020px on a 390px screen. A
+			     reader deciding whether this is worth fifteen minutes does not read
+			     the working; a reader who has decided it might be, does. It ships
+			     open, so the five data-nutrition-step hooks check-dist.mjs reads are
+			     in the HTML either way. -->
+			<FoldedDetail
+				summary="How the fifteen numbers are arrived at"
+				hint="Five steps, from the supplier record to the printed sheet"
+			>
 			<ol role="list" class="evidence-rail" data-nutrition-evidence>
 				{
 					nutrition.points.map((point, index) => (
@@ -82,12 +97,14 @@ const evidenceGuides = [
 					))
 				}
 			</ol>
+			</FoldedDetail>
 		</div>
 
 		<!-- Two captures of one recipe: the panel on the recipe page, and the sheet
 		     the Print button makes. The label is shown on phones because it is the
 		     portrait one; the panel is shown from sm up at half its 2x size. -->
-		<figure class="nutrition-proof" data-nutrition-proof data-reveal>
+		<FoldedDetail summary="The printed label, from this recipe" hint="One 297 g Chicken Burrito Bowl, captured from the live demo">
+		<figure class="nutrition-proof" data-nutrition-proof>
 			<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
 				RECIPE NUTRITION
 			</p>
@@ -114,10 +131,11 @@ const evidenceGuides = [
 			</div>
 			<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">{nutrition.proof.caption}</figcaption>
 		</figure>
+		</FoldedDetail>
 	</div>
 
-	<div class="mt-12 border-t border-ticket-rule pt-8" data-reveal>
-		<h3 class="text-h3 font-semibold">What it is not.</h3>
+	<div class="mt-12 border-t border-ticket-rule pt-8">
+		<h4 class="text-h3 font-semibold">What it is not.</h4>
 		<ul role="list" class="mt-6 grid gap-x-12 gap-y-4 sm:grid-cols-2">
 			{
 				nutrition.notClaimed.map((line) => (
@@ -130,16 +148,13 @@ const evidenceGuides = [
 			<a href={nutrition.href} class="btn-quiet">Nutrition facts, area by area</a>.
 		</p>
 	</div>
-
-	<SectionHandoff from="nutrition" />
-</section>
+</article>
 
 <style>
+	/* The grid itself is .split-layout in global.css; this only names the gap.
+	   See the note there for why the track floor is 27rem and not 29rem. */
 	.nutrition-layout {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 29rem), 1fr));
-		gap: clamp(3rem, 5vw, 4rem);
-		align-items: start;
+		--split-gap: clamp(3rem, 5vw, 4rem);
 	}
 
 	.evidence-rail {

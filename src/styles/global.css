@@ -213,6 +213,31 @@
 		text-wrap: balance;
 	}
 
+	/* THE SPLIT: prose in one column, proof in the other. Five homepage grids
+	   (yield, nutrition, intake, and Sage's two) were four copies of the same
+	   three declarations with the same 29rem track floor, and 29rem is wrong at
+	   exactly one width, which happens to be a common one. container-page is
+	   942px at 1024, and 2 x 29rem plus the gap is 979px, so iPad landscape got
+	   the phone's stacked layout at desktop width.
+
+	   MEASURED 2026-09-09 at 1024x768: 23,628px against 21,316px at 1280x800.
+	   The tablet was 2,141px TALLER than the desktop, and those four grids
+	   stacking were the whole difference (sage +1,082, yield +669,
+	   nutrition +668, intake +238).
+
+	   The floor is 27rem so the split survives 1024 with columns at ~445px, and
+	   still stacks on tablet portrait, where the container is under 800px and
+	   two columns would leave neither side readable. Sections vary the gap and
+	   the alignment through the two custom properties; nobody redeclares the
+	   grid. Considered a media query per section; not used because the force is
+	   one number shared by four layouts, which makes it data, not behaviour. */
+	.split-layout {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--split-min, 27rem)), 1fr));
+		gap: var(--split-gap, clamp(3rem, 5vw, 4rem));
+		align-items: var(--split-align, start);
+	}
+
 	.feature-breadcrumb {
 		display: flex;
 		flex-wrap: wrap;
@@ -294,4 +319,35 @@
 	&:hover {
 		text-decoration-color: var(--color-green);
 	}
+}
+
+/* The three heading roles inside the #more band. They are utilities rather than
+   scoped rules because four block components in src/components/more render them
+   and the whole point of that band is that the four look like one stop. The
+   title is a step down from a section h2 and a step up from an h3 inside a
+   block; the label replaces the eyebrow each of the four used to carry. */
+@utility more-label {
+	font-family: var(--font-body);
+	font-size: var(--text-eyebrow);
+	line-height: var(--text-eyebrow--line-height);
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-amber-deep);
+}
+
+@utility more-title {
+	margin-top: 0.75rem;
+	font-family: var(--font-display);
+	font-size: var(--text-h3);
+	font-weight: 600;
+	line-height: 1.15;
+	text-wrap: balance;
+}
+
+@utility more-lede {
+	margin-top: 1rem;
+	color: var(--color-ink-soft);
+	font-size: var(--text-lede);
+	line-height: var(--text-lede--line-height);
 }

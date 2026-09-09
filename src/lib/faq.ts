@@ -23,6 +23,7 @@
 import { launchPlan, site } from './site';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
+import { orderingAvailability } from './ordering';
 
 export interface FaqEntry {
 	/** Stable id for deep links (#cancel). Lowercase, hyphenated. */
@@ -186,6 +187,12 @@ export const faq: readonly FaqGroup[] = [
 					'Not in the app you would start today. Both connections are in development and carry no date. The same is true of an API. Anything marked Coming on the <a href="/compare">comparison page</a> is being built, not planned, and none of it is in the launch price.'
 				],
 				claims: ['RC-35', 'RC-45', 'RC-46']
+			},
+			{
+				id: 'ordering',
+				question: 'Can customers order from me through CostCook?',
+				answer: orderingAvailability.faqStatus,
+				claims: ['RC-59']
 			},
 			{
 				id: 'margin',

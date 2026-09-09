@@ -104,3 +104,17 @@
 - **Word count before → after:** 502 → 479 rendered words; the final page remains under the 760-word target.
 - **Claims removed:** full tiered access, custom roles, per-screen permissions, cost hiding, self-service manager assignment, audit-history guarantees.
 - **Final Image:** Invite the crew knowing which work stays with you, which work a manager can carry, and which controls are not there yet.
+
+---
+
+## MOVED 2026-09-09 — this is a block inside `#more`, not a stop
+
+See [[homepage-stop-merge]]. The section this tracker was written for is now one
+of four blocks in `src/components/more/`, under one shared heading, one lede and
+one hand-off in `src/components/sections/WhatElse.astro`. Its own eyebrow, h2,
+lede and hand-off are gone; its h2 text survives as the block's h3.
+
+**No claim, figure or `data-*` hook was cut**, and the build contract asserting
+the homepage carries this proof still passes. What the working parts do now is
+fold under 64rem behind `FoldedDetail.astro`, shipping open in the served HTML.
+Every beat above still applies; only the frame around it changed.

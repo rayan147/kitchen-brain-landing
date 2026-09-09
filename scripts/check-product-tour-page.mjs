@@ -32,7 +32,10 @@ const required = [
 	'Illustrative tour data',
 	'Labels & printing is marked Coming.',
 	'data-seed-key="product-tour-connected-event"',
-	'Stop 1 of 12',
+	// Thirteen since 2026-09-09: the guests' restrictions stop landed with the
+	// capability's feature page (RC-60). This number is pinned rather than derived
+	// because a stop silently disappearing is the failure it is here to catch.
+	'Stop 1 of 13',
 	'$127.66 / 10 kg',
 	'$14.03 / kg',
 	'$109.42',
@@ -59,11 +62,14 @@ for (const forbidden of ['Gross margin', 'Unaccounted gap', 'Alvarez–Whitman w
 	if (html.includes(forbidden)) throw new Error(`Product tour still contains stale claim copy: ${forbidden}`);
 }
 
-if ((html.match(/id="tour-tab-/g) ?? []).length !== 12) {
-	throw new Error('Product tour must render exactly twelve feature tabs.');
+// Thirteen since 2026-09-09 (RC-60). One tab per Features dropdown destination;
+// src/lib/tour.ts throws if those two lists ever stop matching, and this is the
+// built-page half of the same contract.
+if ((html.match(/id="tour-tab-/g) ?? []).length !== 13) {
+	throw new Error('Product tour must render exactly thirteen feature tabs.');
 }
-if ((html.match(/id="tour-panel-/g) ?? []).length !== 12) {
-	throw new Error('Product tour must render exactly twelve seeded feature scenes.');
+if ((html.match(/id="tour-panel-/g) ?? []).length !== 13) {
+	throw new Error('Product tour must render exactly thirteen seeded feature scenes.');
 }
 if (!homeHtml.includes('href="/tour/main"') || !homeHtml.includes('Take the product tour')) {
 	throw new Error('Features menu is missing the product-tour entry point.');

@@ -16,8 +16,32 @@
  *
  * NO PRIMARY CTA. The page opens, middles and closes on one action. The quiet
  * link goes to the dedicated feature guide and video.
+ *
+ * CUT 2026-09-09, copy-density pass. BRIEF-copy-density-2026-09-09.md, tracker
+ * at docs/stories/homepage-copy-density.story.md. This section said one thing
+ * six times: eleven checks read, one tool prepares, a person approves. It was
+ * in the lede, in a .sage-promise rail, in the approval-path aria-label, in the
+ * approval-path's own three stages, in the scope heading, and again in the
+ * change guardrail's detail. The approval-path band is the one that SHOWS it, so
+ * that is the one that kept it.
+ *
+ * .sage-promise IS GONE, markup and styles. It sat directly above the approval
+ * path and read "Eleven checks read / One proposal waits", which is what the
+ * band beneath it renders as three labelled stages with the numbers on them.
+ *
+ * THE LEDE STOPPED MARKING THE LINES. It said each answer line is marked "from
+ * your records, calculated, or missing", which is the missing-evidence guardrail
+ * verbatim except that the lede's list was short one state (Sage's read). Two
+ * copies of one claim, one of them wrong, so the lede now says the lines carry
+ * their source and the guardrail keeps the full list.
+ *
+ * THE BOUNDARIES THEMSELVES WERE NOT CUT, only their mechanism sentences. The
+ * section's own h3 is "Useful because the boundaries are visible"; a shorter
+ * page that hides them would be arguing against itself. What went was the
+ * subhead naming Evidence, access and action, three words that then rendered
+ * immediately below as the three group labels.
  */
-import SectionHandoff from '../SectionHandoff.astro';
+import FoldedDetail from '../FoldedDetail.astro';
 import SageIcon from '../SageIcon.astro';
 import { sage, sageStatusWord } from '../../lib/sage';
 
@@ -51,10 +75,9 @@ const guardrailGroups = [
 ] as const;
 ---
 
-<!-- story: docs/stories/homepage-sage-redesign.story.md -->
-<section id="sage" class="border-t border-hairline bg-softgreen" aria-labelledby="sage-heading">
-	<div class="container-page py-section" data-sage-home>
-		<div class="sage-intro-grid">
+<article class="more-block" data-more-block="sage" data-sage-home data-reveal>
+
+		<div class="split-layout sage-intro-grid">
 			<div class="max-w-3xl" data-reveal>
 				<div class="sage-identity">
 					<SageIcon size={44} context="homepage" />
@@ -65,19 +88,11 @@ const guardrailGroups = [
 						</span>
 					</div>
 				</div>
-				<h2 id="sage-heading" class="mt-4 text-h2 font-semibold">
-					Ask your kitchen a question. See where the answer came from.
-				</h2>
-				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
+				<h3 class="more-title mt-4">Ask your kitchen a question. See where the answer came from.</h3>
+				<p class="more-lede max-w-[60ch]">
 					{sage.name} reads the records you already keep in CostCook and answers in plain
-					lines, each one marked as from your records, calculated, or missing. The one thing
-					it can prepare, a shopping list, waits for you to approve it.
+					lines that carry their source.
 				</p>
-
-				<div class="sage-promise">
-					<span>Eleven checks read</span>
-					<span>One proposal waits</span>
-				</div>
 			</div>
 
 			<figure class="answer-proof" data-sage-answer data-reveal>
@@ -122,7 +137,8 @@ const guardrailGroups = [
 			</div>
 		</div>
 
-		<div class="scope-setup-grid">
+		<FoldedDetail summary="The five jobs, and asking during setup" hint="Eleven bounded checks, and Sage in the setup header">
+		<div class="split-layout scope-setup-grid">
 			<div class="sage-scope" data-reveal>
 				<div class="scope-heading">
 					<h3 class="text-h3 font-semibold">Five kitchen jobs.</h3>
@@ -159,17 +175,29 @@ const guardrailGroups = [
 					/>
 				</div>
 				<figcaption>
-					Progress saves. Sage starts from the stage and records you have, then Back to setup
-					returns you to the unfinished work.
+					Sage starts from the stage and records you have. Back to setup returns you to the
+					unfinished work.
 				</figcaption>
 			</figure>
 		</div>
+		</FoldedDetail>
 
 		<div class="sage-boundaries" data-reveal>
 			<div class="boundaries-heading">
 				<h3 class="text-h3 font-semibold">Useful because the boundaries are visible.</h3>
-				<p>Evidence, access and action stay separate.</p>
 			</div>
+			<!-- THE NINE RULES FOLD ON PHONES SINCE 2026-09-09, AND THE CLAIM ABOVE
+			     THEM DOES NOT. The h3 is the promise a skeptic needs, and it stays on
+			     screen; the grid under it is nine rules across three boundaries and it
+			     measured 871px on a 390px screen. Folding the list is not the same
+			     decision as removing it: the reader is still told the boundaries are
+			     visible, and reaching them is one tap rather than four screens of
+			     scroll. It ships open, so all three data-sage-boundary hooks
+			     check-dist.mjs reads are in the HTML either way. -->
+			<FoldedDetail
+				summary="The nine rules, in full"
+				hint="Three boundaries: evidence, access, action"
+			>
 			<div class="boundary-grid">
 				{
 					guardrailGroups.map((group) => (
@@ -192,15 +220,13 @@ const guardrailGroups = [
 					))
 				}
 			</div>
+			</FoldedDetail>
 			<p class="sage-availability">
-				<strong class="font-semibold text-ink">{sageStatusWord}.</strong> Ask from the kitchen
-				records you already keep, including while you are setting them up. <a href={sage.href} class="btn-quiet">Watch Sage at work</a>.
+				<strong class="font-semibold text-ink">{sageStatusWord}.</strong> Available while you are
+				still setting the records up. <a href={sage.href} class="btn-quiet">Watch Sage at work</a>.
 			</p>
 		</div>
-
-		<SectionHandoff from="sage" />
-	</div>
-</section>
+</article>
 
 <style>
 	.sage-identity {
@@ -224,27 +250,11 @@ const guardrailGroups = [
 		color: var(--color-ink);
 	}
 
+	/* Both grids are .split-layout in global.css; this only names the gap.
+	   See the note there for why the track floor is 27rem and not 29rem. */
 	.sage-intro-grid,
 	.scope-setup-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 29rem), 1fr));
-		gap: clamp(3rem, 5vw, 4rem);
-		align-items: start;
-	}
-
-	.sage-promise {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0 1.5rem;
-		margin-top: 2rem;
-		border-block: 1px solid var(--color-hairline-strong);
-	}
-
-	.sage-promise span {
-		padding-block: 0.65rem;
-		font-size: var(--text-body-sm);
-		font-weight: 700;
-		color: var(--color-green-deep);
+		--split-gap: clamp(3rem, 5vw, 4rem);
 	}
 
 	.answer-proof img,
