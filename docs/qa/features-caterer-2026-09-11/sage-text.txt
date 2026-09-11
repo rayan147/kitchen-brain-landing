@@ -1,0 +1,209 @@
+Every feature
+/
+Sage
+Sage
+
+AVAILABLE NOW
+
+Ask Sage about your kitchen.
+
+Ask about your recipes, stock and costs, even during setup. Check the answer’s source records. An Owner or Manager can approve a shopping-list draft.
+
+Start free trial
+Watch 20 seconds
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+CAPTURED SAGE ANSWER
+
+DURING SETUP
+Ask Sage
+Progress saves. Come back to the same stage.
+A different kitchen from the wedding in the tour: cucumber rose from $24.00 to $33.00 across two linked purchases.
+Watch Sage work
+Follow setup, source, and approval in 20 seconds.
+Questions Sage can answer
+See the exact questions Sage can answer.
+Sources and approval
+See what Sage reads, prepares, and leaves to you.
+Watch Sage at work.
+
+A 20-second path from an unfinished setup stage to a checkable answer and a human decision. These are captured CostCook states, not a concept animation.
+
+0:00
+Ask during setup
+The setup stage stays saved while Sage is one action away.
+0:05
+Ask about saved records
+Starting questions follow what your kitchen has entered so far.
+0:10
+Check the source
+The answer keeps its evidence and record link in view.
+0:15
+Keep the final say
+Read the answer. Approve or discard a shopping-list draft.
+Silent walkthrough of a sample kitchen and setup, captured on 2026-08-29.
+Captured setup state. Ask Sage is present in the setup header.
+Ask before the kitchen is fully set up.
+
+Sage does not pretend a half-built catalog is finished. It starts from what you have entered, tells you what is still missing, and keeps the route back to setup visible.
+
+Leave without losing your place
+Open Ask Sage from the setup header.
+Ask a question that fits
+Starting questions follow the setup stage and the records entered so far, so an empty kitchen is not prompted to ask about orders it does not have.
+Return to the work
+Progress saves after each setup stage, and Back to setup returns to the unfinished stage.
+Questions you can ask. A shopping list you can approve.
+
+Ask about the tasks below. Sage uses the relevant kitchen records and shows what it found.
+
+01
+“What needs my attention for Saturday?”
+
+Reads the same attention list the Today screen shows, for one date or all of them.
+
+02
+“What else is on that date?”
+
+Lists the orders on a day: name, guests, status, drafts included.
+
+03
+“What should we prep for Saturday?”
+
+Builds the prep view for one date from the orders already on the books.
+
+04
+“Which ingredients are below par?”
+
+Reads trusted inventory counts and names ingredients below the par you set.
+
+05
+“Why does this dish cost what it costs?”
+
+Walks the recipe line by line, with each line’s share of the plate.
+
+06
+“Find the chicken recipes”
+
+Searches recipes by name and the ingredients they use.
+
+07
+“Which recipes contain sesame?”
+
+Finds recipes carrying a reviewed allergen through their ingredients.
+
+08
+“What is the nutrition for this recipe?”
+
+Shows recipe nutrition and tells you which nutrient values or unit conversions are missing.
+
+09
+“Which prices went up?”
+
+Reads the purchase ledger for price moves and says how many purchases the move rests on. Managers and owners only.
+
+10
+“What came up short in receiving?”
+
+Lists the open receiving follow-ups, without the supplier’s contact details.
+
+11
+“What is left in setup?”
+
+Reads setup progress and points to the unfinished stage. Managers and owners only.
+
+12
+“Prepare the shopping list”
+
+Drafts one. You see what it creates and what it does not touch, then you approve or discard it. Managers and owners only.
+
+The number arrives with its record.
+
+In this sample kitchen, the question is simple: which ingredient prices went up recently?
+
+PRICE MOVE
+$24.00 → $33.00
+CALCULATED CHANGE
+37.5%
+EVIDENCE
+2 purchases
+SOURCE
+Ingredient · Cucumber
+
+A missing number is an answer, too.
+
+WHERE THIS CAME FROM
+
+A different kitchen from the wedding in the tour: cucumber rose from $24.00 to $33.00 across two linked purchases.
+Useful because the boundaries are visible.
+
+An answer stays separate from an action. A prepared draft stays separate from approval.
+
+11 CHECKS
+Read records
+1 DRAFT
+Prepares a proposal
+YOU
+Approve or discard
+Every number has a source.
+
+Links are built by the app, so an answer cannot cite a record it did not read.
+
+It never changes a record on its own.
+
+Nothing sends, buys, reprices or adjusts. The one proposal waits for a person.
+
+It cannot reach another kitchen.
+
+Sage can only use records in the kitchen account you are signed into.
+
+It reads what your role can read.
+
+Price moves are for managers and owners. An answer built on them is redacted for staff in a shared thread.
+
+It says when evidence is missing.
+
+Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.
+
+It has limits, and a stop.
+
+Sage has answer time limits and a daily usage cap. If it stops, you can continue working in the rest of CostCook.
+
+Frequently asked questions
+
+The availability, setup and control questions worth settling before you ask the first one.
+
+Is Sage available now?
+
+Yes. Sage is available inside CostCook. You can reach it from the app navigation and, while setup is unfinished, from the setup header.
+
+How does Sage help during setup?
+
+Your setup progress saves after each stage. Ask Sage opens the assistant with starting questions that fit the stage and the records entered so far. Back to setup returns you to the unfinished stage.
+
+What can I ask Sage?
+
+Sage supports eleven read-only checks across the shift, recipes, stock, buying and setup. It can also prepare one shopping-list proposal for an owner or manager to review.
+
+Can Sage change my kitchen records?
+
+Not on its own. Eleven checks read records. The twelfth tool can prepare a shopping-list proposal. A person reviews the impact, and CostCook checks the underlying records again before an approved proposal is created.
+
+What happens when the evidence is missing?
+
+Sage names the missing evidence or an incomplete check instead of filling the gap with a confident number. The answer remains useful because it tells you what the record still needs.
+
+Who can see price moves or approve a shopping-list draft?
+
+Ingredient price moves and shopping-list preparation require a manager or owner. Staff can ask about attention, orders, recipe costs and receiving follow-ups without using Sage as a way around CostCook roles.
+
+Ask the next question. Keep the final say.
+
+Check the record underneath the answer, then return to the kitchen work that needs you.
+
+Start free trial
+Book a 15-min demo
+Invoices & price-list import
+Recipes & food costing
+Every CostCook feature

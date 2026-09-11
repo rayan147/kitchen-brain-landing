@@ -8,6 +8,7 @@
  * The figures below are read from the shipped Roma tomato disclosure in
  * public/proof/yield-lines-mobile.png; they are not an invented example.
  */
+import FoldedDetail from '../FoldedDetail.astro';
 import SectionHandoff from '../SectionHandoff.astro';
 
 // Considered State; not used because these are fixed terms in one displayed
@@ -45,16 +46,17 @@ const costStages = [
 		op: '=',
 		name: 'Line cost',
 		value: '$0.17',
-		detail: '12% of the recipe-line subtotal.',
+		detail: 'Cost of the tomato in one portion.',
 		iconPaths: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z', 'M15 8.5c-.7-.7-1.7-1-3-1-1.7 0-3 .8-3 2s1.3 1.8 3 2 3 .8 3 2-1.3 2-3 2c-1.3 0-2.3-.3-3-1', 'M12 5.5v13']
 	}
 ] as const;
 ---
 
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <!-- story: docs/stories/homepage-yield-cost-guide.story.md -->
 <!-- story: docs/stories/homepage-scan-and-depth.story.md -->
 <section id="yield" class="container-page border-t border-hairline py-section" aria-labelledby="yield-heading">
-	<div class="split-layout yield-layout">
+	<div class="yield-layout">
 		<div>
 			<div class="max-w-2xl" data-reveal>
 				<p class="eyebrow">Trim and yield</p>
@@ -108,7 +110,8 @@ const costStages = [
 			</figure>
 		</div>
 
-		<figure class="yield-proof" data-yield-proof data-reveal>
+		<FoldedDetail summary="Inspect the recipe line" hint="The same quantity, yield and purchase cost in the app">
+        <figure class="yield-proof" data-yield-proof data-reveal>
 			<p class="proof-label">The same working, open on the recipe line</p>
 			<div>
 				<img
@@ -125,8 +128,8 @@ const costStages = [
 				line, beside the quantity, preparation and cost it changes.
 			</figcaption>
 		</figure>
+        </FoldedDetail>
 	</div>
-
 	<SectionHandoff from="yield" />
 </section>
 

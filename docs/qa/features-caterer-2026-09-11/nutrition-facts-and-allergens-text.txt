@@ -1,0 +1,150 @@
+Every feature
+/
+Nutrition facts & allergens
+Check nutrition and allergens from your recipe.
+
+Match your ingredients to nutrient sources and review their allergen information. See per-portion nutrition, missing information and a printable estimate. Your kitchen still needs to review the food and its suitability for each guest.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+CAPTURED COSTCOOK RECIPE
+
+Chicken Burrito Bowl, one 297 g portion. The source capture is cropped to the answer and retained at 2× pixel density for legible text.
+Open full recipe capture
+Sunday night should not start two new spreadsheets.
+
+A customer asks how much protein is in the bowl and whether it contains milk. When those answers live apart from the recipe, one ingredient change makes both old.
+
+RECIPE CHANGED
+Chicken Burrito Bowl
+NUTRITION SHEET
+Old quantities
+ALLERGEN NOTE
+Review unknown
+
+The same ingredient line should carry the cost, the nutrient source, and the allergen evidence.
+
+Nutrition facts
+Per portion, from matched source profiles, with blanks left blank.
+Allergen management
+Ingredient evidence rolled into recipes and pack lists.
+Nutrition facts that stop where the source stops.
+
+Match an ingredient to the USDA profile that fits its state. CostCook carries that source through sub-recipes, quantities, and portions into the dish.
+
+SERVING BASIS
+Per portion or per batch
+HEADLINE VALUES
+Calories, protein, carbs, fat
+FULL PANEL
+Fifteen Nutrition Facts nutrients
+MISSING EVIDENCE
+Partial or incomplete, never zeroed
+This actual dish fills every row from one verified USDA branded record, including explicit zero values rather than assumed ones.
+Open full Nutrition Facts panel
+An allergen tag needs more than a familiar ingredient name.
+
+CostCook records evidence on the ingredient, rolls reviewed tags through every recipe that uses it, and leaves incomplete review visible all the way to pack-out.
+
+The confirmed allergen line and its named nutrition source stay together at reading size.
+Open allergen evidence in full capture
+01
+Evidence enters
+
+A supplier record, package label, or kitchen review names what is known.
+
+02
+The ingredient carries it
+
+Fourteen allergen tags stay attached to the ingredient rather than its name.
+
+03
+The recipe rolls it up
+
+Dishes include their ingredient and sub-recipe allergens, with incomplete review still visible.
+
+04
+The pack list shows it
+
+Allergen badges reach pack-out, where the kitchen needs the answer.
+
+Incomplete stays visible.
+
+A curated catalog fact may help, but a name match never invents food-safety data. A chef override needs a written reason, and no screen makes an allergen-free claim.
+
+The sheet carries the answer and its limits.
+
+Print nutrition label opens a browser-printable sheet from the live recipe. Put it on label stock today; keep the direct label-printer integration marked for later.
+
+Kitchen name and print time
+Nutrition Facts panel
+Ingredient statement in recipe order
+Allergen line and incomplete-review state
+Nutrient sources and calculated-estimate boundary
+
+A blank row beats a made-up zero.
+
+Captured from the live CostCook demo on 2026-08-29. A 297 g Chicken Burrito Bowl, on USDA FoodData Central branded record 2704502, with milk and soy confirmed.
+Open full-size sheet
+6 shipped details, without the safety claims they cannot carry.
+
+Open either chapter for the exact public feature inventory.
+
+Four boundaries stay in view
+The estimate is not a retail-label compliance claim, and the printed sheet says so.
+CostCook detects, it never certifies. Halal and kosher can only ever come back as a check. Slaughter and certification are facts the app cannot see.
+The ingredient statement is in recipe order, not a regulatory weight order.
+A label printer integration is being built and carries no date. Today the sheet prints from the browser.
+NUTRITION FACTS
+Calculate the panel from the recipe.
++
+Computed per recipe. All fifteen nutrients an FDA label carries, rolled up through sub-recipes to the dish.
+USDA profiles. Nutrient data comes from USDA FoodData Central and attaches to the ingredient.
+Partial is said out loud. A missing profile or a missing conversion reports the dish as partial rather than totalling an incomplete recipe.
+Printed from the recipe. Print nutrition label makes a sheet with the kitchen name, the panel, the ingredient statement, the allergen line and the print time, for the browser to put on label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.
+ALLERGEN MANAGEMENT
+Carry reviewed ingredient evidence into the kitchen.
++
+Allergens. Fourteen-allergen tagging rolls up to every recipe, with chef overrides that require a written reason.
+Allergens at pack-out. Pack lists carry allergen badges.
+Frequently asked questions
+
+The source, missing-value, printing, and food-safety questions worth settling first.
+
+What is nutrition facts software?
+
+It calculates the nutrients in a recipe from its ingredient quantities and source profiles. CostCook shows four headline macros and the fifteen values carried by a Nutrition Facts panel, per portion or batch, on the recipe you already costed.
+
+Where does CostCook get nutrient values?
+
+You match each ingredient to a USDA FoodData Central profile, including the raw, cooked, or prepared state that fits. That source stays attached to the ingredient and rolls through sub-recipes into the dish.
+
+What happens when a nutrient value is missing?
+
+CostCook leaves the value blank and names the missing profile or conversion. It reports a partial or incomplete result instead of counting the missing value as zero or presenting an incomplete dish as complete.
+
+How does CostCook track allergens?
+
+Fourteen allergen tags live on ingredients and roll up through sub-recipes into recipes and pack lists. The evidence comes from a supplier record, a package label, or a kitchen review. A chef override requires a written reason.
+
+Does CostCook make an allergen-free or compliance claim?
+
+No. Unreviewed ingredients remain visible, and the recipe does not claim to be allergen-free. The printed nutrition sheet also says it is a calculated estimate, not a retail-label regulatory compliance claim.
+
+Can I print a nutrition label today?
+
+Yes. Print nutrition label opens a browser-printable sheet from the recipe, ready for label stock. A direct label-printer integration is still in development and carries no release date.
+
+Print the answer. Keep the evidence.
+
+Bring one real recipe, match the ingredients you know, and leave every missing fact visible until you know it too.
+
+Book a 15-min demo
+Start free trial
+Guests’ restrictions & dietary guards
+Recipes & food costing
+Ingredients & supplier prices
+Every CostCook feature

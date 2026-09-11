@@ -46,7 +46,7 @@ const guideSteps = [
 		id: 'send',
 		label: 'Buy',
 		title: 'Send each supplier its purchase order',
-		body: 'Confirmation creates one purchase order per supplier. The film opens the capture inbox so you can see the email that went out.',
+		body: 'Confirmation creates one purchase order per supplier. The film then opens an inbox so you can read the email exactly as a supplier receives it.',
 		from: 'Shopping need',
 		to: 'Purchase orders sent'
 	},
@@ -82,7 +82,7 @@ const guideSteps = [
 // order — the Alvarez-Whitman wedding in the Maple & Main demo world, named on
 // screen in the opening beat — from the food cost that lands before the quote
 // goes out, through the shop list and the prep list (the same order, one tab to
-// the right each time), the ACTUAL email send (the capture inbox is on camera),
+// the right each time), the ACTUAL email send (the demo inbox is on camera),
 // an imperfect delivery, and the quoted-versus-today result. One inset partway
 // through shows three events planned as a single production run. There is no
 // speech track and there will not be one; a generated music bed plays and every
@@ -190,10 +190,7 @@ const guideSteps = [
 			     three times in that stretch. It is still stated twice, in the two places
 			     a reader looks for it. Nothing else in the sentence changed. -->
 			<p class="mt-4 max-w-[68ch] text-lede text-ink-soft">
-				This is the working product, not a mockup. The food cost before the quote goes
-				out, the shopping and prep lists it turns into, the nutrition panel on the same
-				recipe, purchase orders that really send, a delivery that arrives wrong, the price
-				carried back, and Sage answering a question about the job.
+				Watch the sample 180-guest wedding move from quote to delivery, then see three events planned together. Read the same tour below if you prefer. The recording is captioned; no sound is needed.
 			</p>
 			<!-- HIDDEN UNDER lg SINCE 2026-09-09, and only under lg. This link exists
 			     to carry a reader from the player down to a block that used to sit a
@@ -250,7 +247,7 @@ const guideSteps = [
 				prep across all three while the pack list keeps a by-event column so each
 				event&rsquo;s trays stay separate. Each order still gets its own confirmation
 				and its own purchase orders; the combined run does not confirm or buy. Back on
-				the wedding: a capture inbox showing the purchase orders the confirmation
+				the wedding: an inbox showing the purchase orders the confirmation
 				actually emailed, one per vendor, each with its own number, and the one
 				addressed to Green Valley Produce opened as the vendor receives it, five items
 				in whole packs with a $516.08 subtotal. Receiving: arugula received three of
@@ -370,13 +367,14 @@ const guideSteps = [
 		     A hand-typed count is a claim that drifts silently every time the
 		     array changes, and no guard in this repo counts steps against prose.
 		     Neither string can be wrong again. -->
-		<section
+		<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
+<section
 			id="demo-guide"
 			class="demo-guide mt-12 border-y border-ticket-rule py-10 sm:mt-16 sm:py-12"
 			aria-labelledby="demo-guide-heading"
 			data-demo-guide
 		>
-			<details class="demo-guide-disclosure" open data-demo-guide-disclosure>
+			<details class="demo-guide-disclosure" data-demo-guide-disclosure>
 				<summary class="demo-guide-summary">
 					<span class="demo-guide-summary-text">
 						<span class="demo-guide-summary-title">Follow the order in writing</span>
@@ -480,7 +478,7 @@ const guideSteps = [
 		     action. -->
 		<div class="mt-10 border-t border-ticket-rule pt-6" data-reveal>
 			<p class="max-w-[54ch] text-ink-soft">
-				That was one real order, start to finish. Yours will have different numbers.
+				That was a sample wedding in the working product. Yours will have different numbers.
 			</p>
 			<a
 				href={cta.href}
@@ -525,45 +523,12 @@ const guideSteps = [
 	// whole guide. All this does is close it under 64rem, which is where its
 	// 2,975px cost 3.5 viewports of a 37.9-viewport page.
 	//
-	// THE THRESHOLD WAS 52rem UNTIL 2026-09-09, AND 52rem SPLIT THE TABLETS.
-	// 52rem is 832px. Measured: an iPad mini at 768 folded the guide and ran
-	// 1,249px of demo section; an iPad Pro 11 at 834, two pixels the other side
-	// of the line, shipped it open and ran 5,319px. Same device class, same
-	// reading posture, four times the scroll. Nothing chose that; the number did.
-	// 64rem is where the guide's own two-column sticky layout starts earning its
-	// height, and it is the width the jump link above already uses, so the link
-	// and the thing it points at now appear together instead of 192px apart.
-	//
-	// Bundled, never is:inline: the CSP in vercel.json is script-src 'self'.
-	// That means this runs after paint, which is fine here and only here - the
-	// guide begins 2,626px down, so the reflow happens three viewports below the
-	// fold and nothing the reader is looking at moves.
 	const guide = document.querySelector<HTMLDetailsElement>('[data-demo-guide-disclosure]');
-	const narrowForGuide = window.matchMedia('(max-width: 63.99rem)');
-
-	// SAME ROTATION TRAP AS FoldedDetail.astro, same fix, and this one had it
-	// first. The summary is display:none from 64rem, and a tablet crosses 64rem
-	// by being turned over with no reload, so a guide folded in portrait became
-	// unreachable in landscape. Reproduced at 1194 on 2026-09-09: 0px tall, no
-	// control. Opens only on the way up.
-	narrowForGuide.addEventListener('change', (event) => {
-		if (!event.matches && guide) {
-			guide.open = true;
-		}
+	// Native details preserves the reader's choice on every viewport, including no-JS.
+	document.querySelector('[data-demo-guide-jump]')?.addEventListener('click', () => {
+		if (guide) guide.open = true;
 	});
 
-	if (guide && narrowForGuide.matches) {
-		guide.open = false;
-
-		// The jump link under the player targets the heading INSIDE the guide.
-		// Closed, that anchor resolves to nothing, so open it first and let the
-		// browser's own anchor handling do the rest. Not preventDefault'd: the
-		// hash still lands, focus still moves to the tabindex="-1" heading, and
-		// a reader who then collapses it again keeps that choice.
-		document.querySelector('[data-demo-guide-jump]')?.addEventListener('click', () => {
-			guide.open = true;
-		});
-	}
 </script>
 
 <style>
@@ -573,7 +538,7 @@ const guideSteps = [
 
 	/* Considered State (an object that owns open/closed and transitions itself);
 	   not used because <details> already IS that object and the browser runs the
-	   transition. One line of script sets the initial state on one breakpoint.
+	   transition. The summary remains available at every breakpoint.
 	   Alternative rejected: a hand-rolled toggle with aria-expanded, which would
 	   hide content from a no-JS reader and re-implement what the element does. */
 	.demo-guide-summary {
@@ -798,15 +763,7 @@ const guideSteps = [
 	}
 
 	@media (min-width: 64rem) {
-		/* Above this width the script never closes the guide, so the control has
-		   nothing to control. The <details> stays open and the section renders
-		   exactly as it did before this change. Raised from 52rem on 2026-09-09:
-		   at 834px this two-column sticky layout gave the intro a 273px column
-		   and cost tablet portrait 2,082px of open guide, while a 768px tablet
-		   folded it. Both fold now. See the note in the script above. */
-		.demo-guide-summary {
-			display: none;
-		}
+		.demo-guide-summary { display: flex; }
 
 		.demo-guide-disclosure[open] .demo-guide-summary {
 			margin-bottom: 0;

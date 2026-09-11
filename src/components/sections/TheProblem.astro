@@ -27,6 +27,8 @@
  * deliberate: the scan reads comments as well as copy, so spelling the banned
  * sentence out here, even as an example, would fail the build.
  */
+import FoldedDetail from '../FoldedDetail.astro';
+// Considered Composite; not used because two fixed evidence examples need no tree abstraction.
 import SectionHandoff from '../SectionHandoff.astro';
 
 const moments = [
@@ -48,6 +50,7 @@ const moments = [
 	}
 ];
 ---
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 
 <!-- story: docs/stories/homepage-visual-guidance.story.md -->
 <!-- story: docs/stories/homepage-spreadsheet-pain.story.md -->
@@ -61,7 +64,10 @@ const moments = [
      reader's week, and no screenshot of ours can show that. -->
 <section id="problem" class="border-y border-hairline bg-cream">
 	<div class="container-page py-section-tight">
-		<div class="grid gap-12 lg:grid-cols-[6fr_5fr] lg:gap-16">
+		<h2 class="text-h2 font-semibold">A missing price should stop the total.</h2>
+        <p class="mt-4 max-w-[65ch] text-lede text-ink-soft">An ingredient with no price must not look free. CostCook holds the costing when a price or conversion is missing and names the line that needs attention.</p>
+        <FoldedDetail summary="Why a copied spreadsheet can miss the change" hint="Old prices, changed guest counts and the facts a total needs">
+<div class="grid gap-12 lg:grid-cols-[6fr_5fr] lg:gap-16">
 		<div class="max-w-3xl" data-reveal>
 			<!-- Eyebrow added 2026-08-26 as part of the page-wide role register.
 			     See the note in src/pages/index.astro for the measurement. -->
@@ -179,6 +185,7 @@ const moments = [
 			</p>
 		</div>
 
+        </FoldedDetail>
 		<SectionHandoff from="problem" />
 	</div>
 </section>

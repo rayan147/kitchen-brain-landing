@@ -12,12 +12,12 @@ const [html, homeHtml, featureHubHtml] = await Promise.all([
 const required = [
 	'id="features-team"',
 	'id="team-access-heading"',
-	'Three roles. A short list of real boundaries.',
+	'Give your crew their own sign-in.',
 	'Owner',
 	'Manager',
 	'Staff',
-	'Role-aware sensitive actions',
-	'Fine-grained screen permissions',
+	'Actions restricted by role',
+	'Choose who can open each screen',
 	'Before you invite:',
 	'Staff can open cost screens',
 	'Workspace access',
@@ -26,7 +26,7 @@ const required = [
 	'aria-current="page"',
 	'class="container-page onward feature-onward"',
 	'Can I hide food costs from a cook?',
-	'Invite the crew with the boundary understood.'
+	'Invite the crew knowing what they can see and do.'
 ];
 
 const missing = required.filter((fragment) => !html.includes(fragment));

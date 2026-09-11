@@ -9,7 +9,7 @@ const component = await readFile(componentPath, 'utf8');
 
 const required = [
 	'id="orders-heading"',
-	'One confirmed order. Three working lists.',
+	'Turn one event into shopping, prep and pack lists.',
 	'id="shop-the-order"',
 	'id="prep-and-pack"',
 	'id="features-orders"',
@@ -34,13 +34,13 @@ if (/<details id="features-orders"\s+open>/.test(html)) {
 	throw new Error('The full capability inventory must use progressive disclosure.');
 }
 
-const forbiddenSourceFragments = ['overflow: clip', 'filter: blur', '>Book 15 minutes<', 'hero-copy anim-enter'];
+const forbiddenSourceFragments = ['overflow: clip', 'filter: blur', '>Book a 15-min demo<', 'hero-copy anim-enter'];
 const forbidden = forbiddenSourceFragments.filter((fragment) => component.includes(fragment));
 if (forbidden.length > 0) {
 	throw new Error(`Orders, Shop, Prep & Pack source regressed: ${forbidden.join(', ')}`);
 }
 
-for (const requiredSourceFragment of ['demoCta.label', 'launchPlan', 'var(--text-display)', 'min-height: 44px']) {
+for (const requiredSourceFragment of ['demoCta.label', 'FeatureTrialTerms', 'var(--text-display)', 'min-height: 44px']) {
 	if (!component.includes(requiredSourceFragment)) {
 		throw new Error(`Orders, Shop, Prep & Pack source is missing: ${requiredSourceFragment}`);
 	}

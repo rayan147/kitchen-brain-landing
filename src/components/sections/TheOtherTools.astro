@@ -83,12 +83,14 @@ const comingIcons: Record<string, readonly string[]> = {
 
 // The figure. Seven equal marks against irregular special-event dates, drawn at
 // the same scale. One restaurant kitchen can run both planning patterns.
+import FoldedDetail from '../FoldedDetail.astro';
 import SectionHandoff from '../SectionHandoff.astro';
 
 const regularServiceWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 ---
 
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <!-- story: docs/stories/homepage-coming-plans.story.md -->
 <!-- story: docs/stories/homepage-copy-density.story.md -->
 <section
@@ -102,12 +104,14 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 		     viewport empty beside it. At lg the lede is the left column and the
 		     figure the right, so the shape is in view the moment the heading is.
 		     story: docs/stories/homepage-visual-guidance.story.md -->
+        <h2 id="alternatives-heading" class="text-h2 font-semibold">What is still coming</h2>
+        <FoldedDetail summary="Compare regular service and event work" hint="Why CostCook plans by menu, date and guest count">
 		<div class="grid gap-10 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
 		<div class="max-w-3xl" data-reveal>
 			<p class="eyebrow">The other tools</p>
-			<h2 id="alternatives-heading" class="mt-4 text-h2 font-semibold">
+			<h3 class="mt-4 text-h3 font-semibold">
 				Your regular week and your special events are two different plans.
-			</h2>
+			</h3>
 			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
 				A restaurant can run both. Regular service may come back each week; event work moves
 				by date, menu and guest count. CostCook is built for that changing side of the
@@ -220,6 +224,7 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 		</figure>
 		</div>
 
+        </FoldedDetail>
 		<div class="coming-plans" data-coming-plans data-reveal>
 			<div class="coming-heading">
 				<div>
@@ -230,7 +235,7 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 				</div>
 				<p>
 					None is in the CostCook you would start today, and no release date is promised.
-					Kitchen labels are built behind a flag; the other three are on the build plan.
+					Kitchen labels, par replenishment and Spanish are not available in the launch plan.
 				</p>
 			</div>
 			<ul role="list" class="coming-list">

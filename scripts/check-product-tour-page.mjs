@@ -27,7 +27,7 @@ const required = [
 	'data-tour-next',
 	'data-label="Usable yield"',
 	'data-label="Cost"',
-	'One event. Every part of the week that gets it out the door.',
+	'Follow one event from quote to pack list.',
 	'Garden wedding supper',
 	'Illustrative tour data',
 	'Labels & printing is marked Coming.',

@@ -1,0 +1,24 @@
+
+> costcook-landing@0.0.1 check
+> astro check && node scripts/check-landing-claims.mjs
+
+09:41:04 [content] Syncing content
+09:41:04 [content] Synced content
+09:41:04 [types] Generated 1.57s
+09:41:04 [check] Getting diagnostics for Astro files in /home/rayan147/kitchen-brain-landing...
+[96mscripts/capture-setup-proof.mjs[0m:[93m211[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'shootTo' is declared but its value is never read.
+
+[7m211[0m const shootTo = async (name, pattern) => {
+[7m   [0m [93m      ~~~~~~~[0m
+
+[96mscripts/verify-contact.mjs[0m:[93m351[0m:[93m8[0m - [93mwarning[0m[90m ts(6133): [0m'noScript' is declared but its value is never read.
+
+[7m351[0m  const noScript = await evaluate(`1`).catch(() => null);
+[7m   [0m [93m       ~~~~~~~~[0m
+
+Result (167 files):
+- 0 errors
+- 0 warnings
+- 2 hints
+
+Landing claim ledger and public-copy guard passed.

@@ -7,7 +7,7 @@ const homeHtml = await readFile(homePath, 'utf8');
 
 const required = [
 	'id="inventory-heading"',
-	'Know when the shelf number deserves your trust.',
+	'Check your stock before you buy more.',
 	'id="count-and-trust"',
 	'id="plan-the-gap"',
 	'id="features-inventory"',

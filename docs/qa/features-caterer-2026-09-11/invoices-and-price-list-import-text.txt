@@ -1,0 +1,227 @@
+Every feature
+/
+Invoices and price-list import
+Upload paperwork. Check prices before saving.
+
+Upload an invoice or price list as a photo, PDF or spreadsheet. Check the items, pack sizes and prices against the original before you save any changes.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+ILLUSTRATIVE SOURCE-TO-REVIEW PATH
+Invoice
+PURCHASE
+Price list
+OFFER
+DETAILS TO REVIEW
+AWAITING YOUR REVIEW
+Chicken thigh
+Invoice
+Ready to review
+Roma tomato
+Price list
+Check pack
+Unreadable line
+Invoice
+Check the original
+YOU CONFIRM
+then save price changes
+Source
+Review
+You confirm
+
+Illustrative records. Review and confirmation are available today.
+
+The price changed on paper first.
+
+The new case price is in a folded invoice. The supplier offer is in a photograph. Tomorrow's quote still reads the number you entered last month.
+
+SOURCE ARRIVES
+today
+PRICE GETS KEYED
+later
+QUOTE GOES OUT
+now
+Review the price before it changes the next quote.
+Invoice import
+Check the purchase, its lines, and its total before posting.
+Price-list import
+Apply or skip supplier offers without inventing a purchase.
+Upload, review and save.
+
+A photograph, PDF, spreadsheet, Word document, or pasted text can enter the same workspace. Each stays outside your real catalog until review is complete.
+
+1
+Bring in the source
+Keep the original attached.
+2
+Read and match
+Check names, units and prices.
+3
+You confirm
+Resolve what is uncertain.
+4
+Save the reviewed details
+Save only the details you confirmed.
+Invoice import that stops for a proper check.
+
+An invoice says what you bought, when you bought it, and what the supplier charged. Review those facts together before they join the purchase ledger.
+
+ORIGINAL SOURCE
+INVOICE · PDF
+GREEN VALLEY PRODUCE
+INVOICE
+GV-4471
+DATE
+Jul 28, 2026
+Stated total
+$86.65
+PURCHASE TO REVIEW
+3 LINES
+Roma tomato
+25 lb case
+$31.25
+Cucumber
+Check: 12 ct
+$18.40
+Baby spinach
+4 × 2.5 lb
+$37.00
+Computed from lines
+$86.65
+Matches stated total
+Illustrative values based on the CostCook walkthrough. The total remains visible beside the lines awaiting review.
+Keep the source in view.
+
+The photo or PDF sits beside the rows awaiting review, so a doubtful unit can be checked against the paper instead of memory.
+
+Reconcile before posting.
+
+Compare the invoice total with the sum of its lines. Check duplicate warnings before saving a purchase.
+
+Post once.
+
+Saving the same import twice returns its existing receipt. Ingredient prices follow the purchase date, so an older invoice does not replace a newer price.
+
+A supplier price list is an offer, not a purchase.
+
+Read the sheet row by row. Apply the offers you want, skip the ones you do not, and stop when a pack-size change needs a closer look.
+
+SUPPLIER PRICE LIST
+North Coast Foods · Aug 2026
+4 rows to review
+Chicken thigh
+$54.00 / case
+$57.40 / case
+Apply
+Heavy cream
+12 × 1 qt
+6 × 2 qt
+Review pack
+Lemon
+$42.00 / case
+$45.00 / case
+Skip
+Tomato, Roma
+Existing match
+$31.25 / case
+Apply
+Illustrative price-list review. Applying an asking price does not create a purchase.
+
+A price list is an offer. An invoice is what happened. CostCook keeps the difference.
+
+Map the sheet you received.
+
+For a spreadsheet with unfamiliar columns, check which column holds each detail before importing. Any ignored columns are shown.
+
+Match names without hiding doubt.
+
+Check uncertain ingredient matches. Confirmed supplier names can be remembered for the next review.
+
+Refuse the quiet pack change.
+
+A different pack size cannot slide through as if only the price changed. That row stops for a decision.
+
+The awkward rows stay awkward on screen.
+
+Trust is earned at the edge cases. Nothing unreadable, unmatched, duplicated, or structurally changed needs to be guessed into place.
+
+Unreadable
+The source text is quoted back beside the row awaiting review.
+Correct or leave waiting
+Unmatched
+Candidate matches and their ambiguity remain visible.
+Choose or add
+Duplicate
+The existing invoice and receipt help you avoid saving the purchase twice.
+Open the existing record
+Pack changed
+The new pack is not treated as a simple price update.
+Review the unit
+The import details, kept close.
+
+Selected shipped capabilities for invoices and supplier price lists.
+
+15
+capabilities
+
+Invoice import
+Review the purchase before it changes a price.
+8
+Upload or paste. Drop files, paste text, or photograph paper. The workspace queues and tracks each one.
+Check the document type. Check how the document was identified. Change its type, replace an unreadable file or leave it out.
+Check names and units. Review the names, quantities and units read from the document before they are saved.
+Review before saving. Imports live outside your real catalog until you confirm them.
+Invoices that check themselves. Compare the invoice total with the sum of its lines. Duplicate invoices are flagged.
+The original stays visible. The photo or PDF sits beside the rows awaiting review while you review. Discard really deletes it.
+No duplicate save. Saving the same import twice returns the existing receipt instead of adding duplicate purchases.
+Unreadable means unread. Unreadable text stays beside the suggested details so you can correct it against the source.
+Price-list import
+Choose which supplier offers become current.
+7
+Price sheets, row by row. Apply or skip each line. A pack-size change refuses to apply silently. A sheet is an asking price, never a purchase.
+Check every imported row. Review possible duplicates and uncertain matches. Imported rows need the same details as manually entered ones.
+Spreadsheets with different columns. Check which columns hold names, pack sizes and prices before importing. You can see which columns will be ignored.
+Word documents. Import text from a Word document without copying it into another file first.
+Match supplier names. Suggested matches can connect a supplier’s “Roma tomatoes” to your “Tomato, Roma” ingredient.
+It learns your names. Confirmed supplier names can be remembered for your kitchen’s next import.
+Batch imports tested. Tested with 120-item order guides and 20-invoice batches that stay together.
+Frequently asked questions
+
+The practical questions to settle before supplier paperwork changes a working cost.
+
+What can I import into CostCook?
+
+Upload a photo, PDF, spreadsheet or Word document, or paste text. Review the suggested items and prices against the original before saving.
+
+Does an import update ingredient prices automatically?
+
+No. Review and confirm the import first. Exact ingredient matches may be preselected; uncertain names, units and pack sizes need your decision.
+
+What is the difference between an invoice and a price list?
+
+An invoice records a purchase that happened. A supplier price list is an offer, not a purchase. CostCook lets you apply or skip price-list rows individually and will not silently apply a pack-size change.
+
+What happens when CostCook cannot read a line?
+
+Unreadable text stays beside the suggested details. Correct the row, leave it for later, replace the file or exclude it before saving.
+
+How are duplicate invoices handled?
+
+The invoice total is compared with the sum of its lines, and duplicate invoices are flagged. Saving the same import again returns the existing receipt without adding purchases twice.
+
+Can an older invoice replace a newer ingredient price?
+
+Current cost follows the newest qualifying purchase date, not the order in which documents were typed or imported. Backlogging an older invoice does not make it the current price.
+
+Review your next supplier invoice.
+
+Bring in the next supplier document with every line still under your eye.
+
+Book a 15-min demo
+Start free trial
+Purchases & getting prices in
+Recipes & food costing
+Every CostCook feature

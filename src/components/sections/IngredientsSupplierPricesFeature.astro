@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureGroups } from '../../lib/features';
 import { cta, demoCta } from '../../lib/site';
 
@@ -49,7 +50,7 @@ const faqItems = [
 	{
 		question: 'Can I bring in existing ingredient data?',
 		answer:
-			'Yes. Ingredients support CSV import, and supplier prices can also enter through the staged import workflow. Imported facts wait for confirmation before they change costing.'
+			'Yes. Import ingredients from a CSV spreadsheet, or upload supplier paperwork. Review and confirm the suggested details before they change costs.'
 	}
 ] as const;
 ---
@@ -64,11 +65,8 @@ const faqItems = [
 					<span aria-hidden="true">/</span>
 					<span>Ingredients and supplier prices</span>
 				</nav>
-				<h1 id="ingredients-prices-heading" class="feature-display">Know which supplier price is inside the recipe.</h1>
-				<p class="hero-lede">
-					A case price is not comparable until pack size and usable yield have had their say.
-					Keep every offer attached to the ingredient, with the working open.
-				</p>
+				<h1 id="ingredients-prices-heading" class="feature-display">Compare supplier prices by what you can use.</h1>
+				<p class="hero-lede">Enter the case price, pack size and usable yield for one ingredient. Compare suppliers per usable kilo, pound or item, and see which recipes a price change affects.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -80,9 +78,10 @@ const faqItems = [
 						aria-label={demoCta.ariaLabel}
 						class="btn-outline"
 					>
-						Book 15 minutes
+						Book a 15-min demo
 					</a>
 				</div>
+				<FeatureTrialTerms />
 			</div>
 
 			<figure class="offer-board anim-enter" style="--enter-delay: 120ms">
@@ -125,7 +124,7 @@ const faqItems = [
 				<div><span>Last costed</span><strong>$42.10</strong><small>10 kg case</small></div>
 				<svg width="56" height="22" viewBox="0 0 56 22" aria-hidden="true"><path d="M1 11h47M41 4l7 7-7 7" /></svg>
 				<div><span>This invoice</span><strong>$46.80</strong><small>10 kg case</small></div>
-				<figcaption>The difference is not a rounding error. It is a different buying fact.</figcaption>
+				<figcaption>The new case costs $4.70 more. Check the recipes that use it before quoting again.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -176,7 +175,7 @@ const faqItems = [
 			<div class="feature-scenes">
 				<article><h3>Enter it where you meet it.</h3><p>Create an ingredient from the catalog, from a purchase, or inside the recipe you are already building.</p></article>
 				<article><h3>Keep purchased and usable separate.</h3><p>See both costs side by side. Trim and cooking loss remain facts, not an invisible adjustment.</p></article>
-				<article><h3>Find what still needs attention.</h3><p>Catalog health shows what is costable and which ingredient is still missing a price or conversion.</p></article>
+				<article><h3>Find what still needs attention.</h3><p>The ingredient list shows which items can be costed and which still need a price or unit conversion.</p></article>
 			</div>
 		</div>
 	</section>
@@ -187,7 +186,7 @@ const faqItems = [
 				<h2 id="supplier-prices-heading">Compare the food, not the shape of the case.</h2>
 				<p>
 					A lower case price can still cost more after pack size and yield. Convert each offer to
-					the same usable unit, keep its provenance, then adopt the one you intend to use.
+					the same usable unit, keep its source and date, then choose the price you want to use.
 				</p>
 			</div>
 
@@ -252,10 +251,10 @@ const faqItems = [
 		<div class="container-page capabilities-grid">
 			<div data-reveal>
 				<h2 id="capabilities-heading">The complete Ingredients list.</h2>
-				<p>Everything below is shipped today and remains available for the diligence read.</p>
+				<p>Open the details to check what is available today.</p>
 				<p class="count"><strong>{ingredientGroup.items.length}</strong><span>shipped capabilities</span></p>
 			</div>
-			<details id="features-ingredients" data-reveal open>
+			<details id="features-ingredients" data-reveal>
 				<summary><span>Ingredients and supplier prices</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary>
 				<ul role="list">
 					{ingredientGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}
@@ -279,7 +278,7 @@ const faqItems = [
 		<div class="container-page closing-grid" data-reveal>
 			<div><h2 id="closing-heading">A price you can trace. A quote you can defend.</h2><p>Bring one supplier sheet and one real ingredient. Follow the case price into the recipe with the working shown.</p></div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a>
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
 			</div>
 		</div>

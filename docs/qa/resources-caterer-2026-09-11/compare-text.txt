@@ -1,0 +1,566 @@
+Compare CostCook, Parsley, meez and spreadsheets.
+
+You are choosing what your kitchen can rely on when the guest count changes, the order goes out, and the delivery reaches the back door.
+
+Compare available features, product limits and monthly prices. Competitor entries describe their cited pricing pages on the date below; they are not hands-on product tests.
+
+Already use a spreadsheet? Its column shows what you would build or enter and maintain yourself.
+
+Start with the tradeoff
+CostCook fits the job when
+
+one kitchen needs recipes, food cost, prep, purchasing, receiving, and inventory to follow the same changing event. It is one $49/month plan.
+
+Keep comparing if you need
+Lot tracking and FSMA 204
+Fine-grained screen permissions
+Several locations
+
+All three are marked No in the table.
+
+Monthly price on the cited pages
+
+CostCook
+
+$49/month
+
+One plan. Billed monthly, 15 days free.
+
+Parsley
+
+$129 to $379
+
+Three priced plans, plus a quote-only Enterprise plan. Billed monthly.
+
+meez
+
+$24 to $199
+
+Three priced plans, plus a quote-only Enterprise plan. Billed monthly.
+
+Read each cell literally
+Yes
+It ships in the CostCook you would start today.
+Coming
+Not in the app you would start today. Coming features are not included in your trial or subscription.
+No
+CostCook does not do this.
+Not listed
+Not named on their own pricing page on the date below. It does not mean their product cannot do it.
+A spreadsheet
+A spreadsheet cell says what you would build and maintain yourself. It is a description of your work, not of what a spreadsheet is able to do.
+
+Watch the 2:53 product tour
+
+Their columns were read from Parsley’s pricing page and meez’s pricing page on August 30, 2026. Prices and tiers move. If you find a row that is out of date,tell Rayan which row needs checking.
+
+AREA 1 OF 5
+
+Recipes and costing
+
+Recipe costing and pricing
+
+CostCook
+Yes
+Parsley
+Chef, $129
+meez
+Starter, $24
+A spreadsheet
+You build it
+
+Recipe scaling and unit conversion
+
+CostCook
+Yes
+Parsley
+Chef, $129
+meez
+Starter, $24
+A spreadsheet
+You build it
+
+Sub-recipes that cost through to the plate
+
+CostCook
+Yes
+Parsley
+Not listed
+meez
+Starter, $24
+A spreadsheet
+You build it
+
+Menus costed per guest
+
+CostCook
+Yes
+Parsley
+Chef, $129
+meez
+Not listed
+A spreadsheet
+You build it
+
+Trim yield on the recipe line
+
+It moves what you buy, not only what it costs.
+
+CostCook
+Yes
+Parsley
+Not listed
+meez
+Starter, $24
+A spreadsheet
+You build it
+
+Food cost percent against a target you set
+
+Food cost. Not labor, not overhead, so not business margin.
+
+CostCook
+Yes
+Parsley
+Chef, $129
+meez
+Starter, $24
+A spreadsheet
+You build it
+
+A preloaded ingredient catalog
+
+Around 1,500 ingredient names and supplier abbreviations help match your paperwork. You supply the pack sizes and prices.
+
+CostCook
+Yes
+Parsley
+Chef, $129
+meez
+Starter, $24
+A spreadsheet
+You key it in
+Around 1,500 names, plus the vendor abbreviations, typed once and corrected forever after.
+
+USDA yields, densities and unit weights
+
+Suggested ingredient conversions show their USDA source. Review and accept a suggestion before it fills a value.
+
+CostCook
+Yes
+Parsley
+Not listed
+meez
+Starter, $24
+A spreadsheet
+You key it in
+Looked up per ingredient, in the source, and kept beside it.
+
+AREA 2 OF 5
+
+Getting prices in
+
+AI recipe import
+
+CostCook
+Yes
+Parsley
+Chef, $129
+meez
+Starter, $24
+A spreadsheet
+You key it in
+
+Supplier order guides and price sheets
+
+Applied row by row. A pack-size change refuses to apply quietly.
+
+CostCook
+Yes
+Parsley
+Chef, $129
+meez
+Premium, $199
+A spreadsheet
+You key it in
+Every changed line, read off the sheet they sent and entered against the right pack.
+
+Invoice scanning
+
+Upload a photo, PDF, spreadsheet or Word document, or paste text. Review the extracted records before saving.
+
+CostCook
+Yes
+Parsley
+$69/month add-on; also listed in Enterprise
+meez
+Premium, $199
+A spreadsheet
+You key it in
+
+Where a price came from, on the price
+
+The delivery record, invoice and date behind the price.
+
+CostCook
+Yes
+Parsley
+Not listed
+meez
+Not listed
+A spreadsheet
+You build it
+A column beside each price, filled in by whoever changed it.
+
+AREA 3 OF 5
+
+The day itself
+
+Prep lists scaled to the job
+
+CostCook
+Yes
+Parsley
+Business, $379
+meez
+Not listed
+A spreadsheet
+You build it
+
+Production plans across several events
+
+Two to twelve events plan as one run. Each still confirms and buys on its own.
+
+CostCook
+Yes
+Parsley
+Business, $379
+meez
+Not listed
+A spreadsheet
+You build it
+
+Shopping by supplier in whole packs
+
+CostCook
+Yes
+Parsley
+Business, $379
+meez
+Starter, $24
+A spreadsheet
+You build it
+
+Pack lists with equipment
+
+CostCook
+Yes
+Parsley
+Not listed
+meez
+Not listed
+A spreadsheet
+You build it
+
+Purchase orders emailed to your suppliers
+
+You see the exact body that was sent.
+
+CostCook
+Yes
+Parsley
+Not listed
+meez
+Not listed
+A spreadsheet
+You key it in
+The rows go into one message per supplier.
+
+Receiving against what you ordered
+
+Record what arrived, review quantities and prices, then save the delivery to record the purchase.
+
+CostCook
+Yes
+Parsley
+Business, $379
+meez
+Not listed
+A spreadsheet
+You key it in
+What arrived comes back in by hand, against the order you sent.
+
+Inventory
+
+A physical count updated by recorded deliveries, waste and packed orders. Old counts are marked for checking.
+
+CostCook
+Yes
+Parsley
+Business, $379
+meez
+Pro, $119
+A spreadsheet
+You build it
+
+Par levels per ingredient
+
+A floor you set, and the shelf is flagged when it falls under. Judged only from a count it can trust, never from a guess.
+
+CostCook
+Yes
+Parsley
+Business, $379
+meez
+Not listed
+A spreadsheet
+You build it
+
+Buying that tops up to par
+
+Coming soon. Today shopping covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par.
+
+CostCook
+Coming
+Parsley
+Business, $379
+meez
+Not listed
+A spreadsheet
+You build it
+
+AREA 4 OF 5
+
+Compliance and labels
+
+Allergen tagging
+
+Fourteen allergens, rolled up from ingredient to recipe, on the pack list. A name match alone does not confirm allergen information. A chef override needs a written reason.
+
+CostCook
+Yes
+Parsley
+Chef Plus, $189
+meez
+Enterprise, custom
+A spreadsheet
+You key it in
+Fourteen allergens per ingredient, then rolled up to the recipe yourself.
+
+Full nutrition facts
+
+All fifteen nutrients an FDA label carries, computed per recipe from USDA FoodData Central profiles. It tells you when a profile or a conversion is missing instead of quietly totalling an incomplete dish.
+
+CostCook
+Yes
+Parsley
+Chef Plus, $189
+meez
+Enterprise, custom
+A spreadsheet
+You key it in
+Fifteen nutrients per ingredient before anything totals.
+
+Printed USDA nutrition labels
+
+Printed from the recipe through the browser onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.
+
+CostCook
+Yes
+Parsley
+Chef Plus, $189
+meez
+Enterprise, custom
+A spreadsheet
+You build it
+
+Guest restrictions checked per dish
+
+Five diets and fourteen allergens, judged from confirmed ingredient facts on every dish of an order, and printed on the prep and pack lists. It detects and never certifies: halal and kosher cap at check, and an unreviewed ingredient is never clear.
+
+CostCook
+Yes
+Parsley
+Chef Plus, $189
+meez
+Not listed
+A spreadsheet
+You key it in
+
+Lot tracking and FSMA 204
+
+CostCook does not provide lot tracking. Check this requirement before choosing a tool.
+
+CostCook
+No
+Parsley
+Enterprise, call for quote
+meez
+Not listed
+A spreadsheet
+You build it
+CostCook does not support this. In a spreadsheet, you would build and check it yourself.
+
+Kitchen label printing
+
+Coming; not included today. The preview lets you choose storage, settle the use-by date, print one numbered label per container through the browser, and keep the frozen record for reprints. No direct printer connection.
+
+CostCook
+Coming
+Parsley
+$59/month add-on
+meez
+Not listed
+A spreadsheet
+You build it
+
+AREA 5 OF 5
+
+Team, and what it connects to
+
+Unlimited teammates
+
+During launch, on the one plan. No per-device count.
+
+CostCook
+Yes
+Parsley
+Business, $379
+meez
+Pro, $119, five active devices
+A spreadsheet
+You build it
+The file shares for free. Two people in the same cell at once is the part you manage.
+
+Role-aware sensitive actions
+
+Owner, Manager and Staff have different permissions for billing, team setup, recipe publishing and Sage approvals. All can open cost screens.
+
+CostCook
+Yes
+Parsley
+Business, $379
+meez
+Starter, $24
+A spreadsheet
+You build it
+
+Fine-grained screen permissions
+
+No custom roles or per-screen permission grid. A workspace teammate can open cost screens.
+
+CostCook
+No
+Parsley
+Business, $379
+meez
+Not listed
+A spreadsheet
+You build it
+CostCook does not support this. In a spreadsheet, you would build and check it yourself.
+
+English and Spanish
+
+Coming soon. CostCook is English only today; no date is promised.
+
+CostCook
+Coming
+Parsley
+Business, $379
+meez
+Not listed
+A spreadsheet
+You key it in
+
+Several locations
+
+One subscription covers one kitchen.
+
+CostCook
+No
+Parsley
+Enterprise, call for quote
+meez
+Premium, $199; added recipe-viewer locations $60/month each
+A spreadsheet
+You build it
+CostCook does not support this. In a spreadsheet, you would build and check it yourself.
+
+Point of sale
+
+Square is not available today. CostCook does not send menus to your till or import its sales.
+
+CostCook
+Coming
+Parsley
+Business, $379
+meez
+Enterprise, custom
+A spreadsheet
+You build it
+
+Accounting
+
+QuickBooks Online is not available today. There is no accounting sync and no release date is promised.
+
+CostCook
+Coming
+Parsley
+Not listed
+meez
+Restaurant365 sync, $199/month plus setup fee
+A spreadsheet
+You build it
+
+An API to build against
+
+CostCook
+Coming
+Parsley
+Business, $379
+meez
+Enterprise, custom
+A spreadsheet
+You build it
+
+An assistant that answers from your numbers
+
+Sage is available now. It reads your records, shows its sources, helps during setup and can prepare a shopping-list draft for you to approve.
+
+CostCook
+Yes
+Parsley
+Not listed
+meez
+Enterprise, custom
+A spreadsheet
+You build it
+
+Read previously loaded orders offline
+
+Previously loaded order pages stay readable offline and show when they were saved. Reconnect to make changes. With a connection, core pages remain readable without JavaScript.
+
+CostCook
+Yes
+Parsley
+Not listed
+meez
+Not listed
+A spreadsheet
+You build it
+Four rules built for event work
+
+These rules came from the places event kitchens lose trust when software smooths over uncertainty. They explain how the work behaves, not four more checkmarks.
+
+A confirmed quote stays confirmed. Once you confirm an event, its plan and its costing freeze. Prices that move next week move the next quote, never the one you already gave someone.
+Receiving is the order you sent. The checklist shows what you ordered. Review what arrived, then save it to record the purchase and update eligible ingredient prices.
+A missing price stops the costing. It does not quietly become zero and hand you a plate cost that is wrong by the price of the beef.
+The month says what it does not know. What the month should have cost, against what you actually spent, with the gap between them named rather than blamed on waste.
+Bring one real menu. Leave with an answer.
+
+15 days free, then $49/month. If a row marked No is the one you need, one of the others may be the better buy, and I would rather you knew that now than after a month. Start with the next menu you need to cost.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits

@@ -17,16 +17,14 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 	path="/contact/not-sent"
 >
 	<section class="container-page py-section" aria-labelledby="not-sent-title">
-		<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">ASK · NOT SENT</p>
 		<h1 id="not-sent-title" class="mt-4 max-w-[22ch] text-display font-semibold">
-			That did not send. Here are two things that will.
+			Your question was not sent.
 		</h1>
 		<p class="mt-6 max-w-[58ch] text-lede text-ink-soft">
-			Something on my side stopped the message, so nothing reached me. Rather than ask you to
-			retype it into the same form, email it or call.
+			The form could not send your question. Email Rayan, call, or return to the form to try again.
 		</p>
 		<p class="mt-8 flex flex-wrap gap-x-6 gap-y-3">
-			<a href={mailtoHref} class="btn-primary">Email {site.email}</a>
+			<a href={mailtoHref} class="btn-primary max-w-full break-all">Email {site.email}</a>
 			<a href={site.phoneHref} class="btn-quiet">Call {site.phone}</a>
 		</p>
 		<p class="mt-6 max-w-[58ch] text-sm text-ink-soft">

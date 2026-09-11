@@ -1,0 +1,15 @@
+{
+  "landingBranch": "develop",
+  "landingCommit": "40e8410",
+  "includesUncommittedChanges": true,
+  "browserURL": "http://127.0.0.1:4321",
+  "container": "kitchen-brain-landing-site-1",
+  "verifiedBindMount": {
+    "source": "/home/rayan147/kitchen-brain-landing",
+    "destination": "/site"
+  },
+  "appEvidenceRef": "develop",
+  "appEvidenceCommit": "88899a798247286b237b03e4403124a5973e9971",
+  "appCheckedOutBranch": "ux/buy-and-receive",
+  "appNotBrowserAudited": true
+}

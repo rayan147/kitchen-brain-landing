@@ -1,0 +1,169 @@
+Every feature
+/
+Purchases & month cost
+Compare planned food cost with what you spent.
+
+Bring your purchase records together and compare monthly spending with the ingredient use calculated from your orders. Review the difference, including logged waste and anything still unexplained.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+ILLUSTRATIVE AUGUST CLOSE
+
+FOOD-COST REVIEW · 1–31 AUG
+REVIEW
+Theoretical use
+$18,420
+→
+Actual spend
+$19,135
+Difference
++$715
+Logged waste
+$286
+Still unaccounted
+$429
+Illustrative amounts. The difference stays open until the supporting records explain it.
+A $715 gap is not automatically $715 of waste.
+
+Waste can explain the part you logged. Late purchases, corrections, and count quality can explain—or limit—other parts. The remainder should stay named without assigning blame.
+
+Month difference
+$715
+Needs review
+=
+Known + open
+$286 + $429
+Waste + unaccounted
+See every purchase source
+Keep imported, received, order, and quick-log entries in one dated record.
+Explain the month
+Compare theoretical use with actual spend, then keep known and unknown parts distinct.
+Keep purchases from four sources together.
+
+Import a supplier invoice, post a received purchase order, attach spend to an event, or log one item quickly. The source stays on every row.
+
+PURCHASE LEDGER · ILLUSTRATIVE
+AUGUST · 47 ROWS
+SOURCE
+RECORD
+AMOUNT
+Invoice import
+Northline Foods · INV-8831
+$2,184.30
+Receiving
+PO-1048 · received delivery
+$423.00
+Order log
+Harbor wedding · market run
+$186.40
+Quick log
+Produce top-up · cash receipt
+$74.20
+History stays attached
+Source · purchase date · correction trail
+$19,135.00
+Illustrative month: four of 47 purchase records shown; $19,135 is the total of all 47. Filter by ingredient and date to find a purchase.
+Make the month show its working.
+
+Compare the cost of ingredients calculated from orders with recorded purchases. Logged waste may explain part of the difference. The rest remains open for review.
+
+AUGUST FOOD-COST BRIDGE
+ILLUSTRATIVE AMOUNTS
+Theoretical ingredient use
+$18,420
+Actual purchase spend
+$19,135
+Difference to explain
++$715
+Explained by logged waste
+$286
+Cost saved with the waste record
+Still unaccounted
+$429
+Kept open for review
+Illustrative reconciliation. The unaccounted gap is named without being auto-classified as waste.
+Let dates and corrections keep the past intact.
+
+Ingredient prices follow the purchase date. Choose a date range to see price increases and decreases. Correct a wrong amount by adding an adjustment and a reason; keep the original record.
+
+PRICE MOVEMENT · ILLUSTRATIVE
+1–31 AUG
+Chicken thigh · 10 kg case
+$43.00 → $47.00
++9.3%
+Baby spinach · 2 kg case
+$18.60 → $17.90
+−3.8%
+Olive oil · 5 L tin
+$51.20 → $51.20
+No change
+ADJUSTED
+Produce receipt +$12.40
+Reason required · original row retained
+Illustrative items, prices, changes, and correction. Signed percentages show direction over the selected window.
+When the evidence stops, the conclusion stops.
+
+A late record keeps its date, a correction keeps its reason, and turnover waits for trusted counts. Each limit preserves what is known and names the next action.
+
+LATE PURCHASE
+Keep its purchase date
+Current cost follows when the purchase happened, not when it was typed.
+WRONG AMOUNT
+Record a correction and reason
+The correction keeps your reason beside the original amount.
+MISSING TRUSTED COUNT
+Add counts before viewing turnover
+Stock turnover needs a trusted count at each end of the period.
+The complete Purchases & month cost list.
+
+Open the details to check what is available today.
+
+11
+shipped capabilities
+
+Purchases & month cost
+Four ways to record purchases. Manual entry, invoice import, order log, and receiving, each entry tagged with its source.
+Batch entry. Enter a whole invoice, check its total and save all its lines together.
+Quick log. Or record a single purchase in seconds.
+Corrections, not edits. Add or subtract an amount and give a reason. The original purchase stays in the history.
+Cost as of date. Current cost follows the purchase date, not the order you typed things in.
+Prices that moved. See which prices rose or fell over the dates you choose, with a percentage change and a link to the purchases.
+Monthly cost comparison. Compare ingredient use calculated from orders with purchase spending. Any unexplained difference stays separate from logged waste.
+Waste, valued. Logged waste explains part of the difference using the cost saved with that waste record.
+Stock turnover, when counts support it. Stock turnover is shown only when a trusted count is available at each end of the period.
+Purchases needing attention. Find orders waiting for your action or already sent. Open a sent purchase order to record its delivery.
+Filter purchase history. Filter purchases by ingredient and date. Longer results continue on the next page.
+Frequently asked questions
+
+The practical questions behind turning purchase history into a month result without outrunning the evidence.
+
+Where do purchase records come from?
+
+Type a purchase, import an invoice, record an event purchase or save a delivery. Each entry keeps its source. A whole invoice can be saved together.
+
+What does the month verdict compare?
+
+It compares ingredient use calculated from orders with recorded purchase spending. The difference is not automatically classified as waste.
+
+How does logged waste affect the gap?
+
+Logged waste explains part of the difference using the cost saved with that waste record. Any remaining amount stays unexplained.
+
+Can I correct an old purchase?
+
+Corrections are signed adjustments with a required reason. The adjustment joins the record, so the original history is not silently edited.
+
+When does inventory turnover appear?
+
+Only when two trusted inventory counts bracket the selected period. Without those rails, CostCook does not manufacture a turnover number.
+
+Close the month with the known and unknown parts still visible.
+
+Bring one real month. Follow every purchase into the ledger and inspect the result beside the records that support it.
+
+Book a 15-min demo
+Start free trial
+See every CostCook feature

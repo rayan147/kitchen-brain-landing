@@ -18,8 +18,8 @@ const requireText = (text, label) => {
 };
 
 for (const [text, label] of [
-	['You do not need to enter your whole walk-in.', 'page identity'],
-	['Four stages in, it prints', 'plate-cost stage (RC-10)'],
+	['Start by costing one dish.', 'page identity'],
+	['Stage four ends on a number.', 'plate-cost stage (RC-10)'],
 	['3 parts &middot; 5 stages &middot; 1 dish', 'setup ticket stage count (RC-10)'],
 	// The whole trace, not just the total: a reader checks it by hand.
 	['$32.00', 'case price (RC-55)'],
@@ -64,7 +64,7 @@ if (partLabels !== 3) failures.push(`expected 3 part labels (Part N of 3), recei
 // 2: a countable done-marker per step).
 const doneLines = (html.match(/class="fd-stage-done"/g) ?? []).length;
 if (doneLines !== 5) failures.push(`expected 5 done-when lines, received ${doneLines}`);
-for (const text of ['Add one supplier', 'Review the food facts', 'Answer every ingredient once', 'Check the plate cost', 'cost the order']) {
+for (const text of ['Add one supplier', 'Confirm the ingredients, pack sizes and prices', 'Review each ingredient or leave it marked for checking', 'Check the plate cost', 'cost the order']) {
 	requireText(text, `stage done-when line from SETUP_STAGE_GUIDE (${text})`);
 }
 

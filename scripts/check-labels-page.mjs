@@ -17,7 +17,7 @@ const coming = /LABELS_STATUS = 'coming'/.test(labelsSource);
 const required = [
 	'id="features-labels"',
 	'id="labels-feature-heading"',
-	'The sticker says what you chose. Nothing more.',
+	'Kitchen date labels are coming. Preview how they will work.',
 	'id="how-a-label-is-made"',
 	'id="the-record"',
 	'id="what-it-prints-on"',

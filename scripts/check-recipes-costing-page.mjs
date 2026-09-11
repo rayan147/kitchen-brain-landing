@@ -7,7 +7,7 @@ const featureHubHtml = await readFile(featureHubPath, 'utf8');
 
 const required = [
 	'id="recipes-costing-heading"',
-	'The recipe has to work on the line and in the quote.',
+	'Cost a recipe before you quote.',
 	'id="recipe-management"',
 	'id="recipe-costing"',
 	'id="recipe-lifecycle"',

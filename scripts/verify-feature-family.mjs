@@ -13,6 +13,7 @@ const routes = [
 	'/features',
 	'/features/compliance-and-labels',
 	'/features/getting-prices-in',
+	'/features/guest-restrictions-and-dietary-guards',
 	'/features/ingredients-and-supplier-prices',
 	'/features/inventory',
 	'/features/invoices-and-price-list-import',
@@ -154,6 +155,8 @@ try {
 				const heroGridStyle = heroGrid ? getComputedStyle(heroGrid) : null;
 				const heroActionsGroup = document.querySelector('.hero-actions');
 				return {
+					trialTerms: document.querySelector("[data-feature-trial-terms]")?.textContent || "",
+					ambiguousDemo: [...document.querySelectorAll('main a[href="/demo"]')].some(node => !/demo/i.test(node.textContent)),
 					h1Count: document.querySelectorAll('h1').length,
 					heroH2Count: document.querySelectorAll('.hero h2').length,
 					overflow: document.documentElement.scrollWidth - innerWidth,
@@ -176,6 +179,10 @@ try {
 			const label = `${route} at ${width}x${height}`;
 			assert(state.h1Count === 1, `${label}: expected one H1, found ${state.h1Count}`);
 			assert(state.overflow === 0, `${label}: horizontal overflow is ${state.overflow}px`);
+			if (route.startsWith('/features')) {
+				assert(state.trialTerms.includes('Card required') && state.trialTerms.includes('Settings') && state.trialTerms.includes('per kitchen'), `${label}: trial decision is missing card, cancellation or billing-unit terms`);
+				assert(!state.ambiguousDemo, `${label}: booking link does not name a demo`);
+			}
 			if (width === 390) {
 				assert(state.bodyFontSize >= 16, `${label}: body text is ${state.bodyFontSize}px`);
 				assert(state.shortMobileTargets.length === 0, `${label}: controls below 44px: ${state.shortMobileTargets.map((target) => `${target.label} (${target.height}px)`).join(', ')}`);
@@ -222,4 +229,4 @@ if (failures.length > 0) {
 	console.error(`Feature-family browser verification failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
 }
-console.log('Site spacing verification passed: 24 routes, five viewports, specialist hero rhythm, and 200% text at 320px.');
+console.log('Site spacing verification passed: 25 routes, five viewports, specialist hero rhythm, and 200% text at 320px.');

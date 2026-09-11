@@ -1,6 +1,7 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureGroups } from '../../lib/features';
-import { cta, demoCta, launchPlan } from '../../lib/site';
+import { cta, demoCta } from '../../lib/site';
 
 const ordersGroup = featureGroups.find((group) => group.id === 'orders');
 if (!ordersGroup) throw new Error('Missing public feature group: orders');
@@ -55,13 +56,14 @@ const faqItems = [
 		<div class="container-page hero-grid">
 			<div class="hero-copy">
 				<nav aria-label="Breadcrumb" class="breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Orders, shop, prep & pack</span></nav>
-				<h1 id="orders-heading">One confirmed order. Three working lists. Nothing important left in somebody's head.</h1>
-				<p class="hero-lede">Turn the same menu and guest count into what to buy, what to prep, and what must reach the van. Confirmation holds that event plan steady behind every check.</p>
+				<h1 id="orders-heading">Turn one event into shopping, prep and pack lists.</h1>
+				<p class="hero-lede">Choose a menu, date and guest count, then review and confirm the order. The same saved plan tells your crew what to buy, prep and load, with separate progress for each list.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
 				</div>
-				<p class="hero-terms">{launchPlan.trialDays} days free, then {launchPlan.displayPrice}. Charged $0 today.</p>
+				<FeatureTrialTerms />
+
 			</div>
 
 			<figure class="event-ticket orders-enter">

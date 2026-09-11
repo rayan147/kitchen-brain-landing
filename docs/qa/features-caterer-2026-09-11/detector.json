@@ -1,0 +1,200 @@
+[
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 390,
+    "snippet": "font-size: 0.72rem is off the DESIGN.md type ramp",
+    "ignoreValue": "0.72rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 399,
+    "snippet": "font-size: 1.05rem is off the DESIGN.md type ramp",
+    "ignoreValue": "1.05rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 405,
+    "snippet": "font-size: 0.7rem is off the DESIGN.md type ramp",
+    "ignoreValue": "0.7rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 408,
+    "snippet": "font-size: clamp(1.45rem, 2.5vw, 2.2rem) has fluid endpoints 1.45rem and 2.2rem off the DESIGN.md type ramp",
+    "ignoreValue": "1.45rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 419,
+    "snippet": "font-size: 1.08rem is off the DESIGN.md type ramp",
+    "ignoreValue": "1.08rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 422,
+    "snippet": "font-size: 0.72rem is off the DESIGN.md type ramp",
+    "ignoreValue": "0.72rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 435,
+    "snippet": "font-size: 0.7rem is off the DESIGN.md type ramp",
+    "ignoreValue": "0.7rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 437,
+    "snippet": "font-size: 0.92rem is off the DESIGN.md type ramp",
+    "ignoreValue": "0.92rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 439,
+    "snippet": "font-size: clamp(1.6rem, 3vw, 2.5rem) has fluid endpoints 1.6rem and 2.5rem off the DESIGN.md type ramp",
+    "ignoreValue": "1.6rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 447,
+    "snippet": "font-size: clamp(1.8rem, 3.2vw, 3rem) has fluid endpoints 1.8rem and 3rem off the DESIGN.md type ramp",
+    "ignoreValue": "1.8rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 454,
+    "snippet": "font-size: 1rem is off the DESIGN.md type ramp",
+    "ignoreValue": "1rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 455,
+    "snippet": "font-size: 0.86rem is off the DESIGN.md type ramp",
+    "ignoreValue": "0.86rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 461,
+    "snippet": "font-size: 0.72rem is off the DESIGN.md type ramp",
+    "ignoreValue": "0.72rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 462,
+    "snippet": "font-size: 1.35rem is off the DESIGN.md type ramp",
+    "ignoreValue": "1.35rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 463,
+    "snippet": "font-size: 1.5rem is off the DESIGN.md type ramp",
+    "ignoreValue": "1.5rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/NutritionFactsAllergensFeature.astro",
+    "line": 479,
+    "snippet": "font-size: 0.9rem is off the DESIGN.md type ramp",
+    "ignoreValue": "0.9rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/RecipesCostingFeature.astro",
+    "line": 1047,
+    "snippet": "font-size: .72rem is off the DESIGN.md type ramp",
+    "ignoreValue": ".72rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/RecipesCostingFeature.astro",
+    "line": 1048,
+    "snippet": "font-size: 1.35rem is off the DESIGN.md type ramp",
+    "ignoreValue": "1.35rem"
+  }
+]

@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureGroups } from '../../lib/features';
 import { cta, demoCta } from '../../lib/site';
 
@@ -54,7 +55,7 @@ const faqItems = [
 	{
 		question: 'What happens when I confirm a quote?',
 		answer:
-			'Confirmation snapshots the event plan, costing math, and money in one transaction. The quote you gave remains attached to the plan the kitchen will run.'
+			'Confirming saves the event plan, calculations and quoted price together. Later ingredient prices do not rewrite the quote you gave.'
 	},
 	{
 		question: 'Will later ingredient prices change the quote I already gave?',
@@ -79,11 +80,8 @@ const faqItems = [
 					<span aria-hidden="true">/</span>
 					<span>Menus and quotes</span>
 				</nav>
-				<h1 id="menus-quotes-heading" class="feature-display">Build the menu once. Quote the job you can actually run.</h1>
-				<p class="hero-lede">
-					Keep dishes, portions, guest count, equipment, food cost, and the price you say out
-					loud on one path from draft to confirmed event.
-				</p>
+				<h1 id="menus-quotes-heading" class="feature-display">Build your menu. Check the price per guest.</h1>
+				<p class="hero-lede">Choose your dishes and portions, then add the event date, guest count and selling price. Check the food cost before confirming the quote and the kitchen plan together.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -95,9 +93,10 @@ const faqItems = [
 						aria-label={demoCta.ariaLabel}
 						class="btn-outline"
 					>
-						Book 15 minutes
+						Book a 15-min demo
 					</a>
 				</div>
+				<FeatureTrialTerms />
 			</div>
 
 			<figure class="commitment-flow anim-enter" style="--enter-delay: 120ms">
@@ -126,16 +125,16 @@ const faqItems = [
 						<ol>
 							<li class="done"><span></span><div><small>Draft</small><strong>Menu + 180 guests</strong></div></li>
 							<li class="current"><span></span><div><small>Review the number</small><strong>$26.93 food / guest</strong></div></li>
-							<li><span></span><div><small>Confirm</small><strong>$68.00 quoted</strong></div></li>
+							<li><span></span><div><small>Confirm</small><strong>$68.00 / guest quoted</strong></div></li>
 						</ol>
 						<div class="quote-decision">
-							<small>Target price</small>
+							<small>Price for a 30% food-cost target</small>
 							<strong>$89.78 / guest</strong>
 							<span>39.6% food cost at the quoted price</span>
 						</div>
 					</div>
 				</div>
-				<p class="evidence-note">Illustrative record using values from the CostCook product tour.</p>
+				<p class="evidence-note">Sample quote from the product tour. The dishes shown are examples, not its cost breakdown. Food cost excludes labor, rentals, tax and profit.</p>
 			</figure>
 		</div>
 	</section>
@@ -204,9 +203,9 @@ const faqItems = [
 					<div class="price-check">
 						<span>Menu pricing</span>
 						<dl>
-							<div><dt>Food cost / guest</dt><dd>$26.93</dd></div>
-							<div><dt>Selling price</dt><dd>$68.00</dd></div>
-							<div><dt>Target price</dt><dd>$89.78</dd></div>
+							<div><dt>Food cost / guest</dt><dd>$12.00</dd></div>
+							<div><dt>Selling price / guest</dt><dd>$68.00</dd></div>
+							<div><dt>Price / guest for 30% food cost</dt><dd>$40.00</dd></div>
 						</dl>
 					</div>
 					<div class="equipment-sheet">
@@ -215,7 +214,7 @@ const faqItems = [
 						<small>Counts stay fixed when guest count changes.</small>
 					</div>
 				</div>
-				<figcaption>Illustrative walkthrough of the shipped menu workspace, self-pricing, and equipment-template behavior.</figcaption>
+				<figcaption>Separate example: $6.84 + $2.31 + $1.28 + $1.57 = $12.00 food per guest. At a 30% food-cost target, $12.00 ÷ 0.30 = $40.00 per guest. Equipment counts are fixed; they do not scale with guests.</figcaption>
 			</figure>
 
 			<div class="feature-scenes" data-reveal>
@@ -348,7 +347,7 @@ const faqItems = [
 		<div class="container-page closing-grid" data-reveal>
 			<div><h2 id="closing-heading">Ready for the customer. Ready for the kitchen.</h2><p>Bring one real menu, set the guest count, and follow the number into the plan the kitchen will run.</p></div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a>
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
 			</div>
 		</div>

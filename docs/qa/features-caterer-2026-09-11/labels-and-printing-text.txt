@@ -1,0 +1,164 @@
+Every feature / Labels and printing
+
+LABELS AND PRINTING
+
+Coming
+Kitchen date labels are coming. Preview how they will work.
+
+Choose the storage condition, use-by date and number of containers before printing. The label record keeps the wording for later reprints. This preview shows a feature you cannot use in the trial today.
+
+Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.
+
+See what ships today
+Book a 15-min demo
+
+LABEL PREVIEW
+
+Braised Short Rib for the Alvarez-Whitman wedding, refrigerated, with the FDA Food Code seven-day suggestion accepted and two containers recorded. On a phone, the finished sticker stands in so its type stays legible.Open full label-dialog capture
+Make the label
+Keep the record
+Choose the stock
+
+HOW A LABEL IS MADE
+
+Six steps at the bench, one record behind them.
+
+Choose the storage condition and how many containers, then print. Nothing prints until you choose.
+
+01
+
+Tap Label where the food is.
+
+On the prep list, the pack list, a recipe or an ingredient. Each opens the same label form so you can review the same details before printing.
+
+02
+
+Say how it is stored.
+
+Refrigerated, frozen, thawed or opened. There is no default: the app calls it the one thing it cannot know, and nothing prints until you choose.
+
+03
+
+Settle the use-by date.
+
+A saved shelf life for that recipe or ingredient, a number of days, an exact date, or the made date only. Where the app has a sourced suggestion it offers one, and tapping it is what saves the rule. A label never guesses a date.
+
+04
+
+Count the containers.
+
+One label per physical container, numbered 1 of 2, 2 of 2. The batch total on the prep list is not what is in each tub, and the dialog says so.
+
+05
+
+See exactly what will print.
+
+Name, batch and storage word, use-by and made dates, the event and its date on an order-tied label, the kitchen name, who printed it. Confirmed allergens print as Contains and May contain; with no allergen data the sticker prints no line, and the preview says a blank label is not an all-clear.
+
+06
+
+Print, and it is on the record.
+
+The print opens your browser’s print dialog on stock the kitchen chose once in Settings. What the sticker said is frozen at that moment, so a soaked one reprints unchanged even if the recipe has moved since.
+
+THE STICKER, AS PREVIEWED
+
+Sized in millimetres in the dialog, so the preview is the printed size. No allergen data on this recipe, so the sticker prints no allergen line, and the preview says a blank label is not an all-clear.Open full sticker preview
+
+THE PRINT VIEW · 2 OF 2 · REPRINTABLE
+
+The print view opens your browser’s print dialog. These are the exact labels that were recorded; a reprint reproduces them unchanged even if the recipe changes later.Open full print-sheet capture
+
+THE RECORD
+
+A soaked sticker costs a tap.
+
+Printing records what the sticker said. The document is frozen without a stock size or a printer in it, so the same words go on a sheet today and a roll next month, and a reprint six weeks on is the label that went on the container, not a recomposition from a recipe that has moved.
+
+Where a printed date came from is kept with the record, a recipe’s standing rule or a number typed at the bench, so an inspector or a caterer can tell the two apart later. It does not print.
+
+WHAT IT PRINTS ON
+
+Chosen once in Settings, so nobody is asked at 5 a.m.
+
+Sheet, continuous roll and die-cut roll print the same label content. Only the geometry changes, and it is measured in millimetres, not tied to a brand.
+
+30-up sheet
+
+66 × 25.4 mm, 30 to a letter sheet
+
+An office printer and a sheet of stickers.
+
+58 mm continuous roll
+
+58 mm wide, cut to length
+
+Receipt-width thermal stock, one at a time at the bench.
+
+62 mm continuous roll
+
+62 mm wide, cut to length
+
+A wider desktop thermal roll for long dish names.
+
+2 × 1 in die-cut roll
+
+50.8 × 25.4 mm
+
+Pre-cut labels sized for most shipping-label printers.
+
+Describe your own
+
+Any width from 20 to 220 mm
+
+Measure the label you buy. Nothing is tied to a brand.
+
+SETTINGS · LABELS AND PRINTING
+
+Measured choices from CostCook label settings.Open full stock-settings capture
+What it is not.
+Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.
+The only output is the browser’s print dialog. A direct connection to a label printer is not built; the app cannot confirm that paper moved.
+A blank allergen line is not an all-clear, and the sticker preview says so. Allergens print only from confirmed evidence on the ingredient.
+The app never picks a use-by date. A saved shelf life, a number you enter, an exact date, or the made date only.
+Frequently asked questions
+−
+Is kitchen label printing available now?
+
+Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.
+
+−
+What does a label say?
+
+The dish or ingredient, the batch quantity and storage condition, the use-by and made dates, the event and its date when the label is tied to an order, the kitchen name, who printed it, and its number in the run. Confirmed allergens print as Contains and May contain.
+
+−
+Where does the use-by date come from?
+
+From you. A shelf life saved on the recipe or ingredient, a number of days, an exact date, or the made date only. Where the app has a sourced suggestion, such as the FDA Food Code seven-day rule for refrigerated food, it offers it, and tapping it is what saves the rule. The app never guesses a date.
+
+−
+What does it print on?
+
+A 30-up sticker sheet on an office printer, a 58 or 62 mm continuous thermal roll, a 2 by 1 inch die-cut roll, or any stock you measure yourself. The kitchen chooses once in Settings. The sticker preview is sized in millimetres, so what you see is the printed size.
+
+−
+Does it send labels straight to a label printer?
+
+No. The output is your browser’s print dialog. A direct connection to a label printer is designed as a seam in the code and is not built, and the app does not claim that paper moved when it cannot know.
+
+−
+What happens when I reprint?
+
+The exact labels that were recorded print again, unchanged, even if the recipe has changed since. Only the paper can differ: a reprint can go on the stock the kitchen has loaded now.
+
+Print what you chose. Keep the record.
+
+Recipe costing, event planning, prep, purchasing, inventory and nutrition are available today. Start the trial for that work; labels remain excluded until the word above changes.
+
+Start free trial
+Every feature, area by area
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+Labels remain excluded while marked Coming.

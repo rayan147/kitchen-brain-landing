@@ -1,5 +1,6 @@
 ---
-import { cta, demoCta } from '../../lib/site';
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
+import { cta, demoCta, launchPlan } from '../../lib/site';
 
 // Considered Strategy; not used because roles are a fixed, evidence-backed
 // content table and no behavior is selected or swapped at runtime.
@@ -7,7 +8,7 @@ const roles = [
 	{
 		name: 'Owner',
 		mark: 'O',
-		summary: 'Carries the account and the irreversible recipe decisions.',
+		summary: 'Manages billing and recipe publishing, archiving and restoration.',
 		workspaceAccess: 'Everything a Manager and Staff member can access.',
 		protectedWork: 'Manage billing; publish, archive and restore recipes; manage Square when that connection is enabled.',
 		boundary: 'Owner-only actions stay with the workspace owner.'
@@ -15,17 +16,17 @@ const roles = [
 	{
 		name: 'Manager',
 		mark: 'M',
-		summary: 'Carries setup, teammates and the Sage checks that expose price or propose work.',
+		summary: 'Manages setup and invitations; reviews Sage shopping-list drafts.',
 		workspaceAccess: 'Everything a Staff member can access.',
 		protectedWork: 'Complete kitchen setup; invite and revoke teammates; ask Sage about price moves; review Sage shopping-list proposals.',
-		boundary: 'Billing, owner recipe lifecycle work and Square control stay with the Owner.'
+		boundary: 'Billing, recipe publishing, archiving and restoration stay with the Owner. Square controls apply only when that connection becomes available.'
 	},
 	{
 		name: 'Staff',
 		mark: 'S',
 		summary: 'Works from the shared kitchen record without the manager-only Sage or owner-only controls.',
 		workspaceAccess: 'Open the shared operational workspace, including cost screens.',
-		protectedWork: 'Use day-to-day kitchen records and ask the Sage read checks allowed for Staff.',
+		protectedWork: 'Use day-to-day kitchen records and ask Sage the questions available to Staff.',
 		boundary: 'Manager- and Owner-only actions remain unavailable.'
 	}
 ] as const;
@@ -44,8 +45,8 @@ const faqItems = [
 		answer: 'Invited teammates join as Staff today. Invitations are not a self-service path for building a custom manager role.'
 	},
 	{
-		question: 'Are these only visual labels?',
-		answer: 'No. The sensitive boundaries are checked on the server. A hidden button is not treated as the access rule.'
+		question: 'Are restricted actions actually blocked?',
+		answer: 'No. CostCook checks your role when you try a restricted action, even if you follow a direct link.'
 	}
 ] as const;
 ---
@@ -58,13 +59,15 @@ const faqItems = [
 				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
 					<a href="/features">Every feature</a><span aria-hidden="true">/</span><span aria-current="page">Team &amp; access</span>
 				</nav>
-				<h1 id="team-access-heading" class="feature-display">Three roles. A short list of real boundaries.</h1>
-				<p class="hero-lede">Owner, Manager and Staff keep a few sensitive actions where they belong. The rest stays one working kitchen record, and the limits are stated before you invite anyone.</p>
+				<h1 id="team-access-heading" class="feature-display">Give your crew their own sign-in.</h1>
+				<p class="hero-lede">Invite your crew by email to the same kitchen account. Compare what Owners, Managers and Staff can do, from daily prep to recipe publishing and billing.</p>
 				<p class="hero-constraint"><strong>Before you invite:</strong> Staff can open cost screens, and custom roles are not available.</p>
 				<div class="hero-actions">
-					<a href="#role-boundaries" class="btn-primary">See role boundaries</a>
+					<a href="#role-boundaries" class="btn-primary">Compare team roles</a>
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-outline">{cta.label}</a>
 				</div>
+				<FeatureTrialTerms />
+				<p class="hero-constraint">{launchPlan.crewTerms}</p>
 			</div>
 
 			<figure class="role-stack anim-enter" style="--enter-delay: 120ms">
@@ -83,13 +86,13 @@ const faqItems = [
 	<section class="shared-record" aria-labelledby="shared-heading">
 		<div class="container-page shared-grid">
 			<div data-reveal>
-				<h2 id="shared-heading">One kitchen record. Named responsibility.</h2>
-				<p>You invite people into the same workspace instead of passing around a shared password. CostCook checks the member’s role again when a protected action reaches the server.</p>
+				<h2 id="shared-heading">Give each teammate their own sign-in.</h2>
+				<p>Invite people to your kitchen account by email. CostCook checks their role when they try an action reserved for an Owner or Manager.</p>
 			</div>
 			<dl class="access-facts" data-reveal>
 				<div><dt>Workspace roles</dt><dd>Owner · Manager · Staff</dd></div>
 				<div><dt>New invitations</dt><dd>Join as Staff today</dd></div>
-				<div><dt>Enforcement</dt><dd>Checked on the server</dd></div>
+				<div><dt>Enforcement</dt><dd>Checked when you act</dd></div>
 				<div><dt>Cost screens</dt><dd>Visible to workspace teammates</dd></div>
 			</dl>
 		</div>
@@ -99,7 +102,7 @@ const faqItems = [
 		<div class="container-page">
 			<div class="roles-heading" data-reveal>
 				<h2 id="roles-heading">What each role adds.</h2>
-				<p>Read this as an escalation path, not three separate products. An Owner carries Manager work; a Manager carries the protected work listed below.</p>
+				<p>Staff use the shared kitchen records. Managers can also do the management tasks below, and Owners can do both plus the Owner tasks.</p>
 			</div>
 			<div class="role-ledger">
 				{roles.map((role) => (
@@ -121,13 +124,13 @@ const faqItems = [
 			<div data-reveal>
 				<h2 id="limit-heading">What this is not.</h2>
 				<p>CostCook does not let you hide one screen, expose one field, or assemble a custom role. If a cook must receive a prep list without being able to open costs, that boundary is not available today.</p>
-				<p class="limit-recovery">If hiding costs is essential, CostCook is not the right fit today. If you want to check your setup before deciding, <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel}>book 15 minutes</a>.</p>
+				<p class="limit-recovery">If hiding costs is essential, CostCook is not the right fit today. If you want to check your setup before deciding, <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel}>book a 15-min demo</a>.</p>
 			</div>
 			<div class="limit-ticket" data-reveal>
 				<p>Access check</p>
 				<dl>
-					<div><dt>Role-aware sensitive actions</dt><dd>Yes</dd></div>
-					<div><dt>Fine-grained screen permissions</dt><dd>No</dd></div>
+					<div><dt>Actions restricted by role</dt><dd>Yes</dd></div>
+					<div><dt>Choose who can open each screen</dt><dd>No</dd></div>
 					<div><dt>Custom roles</dt><dd>No</dd></div>
 				</dl>
 				<strong>Know the boundary before the invitation leaves.</strong>
@@ -137,7 +140,7 @@ const faqItems = [
 
 	<section id="team-questions" class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
-			<div data-reveal><h2 id="faq-heading">Questions to settle first.</h2><p>The useful answer is the one that names both the restriction and the gap.</p></div>
+			<div data-reveal><h2 id="faq-heading">Questions to settle first.</h2><p>Check cost visibility, invitations and role limits before adding your team.</p></div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
 					<details data-reveal data-team-disclosure><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>
@@ -148,8 +151,8 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">Invite the crew with the boundary understood.</h2><p>Bring the people who run the week into one workspace, and keep the sensitive work attached to the role that should carry it.</p></div>
-			<div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book 15 minutes</a></div>
+			<div><h2 id="closing-heading">Invite the crew knowing what they can see and do.</h2><p>Bring the people who run the week into one workspace, and keep the sensitive work attached to the role that should carry it.</p></div>
+			<div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book a 15-min demo</a></div>
 		</div>
 		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/sage">Sage</a><a href="/features/recipes-and-costing">Recipes &amp; costing</a><a href="/features">Every CostCook feature</a></nav>
 	</section>

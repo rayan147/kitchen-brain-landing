@@ -1,0 +1,119 @@
+Every feature
+/
+Team & access
+Give your crew their own sign-in.
+
+Invite your crew by email to the same kitchen account. Compare what Owners, Managers and Staff can do, from daily prep to recipe publishing and billing.
+
+Before you invite: Staff can open cost screens, and custom roles are not available.
+
+Compare team roles
+Start free trial
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+Teammates are unlimited during launch. Post-launch teammate limits have not been announced.
+
+O
+COSTCOOK WORKSPACE
+Owner
+
+Manages billing and recipe publishing, archiving and restoration.
+
+M
+COSTCOOK WORKSPACE
+Manager
+
+Manages setup and invitations; reviews Sage shopping-list drafts.
+
+S
+COSTCOOK WORKSPACE
+Staff
+
+Works from the shared kitchen record without the manager-only Sage or owner-only controls.
+
+A role is a boundary, not a badge.
+Give each teammate their own sign-in.
+
+Invite people to your kitchen account by email. CostCook checks their role when they try an action reserved for an Owner or Manager.
+
+WORKSPACE ROLES
+Owner · Manager · Staff
+NEW INVITATIONS
+Join as Staff today
+ENFORCEMENT
+Checked when you act
+COST SCREENS
+Visible to workspace teammates
+What each role adds.
+
+Staff use the shared kitchen records. Managers can also do the management tasks below, and Owners can do both plus the Owner tasks.
+
+O
+Owner
+WORKSPACE ACCESS
+Everything a Manager and Staff member can access.
+PROTECTED WORK
+Manage billing; publish, archive and restore recipes; manage Square when that connection is enabled.
+BOUNDARY
+Owner-only actions stay with the workspace owner.
+M
+Manager
+WORKSPACE ACCESS
+Everything a Staff member can access.
+PROTECTED WORK
+Complete kitchen setup; invite and revoke teammates; ask Sage about price moves; review Sage shopping-list proposals.
+BOUNDARY
+Billing, recipe publishing, archiving and restoration stay with the Owner. Square controls apply only when that connection becomes available.
+S
+Staff
+WORKSPACE ACCESS
+Open the shared operational workspace, including cost screens.
+PROTECTED WORK
+Use day-to-day kitchen records and ask Sage the questions available to Staff.
+BOUNDARY
+Manager- and Owner-only actions remain unavailable.
+What this is not.
+
+CostCook does not let you hide one screen, expose one field, or assemble a custom role. If a cook must receive a prep list without being able to open costs, that boundary is not available today.
+
+If hiding costs is essential, CostCook is not the right fit today. If you want to check your setup before deciding, book a 15-min demo.
+
+ACCESS CHECK
+
+Actions restricted by role
+Yes
+Choose who can open each screen
+No
+Custom roles
+No
+Know the boundary before the invitation leaves.
+Questions to settle first.
+
+Check cost visibility, invitations and role limits before adding your team.
+
+Can I hide food costs from a cook?
+
+No. CostCook does not have per-screen permissions, so a workspace teammate can open cost screens. The role boundaries protect specific sensitive actions, not every view.
+
+Can I build a custom role?
+
+No. The available roles are Owner, Manager and Staff. There is no permission builder for individual screens, fields or actions.
+
+What role does a new invitation receive?
+
+Invited teammates join as Staff today. Invitations are not a self-service path for building a custom manager role.
+
+Are restricted actions actually blocked?
+
+No. CostCook checks your role when you try a restricted action, even if you follow a direct link.
+
+Invite the crew knowing what they can see and do.
+
+Bring the people who run the week into one workspace, and keep the sensitive work attached to the role that should carry it.
+
+Start free trial
+Book a 15-min demo
+Sage
+Recipes & costing
+Every CostCook feature

@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureGroups } from '../../lib/features';
 import { cta, demoCta } from '../../lib/site';
 
@@ -79,11 +80,8 @@ const faqItems = [
 					<span aria-hidden="true">/</span>
 					<span>Recipes and costing</span>
 				</nav>
-				<h1 id="recipes-costing-heading" class="feature-display">The recipe has to work on the line and in the quote.</h1>
-				<p class="hero-lede">
-					When the method lives in one place and the cost in another, one of them goes stale.
-					Keep the working recipe and the number you say out loud connected.
-				</p>
+				<h1 id="recipes-costing-heading" class="feature-display">Cost a recipe before you quote.</h1>
+				<p class="hero-lede">Keep ingredients, quantities, method and food cost together. Start with one recipe and its current ingredient prices, then scale the portions without changing the original.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -95,9 +93,10 @@ const faqItems = [
 						aria-label={demoCta.ariaLabel}
 						class="btn-outline"
 					>
-						Book 15 minutes
+						Book a 15-min demo
 					</a>
 				</div>
+				<FeatureTrialTerms />
 			</div>
 
 			<figure class="record-flow anim-enter" style="--enter-delay: 120ms">
@@ -146,7 +145,7 @@ const faqItems = [
 						</ul>
 					</div>
 				</div>
-				<figcaption>Illustrative values. Product evidence below uses the real CostCook interface.</figcaption>
+				<figcaption>Illustrative values: $164.16 ÷ 24 = $6.84 food per portion. At a $22.50 selling price, that is 30.4% food cost. Food cost excludes labor, rentals, tax and profit.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -198,7 +197,7 @@ const faqItems = [
 			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
 		</a>
 		<a href="#recipe-lifecycle">
-			<span>Recipe lifecycle</span>
+			<span>Publishing and recipe history</span>
 			<small>Move from a private draft to kitchen view, with earlier versions still readable.</small>
 			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
 		</a>
@@ -331,7 +330,7 @@ const faqItems = [
 						</li>
 					))}
 				</ol>
-				<figcaption>One price, four steps. Every step stays available when a number needs checking.</figcaption>
+				<figcaption>From case price to event cost. Every step stays available when a number needs checking.</figcaption>
 			</figure>
 
 			<div class="costing-evidence">
@@ -414,7 +413,7 @@ const faqItems = [
 			<div class="capability-heading" data-reveal>
 				<div>
 					<h2 id="capabilities-heading">The complete Recipes & Costing list.</h2>
-					<p>Everything below is shipped today and remains available for the diligence read.</p>
+					<p>Open the details to check what is available today.</p>
 				</div>
 				<p class="count"><strong>{capabilityCount}</strong><span>shipped capabilities</span></p>
 			</div>
@@ -475,7 +474,7 @@ const faqItems = [
 					aria-label={demoCta.ariaLabel}
 					class="btn-primary"
 				>
-					Book 15 minutes
+					Book a 15-min demo
 				</a>
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">
 					{cta.label}
@@ -610,7 +609,8 @@ const faqItems = [
 	}
 
 	.cost-facts {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+		/* Two columns keep adjacent currency amounts distinct in the narrow record. */
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
 	.record-facts div,

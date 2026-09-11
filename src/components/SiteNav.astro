@@ -16,6 +16,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 // the current URL while native details own each open/closed state.
 ---
 
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <!-- story: docs/stories/features-navigation.story.md -->
 <header class="site-header container-page relative flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
 	<!-- One sprite keeps every destination icon on the same 20px grid and
@@ -262,10 +263,14 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 			rel={demoCta.rel}
 			aria-label={demoCta.ariaLabel}
 			aria-current={path === demoCta.href ? 'page' : undefined}
-			class="nav-demo inline-flex min-h-11 items-center whitespace-nowrap rounded-full border border-green px-3 text-sm font-semibold text-green-deep transition-colors duration-150 hover:bg-softgreen sm:px-4"
+			class="nav-demo inline-flex min-h-11 items-center whitespace-nowrap px-1 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 transition-colors duration-150 hover:decoration-green"
 		>
-			<span class="md:hidden">Demo</span>
-			<span class="hidden md:inline">Book a demo</span>
+			<!-- A LINK, NOT A SECOND BUTTON (2026-09-10). This was a bordered pill
+			     beside the primary, so the header read as three actions with two of
+			     them shaped like buttons. The demo is the quiet alternative
+			     (CLAUDE.md principle 5), so it takes the underlined-link register
+			     the Features menu footer already uses. Label and target unchanged. -->
+			<span>Book a demo</span>
 		</a>
 		<a
 			href={cta.href}
@@ -274,7 +279,9 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 			aria-label={cta.ariaLabel}
 			class="btn-primary min-h-11 whitespace-nowrap px-4 py-3 text-sm sm:px-5"
 		>
-			<span class="xl:hidden">Start</span>
+			<!-- The short form keeps "free trial": "Start" alone was the one place
+			     the button said nothing about what starting costs. -->
+			<span class="xl:hidden">Free trial</span>
 			<span class="hidden xl:inline">{cta.label}</span>
 		</a>
 	</div>

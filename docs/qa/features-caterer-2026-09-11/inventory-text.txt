@@ -1,0 +1,191 @@
+Every feature
+/
+Inventory
+Check your stock before you buy more.
+
+Count an ingredient first. Recorded deliveries, waste and packed orders update the quantity. Old or missing counts do not reduce what the shopping list buys.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+ILLUSTRATIVE SHELF RECORD
+
+WALK-IN · PROTEIN
+FRESH
+Chicken thigh
+
+Computed from the last trusted count
+
+26.2 kg
+Counted
+24.0kg
++
+Received
+10.0kg
+−
+Packed
+7.8kg
+=
+On hand
+26.2kg
+Baseline: 28 Aug · 7:10 AM
+3 dated movements
+Illustrative values. The state and every movement stay attached to the result.
+The empty shelf was hidden inside an exact number.
+
+The old count still said one case. Prep opened the walk-in and found none. A number without its count date can be precise, tidy, and wrong at the same time.
+
+ON SCREEN
+1 case
+Last counted 12 days ago
+ON THE SHELF
+Empty
+Prep starts at 5:30 AM
+A stale count is not a low count. It is a question that still needs an answer.
+Record a stock count
+Record a physical count and see when it was taken.
+Work out what to buy
+Use current stock to reduce buying, with manual changes kept separate.
+Start with a count. Track deliveries, use and waste.
+
+After a physical count, recorded purchases add stock. Logged waste and completed packing subtract it. The dated history explains the current quantity.
+
+CHICKEN THIGH · MOVEMENT HISTORY
+AS OF 29 AUG
+28 Aug · 7:10 AM
+Physical count
+Starting physical count
+24.0 kg
+28 Aug · 11:40 AM
+Northline receiving
+Change since count
++10.0 kg
+29 Aug · 5:20 AM
+Packed for two orders
+Change since count
+−7.8 kg
+Computed on hand
+26.2 kg
+COUNT STATUS
+Fresh
+Based on a recent physical count
+SHELF VALUE
+$122.62
+Illustrative value as of 29 Aug
+UNIT COST AT COUNT
+$4.68 / kg
+Frozen at count time
+Illustrative movement history built only from shipped inventory behavior.
+Keep each physical count in the history.
+
+Each count is saved with a date. Deliveries, use and waste after that date explain the new stock quantity.
+
+Freshness stays visible.
+
+Fresh, stale, and never counted are states beside the quantity, not footnotes discovered after planning.
+
+History keeps its old price.
+
+The pack cost freezes at count time, so a later correction does not rewrite what the shelf was worth then.
+
+Use recent counts to work out what to buy.
+
+Start with what the next orders need. A trusted count may reduce estimated buying; a stale or unsupported number may not. Chef overrides remain a separate decision.
+
+CHICKEN THIGH · NEXT JOBS
+ILLUSTRATIVE GAP
+Orders need
+31.5 kg
+Two confirmed jobs
+−
+Trusted shelf
+26.2 kg
+Fresh count state
+=
+Left to cover
+5.3 kg
+Before whole-pack rounding
+Shopping list
+Northline Foods · 10 kg case
+1 case
+Example: 31.5 kg needed − 26.2 kg on hand = 5.3 kg to buy. Sold in 10 kg cases, so buy one case.
+Every shelf state gets a different answer.
+
+The quantity may be visible without being trusted enough to change the buy.
+
+Chicken thigh
+Trusted count; available to reduce buying.
+26.2 kg
+FRESH
+Baby spinach
+Shown for context; count again before using it.
+8.4 kg
+STALE
+Olive oil
+No estimate invented; buying stays unchanged.
+—
+NEVER COUNTED
+No count, no invented shelf.
+
+When the math cannot support an estimate, the state says what is missing and the buy remains unchanged. The recovery is direct: count the ingredient.
+
+FRESH
+Use to reduce buying
+The recent count and subsequent stock changes support this quantity.
+STALE
+Count again
+Keep the old quantity visible, but do not subtract it.
+NEVER COUNTED
+Record the first count
+Nothing is estimated before the first physical count.
+The complete Inventory list.
+
+Open the details to check what is available today.
+
+6
+shipped capabilities
+
+Inventory
+Stock on hand. Start with a dated physical count, then add deliveries and subtract recorded use and waste.
+Dated count history. Each count keeps the unit cost recorded at the time. A later correction does not replace the old count.
+Count freshness. See whether stock is Fresh, Stale or Never counted. Missing or old counts do not reduce estimated buying.
+Desktop and phone views. A desktop table and a phone list, with state badges and a need breakdown naming which order wants what.
+Buy what is missing. Subtract trusted stock from order needs to build a printable shopping list. Quantities you override stay separate.
+Shelf value. What the shelf was worth at any date.
+Frequently asked questions
+
+The practical questions behind letting a shelf quantity change what you buy.
+
+How is on-hand inventory calculated?
+
+Count an ingredient and record the date. Later purchases add stock; logged waste and completed packing subtract it. The history shows each change.
+
+What do Fresh, Stale, and Never counted mean?
+
+Fresh means the count can be used to reduce buying. Stale means count it again. Never counted means enter a first physical count before using stock in the calculation.
+
+Will a stale count reduce what the shopping list buys?
+
+No. Only trusted on-hand quantity reduces estimated buying. A stale or unsupported estimate can remain visible for context, but it is not allowed to quietly subtract from the buy.
+
+Does a par level automatically add food to the shopping list?
+
+Not today. A par level can mark an ingredient below par, at or above par, unevaluable, or without a par. Buying that tops stock back up to the par level you set is Coming soon. Today the shopping list covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par. No date is promised.
+
+What happens when a count is corrected later?
+
+A correction adds a dated record. Earlier counts and the unit costs saved with them stay in the history.
+
+Can I see what the shelf was worth on an earlier date?
+
+Yes. Inventory can show shelf value as of a selected date, using the count and movement history available for that point in time.
+
+A shelf number ready to use.
+
+Bring one real shopping list and count one shelf. See how the count and later changes affect what you need to buy.
+
+Book a 15-min demo
+Start free trial
+See every CostCook feature

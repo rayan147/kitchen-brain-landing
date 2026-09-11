@@ -7,7 +7,7 @@ const homeHtml = await readFile(homePath, 'utf8');
 
 const required = [
 	'id="ledger-heading"',
-	'Know what the month should have cost',
+	'Compare planned food cost with what you spent.',
 	'id="purchase-ledger"',
 	'id="month-close"',
 	'id="features-ledger"',

@@ -1,104 +1,17 @@
 ---
-/**
- * A block of supporting evidence that ships OPEN and folds itself on phones and
- * tablet portrait. The claim always stays outside it; only the working behind
- * the claim goes in.
- *
- * WHY THIS EXISTS. Measured 2026-09-09 at 390x844, the homepage is 27,979px, or
- * 33.2 phone viewports, against a page whose stated job (CLAUDE.md) is to let an
- * owner-operator "decide in under a minute whether a 15-minute demo is worth
- * their time". Two thirds of that height is not text: at the marginal rate the
- * 2026-09-09 copy pass actually delivered, 3.41px per word, every word on the
- * page accounts for about 10,100px of 27,979. The rest is headings, figures,
- * cards, rules and section padding. So the lever is not shorter sentences; it is
- * how much of the working a reader has to scroll past to reach the next claim.
- *
- * THE PATTERN IS NOT NEW HERE. SeeItRun.astro has done exactly this to the
- * written order guide since 2026-09-09 and records the reasoning at length. This
- * component is that behaviour, extracted, so the third and fourth uses are not a
- * third and fourth copy of the same twelve lines. SeeItRun keeps its own copy on
- * purpose: its disclosure is coupled to a jump link that has to force the
- * element open before the browser resolves the hash, and that coupling is not
- * shared by anything else.
- *
- * Pattern: Decorator. Why: three blocks need the same fold-on-small-screens
- * behaviour wrapped around markup that already stands on its own, and each has a
- * different heading, hint and content; a flag threaded through every section
- * would put the same <details>, <summary> and matchMedia in each of them.
- * Alternative rejected: a boolean prop on each section, which is where this
- * started and is how SeeItRun ended up carrying the whole mechanism inline.
- *
- * THIS CONTROL IS DELIBERATELY QUIETER THAN THE DEMO GUIDE'S. SeeItRun's summary
- * is display type, because it folds a whole stop of the page; these two fold a
- * block inside a stop whose heading is still on screen above them. Same role,
- * two levels, and the weight says which. Not an inconsistency to normalise away.
- *
- * OPEN IN THE MARKUP, CLOSED BY SCRIPT, AND THAT ORDER IS THE POINT. Principle 3
- * says nothing is hidden from a no-JS visitor, so the served HTML carries this
- * open and the script only ever CLOSES it, and only under 64rem. JS off, or the
- * script failing, leaves the whole block readable. The failure direction is
- * "too much content", never "missing content" - which also means every
- * data-* hook the build contracts in scripts/check-dist.mjs read is still in
- * dist/index.html whether or not the fold ever runs.
- */
-interface Props {
-	/** The control's label. Names what is inside, in the reader's words. */
-	summary: string;
-	/** One short phrase under the label. Never a claim of its own. */
-	hint: string;
-}
-
+// Pattern: Decorator. Why: supporting evidence needs one native disclosure
+// wrapper across homepage sections. Alternative rejected: repeating custom
+// breakpoint state in every section, which overwrites the reader's choice.
+interface Props { summary: string; hint: string; }
 const { summary, hint } = Astro.props;
 ---
-
-<details class="folded-detail" data-folded-detail open>
-	<summary class="folded-summary">
-		<span>
-			<strong>{summary}</strong>
-			<small>{hint}</small>
-		</span>
-		<span class="folded-chevron" aria-hidden="true">
-			<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-				<path d="M5 8l5 5 5-5" />
-			</svg>
-		</span>
-	</summary>
-	<slot />
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
+<details class="folded-detail" data-folded-detail>
+  <summary class="folded-summary"><span><strong>{summary}</strong><small>{hint}</small></span>
+    <span class="folded-chevron" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" /></svg></span>
+  </summary>
+  <slot />
 </details>
-
-<script>
-	// Closes down, never up. See the note above: the served HTML is open, so this
-	// only ever removes content the reader has not asked for, on the widths where
-	// the block costs a viewport or more. Bundled and deferred like every script
-	// in this repo, because vercel.json ships script-src 'self'; every one of
-	// these sits well below the fold, so the reflow happens where nobody is
-	// looking.
-	const blocks = document.querySelectorAll<HTMLDetailsElement>('[data-folded-detail]');
-	const narrow = window.matchMedia('(max-width: 63.99rem)');
-
-	if (narrow.matches) {
-		for (const block of blocks) {
-			block.open = false;
-		}
-	}
-
-	// AND IT REOPENS ON THE WAY BACK UP, which is not a nicety. The control that
-	// reopens these is display:none from 64rem, and a tablet crosses 64rem by
-	// being turned over: 834 to 1194 on an iPad Pro 11, 768 to 1133 on a mini, no
-	// reload in between. Without this listener a reader who folded the page in
-	// portrait and rotated to landscape got a closed <details> with no summary to
-	// click. REPRODUCED 2026-09-09 before the fix: at 1194 all three folds on the
-	// page measured 0px tall with their controls hidden. It only ever OPENS, on
-	// the way to a width where the fold is not wanted, which keeps the failure
-	// direction the same as everything else here: too much content, never missing.
-	narrow.addEventListener('change', (event) => {
-		if (event.matches) return;
-		for (const block of blocks) {
-			block.open = true;
-		}
-	});
-</script>
-
 <style>
 	.folded-summary {
 		display: flex;
@@ -166,13 +79,4 @@ const { summary, hint } = Astro.props;
 		}
 	}
 
-	/* Above this width the script never closes anything, so the control has
-	   nothing to control and the block renders exactly as it did before. The
-	   number is the same 64rem SeeItRun's guide uses; one fold threshold for the
-	   page, not two. */
-	@media (min-width: 64rem) {
-		.folded-summary {
-			display: none;
-		}
-	}
 </style>

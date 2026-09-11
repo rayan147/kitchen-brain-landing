@@ -43,13 +43,20 @@ const outcomes = [
 			src: '/proof/outcome-quote.png',
 			width: 512,
 			height: 316,
-			alt: 'Food-cost target panel: 39.7 percent food cost, marked critical, 9.7 percentage points over target. Food only: packaging, rentals, staff and anything you cook over the guarantee are outside this number.'
+			alt: 'Food-cost target panel: 39.6 percent food cost, marked critical, 9.6 percentage points over target. Food only: packaging, rentals, staff and anything you cook over the guarantee are outside this number.'
 		}
 	},
 	{
 		stage: 'Plan',
 		title: 'Change the count once',
-		body: 'Recipes scale, shared ingredients roll together, whole packs recalculate, and Shop, Prep and Pack stay on one plan.',
+		// The phone sentence sits HERE and not on Buy, on purpose (2026-09-10).
+		// A reader asked where the page says any of this works on a phone. Shop,
+		// Prep and Pack do (the two crops beside Plan and Buy are phone captures,
+		// and RC-54 covers a loaded page staying readable with no signal).
+		// Receiving at the dock is the claim she actually wanted and it is NOT
+		// made: the app's receiving table clips its right-hand columns at 390px
+		// (src/lib/workflow.ts). Fix it in the app, then say it here.
+		body: 'Recipes scale, shared ingredients roll together, whole packs recalculate, and Shop, Prep and Pack stay on one plan. All three work on a phone, and one you opened earlier stays readable in a walk-in with no signal.',
 		from: 'One number, four tabs',
 		to: 'One guest count carried through',
 		iconPaths: ['M6 4h12v16H6z', 'M9 9h6M9 13h6M9 17h4', 'M9 4V2h6v2'],
@@ -77,7 +84,7 @@ const outcomes = [
 	{
 		stage: 'Cost again',
 		title: 'Bring the real price back to the next quote',
-		body: 'Record what you paid. Approved prices update future costing; the confirmed event stays frozen.',
+		body: 'Record what you paid. Approved prices update future costing; the confirmed quote keeps its price.',
 		from: 'An invoice in a folder, not the sheet',
 		to: 'The paid price in future costing',
 		iconPaths: ['M20 11a8 8 0 1 1-2.34-5.66', 'M20 4v7h-7', 'M12 8v4l3 2'],
@@ -91,12 +98,13 @@ const outcomes = [
 ];
 ---
 
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <section id="outcomes" class="outcomes-guide bg-softgreen" aria-labelledby="outcomes-heading" data-outcomes-guide>
-	<div class="container-page py-section">
+	<div class="container-page py-section-tight">
 		<header class="outcomes-heading" data-reveal>
 			<div>
 				<h2 id="outcomes-heading" class="text-h2 font-semibold">
-					What it does instead: keeps one order moving.
+					One event. One connected plan.
 				</h2>
 				<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
 					Price it, scale it, buy it, then bring the paid price back. Each step picks up
@@ -137,24 +145,13 @@ const outcomes = [
 							<h3 class="mt-4 text-h3 font-semibold">{outcome.title}</h3>
 							<p class="mt-3 max-w-[52ch] text-ink-soft">{outcome.body}</p>
 
-							<div class="handoff" data-outcome-handoff aria-label={`${outcome.from} becomes ${outcome.to}`}>
-								<div>
-									<small>Before</small>
-									<strong>{outcome.from}</strong>
-								</div>
-								<svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-									<path d="M3 11h15M14 7l4 4-4 4" />
-								</svg>
-								<div class="handoff-result">
-									<small>Instead</small>
-									<strong>{outcome.to}</strong>
-								</div>
-							</div>
+                            <p class="handoff" data-outcome-handoff aria-label={`${outcome.from} becomes ${outcome.to}`}><span>{outcome.from} → <strong>{outcome.to}</strong></span></p>
 						</div>
 
 						<figure class="proof-sheet">
-							<figcaption>{outcome.stage} · the screen that carries it</figcaption>
+							<figcaption>{outcome.stage} · sample kitchen record</figcaption>
 							<div>
+                                <a href={outcome.proof.src} target="_blank" rel="noopener noreferrer" aria-label={`Open full-size ${outcome.stage.toLowerCase()} screenshot in a new tab`}>
 								<img
 									src={outcome.proof.src}
 									alt={outcome.proof.alt}
@@ -164,6 +161,7 @@ const outcomes = [
 									decoding="async"
 									style={`width: ${outcome.proof.width / 2}px`}
 								/>
+                                <span class="block py-3 text-sm font-semibold text-green-deep underline">Open full-size (new tab)</span></a>
 							</div>
 						</figure>
 					</li>
@@ -183,7 +181,7 @@ const outcomes = [
 		</div>
 
 		<p class="mt-10 text-sm text-ink-soft" data-reveal>
-			Need the implementation detail? <a href="/features" class="btn-quiet">See everything it does, area by area</a>.
+			Need to check a specific feature? <a href="/features" class="btn-quiet">See everything it does, area by area</a>.
 		</p>
 
 		<SectionHandoff from="outcomes" />
@@ -196,8 +194,8 @@ const outcomes = [
 	.route-key { display: flex; flex-wrap: wrap; gap: .55rem; align-items: center; padding-block: 1rem; border-block: 1px solid var(--color-hairline-strong); color: var(--color-green-deep); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
 	.route-key svg, .stage-label svg, .handoff svg, .loop-close > svg { flex: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 	.route-key svg { color: var(--color-amber-deep); }
-	.outcomes-route { margin-top: clamp(3rem, 7vw, 5.5rem); }
-	.outcome-step { position: relative; display: grid; grid-template-columns: 3.5rem minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; padding-bottom: clamp(3.5rem, 8vw, 6.5rem); }
+	.outcomes-route { margin-top: 2rem; }
+	.outcome-step { position: relative; display: grid; grid-template-columns: 3.5rem minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; padding-bottom: 2rem; }
 	.outcome-step::before { position: absolute; top: 2.5rem; bottom: 0; left: 1.72rem; width: 1px; background: var(--color-ticket-rule); content: ''; }
 	.outcome-step:last-child { padding-bottom: 0; }
 	.outcome-step:last-child::before { display: none; }
@@ -238,4 +236,7 @@ const outcomes = [
 		.proof-sheet > div { min-height: 0; padding: .75rem; }
 		.loop-close { margin-left: 0; padding: 1.1rem; }
 	}
+
+    .handoff { display:block; margin-top: .75rem; padding-block:.75rem; font-size:var(--text-body-sm); }
+    @media(max-width:63.99rem) { .outcome-step { grid-template-columns: minmax(0,1fr); gap:1rem; } .route-node,.outcome-step::before { display:none; } .proof-sheet { grid-column:1; } .proof-sheet > div { padding: .75rem; } }
 </style>

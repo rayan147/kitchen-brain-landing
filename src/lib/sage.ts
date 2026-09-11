@@ -1,3 +1,4 @@
+// story: docs/stories/sage-feature.story.md
 /**
  * Sage, the in-app assistant, as data. story: docs/stories/sage.story.md
  * Copy-density revision: docs/stories/homepage-copy-density.story.md
@@ -36,7 +37,7 @@ export const sage = {
 	verified: { sha: '99321170', branch: 'sandbox/demo', on: '2026-08-29' },
 	href: '/features/sage',
 	onboarding: {
-		entry: 'Ask Sage stays available in the setup header after Sage is enabled.',
+		entry: 'Open Ask Sage from the setup header.',
 		context:
 			'Starting questions follow the setup stage and the records entered so far, so an empty kitchen is not prompted to ask about orders it does not have.',
 		return:
@@ -51,7 +52,7 @@ export const sage = {
 		{ ask: 'Why does this dish cost what it costs?', does: 'Walks the recipe line by line, with each line’s share of the plate.' },
 		{ ask: 'Find the chicken recipes', does: 'Searches recipes by name and the ingredients they use.' },
 		{ ask: 'Which recipes contain sesame?', does: 'Finds recipes carrying a reviewed allergen through their ingredients.' },
-		{ ask: 'What is the nutrition for this recipe?', does: 'Reads the recipe nutrition calculation and names incomplete profile or conversion evidence.' },
+		{ ask: 'What is the nutrition for this recipe?', does: 'Shows recipe nutrition and tells you which nutrient values or unit conversions are missing.' },
 		{ ask: 'Which prices went up?', does: 'Reads the purchase ledger for price moves and says how many purchases the move rests on. Managers and owners only.' },
 		{ ask: 'What came up short in receiving?', does: 'Lists the open receiving follow-ups, without the supplier’s contact details.' },
 		{ ask: 'What is left in setup?', does: 'Reads setup progress and points to the unfinished stage. Managers and owners only.' },
@@ -69,10 +70,10 @@ export const sage = {
 	guardrails: [
 		{ lead: 'Every number has a source.', detail: 'Links are built by the app, so an answer cannot cite a record it did not read.' },
 		{ lead: 'It never changes a record on its own.', detail: 'Nothing sends, buys, reprices or adjusts. The one proposal waits for a person.' },
-		{ lead: 'It cannot reach another kitchen.', detail: 'No check takes a kitchen as an argument, so a record your session does not own resolves to nothing.' },
+		{ lead: 'It cannot reach another kitchen.', detail: 'Sage can only use records in the kitchen account you are signed into.' },
 		{ lead: 'It reads what your role can read.', detail: 'Price moves are for managers and owners. An answer built on them is redacted for staff in a shared thread.' },
 		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.' },
-		{ lead: 'It has limits, and a stop.', detail: 'Eight steps, a minute per answer, a cap per kitchen per day, and a kill switch that leaves every other screen working.' }
+		{ lead: 'It has limits, and a stop.', detail: 'Sage has answer time limits and a daily usage cap. If it stops, you can continue working in the rest of CostCook.' }
 	],
 	proof: {
 		desktop: {

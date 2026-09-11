@@ -1,187 +1,61 @@
 ---
-import LoopBand from '../LoopBand.astro';
 import { cta, launchPlan } from '../../lib/site';
+// Considered Composite; not used because the opening is one fixed decision and
+// one worked example, not a recursive content tree.
 ---
-
-<!--
-  LAYOUT. One measured column, then a full-container band. The previous version
-  was `grid items-center lg:grid-cols-[7fr_5fr]` with a cropped screenshot in the
-  narrow column: `items-center` centred a short figure against a much taller text
-  column, so the fold rendered as a tall block of type beside a small panel
-  floating in a dead band of its own. Reviewer's words: too much margin, not
-  centred. There is no side column now, so there is nothing to mis-centre.
-
-  WHAT THE FOLD ARGUES. It used to argue one narrow claim (a confirmed quote
-  keeps its price) in the largest slot on the page. That is a good claim and it
-  is the wrong one to lead with: a reader who cannot yet say what the product
-  IS has no use for a guarantee about its edge case. The fold now names the
-  whole chain and draws it, because the manual work being replaced is the chain,
-  not the quote.
--->
-<section class="container-page pt-10 pb-section-tight sm:pt-14 lg:pt-20">
-	<div class="mx-auto max-w-3xl text-center">
-	<!-- The audience line names restaurants on purpose. Until 2026-08-30 it said
-	     "caterers and meal-prep kitchens" while Who this is for, 2,000px down,
-	     said "a catering-only kitchen or a restaurant too" (RC-44). A restaurant
-	     owner reading the fold was told this is not for them and then told it
-	     is. The scope is the same as RC-44: the restaurant work that runs by
-	     event, menu, date and guest count, so "restaurants that cater", never
-	     "restaurants". -->
-	<p class="anim-enter text-sm font-semibold text-amber-deep">
-		Back-of-house software for independent caterers, meal-prep kitchens, and restaurants that cater
-	</p>
-
-	<h1
-		class="anim-enter mx-auto mt-4 max-w-[22ch] text-display font-semibold sm:mt-5"
-		style="--enter-delay: 70ms"
-	>
-		Cost it, buy it, prep it, pack it. Enter the numbers once.
-	</h1>
-
-	<!-- MOVED HERE 2026-09-06, from the "See it run" h2 further down the page.
-	     The heading above names the chain in the abstract; this names the job the
-	     reader actually has on the calendar, so the fold now says what CostCook
-	     does AND on what. It is the film's promise, and it is the third of the
-	     seven headings in the documented heading-only scan
-	     (docs/demo-video-rebuild-2026-08-21.md), which is why it reads as a claim
-	     and not as a caption.
-
-	     COST, AND WHO PAID IT. This line adds 100px. On its own that put the
-	     pricing figure at 913.9px against the 844px fold at 320x844, and
-	     verify-homepage.mjs failed on it: that suite asserts the proof starts
-	     inside the first viewport on phones, which is the whole scroll cue.
-	     Rather than shave margins to clear the number, both fold paragraphs step
-	     from text-lede to text-base below sm, TOGETHER so their relative weight
-	     is unchanged, and the section's top padding drops to pt-10. Measured
-	     after: 795px at 320, 671px at 390 (it was 712px at 390 before this line
-	     existed, so the fold is tighter than it looks here). Re-measure with
-	     `npm run verify:homepage` before shipping any edit to these two
-	     paragraphs; the 320px fold is the binding constraint, not 390px.
-	     story: docs/stories/homepage-fold-promise.story.md -->
-	<p
-		class="anim-enter mx-auto mt-4 max-w-[54ch] text-base font-medium text-ink sm:mt-6 sm:text-lede"
-		style="--enter-delay: 110ms"
-	>
-		Follow one 180-guest wedding from quote to shelf. Then three events in one run.
-	</p>
-
-	<!-- The lede does NOT re-list the chain: the band below draws it, and saying
-	     it twice pushed the drawing under the fold on a phone. It says why the
-	     chain matters instead. -->
-	<p
-		class="anim-enter mx-auto mt-3 max-w-[54ch] text-base text-ink-soft sm:mt-4 sm:text-lede"
-		style="--enter-delay: 150ms"
-	>
-		A catering order is one job pretending to be six. Enter the menu and the head count
-		once. The same numbers run to the pack list and back.
-	</p>
-
-	<div class="anim-enter mt-6 sm:mt-8" style="--enter-delay: 230ms">
-		<a
-			href={cta.href}
-			target={cta.target}
-			rel={cta.rel}
-			aria-label={cta.ariaLabel}
-			class="btn-primary"
-		>
-			{cta.label}
-		</a>
-		<!-- The interpolations sit inline: a newline before {expr} is collapsed
-		     away by the compiler, which is how this line shipped reading
-		     "then$49/month" for one build. -->
-		<p class="mx-auto mt-3 max-w-[52ch] text-sm text-ink-soft sm:mt-4">
-			<strong class="font-semibold text-ink">{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} per kitchen workspace. Card up front, charged $0 today. Nothing to install.
-		</p>
-		<p class="mt-3 text-sm sm:mt-4">
-			<a href="#demo" class="btn-quiet"
-				>Watch the 2:53 product tour <span aria-hidden="true">↓</span></a
-			>
-		</p>
-	</div>
-
-	</div>
-
-	<!-- THE PRODUCT, ON THE FIRST SCREEN. Added 2026-08-29. Until now the first
-	     pixel of the app was 2,600px down at 1440 and 4,500px down on a phone.
-	     The B2B pages that convert put a real interface in the hero, and NN/g's
-	     fold guidance says the first screen has to prove there is something
-	     worth scrolling to. This is one straight-on crop of the pricing panel,
-	     cut from public/demo.mp4 at 0:32 (RC-48), so a reader who scrolls to the
-	     film sees the same order, and it sits low enough to straddle the fold at
-	     both widths, which is the scroll cue.
-
-	     NOT A PERSPECTIVE MOCKUP, NOT A DEVICE FRAME. It is paper: a ticket rule,
-	     a mono label, the panel. Below sm it is the Next step box alone, because
-	     the whole panel at 390px renders its small text at 6px.
-
-	     ALT TEXT IS A CLAIM. Both alts read off the crop word for word; if the
-	     crop moves, they move. story: docs/stories/homepage-visual-guidance.story.md -->
-	<figure class="anim-enter mx-auto mt-6 max-w-3xl sm:mt-10" style="--enter-delay: 300ms">
-		<!-- Considered Composite; not used because this is one fixed, three-step
-		     explanation, not a reusable tree of content nodes. -->
-		<div class="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
-			<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">
-				QUOTE CHECK · DRAFT ORDER
-			</p>
-			<p class="font-mono text-xs font-semibold tracking-wide text-ink-soft">
-				180 guests × $68 = $12,240 revenue
-			</p>
-		</div>
-		<ol
-			class="mt-4 grid gap-3 border-y border-hairline py-3 text-left sm:grid-cols-3 sm:gap-0"
-			aria-label="How the quote check works"
-		>
-			<li class="flex gap-3 sm:px-4 sm:first:pl-0">
-				<span class="font-mono text-xs font-semibold text-amber-deep">01</span>
-				<div>
-					<strong class="block text-sm font-semibold text-ink">Set the event</strong>
-					<span class="block text-sm text-ink-soft">Guests × price per head</span>
-				</div>
-			</li>
-			<li class="flex gap-3 border-t border-hairline pt-3 sm:border-l sm:border-t-0 sm:px-4 sm:pt-0">
-				<span class="font-mono text-xs font-semibold text-amber-deep">02</span>
-				<div>
-					<strong class="block text-sm font-semibold text-ink">Check the food</strong>
-					<span class="block text-sm text-ink-soft">$26.98 food per guest</span>
-				</div>
-			</li>
-			<li class="flex gap-3 border-t border-hairline pt-3 sm:border-l sm:border-t-0 sm:px-4 sm:last:pr-0 sm:pt-0">
-				<span class="font-mono text-xs font-semibold text-amber-deep">03</span>
-				<div>
-					<strong class="block text-sm font-semibold text-ink">Decide before sending</strong>
-					<span class="block text-sm text-ink-soft">Charge at least $89.94 / guest</span>
-				</div>
-			</li>
-		</ol>
-		<div class="mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2">
-			<img
-				src="/proof/hero-pricing-mobile.png"
-				alt="The Next step box on an order's pricing panel: charge at least $89.94 per guest to meet the 30 percent target."
-				width={616}
-				height={174}
-				fetchpriority="high"
-				decoding="async"
-				class="mx-auto h-auto w-full max-w-[308px] sm:hidden"
-			/>
-			<img
-				src="/proof/hero-pricing.png"
-				alt="An order's pricing panel. Live totals: revenue $12,240.00, theoretical food cost $4,856.55, food cost per guest $26.98. Food-cost target: 39.7 percent food cost, marked critical, 9.7 percentage points over target. Next step: charge at least $89.94 per guest to meet the 30 percent target."
-				width={1284}
-				height={548}
-				fetchpriority="high"
-				decoding="async"
-				style="width: 642px; max-width: 100%"
-				class="mx-auto hidden h-auto sm:block"
-			/>
-		</div>
-		<figcaption class="mt-3 max-w-[64ch] text-sm text-ink-soft">
-			The panel checks the price you entered against the food the order will require. At
-			$68 a head, this event is at 39.7% food cost against a 30% target, so CostCook names
-			the price that would meet it before the quote goes out.
-		</figcaption>
-	</figure>
-
-	<div class="anim-enter" style="--enter-delay: 300ms">
-		<LoopBand />
-	</div>
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
+<section class="container-page py-8 sm:py-12" aria-labelledby="hero-heading">
+  <div class="hero-layout">
+    <div>
+      <p class="text-sm font-semibold text-amber-deep">Back-of-house software for independent caterers, meal-prep kitchens, and restaurants that cater</p>
+      <h1 id="hero-heading" class="anim-enter mt-4 text-display font-semibold">Cost it, buy it, prep it, pack it.</h1>
+      <p class="mt-4 max-w-[54ch] text-base text-ink-soft sm:text-lede">Use your recipes, current prices and guest count to check food cost and build the shopping, prep and pack lists. Change the count once; the lists change with it.</p>
+      <p class="mt-4 text-sm font-semibold">First dish: about fifteen minutes. Bring its recipe and ingredient prices.</p>
+      <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+        <a href="#demo" class="btn-quiet">Watch the 2:53 product tour <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="mt-3 text-sm text-ink-soft"><strong>{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} {launchPlan.unit}, {launchPlan.crew}. Card up front, charged $0 today. Nothing to install.</p>
+      <a href="/pricing#launch-terms" class="mt-1 inline-flex min-h-11 items-center text-sm font-semibold text-green-deep underline underline-offset-4">Read the launch terms</a>
+    </div>
+    <figure class="quote-proof" aria-labelledby="quote-proof-title">
+      <figcaption id="quote-proof-title" class="font-semibold">A sample wedding, checked before you quote</figcaption>
+      <p class="mt-2 text-sm text-ink-soft">180 guests × $68 = $12,240 revenue</p>
+      <dl class="quote-values">
+        <div><dt>Food per guest</dt><dd>$26.93</dd></div>
+        <div><dt>Food-cost share</dt><dd>39.6%</dd></div>
+        <div><dt>Example food-cost target</dt><dd>30%</dd></div>
+      </dl>
+      <p class="mt-4 font-semibold text-green-deep">$89.78 per guest to meet a 30% food-cost target.</p>
+      <p class="mt-3 text-sm text-ink-soft">Food only: packaging, rentals, staff and anything you cook over the guarantee sit outside it.</p>
+      <details class="mt-4 border-t border-hairline pt-2">
+        <summary class="min-h-11 cursor-pointer py-3 font-semibold text-green-deep">Inspect the pricing panel</summary>
+        <a href="/proof/hero-pricing.png" target="_blank" rel="noopener noreferrer" class="block py-3" aria-label="Open the full-size pricing panel in a new tab">
+          <img src="/proof/hero-pricing.png" alt="Food-cost target panel: 39.6% food cost against a 30% target. Charge at least $89.78 per guest to meet it; food-only exclusions are shown." width="1284" height="366" decoding="async" class="h-auto w-full" />
+          <span class="mt-2 block text-sm font-semibold underline">Open full-size panel (new tab)</span>
+        </a>
+      </details>
+      <p class="mt-3 text-sm text-ink-soft">What you do about the gap is your call: swap a protein, drop a dish, raise the price, or take the job at that margin knowing it.</p>
+    </figure>
+  </div>
+  <aside class="first-dish" aria-labelledby="first-dish-title" data-first-dish-preparation>
+    <div>
+      <h2 id="first-dish-title" class="text-h3 font-semibold">Try one dish before moving the kitchen.</h2>
+      <p class="mt-3 max-w-[68ch]">Have its recipe and ingredient prices ready, as invoices or price sheets. Upload them, confirm what CostCook read, and type anything missing. Allow about fifteen minutes for the first dish. A full menu needs its other dishes entered too.</p>
+    </div>
+    <div>
+      <p>Cancel before day {launchPlan.trialDays + 1} from Settings → Billing. No call required.</p>
+      <a href="/onboarding" class="btn-quiet mt-3">See what setup takes</a>
+    </div>
+  </aside>
 </section>
+<style>
+.hero-layout { display:grid; gap:2rem; align-items:start; }
+.quote-proof { padding:1.25rem; background:var(--color-paper); border:1px solid var(--color-ticket-rule); }
+.quote-values { margin-top:1rem; }
+.quote-values div { display:flex; justify-content:space-between; gap:1rem; padding-block:.65rem; border-bottom:1px solid var(--color-hairline); }
+.quote-values dt { color:var(--color-ink-soft); }
+.quote-values dd { font-weight:700; font-variant-numeric:tabular-nums; }
+.first-dish { display:grid; gap:1.25rem; margin-top:2rem; padding-block:1.5rem; border-block:1px solid var(--color-ticket-rule); }
+@media(min-width:64rem) { .hero-layout { grid-template-columns:1fr 1fr; gap:3rem; } .first-dish { grid-template-columns:2fr 1fr; gap:3rem; } }
+</style>

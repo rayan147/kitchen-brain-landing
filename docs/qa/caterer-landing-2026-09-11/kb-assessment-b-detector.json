@@ -1,0 +1,79 @@
+[
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/TheYield.astro",
+    "line": 248,
+    "snippet": "font-family: Sfmono-Regular is not declared in DESIGN.md typography",
+    "ignoreValue": "Sfmono-Regular"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/TheYield.astro",
+    "line": 249,
+    "snippet": "font-size: clamp(1.2rem, 1rem + 1vw, 1.65rem) has fluid endpoints 1.2rem and 1.65rem off the DESIGN.md type ramp",
+    "ignoreValue": "1.2rem"
+  },
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/sections/StartHere.astro",
+    "line": 215,
+    "snippet": "font-family: Sfmono-Regular is not declared in DESIGN.md typography",
+    "ignoreValue": "Sfmono-Regular"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/more/AccessBlock.astro",
+    "line": 62,
+    "snippet": "font-size: clamp(1.5rem, 3vw, 2.2rem) has fluid endpoints 1.5rem and 2.2rem off the DESIGN.md type ramp",
+    "ignoreValue": "1.5rem"
+  },
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/more/IntakeBlock.astro",
+    "line": 192,
+    "snippet": "font-family: Sfmono-Regular is not declared in DESIGN.md typography",
+    "ignoreValue": "Sfmono-Regular"
+  },
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/more/NutritionBlock.astro",
+    "line": 193,
+    "snippet": "font-family: Sfmono-Regular is not declared in DESIGN.md typography",
+    "ignoreValue": "Sfmono-Regular"
+  },
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "/home/rayan147/kitchen-brain-landing/src/components/more/SageBlock.astro",
+    "line": 284,
+    "snippet": "font-family: Sfmono-Regular is not declared in DESIGN.md typography",
+    "ignoreValue": "Sfmono-Regular"
+  }
+]

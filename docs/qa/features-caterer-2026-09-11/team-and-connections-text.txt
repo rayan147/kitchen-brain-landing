@@ -1,0 +1,123 @@
+Every feature / Team, and what it connects to
+
+25 AVAILABLE FEATURES
+
+Team, and what it connects to
+
+You need the crew ready for Saturday, without spending the week learning new software.
+
+Set up your kitchen, invite your crew and check what each role can do. Staff can open cost screens. Previously opened order pages can be read without signal; reconnect to make changes. Connections marked Coming are not included today.
+
+Start free trial
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+TEAM & SETTINGS
+
+Find kitchen settings and team access in one place.
+Settings that need attention. Settings are grouped by task and show where a decision is needed.
+Preview costing changes. Costing settings preview their impact and name which menus go over target before you save.
+Business details on purchase orders. Business name, reply-to, phone, and delivery address feed straight onto purchase orders.
+Vendor manager. Contacts, per-vendor purchasing method, and insight into what you actually buy from each.
+Metric or imperial. Choose metric or US units for your kitchen.
+Invite by email. Send an email invitation. Invitations expire, and you can revoke them.
+Three team roles. Owner, Manager and Staff control specific actions. All teammates can open cost screens; custom roles are not available.
+Separate kitchen accounts. Your kitchen account does not give access to another kitchen’s records.
+Unassigned records stay separate. Older records without an assigned kitchen are not added to your account automatically.
+
+SETUP
+
+From empty to a costed first order.
+Guided setup. Add your kitchen details, ingredients, food facts, recipes and first order. Resume saved progress on another device.
+Ends with a real order. The first-order estimate runs on the same engine as the rest of the app.
+Progress from your saved work. The setup checklist checks the ingredients and recipes you have saved when you reopen it.
+The real builder. The recipe step is the actual recipe builder, not a toy version.
+
+SIGN-IN & RELIABILITY
+
+Built for wet hands and thin signal.
+No passwords. Sign-in is an invitation and a magic link. Links work once and die in eight minutes.
+Access ends now. Remove someone and their access stops on their next request, not their next sign-in.
+Safe return links. Sign-in destinations are checked, so a crafted link cannot bounce you off-site.
+Read saved pages without signal. Previously opened order pages can be read without signal and show when they were saved. Reconnect to make changes.
+Works without JavaScript. Core pages remain readable if browser scripts are unavailable.
+Readable text and touch controls. Text enlargement, contrast and touch targets are checked in interface tests.
+Notices that behave. Important messages remain visible when an action takes you to another page.
+Service status. The service status check does not repeatedly reload kitchen records.
+
+ORDERING INTEGRATIONS
+
+Coming
+External ordering connections.
+
+External ordering connections are being developed for a later release.
+
+SAGE, THE IN-APP ASSISTANT
+
+Sage, answering from your own numbers.
+Ask during setup. Setup keeps an Ask Sage entry, offers questions that fit the stage and records entered so far, and gives you a direct route back.
+Eleven checks, one proposal. Ask about the shift, recipes, stock, buying or setup. Sage can also prepare a shopping-list proposal for a manager or owner to approve.
+Sources under the answer. Each answer shows the records and checks behind its numbers, and says when evidence is missing.
+A proposal is not a change. Answers read your records. A shopping-list draft waits for an Owner or Manager to approve it, with the records checked again before saving.
+
+ACCOUNTING & POINT OF SALE
+
+Coming
+Square and QuickBooks.
+
+Square and QuickBooks connections are being built. Until they land, nothing here reads from or writes to your books.
+
+Four other areas.
+Recipes and costing
+
+What a plate costs, from the case price up, with the arithmetic shown.
+
+Getting prices in
+
+Upload invoices, price lists and spreadsheets. Review the details before saving.
+
+The day itself
+
+The event, the shopping, the prep, the pack, and what actually came through the back door.
+
+Compliance and labels
+
+Calculate nutrition per portion and print an estimate. Review allergens and guest restrictions. Kitchen date labels are Coming.
+
+If this area covers your kitchen, bring one real menu and see it run. Book a 15-min demo
+
+WHAT IT CONNECTS TO
+
+Your supplier does not have to be plugged in. CostCook reads the paper.
+
+The reason there is no long list of connectors here is that prices get in without one. An order guide, a price sheet, an invoice, or a photograph of a delivery slip taken on the loading dock all go through the same queue.
+
+Five doors in
+
+A photo, a PDF, a spreadsheet, a Word document, or text you paste. Every one lands in the same review.
+
+Review before saving
+
+What comes out sits outside your catalog until you confirm it. Nothing reaches a plate cost that you have not seen.
+
+What it could not read
+
+Anything unreadable is quoted back to you word for word, beside the suggested details, so you can check it against the original.
+
+Square and QuickBooks are not available yet
+
+Neither connection is included in the subscription today. No release date has been announced.
+
+Point of sale
+
+Coming
+
+Square is not available today. You cannot send menus to your till or bring sales into CostCook through this connection.
+
+Accounting
+
+Coming
+
+QuickBooks Online is planned and has not been built. CostCook does not sync your purchases or accounts with it today.
+
+Until they land, nothing in CostCook reads from or writes to your books or your till.

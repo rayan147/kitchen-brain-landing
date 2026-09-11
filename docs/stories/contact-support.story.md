@@ -137,3 +137,20 @@ Six words under the email field doing the work a privacy paragraph usually does 
 - **What is verified.** `npm run test:support` drives the endpoint through 18 checks (method, validation, header injection via CRLF in name and email, the bot trap, an unconfigured mailer, the no-script redirect, and rate limiting). `npm run verify:contact` drives the page in a browser: the form is a real POST that exists without JavaScript, the dialog centres and fits, focus enters it and returns to the button that opened it, a refusal keeps the draft, a success clears it, targets are ≥44px, and 320px at 200% text does not overflow.
 - **One bug this caught, recorded because it was invisible.** Astro scopes component CSS to elements in the template. The dialog is created by script, so none of its styles applied and the modal rendered unstyled in the top-left corner, taller than the screen, while every existing check still passed. The styles are `:global` now and `verify-contact.mjs` asserts the dialog is centred and inside the viewport.
 - **Not shipped, deliberately:** `DemoRequest.astro` still ends its three-step form with a `mailto:` handoff. It has exactly this problem and is the obvious next one, kept out so this change stays one concern.
+
+
+## Caterer first-visit revision · 2026-09-11
+
+Content: `src/pages/contact.astro` and its shared data/response states.
+
+- [x] 1 — Idea: A busy caterer wants to ask one question and know where the reply goes, but an unclear handoff or failed send could waste her gap.
+- [x] 2 — Character: Runs six people; spreadsheet competent, nontechnical, between services. Wants a quick decision; needs checkable inputs, limits and next action; remembers abandoned software setup; assumes unfamiliar words mean more work.
+- [x] 3 — Twelve beats: Interrupted service → clear next decision → existing spreadsheet work → unclear promise → time/card doubt → open the relevant CostCook guide → crew needs a usable plan → inspect the example → understand one concrete outcome → check missing data and limits → avoid another unexplained commitment → choose a guide, trial or human answer knowingly.
+- [x] 4 — Six scenes: Entry (uncertain → oriented); prerequisites (unknown → prepared); example (claim → evidence); consequences (guess → known); limits/recovery (risk → choice); next action (pause → decision). These map to existing sections and response states, without adding narrative scaffolding.
+- [x] 5 — Voices: Persona questions are simulated, not interview quotes. Reader: “What do I need?”, “Does this include my crew?”, “Did it send?” Product: calm, concrete, kitchen-literate; ban seeded, mechanism, release flag from explanatory copy.
+- [x] 6 — Dialogue: Each scene answers the question raised by the last; retain numbers and limits that change the decision, remove editorial commentary.
+- [x] 7 — Intention/obstacle: Help her ask one question and know where the reply goes; explain the work required before asking her to act.
+- [x] 8 — Snap: “Bring one menu and guest count.”
+- [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
+- [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
+- [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.

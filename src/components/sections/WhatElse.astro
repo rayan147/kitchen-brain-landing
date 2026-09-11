@@ -41,12 +41,14 @@
  * Alternative rejected: leaving them as four sections, which is the thing being
  * measured here.
  */
+import FoldedDetail from '../FoldedDetail.astro';
 import SectionHandoff from '../SectionHandoff.astro';
 import NutritionBlock from '../more/NutritionBlock.astro';
 import IntakeBlock from '../more/IntakeBlock.astro';
 import SageBlock from '../more/SageBlock.astro';
 import AccessBlock from '../more/AccessBlock.astro';
 ---
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 
 <!-- story: docs/stories/homepage-stop-merge.story.md -->
 <section id="more" class="border-t border-hairline bg-cream" aria-labelledby="more-heading">
@@ -63,10 +65,10 @@ import AccessBlock from '../more/AccessBlock.astro';
 		</div>
 
 		<div class="more-stack">
-			<NutritionBlock />
-			<IntakeBlock />
-			<SageBlock />
-			<AccessBlock />
+			<FoldedDetail summary="Nutrition estimates and printed sheets" hint="Calculated from your recipes; not a retail-label compliance claim"><NutritionBlock /></FoldedDetail>
+			<FoldedDetail summary="Bring in invoices and recipes" hint="Upload, review and approve; correct anything missing"><IntakeBlock /></FoldedDetail>
+			<FoldedDetail summary="Ask Sage about your kitchen" hint="Answers show their sources; changes wait for approval"><SageBlock /></FoldedDetail>
+			<FoldedDetail summary="Your crew and what they can see" hint="Owner, Manager and Staff; kitchen costs stay visible to the crew"><AccessBlock /></FoldedDetail>
 		</div>
 
 		<SectionHandoff from="more" />
@@ -79,12 +81,12 @@ import AccessBlock from '../more/AccessBlock.astro';
 	   thing this band replaced. The rule is the same dashed ticket rule the page
 	   uses between a section and its hand-off. */
 	.more-stack {
-		margin-top: clamp(3rem, 7vw, 5rem);
+		margin-top: 1.5rem;
 	}
 
 	.more-stack > * + * {
-		margin-top: clamp(3rem, 7vw, 5rem);
-		padding-top: clamp(3rem, 7vw, 5rem);
+		margin-top: 1.5rem;
+		padding-top: 0;
 		border-top: 1px solid var(--color-ticket-rule);
 	}
 </style>

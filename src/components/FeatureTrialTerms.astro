@@ -1,0 +1,15 @@
+---
+import { launchPlan } from '../lib/site';
+// Considered Strategy; not used because every feature page shares the same
+// trial terms, with no varying behavior or runtime selection.
+---
+<!-- story: docs/stories/features-navigation.story.md -->
+<p class="feature-trial-terms" data-feature-trial-terms>
+  {launchPlan.trialDays} days free, then {launchPlan.displayPrice} {launchPlan.unit}. Card required; $0 today.
+  Cancel before day {launchPlan.trialDays + 1} in Settings → Billing, no call required.{' '}
+  <a href="/onboarding">What to prepare</a> · <a href="/pricing#launch-terms">Plan and team limits</a>
+</p>
+<style>
+  .feature-trial-terms { margin-top: 1rem; max-width: 60ch; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.55; }
+  a { text-decoration: underline; text-underline-offset: .2em; }
+</style>

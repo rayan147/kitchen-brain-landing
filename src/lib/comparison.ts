@@ -201,7 +201,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'key',
 				sheetNote: 'Around 1,500 names, plus the vendor abbreviations, typed once and corrected forever after.',
 				costcook: 'yes',
-				note: 'Around 1,500 canonical names with the vendor abbreviations that resolve to them, so an invoice reading chix breast lands on chicken breast. Names and aliases, not prices: a preloaded price would be a number nobody chose sitting on your plate cost.',
+				note: 'Around 1,500 ingredient names and supplier abbreviations help match your paperwork. You supply the pack sizes and prices.',
 				parsley: 'Chef, $129',
 				meez: 'Starter, $24'
 			},
@@ -210,7 +210,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'key',
 				sheetNote: 'Looked up per ingredient, in the source, and kept beside it.',
 				costcook: 'yes',
-				note: 'Offered as chips you tap to fill, each sourced to its FoodData Central or Handbook 102 entry. Nothing is assumed until you accept it.',
+				note: 'Suggested ingredient conversions show their USDA source. Review and accept a suggestion before it fills a value.',
 				parsley: NOT_LISTED,
 				meez: 'Starter, $24'
 			}
@@ -239,8 +239,8 @@ export const comparison: RowGroup[] = [
 				label: 'Invoice scanning',
 				sheet: 'key',
 				costcook: 'yes',
-				note: 'Photo, PDF, spreadsheet, Word, or pasted text, all staged for you to confirm.',
-				parsley: 'Enterprise, call for quote',
+				note: 'Upload a photo, PDF, spreadsheet or Word document, or paste text. Review the extracted records before saving.',
+				parsley: '$69/month add-on; also listed in Enterprise',
 				meez: 'Premium, $199'
 			},
 			{
@@ -248,7 +248,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'build',
 				sheetNote: 'A column beside each price, filled in by whoever changed it.',
 				costcook: 'yes',
-				note: 'Which receiving, which invoice, which date.',
+				note: 'The delivery record, invoice and date behind the price.',
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			}
@@ -300,7 +300,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'key',
 				sheetNote: 'What arrived comes back in by hand, against the order you sent.',
 				costcook: 'yes',
-				note: 'Short, over, substitute, missing, unexpected. Ticking it off writes the purchase.',
+				note: 'Record what arrived, review quantities and prices, then save the delivery to record the purchase.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},
@@ -308,7 +308,7 @@ export const comparison: RowGroup[] = [
 				label: 'Inventory',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Computed from dated movements, and it says out loud when a count is stale.',
+				note: 'A physical count updated by recorded deliveries, waste and packed orders. Old counts are marked for checking.',
 				parsley: 'Business, $379',
 				meez: 'Pro, $119'
 			},
@@ -344,7 +344,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'key',
 				sheetNote: 'Fourteen allergens per ingredient, then rolled up to the recipe yourself.',
 				costcook: 'yes',
-				note: 'Fourteen allergens, rolled up from ingredient to recipe, on the pack list. Catalog entries carry curated allergen facts as an allow-list, so a name match never invents food-safety data. A chef override needs a written reason.',
+				note: 'Fourteen allergens, rolled up from ingredient to recipe, on the pack list. A name match alone does not confirm allergen information. A chef override needs a written reason.',
 				parsley: 'Chef Plus, $189',
 				meez: 'Enterprise, custom'
 			},
@@ -390,9 +390,9 @@ export const comparison: RowGroup[] = [
 			{
 				label: 'Lot tracking and FSMA 204',
 				sheet: 'build',
-				sheetNote: 'CostCook says No here. A sheet is the better answer if you need it.',
+				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
 				costcook: 'no',
-				note: 'Built for caterers, not for a facility under a traceability rule.',
+				note: 'CostCook does not provide lot tracking. Check this requirement before choosing a tool.',
 				parsley: 'Enterprise, call for quote',
 				meez: NOT_LISTED
 			},
@@ -422,14 +422,14 @@ export const comparison: RowGroup[] = [
 				label: 'Role-aware sensitive actions',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Owner, Manager and Staff boundaries protect billing, team and setup work, recipe lifecycle decisions, and selected Sage actions.',
+				note: 'Owner, Manager and Staff have different permissions for billing, team setup, recipe publishing and Sage approvals. All can open cost screens.',
 				parsley: 'Business, $379',
 				meez: 'Starter, $24'
 			},
 			{
 				label: 'Fine-grained screen permissions',
 				sheet: 'build',
-				sheetNote: 'CostCook says No here. A sheet is the better answer if you need it.',
+				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
 				costcook: 'no',
 				note: 'No custom roles or per-screen permission grid. A workspace teammate can open cost screens.',
 				parsley: 'Business, $379',
@@ -446,17 +446,17 @@ export const comparison: RowGroup[] = [
 			{
 				label: 'Several locations',
 				sheet: 'build',
-				sheetNote: 'CostCook says No here. A sheet is the better answer if you need it.',
+				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
 				costcook: 'no',
-				note: 'One kitchen workspace.',
+				note: 'One subscription covers one kitchen.',
 				parsley: 'Enterprise, call for quote',
-				meez: 'Starter, $24; added recipe-viewer locations $60/month each'
+				meez: 'Premium, $199; added recipe-viewer locations $60/month each'
 			},
 			{
 				label: 'Point of sale',
 				sheet: 'build',
 				costcook: 'coming',
-				note: 'Square is built and sits behind a release flag that is switched off, so nothing publishes to your till and no sale comes back today.',
+				note: 'Square is not available today. CostCook does not send menus to your till or import its sales.',
 				parsley: 'Business, $379',
 				meez: 'Enterprise, custom'
 			},
@@ -464,7 +464,7 @@ export const comparison: RowGroup[] = [
 				label: 'Accounting',
 				sheet: 'build',
 				costcook: 'coming',
-				note: 'QuickBooks Online is not started. It is a reserved name in the app with nothing behind it yet, queued after Square.',
+				note: 'QuickBooks Online is not available today. There is no accounting sync and no release date is promised.',
 				parsley: NOT_LISTED,
 				meez: 'Restaurant365 sync, $199/month plus setup fee'
 			},
@@ -486,10 +486,10 @@ export const comparison: RowGroup[] = [
 				meez: 'Enterprise, custom'
 			},
 			{
-				label: 'Works with no signal, and with no JavaScript',
+				label: 'Read previously loaded orders offline',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Order pages keep working in the walk-in, marked with when they were cached.',
+				note: 'Previously loaded order pages stay readable offline and show when they were saved. Reconnect to make changes. With a connection, core pages remain readable without JavaScript.',
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			}

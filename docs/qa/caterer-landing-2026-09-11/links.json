@@ -1,0 +1,370 @@
+[
+  {
+    "text": "Skip to content",
+    "href": "#main"
+  },
+  {
+    "text": "CostCook",
+    "href": "/"
+  },
+  {
+    "text": "",
+    "href": "/features/recipes-and-costing"
+  },
+  {
+    "text": "",
+    "href": "/features/menus-and-quotes"
+  },
+  {
+    "text": "",
+    "href": "/features/ingredients-and-supplier-prices"
+  },
+  {
+    "text": "",
+    "href": "/features/invoices-and-price-list-import"
+  },
+  {
+    "text": "",
+    "href": "/features/nutrition-facts-and-allergens"
+  },
+  {
+    "text": "",
+    "href": "/features/guest-restrictions-and-dietary-guards"
+  },
+  {
+    "text": "",
+    "href": "/features/labels-and-printing"
+  },
+  {
+    "text": "",
+    "href": "/features/order-shop-prep-pack"
+  },
+  {
+    "text": "",
+    "href": "/features/purchasing-and-receiving"
+  },
+  {
+    "text": "",
+    "href": "/features/inventory"
+  },
+  {
+    "text": "",
+    "href": "/features/purchases-and-month-cost"
+  },
+  {
+    "text": "",
+    "href": "/features/sage"
+  },
+  {
+    "text": "",
+    "href": "/features/team-and-access"
+  },
+  {
+    "text": "",
+    "href": "/tour/main"
+  },
+  {
+    "text": "",
+    "href": "/features"
+  },
+  {
+    "text": "Pricing",
+    "href": "/pricing"
+  },
+  {
+    "text": "How to calculate food cost per guest for a catering eventWork from total ingredient cost to food cost per guest, food-cost percentage, and the selling price needed to meet your target.",
+    "href": "/blog/food-cost-per-guest"
+  },
+  {
+    "text": "Catering menu pricing: margin, markup, and food-cost targetUnderstand the three percentages people mix together when pricing catering menus, then calculate each one from the same food cost.",
+    "href": "/blog/catering-menu-pricing"
+  },
+  {
+    "text": "How to cost a recipe from case price to portion costFollow a supplier case through unit conversion, usable yield, recipe quantity, and portions without hiding the arithmetic.",
+    "href": "/blog/case-price-to-portion-cost"
+  },
+  {
+    "text": "The event is over. What should the food have cost, and what did you actually spend?Reconcile expected recipe cost with attributed purchases, documented stock use, leftovers, and recorded differences before judging an event’s result.",
+    "href": "/blog/expected-vs-actual-food-cost"
+  },
+  {
+    "text": "The client added 40 guests. What actually needs to change?Separate quantities that scale with guests from whole-pack buying, fixed equipment, confirmed commitments, and the quote that needs another look.",
+    "href": "/blog/client-added-40-guests"
+  },
+  {
+    "text": "How to turn a catering menu into a shopping list in whole packsConsolidate recipe needs, convert them into supplier pack units, round intentionally, and keep the difference visible.",
+    "href": "/blog/shopping-list-whole-packs"
+  },
+  {
+    "text": "How supplier price changes reach the recipes you already costedKeep the source, compare like-for-like packs, choose the current price deliberately, and trace the result into recipes and open quotes.",
+    "href": "/blog/supplier-price-changes"
+  },
+  {
+    "text": "The delivery arrived wrong. What should you check before accepting it?Compare the purchase order, delivered cases, and invoice line by line so a shortage or substitution does not become the new stock record.",
+    "href": "/blog/delivery-arrived-wrong"
+  },
+  {
+    "text": "How to scale a catering prep list without making half a potConvert guests into portions, recipe batches, equipment runs, and supplier packs without letting one kind of rounding distort another.",
+    "href": "/blog/scale-catering-prep-list"
+  },
+  {
+    "text": "How to check a supplier invoice before it changes your recipe costsConfirm the ingredient, pack, unit conversion, and price difference before an imported invoice line becomes the current recipe cost.",
+    "href": "/blog/review-supplier-invoice"
+  },
+  {
+    "text": "Read every guide",
+    "href": "/blog"
+  },
+  {
+    "text": "Product tourFollow one 180-guest wedding from quote to shelf.",
+    "href": "/tour/main"
+  },
+  {
+    "text": "Who it's forCheck the kitchens, events, and working styles CostCook fits.",
+    "href": "/who-its-for"
+  },
+  {
+    "text": "Your initial setupOne dish to start, then how the rest of your menu and your crew get in.",
+    "href": "/onboarding"
+  },
+  {
+    "text": "How we compareCompare workflows, shipped capabilities, and published pricing.",
+    "href": "/compare"
+  },
+  {
+    "text": "FAQGet direct answers about setup, pricing, data, and leaving.",
+    "href": "/faq"
+  },
+  {
+    "text": "ContactEmail or call Rayan when your question needs a person.",
+    "href": "/contact"
+  },
+  {
+    "text": "",
+    "href": "/features"
+  },
+  {
+    "text": "",
+    "href": "/pricing"
+  },
+  {
+    "text": "",
+    "href": "/blog"
+  },
+  {
+    "text": "",
+    "href": "/tour/main"
+  },
+  {
+    "text": "",
+    "href": "/who-its-for"
+  },
+  {
+    "text": "",
+    "href": "/onboarding"
+  },
+  {
+    "text": "",
+    "href": "/compare"
+  },
+  {
+    "text": "",
+    "href": "/faq"
+  },
+  {
+    "text": "",
+    "href": "/contact"
+  },
+  {
+    "text": "",
+    "href": "http://localhost:5173/login"
+  },
+  {
+    "text": "Sign in",
+    "href": "http://localhost:5173/login"
+  },
+  {
+    "text": "Demo",
+    "href": "/demo"
+  },
+  {
+    "text": "Free trial",
+    "href": "http://localhost:5173/start?plan=launch"
+  },
+  {
+    "text": "Start free trial",
+    "href": "http://localhost:5173/start?plan=launch"
+  },
+  {
+    "text": "Watch the 2:53 product tour\n↓",
+    "href": "#demo"
+  },
+  {
+    "text": "Follow the order in writing",
+    "href": "#demo-guide-heading"
+  },
+  {
+    "text": "Download it instead",
+    "href": "/demo.mp4"
+  },
+  {
+    "text": "Start free trial",
+    "href": "http://localhost:5173/start?plan=launch"
+  },
+  {
+    "text": "NEXT SECTION:\nNEXT ·\nWHAT GOES WRONG\n↓",
+    "href": "#problem"
+  },
+  {
+    "text": "NEXT SECTION:\nNEXT ·\nWHO THIS IS FOR\n↓",
+    "href": "#who"
+  },
+  {
+    "text": "product comparison",
+    "href": "/compare"
+  },
+  {
+    "text": "NEXT SECTION:\nNEXT ·\nWHAT IT DOES INSTEAD\n↓",
+    "href": "#outcomes"
+  },
+  {
+    "text": "See everything it does, area by area",
+    "href": "/features"
+  },
+  {
+    "text": "NEXT SECTION:\nNEXT ·\nTRIM AND YIELD\n↓",
+    "href": "#yield"
+  },
+  {
+    "text": "NEXT SECTION:\nNEXT ·\nWHAT ELSE IS IN IT\n↓",
+    "href": "#more"
+  },
+  {
+    "text": "Nutrition facts, area by area",
+    "href": "/features/nutrition-facts-and-allergens"
+  },
+  {
+    "text": "Watch Sage at work",
+    "href": "/features/sage"
+  },
+  {
+    "text": "See every access boundary",
+    "href": "/features/team-and-access"
+  },
+  {
+    "text": "NEXT SECTION:\nNEXT ·\nTHE OTHER TOOLS\n↓",
+    "href": "#alternatives"
+  },
+  {
+    "text": "comparison page",
+    "href": "/compare"
+  },
+  {
+    "text": "NEXT SECTION:\nNEXT ·\nWHO MADE IT\n↓",
+    "href": "#trust"
+  },
+  {
+    "text": "Contact Rayan",
+    "href": "/contact"
+  },
+  {
+    "text": "NEXT SECTION:\nNEXT ·\nSTART HERE\n↓",
+    "href": "#start"
+  },
+  {
+    "text": "See every setup screen",
+    "href": "/onboarding"
+  },
+  {
+    "text": "Start free trial",
+    "href": "http://localhost:5173/start?plan=launch"
+  },
+  {
+    "text": "Book 15 minutes",
+    "href": "/demo"
+  },
+  {
+    "text": "Every answer, on one page",
+    "href": "/faq"
+  },
+  {
+    "text": "Start free trial",
+    "href": "http://localhost:5173/start?plan=launch"
+  },
+  {
+    "text": "rayan@costcook.io",
+    "href": "mailto:rayan@costcook.io"
+  },
+  {
+    "text": "973-870-6309",
+    "href": "tel:+19738706309"
+  },
+  {
+    "text": "Pricing",
+    "href": "/pricing"
+  },
+  {
+    "text": "Every feature",
+    "href": "/features"
+  },
+  {
+    "text": "Blog",
+    "href": "/blog"
+  },
+  {
+    "text": "Product tour",
+    "href": "/tour/main"
+  },
+  {
+    "text": "Who it's for",
+    "href": "/who-its-for"
+  },
+  {
+    "text": "Your initial setup",
+    "href": "/onboarding"
+  },
+  {
+    "text": "How we compare",
+    "href": "/compare"
+  },
+  {
+    "text": "FAQ",
+    "href": "/faq"
+  },
+  {
+    "text": "Contact",
+    "href": "/contact"
+  },
+  {
+    "text": "Sign in",
+    "href": "http://localhost:5173/login"
+  },
+  {
+    "text": "Book a demo",
+    "href": "/demo"
+  },
+  {
+    "text": "View all",
+    "href": "https://astro.build/integrations/"
+  },
+  {
+    "text": "Report a Bug",
+    "href": "https://github.com/withastro/astro/issues/new/choose"
+  },
+  {
+    "text": "Feedback",
+    "href": "https://github.com/withastro/roadmap/discussions/new/choose"
+  },
+  {
+    "text": "Documentation",
+    "href": "https://docs.astro.build"
+  },
+  {
+    "text": "Community",
+    "href": "https://astro.build/chat"
+  },
+  {
+    "text": "Learn more",
+    "href": "https://docs.astro.build/en/reference/cli-reference/#astro-preferences"
+  }
+]

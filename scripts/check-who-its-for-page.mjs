@@ -10,7 +10,7 @@ const requireText = (text, label) => {
 };
 
 for (const [text, label] of [
-	['The work decides whether CostCook fits.', 'page identity'],
+	['Is CostCook right for your kitchen?', 'page identity'],
 	['One kitchen · two kinds of service', 'paired service ticket'],
 	['Regular service', 'regular restaurant service'],
 	['Private dinner', 'special-event service'],

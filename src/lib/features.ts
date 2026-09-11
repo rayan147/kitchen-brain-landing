@@ -1,3 +1,5 @@
+// story: docs/stories/features-navigation.story.md
+// Considered Strategy; not used because feature wording varies as static data, not runtime behavior.
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
 import { orderingAvailability } from './ordering';
@@ -73,28 +75,32 @@ export const SECTION_META: Readonly<
 		lede: 'A price arrives on a case. It has to travel through a yield, a sub-recipe, a portion size and a guest count before it becomes a number you can put in front of a customer. This is that path, and every step of it stays visible.'
 	},
 	'Getting prices in': {
+		// story: docs/stories/features-getting-prices-in-caterer.story.md
 		slug: 'getting-prices-in',
-		blurb: 'Invoices, price lists and spreadsheets read into the app, staged for you to confirm.',
+		blurb: 'Upload invoices, price lists and spreadsheets. Review the details before saving.',
 		wall: 'The new price list arrived as a photograph of a printout. Keying it in is an evening you do not have. Not keying it in means quoting off last month.',
-		lede: 'Nobody types a supplier price list twice. Paper and spreadsheets come in, get read, and wait as staged facts until you say they are right. Nothing writes itself into your costing behind your back.'
+		lede: 'Upload supplier paperwork, compare the suggested items and prices with the original, and correct anything unclear. Confirm the changes before they reach your ingredient costs.'
 	},
 	'The day itself': {
+		// story: docs/stories/features-the-day-itself-caterer.story.md
 		slug: 'the-day-itself',
 		blurb: 'The event, the shopping, the prep, the pack, and what actually came through the back door.',
 		wall: 'It is five in the morning, your hands are wet, and the sheet taped to the hotel pan has to be right. There is no second trip to the store.',
-		lede: 'The part of the week that happens on your feet. An event gets quoted and frozen, the shopping and prep lists fall out of it, and the delivery you tick off at the back door is the order you sent rather than a second round of typing.'
+		lede: 'Confirm the menu and guest count to create shopping, prep and pack lists. Check deliveries against the supplier orders you sent, and keep shortages visible for follow-up.'
 	},
 	'Compliance and labels': {
+		// story: docs/stories/features-compliance-and-labels-caterer.story.md
 		slug: 'compliance-and-labels',
 		blurb: labelsAvailability.sectionBlurb,
 		wall: 'Somebody asks for the numbers on a dish. Roughly is not an answer, and neither is a figure you worked out once and cannot show your working for.',
 		lede: labelsAvailability.sectionLede
 	},
 	'Team, and what it connects to': {
+		// story: docs/stories/features-team-and-connections-caterer.story.md
 		slug: 'team-and-connections',
 		blurb: 'Who can change what, how a new kitchen gets started, and the connections being built.',
-		wall: 'The kitchen is empty on Monday and there is a job on Saturday. Everything in here is the distance between those two.',
-		lede: 'Everything around the edges: getting a kitchen from empty to a first costed order, who on the crew can change what, and how the app behaves on a phone with one bar. The connection work in this section is still being built and is marked Coming rather than folded into the shipped list.'
+		wall: 'You need the crew ready for Saturday, without spending the week learning new software.',
+		lede: 'Set up your kitchen, invite your crew and check what each role can do. Staff can open cost screens. Previously opened order pages can be read without signal; reconnect to make changes. Connections marked Coming are not included today.'
 	}
 };
 
@@ -124,9 +130,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'math',
 		section: 'Recipes and costing',
 		kicker: 'The costing math',
-		title: 'One engine, whole numbers, shown work.',
+		title: 'From recipe quantities to food cost, with the calculations shown.',
 		items: [
-			{ lead: 'One production engine.', detail: 'Menu times guest count becomes what to buy, cook, and pack, with the cost attached.' },
+			{ lead: 'One connected plan.', detail: 'Menu times guest count becomes what to buy, cook, and pack, with the cost attached.' },
 			{ lead: 'Real unit conversion.', detail: 'Weight, volume, and count convert only through facts you set per ingredient, never a global guess table.' },
 			{ lead: 'Whole batches.', detail: 'Batches round up to whole ones and the plan says made and needed, so nothing pretends to be exact.' },
 			{ lead: 'Two kinds of yield.', detail: 'Trim loss and cooking loss are separate numbers, and each recipe line says which state its quantity means.' },
@@ -135,11 +141,11 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Lines that reconcile.', detail: 'Every line’s cost contribution adds up to the total. No silent remainder.' },
 			{ lead: 'Misc is its own line.', detail: 'Miscellaneous cost is visible and applied once, never buried in a dish.' },
 			{ lead: 'Tap-to-see arithmetic.', detail: 'Any plate cost or food-cost percent opens the math behind it.' },
-			{ lead: 'One percent vocabulary.', detail: 'Over target reads the same words on every screen.' },
-			{ lead: 'Whole-cent money.', detail: 'Money is integer cents end to end. No floating-point drift.' },
+			{ lead: 'Consistent target warnings.', detail: 'Over target reads the same words on every screen.' },
+			{ lead: 'Amounts in cents.', detail: 'Costs are calculated in cents so the displayed amounts add up.' },
 			{ lead: 'Your units.', detail: 'Quantities print metric or US, rounded the way a cook reads them.' },
 			{ lead: 'Scaling preview.', detail: 'Scale a recipe by target amount or by what you have on hand. The saved recipe never changes.' },
-			{ lead: 'Safe nesting.', detail: 'Sub-recipes nest inside dishes, and cycles are refused before they can corrupt a cost.' }
+			{ lead: 'Sub-recipes checked.', detail: 'Reuse a sauce or other sub-recipe in dishes. A recipe cannot include itself, even through another recipe.' }
 		]
 	},
 	{
@@ -150,8 +156,8 @@ export const featureGroups: readonly FeatureGroup[] = [
 		items: [
 			{ lead: 'Attention first.', detail: 'Orders, guests, and deliveries up top. When nothing needs you, it says all clear.' },
 			{ lead: 'Ranked tasks.', detail: 'Each attention item opens the exact screen that fixes it.' },
-			{ lead: 'Partial failure survives.', detail: 'If one panel breaks, the rest of Today still loads, with a retry on just the broken one.' },
-			{ lead: 'Quiet signals.', detail: 'Purchase pulse, price drift, staged imports, catalog blockers, inventory attention. No digging.' },
+			{ lead: 'Retry a failed panel.', detail: 'If part of Today cannot load, retry that panel while continuing to use the rest.' },
+			{ lead: 'Quiet signals.', detail: 'See purchase updates, price changes, imports awaiting review, missing ingredient details and stock needing a count.' },
 			{ lead: 'Dismissible checklist.', detail: 'The finish-setting-up list goes away when you say so, and stays away.' },
 			{ lead: 'First-use guidance.', detail: 'Quick actions and an empty state that tells a new kitchen where to start.' },
 			{ lead: 'Sample data.', detail: 'Loads with one tap, resets cleanly, and spares any rows you renamed.' }
@@ -163,17 +169,17 @@ export const featureGroups: readonly FeatureGroup[] = [
 		kicker: 'Ingredients',
 		title: 'Buying facts that stay attached to the food.',
 		items: [
-			{ lead: 'Catalog health.', detail: 'The catalog opens with what is costable and what still needs a fact.' },
-			{ lead: 'Shareable filters.', detail: 'Search and filters mirror into the URL, so a filtered list can be bookmarked or sent.' },
+			{ lead: 'Missing ingredient details.', detail: 'See which ingredients can be costed and which need a price, yield or conversion.' },
+			{ lead: 'Shareable filters.', detail: 'Bookmark or share a filtered ingredient list and reopen the same search.' },
 			{ lead: 'Fix a price in place.', detail: 'Edit a pack cost right from the list without losing your filters.' },
-			{ lead: 'Three doors in.', detail: 'Create from scratch, from the USDA reference, or from a purchase. Unit and yield are your choice, never a guess.' },
+			{ lead: 'Three ways to add an ingredient.', detail: 'Create from scratch, from the USDA reference, or from a purchase. Unit and yield are your choice, never a guess.' },
 			{ lead: 'Mid-recipe creation.', detail: 'Add a missing ingredient from inside the recipe builder without losing what you typed.' },
 			{ lead: 'Suppliers anywhere.', detail: 'Add a supplier from any screen that needs one. Same form, same result.' },
 			{ lead: 'Purchased vs usable.', detail: 'Each ingredient shows both costs side by side, with its purchase history underneath.' },
-			{ lead: 'Compare suppliers.', detail: 'Concurrent offers compare per usable unit, cheapest first, adopted with a tap.' },
-			{ lead: 'Price provenance.', detail: 'Every current price says where it came from, from which supplier, effective when.' },
-			{ lead: 'Blast radius.', detail: 'Before a price changes, see every recipe and menu it touches.' },
-			{ lead: 'Guarded deletes.', detail: 'Deleting an ingredient walks its uses first. Nothing orphans quietly.' },
+			{ lead: 'Compare suppliers.', detail: 'Compare supplier offers per usable kilo, pound or item, cheapest first. Choose which price to use.' },
+			{ lead: 'Price source.', detail: 'Every current price says where it came from, from which supplier, effective when.' },
+			{ lead: 'Affected recipes and menus.', detail: 'Before a price changes, see every recipe and menu it touches.' },
+			{ lead: 'Check before deleting.', detail: 'Before deleting an ingredient, check the recipes that still use it.' },
 			{ lead: 'CSV import.', detail: 'Bulk ingredient import with a template whose example rows actually pass.' },
 			{ lead: 'USDA reference built in.', detail: 'Yields, densities, and unit weights offered as chips you tap to fill.' },
 			{ lead: 'Allergens.', detail: 'Fourteen-allergen tagging rolls up to every recipe, with chef overrides that require a written reason.' },
@@ -194,10 +200,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Earlier published versions.', detail: 'Read the recipe history and open an earlier published version without replacing the current one.' },
 			{ lead: 'Filed for the kitchen.', detail: 'Collections, tags, stations and shelves keep a growing recipe book findable.' },
 			{ lead: 'Structured methods.', detail: 'Write and reorder method steps instead of burying the working sequence in one paragraph.' },
-			{ lead: 'Archive with recovery.', detail: 'Owners can archive, restore and control the published recipe lifecycle.' },
+			{ lead: 'Archive and restore.', detail: 'Owners can publish, archive and restore recipes.' },
 			{ lead: 'Learned yield.', detail: 'CostCook proposes yield corrections from your own buying evidence. You apply or reverse, and the evidence is kept.' },
-			{ lead: 'Inherited defaults.', detail: 'New lines take the ingredient’s usual yield. Old lines never rewrite.' },
-			{ lead: 'CSV export.', detail: 'The whole book or one recipe, in columns that round-trip through the importer.' },
+			{ lead: 'Usual ingredient yield.', detail: 'New recipe lines use the ingredient’s usual yield. Existing lines keep their saved yield.' },
+			{ lead: 'CSV export.', detail: 'Download one recipe or the whole recipe book as a CSV spreadsheet you can import again.' },
 			{ lead: 'Print sheets.', detail: 'A recipe prints clean, stamped with when it was printed.' },
 			{ lead: 'Checked deletes.', detail: 'Removing a recipe checks what uses it first.' }
 		]
@@ -224,24 +230,24 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Costed before commitment.', detail: 'A new order is a menu, a date, guests, and a price, estimated live as you set it up.' },
 			{ lead: 'Three tabs, one plan.', detail: 'Shop, Prep, and Pack all read the same computed plan.' },
 			{ lead: 'Pinned money bar.', detail: 'The numbers stay on screen while you work, and guest-count changes autosave quietly.' },
-			{ lead: 'Confirm freezes everything.', detail: 'Plan, math, and money snapshot in one transaction. The quote you gave is the quote that stays.' },
+			{ lead: 'Confirm freezes everything.', detail: 'Confirmation saves the plan, calculations and quoted price together. Later price changes do not rewrite that quote.' },
 			{ lead: 'Honest reopen.', detail: 'Reopening keeps the frozen prices and says so. Once purchasing starts, reopening is refused.' },
 			{ lead: 'Clean duplication.', detail: 'Copy an event into one draft. A double-tap cannot make two.' },
-			{ lead: 'Shelf check.', detail: 'On-hand steppers for ingredients and batches, scoped to the order so they cannot go stale.' },
+			{ lead: 'Shelf check.', detail: 'Enter the ingredients and prepared batches you have on hand for this order.' },
 			{ lead: 'Buy math shown.', detail: 'Every buy line can show need, on hand, pack size, and packs.' },
 			{ lead: 'Vendor grouping.', detail: 'The shopping list groups by supplier and by kitchen section.' },
-			{ lead: 'Durable check-offs.', detail: 'Checks persist on the server, and a plan change clears exactly the checks it staled.' },
+			{ lead: 'Durable check-offs.', detail: 'Checked items stay saved. If the plan changes, affected items need checking again.' },
 			{ lead: 'Walk-in mode.', detail: 'On a phone, a running left-to-grab footer follows you through the list.' },
 			{ lead: 'Printable lists.', detail: 'Shop, prep, and pack print clean: controls gone, hints kept, columns aligned for a clipboard.' },
 			{ lead: 'Leftover nudges.', detail: 'Likely left about a quart, from your recent orders. One at a time, dismissible.' },
 			{ lead: 'Quoted vs today.', detail: 'Confirmed orders compare the frozen quote with current prices, and say when they cannot.' },
-			{ lead: 'Event cost, after.', detail: 'The frozen quote against actual attributed spend, with a materiality floor in dollars.' },
+			{ lead: 'Event cost, after.', detail: 'Compare the confirmed quote with purchases recorded against the event. Differences below the configured dollar threshold are not highlighted.' },
 			{ lead: 'Shortfall evidence.', detail: 'Pack lines left open at close become reviewable evidence: short, packed, or not sure.' },
 			{ lead: 'Aged plans flagged.', detail: 'An old frozen plan is marked old. It is never silently recomputed.' },
 			{ lead: 'Per-order equipment.', detail: 'Hide a template line or add a one-off for this event. The menu template never changes.' },
 			{ lead: 'Allergens at pack-out.', detail: 'Pack lists carry allergen badges.' },
 			{ lead: 'Orders hub.', detail: 'Filter, search, and read food-cost and status badges across every event.' },
-			{ lead: 'Frozen prep notes.', detail: 'Drafts read live prose. Confirmed orders read only the copy frozen at confirmation.' }
+			{ lead: 'Frozen prep notes.', detail: 'Draft orders use the current prep notes. Confirmed orders keep the notes saved when you confirmed.' }
 		]
 	},
 	{
@@ -251,13 +257,13 @@ export const featureGroups: readonly FeatureGroup[] = [
 		title: 'What you send, and what actually arrives.',
 		items: [
 			{ lead: 'Per-vendor POs.', detail: 'Confirming an order offers purchase orders per supplier: email, print, or handled by you.' },
-			{ lead: 'The email you saw.', detail: 'The PO review shows the exact body sent, and the record is written only after the send succeeds.' },
+			{ lead: 'The email you saw.', detail: 'Review the exact supplier email before sending. Check the order record for whether it was sent or needs a retry.' },
 			{ lead: 'Printable POs.', detail: 'Signature lines and stable PO numbers.' },
 			{ lead: 'Receiving follows sending.', detail: 'A sent PO creates its receiving checklist for you.' },
 			{ lead: 'Deliveries as they are.', detail: 'Short, over, substituted, missing, and unexpected lines each have their own handling.' },
 			{ lead: 'All-or-nothing posting.', detail: 'Committing a delivery writes real purchases, and current prices update from what actually arrived.' },
 			{ lead: 'Automatic rebuy list.', detail: 'Short and missing lines become a durable follow-up list with handled and reopen states.' },
-			{ lead: 'A door per PO.', detail: 'Receive against any sent purchase order from its own screen.' },
+			{ lead: 'Receive from the purchase order.', detail: 'Receive against any sent purchase order from its own screen.' },
 			{ lead: 'Retryable sends.', detail: 'A failed PO send can be retried, with the failure kept on record.' }
 		]
 	},
@@ -267,17 +273,17 @@ export const featureGroups: readonly FeatureGroup[] = [
 		kicker: 'Purchases & month cost',
 		title: 'What the month should have cost, and did.',
 		items: [
-			{ lead: 'One ledger, four doors.', detail: 'Manual entry, invoice import, order log, and receiving, each entry tagged with its source.' },
-			{ lead: 'Batch entry.', detail: 'A whole invoice of lines, priced live, committed all or nothing.' },
+			{ lead: 'Four ways to record purchases.', detail: 'Manual entry, invoice import, order log, and receiving, each entry tagged with its source.' },
+			{ lead: 'Batch entry.', detail: 'Enter a whole invoice, check its total and save all its lines together.' },
 			{ lead: 'Quick log.', detail: 'Or record a single purchase in seconds.' },
-			{ lead: 'Corrections, not edits.', detail: 'A signed adjustment with a required reason joins the record. History is never restated.' },
+			{ lead: 'Corrections, not edits.', detail: 'Add or subtract an amount and give a reason. The original purchase stays in the history.' },
 			{ lead: 'Cost as of date.', detail: 'Current cost follows the purchase date, not the order you typed things in.' },
-			{ lead: 'Prices that moved.', detail: 'Drift over your chosen window with signed percents, one tap from the summary to the full review.' },
-			{ lead: 'Month verdict.', detail: 'Theoretical usage against actual spend, with the unaccounted gap named, never auto-blamed as waste.' },
-			{ lead: 'Waste, valued.', detail: 'Logged waste re-labels part of the gap at frozen sticker cost. No reason taxonomy to maintain.' },
-			{ lead: 'Turnover, earned.', detail: 'Inventory turnover computes only when two trusted counts bracket the period.' },
-			{ lead: 'Working rails.', detail: 'Waiting-on-you and sent-order lists, and every sent PO doubles as its receiving door.' },
-			{ lead: 'Filters that scale.', detail: 'Ledger filters by ingredient and date, with paging past 50 rows.' }
+			{ lead: 'Prices that moved.', detail: 'See which prices rose or fell over the dates you choose, with a percentage change and a link to the purchases.' },
+			{ lead: 'Monthly cost comparison.', detail: 'Compare ingredient use calculated from orders with purchase spending. Any unexplained difference stays separate from logged waste.' },
+			{ lead: 'Waste, valued.', detail: 'Logged waste explains part of the difference using the cost saved with that waste record.' },
+			{ lead: 'Stock turnover, when counts support it.', detail: 'Stock turnover is shown only when a trusted count is available at each end of the period.' },
+			{ lead: 'Purchases needing attention.', detail: 'Find orders waiting for your action or already sent. Open a sent purchase order to record its delivery.' },
+			{ lead: 'Filter purchase history.', detail: 'Filter purchases by ingredient and date. Longer results continue on the next page.' }
 		]
 	},
 	{
@@ -286,39 +292,39 @@ export const featureGroups: readonly FeatureGroup[] = [
 		kicker: 'Inventory',
 		title: 'The shelf, computed, never guessed.',
 		items: [
-			{ lead: 'Computed on-hand.', detail: 'Derived from dated movements. A count overrules from its date forward. No running total to drift.' },
-			{ lead: 'Append-only counts.', detail: 'Pack cost freezes at count time, so a back-dated correction cannot restate history.' },
-			{ lead: 'A trust gate.', detail: 'Fresh, stale, or never counted is said out loud. Estimates the math cannot back are refused, not invented.' },
-			{ lead: 'Two shapes.', detail: 'A desktop table and a phone list, with state badges and a need breakdown naming which order wants what.' },
-			{ lead: 'Gap shopping list.', detail: 'Need minus trusted shelf becomes one durable list, rebuilt in place, chef overrides kept separate, printable.' },
+			{ lead: 'Stock on hand.', detail: 'Start with a dated physical count, then add deliveries and subtract recorded use and waste.' },
+			{ lead: 'Dated count history.', detail: 'Each count keeps the unit cost recorded at the time. A later correction does not replace the old count.' },
+			{ lead: 'Count freshness.', detail: 'See whether stock is Fresh, Stale or Never counted. Missing or old counts do not reduce estimated buying.' },
+			{ lead: 'Desktop and phone views.', detail: 'A desktop table and a phone list, with state badges and a need breakdown naming which order wants what.' },
+			{ lead: 'Buy what is missing.', detail: 'Subtract trusted stock from order needs to build a printable shopping list. Quantities you override stay separate.' },
 			{ lead: 'Shelf value.', detail: 'What the shelf was worth at any date.' }
 		]
 	},
 	{
 		id: 'import',
 		section: 'Getting prices in',
-		kicker: 'Import & AI intake',
-		title: 'Paper in, staged facts out, you confirm.',
+		kicker: 'Document import',
+		title: 'Upload the paperwork. Review the details. Save your changes.',
 		items: [
-			{ lead: 'Any door in.', detail: 'Drop files, paste text, or photograph paper. The workspace queues and tracks each one.' },
-			{ lead: 'Classified, timed, retryable.', detail: 'Six document kinds with confidence scores, OCR fallback, and reclassify, replace, or exclude.' },
-			{ lead: 'AI on a leash.', detail: 'Extraction runs behind a strict schema. Units arrive as text for review, never trusted ids.' },
-			{ lead: 'A careful auto-accept.', detail: 'Only when name and unit are certain and the match is exact. Everything doubtful is one human tap.' },
-			{ lead: 'Staging, not writing.', detail: 'Imports live outside your real catalog until you confirm them.' },
-			{ lead: 'Safe recipe commits.', detail: 'One transaction, cycle-checked first. Re-importing replaces in place so menus stay linked.' },
-			{ lead: 'Invoices that check themselves.', detail: 'Stated totals compare against computed ones, and duplicates are fingerprinted.' },
+			{ lead: 'Upload or paste.', detail: 'Drop files, paste text, or photograph paper. The workspace queues and tracks each one.' },
+			{ lead: 'Check the document type.', detail: 'Check how the document was identified. Change its type, replace an unreadable file or leave it out.' },
+			{ lead: 'Check names and units.', detail: 'Review the names, quantities and units read from the document before they are saved.' },
+			{ lead: 'Suggested exact matches.', detail: 'Only when name and unit are certain and the match is exact. Everything doubtful is one human tap.' },
+			{ lead: 'Review before saving.', detail: 'Imports live outside your real catalog until you confirm them.' },
+			{ lead: 'Keep recipe links when importing again.', detail: 'Recipe imports are checked before saving. Importing an updated recipe keeps its existing menu links.' },
+			{ lead: 'Invoices that check themselves.', detail: 'Compare the invoice total with the sum of its lines. Duplicate invoices are flagged.' },
 			{ lead: 'Price sheets, row by row.', detail: 'Apply or skip each line. A pack-size change refuses to apply silently. A sheet is an asking price, never a purchase.' },
-			{ lead: 'Bulk add with verdicts.', detail: 'Duplicate-match scores are shown, ambiguity is surfaced, and every row passes the same validation as the manual form.' },
-			{ lead: 'Foreign CSVs.', detail: 'The model proposes a column mapping, a deterministic parser reads every cell, ignored columns are disclosed.' },
-			{ lead: 'Recipe CSVs too.', detail: 'Same mapping pattern. Unreadable rows are surfaced, never dropped.' },
-			{ lead: 'Word documents.', detail: 'DOCX parses deterministically, with no model involved at all.' },
-			{ lead: 'The original stays visible.', detail: 'The photo or PDF sits beside the staged rows while you review. Discard really deletes it.' },
-			{ lead: 'Receipts, not repeats.', detail: 'Committing twice by accident replays the same receipt. Never double rows.' },
-			{ lead: 'Unreadable means unread.', detail: 'What the model could not read is quoted back verbatim, next to what it staged.' },
-			{ lead: 'Semantic matching.', detail: 'Vector search tuned against labelled fixtures, so Roma tomatoes find tomato, Roma.' },
-			{ lead: 'It learns your names.', detail: 'Every confirm teaches an alias per kitchen. The review pile shrinks with use.' },
-			{ lead: 'Safe re-runs.', detail: 'Embedding backfill is idempotent. Running it again is safe, not a bill.' },
-			{ lead: 'Caterer scale.', detail: 'Tested with 120-item order guides and 20-invoice batches that stay together.' }
+			{ lead: 'Check every imported row.', detail: 'Review possible duplicates and uncertain matches. Imported rows need the same details as manually entered ones.' },
+			{ lead: 'Spreadsheets with different columns.', detail: 'Check which columns hold names, pack sizes and prices before importing. You can see which columns will be ignored.' },
+			{ lead: 'Recipe CSVs too.', detail: 'Review the recipe columns before importing. Unreadable rows are shown for you to check.' },
+			{ lead: 'Word documents.', detail: 'Import text from a Word document without copying it into another file first.' },
+			{ lead: 'The original stays visible.', detail: 'The photo or PDF sits beside the rows awaiting review while you review. Discard really deletes it.' },
+			{ lead: 'No duplicate save.', detail: 'Saving the same import twice returns the existing receipt instead of adding duplicate purchases.' },
+			{ lead: 'Unreadable means unread.', detail: 'Unreadable text stays beside the suggested details so you can correct it against the source.' },
+			{ lead: 'Match supplier names.', detail: 'Suggested matches can connect a supplier’s “Roma tomatoes” to your “Tomato, Roma” ingredient.' },
+			{ lead: 'It learns your names.', detail: 'Confirmed supplier names can be remembered for your kitchen’s next import.' },
+			{ lead: 'Repeat matching without duplicates.', detail: 'Refreshing ingredient matches does not create duplicate ingredient records.' },
+			{ lead: 'Batch imports tested.', detail: 'Tested with 120-item order guides and 20-invoice batches that stay together.' }
 		]
 	},
 	{
@@ -337,7 +343,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	{
 		/* RC-42. Shipped on sandbox/demo: src/lib/core/nutrition.ts carries
 		   LABEL_NUTRIENT_CODES and calculateRecipeNutrition() with its
-		   complete/partial/incomplete status. It was missing from this list
+		   complete, partial or incomplete status. It was missing from this list
 		   while /compare said Yes, which broke this page's own promise that
 		   anything absent here is something CostCook does not do yet. The
 		   PRINTED panel stays off: that is a separate coming row. */
@@ -402,17 +408,17 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'team',
 		section: 'Team, and what it connects to',
 		kicker: 'Team & settings',
-		title: 'Five cards, not a maze.',
+		title: 'Find kitchen settings and team access in one place.',
 		items: [
-			{ lead: 'A settings hub.', detail: 'Five category cards with live attention lines pointing at what needs a decision.' },
-			{ lead: 'Knobs with consequences.', detail: 'Costing settings preview their impact and name which menus go over target before you save.' },
-			{ lead: 'Profile is letterhead.', detail: 'Business name, reply-to, phone, and delivery address feed straight onto purchase orders.' },
+			{ lead: 'Settings that need attention.', detail: 'Settings are grouped by task and show where a decision is needed.' },
+			{ lead: 'Preview costing changes.', detail: 'Costing settings preview their impact and name which menus go over target before you save.' },
+			{ lead: 'Business details on purchase orders.', detail: 'Business name, reply-to, phone, and delivery address feed straight onto purchase orders.' },
 			{ lead: 'Vendor manager.', detail: 'Contacts, per-vendor purchasing method, and insight into what you actually buy from each.' },
-			{ lead: 'Metric or imperial.', detail: 'A per-kitchen choice, read on every request.' },
-			{ lead: 'Magic-link invites.', detail: 'Invite teammates by email, with expiry and revoke.' },
-			{ lead: 'Three role boundaries.', detail: 'Owner, Manager and Staff protect specific sensitive actions without pretending to be a custom permission grid.' },
-			{ lead: 'Isolation by construction.', detail: 'Every kitchen’s data is scoped per request. Cross-kitchen reads are refused, and unscoped writes fail loudly.' },
-			{ lead: 'No guessed ownership.', detail: 'Records from before a kitchen existed stay marked unowned rather than being assigned to one.' }
+			{ lead: 'Metric or imperial.', detail: 'Choose metric or US units for your kitchen.' },
+			{ lead: 'Invite by email.', detail: 'Send an email invitation. Invitations expire, and you can revoke them.' },
+			{ lead: 'Three team roles.', detail: 'Owner, Manager and Staff control specific actions. All teammates can open cost screens; custom roles are not available.' },
+			{ lead: 'Separate kitchen accounts.', detail: 'Your kitchen account does not give access to another kitchen’s records.' },
+			{ lead: 'Unassigned records stay separate.', detail: 'Older records without an assigned kitchen are not added to your account automatically.' }
 		]
 	},
 	{
@@ -421,9 +427,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		kicker: 'Setup',
 		title: 'From empty to a costed first order.',
 		items: [
-			{ lead: 'Six guided stages.', detail: 'Resumable on any device, role-aware, and never duplicating what you already made.' },
+			{ lead: 'Guided setup.', detail: 'Add your kitchen details, ingredients, food facts, recipes and first order. Resume saved progress on another device.' },
 			{ lead: 'Ends with a real order.', detail: 'The first-order estimate runs on the same engine as the rest of the app.' },
-			{ lead: 'A checklist that cannot lie.', detail: 'Progress is derived from your actual catalog on every load, so it cannot go stale.' },
+			{ lead: 'Progress from your saved work.', detail: 'The setup checklist checks the ingredients and recipes you have saved when you reopen it.' },
 			{ lead: 'The real builder.', detail: 'The recipe step is the actual recipe builder, not a toy version.' }
 		]
 	},
@@ -436,11 +442,11 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'No passwords.', detail: 'Sign-in is an invitation and a magic link. Links work once and die in eight minutes.' },
 			{ lead: 'Access ends now.', detail: 'Remove someone and their access stops on their next request, not their next sign-in.' },
 			{ lead: 'Safe return links.', detail: 'Sign-in destinations are checked, so a crafted link cannot bounce you off-site.' },
-			{ lead: 'Works in the walk-in.', detail: 'Order pages keep working with no signal, marked with when they were cached.' },
-			{ lead: 'Works without JavaScript.', detail: 'Every page renders on the server first. Scripts improve it, they do not carry it.' },
-			{ lead: 'Accessibility, pinned.', detail: '44-pixel targets, AA contrast, and 200 percent text survival are held by tests, not intentions.' },
-			{ lead: 'Notices that behave.', detail: 'Messages survive redirects, never repeat, and work without JS.' },
-			{ lead: 'A cheap health check.', detail: 'The status endpoint answers from a short cache, so a flood cannot amplify into database traffic.' }
+			{ lead: 'Read saved pages without signal.', detail: 'Previously opened order pages can be read without signal and show when they were saved. Reconnect to make changes.' },
+			{ lead: 'Works without JavaScript.', detail: 'Core pages remain readable if browser scripts are unavailable.' },
+			{ lead: 'Readable text and touch controls.', detail: 'Text enlargement, contrast and touch targets are checked in interface tests.' },
+			{ lead: 'Notices that behave.', detail: 'Important messages remain visible when an action takes you to another page.' },
+			{ lead: 'Service status.', detail: 'The service status check does not repeatedly reload kitchen records.' }
 		]
 	},
 	{
@@ -465,7 +471,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Ask during setup.', detail: 'Setup keeps an Ask Sage entry, offers questions that fit the stage and records entered so far, and gives you a direct route back.' },
 			{ lead: 'Eleven checks, one proposal.', detail: 'Ask about the shift, recipes, stock, buying or setup. Sage can also prepare a shopping-list proposal for a manager or owner to approve.' },
 			{ lead: 'Sources under the answer.', detail: 'Each answer shows the records and checks behind its numbers, and says when evidence is missing.' },
-			{ lead: 'A proposal is not a change.', detail: 'Eleven tools read. One prepares a shopping-list proposal. The underlying records are checked again before a person approves it.' }
+			{ lead: 'A proposal is not a change.', detail: 'Answers read your records. A shopping-list draft waits for an Owner or Manager to approve it, with the records checked again before saving.' }
 		]
 	},
 	{

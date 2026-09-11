@@ -35,6 +35,7 @@ const comingRows = comparison
 	.filter((row) => row.label === 'Point of sale' || row.label === 'Accounting');
 ---
 
+<!-- story: docs/stories/integrations.story.md -->
 <section id="connections" class="border-t border-hairline" aria-labelledby="connections-heading">
 	<div class="container-page py-section">
 		<div class="max-w-3xl">
@@ -58,7 +59,7 @@ const comingRows = comparison
 				</p>
 			</div>
 			<div>
-				<h3 class="font-semibold">Staged, not written</h3>
+				<h3 class="font-semibold">Review before saving</h3>
 				<p class="mt-2 text-sm leading-relaxed text-ink-soft">
 					What comes out sits outside your catalog until you confirm it. Nothing
 					reaches a plate cost that you have not seen.
@@ -67,19 +68,15 @@ const comingRows = comparison
 			<div>
 				<h3 class="font-semibold">What it could not read</h3>
 				<p class="mt-2 text-sm leading-relaxed text-ink-soft">
-					Anything unreadable is quoted back to you word for word, beside what was
-					staged, rather than dropped or guessed at.
+					Anything unreadable is quoted back to you word for word, beside the suggested details, so you can check it against the original.
 				</p>
 			</div>
 		</div>
 
 		<div class="mt-12 max-w-3xl">
-			<h3 class="text-h3 font-semibold">Two connections, at two different distances</h3>
+			<h3 class="text-h3 font-semibold">Square and QuickBooks are not available yet</h3>
 			<p class="mt-4 max-w-[62ch] text-ink-soft">
-				Coming means the same here as it does on the comparison page: not in the app
-				you would start today. It does not mean these two are at the same stage, and
-				the lines below say which is which. There is no date on either, because a date
-				is a promise and neither has earned one yet.
+				Neither connection is included in the subscription today. No release date has been announced.
 			</p>
 			<ul role="list" class="mt-6 space-y-5">
 				{
@@ -91,7 +88,7 @@ const comingRows = comparison
 									Coming
 								</span>
 							</div>
-							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.note}</p>
+							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.label === 'Point of sale' ? 'Square is not available today. You cannot send menus to your till or bring sales into CostCook through this connection.' : 'QuickBooks Online is planned and has not been built. CostCook does not sync your purchases or accounts with it today.'}</p>
 						</li>
 					))
 				}

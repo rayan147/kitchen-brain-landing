@@ -1,7 +1,7 @@
 ---
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { faq, faqCount } from '../../lib/faq';
 import { contactCta, cta, demoCta, launchPlan } from '../../lib/site';
-import { spellCapital } from '../../lib/words';
 import SageIcon from '../SageIcon.astro';
 
 type GroupGuide = {
@@ -12,11 +12,11 @@ type GroupGuide = {
 const groupGuides: Record<string, GroupGuide> = {
 	money: {
 		shortLabel: 'Money',
-		description: 'Start here if the card, first charge, or exit is the part you do not trust.'
+		description: 'See what you pay, when billing starts, and how to cancel.'
 	},
 	fit: {
 		shortLabel: 'Fit',
-		description: 'The yeses only mean something after the limits are stated plainly.'
+		description: 'Check supported kitchen work and the limits that could rule CostCook out.'
 	},
 	how: {
 		shortLabel: 'The work',
@@ -30,7 +30,7 @@ const groupGuides: Record<string, GroupGuide> = {
 
 const decisionFacts = [
 	{ term: 'Trial', value: `${launchPlan.trialDays} days at $0`, href: '#trial' },
-	{ term: 'Card', value: 'Held by Stripe', href: '#card' },
+	{ term: 'Card', value: 'Required via Stripe', href: '#card' },
 	{ term: 'First charge', value: `Day ${launchPlan.trialDays + 1}`, href: '#trial' },
 	{ term: 'Cancel', value: 'Settings → Billing', href: '#cancel' }
 ] as const;
@@ -44,10 +44,9 @@ const decisionFacts = [
 	<section class="faq-hero" aria-labelledby="faq-title">
 		<div class="container-page faq-hero-grid">
 			<div class="faq-hero-copy">
-				<h1 id="faq-title">Know the catch before you hand over the card.</h1>
+				<h1 id="faq-title">Questions before you try CostCook?</h1>
 				<p>
-					{spellCapital(faqCount)} answers checked against the app you would start today.
-					Where the answer is no, it says no.
+					Check the trial, cancellation, setup and product limits. Choose a topic below or read all {faqCount} answers.
 				</p>
 				<div class="hero-actions">
 					<a class="btn-primary" href="#money">Read the trial and billing answers</a>
@@ -75,7 +74,7 @@ const decisionFacts = [
 						))
 					}
 				</dl>
-				<p>Open the answer. See the mechanism. Keep the link.</p>
+				<p>Per kitchen. Cancel before day 16 to avoid the first charge.</p>
 			</aside>
 		</div>
 	</section>
@@ -143,12 +142,19 @@ const decisionFacts = [
 				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">
 					{demoCta.label}
 				</a>
+				<FeatureTrialTerms />
 			</div>
 		</section>
 	</div>
 </div>
 
 <style>
+  /* Keep the decision ticket and actions inside the reading width at 200% text. */
+  .faq-hero-grid > * { min-width: 0; }
+  .hero-actions a, .close-actions a { max-width: 100%; overflow-wrap: anywhere; }
+  .ticket-heading { flex-wrap: wrap; }
+  .decision-ticket dl a > div { min-width: 0; }
+
 	.faq-page {
 		border-top: 1px solid var(--color-hairline);
 	}
@@ -165,6 +171,7 @@ const decisionFacts = [
 	}
 
 	.faq-hero-copy h1 {
+        overflow-wrap: anywhere;
 		max-width: 12ch;
 		font-size: clamp(2.8rem, 2rem + 3.5vw, 5.25rem);
 		font-weight: 600;
@@ -516,7 +523,8 @@ const decisionFacts = [
 		}
 
 		.decision-ticket dl div {
-			grid-template-columns: minmax(5rem, 0.7fr) minmax(0, 1fr);
+			grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+            overflow-wrap: anywhere;
 		}
 
 		.question-map ul {

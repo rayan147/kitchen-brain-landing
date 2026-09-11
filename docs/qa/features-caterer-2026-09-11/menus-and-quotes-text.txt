@@ -1,0 +1,229 @@
+Every feature
+/
+Menus and quotes
+Build your menu. Check the price per guest.
+
+Choose your dishes and portions, then add the event date, guest count and selling price. Check the food cost before confirming the quote and the kitchen plan together.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+ILLUSTRATIVE MENU-TO-QUOTE RECORD
+MENU
+180 GUESTS
+Summer wedding dinner
+DISH
+PER GUEST
+Herb roast chicken
+1 portion
+Lemon herb potatoes
+180 g
+Seasonal green salad
+120 g
+Lemon tart
+1 slice
+Default price
+$68.00 / guest
+Equipment
+3 chafers
+QUOTE PATH
+SAME MENU
+DRAFT
+Menu + 180 guests
+REVIEW THE NUMBER
+$26.93 food / guest
+CONFIRM
+$68.00 / guest quoted
+PRICE FOR A 30% FOOD-COST TARGET
+$89.78 / guest
+39.6% food cost at the quoted price
+
+Sample quote from the product tour. The dishes shown are examples, not its cost breakdown. Food cost excludes labor, rentals, tax and profit.
+
+Three files. One customer waiting.
+
+The dishes are in a menu document. The revised count is in an email. The number you plan to send is in a spreadsheet. The copying only looks harmless while all three agree.
+
+MENU DOCUMENT
+What they chose
+GUEST-COUNT EMAIL
+What changed
+QUOTE SHEET
+What you say
+One event record should carry what the customer chose and what the kitchen has to run.
+Menu management
+Build what each guest gets, priced and ready to reuse.
+Catering quotes
+Test the number, confirm it, and keep the original commitment.
+Make the menu runnable before you make it presentable.
+
+Keep dishes, portions per guest, the default price, and the equipment the menu always needs in one workspace.
+
+MENU WORKSPACE
+ILLUSTRATIVE
+MENU
+Summer wedding dinner
+DEFAULT
+$68 / guest
+DISH
+PER GUEST
+COST
+Herb roast chicken
+1 portion
+$6.84
+Lemon herb potatoes
+180 g
+$2.31
+Seasonal green salad
+120 g
+$1.28
+Lemon tart
+1 slice
+$1.57
+MENU PRICING
+Food cost / guest
+$12.00
+Selling price / guest
+$68.00
+Price / guest for 30% food cost
+$40.00
+EQUIPMENT TEMPLATE
+Chafers
+3
+Sheet trays
+6
+Service utensils
+8
+Counts stay fixed when guest count changes.
+Separate example: $6.84 + $2.31 + $1.28 + $1.57 = $12.00 food per guest. At a 30% food-cost target, $12.00 ÷ 0.30 = $40.00 per guest. Equipment counts are fixed; they do not scale with guests.
+Build what each guest receives.
+
+Dishes and portions per guest stay together, so the menu already carries the quantities an event will need.
+
+Price the menu from its food.
+
+Read cost per guest against the selling price, including the price that would meet your configured target.
+
+Keep the reusable plan safe.
+
+Attach fixed equipment counts, override details on one event, and check where a menu is used before deleting it.
+
+Know what the quote is carrying before you confirm it.
+
+A new event starts with a menu, date, guest count, and price. See the food cost while the job is still a draft, then freeze the plan, math, and money together.
+
+1
+Menu
+
+Choose what each guest receives.
+
+2
+Date
+
+Put the job on the calendar.
+
+3
+Guests
+
+Set the count the kitchen must serve.
+
+4
+Price
+
+Test the number against food cost.
+
+5
+Confirm
+
+Freeze plan, math, and money.
+
+Review happens before confirmation, while the number can still be changed deliberately.
+Cost before commitment.
+
+For this 180-guest tour event, $68 per guest puts food cost at 39.6%. The same panel names $89.78 as the price that would meet the 30% target.
+
+The order price can override the menu default.
+Guest-count changes update the draft estimate.
+Confirmation freezes the agreed plan and money.
+Real CostCook product-tour frame at 0:29.
+Compare without rewriting.
+
+The confirmed quote stays frozen while today's cost remains visible beside it. The original number does not disappear just because a supplier price moved later.
+
+The quote should know what the kitchen has to pack.
+
+Confirmation is not the end of the record. The same frozen event becomes the source for Shop, Prep, and Pack, so the kitchen runs the job that was priced.
+
+Build menu
+Set guests
+Review cost
+Set price
+Confirm
+Shop
+Prep
+Pack
+One confirmed event feeds three working views without rebuilding the menu or guest count.
+The complete Menus & Quotes list.
+
+Only the shipped capabilities directly involved in building, pricing, and confirming the job.
+
+13
+relevant capabilities
+
+Menu management
+What each guest gets, priced.
+5
+Menu workspace. Dishes, portions per guest, and price, saved in one piece.
+Self-pricing. Cost per guest against selling price, plus the price that would hit your target.
+Equipment templates. Each menu carries its equipment counts. Chafers times three stays times three regardless of guests.
+Used-by guards. A menu that orders still use will not delete out from under them.
+Overridable pricing. The menu’s per-guest price is the default an order can override.
+Quote and confirmation
+Price the draft, then protect the commitment.
+8
+Costed before commitment. A new order is a menu, a date, guests, and a price, estimated live as you set it up.
+Pinned money bar. The numbers stay on screen while you work, and guest-count changes autosave quietly.
+Confirm freezes everything. Confirmation saves the plan, calculations and quoted price together. Later price changes do not rewrite that quote.
+Honest reopen. Reopening keeps the frozen prices and says so. Once purchasing starts, reopening is refused.
+Clean duplication. Copy an event into one draft. A double-tap cannot make two.
+Quoted vs today. Confirmed orders compare the frozen quote with current prices, and say when they cannot.
+Aged plans flagged. An old frozen plan is marked old. It is never silently recomputed.
+Frozen prep notes. Draft orders use the current prep notes. Confirmed orders keep the notes saved when you confirmed.
+Frequently asked questions
+
+The practical questions to settle before the number leaves your kitchen.
+
+What is menu management software?
+
+Menu management software keeps dishes, portions per guest, the default selling price, and reusable equipment counts together. In CostCook, the menu can then become the starting point for a costed event.
+
+How does CostCook calculate a catering quote?
+
+A draft combines a menu, date, guest count, and price. CostCook computes the food cost per guest and food-cost percentage, then shows the price that would meet the configured target before you confirm.
+
+Can an event use a different price from the menu default?
+
+Yes. The menu carries the default per-guest price, and an individual order can override it without changing the reusable menu.
+
+What happens when I confirm a quote?
+
+Confirming saves the event plan, calculations and quoted price together. Later ingredient prices do not rewrite the quote you gave.
+
+Will later ingredient prices change the quote I already gave?
+
+No. A confirmed event keeps its frozen prices. CostCook can compare the original quote with current prices later without silently rewriting the commitment.
+
+Can I reopen a confirmed event?
+
+You can reopen while preserving the frozen prices, and the screen says that clearly. Once purchasing has started, reopening is refused so completed work is not invalidated.
+
+Ready for the customer. Ready for the kitchen.
+
+Bring one real menu, set the guest count, and follow the number into the plan the kitchen will run.
+
+Book a 15-min demo
+Start free trial
+Recipes & food costing
+Every CostCook feature

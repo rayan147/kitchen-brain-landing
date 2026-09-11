@@ -1,0 +1,105 @@
+Features
+/
+Product tour
+Follow one event from quote to pack list.
+
+See sample screens for a 180-guest wedding, from recipe costs to buying, prep and packing. No account needed. Choose any stop; kitchen date labels are a Coming preview.
+
+Start the guided tour
+Book a 15-min demo
+SAMPLE EVENT
+ILLUSTRATIVE
+Garden wedding supper
+Event
+Saturday, Aug 29
+Guests
+180
+Menu
+Garden wedding supper
+Quote
+$28.00 per guest
+
+13 stops. Start with recipes or choose the task you want to see.
+
+Take the product tour
+
+Choose a stop or use Next to follow the event. These are sample screens; use the feature link for details.
+
+All figures are illustrative. Each stop follows its public status; Labels & printing is marked Coming.
+
+Tour stop
+1. Recipes & food costing
+2. Menus & quotes
+3. Ingredients & supplier prices
+4. Invoices & price-list import
+5. Nutrition facts & allergens
+6. Guests’ restrictions
+7. Labels & printing
+8. Orders, shop, prep & pack
+9. Purchasing & receiving
+10. Inventory
+11. Purchases & month cost
+12. Team & access
+13. Sage, the assistant
+CC
+Juniper & Stone Catering
+AR
+Stop 1 of 13: Recipes & food costing
+
+Recipes / Herb roast chicken
+
+Keep the working recipe and its cost on one record.
+Illustrative tour data
+Recipe cost
+$164.16
+Per portion
+$6.84
+Food cost
+30.4%
+Batch yield
+24 portions
+INGREDIENT	USED	USABLE YIELD	COST
+Chicken thigh
+7.8 kg
+91%
+$109.42
+Herb marinade
+1.1 kg
+100%
+$24.86
+Lemon
+12 each
+82%
+$9.84
+Pan jus
+1.4 L
+100%
+$20.04
+Cost path
+Complete
+Case
+$127.66 / 10 kg
+Usable cost
+$14.03 / kg
+Plate share
+$4.56
+Missing prices
+None
+
+$164.16 ÷ 24 portions = $6.84. At a sample selling price of $22.50 per portion, food cost is 30.4%. Food only; labor and overhead are extra. This tour table is a preview.
+
+The same 7.8 kg of chicken has to survive the recipe, the purchase order, and the back door.
+
+Open the dish the kitchen will cook and follow its price from purchased weight through usable yield to one portion.
+
+Read the feature guide
+Previous stop
+Next: Menus & quotes
+Start with one real menu. Keep it intact all the way to the back door.
+
+Bring the recipes and supplier prices you already have. CostCook keeps the working plan and its numbers connected.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits

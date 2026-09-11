@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureGroups } from '../../lib/features';
 import { cta, demoCta } from '../../lib/site';
 
@@ -20,8 +21,8 @@ const historyRows = [
 
 const recoveryStates = [
 	{ label: 'Late purchase', action: 'Keep its purchase date', note: 'Current cost follows when the purchase happened, not when it was typed.' },
-	{ label: 'Wrong amount', action: 'Add a signed adjustment', note: 'A required reason joins the record; history is not restated.' },
-	{ label: 'Missing trusted count', action: 'Withhold turnover', note: 'The metric waits until two trusted counts bracket the period.' }
+	{ label: 'Wrong amount', action: 'Record a correction and reason', note: 'The correction keeps your reason beside the original amount.' },
+	{ label: 'Missing trusted count', action: 'Add counts before viewing turnover', note: 'Stock turnover needs a trusted count at each end of the period.' }
 ] as const;
 
 // Considered Strategy; not used because the FAQ and evidence rows are static
@@ -29,15 +30,15 @@ const recoveryStates = [
 const faqItems = [
 	{
 		question: 'Where do purchase records come from?',
-		answer: 'One ledger accepts manual entry, invoice import, order log, and receiving. Every entry keeps its source, and a whole invoice can be committed as one all-or-nothing batch.'
+		answer: 'Type a purchase, import an invoice, record an event purchase or save a delivery. Each entry keeps its source. A whole invoice can be saved together.'
 	},
 	{
 		question: 'What does the month verdict compare?',
-		answer: 'It compares theoretical ingredient usage with actual spend. The remaining difference is named as an unaccounted gap rather than automatically blamed as waste.'
+		answer: 'It compares ingredient use calculated from orders with recorded purchase spending. The difference is not automatically classified as waste.'
 	},
 	{
 		question: 'How does logged waste affect the gap?',
-		answer: 'Logged waste values part of the gap at frozen sticker cost. It re-labels supported spend without pretending to explain the rest.'
+		answer: 'Logged waste explains part of the difference using the cost saved with that waste record. Any remaining amount stays unexplained.'
 	},
 	{
 		question: 'Can I correct an old purchase?',
@@ -56,12 +57,13 @@ const faqItems = [
 		<div class="container-page hero-grid">
 			<div class="hero-copy anim-enter">
 				<nav aria-label="Breadcrumb" class="feature-breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Purchases & month cost</span></nav>
-				<h1 id="ledger-heading" class="feature-display">Know what the month should have cost—and what it actually did.</h1>
-				<p class="hero-lede">Bring every purchase into one sourced ledger, compare theoretical use with actual spend, and keep the unaccounted gap honest.</p>
+				<h1 id="ledger-heading" class="feature-display">Compare planned food cost with what you spent.</h1>
+				<p class="hero-lede">Bring your purchase records together and compare monthly spending with the ingredient use calculated from your orders. Review the difference, including logged waste and anything still unexplained.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
 				</div>
+				<FeatureTrialTerms />
 			</div>
 
 			<figure class="month-sheet ledger-enter">
@@ -97,26 +99,26 @@ const faqItems = [
 
 	<section id="purchase-ledger" class="product-section ledger-section" aria-labelledby="purchase-ledger-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="purchase-ledger-heading">One ledger. Four doors in.</h2><p>Import a supplier invoice, post a received purchase order, attach spend to an event, or log one item quickly. The source stays on every row.</p></div>
+			<div class="section-intro"><h2 id="purchase-ledger-heading">Keep purchases from four sources together.</h2><p>Import a supplier invoice, post a received purchase order, attach spend to an event, or log one item quickly. The source stays on every row.</p></div>
 			<figure class="ledger-sheet">
 				<div class="ledger-head"><span>Purchase ledger · illustrative</span><span>August · 47 rows</span></div>
 				<div class="line-head"><span>Source</span><span>Record</span><span>Amount</span></div>
 				{purchaseSources.map((row) => <div class="ledger-line"><span class="source-tag">{row.source}</span><strong>{row.record}</strong><b>{row.amount}</b></div>)}
 				<div class="ledger-foot"><span><strong>History stays attached</strong><small>Source · purchase date · correction trail</small></span><b>$19,135.00</b></div>
-				<figcaption>Illustrative supplier, records, row count, and amounts. Ledger filters can narrow by ingredient and date, with paging beyond 50 rows.</figcaption>
+				<figcaption>Illustrative month: four of 47 purchase records shown; $19,135 is the total of all 47. Filter by ingredient and date to find a purchase.</figcaption>
 			</figure>
 		</div>
 	</section>
 
 	<section id="month-close" class="product-section close-section" aria-labelledby="month-close-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="month-close-heading">Make the month show its working.</h2><p>Theoretical usage and actual spend set the difference. Logged waste can account for part of it; CostCook leaves the rest visibly unaccounted.</p></div>
+			<div class="section-intro"><h2 id="month-close-heading">Make the month show its working.</h2><p>Compare the cost of ingredients calculated from orders with recorded purchases. Logged waste may explain part of the difference. The rest remains open for review.</p></div>
 			<figure class="reconciliation">
 				<div class="recon-head"><span>August food-cost bridge</span><span>Illustrative amounts</span></div>
 				<div class="recon-line"><span>Theoretical ingredient use</span><strong>$18,420</strong></div>
 				<div class="recon-line actual"><span>Actual purchase spend</span><strong>$19,135</strong></div>
 				<div class="recon-line variance"><span>Difference to explain</span><strong>+$715</strong></div>
-				<div class="recon-breakdown"><div><small>Explained by logged waste</small><strong>$286</strong><span>Frozen sticker cost</span></div><div><small>Still unaccounted</small><strong>$429</strong><span>Kept open for review</span></div></div>
+				<div class="recon-breakdown"><div><small>Explained by logged waste</small><strong>$286</strong><span>Cost saved with the waste record</span></div><div><small>Still unaccounted</small><strong>$429</strong><span>Kept open for review</span></div></div>
 				<figcaption>Illustrative reconciliation. The unaccounted gap is named without being auto-classified as waste.</figcaption>
 			</figure>
 		</div>
@@ -124,7 +126,7 @@ const faqItems = [
 
 	<section class="history" aria-labelledby="history-heading">
 		<div class="container-page history-grid">
-			<div><h2 id="history-heading">Let dates and corrections keep the past intact.</h2><p>Current cost follows the purchase date. Price drift shows the signed change over the window you choose. If an amount is wrong, add a reasoned adjustment instead of replacing the old line.</p></div>
+			<div><h2 id="history-heading">Let dates and corrections keep the past intact.</h2><p>Ingredient prices follow the purchase date. Choose a date range to see price increases and decreases. Correct a wrong amount by adding an adjustment and a reason; keep the original record.</p></div>
 			<figure class="history-sheet">
 				<div class="history-top"><span>Price movement · illustrative</span><span>1–31 Aug</span></div>
 				{historyRows.map((row) => <div class="history-line"><strong>{row.label}</strong><span>{row.before} → {row.after}</span><b>{row.change}</b></div>)}
@@ -143,8 +145,8 @@ const faqItems = [
 
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
-			<div><h2 id="capabilities-heading">The complete Purchases & month cost list.</h2><p>Everything below is shipped today and remains available for the diligence read.</p><p class="count"><strong>{ledgerGroup.items.length}</strong><span>shipped capabilities</span></p></div>
-			<details id="features-ledger" open><summary><span>Purchases & month cost</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{ledgerGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
+			<div><h2 id="capabilities-heading">The complete Purchases & month cost list.</h2><p>Open the details to check what is available today.</p><p class="count"><strong>{ledgerGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<details id="features-ledger"><summary><span>Purchases & month cost</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{ledgerGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
 		</div>
 	</section>
 
@@ -153,7 +155,7 @@ const faqItems = [
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">
-		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the month with the known and unknown parts still visible.</h2><p>Bring one real month. Follow every purchase into the ledger and inspect the result beside the records that support it.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
+		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the month with the known and unknown parts still visible.</h2><p>Bring one real month. Follow every purchase into the ledger and inspect the result beside the records that support it.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
 		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>

@@ -1,0 +1,98 @@
+Every feature / The day itself
+
+43 AVAILABLE FEATURES
+
+The day itself
+
+It is five in the morning, your hands are wet, and the sheet taped to the hotel pan has to be right. There is no second trip to the store.
+
+Confirm the menu and guest count to create shopping, prep and pack lists. Check deliveries against the supplier orders you sent, and keep shortages visible for follow-up.
+
+Start free trial
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+TODAY, THE HOME SCREEN
+
+Opens on what needs attention.
+Attention first. Orders, guests, and deliveries up top. When nothing needs you, it says all clear.
+Ranked tasks. Each attention item opens the exact screen that fixes it.
+Retry a failed panel. If part of Today cannot load, retry that panel while continuing to use the rest.
+Quiet signals. See purchase updates, price changes, imports awaiting review, missing ingredient details and stock needing a count.
+Dismissible checklist. The finish-setting-up list goes away when you say so, and stays away.
+First-use guidance. Quick actions and an empty state that tells a new kitchen where to start.
+Sample data. Loads with one tap, resets cleanly, and spares any rows you renamed.
+
+ORDERS, THE EVENT
+
+Quote it, freeze it, run it.
+Costed before commitment. A new order is a menu, a date, guests, and a price, estimated live as you set it up.
+Three tabs, one plan. Shop, Prep, and Pack all read the same computed plan.
+Pinned money bar. The numbers stay on screen while you work, and guest-count changes autosave quietly.
+Confirm freezes everything. Confirmation saves the plan, calculations and quoted price together. Later price changes do not rewrite that quote.
+Honest reopen. Reopening keeps the frozen prices and says so. Once purchasing starts, reopening is refused.
+Clean duplication. Copy an event into one draft. A double-tap cannot make two.
+Shelf check. Enter the ingredients and prepared batches you have on hand for this order.
+Buy math shown. Every buy line can show need, on hand, pack size, and packs.
+Vendor grouping. The shopping list groups by supplier and by kitchen section.
+Durable check-offs. Checked items stay saved. If the plan changes, affected items need checking again.
+Walk-in mode. On a phone, a running left-to-grab footer follows you through the list.
+Printable lists. Shop, prep, and pack print clean: controls gone, hints kept, columns aligned for a clipboard.
+Leftover nudges. Likely left about a quart, from your recent orders. One at a time, dismissible.
+Quoted vs today. Confirmed orders compare the frozen quote with current prices, and say when they cannot.
+Event cost, after. Compare the confirmed quote with purchases recorded against the event. Differences below the configured dollar threshold are not highlighted.
+Shortfall evidence. Pack lines left open at close become reviewable evidence: short, packed, or not sure.
+Aged plans flagged. An old frozen plan is marked old. It is never silently recomputed.
+Per-order equipment. Hide a template line or add a one-off for this event. The menu template never changes.
+Allergens at pack-out. Pack lists carry allergen badges.
+Orders hub. Filter, search, and read food-cost and status badges across every event.
+Frozen prep notes. Draft orders use the current prep notes. Confirmed orders keep the notes saved when you confirmed.
+
+PURCHASE ORDERS & RECEIVING
+
+What you send, and what actually arrives.
+Per-vendor POs. Confirming an order offers purchase orders per supplier: email, print, or handled by you.
+The email you saw. Review the exact supplier email before sending. Check the order record for whether it was sent or needs a retry.
+Printable POs. Signature lines and stable PO numbers.
+Receiving follows sending. A sent PO creates its receiving checklist for you.
+Deliveries as they are. Short, over, substituted, missing, and unexpected lines each have their own handling.
+All-or-nothing posting. Committing a delivery writes real purchases, and current prices update from what actually arrived.
+Automatic rebuy list. Short and missing lines become a durable follow-up list with handled and reopen states.
+Receive from the purchase order. Receive against any sent purchase order from its own screen.
+Retryable sends. A failed PO send can be retried, with the failure kept on record.
+
+INVENTORY
+
+The shelf, computed, never guessed.
+Stock on hand. Start with a dated physical count, then add deliveries and subtract recorded use and waste.
+Dated count history. Each count keeps the unit cost recorded at the time. A later correction does not replace the old count.
+Count freshness. See whether stock is Fresh, Stale or Never counted. Missing or old counts do not reduce estimated buying.
+Desktop and phone views. A desktop table and a phone list, with state badges and a need breakdown naming which order wants what.
+Buy what is missing. Subtract trusted stock from order needs to build a printable shopping list. Quantities you override stay separate.
+Shelf value. What the shelf was worth at any date.
+
+TAKING ORDERS
+
+Coming
+The enquiry, arriving as something you can quote from.
+
+A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives awaiting kitchen confirmation, which means you still say yes to it. The storefront and the embeddable widget are built and are not deployed anywhere a customer could reach, so this stays marked Coming.
+
+Four other areas.
+Recipes and costing
+
+What a plate costs, from the case price up, with the arithmetic shown.
+
+Getting prices in
+
+Upload invoices, price lists and spreadsheets. Review the details before saving.
+
+Compliance and labels
+
+Calculate nutrition per portion and print an estimate. Review allergens and guest restrictions. Kitchen date labels are Coming.
+
+Team, and what it connects to
+
+Who can change what, how a new kitchen gets started, and the connections being built.
+
+If this area covers your kitchen, bring one real menu and see it run. Book a 15-min demo

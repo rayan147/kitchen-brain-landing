@@ -11,18 +11,18 @@ const [html, featureHubHtml] = await Promise.all([
 const required = [
 	'id="features-import"',
 	'id="imports-heading"',
-	'Bring in the paperwork. Keep the final say.',
+	'Upload paperwork. Check prices before saving.',
 	'id="invoice-import"',
 	'id="price-list-import"',
 	'aria-label="On this page"',
 	'Source',
-	'Staged',
+	'Details to review',
 	'You confirm',
 	'A price list is an offer. An invoice is what happened. CostCook keeps the difference.',
 	'id="faq-heading"',
 	'What can I import into CostCook?',
 	'Can an older invoice replace a newer ingredient price?',
-	'The source filed. The price explained.',
+	'Review your next supplier invoice.',
 	'invoices-price-lists-final-say'
 ];
 

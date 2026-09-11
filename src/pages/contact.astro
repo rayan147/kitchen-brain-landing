@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import AskSupport from '../components/sections/AskSupport.astro';
+// story: docs/stories/contact-support.story.md
+// Considered Strategy; not used because this copy uses one shared contact flow.
 import { demoCta, signIn } from '../lib/site';
 
 ---
@@ -15,8 +17,7 @@ import { demoCta, signIn } from '../lib/site';
 			<div class="max-w-3xl">
 				<h1 id="contact-title" class="text-display font-semibold">Questions before you start?</h1>
 				<p class="mt-6 max-w-[60ch] text-lede text-ink-soft">
-					Tell me about your kitchen, the workflow you are trying to fix, or anything you want to
-					understand before starting CostCook.
+					Ask Rayan about your kitchen, setup or pricing. He replies by email, usually the same day. You can ask before starting a trial.
 				</p>
 				<AskSupport />
 				<p class="mt-6 max-w-[60ch] text-sm leading-6 text-ink-soft">
@@ -48,7 +49,7 @@ import { demoCta, signIn } from '../lib/site';
 		<div class="container-page py-section-tight">
 			<div class="grid items-start gap-8 lg:grid-cols-[7fr_5fr] lg:gap-16">
 				<div>
-					<h2 class="text-h2 font-semibold">Rather show me the workflow?</h2>
+					<h2 class="text-h2 font-semibold">Want to see your menu in a demo?</h2>
 					<p class="mt-4 max-w-[58ch] text-ink-soft">
 						Bring one menu and guest count. We can walk through how CostCook would turn it into
 						costing, shopping, prep, and pack work.

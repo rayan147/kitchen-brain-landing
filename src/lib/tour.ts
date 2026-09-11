@@ -91,9 +91,9 @@ if (recipeProofHasDrifted) {
 	throw new Error('Product tour recipe-costing proof no longer reconciles.');
 }
 
-// Considered Strategy; not used because the twelve tour stops vary as static,
+// Considered Strategy; not used because the tour stops vary as static,
 // validated content data and share one rendering behavior. A strategy per stop
-// would turn editorial variation into twelve unnecessary implementations.
+// would turn editorial variation into unnecessary implementations.
 export const tourStops: readonly TourStop[] = [
 	{
 		id: 'recipes-costing',
@@ -126,7 +126,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Plate share', value: formatCurrency(tourRecipeCostingProof.chickenPlateShare) },
 				{ label: 'Missing prices', value: 'None', tone: 'good' }
 			],
-			footnote: 'Open any line to see the arithmetic and the price source.'
+			footnote: '$164.16 ÷ 24 portions = $6.84. At a sample selling price of $22.50 per portion, food cost is 30.4%. Food only; labor and overhead are extra. This tour table is a preview.'
 		}
 	},
 	{
@@ -135,7 +135,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Menus & quotes',
 		appArea: 'Menus / Garden wedding supper',
 		title: 'Say the per-guest price with the food cost beside it.',
-		intro: 'Build the menu once, set the guest count, and inspect the food-cost room before the customer hears the number.',
+		intro: 'Choose dishes and portions, enter 180 guests and a selling price, then check food cost against your target.',
 		callout: 'At 180 guests, one dollar per head is a $180 decision.',
 		featureHref: featureMenuHref('menus'),
 		metrics: [
@@ -160,7 +160,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Target food cost', value: '31.0%' },
 				{ label: 'Room to target', value: '1.4 pts', tone: 'good' }
 			],
-			footnote: 'Confirming freezes the plan, math, and quoted money together.'
+			footnote: '$1,491.38 food cost ÷ $5,040 revenue = 29.6%. The 31% target leaves 1.4 percentage points. Revenue after food cost still needs to cover labor, overhead and profit. Confirming preserves this quote.'
 		}
 	},
 	{
@@ -173,7 +173,7 @@ export const tourStops: readonly TourStop[] = [
 		callout: 'A cheaper case is not cheaper if the usable kilo costs more.',
 		featureHref: featureMenuHref('ingredients'),
 		metrics: [
-			{ label: 'Current pack', value: formatCurrency(tourRecipeCostingProof.chickenPackPrice) },
+			{ label: '10 kg pack', value: formatCurrency(tourRecipeCostingProof.chickenPackPrice) },
 			{ label: 'Purchased cost', value: `${formatCurrency(tourRecipeCostingProof.chickenPurchasedCostPerKg)} / kg` },
 			{ label: 'Usable cost', value: `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerKg)} / kg` },
 			{ label: 'Recipes affected', value: '6', tone: 'attention' }
@@ -188,8 +188,8 @@ export const tourStops: readonly TourStop[] = [
 			title: 'Ingredient facts',
 			status: 'Costable',
 			lines: [
-				{ label: 'Trim yield', value: '94%' },
-				{ label: 'Cook yield', value: '97%' },
+				{ label: 'Usable after trim', value: '91%' },
+				{ label: 'Costing quantity', value: 'Before cooking' },
 				{ label: 'Storage area', value: 'Walk-in 1' },
 				{ label: 'Allergens', value: 'None', tone: 'good' }
 			],
@@ -201,7 +201,7 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'import',
 		label: 'Invoices & price-list import',
 		appArea: 'Import / Harbor Foods invoice 88421',
-		title: 'Let the file become staged facts, not silent changes.',
+		title: 'Review the invoice before saving its prices.',
 		intro: 'Keep the original invoice beside the extracted rows, then confirm exact matches and resolve the uncertain ones.',
 		callout: 'Three doubtful rows wait. The other sixteen do not need typing twice.',
 		featureHref: featureMenuHref('import'),
@@ -227,7 +227,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Computed total', value: formatCurrency(tourRecipeCostingProof.invoiceTotal), tone: 'good' },
 				{ label: 'Difference', value: '$0.00', tone: 'good' }
 			],
-			footnote: 'Nothing reaches the catalog until the review is confirmed.'
+			footnote: 'Four of 19 invoice rows are shown. The total includes all 19. In CostCook, review and save the records before they change your prices.'
 		}
 	},
 	{
@@ -236,11 +236,11 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Nutrition facts & allergens',
 		appArea: 'Recipes / Herb roast chicken / Nutrition',
 		title: 'Keep the label numbers and allergen review on the recipe.',
-		intro: 'Review the per-portion calculation, see which ingredient supplied each profile, and print the complete panel.',
+		intro: 'See nutrition estimates per portion, review the ingredient sources and allergens, then use the recipe’s print action in CostCook.',
 		callout: 'A blank nutrient stays blank. It never becomes a made-up zero.',
 		featureHref: featureMenuHref('nutrition'),
 		metrics: [
-			{ label: 'Calories', value: '418' },
+			{ label: 'Calories', value: '418 kcal' },
 			{ label: 'Protein', value: '34.6 g' },
 			{ label: 'Carbohydrate', value: '18.2 g' },
 			{ label: 'Total fat', value: '22.8 g' }
@@ -298,10 +298,10 @@ export const tourStops: readonly TourStop[] = [
 			lines: [
 				{ label: 'Order', value: 'Garden wedding supper' },
 				{ label: 'Checked', value: 'At confirm' },
-				{ label: 'Later recipe edits', value: 'Not restated', tone: 'attention' },
-				{ label: 'Re-check', value: 'Appends a new reading' }
+				{ label: 'Later recipe edits', value: 'Original check kept', tone: 'attention' },
+				{ label: 'Re-check', value: 'Saves a new check' }
 			],
-			footnote: 'Illustrative tour values. CostCook detects and never certifies; a guard is a reason to look at an ingredient.'
+			footnote: 'Illustrative examples of restriction results; summary counts cover the whole order, beyond the rows shown. Clear means no conflict found in reviewed records. Your kitchen still checks the food and preparation.'
 		}
 	},
 	{
@@ -344,7 +344,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Orders, shop, prep & pack',
 		appArea: 'Orders / Garden wedding supper',
 		title: 'Run shop, prep, and pack from the quote you confirmed.',
-		intro: 'The 180-guest plan carries the frozen quote into three working lists, with check-offs that survive the walk-in and prep table.',
+		intro: 'Confirm the order to work from shopping, prep and pack lists for 180 guests. Previously loaded pages stay readable offline; reconnect to save check-offs.',
 		callout: 'One guest count. Three lists. No second round of typing.',
 		featureHref: featureMenuHref('orders'),
 		metrics: [
@@ -395,15 +395,15 @@ export const tourStops: readonly TourStop[] = [
 			['Mixed herbs', '1 case', '1 case', 'Received']
 		],
 		aside: {
-			title: 'Commit delivery',
+			title: 'Save the delivery',
 			status: 'Ready with warning',
 			lines: [
 				{ label: 'Purchase rows', value: '12' },
-				{ label: 'Current prices updated', value: '11' },
+				{ label: 'Prices to update', value: '11' },
 				{ label: 'Follow-up line', value: 'Chicken thigh', tone: 'attention' },
 				{ label: 'Unexpected items', value: 'None', tone: 'good' }
 			],
-			footnote: 'Posting is all-or-nothing; short and missing lines remain actionable.'
+			footnote: 'Four of 12 delivery lines are shown. Save the reviewed delivery to record purchases and update eligible prices. Shortfalls stay visible for follow-up.'
 		}
 	},
 	{
@@ -412,7 +412,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Inventory',
 		appArea: 'Inventory / Walk-in 1',
 		title: 'Build the next shopping list from a count you can trust.',
-		intro: 'See the movement-based on-hand value, when it was last counted, and the exact order creating the gap.',
+		intro: 'Start with a stock count, then follow deliveries, waste and packed orders. Check the count date before using it to reduce a shopping list.',
 		callout: '“Never counted” is an answer. Zero is a different one.',
 		featureHref: featureMenuHref('inventory'),
 		metrics: [
@@ -437,7 +437,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Trusted surplus', value: '5 lines', tone: 'good' },
 				{ label: 'Refused estimates', value: '3' }
 			],
-			footnote: 'Need minus trusted shelf becomes one durable, printable list.'
+			footnote: 'The summary covers all stock records; four are shown. Missing or stale counts do not reduce buying. For chicken, 58.5 kg needed − 48.5 kg on hand = 10 kg to buy.'
 		}
 	},
 	{
@@ -446,11 +446,11 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Purchases & month cost',
 		appArea: 'Purchases / August cost review',
 		title: 'Name the month’s gap without guessing what caused it.',
-		intro: 'Compare theoretical usage with signed purchase history, then separate known waste from the amount that still needs investigation.',
+		intro: 'Compare recipe-calculated food use for August with recorded purchases. Deduct recorded waste to see the amount still unexplained.',
 		callout: 'The gap is evidence to review, not a waste number to blame on the crew.',
 		featureHref: featureMenuHref('ledger'),
 		metrics: [
-			{ label: 'Theoretical', value: '$8,420.00' },
+			{ label: 'Planned food use', value: '$8,420.00' },
 			{ label: 'Actual spend', value: '$8,891.40' },
 			{ label: 'Difference to explain', value: '$471.40', tone: 'attention' },
 			{ label: 'Inventory trust', value: 'Counted', tone: 'good' }
@@ -471,7 +471,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Lemon', value: '−3.1%', tone: 'good' },
 				{ label: 'Corrections', value: '2 signed' }
 			],
-			footnote: 'Corrections join the ledger; they never rewrite its history.'
+			footnote: '$8,891.40 spent − $8,420 planned = $471.40. Subtract $186.50 recorded waste: $284.90 still needs checking. Price changes compare current and previous prices; three of the month’s ingredients are shown.'
 		}
 	},
 	{
@@ -479,8 +479,8 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'team',
 		label: 'Team & access',
 		appArea: 'Settings / Team & access',
-		title: 'Give sensitive actions a clear human boundary.',
-		intro: 'Invite the crew knowing where Owner, Manager, and Staff authority actually changes, without implying a custom permission grid that is not there.',
+		title: 'See what each team role can do.',
+		intro: 'Invite teammates by email. Owners, Managers and Staff have different actions; all can open cost screens. Invitations join as Staff.',
 		callout: 'The cook can open the work. Publishing, billing, and approvals still have named owners.',
 		featureHref: featureMenuHref('team'),
 		metrics: [
@@ -505,7 +505,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Cost screens', value: 'Visible' },
 				{ label: 'Custom screen rules', value: 'Not available', tone: 'attention' }
 			],
-			footnote: 'CostCook enforces role-aware sensitive actions, not fine-grained per-screen permissions.'
+			footnote: 'You cannot hide individual screens from selected teammates or create custom roles.'
 		}
 	},
 	{
@@ -538,7 +538,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Order', value: 'Garden wedding supper' },
 				{ label: 'Purchase order', value: 'PO-1047' },
 				{ label: 'Inventory area', value: 'Walk-in 1' },
-				{ label: 'Proposed writes', value: '0', tone: 'good' }
+				{ label: 'Proposed changes', value: '0', tone: 'good' }
 			],
 			footnote: 'Shopping-list proposals wait for a manager or owner to review.'
 		}

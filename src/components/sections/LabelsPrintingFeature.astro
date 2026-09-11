@@ -15,7 +15,8 @@
  * composition of static product data, nothing is swapped at runtime.
  */
 import { labels, labelsAvailability, labelsStatusWord, LABELS_STATUS } from '../../lib/labels';
-import { cta, demoCta, launchPlan } from '../../lib/site';
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
+import { cta, demoCta } from '../../lib/site';
 
 const coming = labelsAvailability.isComing;
 
@@ -37,7 +38,7 @@ const faqItems = [
 	{
 		question: 'What does it print on?',
 		answer:
-			'A 30-up sticker sheet on an office printer, a 58 or 62 mm continuous thermal roll, a 2 by 1 inch die-cut roll, or any stock you measure yourself. The kitchen chooses once in Settings. The sticker preview is sized in millimetres, so what you see is the print geometry.'
+			'A 30-up sticker sheet on an office printer, a 58 or 62 mm continuous thermal roll, a 2 by 1 inch die-cut roll, or any stock you measure yourself. The kitchen chooses once in Settings. The sticker preview is sized in millimetres, so what you see is the printed size.'
 	},
 	{
 		question: 'Does it send labels straight to a label printer?',
@@ -78,12 +79,10 @@ const faqItems = [
 						</span>
 					</div>
 					<h1 id="labels-feature-heading" class="mt-4 text-display font-semibold">
-						The sticker says what you chose. Nothing more.
+						Kitchen date labels are coming. Preview how they will work.
 					</h1>
 					<p class="mt-5 max-w-[58ch] text-lede text-ink">
-						A date label is a food-safety claim on a physical container. So the app asks the
-						cook the one thing it cannot know, never guesses a use-by date, and freezes what
-						the sticker said the moment it prints.
+						Choose the storage condition, use-by date and number of containers before printing. The label record keeps the wording for later reprints. This preview shows a feature you cannot use in the trial today.
 					</p>
 					{
 						coming && (
@@ -170,7 +169,7 @@ const faqItems = [
 					/>
 				</div>
 				<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
-					Sized in millimetres in the dialog, so the preview is the print geometry. No allergen
+					Sized in millimetres in the dialog, so the preview is the printed size. No allergen
 					data on this recipe, so the sticker prints no allergen line, and the preview says a
 					blank label is not an all-clear.
 					<a href={labels.proof.sticker.src} class="btn-quiet mt-2 w-fit" data-full-proof-link>Open full sticker preview</a>
@@ -297,15 +296,16 @@ const faqItems = [
 		<div class="container-page py-section">
 			<h2 id="closing-heading" class="text-h2 font-semibold">Print what you chose. Keep the record.</h2>
 			<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
-				Costing, ordering, prep, purchasing, inventory, and nutrition ship today. Start
+				Recipe costing, event planning, prep, purchasing, inventory and nutrition are available today. Start
 				the trial for that work; labels remain excluded until the word above changes.
 			</p>
 			<div class="mt-8 flex flex-wrap items-center gap-4">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				<a href="/features" class="btn-quiet">Every feature, area by area</a>
 			</div>
+			<FeatureTrialTerms />
 			<p class="mt-4 text-sm text-ink-soft">
-				{launchPlan.trialDays} days free, then {launchPlan.displayPrice}. Charged $0 today. Labels remain excluded while marked Coming.
+				Labels remain excluded while marked Coming.
 			</p>
 		</div>
 	</section>

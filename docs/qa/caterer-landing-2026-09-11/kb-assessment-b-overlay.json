@@ -1,0 +1,354 @@
+{
+  "injected": true,
+  "visibleToUser": false,
+  "logs": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "startGroup",
+      "text": "%c[impeccable] 74 anti-patterns found color: oklch(84% 0.19 80.46); font-weight: bold"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~110 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~85 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~131 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~151 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~91 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 36 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~96 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~96 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 36 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 41 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 34 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 33 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 32 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 39 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cgray-on-color%c text #d6e2dd on bg #256549 color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 35 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 39 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~88 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~88 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cline-length%c ~101 chars/line (aim for <80) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cside-tab%c border-top: 4px color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cnested-cards%c Card inside card color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 36 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 32 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%call-caps-body%c text-transform: uppercase on 32 chars of body text color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"Then, the scale test\" above h3 \"Three events. One production run.\" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"What goes wrong\" above h2 \"The spreadsheet works until the job changes.\" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"Who this is for\" above h2 \"Built for the kitchen where the person who quotes the job al\" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"Trim and yield\" above h2 \"The case has the skins on it. Your recipe does not.\" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"What else is in it\" above h2 \"Four more areas, and where each one stops.\" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"The other tools\" above h2 \"Your regular week and your special events are two different \" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"Who made it\" above h2 \"I cooked professionally for twelve years before I built Cost\" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"Start here\" above h2 \"Put one real order through it.\" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ckicker-above-heading%c kicker \"Your trial\" above h3 \"Start with the next order.\" color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cnested-cards%c Card inside card color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cnested-cards%c Card inside card color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cnested-cards%c Card inside card color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cnested-cards%c Card inside card color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cnested-cards%c Card inside card color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cnested-cards%c Card inside card color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cheading-rhythm%c h3 \"Ask your kitchen a question. See where the answer came from.\" has 0px above vs 16px below — it reads as bound to the block above (2 headings on page) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%cheading-rhythm%c h3 \"Three roles. A short list of real boundaries.\" has 0px above vs 16px below — it reads as bound to the block above (2 headings on page) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"See yield, portion, and \" is 96% covered by overlapping text (p.anim-enter.text-sm.font-semibold.text-amber-deep) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.flex.flex-wrap.items-baseline.gap-x-2.text-sm.font-semibold.text-ink \"Menus & quotes\" is 96% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"Price a menu before you \" is 96% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.flex.flex-wrap.items-baseline.gap-x-2.text-sm.font-semibold.text-ink \"Ingredients & supplier p\" is 96% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"Keep pack costs, yields,\" is 96% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.flex.flex-wrap.items-baseline.gap-x-2.text-sm.font-semibold.text-ink \"Invoices & price-list im\" is 96% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"Bring in paper or spread\" is 96% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"The fifteen label number\" is 92% covered by overlapping text (p.anim-enter.mx-auto.mt-3.max-w-[54ch].text-base.text-ink-soft.sm:mt-4.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"Turn one menu and guest \" is 100% covered by overlapping text (p.anim-enter.text-sm.font-semibold.text-amber-deep) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.flex.flex-wrap.items-baseline.gap-x-2.text-sm.font-semibold.text-ink \"Purchasing & receiving\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"Send the order, record w\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.flex.flex-wrap.items-baseline.gap-x-2.text-sm.font-semibold.text-ink \"Inventory\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"See what is on the shelf\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.flex.flex-wrap.items-baseline.gap-x-2.text-sm.font-semibold.text-ink \"Purchases & month cost\" is 100% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"Compare what the month s\" is 100% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-0.5.block.text-xs.leading-snug.text-ink-soft \"Ask a question, get an a\" is 100% covered by overlapping text (p.anim-enter.mx-auto.mt-3.max-w-[54ch].text-base.text-ink-soft.sm:mt-4.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Work from total ingredie\" is 75% covered by overlapping text (p.anim-enter.text-sm.font-semibold.text-amber-deep) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"Catering menu pricing: m\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Understand the three per\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"How to cost a recipe fro\" is 100% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Follow a supplier case t\" is 50% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"The event is over. What \" is 100% covered by overlapping text (p.anim-enter.mx-auto.mt-3.max-w-[54ch].text-base.text-ink-soft.sm:mt-4.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Separate quantities that\" is 56% covered by overlapping text (p.anim-enter.text-sm.font-semibold.text-amber-deep) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"How to turn a catering m\" is 74% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Consolidate recipe needs\" is 74% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"How supplier price chang\" is 47% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Keep the source, compare\" is 53% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"The delivery arrived wro\" is 70% covered by overlapping text (p.anim-enter.mx-auto.mt-3.max-w-[54ch].text-base.text-ink-soft.sm:mt-4.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Confirm the ingredient, \" is 53% covered by overlapping text (p.font-mono.text-xs.font-semibold.tracking-wide.text-ink-soft) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c a.inline-flex.min-h-11.items-center.gap-2.text-sm.font-semibold.text-green-deep.underline.decoration-ticket-rule.underline-offset-4.transition-colors.duration-150.hover:decoration-green \"Read every guide\" is 67% covered by an opaque element (ol.mt-4.grid.gap-3.border-y.border-hairline.py-3.text-left.sm:grid-cols-3.sm:gap-0) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c p.text-xs.text-ink-soft \"Ten worked guides. The a\" is 72% covered by an opaque element (div.mt-3.border.border-hairline.bg-paper.p-1.shadow-ticket.sm:p-2) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Follow one 180-guest wed\" is 82% covered by overlapping text (p.anim-enter.text-sm.font-semibold.text-amber-deep) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"Who it's for\" is 82% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Check the kitchens, even\" is 82% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"Your initial setup\" is 82% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Compare workflows, shipp\" is 100% covered by overlapping text (p.anim-enter.text-sm.font-semibold.text-amber-deep) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"FAQ\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Get direct answers about\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.block.text-sm.font-semibold.leading-snug.text-ink \"Contact\" is 100% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c span.mt-1.block.text-xs.leading-snug.text-ink-soft \"Email or call Rayan when\" is 50% covered by overlapping text (h1.anim-enter.mx-auto.mt-4.max-w-[22ch].text-display.font-semibold.sm:mt-5) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "log",
+      "text": "%ctext-occlusion%c p.text-xs.text-ink-soft \"Six paths, each answerin\" is 87% covered by overlapping text (p.anim-enter.mx-auto.mt-4.max-w-[54ch].text-base.font-medium.text-ink.sm:mt-6.sm:text-lede) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd"
+    }
+  ]
+}

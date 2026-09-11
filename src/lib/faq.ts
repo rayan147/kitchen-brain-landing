@@ -1,3 +1,4 @@
+// story: docs/stories/homepage-caterer-fixes.story.md
 /**
  * The FAQ, as data. story: docs/stories/faq.story.md
  *
@@ -24,6 +25,7 @@ import { launchPlan, site } from './site';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
 import { orderingAvailability } from './ordering';
+import { dietary } from './dietary';
 
 export interface FaqEntry {
 	/** Stable id for deep links (#cancel). Lowercase, hyphenated. */
@@ -53,7 +55,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'trial',
 				question: 'What does the trial actually cost?',
 				answer: [
-					`Nothing for ${days} days. Stripe takes a card when you start and charges $0 during the trial. On day sixteen billing begins at ${price} per kitchen workspace unless you cancelled first.`
+					`Nothing for ${days} days. Stripe takes a card when you start and charges $0 during the trial. On day sixteen billing begins at ${price} per kitchen unless you cancelled first.`
 				],
 				claims: ['RC-34']
 			},
@@ -61,7 +63,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'card',
 				question: 'Why a card up front?',
 				answer: [
-					'So that the trial ends the way a subscription ends, by you cancelling or not, rather than by a sales call. The card is held by Stripe and is not charged during the trial.'
+					'The trial starts a subscription that bills automatically on day 16 unless you cancel first. Stripe handles your card details; you pay $0 during the trial.'
 				],
 				claims: ['RC-34']
 			},
@@ -85,7 +87,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'seats',
 				question: 'Do I pay per person?',
 				answer: [
-					'No. The subscription belongs to the kitchen workspace, not to each teammate. The verified owner manages billing and invites the crew, and teammates are unlimited during launch.'
+					`No. The subscription is per kitchen, not per teammate. The verified owner manages billing and invites the crew. ${launchPlan.crewTerms}`
 				],
 				claims: ['RC-34']
 			},
@@ -107,7 +109,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'who',
 				question: 'Who is this for?',
 				answer: [
-					'Catering and meal prep run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. Everything in the app starts from an event with a guest count.'
+					'Catering and meal prep run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. You can start with one recipe, then use a menu and guest count to plan an event.'
 				],
 				claims: ['RC-01', 'RC-03', 'RC-44']
 			},
@@ -123,7 +125,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'locations',
 				question: 'We have more than one kitchen. Can each see its own shelf?',
 				answer: [
-					'No. CostCook is one kitchen workspace. There is no per-site inventory and no roll-up across sites.'
+					'No. One subscription covers one kitchen. There is no per-site inventory and no roll-up across sites.'
 				],
 				claims: ['RC-44']
 			},
@@ -139,7 +141,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'roles',
 				question: 'What do Owner, Manager and Staff mean?',
 				answer: [
-					'Owner carries billing and owner-only recipe lifecycle decisions. Manager carries setup, teammate administration, and the Sage checks that expose price movement or prepare a shopping proposal. Staff works from the shared operational record without those higher-role actions. Invited teammates join as Staff today; there is no custom permission builder.'
+					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and review Sage shopping proposals. Staff use the shared kitchen lists and can open cost screens. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
 				],
 				claims: ['RC-52']
 			},
@@ -157,6 +159,12 @@ export const faq: readonly FaqGroup[] = [
 					labelsAvailability.nutritionFaqCrosslink
 				],
 				claims: ['RC-42', 'RC-47', 'RC-50']
+			},
+			{
+				id: 'guest-restrictions',
+				question: 'Can I check a menu against guest allergies and diets?',
+				answer: [dietary.faq],
+				claims: ['RC-50']
 			},
 			{
 				id: 'label-printing',
@@ -184,7 +192,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'integrations',
 				question: 'Does it connect to Square or QuickBooks?',
 				answer: [
-					'Not in the app you would start today. Both connections are in development and carry no date. The same is true of an API. Anything marked Coming on the <a href="/compare">comparison page</a> is being built, not planned, and none of it is in the launch price.'
+					'No. Square, QuickBooks and an API for custom connections are marked Coming and are not available in your trial or subscription. No release date is promised. Check the <a href="/compare">comparison page</a> if these connections are essential.'
 				],
 				claims: ['RC-35', 'RC-45', 'RC-46']
 			},
@@ -237,7 +245,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'shopping',
 				question: 'What does the shopping list look like?',
 				answer: [
-					'Grouped by supplier, rounded to the whole packs you actually buy, with a supplier subtotal. Sub-recipes like a stock or a mirepoix are treated as batches to make rather than things to shop for, and entering what you already have on hand reduces the buying.'
+					'Grouped by supplier, rounded to the whole packs you actually buy, with a supplier subtotal. Sub-recipes like a stock or a mirepoix are treated as batches to make rather than things to shop for, and a recent, trusted stock count reduces the buying; missing or stale counts do not.'
 				],
 				claims: ['RC-18', 'RC-22']
 			},
@@ -253,7 +261,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'receiving',
 				question: 'What happens when the truck is short?',
 				answer: [
-					'Receiving records what the delivery actually was against what you ordered: full, over, short, substituted, missing, or unexpected, with the received value beside the ordered value. Nothing posts until you say so.'
+					'Receiving records what the delivery actually was against what you ordered: full, over, short, substituted, missing, or unexpected, with the received value beside the ordered value. Review the quantities and prices, then save the delivery.'
 				],
 				claims: ['RC-27', 'RC-37']
 			},
@@ -300,7 +308,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'after-setup',
 				question: 'What do I do after setup, and how does my crew get in?',
 				answer: [
-					'Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, staged for you to confirm.',
+					'Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, ready for you to review before saving.',
 					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
 				],
 				claims: ['RC-38', 'RC-39', 'RC-52']
@@ -309,7 +317,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'prices-in',
 				question: 'How do my supplier prices get in?',
 				answer: [
-					'Photograph the price list, drop in the PDF or the Word document, upload the spreadsheet, or paste the text. Everything goes through one queue and comes back as staged facts for you to confirm. Nothing is written to your costing until you commit it, and whatever could not be read is quoted back as it appeared rather than guessed. Keying an awkward invoice in by hand is still a supported way to do it.'
+					'Photograph the price list, drop in the PDF or the Word document, upload the spreadsheet, or paste the text. Review the supplier, ingredients, pack sizes and prices before saving. Nothing changes your costing until you save the reviewed records, and whatever could not be read is quoted back as it appeared rather than guessed. Keying an awkward invoice in by hand is still a supported way to do it.'
 				],
 				claims: ['RC-09', 'RC-26', 'RC-38', 'RC-39']
 			},
@@ -317,7 +325,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'catalog',
 				question: 'Do I have to type every ingredient?',
 				answer: [
-					'No. A catalog of roughly 1,500 ingredient names with vendor aliases is preloaded as the match target for whatever you import. It carries names and aliases only, never prices, so no cost basis is chosen for you.'
+					'No. CostCook includes roughly 1,500 ingredient names and supplier abbreviations to help match your paperwork. You still enter or import your own pack sizes and prices.'
 				],
 				claims: ['RC-41']
 			},
@@ -325,7 +333,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'recipes-in',
 				question: 'How do my recipes get in?',
 				answer: [
-					'The same queue: a photo, a PDF, a spreadsheet, a document or pasted text, read and staged for you to confirm. Recipes can carry sub-recipes and a trim yield on each line, and the yield moves how much you buy as well as what the plate costs.'
+					'Upload a photo, PDF, spreadsheet or document, or paste the recipe text. Review the draft before saving it. Recipes can carry sub-recipes and a trim yield on each line, and the yield moves how much you buy as well as what the plate costs.'
 				],
 				claims: ['RC-16', 'RC-19', 'RC-38']
 			},

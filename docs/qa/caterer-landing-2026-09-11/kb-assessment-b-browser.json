@@ -1,0 +1,844 @@
+{
+  "390": {
+    "height": 23385,
+    "width": 390,
+    "sections": [
+      {
+        "id": "demo",
+        "y": 1997.25,
+        "height": 1098
+      },
+      {
+        "id": "demo-guide",
+        "y": 2601.59375,
+        "height": 126
+      },
+      {
+        "id": "problem",
+        "y": 3095.421875,
+        "height": 2136
+      },
+      {
+        "id": "who",
+        "y": 5233.171875,
+        "height": 1208
+      },
+      {
+        "id": "outcomes",
+        "y": 6440.75,
+        "height": 3962
+      },
+      {
+        "id": "yield",
+        "y": 10402.515625,
+        "height": 1950
+      },
+      {
+        "id": "more",
+        "y": 12353.453125,
+        "height": 4303
+      },
+      {
+        "id": "alternatives",
+        "y": 16657.890625,
+        "height": 2102
+      },
+      {
+        "id": "trust",
+        "y": 18761.546875,
+        "height": 1434
+      },
+      {
+        "id": "start",
+        "y": 20195.34375,
+        "height": 2771
+      }
+    ],
+    "links": [
+      {
+        "text": "Skip to content",
+        "href": "#main"
+      },
+      {
+        "text": "CostCook",
+        "href": "/"
+      },
+      {
+        "text": "Recipes & food costingSee yield, portion, and plate-cost math with the work shown.",
+        "href": "/features/recipes-and-costing"
+      },
+      {
+        "text": "Menus & quotesPrice a menu before you say the number out loud.",
+        "href": "/features/menus-and-quotes"
+      },
+      {
+        "text": "Ingredients & supplier pricesKeep pack costs, yields, and supplier history attached to the food.",
+        "href": "/features/ingredients-and-supplier-prices"
+      },
+      {
+        "text": "Invoices & price-list importBring in paper or spreadsheets, then confirm what changes.",
+        "href": "/features/invoices-and-price-list-import"
+      },
+      {
+        "text": "Nutrition facts & allergensThe fifteen label numbers per portion, from USDA profiles, printable.",
+        "href": "/features/nutrition-facts-and-allergens"
+      },
+      {
+        "text": "Guests’ restrictionsEvery dish on the order checked against the guests who asked.",
+        "href": "/features/guest-restrictions-and-dietary-guards"
+      },
+      {
+        "text": "Labels & printingComingDate and allergen stickers from the prep list, frozen for reprints.",
+        "href": "/features/labels-and-printing"
+      },
+      {
+        "text": "Orders, shop, prep & packTurn one menu and guest count into the plan for the day.",
+        "href": "/features/order-shop-prep-pack"
+      },
+      {
+        "text": "Purchasing & receivingSend the order, record what arrived, and keep shortfalls visible.",
+        "href": "/features/purchasing-and-receiving"
+      },
+      {
+        "text": "InventorySee what is on the shelf before the next shopping list is built.",
+        "href": "/features/inventory"
+      },
+      {
+        "text": "Purchases & month costCompare what the month should have cost with what you spent.",
+        "href": "/features/purchases-and-month-cost"
+      },
+      {
+        "text": "Sage, the assistantAsk a question, get an answer from your own records, with its sources.",
+        "href": "/features/sage"
+      },
+      {
+        "text": "Team & accessSee the real Owner, Manager and Staff boundaries before you invite the crew.",
+        "href": "/features/team-and-access"
+      },
+      {
+        "text": "Take the product tour",
+        "href": "/tour/main"
+      },
+      {
+        "text": "Explore every shipped feature",
+        "href": "/features"
+      },
+      {
+        "text": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "text": "Blog",
+        "href": "/blog"
+      },
+      {
+        "text": "Product tour",
+        "href": "/tour/main"
+      },
+      {
+        "text": "Who it's for",
+        "href": "/who-its-for"
+      },
+      {
+        "text": "Your initial setup",
+        "href": "/onboarding"
+      },
+      {
+        "text": "How we compare",
+        "href": "/compare"
+      },
+      {
+        "text": "FAQ",
+        "href": "/faq"
+      },
+      {
+        "text": "Contact",
+        "href": "/contact"
+      },
+      {
+        "text": "Sign in",
+        "href": "http://localhost:5173/login"
+      },
+      {
+        "text": "DemoBook a demo",
+        "href": "/demo"
+      },
+      {
+        "text": "Free trialStart free trial",
+        "href": "http://localhost:5173/start?plan=launch"
+      },
+      {
+        "text": "Start free trial",
+        "href": "http://localhost:5173/start?plan=launch"
+      },
+      {
+        "text": "Watch the 2:53 product tour ↓",
+        "href": "#demo"
+      },
+      {
+        "text": "Start free trial",
+        "href": "http://localhost:5173/start?plan=launch"
+      },
+      {
+        "text": "Next section: Next ·What goes wrong↓",
+        "href": "#problem"
+      },
+      {
+        "text": "Next section: Next ·Who this is for↓",
+        "href": "#who"
+      },
+      {
+        "text": "product comparison",
+        "href": "/compare"
+      },
+      {
+        "text": "Next section: Next ·What it does instead↓",
+        "href": "#outcomes"
+      },
+      {
+        "text": "See everything it does, area by area",
+        "href": "/features"
+      },
+      {
+        "text": "Next section: Next ·Trim and yield↓",
+        "href": "#yield"
+      },
+      {
+        "text": "Next section: Next ·What else is in it↓",
+        "href": "#more"
+      },
+      {
+        "text": "Nutrition facts, area by area",
+        "href": "/features/nutrition-facts-and-allergens"
+      },
+      {
+        "text": "Watch Sage at work",
+        "href": "/features/sage"
+      },
+      {
+        "text": "See every access boundary",
+        "href": "/features/team-and-access"
+      },
+      {
+        "text": "Next section: Next ·The other tools↓",
+        "href": "#alternatives"
+      },
+      {
+        "text": "comparison page",
+        "href": "/compare"
+      },
+      {
+        "text": "Next section: Next ·Who made it↓",
+        "href": "#trust"
+      },
+      {
+        "text": "Contact Rayan",
+        "href": "/contact"
+      },
+      {
+        "text": "Next section: Next ·Start here↓",
+        "href": "#start"
+      },
+      {
+        "text": "See every setup screen",
+        "href": "/onboarding"
+      },
+      {
+        "text": "Start free trial",
+        "href": "http://localhost:5173/start?plan=launch"
+      },
+      {
+        "text": "Book 15 minutes",
+        "href": "/demo"
+      },
+      {
+        "text": "Every answer, on one page",
+        "href": "/faq"
+      },
+      {
+        "text": "rayan@costcook.io",
+        "href": "mailto:rayan@costcook.io"
+      },
+      {
+        "text": "973-870-6309",
+        "href": "tel:+19738706309"
+      },
+      {
+        "text": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "text": "Every feature",
+        "href": "/features"
+      },
+      {
+        "text": "Blog",
+        "href": "/blog"
+      },
+      {
+        "text": "Product tour",
+        "href": "/tour/main"
+      },
+      {
+        "text": "Who it's for",
+        "href": "/who-its-for"
+      },
+      {
+        "text": "Your initial setup",
+        "href": "/onboarding"
+      },
+      {
+        "text": "How we compare",
+        "href": "/compare"
+      },
+      {
+        "text": "FAQ",
+        "href": "/faq"
+      },
+      {
+        "text": "Contact",
+        "href": "/contact"
+      },
+      {
+        "text": "Sign in",
+        "href": "http://localhost:5173/login"
+      },
+      {
+        "text": "Book a demo",
+        "href": "/demo"
+      }
+    ],
+    "video": [
+      {
+        "preload": "none",
+        "readyState": 0,
+        "networkState": 1,
+        "poster": "http://127.0.0.1:4321/demo-poster-mobile.jpg",
+        "controls": true,
+        "currentSrc": "http://127.0.0.1:4321/demo.webm"
+      }
+    ],
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "Skip to content",
+        "label": null,
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "CostCook",
+        "label": null,
+        "outline": "solid"
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Features",
+        "label": "Features, broken down by kitchen job",
+        "outline": "solid"
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Menu",
+        "label": "Site navigation",
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "DemoBook a demo",
+        "label": "Prepare and book a 15-minute CostCook demo",
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "Free trialStart free trial",
+        "label": "Start free trial of CostCook, 15 days",
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "Start free trial",
+        "label": "Start free trial of CostCook, 15 days",
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "Watch the 2:53 product tour ↓",
+        "label": null,
+        "outline": "solid"
+      },
+      {
+        "tag": "VIDEO",
+        "text": "Your browser can’t play this video.Download it instead",
+        "label": "Silent, captioned screen recording: CostCook prices a 180-guest wedding before the quote goes out, turns it into a vendor shopping list and a scaled prep list, computes the nutrition panel on a dish from the same menu, plans three events as one production run, emails its purchase orders, records a delivery that arrived wrong, and answers a question about the job from its own records",
+        "outline": "solid"
+      }
+    ],
+    "menuOpen": true,
+    "menuEscape": {
+      "open": false,
+      "focused": true
+    },
+    "videoPlayed": {
+      "paused": false,
+      "currentTime": 2.206148,
+      "readyState": 4
+    },
+    "guide": true,
+    "injectionPreflight": true,
+    "logs": [
+      {
+        "type": "debug",
+        "text": "[vite] connecting..."
+      },
+      {
+        "type": "debug",
+        "text": "[vite] connected."
+      }
+    ],
+    "failures": []
+  },
+  "1440": {
+    "height": 20556,
+    "width": 1440,
+    "sections": [
+      {
+        "id": "demo",
+        "y": 1636.765625,
+        "height": 3252
+      },
+      {
+        "id": "demo-guide",
+        "y": 2674.75,
+        "height": 1831
+      },
+      {
+        "id": "problem",
+        "y": 4889.25,
+        "height": 1350
+      },
+      {
+        "id": "who",
+        "y": 6240.90625,
+        "height": 758
+      },
+      {
+        "id": "outcomes",
+        "y": 6999.328125,
+        "height": 3025
+      },
+      {
+        "id": "yield",
+        "y": 10024.1875,
+        "height": 1369
+      },
+      {
+        "id": "more",
+        "y": 11393.921875,
+        "height": 4970
+      },
+      {
+        "id": "alternatives",
+        "y": 16365.265625,
+        "height": 1341
+      },
+      {
+        "id": "trust",
+        "y": 17708.328125,
+        "height": 1107
+      },
+      {
+        "id": "start",
+        "y": 18815.109375,
+        "height": 1537
+      }
+    ],
+    "links": [
+      {
+        "text": "Skip to content",
+        "href": "#main"
+      },
+      {
+        "text": "CostCook",
+        "href": "/"
+      },
+      {
+        "text": "Recipes & food costingSee yield, portion, and plate-cost math with the work shown.",
+        "href": "/features/recipes-and-costing"
+      },
+      {
+        "text": "Menus & quotesPrice a menu before you say the number out loud.",
+        "href": "/features/menus-and-quotes"
+      },
+      {
+        "text": "Ingredients & supplier pricesKeep pack costs, yields, and supplier history attached to the food.",
+        "href": "/features/ingredients-and-supplier-prices"
+      },
+      {
+        "text": "Invoices & price-list importBring in paper or spreadsheets, then confirm what changes.",
+        "href": "/features/invoices-and-price-list-import"
+      },
+      {
+        "text": "Nutrition facts & allergensThe fifteen label numbers per portion, from USDA profiles, printable.",
+        "href": "/features/nutrition-facts-and-allergens"
+      },
+      {
+        "text": "Guests’ restrictionsEvery dish on the order checked against the guests who asked.",
+        "href": "/features/guest-restrictions-and-dietary-guards"
+      },
+      {
+        "text": "Labels & printingComingDate and allergen stickers from the prep list, frozen for reprints.",
+        "href": "/features/labels-and-printing"
+      },
+      {
+        "text": "Orders, shop, prep & packTurn one menu and guest count into the plan for the day.",
+        "href": "/features/order-shop-prep-pack"
+      },
+      {
+        "text": "Purchasing & receivingSend the order, record what arrived, and keep shortfalls visible.",
+        "href": "/features/purchasing-and-receiving"
+      },
+      {
+        "text": "InventorySee what is on the shelf before the next shopping list is built.",
+        "href": "/features/inventory"
+      },
+      {
+        "text": "Purchases & month costCompare what the month should have cost with what you spent.",
+        "href": "/features/purchases-and-month-cost"
+      },
+      {
+        "text": "Sage, the assistantAsk a question, get an answer from your own records, with its sources.",
+        "href": "/features/sage"
+      },
+      {
+        "text": "Team & accessSee the real Owner, Manager and Staff boundaries before you invite the crew.",
+        "href": "/features/team-and-access"
+      },
+      {
+        "text": "Take the product tour",
+        "href": "/tour/main"
+      },
+      {
+        "text": "Explore every shipped feature",
+        "href": "/features"
+      },
+      {
+        "text": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "text": "How to calculate food cost per guest for a catering eventWork from total ingredient cost to food cost per guest, food-cost percentage, and the selling price needed to meet your target.",
+        "href": "/blog/food-cost-per-guest"
+      },
+      {
+        "text": "Catering menu pricing: margin, markup, and food-cost targetUnderstand the three percentages people mix together when pricing catering menus, then calculate each one from the same food cost.",
+        "href": "/blog/catering-menu-pricing"
+      },
+      {
+        "text": "How to cost a recipe from case price to portion costFollow a supplier case through unit conversion, usable yield, recipe quantity, and portions without hiding the arithmetic.",
+        "href": "/blog/case-price-to-portion-cost"
+      },
+      {
+        "text": "The event is over. What should the food have cost, and what did you actually spend?Reconcile expected recipe cost with attributed purchases, documented stock use, leftovers, and recorded differences before judging an event’s result.",
+        "href": "/blog/expected-vs-actual-food-cost"
+      },
+      {
+        "text": "The client added 40 guests. What actually needs to change?Separate quantities that scale with guests from whole-pack buying, fixed equipment, confirmed commitments, and the quote that needs another look.",
+        "href": "/blog/client-added-40-guests"
+      },
+      {
+        "text": "How to turn a catering menu into a shopping list in whole packsConsolidate recipe needs, convert them into supplier pack units, round intentionally, and keep the difference visible.",
+        "href": "/blog/shopping-list-whole-packs"
+      },
+      {
+        "text": "How supplier price changes reach the recipes you already costedKeep the source, compare like-for-like packs, choose the current price deliberately, and trace the result into recipes and open quotes.",
+        "href": "/blog/supplier-price-changes"
+      },
+      {
+        "text": "The delivery arrived wrong. What should you check before accepting it?Compare the purchase order, delivered cases, and invoice line by line so a shortage or substitution does not become the new stock record.",
+        "href": "/blog/delivery-arrived-wrong"
+      },
+      {
+        "text": "How to scale a catering prep list without making half a potConvert guests into portions, recipe batches, equipment runs, and supplier packs without letting one kind of rounding distort another.",
+        "href": "/blog/scale-catering-prep-list"
+      },
+      {
+        "text": "How to check a supplier invoice before it changes your recipe costsConfirm the ingredient, pack, unit conversion, and price difference before an imported invoice line becomes the current recipe cost.",
+        "href": "/blog/review-supplier-invoice"
+      },
+      {
+        "text": "Read every guide",
+        "href": "/blog"
+      },
+      {
+        "text": "Product tourFollow one 180-guest wedding from quote to shelf.",
+        "href": "/tour/main"
+      },
+      {
+        "text": "Who it's forCheck the kitchens, events, and working styles CostCook fits.",
+        "href": "/who-its-for"
+      },
+      {
+        "text": "Your initial setupOne dish to start, then how the rest of your menu and your crew get in.",
+        "href": "/onboarding"
+      },
+      {
+        "text": "How we compareCompare workflows, shipped capabilities, and published pricing.",
+        "href": "/compare"
+      },
+      {
+        "text": "FAQGet direct answers about setup, pricing, data, and leaving.",
+        "href": "/faq"
+      },
+      {
+        "text": "ContactEmail or call Rayan when your question needs a person.",
+        "href": "/contact"
+      },
+      {
+        "text": "Sign in",
+        "href": "http://localhost:5173/login"
+      },
+      {
+        "text": "DemoBook a demo",
+        "href": "/demo"
+      },
+      {
+        "text": "Free trialStart free trial",
+        "href": "http://localhost:5173/start?plan=launch"
+      },
+      {
+        "text": "Start free trial",
+        "href": "http://localhost:5173/start?plan=launch"
+      },
+      {
+        "text": "Watch the 2:53 product tour ↓",
+        "href": "#demo"
+      },
+      {
+        "text": "Follow the order in writing",
+        "href": "#demo-guide-heading"
+      },
+      {
+        "text": "Start free trial",
+        "href": "http://localhost:5173/start?plan=launch"
+      },
+      {
+        "text": "Next section: Next ·What goes wrong↓",
+        "href": "#problem"
+      },
+      {
+        "text": "Next section: Next ·Who this is for↓",
+        "href": "#who"
+      },
+      {
+        "text": "product comparison",
+        "href": "/compare"
+      },
+      {
+        "text": "Next section: Next ·What it does instead↓",
+        "href": "#outcomes"
+      },
+      {
+        "text": "See everything it does, area by area",
+        "href": "/features"
+      },
+      {
+        "text": "Next section: Next ·Trim and yield↓",
+        "href": "#yield"
+      },
+      {
+        "text": "Next section: Next ·What else is in it↓",
+        "href": "#more"
+      },
+      {
+        "text": "Nutrition facts, area by area",
+        "href": "/features/nutrition-facts-and-allergens"
+      },
+      {
+        "text": "Watch Sage at work",
+        "href": "/features/sage"
+      },
+      {
+        "text": "See every access boundary",
+        "href": "/features/team-and-access"
+      },
+      {
+        "text": "Next section: Next ·The other tools↓",
+        "href": "#alternatives"
+      },
+      {
+        "text": "comparison page",
+        "href": "/compare"
+      },
+      {
+        "text": "Next section: Next ·Who made it↓",
+        "href": "#trust"
+      },
+      {
+        "text": "Contact Rayan",
+        "href": "/contact"
+      },
+      {
+        "text": "Next section: Next ·Start here↓",
+        "href": "#start"
+      },
+      {
+        "text": "See every setup screen",
+        "href": "/onboarding"
+      },
+      {
+        "text": "Start free trial",
+        "href": "http://localhost:5173/start?plan=launch"
+      },
+      {
+        "text": "Book 15 minutes",
+        "href": "/demo"
+      },
+      {
+        "text": "Every answer, on one page",
+        "href": "/faq"
+      },
+      {
+        "text": "rayan@costcook.io",
+        "href": "mailto:rayan@costcook.io"
+      },
+      {
+        "text": "973-870-6309",
+        "href": "tel:+19738706309"
+      },
+      {
+        "text": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "text": "Every feature",
+        "href": "/features"
+      },
+      {
+        "text": "Blog",
+        "href": "/blog"
+      },
+      {
+        "text": "Product tour",
+        "href": "/tour/main"
+      },
+      {
+        "text": "Who it's for",
+        "href": "/who-its-for"
+      },
+      {
+        "text": "Your initial setup",
+        "href": "/onboarding"
+      },
+      {
+        "text": "How we compare",
+        "href": "/compare"
+      },
+      {
+        "text": "FAQ",
+        "href": "/faq"
+      },
+      {
+        "text": "Contact",
+        "href": "/contact"
+      },
+      {
+        "text": "Sign in",
+        "href": "http://localhost:5173/login"
+      },
+      {
+        "text": "Book a demo",
+        "href": "/demo"
+      }
+    ],
+    "video": [
+      {
+        "preload": "none",
+        "readyState": 0,
+        "networkState": 1,
+        "poster": "http://127.0.0.1:4321/demo-poster.jpg",
+        "controls": true,
+        "currentSrc": "http://127.0.0.1:4321/demo.webm"
+      }
+    ],
+    "tabs": [
+      {
+        "tag": "A",
+        "text": "Skip to content",
+        "label": null,
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "CostCook",
+        "label": null,
+        "outline": "solid"
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Features",
+        "label": "Features, broken down by kitchen job",
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "Pricing",
+        "label": null,
+        "outline": "solid"
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Blog",
+        "label": "Blog guides, broken down by kitchen question",
+        "outline": "solid"
+      },
+      {
+        "tag": "SUMMARY",
+        "text": "Resources",
+        "label": "CostCook resources",
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "Sign in",
+        "label": "Sign in to CostCook",
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "DemoBook a demo",
+        "label": "Prepare and book a 15-minute CostCook demo",
+        "outline": "solid"
+      },
+      {
+        "tag": "A",
+        "text": "Free trialStart free trial",
+        "label": "Start free trial of CostCook, 15 days",
+        "outline": "solid"
+      }
+    ],
+    "menuOpen": true,
+    "menuEscape": {
+      "open": false,
+      "focused": true
+    },
+    "videoPlayed": {
+      "paused": false,
+      "currentTime": 2.131039,
+      "readyState": 4
+    },
+    "guide": null,
+    "injectionPreflight": true,
+    "logs": [
+      {
+        "type": "debug",
+        "text": "[vite] connecting..."
+      },
+      {
+        "type": "debug",
+        "text": "[vite] connected."
+      }
+    ],
+    "failures": []
+  }
+}
