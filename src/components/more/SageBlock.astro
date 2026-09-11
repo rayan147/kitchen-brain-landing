@@ -75,6 +75,7 @@ const guardrailGroups = [
 ] as const;
 ---
 
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <article class="more-block" data-more-block="sage" data-sage-home data-reveal>
 
 		<div class="split-layout sage-intro-grid">
@@ -117,15 +118,15 @@ const guardrailGroups = [
 			</figure>
 		</div>
 
-		<div class="approval-path" aria-label="Eleven checks read, one tool prepares a proposal, and you approve or discard" data-reveal>
+		<div class="approval-path" aria-label="Read records, review a proposal, then approve or discard" data-reveal>
 			<div data-sage-stage="read">
-				<span>11 checks</span>
+				<span>Your records</span>
 				<strong>Read records</strong>
 				<small>Answers keep their source.</small>
 			</div>
 			<i aria-hidden="true"></i>
 			<div data-sage-stage="prepare">
-				<span>1 tool</span>
+				<span>A proposal</span>
 				<strong>Prepares a proposal</strong>
 				<small>Nothing changes yet.</small>
 			</div>
@@ -137,12 +138,12 @@ const guardrailGroups = [
 			</div>
 		</div>
 
-		<FoldedDetail summary="The five jobs, and asking during setup" hint="Eleven bounded checks, and Sage in the setup header">
+		<FoldedDetail summary="Questions you can ask, including during setup" hint="See examples and how to return to setup">
 		<div class="split-layout scope-setup-grid">
 			<div class="sage-scope" data-reveal>
 				<div class="scope-heading">
-					<h3 class="text-h3 font-semibold">Five kitchen jobs.</h3>
-					<p>Eleven bounded checks sit inside them.</p>
+					<h3 class="text-h3 font-semibold">Ask about the work ahead.</h3>
+					<p>Each answer stays within the records your role can read.</p>
 				</div>
 				<ul role="list" class="scope-list">
 					{
@@ -195,7 +196,7 @@ const guardrailGroups = [
 			     scroll. It ships open, so all three data-sage-boundary hooks
 			     check-dist.mjs reads are in the HTML either way. -->
 			<FoldedDetail
-				summary="The nine rules, in full"
+				summary="What Sage can read and change"
 				hint="Three boundaries: evidence, access, action"
 			>
 			<div class="boundary-grid">

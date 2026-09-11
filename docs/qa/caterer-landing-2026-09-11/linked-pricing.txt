@@ -1,0 +1,57 @@
+PER KITCHEN, NOT PER SEAT
+
+One kitchen. One launch plan.
+
+The subscription is per kitchen, not per teammate, and the crew is unlimited during launch. The verified owner manages billing and can invite the team.
+
+CostCook Launch
+
+$49/month
+
+Start with 15 days free. Stripe securely collects payment details, charges $0 today, and begins monthly billing after the trial unless you cancel.
+
+$49/month is the launch price and it will not stay there. When it moves it moves for kitchens that sign up after, never for yours. The price you start on is the price you keep.
+
+Start 15-day free trial
+Included at launch
+Recipe and menu costing
+Orders, shopping, prep, and pack plans
+Purchasing, receiving, and inventory
+Unlimited teammates during launch
+Coming, and not in this price.
+
+Four feature groups contain work marked Coming. Not in the app you would start today. Each feature names whether it is being built or is already behind a release flag.
+
+TAKING ORDERS
+
+Coming
+The enquiry, arriving as something you can quote from.
+
+A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives awaiting kitchen confirmation, which means you still say yes to it. The storefront and the embeddable widget are built and are not deployed anywhere a customer could reach, so this stays marked Coming.
+
+LABELS & PRINTING
+
+Coming
+Kitchen date and allergen labels, from the prep list.
+
+Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. The feature is built behind a release flag and not included at launch, so it remains marked Coming.
+
+ORDERING INTEGRATIONS
+
+Coming
+External ordering connections.
+
+External ordering connections are being developed for a later release.
+
+ACCOUNTING & POINT OF SALE
+
+Coming
+Square and QuickBooks.
+
+Square and QuickBooks connections are being built. Until they land, nothing here reads from or writes to your books.
+
+Wondering how that compares? See it against Parsley and meez.
+
+Have a question about the plan? Contact Rayan.
+
+Want to see your own menu run first? Book a 15-minute demo.

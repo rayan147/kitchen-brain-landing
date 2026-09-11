@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta } from '../../lib/site';
 
 // Considered Template Method and Strategy for the three parts; not used
@@ -55,12 +56,12 @@ const stages = [
 		n: '2',
 		label: 'Ingredients',
 		body: 'Tap “Import an invoice or price sheet”, then “Choose files”, pick the photo of the invoice, and confirm the supplier, packs and prices that come back on “Review extracted records” instead of typing them.',
-		done: 'Review the food facts CostCook found',
+		done: 'Confirm the ingredients, pack sizes and prices',
 		shots: [{
 			src: '/proof/setup/02-choices.png',
 			width: 2264,
 			height: 1364,
-			alt: 'The Ingredients stage, headed “Add the ingredients for Roast chicken plate. Start with Roast chicken plate: just the ingredients it uses. You do not need to enter your whole walk-in.” Under “On this screen”: Add the ingredients for one dish, Review the food facts CostCook found. Then three cards. “Import an invoice or price sheet: Upload or photograph one. Supplier, packs, and prices come back for you to confirm, not type.” “Import an ingredient list: A spreadsheet or a typed list. Sage reads it into one review batch.” “Add ingredients manually: Best when you know one dish and its pack prices by heart.”',
+			alt: 'The Ingredients stage, headed “Add the ingredients for Roast chicken plate. Start with Roast chicken plate: just the ingredients it uses. Start by costing one dish.” Under “On this screen”: Add the ingredients for one dish, Review the food facts CostCook found. Then three cards. “Import an invoice or price sheet: Upload or photograph one. Supplier, packs, and prices come back for you to confirm, not type.” “Import an ingredient list: A spreadsheet or a typed list. Sage reads it into one review batch.” “Add ingredients manually: Best when you know one dish and its pack prices by heart.”',
 			caption: 'Stage two on an empty kitchen. The first card is the invoice; the form is the third.'
 		}, {
 			src: '/proof/setup/02-dropzone.png',
@@ -74,7 +75,7 @@ const stages = [
 		n: '3',
 		label: 'Food facts',
 		body: 'Sage drafts each ingredient’s allergens and diet facts for you to confirm, or “Skip for now” and every order that uses it reads “check”, never “clear”.',
-		done: 'Answer every ingredient once',
+		done: 'Review each ingredient or leave it marked for checking',
 		shots: [{
 			src: '/proof/setup/03-chips.png',
 			width: 1668,
@@ -86,7 +87,7 @@ const stages = [
 	{
 		n: '4',
 		label: 'Recipes',
-		body: 'Tap “Build with Sage”, then “Choose files”, then the photo of the recipe card, and read the draft it makes; the plate cost is behind it.',
+		body: 'Tap “Build with Sage”, then “Choose files”, then the photo of the recipe card, and read the draft it makes; review the ingredients and amounts, then check the food cost per portion.',
 		done: 'Check the plate cost',
 		shots: [{
 			src: '/proof/setup/04-choices.png',
@@ -202,7 +203,7 @@ const afterScenes = [
 				}
 			}
 		],
-		handoff: 'A catalog nobody else opens is a spreadsheet with a login. This is how the crew gets one.'
+		handoff: 'Once your first order is ready, invite the crew to work from its lists.'
 	},
 	{
 		id: 'after-crew',
@@ -210,7 +211,7 @@ const afterScenes = [
 		heading: 'The crew joins from a link, and works from the list you built.',
 		scenes: [
 			{
-				label: 'Two emails',
+				label: 'Invite a teammate',
 				body: 'Open Settings, then Team & access, type an email address and tap “Send invitation”; they receive a one-time link to join this kitchen, no password needed, and land on the shopping list you just made.',
 				shot: {
 					src: '/proof/setup/09-team.png',
@@ -235,19 +236,14 @@ const afterScenes = [
 				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
 					<a href="/">Home</a><span aria-hidden="true">/</span><span>Your initial setup</span>
 				</nav>
-				<p class="eyebrow">Your initial setup</p>
-				<h1 id="fd-heading" class="feature-display">You do not need to enter your whole walk-in.</h1>
-				<p class="fd-lede">
-					Setup asks for one dish you already cook and takes about fifteen minutes. Its
-					ingredients come off one invoice and one recipe, uploaded as a photo or a PDF, and
-					you confirm what CostCook read. Four stages in, it prints that dish&rsquo;s plate cost
-					with the arithmetic beside it. This page shows every screen, then says what comes
-					after, and how the rest of your kitchen gets in.
-				</p>
+
+				<h1 id="fd-heading" class="feature-display">Start by costing one dish.</h1>
+				<p class="fd-lede">Start with one recipe and current supplier prices. Allow about fifteen minutes for a first dish; checking missing details can take longer. Follow five stages to its food cost and your first order.</p>
 				<div class="fd-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href="#the-number" class="btn-quiet">See the number it ends on</a>
+					<a href="#the-number" class="btn-quiet">See the example food cost</a>
 				</div>
+				<FeatureTrialTerms />
 			</div>
 
 			<figure class="fd-ticket anim-enter" aria-labelledby="fd-ticket-title">
@@ -277,15 +273,13 @@ const afterScenes = [
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow fd-part-label">Part 1 of 3 &middot; Before you start</p>
-				<h2 id="fd-before-heading">Have two pieces of paper within reach. That is the preparation.</h2>
+				<h2 id="fd-before-heading">Have one recipe and its supplier prices ready.</h2>
 				<p>
 					You have done this before. The last tool wanted your whole catalog typed in before it
 					would do anything, and the half-filled spreadsheet is still on the desktop.
 				</p>
 				<p>
-					CostCook wants what is already written down: one invoice, one recipe. Everything
-					setup needs about your first dish is on those two, and you confirm what it read
-					instead of typing it.
+					CostCook wants what is already written down: one invoice, one recipe. Review the amounts and prices it reads, then fill in any missing details.
 				</p>
 			</div>
 			<div class="fd-before-layout">
@@ -305,7 +299,7 @@ const afterScenes = [
 							</li>
 						))}
 					</ol>
-					<figcaption>That is the whole preparation. Nothing gets typed twice.</figcaption>
+					<figcaption>Check the recipe amounts and pack prices. Add or correct anything the upload could not read.</figcaption>
 				</figure>
 				<figure class="fd-shot fd-welcome-shot">
 					<img src="/proof/setup/00-welcome.png" width="1572" height="1872" style="max-width:786px" loading="lazy" decoding="async" alt="The welcome screen, headed “Welcome to Harbor & Hearth Catering.” It says that over five short stages the kitchen turns one dish you already cook into a costed order, shows the chain ingredient, dish, menu, order, shop, and notes that you named the kitchen at sign-up so the first stage already has one tick. Then “Two questions so the rest fits your kitchen.” What kind of kitchen do you run: Catering selected, Meal prep, Restaurant with events, Something else. One dish you know well: Roast chicken plate. What do you most want to know, optional: What an event really costs selected, What to buy for a date, Whether a price change hurt me. Two buttons: “Start setup” and “Skip these questions”." />
@@ -314,7 +308,7 @@ const afterScenes = [
 			</div>
 			<div class="fd-prose">
 				<p>
-					Sign-up asks for your kitchen&rsquo;s name and nothing else. Name the dish at the
+					During sign-up, you name your kitchen and enter the card for your trial. Name the dish at the
 					welcome, and every screen after says its name back to you.
 				</p>
 				<p class="fd-handoff">Those answers take a minute. These five stages are the work.</p>
@@ -372,12 +366,12 @@ const afterScenes = [
 		<div class="container-page fd-number-layout" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow">The number</p>
-				<h2 id="fd-number-heading">One line of one dish, costed from the case price you actually pay.</h2>
+				<h2 id="fd-number-heading">Example: one ingredient costed from its case price.</h2>
 				<p>
 					180 g of chicken thigh, bought at $32.00 for a 10 lb case, 80% of it surviving the trim.
 				</p>
 				<p class="fd-snap">
-					A $32 case of thighs, 80% of it surviving the knife, 180 g on the plate: $1.62. Check it
+					A $32 case of thighs, 80% usable after trim, 180 g on the plate, plus 2% misc: $1.62. Check it
 					on paper. We would rather you did.
 				</p>
 			</div>
@@ -434,7 +428,7 @@ const afterScenes = [
 			<ul class="fd-guards" role="list">
 				{guards.map((guard) => <li>{guard}</li>)}
 			</ul>
-			<p class="fd-handoff">Which leaves the question the old page never answered: what happens after stage five.</p>
+			<p class="fd-handoff">After stage five, open your first shopping list or add the next dish.</p>
 		</div>
 	</section>
 
@@ -493,7 +487,7 @@ const afterScenes = [
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow">Where this leaves you</p>
-				<h2 id="fd-close-heading">Tonight, one dish with a price on it. Tomorrow, the next invoice into the same box, and two emails.</h2>
+				<h2 id="fd-close-heading">Check one dish’s cost. Then add your next recipe and invite the crew.</h2>
 				<p>
 					The alternative is another season where the number in your head and the number on the
 					invoice are two different numbers, and the crew works from a text message.

@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
 
 const fitSignals = [
@@ -28,9 +29,9 @@ const workPath = [
 ] as const;
 
 const limits = [
-	'Several locations that each need their own inventory and a roll-up.',
+	'Stock counts and combined reporting across several kitchens.',
 	'Lot tracking for a facility operating under FSMA 204 traceability rules.',
-	'Fine-grained permissions that hide costs from selected workspace members.'
+	'Hiding cost screens from selected teammates. Staff can open costs.'
 ] as const;
 ---
 
@@ -42,14 +43,13 @@ const limits = [
 				<nav aria-label="Breadcrumb" class="breadcrumb">
 					<a href="/">Home</a><span aria-hidden="true">/</span><span>Who it's for</span>
 				</nav>
-				<h1 id="audience-heading">The work decides whether CostCook fits. Not the sign out front.</h1>
+				<h1 id="audience-heading">Is CostCook right for your kitchen?</h1>
 				<p class="hero-lede">
-					If you plan changing menus by date and guest count, CostCook is built for that work—whether
-					you run catering, meal prep, special dinners, a restaurant, or more than one of them.
+					If you cost changing menus and buy for a date and guest count, start here. CostCook connects recipes, shopping, prep and packing for one kitchen.
 				</p>
 				<div class="hero-actions">
-					<a href="#fit-test" class="btn-primary">See the fit test</a>
-					<a href="/compare" class="btn-quiet">Check the limits</a>
+					<a href="#fit-test" class="btn-primary">Check your kitchen’s needs</a>
+					<a href="#limits-heading" class="btn-quiet">See what is not supported</a>
 				</div>
 			</div>
 
@@ -63,14 +63,14 @@ const limits = [
 						<span>Tuesday</span>
 						<h2>Regular service</h2>
 						<p>House menu</p>
-						<small>Recurring kitchen plan</small>
+						<small>Your regular service</small>
 					</div>
 					<div class="ticket-stitch" aria-hidden="true"><span></span></div>
 					<div class="service-plan event">
 						<span>Saturday</span>
 						<h2>Private dinner</h2>
 						<p>Dated menu + guest count</p>
-						<small>Event-driven kitchen plan</small>
+						<small>Plan this event in CostCook</small>
 					</div>
 				</div>
 				<figcaption>The same kitchen can run Tuesday service and Saturday's private dinner.</figcaption>
@@ -122,8 +122,7 @@ const limits = [
 			<div>
 				<h2 id="limits-heading">Fit also means knowing where it stops.</h2>
 				<p>
-					A restaurant label is not a limitation. These three requirements are. If your kitchen
-					depends on one of them, check the comparison before you decide.
+					CostCook does not support these three requirements. If any is essential to your kitchen, compare the alternatives before starting a trial.
 				</p>
 				<a href="/compare" class="btn-quiet">Read the full product comparison</a>
 			</div>
@@ -140,15 +139,25 @@ const limits = [
 				<h2 id="close-heading">Bring one real menu and one guest count.</h2>
 				<p>See whether CostCook matches the work you need to price and run next.</p>
 			</div>
-			<div class="close-actions">
+			<!-- Considered Composite; not used because this is a fixed pair of
+                 content groups. Bounded columns keep billing text from shrinking the heading. -->
+            <div class="closing-decision">
+                <div class="close-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
 			</div>
+                <FeatureTrialTerms />
+            </div>
 		</div>
 	</section>
 </article>
 
 <style>
+    .closing-decision { min-width: 0; }
+  /* The real caption owns its separator; a positioned rule could cross wrapped text. */
+  .service-ticket::after { display: none; }
+  .service-ticket figcaption { border-top: 1px dashed var(--color-ticket-rule); }
+
 	.audience-page { overflow: clip; }
 	.audience-hero { padding: clamp(3.5rem, 7vw, 7rem) 0 clamp(4.5rem, 8vw, 8rem); }
 	.hero-layout { display: grid; align-items: center; gap: clamp(3rem, 7vw, 6.5rem); }
@@ -217,7 +226,7 @@ const limits = [
 		.work-path strong { margin-top: .75rem; }
 		.work-path small { grid-column: 1 / -1; margin-top: .25rem; }
 		.work-path svg { grid-column: 2; grid-row: 2; }
-		.close-layout { grid-template-columns: minmax(0, 1fr) auto; }
+		.close-layout { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
 	}
 	@media (prefers-reduced-motion: reduce) { .service-ticket { animation: none; transform: none; } }
 </style>

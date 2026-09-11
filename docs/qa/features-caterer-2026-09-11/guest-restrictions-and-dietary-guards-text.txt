@@ -1,0 +1,128 @@
+Every feature
+/
+Guests’ restrictions & dietary guards
+“Two celiac, one halal, the bride is allergic to tree nuts.”
+
+That is how the booking arrives, and until now it stayed on your phone. Put it on the order instead, and every dish gets checked against it from the ingredient facts your kitchen confirmed.
+
+CostCook detects, it never certifies. A guard is a reason to look at an ingredient, not a promise about a guest.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+SATURDAY · RODRIGUEZ · PACK LIST
+
+CONFLICT
+Pesto
+walnuts (contains) · bride, Tree nuts
+CHECK
+Braised short rib
+meat, halal depends on the source · 1 guest
+CLEAR
+Roasted carrots
+every ingredient reviewed · 2 guests, Gluten-free
+Three dishes, three answers. Illustrative lines in the app’s own wording; no capture of this screen is published yet.
+The catalog knew. Nothing ever asked it.
+
+You entered the ingredients, priced them and costed the dish. At no point did anything ask what those ingredients carry, and at no point did the pack list mention the bride. The facts and the people were in two different places, and the only thing joining them was you, remembering.
+
+ON YOUR PHONE
+bride, tree nuts
+ON THE HOTEL PAN
+Pesto, 40 portions
+Say who is eating, once, on the order.
+
+An allergen or a diet, a label so the kitchen knows who it is, and how many people. It lives on that order. Duplicating an order asks before it copies them, because the people at the next event are not the people at this one.
+
+Vegetarian
+Vegan
+Halal
+Kosher
+Gluten-free
+
+Five diets, and fourteen allergens beside them. A diet is judged from the traits your ingredients carry, never from what an ingredient is called.
+
+Three answers, and there is no fourth.
+
+Every dish on the order gets one, and the line names the ingredient that caused it.
+
+Conflict
+
+A reviewed ingredient contains the named allergen or has a characteristic that conflicts with the guest’s diet.
+
+Check
+
+Review is needed: an ingredient may contain the allergen, information is missing, or the diet requires checks the app cannot make.
+
+Clear
+
+Every ingredient has been reviewed and no conflict was found in the recorded information. This is not a guarantee about the food you serve.
+
+The worst answer across the guests is the one the row carries, so a dish is never quieter than its most serious reason. The same reading prints on the order, the prep list and the pack list.
+
+A quiet screen should mean somebody looked.
+
+Check what has not yet been reviewed. An ingredient nobody has reviewed is never counted as clear, and the order carries the number of outstanding ingredients where you can see it. No news does not mean good news here. It tells you how much of the answer is still missing.
+
+Unknown is never clear.
+
+ORDER SUMMARY
+
+Conflicts
+1
+Checks
+3
+Ingredients not reviewed
+4
+
+Counted once for the order, not repeated on every dish.
+
+What it will not tell you.
+
+Check these limits before using a result to plan a guest’s meal.
+
+A clear result means no conflict was found in the recorded ingredient information. Your kitchen must still check the food and its preparation. No screen makes an allergen-free claim.
+Halal and kosher can only ever come back as a check. Slaughter and certification are facts the app cannot see.
+An ingredient nobody has reviewed is never counted as clear. The order says how many are outstanding.
+Confirming an order freezes the reading it was checked on. A later change to a recipe does not restate it, and the screen says when it was checked.
+Find recipes by diet before building the menu.
+
+A client asks which of your dishes are vegan while you are mid-prep. The recipe carries its own dietary characteristics with the reason beside each one, the catalog filters the book by diet and says how many recipes it held back because they could only be a check, and the allergen matrix prints every recipe against every allergen for the pass or the front of house.
+
+C contains M may contain X cross-contact? not sure. Blank is no confirmed claim.
+
+Questions to settle first.
+
+The ones a chef asks before trusting any of it.
+
+Does a clear result mean the dish is fine to serve?
+
+It means every ingredient in the dish was reviewed and none of them says otherwise. It is a reason to serve, not a promise about a guest. No screen in CostCook makes an allergen-free claim.
+
+Why can halal and kosher only ever come back as a check?
+
+Because the facts that decide them are not in a recipe. Halal meat depends on the slaughter and kosher meat on certification, and no ingredient row can carry either. CostCook checks what it can see, forbids pork and alcohol for halal and pork and shellfish for kosher, flags meat with dairy on a kosher order, and stops there.
+
+What happens to dishes with ingredients nobody has reviewed?
+
+They come back as a check, never as clear, and the order tells you how many ingredients are outstanding. The count is on the order once, not repeated on every dish, so it reads as a job to finish rather than noise.
+
+Does the answer update if I change a recipe after confirming?
+
+No, and the screen says so. Confirming an order freezes the reading it was checked on and carries the date it was checked. A later edit to a recipe does not silently restate it. Re-check reads the catalog again and appends a new reading beside the old one.
+
+Do I have to tag every ingredient before this is useful?
+
+Setup drafts the rows from your ingredient names so the repetitive part is not yours. Every draft stays editable, uncertainty stays as do not know, and only your confirmation becomes a fact the guards will use.
+
+Put Saturday’s booking on the order.
+
+Bring one event and the dietary requests you received. The cook reads the answer off the pan, and the text thread stays on your phone, where it belongs.
+
+Start free trial
+Book a 15-min demo
+Nutrition facts & allergens
+Recipes & costing
+Every CostCook feature

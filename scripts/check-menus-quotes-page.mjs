@@ -12,7 +12,7 @@ const [html, featureHubHtml, recipesHtml] = await Promise.all([
 
 const required = [
 	'id="menus-quotes-heading"',
-	'Build the menu once. Quote the job you can actually run.',
+	'Build your menu. Check the price per guest.',
 	'id="menu-management"',
 	'id="catering-quotes"',
 	'aria-label="On this page"',

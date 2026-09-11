@@ -248,11 +248,12 @@ try {
 	const noScript = await evaluate(`(() => ({
 		heading: document.querySelector('h1')?.textContent.trim(),
 		primary: Boolean(document.querySelector('main .btn-primary')),
-		sections: document.querySelectorAll('main > section').length
+		sections: [...document.querySelectorAll('main > section')].map(section => section.id).filter(Boolean)
 	}))()`);
 	assert(noScript.heading?.startsWith('Cost it, buy it, prep it, pack it.'), 'no JavaScript: homepage identity is missing');
 	assert(noScript.primary, 'no JavaScript: primary action is missing');
-	assert(noScript.sections >= 12, `no JavaScript: only ${noScript.sections} homepage sections rendered`);
+	// Assert visitor destinations rather than an obsolete minimum section count.
+	assert(noScript.sections.join(',') === 'outcomes,demo,problem,yield,trust,who,more,alternatives,start', 'no JavaScript: homepage decision destinations are missing or out of order');
 
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

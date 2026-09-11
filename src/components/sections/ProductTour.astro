@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { tourSeedKey, tourStops } from '../../lib/tour';
 import { cta, demoCta } from '../../lib/site';
 import SageIcon from '../SageIcon.astro';
@@ -14,18 +15,17 @@ import SageIcon from '../SageIcon.astro';
 					<span aria-hidden="true">/</span>
 					<span>Product tour</span>
 				</nav>
-				<h1 id="tour-heading">One event. Every part of the week that gets it out the door.</h1>
+				<h1 id="tour-heading">Follow one event from quote to pack list.</h1>
 				<p>
-					Follow a fully seeded 180-guest wedding from the working recipe and customer quote
-					through buying, receiving, inventory, labels, month cost, and Sage.
+					See sample screens for a 180-guest wedding, from recipe costs to buying, prep and packing. No account needed. Choose any stop; kitchen date labels are a Coming preview.
 				</p>
 				<div class="tour-hero-actions">
 					<a href="#guided-tour" class="btn-primary">Start the guided tour</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
 				</div>
 			</div>
 			<div class="tour-ticket anim-enter" style="--enter-delay: 120ms" aria-label="Illustrative tour dataset summary">
-				<div class="tour-ticket-head"><span>Tour dataset</span><span>Illustrative</span></div>
+				<div class="tour-ticket-head"><span>Sample event</span><span>Illustrative</span></div>
 				<strong>Garden wedding supper</strong>
 				<dl>
 					<div><dt>Event</dt><dd>Saturday, Aug 29</dd></div>
@@ -33,7 +33,7 @@ import SageIcon from '../SageIcon.astro';
 					<div><dt>Menu</dt><dd>Garden wedding supper</dd></div>
 					<div><dt>Quote</dt><dd>$28.00 per guest</dd></div>
 				</dl>
-				<p>Twelve connected stops. Every destination in the Features dropdown.</p>
+				<p>{tourStops.length} stops. Start with recipes or choose the task you want to see.</p>
 			</div>
 		</div>
 	</section>
@@ -43,9 +43,9 @@ import SageIcon from '../SageIcon.astro';
 			<div class="tour-heading-row">
 				<div>
 					<h2 id="guided-tour-heading">Take the product tour</h2>
-					<p>Choose any stop or follow the event from recipe to sourced answer.</p>
+					<p>Choose a stop or use Next to follow the event. These are sample screens; use the feature link for details.</p>
 				</div>
-				<p class="tour-truth">All values in this guided dataset are illustrative. Each stop follows its public status; Labels & printing is marked Coming.</p>
+				<p class="tour-truth">All figures are illustrative. Each stop follows its public status; Labels & printing is marked Coming.</p>
 			</div>
 
 			<div class="tour-mobile-control">
@@ -150,7 +150,7 @@ import SageIcon from '../SageIcon.astro';
 									<h4>{stop.callout}</h4>
 									<p>{stop.intro}</p>
 								</div>
-								<a href={stop.featureHref}>Explore this feature</a>
+								<a href={stop.featureHref}>Read the feature guide</a>
 							</div>
 						</section>
 					))}
@@ -174,10 +174,15 @@ import SageIcon from '../SageIcon.astro';
 				<h2 id="tour-close-heading">Start with one real menu. Keep it intact all the way to the back door.</h2>
 				<p>Bring the recipes and supplier prices you already have. CostCook keeps the working plan and its numbers connected.</p>
 			</div>
-			<div class="tour-close-actions">
+			<!-- Considered Composite; not used because this is a fixed pair of
+                 content groups. Bounded columns keep billing text from shrinking the heading. -->
+            <div class="closing-decision">
+                <div class="tour-close-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
 			</div>
+                <FeatureTrialTerms />
+            </div>
 		</div>
 	</section>
 </article>
@@ -316,6 +321,12 @@ import SageIcon from '../SageIcon.astro';
 </script>
 
 <style>
+    .closing-decision { min-width: 0; }
+  /* Long labels must wrap when text is enlarged; grid children may shrink. */
+  .tour-hero-grid > *, .tour-heading-row > *, .tour-close .container-page > * { min-width: 0; }
+  .tour-hero-actions a, .tour-close-actions a { max-width: 100%; white-space: normal; overflow-wrap: anywhere; text-align: center; }
+  .tour-ticket-head, .tour-ticket dl div { flex-wrap: wrap; }
+
 	:global(html.tour-deep-link-jump) { scroll-behavior: auto; }
 	.product-tour { color: var(--color-ink); }
 	.tour-hero { border-block: 1px solid var(--color-hairline); background: var(--color-cream); }
@@ -468,14 +479,14 @@ import SageIcon from '../SageIcon.astro';
 		.tour-workspace :global(.container-page) { max-width: 80rem; }
 		.tour-rail { display: block; }
 		.metric-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-		.tour-coach { grid-template-columns: minmax(0, 1fr) auto; }
-		.tour-close-grid { grid-template-columns: minmax(0, 1fr) auto; }
+		.tour-coach { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+		.tour-close-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
 	}
 
 	@media (max-width: 1099px) {
 		.tour-ticket { justify-self: start; }
 		.tour-mobile-control { display: block; }
-		.app-topbar { grid-template-columns: minmax(0, 1fr) auto; }
+		.app-topbar { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
 		.app-search { display: none; }
 		.app-page-head { display: block; }
 		.seed-chip { display: inline-flex; margin-top: .75rem; }

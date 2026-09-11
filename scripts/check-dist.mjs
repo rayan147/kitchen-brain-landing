@@ -130,22 +130,10 @@ if (!homeHtml.includes('data-features-menu')) {
 	failed = true;
 }
 
-// The hero loop is a sequence, not six unrelated labels. Keep its accessible
-// ordered-list contract and every visual stop in the built homepage so a
-// layout refactor cannot silently erase the guidance rail.
-const loopSteps = ['PRICE IN', 'COST IT', 'ORDER', 'SHOP', 'PREP', 'PACK'];
-if (
-	!homeHtml.includes('data-homepage-loop') ||
-	!homeHtml.includes('aria-label="From supplier price to packed order"')
-) {
-	console.error('check-dist: homepage workflow loop is missing its ordered-list landmark');
-	failed = true;
-}
-for (const step of loopSteps) {
-	if (!homeHtml.includes(`data-loop-step="${step}"`)) {
-		console.error(`check-dist: homepage workflow loop is missing ${step}`);
-		failed = true;
-	}
+// The duplicated hero loop was retired by the 2026-09-11 review. Preserve
+// the one connected event and its complete, readable first cost result instead.
+for (const required of ['data-outcomes-guide', 'data-first-dish-preparation', '39.6%', '$26.93', '$89.78', '30% food-cost target']) {
+ if (!homeHtml.includes(required)) { console.error(`check-dist: first event decision is missing ${required}`); failed = true; }
 }
 
 // The written guide walks the film in order, so this list is the film's order:
@@ -208,7 +196,7 @@ const spreadsheetBefores = [
 ];
 const problemSectionHtml = homeHtml.slice(
 	homeHtml.indexOf('id="problem"'),
-	homeHtml.indexOf('id="who"'),
+	homeHtml.indexOf('id="yield"'),
 );
 const renderedPains = [...problemSectionHtml.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>/g)].map((match) =>
 	stripTags(match[1]),
@@ -223,13 +211,11 @@ if (renderedPains.join(' | ') !== spreadsheetPains.join(' | ')) {
 // The "Before" side of each handoff, in route order. Every handoff renders
 // Before then Instead, so the odd entries are the befores.
 const outcomesSectionHtml = homeHtml.slice(
-	homeHtml.indexOf('data-outcomes-guide'),
-	homeHtml.indexOf('id="yield"'),
+ homeHtml.indexOf('data-outcomes-guide'), homeHtml.indexOf('id="demo"')
 );
-const renderedBefores = [...outcomesSectionHtml.matchAll(/<strong[^>]*>([\s\S]*?)<\/strong>/g)]
-	.map((match) => stripTags(match[1]))
-	.filter((_, index) => index % 2 === 0)
-	.slice(0, spreadsheetBefores.length);
+// Read the semantic before/after label, not the presentation's strong-tag count.
+const renderedBefores = [...outcomesSectionHtml.matchAll(/data-outcome-handoff[^>]*aria-label="([^"]+) becomes [^"]+"/g)]
+ .map((match) => stripTags(match[1]));
 if (renderedBefores.join(' | ') !== spreadsheetBefores.join(' | ')) {
 	console.error(
 		`check-dist: homepage answers render befores [${renderedBefores.join(', ')}], which no ` +
@@ -474,7 +460,7 @@ if (failed) process.exit(1);
 console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s) all carry intrinsic width/height`);
 console.log(`check-dist: ${pages.length} built page(s) carry no CSP-blocked inline script or event handler`);
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
-console.log(`check-dist: homepage workflow loop retains ${loopSteps.length} ordered visual stops`);
+console.log('check-dist: homepage retains the connected event and early setup/cost evidence');
 console.log(`check-dist: homepage demo retains ${demoGuideSteps.length} readable handoffs and the multi-run boundary`);
 console.log(`check-dist: homepage outcomes retain ${outcomeStages.length} guided handoffs and their proof`);
 console.log(`check-dist: /compare renders a spreadsheet column on ${compareRowCount} rows across 5 group tables`);

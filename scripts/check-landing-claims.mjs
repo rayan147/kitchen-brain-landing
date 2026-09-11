@@ -276,28 +276,11 @@ requireText(await read('src/layouts/Base.astro'), 'import.meta.env.PROD', 'deplo
 // reader arriving cold from an email settles "is this real" on the first
 // scroll instead of on the fourth. TheProblem and WhoThisIsFor keep their
 // order relative to each other and still land before the answers they set up.
+// The 2026-09-11 review puts one event's proof before optional diligence.
 const expectedSectionOrder = [
-	'<Hero />',
-	'<SeeItRun />',
-	'<TheProblem />',
-	'<WhoThisIsFor />',
-	'<CustomerOutcomes />',
-	'<TheYield />',
-	// ONE STOP SINCE 2026-09-09, and it was four. NutritionFacts, PaperIn, Sage
-	// and TeamAccess are the four blocks of #more, in that order, in
-	// src/components/more. The order they hold inside the band is the order they
-	// held as stops and the reasons are unchanged: nutrition is recipe-level and
-	// follows yield; Sage is a mechanic and sits with the mechanics, ahead of the
-	// rival beat whose /compare link lists it as a Coming row. What the merge
-	// removed is three eyebrows, three h2s, three ledes, three hand-off lines and
-	// three screens of section padding, not a claim. See the note at the head of
-	// src/components/sections/WhatElse.astro.
-	'<WhatElse />',
-	// The rival beat lands after the reader wants the
-	// thing, and before the maker signs it. See src/pages/index.astro.
-	'<TheOtherTools />',
-	'<BuiltForKitchens />',
-	'<StartHere />',
+ '<Hero />', '<CustomerOutcomes />', '<SeeItRun />', '<TheProblem />',
+ '<TheYield />', '<BuiltForKitchens />', '<WhoThisIsFor />', '<WhatElse />',
+ '<TheOtherTools />', '<StartHere />'
 ];
 let previousSectionIndex = -1;
 for (const component of expectedSectionOrder) {
@@ -488,7 +471,7 @@ if ((comparePage.match(/<CellMark status={row.costcook} \/>/g) ?? []).length !==
 
 // RC-41. The preloaded catalog is names and aliases. The moment the page implies
 // it ships prices, we are promising a cost basis nobody chose.
-requireText(comparisonSource, 'Names and aliases, not prices', 'comparison catalog no-price edge');
+requireText(comparisonSource, 'You supply the pack sizes and prices', 'comparison catalog no-price edge');
 
 // A1: the returning trial user. costcook.io had no way into the product from
 // any page, which is not a claim problem, it is a missing door. The app's own
@@ -672,18 +655,7 @@ for (let claim = 1; claim <= 60; claim += 1) {
 // third primary and must render cta.label like the other two.
 const stopsSource = await read('src/lib/stops.ts');
 const stopIds = [...stopsSource.matchAll(/\{ id: '([a-z]+)'/g)].map((m) => m[1]);
-const expectedStopIds = [
-	'demo',
-	'problem',
-	'who',
-	'outcomes',
-	'yield',
-	// Four stops until 2026-09-09: nutrition, intake, sage, access.
-	'more',
-	'alternatives',
-	'trust',
-	'start',
-];
+const expectedStopIds = ['outcomes', 'demo', 'problem', 'yield', 'trust', 'who', 'more', 'alternatives', 'start'];
 if (stopIds.join(',') !== expectedStopIds.join(',')) {
 	failures.push(
 		`hand-offs: src/lib/stops.ts reads [${stopIds.join(', ')}] but the homepage renders ` +
@@ -802,7 +774,7 @@ if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start to
 // adds a stage or changes DEFAULT_ONBOARDING_MISC_COST_PCT, this fails first.
 const onboardingSource = surfaces[surfaceFiles.indexOf('src/components/sections/OnboardingPage.astro')];
 requireText(onboardingSource, 'docs/stories/onboarding.story.md', 'onboarding story pointer');
-requireText(onboardingSource, 'Four stages in, it prints', 'onboarding plate-cost stage (RC-10)');
+requireText(onboardingSource, 'Stage four ends on a number.', 'onboarding plate-cost stage (RC-10)');
 // F1 again, on a decision route: both primaries must render cta.label from
 // site.ts rather than a literal, so the label cannot drift page by page. The
 // browser cannot catch this — the template interpolates the same value it
@@ -836,7 +808,7 @@ for (const [text, label] of [
 	['Back to Ingredients', 'the way back into setup (RC-58)'],
 	['Build with Sage', 'stage-four Sage door (RC-58)'],
 	['Build the dish by hand', 'stage-four manual door (RC-58)'],
-	['confirm what CostCook read', 'confirm-not-type framing (RC-09)'],
+	['Review the amounts and prices it reads', 'confirm-not-type framing (RC-09)'],
 	['quoted back to you', 'unreadable-is-not-guessed (RC-39)'],
 ]) requireText(onboardingSource, text, `onboarding ${label}`);
 requireText(onboardingSource, 'Sage stays open beside', 'onboarding Sage-in-setup claim (RC-55)');
@@ -944,10 +916,10 @@ for (const label of ['Lot tracking and FSMA 204', 'Fine-grained screen permissio
 		comparisonSource.indexOf(`label: '${label}'`),
 		comparisonSource.indexOf(`label: '${label}'`) + 700,
 	);
-	if (!/sheetNote: 'CostCook says No here\. A sheet is the better answer if you need it\.'/.test(rowText)) {
+	if (!/sheetNote: 'CostCook does not support this\. In a spreadsheet, you would build and check it yourself\.'/.test(rowText)) {
 		failures.push(
 			`comparison (RC-57): "${label}" is a CostCook No row, so its spreadsheet cell must say ` +
-				'the sheet is the better answer there',
+				'CostCook does not support it and the spreadsheet requires building and checking',
 		);
 	}
 }
@@ -1064,6 +1036,64 @@ const forbiddenClaims = [
 ];
 for (const [pattern, label] of forbiddenClaims) {
 	if (pattern.test(publicCopy)) failures.push(`public copy contains forbidden ${label}`);
+}
+
+// 2026-09-10 CATERER WALKTHROUGH. A six-person caterer read the homepage
+// between services and stopped on these; each one is held here so it cannot
+// quietly come back. Tracker: docs/stories/homepage-caterer-walkthrough.story.md
+//
+// Considered Chain of Responsibility; not used because these are independent
+// assertions over static source, and one flat list is how every other rule in
+// this file is written.
+//
+// 1. One word for the billing unit. "Workspace" meant the price unit on the
+//    fold and the whole account in the limits ticket.
+for (const [pattern, label] of [
+	[/\bper kitchen workspace\b/i, 'the price unit as "per kitchen workspace" (say "per kitchen")'],
+	[/\bone kitchen workspace\b/i, 'the account as "one kitchen workspace" (say "one subscription covers one kitchen")'],
+	// 2. Rig vocabulary. A reader has no idea what either is, and a technical
+	//    reader knows exactly what it is, which is worse.
+	[/\bcapture inbox\b/i, 'dev-rig vocabulary "capture inbox"'],
+	[/\bstaging queue\b/i, 'dev-rig vocabulary "staging queue" (the app says review)'],
+]) {
+	if (pattern.test(publicCopy)) failures.push(`public copy contains ${label}`);
+}
+requireText(heroSource, '{launchPlan.unit}, {launchPlan.crew}', 'hero price line names the unit and the crew');
+requireText(siteSource, "crew: 'unlimited crew during launch'", 'billing unit answers the per-user question');
+// 3. The cost of trying it, said before the close's button. A spreadsheet
+//    person knows "one real order" means every dish and price on it; silence
+//    there reads as evasion. Pinned by hook, not by sentence, so the words can
+//    be revised, but the paragraph has to exist and name the first-dish time.
+requireText(startHereSource, 'data-real-order-setup', 'close states what one order requires first');
+requireText(startHereSource, 'about fifteen minutes', 'close states the owner-confirmed first-dish time (RC-10)');
+requireText(startHereSource, 'type any line it could not', 'close keeps the typed-line boundary (RC-58)');
+// 4. The panel is a check, not an instruction, and the number is food only.
+//    Both used to live only in pixels and alt text.
+requireText(heroSource, 'packaging, rentals, staff and anything you cook over the guarantee', 'hero caption says the number is food only');
+requireText(heroSource, 'What you do about the gap is your call', 'hero caption frames the panel as a check');
+// 5. One wedding, one set of numbers. The hero, the outcome crop and the two
+//    worked blog posts showed $26.98 / 39.7% / $89.94 from an Aug 29 capture
+//    while the film showed $26.93 / 39.6% / $89.78. For a product whose whole
+//    promise is that the numbers agree, that was the finding most likely to
+//    cost trust. The film is canonical because it is the expensive thing to
+//    redo. Its $4,847.96 total is one cent off today's app ($4,847.95 since a
+//    2026-09-04 rounding fix), so the hero crop leaves the total out.
+{
+	const wedding = [
+		heroSource,
+		surfaces[surfaceFiles.indexOf('src/components/sections/SeeItRun.astro')],
+		surfaces[surfaceFiles.indexOf('src/components/sections/CustomerOutcomes.astro')],
+		surfaces[surfaceFiles.indexOf('src/components/sections/MenusQuotesFeature.astro')],
+		await read('src/pages/blog/index.astro'),
+		await read('src/content/blog/food-cost-per-guest.md'),
+		await read('src/content/blog/catering-menu-pricing.md'),
+	].join('\n');
+	for (const retired of ['$26.98', '$89.94', '39.7%', '39.7 percent', '$4,856.55', '9.7 percentage']) {
+		if (wedding.includes(retired)) failures.push(`wedding figures: retired ${retired} is back (canonical: $26.93 / 39.6% / $89.78)`);
+	}
+	for (const canonical of ['$26.93', '$89.78', '39.6%']) {
+		requireText(heroSource, canonical, 'hero carries the film\'s wedding figures');
+	}
 }
 
 if (failures.length > 0) {

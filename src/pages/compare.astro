@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import FeatureTrialTerms from '../components/FeatureTrialTerms.astro';
+// story: docs/stories/compare.story.md
 import { comparison, competitors, costcookNo, NOT_LISTED, sheetWork, VERIFIED_ON } from '../lib/comparison';
 import { spell } from '../lib/words';
 import CellMark from '../components/CellMark.astro';
@@ -68,26 +70,22 @@ const legend = [
 >
 	<section class="container-page py-section" aria-labelledby="compare-title">
 		<div class="max-w-3xl">
-			<h1 id="compare-title" class="text-display font-semibold">
-				Compare the work, not just the feature list.
+			<h1 id="compare-title" class="text-display font-semibold [overflow-wrap:anywhere]">
+				Compare CostCook, Parsley, meez and spreadsheets.
 			</h1>
 			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">
 				You are choosing what your kitchen can rely on when the guest count changes,
 				the order goes out, and the delivery reaches the back door.
 			</p>
 			<p class="mt-5 max-w-[62ch] text-ink-soft">
-				This page shows what CostCook ships, what it does not, and what Parsley and meez
-				list on their pricing pages&mdash;at the monthly price that unlocks each row.
+				Compare available features, product limits and monthly prices. Competitor entries describe their cited pricing pages on the date below; they are not hands-on product tests.
 			</p>
 			<!-- The spreadsheet column, 2026-09-05 (RC-57). Most kitchens reading this
 			     page are costing on a sheet today, and it was the one option the table
 			     never showed them. It is not a fourth product: it has no pricing page,
 			     so its cells report the reader's own work instead. -->
 			<p class="mt-5 max-w-[62ch] text-ink-soft">
-				It also shows the option most kitchens are using right now. A spreadsheet
-				will hold almost anything on this list. The column says what you would be
-				building and keeping right for it, because that part is the cost nobody
-				puts a price on.
+				Already use a spreadsheet? Its column shows what you would build or enter and maintain yourself.
 			</p>
 		</div>
 
@@ -134,7 +132,7 @@ const legend = [
 							{rival.key === 'parsley' ? '$129 to $379' : '$24 to $199'}
 						</p>
 						<p class="mt-2 text-sm text-ink-soft">
-							Four tiers, plus a quote-only top tier. {rival.basis}.
+							Three priced plans, plus a quote-only Enterprise plan. {rival.basis}.
 						</p>
 					</div>
 				))}
@@ -165,12 +163,10 @@ const legend = [
 				<a href="/#demo" class="btn-quiet">Watch the 2:53 product tour</a>
 			</p>
 			<p class="mt-5 max-w-[58ch] text-ink-soft">
-				Their columns were read from
-				<a href={competitors[0].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">Parsley&rsquo;s pricing page</a>
-				and
-				<a href={competitors[1].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">meez&rsquo;s pricing page</a>
-				on {VERIFIED_ON}. Prices and tiers move. If you find a row that is out of date,
-				tell me and I will fix it.
+				Their columns were read from{' '}
+				<a href={competitors[0].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">Parsley&rsquo;s pricing page</a>{' '}and{' '}
+				<a href={competitors[1].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">meez&rsquo;s pricing page</a>{' '}on {VERIFIED_ON}. Prices and tiers move. If you find a row that is out of date,
+				<a href="/contact" class="btn-quiet">tell Rayan which row needs checking</a>.
 			</p>
 		</div>
 
@@ -303,9 +299,8 @@ const legend = [
 				</li>
 				<li>
 					<span class="font-semibold text-ink">Receiving is the order you sent.</span> The
-					checklist at the back door is the purchase order, and ticking it off is what
-					writes the purchase and updates the price, so the delivery is not typed in a
-					second time.
+					checklist shows what you ordered. Review what arrived, then save it to record
+					the purchase and update eligible ingredient prices.
 				</li>
 				<li>
 					<span class="font-semibold text-ink">A missing price stops the costing.</span> It
@@ -331,9 +326,10 @@ const legend = [
 			<div class="mt-7 flex flex-wrap items-center gap-5">
 				<a href={cta.href} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">
-					Book 15 minutes
+					Book a 15-min demo
 				</a>
 			</div>
 		</div>
+	<FeatureTrialTerms />
 	</section>
 </Base>

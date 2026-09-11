@@ -1,7 +1,8 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureSections } from '../../lib/features';
 import { spellCapital } from '../../lib/words';
-import { demoCta } from '../../lib/site';
+import { cta, demoCta } from '../../lib/site';
 import FeatureAreaIcon from '../FeatureAreaIcon.astro';
 import FeatureAreaFigure from '../FeatureAreaFigure.astro';
 import SageIcon from '../SageIcon.astro';
@@ -57,6 +58,7 @@ const siblings = featureSections.filter((other) => other.slug !== entry.slug);
 // Do not invent a second status vocabulary here.
 ---
 
+<!-- story: docs/stories/features-navigation.story.md -->
 <section class="border-y border-hairline bg-cream" aria-labelledby="area-heading">
 	<div class="container-page py-section">
 		<nav aria-label="Breadcrumb" class="text-sm">
@@ -67,12 +69,14 @@ const siblings = featureSections.filter((other) => other.slug !== entry.slug);
 		<div class="mt-6 max-w-3xl" data-reveal>
 			<div class="flex items-center gap-x-3">
 				<FeatureAreaIcon slug={entry.slug} class="shrink-0 text-amber-deep" />
-				<p class="eyebrow">{entry.count} shipped things</p>
+				<p class="eyebrow">{entry.count} available features</p>
 			</div>
 			<h1 id="area-heading" class="mt-4 text-display font-semibold break-words">{entry.section}</h1>
 			<p class="mt-5 max-w-[58ch] text-lede text-ink">{entry.wall}</p>
 			<p class="mt-5 max-w-[62ch] text-ink-soft">{entry.lede}</p>
 		</div>
+
+		<div class="mt-6"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><FeatureTrialTerms /></div>
 
 		<FeatureAreaFigure slug={entry.slug} />
 
@@ -126,7 +130,7 @@ const siblings = featureSections.filter((other) => other.slug !== entry.slug);
 			<p class="mt-8 max-w-[66ch] text-ink-soft">
 				If this area covers your kitchen, bring one real menu and see it run.{' '}
 				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet"
-					>Book 15 minutes</a
+					>Book a 15-min demo</a
 				>
 			</p>
 		</div>

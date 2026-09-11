@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { sage, sageStatusWord } from '../../lib/sage';
 import { cta, demoCta } from '../../lib/site';
 import SageIcon from '../SageIcon.astro';
@@ -40,9 +41,9 @@ const faqItems = [
 
 const videoChapters = [
 	{ at: '0:00', title: 'Ask during setup', detail: 'The setup stage stays saved while Sage is one action away.' },
-	{ at: '0:05', title: 'Fit the records', detail: 'Starting questions follow what your kitchen has entered so far.' },
+	{ at: '0:05', title: 'Ask about saved records', detail: 'Starting questions follow what your kitchen has entered so far.' },
 	{ at: '0:10', title: 'Check the source', detail: 'The answer keeps its evidence and record link in view.' },
-	{ at: '0:15', title: 'Keep the final say', detail: 'Checks read. One proposal waits for you.' }
+	{ at: '0:15', title: 'Keep the final say', detail: 'Read the answer. Approve or discard a shopping-list draft.' }
 ] as const;
 ---
 
@@ -60,16 +61,13 @@ const videoChapters = [
 					<SageIcon size={32} context="specialist" />
 					<div><strong>Sage</strong><p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p></div>
 				</div>
-				<h1 id="sage-feature-heading" class="feature-display">Ask your kitchen. Check the answer.</h1>
-				<p class="hero-lede">
-					Sage is inside CostCook, including during setup. It reads the records you have,
-					shows where each answer came from, and waits for your approval before prepared work
-					becomes real.
-				</p>
+				<h1 id="sage-feature-heading" class="feature-display">Ask Sage about your kitchen.</h1>
+				<p class="hero-lede">Ask about your recipes, stock and costs, even during setup. Check the answer’s source records. An Owner or Manager can approve a shopping-list draft.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href="#watch-sage" class="btn-outline">Watch 20 seconds</a>
 				</div>
+				<FeatureTrialTerms />
 			</div>
 
 			<figure class="hero-evidence anim-enter" style="--enter-delay: 120ms">
@@ -98,7 +96,7 @@ const videoChapters = [
 
 	<nav class="feature-chapters container-page" aria-label="On this page">
 		<a href="#watch-sage"><strong>Watch Sage work</strong><span>Follow setup, source, and approval in 20 seconds.</span></a>
-		<a href="#sage-jobs"><strong>Six kitchen jobs</strong><span>See the exact questions Sage can answer.</span></a>
+		<a href="#sage-jobs"><strong>Questions Sage can answer</strong><span>See the exact questions Sage can answer.</span></a>
 		<a href="#sage-guardrails"><strong>Sources and approval</strong><span>See what Sage reads, prepares, and leaves to you.</span></a>
 	</nav>
 
@@ -129,7 +127,7 @@ const videoChapters = [
 					<track kind="captions" src="/proof/sage-walkthrough.vtt" srclang="en" label="English" default />
 					Your browser does not support embedded video. The transcript follows beside the player.
 				</video>
-				<figcaption>Silent walkthrough assembled from the Sage fixture and setup captures on 2026-08-29.</figcaption>
+				<figcaption>Silent walkthrough of a sample kitchen and setup, captured on 2026-08-29.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -165,8 +163,8 @@ const videoChapters = [
 	<section id="sage-jobs" class="questions" aria-labelledby="questions-heading">
 		<div class="container-page questions-grid">
 			<div class="questions-intro" data-reveal>
-				<h2 id="questions-heading">Eleven kitchen checks. One reviewed proposal.</h2>
-				<p>Each question reaches a bounded CostCook check. The assistant does not get a general door into your data.</p>
+				<h2 id="questions-heading">Questions you can ask. A shopping list you can approve.</h2>
+				<p>Ask about the tasks below. Sage uses the relevant kitchen records and shows what it found.</p>
 			</div>
 			<ol class="question-list">
 				{sage.abilities.map((ability, index) => (
@@ -183,7 +181,7 @@ const videoChapters = [
 		<div class="container-page proof-grid">
 			<div class="proof-copy" data-reveal>
 				<h2 id="proof-heading">The number arrives with its record.</h2>
-				<p>In the captured fixture, the question is simple: which ingredient prices went up recently?</p>
+				<p>In this sample kitchen, the question is simple: which ingredient prices went up recently?</p>
 				<dl class="answer-facts">
 					<div><dt>Price move</dt><dd>$24.00 → $33.00</dd></div>
 					<div><dt>Calculated change</dt><dd>37.5%</dd></div>
@@ -219,7 +217,7 @@ const videoChapters = [
 			<div class="approval-path" data-reveal aria-label="Eleven checks read records, one tool prepares a proposal, and a person approves">
 				<div><span>11 checks</span><strong>Read records</strong></div>
 				<i aria-hidden="true"></i>
-				<div><span>1 tool</span><strong>Prepares a proposal</strong></div>
+				<div><span>1 draft</span><strong>Prepares a proposal</strong></div>
 				<i aria-hidden="true"></i>
 				<div class="person"><span>You</span><strong>Approve or discard</strong></div>
 			</div>
@@ -256,7 +254,7 @@ const videoChapters = [
 			</div>
 			<div class="closing-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book 15 minutes</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book a 15-min demo</a>
 			</div>
 		</div>
 		<nav class="container-page onward feature-onward" aria-label="Related feature guides">

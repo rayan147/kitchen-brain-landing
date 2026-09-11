@@ -91,7 +91,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 						placeholder="you@yourkitchen.com"
 						aria-describedby="support-email-help"
 					/>
-					<p id="support-email-help" class="ask-help">The only place my answer can go.</p>
+					<p id="support-email-help" class="ask-help">Rayan will reply to this address.</p>
 				</div>
 
 				<div class="ask-field">
@@ -134,14 +134,14 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 					<path class="ask-tick" d="M10 17.5l4.5 4.5L24 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 				</svg>
 				<p class="ask-confirm-title" role="status" data-support-confirm-text></p>
-				<p class="ask-confirm-note">Closing this box. Nothing else to do.</p>
+				<p class="ask-confirm-note">Your question has been sent. Watch your email for Rayan’s reply.</p>
 			</div>
 		</div>
 	</div>
 
 	<noscript>
 		<p class="ask-help ask-noscript">
-			The form above sends without JavaScript. If your browser blocks the send, email
+			If the form cannot send, email
 			<a href={mailtoHref}>{site.email}</a> or call {site.phone}.
 		</p>
 	</noscript>
@@ -302,7 +302,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 				form.hidden = true;
 				confirmPanel.hidden = false;
 				dialog.dataset.state = 'acknowledged';
-				confirmText.textContent = `Message sent to ${sentTo}.`;
+				confirmText.textContent = `Question sent. Rayan will reply to ${sentTo}.`;
 
 				// The receipt is written now, not on the way out, so it is already
 				// on the page behind the dialog whichever way this box closes.

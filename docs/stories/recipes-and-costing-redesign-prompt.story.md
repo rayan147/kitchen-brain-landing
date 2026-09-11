@@ -117,3 +117,18 @@
 - **Browser revision:** The desktop and mobile passes kept both product chapters in one reading flow, removed mobile horizontal scrolling from the recipe builder, retained the actual CostCook screenshots in the costing chapter, and added a clear entry from the existing Features hub.
 - **FAQ revision:** Six concise disclosures answer the last practical objections about scaling, sub-recipes, missing prices, visible arithmetic, print/export, and confirmed quote prices. Every answer stays inside the shipped feature register.
 - **Final Image:** The recipe is ready for the line, the price is ready for the quote, and the next step asks the visitor to bring one real menu.
+
+
+## Caterer first-visit revision · 2026-09-11
+
+- [x] 1 Idea: A busy owner of a six-person catering kitchen wants to price one dish, but the recipe and current prices are in separate files.
+- [x] 2 Character: Wants a usable answer between services; needs a traceable result; remembers a costly spreadsheet mistake; habitually postpones setup.
+- [x] 3 Plot: (1) interrupted service gap; (2) one dependable answer; (3) separate records; (4) the recipe and current prices are in separate files; (5) asks what to enter; (6) tries the relevant CostCook task; (7) hands the result to the crew; (8) follows the worked example; (9) checks its labelled numbers; (10) reads missing-data and release limits; (11) sees the cost of guessing; (12) chooses a trial or booked demo.
+- [x] 4 Scenes: hero, daily problem, task navigation, worked example, exceptions, detailed questions, next step. Turns: uncertainty to purpose; familiarity to need; confusion to action; doubt to evidence; risk to limits; questions to answers; hesitation to informed choice. Existing route and layout retained.
+- [x] 5 Voices: Reader asks “What do I enter?” and “Can my kitchen use this today?” (persona prompts, not customer quotes). Product is calm, concrete and kitchen-literate; ban seamless, powerful and robust.
+- [x] 6 Dialogue: Each scene answers the next practical question instead of explaining internal architecture.
+- [x] 7 Intention/obstacle: price one dish / the recipe and current prices are in separate files. Headline: “Cost a recipe before you quote.” Supporting line: “Keep ingredients, quantities, method and food cost together. Start with one recipe and its current ingredient prices, then scale the portions without changing the original.”
+- [x] 8 Snap: “A sauce is one recipe, even in five dishes.” Retain this concrete detail; cut competing abstract slogans.
+- [x] 9 Setting: Phone beside the prep bench, a short gap between services, crew waiting for the next list.
+- [x] 10 Connection: You throughout; inputs lead to results, results to limits, limits to the trial decision. Shared terms keep the next action consistent.
+- [x] 11 Revision: Build and claim checks passed; every feature route inspected at desktop and mobile, with native disclosures and no JavaScript. Five-width regression checks and 320px/200% text passed. Report: `docs/qa/features-caterer-2026-09-11/report.md`.

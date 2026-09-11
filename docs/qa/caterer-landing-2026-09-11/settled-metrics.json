@@ -1,0 +1,134 @@
+[
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "height": 23617,
+    "scrollWidth": 390,
+    "sections": [
+      {
+        "id": "",
+        "y": 132,
+        "height": 1865
+      },
+      {
+        "id": "demo",
+        "y": 1997,
+        "height": 1098
+      },
+      {
+        "id": "problem",
+        "y": 3095,
+        "height": 2138
+      },
+      {
+        "id": "who",
+        "y": 5233,
+        "height": 1208
+      },
+      {
+        "id": "outcomes",
+        "y": 6441,
+        "height": 3962
+      },
+      {
+        "id": "yield",
+        "y": 10403,
+        "height": 1951
+      },
+      {
+        "id": "more",
+        "y": 12353,
+        "height": 4536
+      },
+      {
+        "id": "alternatives",
+        "y": 16889,
+        "height": 2104
+      },
+      {
+        "id": "trust",
+        "y": 18993,
+        "height": 1434
+      },
+      {
+        "id": "start",
+        "y": 20427,
+        "height": 2773
+      }
+    ],
+    "setupParagraph": [
+      {
+        "y": 20783,
+        "text": "What it takes first: every dish on that menu goes in once. Upload its recipe card and the invoice its ingredients came on, confirm what CostCook read, and type any line it could not. The first dish takes about fifteen minutes; the rest come in the same way.See every setup screen"
+      }
+    ]
+  },
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "height": 20556,
+    "scrollWidth": 1440,
+    "sections": [
+      {
+        "id": "",
+        "y": 92,
+        "height": 1545
+      },
+      {
+        "id": "demo",
+        "y": 1637,
+        "height": 3252
+      },
+      {
+        "id": "problem",
+        "y": 4889,
+        "height": 1352
+      },
+      {
+        "id": "who",
+        "y": 6241,
+        "height": 758
+      },
+      {
+        "id": "outcomes",
+        "y": 6999,
+        "height": 3025
+      },
+      {
+        "id": "yield",
+        "y": 10024,
+        "height": 1370
+      },
+      {
+        "id": "more",
+        "y": 11394,
+        "height": 4971
+      },
+      {
+        "id": "alternatives",
+        "y": 16365,
+        "height": 1343
+      },
+      {
+        "id": "trust",
+        "y": 17708,
+        "height": 1107
+      },
+      {
+        "id": "start",
+        "y": 18815,
+        "height": 1539
+      }
+    ],
+    "setupParagraph": [
+      {
+        "y": 19252,
+        "text": "What it takes first: every dish on that menu goes in once. Upload its recipe card and the invoice its ingredients came on, confirm what CostCook read, and type any line it could not. The first dish takes about fifteen minutes; the rest come in the same way.See every setup screen"
+      }
+    ]
+  }
+]

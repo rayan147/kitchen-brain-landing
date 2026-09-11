@@ -1,4 +1,5 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureGroups } from '../../lib/features';
 import { cta, demoCta } from '../../lib/site';
 
@@ -9,23 +10,23 @@ if (!importGroup || !ledgerGroup) throw new Error('Missing import and purchase-l
 // Considered Strategy; not used because these are fixed editorial selections
 // from shipped feature data, not algorithms selected or swapped at runtime.
 const invoiceLeads = new Set([
-	'Any door in.',
-	'Classified, timed, retryable.',
-	'AI on a leash.',
-	'Staging, not writing.',
+	'Upload or paste.',
+	'Check the document type.',
+	'Check names and units.',
+	'Review before saving.',
 	'Invoices that check themselves.',
 	'The original stays visible.',
-	'Receipts, not repeats.',
+	'No duplicate save.',
 	'Unreadable means unread.'
 ]);
 const priceListLeads = new Set([
 	'Price sheets, row by row.',
-	'Bulk add with verdicts.',
-	'Foreign CSVs.',
+	'Check every imported row.',
+	'Spreadsheets with different columns.',
 	'Word documents.',
-	'Semantic matching.',
+	'Match supplier names.',
 	'It learns your names.',
-	'Caterer scale.'
+	'Batch imports tested.'
 ]);
 const invoiceItems = importGroup.items.filter((item) => invoiceLeads.has(item.lead));
 const priceListItems = importGroup.items.filter((item) => priceListLeads.has(item.lead));
@@ -34,7 +35,7 @@ if (invoiceItems.length !== invoiceLeads.size || priceListItems.length !== price
 }
 
 const capabilityGroups = [
-	{ label: 'Invoice import', title: 'Stage the purchase before it changes a price.', items: invoiceItems },
+	{ label: 'Invoice import', title: 'Review the purchase before it changes a price.', items: invoiceItems },
 	{ label: 'Price-list import', title: 'Choose which supplier offers become current.', items: priceListItems }
 ] as const;
 const capabilityCount = capabilityGroups.reduce((total, group) => total + group.items.length, 0);
@@ -43,12 +44,12 @@ const faqItems = [
 	{
 		question: 'What can I import into CostCook?',
 		answer:
-			'One queue accepts a photograph, PDF, spreadsheet, Word document, or pasted text. CostCook classifies the source and stages what it can read for review; it does not write uncertain information straight into your catalog.'
+			'Upload a photo, PDF, spreadsheet or Word document, or paste text. Review the suggested items and prices against the original before saving.'
 	},
 	{
 		question: 'Does an import update ingredient prices automatically?',
 		answer:
-			'No. Imported facts stay in staging until you confirm them. Only a careful exact match can be preselected, and doubtful names, units, pack sizes, or rows remain a human decision.'
+			'No. Review and confirm the import first. Exact ingredient matches may be preselected; uncertain names, units and pack sizes need your decision.'
 	},
 	{
 		question: 'What is the difference between an invoice and a price list?',
@@ -58,12 +59,12 @@ const faqItems = [
 	{
 		question: 'What happens when CostCook cannot read a line?',
 		answer:
-			'Unreadable text is surfaced beside the staged result instead of being dropped or guessed. You can correct the row, leave it waiting, replace the source, or exclude it before committing.'
+			'Unreadable text stays beside the suggested details. Correct the row, leave it for later, replace the file or exclude it before saving.'
 	},
 	{
 		question: 'How are duplicate invoices handled?',
 		answer:
-			'Invoice totals are checked against their lines and duplicate sources are fingerprinted. A repeated commit replays the same receipt rather than creating the purchase rows twice.'
+			'The invoice total is compared with the sum of its lines, and duplicate invoices are flagged. Saving the same import again returns the existing receipt without adding purchases twice.'
 	},
 	{
 		question: 'Can an older invoice replace a newer ingredient price?',
@@ -83,15 +84,13 @@ const faqItems = [
 					<span aria-hidden="true">/</span>
 					<span>Invoices and price-list import</span>
 				</nav>
-				<h1 id="imports-heading" class="feature-display">Bring in the paperwork. Keep the final say.</h1>
-				<p class="hero-lede">
-					Send an invoice or supplier price list into one review queue. CostCook stages the
-					lines, keeps the source beside them, and waits for you before anything becomes real.
-				</p>
+				<h1 id="imports-heading" class="feature-display">Upload paperwork. Check prices before saving.</h1>
+				<p class="hero-lede">Upload an invoice or price list as a photo, PDF or spreadsheet. Check the items, pack sizes and prices against the original before you save any changes.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book 15 minutes</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
 				</div>
+				<FeatureTrialTerms />
 			</div>
 
 			<figure class="intake-desk anim-enter" style="--enter-delay: 120ms">
@@ -101,17 +100,17 @@ const faqItems = [
 					<div class="source-sheet price-sheet"><span>Price list</span><strong>Offer</strong><i></i><i></i><i></i></div>
 				</div>
 				<div class="stage-sheet">
-					<div class="sheet-head"><span>Staged records</span><span>Nothing saved</span></div>
+					<div class="sheet-head"><span>Details to review</span><span>Awaiting your review</span></div>
 					<div class="stage-row stage-labels"><span>Item</span><span>Source</span><span>State</span></div>
 					<div class="stage-row"><strong>Chicken thigh</strong><span>Invoice</span><em class="ready">Ready to review</em></div>
 					<div class="stage-row"><strong>Roma tomato</strong><span>Price list</span><em class="check">Check pack</em></div>
-					<div class="stage-row"><strong>Unreadable line</strong><span>Invoice</span><em class="check">Needs you</em></div>
-					<div class="confirm-gate"><span>You confirm</span><strong>then prices can move</strong></div>
+					<div class="stage-row"><strong>Unreadable line</strong><span>Invoice</span><em class="check">Check the original</em></div>
+					<div class="confirm-gate"><span>You confirm</span><strong>then save price changes</strong></div>
 				</div>
-				<div class="flow-key" aria-label="Source, then staged facts, then your confirmation">
-					<span>Source</span><i></i><span>Staged</span><i></i><strong>You confirm</strong>
+				<div class="flow-key" aria-label="Upload the source, review the details, then confirm">
+					<span>Source</span><i></i><span>Review</span><i></i><strong>You confirm</strong>
 				</div>
-				<p>Illustrative records. The staging and confirmation behavior is shipped.</p>
+				<p>Illustrative records. Review and confirmation are available today.</p>
 			</figure>
 		</div>
 	</section>
@@ -131,7 +130,7 @@ const faqItems = [
 				<div><span>Price gets keyed</span><strong>later</strong></div>
 				<i aria-hidden="true"></i>
 				<div><span>Quote goes out</span><strong>now</strong></div>
-				<figcaption>That is why reading and committing belong in different moments.</figcaption>
+				<figcaption>Review the price before it changes the next quote.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -143,12 +142,12 @@ const faqItems = [
 
 	<section class="common-rule" aria-labelledby="common-rule-heading">
 		<div class="container-page common-grid">
-			<div data-reveal><h2 id="common-rule-heading">Five doors. One queue. One gate.</h2><p>A photograph, PDF, spreadsheet, Word document, or pasted text can enter the same workspace. Each stays outside your real catalog until review is complete.</p></div>
+			<div data-reveal><h2 id="common-rule-heading">Upload, review and save.</h2><p>A photograph, PDF, spreadsheet, Word document, or pasted text can enter the same workspace. Each stays outside your real catalog until review is complete.</p></div>
 			<ol class="queue-path" data-reveal>
 				<li><span>1</span><strong>Bring in the source</strong><small>Keep the original attached.</small></li>
-				<li><span>2</span><strong>Read and match</strong><small>Stage names, units, and prices.</small></li>
+				<li><span>2</span><strong>Read and match</strong><small>Check names, units and prices.</small></li>
 				<li class="gate"><span>3</span><strong>You confirm</strong><small>Resolve what is uncertain.</small></li>
-				<li><span>4</span><strong>Commit the result</strong><small>Write only accepted facts.</small></li>
+				<li><span>4</span><strong>Save the reviewed details</strong><small>Save only the details you confirmed.</small></li>
 			</ol>
 		</div>
 	</section>
@@ -169,20 +168,20 @@ const faqItems = [
 					<strong class="paper-total">Stated total <span>$86.65</span></strong>
 				</div>
 				<div class="review-ledger">
-					<div class="preview-head"><span>Staged purchase</span><strong>3 lines</strong></div>
+					<div class="preview-head"><span>Purchase to review</span><strong>3 lines</strong></div>
 					<div class="review-row labels"><span>Match</span><span>Pack</span><span>Line total</span></div>
 					<div class="review-row"><strong>Roma tomato</strong><span>25 lb case</span><b>$31.25</b></div>
 					<div class="review-row flagged"><strong>Cucumber</strong><span>Check: 12 ct</span><b>$18.40</b></div>
 					<div class="review-row"><strong>Baby spinach</strong><span>4 × 2.5 lb</span><b>$37.00</b></div>
 					<div class="reconcile"><span>Computed from lines</span><strong>$86.65</strong><em>Matches stated total</em></div>
 				</div>
-				<figcaption>Illustrative values based on the CostCook walkthrough. The total remains visible beside the staged lines.</figcaption>
+				<figcaption>Illustrative values based on the CostCook walkthrough. The total remains visible beside the lines awaiting review.</figcaption>
 			</figure>
 
 			<div class="feature-scenes">
-				<article data-reveal><h3>Keep the source in view.</h3><p>The photo or PDF sits beside the staged rows, so a doubtful unit can be checked against the paper instead of memory.</p></article>
-				<article data-reveal><h3>Reconcile before posting.</h3><p>Stated invoice totals compare with the computed lines, and a duplicate source is fingerprinted before it becomes another purchase.</p></article>
-				<article data-reveal><h3>Post once.</h3><p>Committing twice replays the same receipt rather than adding the purchase rows again. Current cost still follows purchase date.</p></article>
+				<article data-reveal><h3>Keep the source in view.</h3><p>The photo or PDF sits beside the rows awaiting review, so a doubtful unit can be checked against the paper instead of memory.</p></article>
+				<article data-reveal><h3>Reconcile before posting.</h3><p>Compare the invoice total with the sum of its lines. Check duplicate warnings before saving a purchase.</p></article>
+				<article data-reveal><h3>Post once.</h3><p>Saving the same import twice returns its existing receipt. Ingredient prices follow the purchase date, so an older invoice does not replace a newer price.</p></article>
 			</div>
 	</div>
 	</section>
@@ -195,7 +194,7 @@ const faqItems = [
 			</div>
 
 			<figure class="offer-review" data-reveal>
-				<div class="offer-head"><div><span>Supplier price list</span><strong>North Coast Foods · Aug 2026</strong></div><em>4 rows staged</em></div>
+				<div class="offer-head"><div><span>Supplier price list</span><strong>North Coast Foods · Aug 2026</strong></div><em>4 rows to review</em></div>
 				<div class="offer-row labels"><span>Supplier item</span><span>Current</span><span>Offered</span><span>Decision</span></div>
 				<div class="offer-row"><strong>Chicken thigh</strong><span>$54.00 / case</span><b>$57.40 / case</b><em class="apply">Apply</em></div>
 				<div class="offer-row changed"><strong>Heavy cream</strong><span>12 × 1 qt</span><b>6 × 2 qt</b><em class="review">Review pack</em></div>
@@ -206,8 +205,8 @@ const faqItems = [
 
 			<p class="snap" data-reveal>A price list is an offer. An invoice is what happened. CostCook keeps the difference.</p>
 			<div class="feature-scenes">
-				<article data-reveal><h3>Map the sheet you received.</h3><p>For an unfamiliar CSV, the proposed column mapping is reviewed before a deterministic parser reads every cell. Ignored columns stay disclosed.</p></article>
-				<article data-reveal><h3>Match names without hiding doubt.</h3><p>Duplicate-match scores and ambiguity stay visible. Confirmed supplier names can become aliases for the next review.</p></article>
+				<article data-reveal><h3>Map the sheet you received.</h3><p>For a spreadsheet with unfamiliar columns, check which column holds each detail before importing. Any ignored columns are shown.</p></article>
+				<article data-reveal><h3>Match names without hiding doubt.</h3><p>Check uncertain ingredient matches. Confirmed supplier names can be remembered for the next review.</p></article>
 				<article data-reveal><h3>Refuse the quiet pack change.</h3><p>A different pack size cannot slide through as if only the price changed. That row stops for a decision.</p></article>
 			</div>
 		</div>
@@ -217,9 +216,9 @@ const faqItems = [
 		<div class="container-page exceptions-grid">
 			<div data-reveal><h2 id="exceptions-heading">The awkward rows stay awkward on screen.</h2><p>Trust is earned at the edge cases. Nothing unreadable, unmatched, duplicated, or structurally changed needs to be guessed into place.</p></div>
 			<ul class="exception-list" role="list" data-reveal>
-				<li><strong>Unreadable</strong><span>The source text is quoted back beside the staged row.</span><em>Correct or leave waiting</em></li>
+				<li><strong>Unreadable</strong><span>The source text is quoted back beside the row awaiting review.</span><em>Correct or leave waiting</em></li>
 				<li><strong>Unmatched</strong><span>Candidate matches and their ambiguity remain visible.</span><em>Choose or add</em></li>
-				<li><strong>Duplicate</strong><span>The source fingerprint and prior receipt stop a second posting.</span><em>Open the existing record</em></li>
+				<li><strong>Duplicate</strong><span>The existing invoice and receipt help you avoid saving the purchase twice.</span><em>Open the existing record</em></li>
 				<li><strong>Pack changed</strong><span>The new pack is not treated as a simple price update.</span><em>Review the unit</em></li>
 			</ul>
 		</div>
@@ -245,8 +244,8 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">The source filed. The price explained.</h2><p>Bring in the next supplier document with every line still under your eye.</p></div>
-			<div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book 15 minutes</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div>
+			<div><h2 id="closing-heading">Review your next supplier invoice.</h2><p>Bring in the next supplier document with every line still under your eye.</p></div>
+			<div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div>
 		</div>
 		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/getting-prices-in">Purchases &amp; getting prices in</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
 	</section>

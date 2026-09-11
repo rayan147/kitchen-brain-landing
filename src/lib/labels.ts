@@ -27,7 +27,6 @@
  *
  * No pattern: a table the sections render.
  */
-import { dietary } from './dietary';
 
 import type { Verdict } from './comparison';
 
@@ -41,31 +40,31 @@ export const labelsAvailability = {
 	isComing: labelsAreComing,
 	verdict: LABELS_STATUS,
 	word: labelsStatusWord,
-	featureLead: labelsAreComing ? 'Built, behind a flag, marked Coming.' : 'Available now.',
+	featureLead: labelsAreComing ? 'Coming; not included today.' : 'Available now.',
 	pageSentence: labelsAreComing
 		? 'Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.'
 		: 'Available now in the CostCook subscription you would start today.',
 	featureDetail: labelsAreComing
-		? 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. The feature is built behind a release flag and not included at launch, so it remains marked Coming.'
+		? 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. This is a preview of the planned workflow. Kitchen date labels are not included in the subscription today.'
 		: 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints.',
 	sectionBlurb: labelsAreComing
-		? 'The fifteen numbers an FDA panel carries, per recipe, and a sheet to print them on. Kitchen date labels are built and marked Coming.'
+		? 'Calculate nutrition per portion and print an estimate. Review allergens and guest restrictions. Kitchen date labels are Coming.'
 		: 'Nutrition panels and kitchen date labels, calculated or settled from the recipe and ready for the browser to print.',
 	sectionLede: labelsAreComing
-		? 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels are built in the app behind a release flag and not included at launch, so they are marked Coming below rather than folded into the shipped list.'
+		? 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen stickers are a separate feature marked Coming and are not included today. Nutrition sheets are calculated estimates, not a retail-label compliance claim.'
 		: 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels ask you to settle the storage and use-by facts before the browser prints them.',
 	nutritionFaqCrosslink: labelsAreComing
-		? `Kitchen date and allergen stickers are a separate thing, built behind a release flag and marked Coming; see the next answer. ${dietary.faq}`
-		: `Kitchen date and allergen stickers are a separate feature; see the next answer. ${dietary.faq}`,
+		? 'Kitchen date labels are a separate feature marked Coming and are not included today; see the next answer.'
+		: 'Kitchen date labels are a separate feature; see the next answer.',
 	seoDescription: labelsAreComing
-		? 'Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record. Built behind a flag and marked Coming.'
+		? 'Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record. Coming; not included in the subscription today.'
 		: 'Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record.',
 	comparisonNote: labelsAreComing
-		? 'Not included at launch. The feature is built behind a release flag: choose storage, settle the use-by date, print one numbered label per container through the browser, and keep the frozen record for reprints. No direct printer connection.'
+		? 'Coming; not included today. The preview lets you choose storage, settle the use-by date, print one numbered label per container through the browser, and keep the frozen record for reprints. No direct printer connection.'
 		: 'Choose storage, settle the use-by date, print one numbered label per container through the browser, and keep the frozen record for reprints. No direct printer connection.',
 	faqStatus: labelsAreComing
 		? [
-				'Not in the app you would start today. The feature is built behind a release flag and remains marked Coming. Tap Label on the prep list, pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.',
+				'Coming; not included in your trial or subscription. In the preview, tap Label on the prep list, pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.',
 				'It is not included in the launch subscription. There is no direct connection to a label printer; the output is the browser print dialog.'
 			]
 		: [
@@ -87,7 +86,7 @@ export const labels = {
 	steps: [
 		{
 			lead: 'Tap Label where the food is.',
-			detail: 'On the prep list, the pack list, a recipe or an ingredient. All four post to one endpoint, so a sticker printed at the bench cannot differ from one printed at pack-out.'
+			detail: 'On the prep list, the pack list, a recipe or an ingredient. Each opens the same label form so you can review the same details before printing.'
 		},
 		{
 			lead: 'Say how it is stored.',
@@ -110,7 +109,7 @@ export const labels = {
 			detail: 'The print opens your browser’s print dialog on stock the kitchen chose once in Settings. What the sticker said is frozen at that moment, so a soaked one reprints unchanged even if the recipe has moved since.'
 		}
 	],
-	/** The media the sticker is sized for. Millimetres, so the preview is the print geometry. */
+	/** The media the sticker is sized for. Millimetres, so the preview is the printed size. */
 	stock: [
 		{ name: '30-up sheet', size: '66 × 25.4 mm, 30 to a letter sheet', detail: 'An office printer and a sheet of stickers.' },
 		{ name: '58 mm continuous roll', size: '58 mm wide, cut to length', detail: 'Receipt-width thermal stock, one at a time at the bench.' },

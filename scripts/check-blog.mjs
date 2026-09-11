@@ -87,7 +87,7 @@ requireText(
 for (const slug of ['food-cost-per-guest', 'catering-menu-pricing']) {
 	requireText(
 		readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'),
-		'$26.9808 ÷ 0.30 ≈ $89.94 per guest',
+		'$26.9331 ÷ 0.30 ≈ $89.78 per guest',
 		`${slug} unrounded target-price equation`
 	);
 }

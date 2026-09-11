@@ -1,3 +1,4 @@
+// story: docs/stories/homepage-caterer-fixes.story.md
 /**
  * Single source of truth for owner-supplied values.
  * Every TODO below must be swapped before real traffic — the QA issue's
@@ -63,9 +64,15 @@ function appOrigin(configuredOrigin: string | undefined): string {
 // (PUBLIC_APP_URL in .env) moves Start and Sign in together.
 const app = appOrigin(import.meta.env.PUBLIC_APP_URL);
 
+// "Free trial" is in the label because the button is where the reader decides,
+// and "Start CostCook" gave no hint that anything about it was free or bounded.
+// The card disclosure stays in the line under every primary; the label only
+// has to stop the button reading like a purchase. 2026-09-10 walkthrough, #10.
 export const cta = {
-	label: 'Start CostCook',
-	ariaLabel: 'Start CostCook',
+	label: 'Start free trial',
+	// Starts with the visible label so speech input ("click Start free trial")
+	// matches the accessible name (WCAG 2.5.3).
+	ariaLabel: 'Start free trial of CostCook, 15 days',
 	href: `${app}/start?plan=launch`,
 	target: '_self',
 	rel: undefined
@@ -89,7 +96,7 @@ export const signIn = {
 
 export const demoCta = {
 	label: 'Book a 15-min demo',
-	ariaLabel: 'Prepare and book a 15-minute CostCook demo',
+	ariaLabel: 'Book a demo: prepare a 15-minute CostCook session',
 	href: '/demo',
 	target: '_self',
 	rel: undefined
@@ -101,11 +108,24 @@ export const contactCta = {
 	href: '/contact'
 } as const;
 
-/** Public launch terms shown wherever a visitor decides whether to start. */
+/**
+ * Public launch terms shown wherever a visitor decides whether to start.
+ *
+ * THE BILLING UNIT IS "a kitchen", said one way everywhere. The price line
+ * used to bill per "workspace" while the limits ticket used the same word for
+ * the whole account: one term, two meanings, on the line a reader checks
+ * hardest. scripts/check-landing-claims.mjs now fails on the old phrasing.
+ * A reader with one kitchen and a sous asks whether the sous is another $49.
+ * `crew` answers that on the same line (FAQ "Do I pay per user?", pricing
+ * page: teammates unlimited during launch).
+ */
 export const launchPlan = {
 	displayPrice: import.meta.env.PUBLIC_LAUNCH_PRICE_DISPLAY?.trim() || '$49/month',
 	trialDays: 15,
-	billingNote: 'per kitchen workspace after a 15-day free trial.'
+	unit: 'per kitchen',
+	crew: 'unlimited crew during launch',
+	crewTerms: 'Teammates are unlimited during launch. Post-launch teammate limits have not been announced.',
+	billingNote: 'per kitchen, unlimited crew during launch, after a 15-day free trial.'
 } as const;
 
 const productTourHref = '/tour/main';
@@ -128,7 +148,7 @@ const resourceNav = [
 		header: 'resources',
 		group: 'See it work',
 		icon: 'tour',
-		description: 'Follow one 180-guest wedding from quote to shelf.'
+		description: 'See a sample wedding go from recipe costs to shopping and prep.'
 	},
 	{
 		label: 'Who it\'s for',
@@ -144,7 +164,7 @@ const resourceNav = [
 		header: 'resources',
 		group: 'See it work',
 		icon: 'dish',
-		description: 'One dish to start, then how the rest of your menu and your crew get in.'
+		description: 'See what to prepare, the five setup stages, and how to invite your crew.'
 	},
 	{
 		label: 'How we compare',
@@ -152,7 +172,7 @@ const resourceNav = [
 		header: 'resources',
 		group: 'Make the decision',
 		icon: 'compare',
-		description: 'Compare workflows, shipped capabilities, and published pricing.'
+		description: 'Compare kitchen tasks, product limits, and monthly prices.'
 	},
 	{
 		label: 'FAQ',

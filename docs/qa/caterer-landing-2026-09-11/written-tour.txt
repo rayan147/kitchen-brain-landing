@@ -1,0 +1,98 @@
+Follow the order in writing
+8 HANDOFFS
+Follow the order without pressing play.
+
+Read the same 180-guest wedding in 8 handoffs. Each line shows what goes in and what the next part of the job receives.
+
+01
+
+QUOTE
+
+Check the food cost before you quote
+
+The pricing panel puts the guest count, quoted price, food cost, target and the price needed to meet it in one decision.
+
+Menu + 180 guests
+Food cost before send
+02
+
+SHOP
+
+Turn the wedding into whole packs
+
+The same order becomes a shopping list grouped by supplier, with sub-recipes kept out of the buy list as batches to make.
+
+Same wedding
+Supplier-grouped packs
+03
+
+PREP
+
+Scale the kitchen work to the count
+
+The prep list carries the same guest count into every ingredient and sub-recipe, with a check-off box on each line.
+
+Same guest count
+Scaled prep list
+04
+
+NUTRITION
+
+Answer the nutrition question off the same recipe
+
+Calories and protein per portion sit on the dish you already costed, computed from the sources you matched. Rows the source will not report stay blank, with the ingredient named.
+
+Same costed recipe
+Panel, blanks named
+05
+
+BUY
+
+Send each supplier its purchase order
+
+Confirmation creates one purchase order per supplier. The film then opens an inbox so you can read the email exactly as a supplier receives it.
+
+Shopping need
+Purchase orders sent
+06
+
+RECEIVE
+
+Record the delivery you actually got
+
+A short arugula line and extra spinach stay beside what was ordered. The difference is recorded instead of smoothed over.
+
+Expected delivery
+Received quantity + value
+07
+
+UPDATE
+
+Carry the paid price back to costing
+
+The received price becomes the current ingredient cost. The confirmed quote stays held while today’s comparison moves.
+
+What actually arrived
+Current cost for next time
+08
+
+ASK
+
+Ask about the job and check the answer
+
+Sage reads the records this order has built and answers in plain words. The film asks what needs attention, and the answer carries the same 39.6 percent food cost the pricing panel worked out, with the orders it read listed under it.
+
+The records so far
+Answer with its sources
+
+THEN, THE SCALE TEST
+
+Three events. One production run.
+
+Combined production totals Shop and Prep across all three. Pack keeps a by-event column, and confirmation and purchase orders still stay with each order.
+
+Event 1
+Event 2
+Event 3
+Combined Shop + Prep
+Pack stays by event

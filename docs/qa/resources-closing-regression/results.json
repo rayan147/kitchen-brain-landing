@@ -1,0 +1,85 @@
+{
+  "results": [
+    {
+      "route": "/tour/main#tour-recipes-costing",
+      "width": 1440,
+      "headingWidth": 547.71875,
+      "headingHeight": 241.875,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/tour/main#tour-recipes-costing",
+      "width": 1280,
+      "headingWidth": 547.71875,
+      "headingHeight": 215,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/tour/main#tour-recipes-costing",
+      "width": 1024,
+      "headingWidth": 490.9375,
+      "headingHeight": 129,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/tour/main#tour-recipes-costing",
+      "width": 768,
+      "headingWidth": 385.34375,
+      "headingHeight": 100.78125,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/tour/main#tour-recipes-costing",
+      "width": 390,
+      "headingWidth": 350,
+      "headingHeight": 134.375,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/who-its-for",
+      "width": 1440,
+      "headingWidth": 464.5625,
+      "headingHeight": 168.46875,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/who-its-for",
+      "width": 1280,
+      "headingWidth": 464.5625,
+      "headingHeight": 110.59375,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/who-its-for",
+      "width": 1024,
+      "headingWidth": 350.65625,
+      "headingHeight": 132.65625,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/who-its-for",
+      "width": 768,
+      "headingWidth": 115.125,
+      "headingHeight": 241.828125,
+      "overlap": false,
+      "overflow": false
+    },
+    {
+      "route": "/who-its-for",
+      "width": 390,
+      "headingWidth": 350,
+      "headingHeight": 69.09375,
+      "overlap": false,
+      "overflow": false
+    }
+  ],
+  "failures": []
+}

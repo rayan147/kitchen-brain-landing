@@ -1,0 +1,335 @@
+Every feature
+/
+Recipes and costing
+Cost a recipe before you quote.
+
+Keep ingredients, quantities, method and food cost together. Start with one recipe and its current ingredient prices, then scale the portions without changing the original.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+ILLUSTRATIVE RECIPE FLOW
+
+WORKING RECIPE
+24 PORTIONS
+Herb roast chicken
+YIELD
+6.4 kg
+PORTION
+265 g
+
+INGREDIENTS
+
+Chicken thigh
+7.8 kg
+Herb marinade
+1.1 kg
+Lemon
+12 each
+Pan jus
+1.4 L
+
+Roast, rest, portion, and hold for service.
+
+RECIPE COSTING
+SAME RECIPE
+Herb roast chicken
+RECIPE COST
+$164.16
+PER PORTION
+$6.84
+FOOD COST
+30.4%
+
+THE PATH STAYS VISIBLE
+
+Purchased amount
+8.6 kg
+Usable yield
+91%
+Cost contribution
+$109.42
+Illustrative values: $164.16 ÷ 24 = $6.84 food per portion. At a $22.50 selling price, that is 30.4% food cost. Food cost excludes labor, rentals, tax and profit.
+Three places. One answer due today.
+
+The method is in a binder. The current case price is in a purchase record. The quote is waiting in a spreadsheet. The split feels harmless until the kitchen and the customer need their answers on the same afternoon.
+
+RECIPE
+What to make
+rekey
+PRICE
+What it costs
+recheck
+QUOTE
+What you say
+One working recipe should carry both the method and the math.
+Recipe management
+Build it once. Find it, scale it, and hand it to the kitchen.
+Publishing and recipe history
+Move from a private draft to kitchen view, with earlier versions still readable.
+Recipe costing
+Follow the price from the case to the plate and the quote.
+One working recipe, from first draft to prep sheet.
+
+Build the dish while the details are in your hands. Keep ingredients, prep, yield, sub-recipes, and the version the kitchen should use in one record.
+
+ WORKING RECIPE
+PRIVATE DRAFT
+RECIPE NAME
+Lemon herb chicken
+BATCH YIELD
+24 portions
+INGREDIENT
+USED
+PREP
+Chicken thigh
+6.4 kg
+trimmed
+Herb marinade
+1.1 kg
+sub-recipe
+Lemon
+12 each
+zested
+Add an ingredient
+Type, pick, next line
+SCALING PREVIEW
+SAVED RECIPE UNCHANGED
+ORIGINAL
+24
+portions
+TARGET
+80
+portions
+
+Chicken thigh
+21.3 kg
+
+Herb marinade
+3.7 kg
+
+PRINTED 8:42 AM
+Lemon herb chicken
+
+Roast until browned. Rest before portioning.
+
+24 portions · 265 g each
+Illustrative walkthrough of shipped recipe-builder, scaling-preview, and print-sheet behavior.
+Build without leaving the recipe.
+
+Type, pick, and move to the next line. Add a missing ingredient without losing the recipe already in your hands.
+
+Scale without rewriting the original.
+
+Preview a target amount or work from what you have on hand. The saved recipe stays exactly where you left it.
+
+Hand off the current version.
+
+Print a clean kitchen sheet with the time it was printed, so the paper on the prep table says when it left the system.
+
+The kitchen version is a decision, not the last tab left open.
+
+Build in private, check readiness, publish deliberately, and give the crew a read-only kitchen view. Earlier published versions remain available when you need to see what changed.
+
+01
+Draft
+
+Private while the recipe is still being built.
+
+02
+Ready
+
+Required recipe facts are checked before publishing.
+
+03
+Published
+
+The current approved version is explicit.
+
+04
+Kitchen view
+
+The crew reads the working method without edit controls.
+
+05
+History
+
+Earlier published versions stay available to read.
+
+Archive and restore sit beside this path for owners; they do not erase the published history.
+File it the way the kitchen looks for it.
+
+Collections, tags, stations and shelves give a growing recipe book more than one useful way back in.
+
+Collections
+Tags
+Stations
+Shelves
+Keep the method in working order.
+
+Structured method steps can be reordered without turning the full procedure into one loose paragraph.
+
+See the cost change before the quote does.
+
+A case price only becomes useful after the pack, usable yield, sub-recipe, portion, and guest count have had their say. Keep every step open to inspection.
+
+1
+Case
+
+What the supplier charged for the whole pack.
+
+2
+Unit
+
+The price per kilo, litre, or each.
+
+3
+Edible
+
+What remains after trim and cooking loss.
+
+4
+Plate
+
+That ingredient’s share of one dish.
+
+5
+Event
+
+The food cost the quote is judged against.
+
+From case price to event cost. Every step stays available when a number needs checking.
+Open the arithmetic.
+
+Purchased amount, yield, quantity to buy, prep state, and cost contribution sit on the same line. Open any calculation and follow the number back to its facts.
+
+Missing prices are named instead of reading as zero.
+Every line reconciles to the recipe total.
+Trim and cooking loss remain separate facts.
+Each ingredient carries its own working, not just a share of the final total.
+Price the menu before commitment.
+
+See cost per guest against the price you plan to charge, then compare the frozen quote with today's prices after the order is confirmed.
+
+A sauce is one recipe, even in five dishes.
+
+Cost the batch once. Reuse it wherever it belongs. When its facts change, you can see which recipes and menus are touched before you decide what to do next.
+
+Sub-recipe
+Herb marinade
+One batch · one cost
+Roast chicken
+Grain bowl
+Lunch box
+Canapé tray
+Family meal
+One maintained component, reused without copying its costing facts into five places.
+The complete Recipes & Costing list.
+
+Open the details to check what is available today.
+
+48
+shipped capabilities
+
+Recipes
+A sauce is one recipe, even in five dishes.
+14
+One-screen builder. Type, pick, next line. Autocomplete stays under your thumb.
+Live pricing. Set the selling price and the food-cost percent moves as you type, with a nudge when you are over target.
+Private drafts. A blank recipe stays out of the catalog until its first valid save.
+Duplicate. Copy a recipe with its costing facts intact.
+Draft to kitchen view. Readiness checks stand between a private draft and the published version the kitchen opens.
+Earlier published versions. Read the recipe history and open an earlier published version without replacing the current one.
+Filed for the kitchen. Collections, tags, stations and shelves keep a growing recipe book findable.
+Structured methods. Write and reorder method steps instead of burying the working sequence in one paragraph.
+Archive and restore. Owners can publish, archive and restore recipes.
+Learned yield. CostCook proposes yield corrections from your own buying evidence. You apply or reverse, and the evidence is kept.
+Usual ingredient yield. New recipe lines use the ingredient’s usual yield. Existing lines keep their saved yield.
+CSV export. Download one recipe or the whole recipe book as a CSV spreadsheet you can import again.
+Print sheets. A recipe prints clean, stamped with when it was printed.
+Checked deletes. Removing a recipe checks what uses it first.
+The costing math
+From recipe quantities to food cost, with the calculations shown.
+14
+One connected plan. Menu times guest count becomes what to buy, cook, and pack, with the cost attached.
+Real unit conversion. Weight, volume, and count convert only through facts you set per ingredient, never a global guess table.
+Whole batches. Batches round up to whole ones and the plan says made and needed, so nothing pretends to be exact.
+Two kinds of yield. Trim loss and cooking loss are separate numbers, and each recipe line says which state its quantity means.
+Byproduct credit. Bones and trim you use elsewhere credit back against the ingredient’s usable cost.
+Missing prices are named. Uncostable lines are listed, and partial totals say what is missing instead of showing zero.
+Lines that reconcile. Every line’s cost contribution adds up to the total. No silent remainder.
+Misc is its own line. Miscellaneous cost is visible and applied once, never buried in a dish.
+Tap-to-see arithmetic. Any plate cost or food-cost percent opens the math behind it.
+Consistent target warnings. Over target reads the same words on every screen.
+Amounts in cents. Costs are calculated in cents so the displayed amounts add up.
+Your units. Quantities print metric or US, rounded the way a cook reads them.
+Scaling preview. Scale a recipe by target amount or by what you have on hand. The saved recipe never changes.
+Sub-recipes checked. Reuse a sauce or other sub-recipe in dishes. A recipe cannot include itself, even through another recipe.
+Ingredients
+Buying facts that stay attached to the food.
+15
+Missing ingredient details. See which ingredients can be costed and which need a price, yield or conversion.
+Shareable filters. Bookmark or share a filtered ingredient list and reopen the same search.
+Fix a price in place. Edit a pack cost right from the list without losing your filters.
+Three ways to add an ingredient. Create from scratch, from the USDA reference, or from a purchase. Unit and yield are your choice, never a guess.
+Mid-recipe creation. Add a missing ingredient from inside the recipe builder without losing what you typed.
+Suppliers anywhere. Add a supplier from any screen that needs one. Same form, same result.
+Purchased vs usable. Each ingredient shows both costs side by side, with its purchase history underneath.
+Compare suppliers. Compare supplier offers per usable kilo, pound or item, cheapest first. Choose which price to use.
+Price source. Every current price says where it came from, from which supplier, effective when.
+Affected recipes and menus. Before a price changes, see every recipe and menu it touches.
+Check before deleting. Before deleting an ingredient, check the recipes that still use it.
+CSV import. Bulk ingredient import with a template whose example rows actually pass.
+USDA reference built in. Yields, densities, and unit weights offered as chips you tap to fill.
+Allergens. Fourteen-allergen tagging rolls up to every recipe, with chef overrides that require a written reason.
+Shelf facts. Storage areas and par levels live on the ingredient. An unset par is unset, not zero.
+Menus
+What each guest gets, priced.
+5
+Menu workspace. Dishes, portions per guest, and price, saved in one piece.
+Self-pricing. Cost per guest against selling price, plus the price that would hit your target.
+Equipment templates. Each menu carries its equipment counts. Chafers times three stays times three regardless of guests.
+Used-by guards. A menu that orders still use will not delete out from under them.
+Overridable pricing. The menu’s per-guest price is the default an order can override.
+Frequently asked questions
+
+The practical questions that come up before you bring a real recipe into the room.
+
+What is recipe management software?
+
+Recipe management software keeps ingredients, method, yield, sub-recipes, scaling, and the kitchen-ready version together. In CostCook, that means the recipe the kitchen reads is also the record used for costing.
+
+How does recipe costing work in CostCook?
+
+CostCook follows the purchase price through pack size, usable yield, recipe quantity, portion, and guest count. You can open the arithmetic behind a plate cost or food-cost percentage instead of accepting an unexplained total.
+
+Can I scale a recipe without changing the original?
+
+Yes. Scale by a target amount or by what you have on hand, then use the recalculated quantities as a preview. The saved recipe stays unchanged.
+
+What happens when a yield or ingredient price is missing?
+
+Trim loss and cooking loss remain separate facts. If a line cannot be costed, CostCook names the missing price and labels the total as partial instead of quietly treating the ingredient as free.
+
+Can I reuse sub-recipes and hand recipes to the kitchen?
+
+Yes. A sauce or other sub-recipe can feed several dishes without copying its costing facts into each one. Recipes can also be exported to CSV or printed as clean kitchen sheets stamped with the print time.
+
+Can I see an earlier published recipe?
+
+Yes. Recipe history keeps earlier published versions available to read. The current published version remains clear, so opening history does not silently replace what the kitchen uses.
+
+Will a later price change rewrite a confirmed quote?
+
+No. Confirming an order freezes its plan, math, and money together. CostCook can compare that frozen quote with current prices later without silently rewriting what you originally quoted.
+
+Ready for the line. Ready to price.
+
+Bring one real menu and follow it from recipe to quote, with the working shown.
+
+Book a 15-min demo
+Start free trial
+Menus & quotes
+See every CostCook feature

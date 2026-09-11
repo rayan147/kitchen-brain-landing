@@ -11,7 +11,7 @@ const requireText = (text, label) => {
 };
 
 for (const [text, label] of [
-	['Know the catch before you hand over the card.', 'page identity'],
+	['Questions before you try CostCook?', 'page identity'],
 	['id="decision-ticket-title"', 'before-you-start ticket'],
 	['id="money"', 'money chapter'],
 	['id="fit"', 'fit chapter'],
@@ -23,11 +23,11 @@ for (const [text, label] of [
 ]) requireText(text, label);
 
 const entryCount = (html.match(/data-faq-entry/g) ?? []).length;
-if (entryCount !== 36) failures.push(`expected 36 FAQ answers, received ${entryCount}`);
+if (entryCount !== 37) failures.push(`expected 37 FAQ answers, received ${entryCount}`);
 
 if (faqMarkup.includes('<details')) failures.push('FAQ answers must remain open; found a details disclosure');
 
-for (const id of ['trial', 'cancel', 'guests', 'phone', 'demo']) {
+for (const id of ['trial', 'cancel', 'guests', 'phone', 'demo', 'guest-restrictions']) {
 	requireText(`id="${id}"`, `stable #${id} deep link`);
 }
 
@@ -46,4 +46,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('FAQ page contract passed: 36 open answers, stable anchors, decision ticket, snap answer, and structured data.');
+console.log('FAQ page contract passed: 37 open answers, stable anchors, decision ticket, snap answer, and structured data.');

@@ -14,7 +14,7 @@ const [html, featureHubHtml, component, route] = await Promise.all([
 const required = [
 	'id="features-nutrition"',
 	'id="nutrition-feature-heading"',
-	'One recipe. Two answers you cannot guess at.',
+	'Check nutrition and allergens from your recipe.',
 	'id="nutrition-facts"',
 	'id="allergen-management"',
 	'339',
@@ -61,13 +61,13 @@ if (!featureHubHtml.includes('href="/features/nutrition-facts-and-allergens"')) 
 	throw new Error('Feature navigation is missing its dedicated Nutrition & allergens destination.');
 }
 
-const forbiddenSourceFragments = ['overflow: clip', '>Book 15 minutes<', 'const macroFacts', 'font-size: clamp(3rem, 5.55vw, 5.9rem)'];
+const forbiddenSourceFragments = ['overflow: clip', '>Book a 15-min demo<', 'const macroFacts', 'font-size: clamp(3rem, 5.55vw, 5.9rem)'];
 const forbidden = forbiddenSourceFragments.filter((fragment) => component.includes(fragment));
 if (forbidden.length > 0) {
 	throw new Error(`Nutrition & allergens source regressed: ${forbidden.join(', ')}`);
 }
 
-for (const requiredSourceFragment of ['demoCta.label', 'launchPlan', 'var(--text-display)', 'var(--text-h2)', 'min-height: 44px', 'overflow-wrap: anywhere']) {
+for (const requiredSourceFragment of ['demoCta.label', 'FeatureTrialTerms', 'var(--text-display)', 'var(--text-h2)', 'min-height: 44px', 'overflow-wrap: anywhere']) {
 	if (!component.includes(requiredSourceFragment)) {
 		throw new Error(`Nutrition & allergens source is missing: ${requiredSourceFragment}`);
 	}

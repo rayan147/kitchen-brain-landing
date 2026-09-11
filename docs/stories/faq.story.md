@@ -103,3 +103,20 @@ Phone, one bar, the walk-in door propped with a foot. The reader is not going to
 ## Revision — trial and offline boundaries (2026-08-30)
 
 All eleven steps remain complete. The trial answer promises only what the product and Stripe setup establish: $0 charged during the 15-day trial, with billing beginning on day sixteen unless cancelled. It no longer promises that Stripe creates no invoice. The walk-in answer separates three states that used to be collapsed into “works offline”: previously loaded order pages remain readable from their cache and show its time; unseen pages fall back offline; writes need a connection. Server-rendered reading with JavaScript disabled remains a separate capability, not an offline guarantee. The page’s snap line and final image remain unchanged.
+
+
+## Caterer first-visit revision · 2026-09-11
+
+Content: `src/lib/faq.ts` and its shared data/response states.
+
+- [x] 1 — Idea: A busy caterer wants to find a direct answer before handing over a card, but internal terminology and merged answers delay the decision.
+- [x] 2 — Character: Runs six people; spreadsheet competent, nontechnical, between services. Wants a quick decision; needs checkable inputs, limits and next action; remembers abandoned software setup; assumes unfamiliar words mean more work.
+- [x] 3 — Twelve beats: Interrupted service → clear next decision → existing spreadsheet work → unclear promise → time/card doubt → open the relevant CostCook guide → crew needs a usable plan → inspect the example → understand one concrete outcome → check missing data and limits → avoid another unexplained commitment → choose a guide, trial or human answer knowingly.
+- [x] 4 — Six scenes: Entry (uncertain → oriented); prerequisites (unknown → prepared); example (claim → evidence); consequences (guess → known); limits/recovery (risk → choice); next action (pause → decision). These map to existing sections and response states, without adding narrative scaffolding.
+- [x] 5 — Voices: Persona questions are simulated, not interview quotes. Reader: “What do I need?”, “Does this include my crew?”, “Did it send?” Product: calm, concrete, kitchen-literate; ban seeded, mechanism, release flag from explanatory copy.
+- [x] 6 — Dialogue: Each scene answers the question raised by the last; retain numbers and limits that change the decision, remove editorial commentary.
+- [x] 7 — Intention/obstacle: Help her find a direct answer before handing over a card; explain the work required before asking her to act.
+- [x] 8 — Snap: “The guest count.”
+- [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
+- [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
+- [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.

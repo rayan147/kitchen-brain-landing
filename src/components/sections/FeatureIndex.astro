@@ -1,7 +1,8 @@
 ---
+import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureSections, featureCount, inDevelopmentFeatureGroups } from '../../lib/features';
 import { spellCapital } from '../../lib/words';
-import { demoCta } from '../../lib/site';
+import { cta, demoCta } from '../../lib/site';
 import FeatureAreaIcon from '../FeatureAreaIcon.astro';
 import { comingDefinition } from '../../lib/availability';
 
@@ -41,20 +42,15 @@ import { comingDefinition } from '../../lib/availability';
 		    the page sideways (WCAG 1.4.10). It only engages when a single word
 		    genuinely cannot fit, so nothing changes at normal sizes. */}
 		<div class="max-w-3xl" data-reveal>
-			<p class="eyebrow">The complete list</p>
+			<p class="eyebrow">Explore by kitchen task</p>
 			<h1 id="features-hub-heading" class="mt-4 text-display font-semibold break-words">
-				Everything CostCook does today. All {featureCount} things.
+				Find the tools for your next catering job.
 			</h1>
 			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
-				This list is written from the code, not the roadmap. Every line of it is shipped and
-				working in the app you would see on a demo call. If something is not in here,
-				CostCook does not do it yet.
+				Explore recipes, food costs, supplier prices and event lists. The {featureCount} available features below are grouped by kitchen task; future additions are marked Coming.
 			</p>
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
-				It reads in five areas, and they are the one job the homepage draws, taken apart:
-				the prices coming in, what a plate costs, the day it all happens on, what you have
-				to be able to prove, and everything around the edges. Pick the one that matches the
-				part of your week you are worried about.
+				Choose the part of your week you want help with. Each guide shows what you enter, what you get and the limits to check before trying it.
 			</p>
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
 				{spellCapital(inDevelopmentFeatureGroups.length)} feature groups below contain work marked Coming. {comingDefinition}{' '}
@@ -64,6 +60,8 @@ import { comingDefinition } from '../../lib/availability';
 				<a href="/#demo" class="btn-quiet">Watch the 2:53 product tour</a>
 			</p>
 		</div>
+
+		<div class="mt-6"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><FeatureTrialTerms /></div>
 
 		<ul role="list" class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
 			{
@@ -103,9 +101,9 @@ import { comingDefinition } from '../../lib/availability';
 		</ul>
 
 		<p class="mt-16 max-w-[66ch] border-t border-ticket-rule pt-6 text-ink-soft">
-			That is the whole of it. If it covers your kitchen, bring one real menu and see it run.{' '}
+			Want a guided look? Bring one menu to a 15-minute demo.{' '}
 			<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet"
-				>Book 15 minutes</a
+				>Book a 15-min demo</a
 			>
 		</p>
 	</div>

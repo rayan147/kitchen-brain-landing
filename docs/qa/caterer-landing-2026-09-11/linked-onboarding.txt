@@ -1,0 +1,193 @@
+Home
+/
+Your initial setup
+
+YOUR INITIAL SETUP
+
+You do not need to enter your whole walk-in.
+
+Setup asks for one dish you already cook and takes about fifteen minutes. Its ingredients come off one invoice and one recipe, uploaded as a photo or a PDF, and you confirm what CostCook read. Four stages in, it prints that dish’s plate cost with the arithmetic beside it. This page shows every screen, then says what comes after, and how the rest of your kitchen gets in.
+
+Start free trial
+See the number it ends on
+
+THIS PAGE
+
+3 PARTS · 5 STAGES · 1 DISH
+1
+Before you start
+Done when one invoice and one recipe are within reach.
+2
+The five stages
+Done when one dish has a plate cost you can check on paper.
+3
+After setup
+Done when the next dish and the first teammate are in.
+Pick the question you came with. Each part ends with one next step.
+
+PART 1 OF 3 · BEFORE YOU START
+
+Have two pieces of paper within reach. That is the preparation.
+
+You have done this before. The last tool wanted your whole catalog typed in before it would do anything, and the half-filled spreadsheet is still on the desktop.
+
+CostCook wants what is already written down: one invoice, one recipe. Everything setup needs about your first dish is on those two, and you confirm what it read instead of typing it.
+
+HAVE READY
+
+2 PAPERS · 1 PHONE
+1
+One invoice from the supplier you buy the most from.
+A photo of the paper is fine. So is the PDF they emailed you. A price sheet works the same way.
+2
+The recipe for one dish you know well.
+The card, a photo of the card, a PDF, a link to it, or the text. It does not need to be tidy.
+3
+Your phone, or the laptop you are reading this on.
+Setup works on either. The photo can come straight off the phone.
+That is the whole preparation. Nothing gets typed twice.
+The first screen after sign-up. Two questions, and the name of one dish.
+
+Sign-up asks for your kitchen’s name and nothing else. Name the dish at the welcome, and every screen after says its name back to you.
+
+Those answers take a minute. These five stages are the work.
+
+PART 2 OF 3 · THE FIVE STAGES
+
+Five stages is one dish’s worth of facts, and two of them are uploads.
+
+Each stage asks for the next thing that one dish needs, and nothing else. Here is each one as you will meet it.
+
+1
+Kitchen and suppliers
+
+Name the supplier you buy the most from, set the share of a selling price food should take, and tap “Save and continue”; the invoice adds the rest of the supplier’s details.
+
+DONE WHEN Add one supplier.
+
+Stage one, with the five stages down the left and Sage open beside it. The stages stay there the whole way, ticking off as you go.
+
+2
+Ingredients
+
+Tap “Import an invoice or price sheet”, then “Choose files”, pick the photo of the invoice, and confirm the supplier, packs and prices that come back on “Review extracted records” instead of typing them.
+
+DONE WHEN Review the food facts CostCook found.
+
+Stage two on an empty kitchen. The first card is the invoice; the form is the third.
+Behind the first card. “Choose files” opens your camera roll on a phone; the review lands in the panel on the right.
+
+3
+Food facts
+
+Sage drafts each ingredient’s allergens and diet facts for you to confirm, or “Skip for now” and every order that uses it reads “check”, never “clear”.
+
+DONE WHEN Answer every ingredient once.
+
+One ingredient’s card, as Sage drafted it. What it does not know stays “don’t know”, and don’t know is never read as clear.
+
+4
+Recipes
+
+Tap “Build with Sage”, then “Choose files”, then the photo of the recipe card, and read the draft it makes; the plate cost is behind it.
+
+DONE WHEN Check the plate cost.
+
+Stage four opens on the same shape as stage two. Sage first, the form second.
+
+5
+Menu and first order
+
+Fill in “Event date” and “Guests” and tap “Create first order”; the menu is already named after your dish.
+
+DONE WHEN Add guests and a date, then cost the order.
+
+Stage five. The menu is already named after your dish, and the quote beside it already reads $1.62 a guest. The date, the guest count and one button are what is left.
+
+Nothing that comes in through an upload is written to your kitchen until you confirm it, and what CostCook could not read is quoted back to you rather than guessed at.
+
+Sage stays open beside whichever stage you are on. Its questions are the ones that stage raises, and it answers from the records you have entered so far. It reads them; it never fills a stage in for you.
+
+Stage four ends on a number.
+
+THE NUMBER
+
+One line of one dish, costed from the case price you actually pay.
+
+180 g of chicken thigh, bought at $32.00 for a 10 lb case, 80% of it surviving the trim.
+
+A $32 case of thighs, 80% of it surviving the knife, 180 g on the plate: $1.62. Check it on paper. We would rather you did.
+
+PLATE COST, AS THE SCREEN PRINTS IT
+
+How a $32.00 ten-pound case of chicken thigh becomes a $1.62 plate cost.
+Step	Result	Reading
+$32.00 ÷ 4,535.92 g	$0.0070548 / g	as purchased
+÷ 0.80 trim yield	$0.0088185 / g	usable
+× 180 g on the plate	$1.59	ingredient lines
++ 2% misc (the default)	$0.03	its own line
+Plate cost	$1.62	per portion
+Misc is a business-wide percentage, 2% until you change it, and it stays on its own line.
+
+WHAT IT REFUSES TO DO
+
+A number you can check is only half of it.
+
+The other half is what happens when you get something wrong.
+
+Leave a pack price blank and the ingredient does not go on. The screen says what it needs and puts your cursor in the field.
+Ask for 100 ml of something sold by weight and it stops, and it names the fix: pick a weight unit, or give the ingredient a density.
+Press “Start over” by mistake and your ingredients, recipes, menus and orders stay. Only the guide’s progress resets.
+Lose the wifi mid-save and nothing is written and nothing is claimed. What you typed is still on screen, and the same button retries.
+
+Which leaves the question the old page never answered: what happens after stage five.
+
+PART 3 OF 3 · AFTER SETUP
+
+Stage five ends on a screen that says your kitchen is ready. Tap “Open shopping list”.
+
+That is tonight’s next step, and where the product tour picks up. “Go to Today” is the other door.
+
+The completion screen as the app prints it. If you named a goal at the welcome, the first line answers it in your words.
+
+The first dish was the hard one. The rest come in the same way: upload, then confirm.
+
+THE REST OF YOUR MENU
+
+The next invoice and the next dish go into the same box.
+
+The next invoice
+
+Open Kitchen records, tap “Import invoice” on the Purchases card, and confirm the lines: the purchase is logged and every ingredient cost and draft order moves with it, without rewriting confirmed orders.
+
+The Purchases card on Kitchen records. The next invoice goes in through “Import invoice”.
+
+The next dish
+
+A recipe card goes into the same box as a photo, a PDF, a spreadsheet, a Word document or pasted text, and comes back as a draft for you to confirm, with anything it could not read quoted back as it appeared.
+
+The same box, outside setup. One queue for invoices, price sheets, ingredient lists and recipe cards.
+
+A catalog nobody else opens is a spreadsheet with a login. This is how the crew gets one.
+
+THE REST OF YOUR CREW
+
+The crew joins from a link, and works from the list you built.
+
+Two emails
+
+Open Settings, then Team & access, type an email address and tap “Send invitation”; they receive a one-time link to join this kitchen, no password needed, and land on the shopping list you just made.
+
+Settings, then Team & access. One field, one button.
+
+Invited teammates join as Staff today. Staff can open cost screens, and there is no custom role; the full Owner, Manager and Staff boundary, and what each can and cannot open, is on the Team and Access guide.
+
+WHERE THIS LEAVES YOU
+
+Tonight, one dish with a price on it. Tomorrow, the next invoice into the same box, and two emails.
+
+The alternative is another season where the number in your head and the number on the invoice are two different numbers, and the crew works from a text message.
+
+One dish, and you will know. Then they will too.
+
+Start free trial

@@ -116,3 +116,18 @@
 - **Claims removed because they couldn't be shown:** guaranteed prevention of missed items, automatic purchasing, automatic inventory accuracy, time-saved claims, and invented customer results.
 - **Illustrative-data rule:** Every guest count, line count, completion count, date, and event name in the page evidence is labeled illustrative.
 - **Final Image (the CTA sentence):** Close the van on the same plan you priced, shopped, and cooked.
+
+
+## Caterer first-visit revision · 2026-09-11
+
+- [x] 1 Idea: A busy owner of a six-person catering kitchen wants to get every event item into the van, but finished prep does not mean everything was packed.
+- [x] 2 Character: Wants a usable answer between services; needs a traceable result; remembers a costly spreadsheet mistake; habitually postpones setup.
+- [x] 3 Plot: (1) interrupted service gap; (2) one dependable answer; (3) separate records; (4) finished prep does not mean everything was packed; (5) asks what to enter; (6) tries the relevant CostCook task; (7) hands the result to the crew; (8) follows the worked example; (9) checks its labelled numbers; (10) reads missing-data and release limits; (11) sees the cost of guessing; (12) chooses a trial or booked demo.
+- [x] 4 Scenes: hero, daily problem, task navigation, worked example, exceptions, detailed questions, next step. Turns: uncertainty to purpose; familiarity to need; confusion to action; doubt to evidence; risk to limits; questions to answers; hesitation to informed choice. Existing route and layout retained.
+- [x] 5 Voices: Reader asks “What do I enter?” and “Can my kitchen use this today?” (persona prompts, not customer quotes). Product is calm, concrete and kitchen-literate; ban seamless, powerful and robust.
+- [x] 6 Dialogue: Each scene answers the next practical question instead of explaining internal architecture.
+- [x] 7 Intention/obstacle: get every event item into the van / finished prep does not mean everything was packed. Headline: “Turn one event into shopping, prep and pack lists.” Supporting line: “Choose a menu, date and guest count, then review and confirm the order. The same saved plan tells your crew what to buy, prep and load, with separate progress for each list.”
+- [x] 8 Snap: “Eight hotel pans prepped. Seven in the van is still one pan short.” Retain this concrete detail; cut competing abstract slogans.
+- [x] 9 Setting: Phone beside the prep bench, a short gap between services, crew waiting for the next list.
+- [x] 10 Connection: You throughout; inputs lead to results, results to limits, limits to the trial decision. Shared terms keep the next action consistent.
+- [x] 11 Revision: Build and claim checks passed; every feature route inspected at desktop and mobile, with native disclosures and no JavaScript. Five-width regression checks and 320px/200% text passed. Report: `docs/qa/features-caterer-2026-09-11/report.md`.

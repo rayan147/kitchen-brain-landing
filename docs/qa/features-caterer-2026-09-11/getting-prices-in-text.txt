@@ -1,0 +1,89 @@
+Every feature / Getting prices in
+
+30 AVAILABLE FEATURES
+
+Getting prices in
+
+The new price list arrived as a photograph of a printout. Keying it in is an evening you do not have. Not keying it in means quoting off last month.
+
+Upload supplier paperwork, compare the suggested items and prices with the original, and correct anything unclear. Confirm the changes before they reach your ingredient costs.
+
+Start free trial
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+How a price gets in, in four steps. Four doors: a photograph, a PDF or a document, a spreadsheet, or pasted text. One queue, where it is read and matched against the ingredients you already have, with nothing saved. Then you confirm: a list of differences to look at, with whatever could not be made out quoted back as it appeared. Only then, your prices, and only the lines you said yes to. The rest waits, or gets keyed in by hand.
+
+FOUR DOORS
+
+A photograph, a PDF or a doc, a spreadsheet, pasted text. The queue does not care which it was.
+
+ONE QUEUE
+
+Read, and matched against the ingredients you already have. Nothing saved.
+
+YOU CONFIRM
+
+A list of differences to look at. Whatever could not be made out is quoted back as it appeared.
+
+YOUR PRICES
+
+Only the lines you said yes to. The rest waits, or gets keyed in by hand.
+
+The gate in the middle is the point. Everything to the left of it is a proposal. Reading the paper is the fast part; saying yes to it stays yours.
+
+PURCHASES & MONTH COST
+
+What the month should have cost, and did.
+Four ways to record purchases. Manual entry, invoice import, order log, and receiving, each entry tagged with its source.
+Batch entry. Enter a whole invoice, check its total and save all its lines together.
+Quick log. Or record a single purchase in seconds.
+Corrections, not edits. Add or subtract an amount and give a reason. The original purchase stays in the history.
+Cost as of date. Current cost follows the purchase date, not the order you typed things in.
+Prices that moved. See which prices rose or fell over the dates you choose, with a percentage change and a link to the purchases.
+Monthly cost comparison. Compare ingredient use calculated from orders with purchase spending. Any unexplained difference stays separate from logged waste.
+Waste, valued. Logged waste explains part of the difference using the cost saved with that waste record.
+Stock turnover, when counts support it. Stock turnover is shown only when a trusted count is available at each end of the period.
+Purchases needing attention. Find orders waiting for your action or already sent. Open a sent purchase order to record its delivery.
+Filter purchase history. Filter purchases by ingredient and date. Longer results continue on the next page.
+
+DOCUMENT IMPORT
+
+Upload the paperwork. Review the details. Save your changes.
+Upload or paste. Drop files, paste text, or photograph paper. The workspace queues and tracks each one.
+Check the document type. Check how the document was identified. Change its type, replace an unreadable file or leave it out.
+Check names and units. Review the names, quantities and units read from the document before they are saved.
+Suggested exact matches. Only when name and unit are certain and the match is exact. Everything doubtful is one human tap.
+Review before saving. Imports live outside your real catalog until you confirm them.
+Keep recipe links when importing again. Recipe imports are checked before saving. Importing an updated recipe keeps its existing menu links.
+Invoices that check themselves. Compare the invoice total with the sum of its lines. Duplicate invoices are flagged.
+Price sheets, row by row. Apply or skip each line. A pack-size change refuses to apply silently. A sheet is an asking price, never a purchase.
+Check every imported row. Review possible duplicates and uncertain matches. Imported rows need the same details as manually entered ones.
+Spreadsheets with different columns. Check which columns hold names, pack sizes and prices before importing. You can see which columns will be ignored.
+Recipe CSVs too. Review the recipe columns before importing. Unreadable rows are shown for you to check.
+Word documents. Import text from a Word document without copying it into another file first.
+The original stays visible. The photo or PDF sits beside the rows awaiting review while you review. Discard really deletes it.
+No duplicate save. Saving the same import twice returns the existing receipt instead of adding duplicate purchases.
+Unreadable means unread. Unreadable text stays beside the suggested details so you can correct it against the source.
+Match supplier names. Suggested matches can connect a supplier’s “Roma tomatoes” to your “Tomato, Roma” ingredient.
+It learns your names. Confirmed supplier names can be remembered for your kitchen’s next import.
+Repeat matching without duplicates. Refreshing ingredient matches does not create duplicate ingredient records.
+Batch imports tested. Tested with 120-item order guides and 20-invoice batches that stay together.
+Four other areas.
+Recipes and costing
+
+What a plate costs, from the case price up, with the arithmetic shown.
+
+The day itself
+
+The event, the shopping, the prep, the pack, and what actually came through the back door.
+
+Compliance and labels
+
+Calculate nutrition per portion and print an estimate. Review allergens and guest restrictions. Kitchen date labels are Coming.
+
+Team, and what it connects to
+
+Who can change what, how a new kitchen gets started, and the connections being built.
+
+If this area covers your kitchen, bring one real menu and see it run. Book a 15-min demo

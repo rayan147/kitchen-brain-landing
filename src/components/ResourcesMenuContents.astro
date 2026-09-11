@@ -10,8 +10,7 @@ const { path } = Astro.props;
 // Considered Composite; not used because these are two fixed groups of leaf
 // destinations. The variation is flat navigation data, not a recursive tree.
 
-const numberWords = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'] as const;
-const pathCount = numberWords[resourcesMenu.items.length] ?? String(resourcesMenu.items.length);
+
 ---
 
 <!-- story: docs/stories/resources-navigation.story.md -->
@@ -60,7 +59,6 @@ const pathCount = numberWords[resourcesMenu.items.length] ?? String(resourcesMen
 </div>
 
 <div class="border-t border-ticket-rule bg-cream px-6 py-4">
-	<!-- Counted from the data, not typed. The line went stale the first time a
-	     destination was added; deriving it means it cannot again. -->
-	<p class="text-xs text-ink-soft">{pathCount} paths, each answering a different hesitation.</p>
+	<!-- Describe the decision instead of making the reader interpret a path count. -->
+	<p class="text-xs text-ink-soft">Choose a guide, check the limits, or ask Rayan.</p>
 </div>

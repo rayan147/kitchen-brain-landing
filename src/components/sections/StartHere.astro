@@ -5,6 +5,7 @@
  * One primary action, with the card and trial boundary visible before it.
  * RC-03/14 back the one-order path; RC-34 backs the launch terms.
  */
+import FoldedDetail from '../FoldedDetail.astro';
 import { cta, demoCta, launchPlan } from '../../lib/site';
 
 // Considered State; not used because inputs and returned plans form one fixed
@@ -12,7 +13,7 @@ import { cta, demoCta, launchPlan } from '../../lib/site';
 const orderInputs = [
 	{
 		name: 'One menu',
-		detail: 'The dishes you already quoted.',
+		detail: 'Each dish on it, from the recipe card you already use.',
 		iconPaths: ['M5 4h14v16H5z', 'M8 8h8', 'M8 12h5', 'M8 16h7']
 	},
 	{
@@ -22,7 +23,7 @@ const orderInputs = [
 	},
 	{
 		name: 'Current prices',
-		detail: 'What your suppliers charge now.',
+		detail: 'Off your latest invoices, as a photo or PDF.',
 		iconPaths: ['M7 3h10v18l-2-1.5L13 21l-2-1.5L9 21l-2-1.5z', 'M10 8h4', 'M10 12h4', 'M10 16h2']
 	}
 ] as const;
@@ -57,9 +58,11 @@ const trialFacts = [
 	{ term: 'Then', value: launchPlan.displayPrice }
 ] as const;
 ---
+<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 
 <!-- story: docs/stories/homepage-real-order-close.story.md -->
 <!-- story: docs/stories/homepage-copy-density.story.md -->
+<!-- story: docs/stories/homepage-caterer-walkthrough.story.md -->
 <section id="start" class="border-y border-ticket-rule bg-cream" aria-labelledby="start-heading">
 	<div class="container-page py-section">
 		<div class="start-hero">
@@ -70,6 +73,24 @@ const trialFacts = [
 					Bring the menu and guest count already on your calendar. Check the food cost,
 					buy, prep and pack plan it gives back before you move the rest of the kitchen.
 					Your numbers, not a sales demo&rsquo;s.
+				</p>
+				<!-- WHAT THE TEST COSTS, SAID BEFORE THE BUTTON (2026-09-10). The
+				     tracker for this section named the reader's debate beat ("will
+				     setup take longer than the answer is worth?") and the copy never
+				     answered it. A spreadsheet person knows "one real order" means
+				     every dish and every price on it, and silence there read as
+				     evasion. This says what goes in, how, and the one duration anyone
+				     has confirmed: about fifteen minutes for the first dish (RC-10
+				     allows that approximation and nothing tighter). It does NOT say
+				     typing is gone or that a read comes back complete (RC-58): the
+				     line it could not read is typed, and the sentence says so. The
+				     setup link is inline prose, not a third btn-quiet (principle 5). -->
+				<p class="setup-cost mt-4 max-w-[60ch] text-ink" data-real-order-setup>
+					<strong class="font-semibold">What it takes first:</strong> every dish on that menu
+					goes in once. Upload its recipe card and the invoice its ingredients came on,
+					confirm what CostCook read, and type any line it could not. The first dish takes
+					about fifteen minutes; the rest come in the same way.
+					<a href="/onboarding" class="inline-flex min-h-11 items-center font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 hover:decoration-green">See every setup screen</a>
 				</p>
 			</div>
 
@@ -109,7 +130,8 @@ const trialFacts = [
 			</aside>
 		</div>
 
-		<figure class="order-test" data-real-order-path data-reveal>
+		<FoldedDetail summary="What one order gives you" hint="The inputs you bring and the four plans you inspect">
+        <figure class="order-test" data-real-order-path data-reveal>
 			<figcaption>
 				<h3 class="text-h3 font-semibold">One order in. Four working plans out.</h3>
 			</figcaption>
@@ -142,6 +164,7 @@ const trialFacts = [
 			</div>
 		</figure>
 
+        </FoldedDetail>
 		<section class="card-questions" aria-labelledby="card-questions-title" data-reveal>
 			<div class="questions-heading">
 				<h3 id="card-questions-title" class="text-h3 font-semibold">Before you hand over a card.</h3>
@@ -150,7 +173,7 @@ const trialFacts = [
 			<dl>
 				<div>
 					<dt>How do I cancel?</dt>
-					<dd>The workspace owner cancels from Settings → Billing through Stripe. No email, notice period, or retention call.</dd>
+					<dd>The owner cancels from Settings → Billing through Stripe. No email, notice period, or retention call.</dd>
 				</div>
 				<div>
 					<dt>Can I take my work with me?</dt>

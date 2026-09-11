@@ -1,0 +1,126 @@
+Know the catch before you hand over the card.
+
+36 answers checked against the app you would start today. Where the answer is no, it says no.
+
+Read the trial and billing answers
+Contact Rayan
+Before you start
+$49/month
+Trial
+15 days at $0
+Card
+Held by Stripe
+First charge
+Day 16
+Cancel
+Settings → Billing
+
+Open the answer. See the mechanism. Keep the link.
+
+Choose what you need answered
+
+Money
+6 answers
+Fit
+13 answers
+The work
+9 answers
+Getting started
+8 answers
+The trial, the bill, and leaving
+Start here if the card, first charge, or exit is the part you do not trust.
+Back to the top
+What does the trial actually cost?
+Nothing for 15 days. Stripe takes a card when you start and charges $0 during the trial. On day sixteen billing begins at $49/month per kitchen unless you cancelled first.
+Why a card up front?
+So that the trial ends the way a subscription ends, by you cancelling or not, rather than by a sales call. The card is held by Stripe and is not charged during the trial.
+How do I cancel?
+The workspace owner cancels from Settings, then Billing, through Stripe. No email to me, no notice period, no talking anyone out of it. Cancel inside the trial and nothing is ever charged.
+Is $49/month the price, or a promotion?
+$49/month is the launch price and it will not stay there. When it moves it moves for kitchens that sign up after, never for yours. The price you start on is the price you keep.
+Do I pay per person?
+No. The subscription is per kitchen, not per teammate. The verified owner manages billing and invites the crew, and teammates are unlimited during launch.
+Can I take my work with me if I leave?
+The whole recipe book exports as a spreadsheet from the recipe list, any time. Ingredient prices do not export yet. That one is on me to build.
+Whether it fits your kitchen
+The yeses only mean something after the limits are stated plainly.
+Back to the top
+Who is this for?
+Catering and meal prep run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. Everything in the app starts from an event with a guest count.
+I run a restaurant. Will CostCook fit?
+Yes, for the part of your business that moves by event, menu, date, and guest count: catering, special dinners, and other changing menus. CostCook carries that plan through recipe costing, shopping, prep, pack, purchasing, and food cost. You can run regular restaurant service alongside that work and still belong here. The comparison page shows the product limits that may still matter to you.
+We have more than one kitchen. Can each see its own shelf?
+No. One subscription covers one kitchen. There is no per-site inventory and no roll-up across sites.
+Can I give a cook the prep list without showing them the costs?
+No. Owner, Manager and Staff protect specific sensitive actions, but there is no per-screen control, so anyone on the workspace can open the costs. The Team & Access guide names every current boundary.
+What do Owner, Manager and Staff mean?
+Owner carries billing and owner-only recipe lifecycle decisions. Manager carries setup, teammate administration, and the Sage checks that expose price movement or prepare a shopping proposal. Staff works from the shared operational record without those higher-role actions. Invited teammates join as Staff today; there is no custom permission builder.
+Does it do lot tracking for FSMA 204?
+No. CostCook does not provide the lot tracking a facility under a traceability rule needs.
+Does it do nutrition labels?
+Yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Print nutrition label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.
+Kitchen date and allergen stickers are a separate thing, built behind a release flag and marked Coming; see the next answer. Yes. Record who is eating on the order, by allergen or by diet, and every dish is judged against them from the ingredient facts your kitchen confirmed. Vegetarian, vegan, halal, kosher and gluten-free. Each dish comes back conflict, check or clear, with the ingredient named, and the answer prints on the prep and pack lists. It detects, it never certifies: halal and kosher can only ever be a check, because slaughter and certification are facts the app cannot see, and an ingredient nobody reviewed is never counted as clear.
+Does it print kitchen labels with a use-by date?
+Not in the app you would start today. The feature is built behind a release flag and remains marked Coming. Tap Label on the prep list, pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.
+It is not included in the launch subscription. There is no direct connection to a label printer; the output is the browser print dialog.
+Is there a Spanish version?
+A Spanish version is Coming soon. CostCook is English only today, and no date is promised.
+What is Sage?
+An assistant inside CostCook with eleven read-only checks across the shift, recipes, stock, buying and setup. Every answer shows where its numbers came from, and the one thing it can prepare, a shopping-list proposal, waits for a manager or owner to approve it. It cannot reach another kitchen and it never changes a record on its own.
+Sage is available now and stays within reach during setup. Its starting questions follow the setup stage and the records entered so far, and a Back to setup action returns you to the unfinished stage. See the Sage feature guide and video.
+Does it connect to Square or QuickBooks?
+Not in the app you would start today. Both connections are in development and carry no date. The same is true of an API. Anything marked Coming on the comparison page is being built, not planned, and none of it is in the launch price.
+Can customers order from me through CostCook?
+Not in the app you would start today. The storefront and the widget are built and are not deployed anywhere a customer could reach them, so this stays marked Coming and carries no date.
+When it lands, a customer picks from a menu you published, sizes the choices, gives you the date, the headcount and their contact, and reads it back before sending. What arrives is awaiting kitchen confirmation rather than a booked event, and you still say yes to it. Every amount is worked out by CostCook after the selections arrive: the browser sends what the customer chose, without prices, and never a number of its own. Card details are a handoff to Stripe, and the app says plainly when no online charge happened.
+Will it tell me my margin?
+It tells you food cost: the theoretical food cost of an event, the food-cost percentage against a target you set, and the selling price that would meet that target. Labor and overhead are not in it, so the number is food cost and it is never called margin.
+How the work moves
+Follow a quote through buying, receiving, inventory, prep, and pack.
+Back to the top
+How does a quote get its food cost?
+Pick a costed menu, enter the guest count and the price per head, and the draft order shows revenue, theoretical food cost, food cost per guest and the percentage against your target, before anything is sent. While it is a draft, those numbers follow your current ingredient prices.
+If a supplier price changes after I quote, does my quote change?
+No. Confirming an order freezes its plan, its costing inputs and its money. Later prices update your catalog and any draft orders, and the confirmed event shows you quoted-versus-today so you can see the drift, but nothing rewrites it.
+The client added forty guests. What do I retype?
+The guest count.
+Recipes scale from it, shared ingredients roll together, whole packs recalculate, and the Shop, Prep and Pack tabs stay on the same plan.
+What does the shopping list look like?
+Grouped by supplier, rounded to the whole packs you actually buy, with a supplier subtotal. Sub-recipes like a stock or a mirepoix are treated as batches to make rather than things to shop for, and entering what you already have on hand reduces the buying.
+Does it send the purchase orders?
+Confirming an order emails one purchase order per supplier, each with its own number, in whole packs. Email is email: the app records the send, and I do not promise delivery into anyone’s inbox.
+What happens when the truck is short?
+Receiving records what the delivery actually was against what you ordered: full, over, short, substituted, missing, or unexpected, with the received value beside the ordered value. Nothing posts until you say so.
+How does the price I paid get back into my costing?
+The newest qualifying purchase, by purchase date, can become the current price of that ingredient, with the receiving it came from on record. It moves future costing and draft orders. It never rewrites a confirmed event.
+Can I shop and prep for several events at once?
+Yes, for the planning. Two to twelve events can be created together and open a combined Shop, Prep and Pack workspace that totals the shopping and the prep across all of them, with the pack list keeping a column per event. Confirming, freezing prices and sending purchase orders all stay per order; the combined run does not confirm or buy.
+Is the inventory a live count?
+No. A physical count sets the baseline; purchases, waste and completed Pack move it from there, and the app tells you how fresh the number is. You can set a par level per ingredient and it will tell you whether you are below it, judged only from a trusted count. Buying that tops stock back up to the par level you set is Coming soon. Today the shopping list covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par. No date is promised.
+Getting started, and getting help
+See how records get in, what works on a phone, and who answers.
+Back to the top
+What does setup actually involve?
+One dish you already cook, not your whole walk-in. A skippable welcome asks what kind of kitchen you run and the name of that dish, then five stages ask for the next thing the dish needs: your kitchen and one supplier, the dish’s ingredients and their pack prices, their food facts, the dish itself, then a menu with a date and a guest count.
+It ends on that dish’s plate cost with the arithmetic beside it, and a shopping list in whole packs. See the five stages, the number they end on, and what comes after.
+What do I do after setup, and how does my crew get in?
+Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, staged for you to confirm.
+To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens and there is no custom role. See the after-setup part of the guide.
+How do my supplier prices get in?
+Photograph the price list, drop in the PDF or the Word document, upload the spreadsheet, or paste the text. Everything goes through one queue and comes back as staged facts for you to confirm. Nothing is written to your costing until you commit it, and whatever could not be read is quoted back as it appeared rather than guessed. Keying an awkward invoice in by hand is still a supported way to do it.
+Do I have to type every ingredient?
+No. A catalog of roughly 1,500 ingredient names with vendor aliases is preloaded as the match target for whatever you import. It carries names and aliases only, never prices, so no cost basis is chosen for you.
+How do my recipes get in?
+The same queue: a photo, a PDF, a spreadsheet, a document or pasted text, read and staged for you to confirm. Recipes can carry sub-recipes and a trim yield on each line, and the yield moves how much you buy as well as what the plate costs.
+Does it work on a phone in a walk-in with one bar?
+Previously loaded order pages remain readable with no signal and show when they were cached. A page you did not load before going offline shows the offline fallback, and actions that write data need a connection. With a connection, core pages are server-rendered and remain readable with JavaScript off.
+Who answers when I write?
+I do. Ask on the contact page and the answer comes back to the address you leave, or call 973-870-6309. Inside the app, Contact support sends your account email and the screen you are on with the message.
+Can someone run my menu through it before I start?
+Yes. Book fifteen minutes and bring one menu and a guest count. We put it through and you see the shopping list, the prep sheet, the pack list and the food cost it gives back. Your numbers, not a sales demo’s.
+Put one real order through it.
+
+Bring a menu and a guest count you already quoted. See what comes back before you move the rest of the kitchen.
+
+Start free trial
+Book a 15-min demo

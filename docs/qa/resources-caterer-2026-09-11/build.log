@@ -1,0 +1,105 @@
+
+> costcook-landing@0.0.1 build
+> astro build
+
+10:11:59 [content] Syncing content
+10:11:59 [content] Synced content
+10:11:59 [types] Generated 820ms
+10:11:59 [build] output: "static"
+10:11:59 [build] mode: "static"
+10:11:59 [build] directory: /home/rayan147/kitchen-brain-landing/dist/
+10:11:59 [build] Collecting build info...
+10:11:59 [build] ✓ Completed in 925ms.
+10:11:59 [build] Building static entrypoints...
+10:12:00 [vite] ✓ built in 1.33s
+10:12:00 [vite] ✓ built in 74ms
+10:12:00 [build] Rearranging server assets...
+
+ generating static routes
+10:12:00   ├─ /blog/case-price-to-portion-cost/index.html (+29ms)
+10:12:00   ├─ /blog/catering-menu-pricing/index.html (+6ms)
+10:12:00   ├─ /blog/client-added-40-guests/index.html (+5ms)
+10:12:00   ├─ /blog/delivery-arrived-wrong/index.html (+7ms)
+10:12:00   ├─ /blog/expected-vs-actual-food-cost/index.html (+8ms)
+10:12:00   ├─ /blog/food-cost-per-guest/index.html (+6ms)
+10:12:00   ├─ /blog/review-supplier-invoice/index.html (+5ms)
+10:12:00   ├─ /blog/scale-catering-prep-list/index.html (+6ms)
+10:12:00   ├─ /blog/shopping-list-whole-packs/index.html (+5ms)
+10:12:00   ├─ /blog/supplier-price-changes/index.html (+5ms)
+10:12:00   ├─ /blog/index.html (+7ms)
+10:12:00   ├─ /compare/index.html (+11ms)
+10:12:00   ├─ /contact/not-sent/index.html (+7ms)
+10:12:00   ├─ /contact/sent/index.html (+4ms)
+10:12:00   ├─ /contact/index.html (+5ms)
+10:12:00   ├─ /demo/not-sent/index.html (+6ms)
+10:12:01   ├─ /demo/sent/index.html (+4ms)
+10:12:01   ├─ /demo/index.html (+4ms)
+10:12:01   ├─ /faq/index.html (+6ms)
+10:12:01   ├─ /features/guest-restrictions-and-dietary-guards/index.html (+5ms)
+10:12:01   ├─ /features/ingredients-and-supplier-prices/index.html (+5ms)
+10:12:01   ├─ /features/inventory/index.html (+6ms)
+10:12:01   ├─ /features/invoices-and-price-list-import/index.html (+6ms)
+10:12:01   ├─ /features/labels-and-printing/index.html (+7ms)
+10:12:01   ├─ /features/menus-and-quotes/index.html (+6ms)
+10:12:01   ├─ /features/nutrition-facts-and-allergens/index.html (+7ms)
+10:12:01   ├─ /features/order-shop-prep-pack/index.html (+5ms)
+10:12:01   ├─ /features/purchases-and-month-cost/index.html (+5ms)
+10:12:01   ├─ /features/purchasing-and-receiving/index.html (+5ms)
+10:12:01   ├─ /features/recipes-and-costing/index.html (+6ms)
+10:12:01   ├─ /features/sage/index.html (+6ms)
+10:12:01   ├─ /features/team-and-access/index.html (+5ms)
+10:12:01   ├─ /features/getting-prices-in/index.html (+5ms)
+10:12:01   ├─ /features/the-day-itself/index.html (+3ms)
+10:12:01   ├─ /features/compliance-and-labels/index.html (+13ms)
+10:12:01   ├─ /features/team-and-connections/index.html (+4ms)
+10:12:01   ├─ /features/index.html (+5ms)
+10:12:01   ├─ /onboarding/index.html (+8ms)
+10:12:01   ├─ /pricing/index.html (+4ms)
+10:12:01   ├─ /tour/main/index.html (+13ms)
+10:12:01   ├─ /who-its-for/index.html (+5ms)
+10:12:01   ├─ /index.html (+12ms)
+10:12:01 ✓ Completed in 319ms.
+
+10:12:01 [build] ✓ Completed in 1.79s.
+10:12:01 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+10:12:01 [build] 42 page(s) built in 2.76s
+10:12:01 [build] Complete!
+
+> costcook-landing@0.0.1 postbuild
+> node scripts/check-dist.mjs && node scripts/check-recipes-costing-page.mjs && node scripts/check-menus-quotes-page.mjs && node scripts/check-ingredients-supplier-prices-page.mjs && node scripts/check-invoices-price-list-page.mjs && node scripts/check-inventory-page.mjs && node scripts/check-sage-page.mjs && node scripts/check-team-access-page.mjs && node scripts/check-purchasing-receiving-page.mjs && node scripts/check-nutrition-allergens-page.mjs && node scripts/check-guest-restrictions-page.mjs && node scripts/check-order-shop-prep-pack-page.mjs && node scripts/check-purchases-month-cost-page.mjs && node scripts/check-faq-page.mjs && node scripts/check-who-its-for-page.mjs && node scripts/check-labels-page.mjs && node scripts/check-product-tour-page.mjs && node scripts/check-demo-page.mjs && node scripts/check-blog.mjs && node scripts/check-onboarding-page.mjs
+
+check-dist: 1880 inline svg(s) across 42 page(s) all carry intrinsic width/height
+check-dist: 42 built page(s) carry no CSP-blocked inline script or event handler
+check-dist: 12 Features menu deep links resolve across their built area pages
+check-dist: homepage retains the connected event and early setup/cost evidence
+check-dist: homepage demo retains 8 readable handoffs and the multi-run boundary
+check-dist: homepage outcomes retain 4 guided handoffs and their proof
+check-dist: /compare renders a spreadsheet column on 37 rows across 5 group tables
+check-dist: homepage diagnosis renders 4 spreadsheet pains mirrored by 4 answers
+check-dist: homepage paper intake retains 4 sources, one queue, and confirmation
+check-dist: homepage nutrition evidence retains 5 guided steps and proof
+check-dist: homepage yield calculation retains 5 visible stages and proof
+check-dist: homepage retains 3 explicitly marked Coming soon plans
+check-dist: homepage close retains 3 real-order inputs, 4 outputs, and trial terms
+check-dist: homepage founder trust retains a portrait, direct contact, and 3 product consequences
+check-dist: homepage Sage retains 3 stages, 5 jobs, and 3 boundaries
+check-dist: shared Sage icon is present across 7 homepage and decision-route contexts
+Recipes & Costing page contract passed.
+Menus & Quotes page contract passed.
+Ingredients & Supplier Prices page contract passed.
+Invoices & price-list import page contract passed.
+Inventory page contract passed.
+Sage page and video contract passed.
+Team & Access page contract passed.
+Purchasing & Receiving page contract passed.
+Nutrition facts & allergens page contract passed.
+Guests' restrictions page contract passed: the detect-never-certify boundary, five diets, three outcomes, four limits, the two caps, the confirm freeze, and a labelled illustrative example.
+Orders, Shop, Prep & Pack page contract passed.
+Purchases & Month Cost page contract passed.
+FAQ page contract passed: 37 open answers, stable anchors, decision ticket, snap answer, and structured data.
+Who-it-is-for page contract passed: work-based fit, two-service ticket, four-step plan, three limits, and active navigation.
+Labels and printing page contract passed.
+Product tour page contract passed.
+Demo page contract passed: story, three-step handoff, seven required fields, a real send to two mailboxes, an embedded calendar the CSP admits, and self-serve recovery.
+Blog contract passed: index, four topic paths, ten articles, structured data, and product handoffs.
+Onboarding page contract passed: five stages, the full plate-cost trace, four guards, a reachable arithmetic table, and active navigation.

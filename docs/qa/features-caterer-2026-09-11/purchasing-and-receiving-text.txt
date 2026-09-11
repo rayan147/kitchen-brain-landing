@@ -1,0 +1,177 @@
+Every feature
+/
+Purchasing & receiving
+Check the delivery against the order you sent.
+
+Review a purchase order for each supplier. When it arrives, record the quantities and prices you received, then save the delivery. Shortages stay visible for follow-up.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+ILLUSTRATIVE PURCHASE RECORD
+
+PO-1048 · NORTHLINE FOODS
+PO SENT
+Ordered
+10
+cases
+Received
+9
+cases
+Follow up
+1
+case
+Chicken thigh · 10 kg case
+RECEIVED · SHORT 1
+Illustrative values. The sent quantity, received quantity, and open shortfall stay together.
+Ten cases ordered. Nine at the back door is not ten in the walk-in.
+
+A tidy purchase order describes the promise. Receiving records the delivery as it is: short, over, substituted, missing, or unexpected.
+
+Supplier order
+10 cases
+Sent 27 Aug · 3:42 PM
+≠
+Delivery slip
+9 cases
+Received 28 Aug · 6:18 AM
+Send what you reviewed
+One stable PO per supplier, with the exact message visible.
+Post what arrived
+Receive from the same lines and keep every variance actionable.
+Start with the promise the supplier actually received.
+
+Confirming an event offers a purchase order for each supplier. Review the exact email, print a stable PO, or record that you handled it yourself.
+
+PURCHASE ORDER PO-1048
+REVIEW BEFORE SENDING
+Supplier
+Northline Foods
+Delivery
+28 Aug · before 7 AM
+Email body
+
+Please deliver the lines below to CostCook Catering. PO-1048 must appear on the delivery slip.
+
+Chicken thigh · 10 kg case
+10 cases
+Baby spinach · 2 kg case
+4 cases
+AVAILABLE HANDOFFS
+Email supplier
+Print PO
+Handled by me
+Illustrative purchase order. The record starts queued before email is attempted; a failed send stays on the record and remains retryable.
+Once it is sent, those same lines are ready at the door.
+
+A sent purchase order creates the receiving checklist. Change ordered to arrived without building a second record from the delivery slip.
+
+RECEIVE PO-1048 · NORTHLINE FOODS
+ILLUSTRATIVE DELIVERY
+INGREDIENT
+ORDERED
+ARRIVED
+PRICE / CASE
+STATE
+Chicken thigh · 10 kg case
+10
+9
+$45.00
+→
+$47.00
+$45.00 ordered, $47.00 received per case
+SHORT 1
+Baby spinach · 2 kg case
+4
+4
+$18.00
+→
+$18.00
+$18.00 ordered, $18.00 received per case
+RECEIVED
+Olive oil · 5 L tin
+2
+2
+$72.00
+→
+$75.00
+$72.00 ordered, $75.00 received per case
+SUBSTITUTED
+Ready to post
+3 lines · 1 follow-up
+Post received delivery
+Illustrative receiving checklist. The arrow runs from the ordered case price to the received case price; posting carries the received value forward.
+The actual delivery becomes the buying fact.
+
+Save the reviewed delivery once. Its quantities and prices update purchases and ingredient prices together. Unresolved shortages stay on the follow-up list.
+
+AFTER POSTING · ILLUSTRATIVE
+Purchase recorded
+9 cases · $423.00
+Current pack price
+$47.00 / case
+Rebuy list
+1 case open
+A problem at the handoff keeps a recovery path.
+
+Send failures, short lines, and unexpected items do not collapse into one warning. Each one says what happened and what you can do next.
+
+SEND FAILED
+Retry the same PO
+The failure stays on the record.
+SHORT OR MISSING
+Keep it on the rebuy list
+Mark handled or reopen it later.
+UNEXPECTED LINE
+Review before posting
+Do not turn an unplanned item into a silent purchase.
+The complete Purchasing & receiving list.
+
+Open the full shipped list when you want the details.
+
+9
+shipped capabilities
+
+See all 9 shipped capabilities
+Per-vendor POs. Confirming an order offers purchase orders per supplier: email, print, or handled by you.
+The email you saw. Review the exact supplier email before sending. Check the order record for whether it was sent or needs a retry.
+Printable POs. Signature lines and stable PO numbers.
+Receiving follows sending. A sent PO creates its receiving checklist for you.
+Deliveries as they are. Short, over, substituted, missing, and unexpected lines each have their own handling.
+All-or-nothing posting. Committing a delivery writes real purchases, and current prices update from what actually arrived.
+Automatic rebuy list. Short and missing lines become a durable follow-up list with handled and reopen states.
+Receive from the purchase order. Receive against any sent purchase order from its own screen.
+Retryable sends. A failed PO send can be retried, with the failure kept on record.
+Frequently asked questions
+
+The practical questions behind moving a supplier order through the back door without losing the differences.
+
+Does CostCook send one purchase order to every supplier?
+
+CostCook offers a separate purchase order per supplier. You can review the exact email body, then email it, print it, or mark it as handled by you.
+
+What happens if the supplier email fails?
+
+The purchase order is recorded as queued before CostCook attempts the email. If the send fails, that same record keeps the failure and remains safe to retry.
+
+Do I have to type the delivery again?
+
+No. A sent purchase order creates its receiving checklist, so the lines at the back door begin with the order the supplier received.
+
+How are shortages and substitutions handled?
+
+Short, over, substituted, missing, and unexpected lines keep distinct receiving states. Short and missing quantities become a durable follow-up list.
+
+When do ingredient prices change?
+
+Committing the delivery posts the real purchases and updates current prices from what actually arrived. The posting is all-or-nothing.
+
+Walk back into prep with one record.
+
+Bring one real supplier order. Follow it from the message you send to the quantity, price, and shortfall you receive.
+
+Book a 15-min demo
+Start free trial
+See every CostCook feature

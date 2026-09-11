@@ -1,3 +1,4 @@
+// story: docs/stories/dietary-guards.story.md
 /**
  * Guests' restrictions and dietary guards: the shipped wording, in one place.
  *
@@ -43,15 +44,15 @@ export const dietNames = ['Vegetarian', 'Vegan', 'Halal', 'Kosher', 'Gluten-free
 export const guardOutcomes = [
 	{
 		word: 'Conflict',
-		detail: 'An ingredient in the dish is a confirmed contains, or a trait the diet forbids is a confirmed yes.'
+		detail: 'A reviewed ingredient contains the named allergen or has a characteristic that conflicts with the guest’s diet.'
 	},
 	{
 		word: 'Check',
-		detail: 'The dish may contain it, or an ingredient was never reviewed, or the rule itself can only ever be a check.'
+		detail: 'Review is needed: an ingredient may contain the allergen, information is missing, or the diet requires checks the app cannot make.'
 	},
 	{
 		word: 'Clear',
-		detail: 'Every ingredient was reviewed and none of them says otherwise.'
+		detail: 'Every ingredient has been reviewed and no conflict was found in the recorded information. This is not a guarantee about the food you serve.'
 	}
 ] as const;
 
@@ -70,7 +71,7 @@ export const dietary = {
 
 	/** What a reader must be told before believing a clear row. */
 	notClaimed: [
-		'A clear result is a reason to serve the dish, not a promise to a guest. No screen makes an allergen-free claim.',
+		'A clear result means no conflict was found in the recorded ingredient information. Your kitchen must still check the food and its preparation. No screen makes an allergen-free claim.',
 		'Halal and kosher can only ever come back as a check. Slaughter and certification are facts the app cannot see.',
 		'An ingredient nobody has reviewed is never counted as clear. The order says how many are outstanding.',
 		'Confirming an order freezes the reading it was checked on. A later change to a recipe does not restate it, and the screen says when it was checked.'

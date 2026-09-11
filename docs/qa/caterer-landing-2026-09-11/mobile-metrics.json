@@ -1,0 +1,128 @@
+{
+  "sections": [
+    {
+      "id": "",
+      "heading": "Cost it, buy it, prep it, pack it. Enter the numbers once.",
+      "y": 132,
+      "height": 1865
+    },
+    {
+      "id": "demo",
+      "heading": "See it run",
+      "y": 1997,
+      "height": 1098
+    },
+    {
+      "id": "demo-guide",
+      "y": 2602,
+      "height": 128
+    },
+    {
+      "id": "problem",
+      "heading": "The spreadsheet works until the job changes.",
+      "y": 3095,
+      "height": 2138
+    },
+    {
+      "id": "who",
+      "heading": "Built for the kitchen where the person who quotes the job also cooks it.",
+      "y": 5233,
+      "height": 1208
+    },
+    {
+      "id": "outcomes",
+      "heading": "What it does instead: keeps one order moving.",
+      "y": 6441,
+      "height": 3962
+    },
+    {
+      "id": "yield",
+      "heading": "The case has the skins on it. Your recipe does not.",
+      "y": 10403,
+      "height": 1951
+    },
+    {
+      "id": "more",
+      "heading": "Four more areas, and where each one stops.",
+      "y": 12353,
+      "height": 4304
+    },
+    {
+      "id": "",
+      "y": 15647,
+      "height": 282
+    },
+    {
+      "id": "",
+      "y": 15961,
+      "height": 263
+    },
+    {
+      "id": "",
+      "y": 16256,
+      "height": 263
+    },
+    {
+      "id": "alternatives",
+      "heading": "Your regular week and your special events are two different plans.",
+      "y": 16658,
+      "height": 2104
+    },
+    {
+      "id": "trust",
+      "heading": "I cooked professionally for twelve years before I built CostCook.",
+      "y": 18762,
+      "height": 1434
+    },
+    {
+      "id": "start",
+      "heading": "Put one real order through it.",
+      "y": 20195,
+      "height": 2773
+    },
+    {
+      "id": "",
+      "y": 21634,
+      "height": 270
+    },
+    {
+      "id": "",
+      "y": 21983,
+      "height": 329
+    },
+    {
+      "id": "",
+      "y": 22394,
+      "height": 490
+    }
+  ],
+  "errors": [],
+  "dimensions": {
+    "width": 390,
+    "scrollWidth": 390,
+    "height": 23385
+  },
+  "details": [
+    "Features",
+    "Blog",
+    "Resources",
+    "Menu",
+    "Follow the order in writing8 handoffs",
+    "How the fifteen numbers are arrived atFive steps, from the supplier record to the printed sheet",
+    "The printed label, from this recipeOne 297 g Chicken Burrito Bowl, captured from the live demo",
+    "The four doors and the one queuePhotograph, PDF or doc, spreadsheet, pasted text",
+    "The five jobs, and asking during setupEleven bounded checks, and Sage in the setup header",
+    "The nine rules, in fullThree boundaries: evidence, access, action",
+    "The access check, as one ticketRole-aware actions, fine-grained screens, who may invite"
+  ],
+  "videos": [
+    {
+      "src": "http://127.0.0.1:4321/demo.webm",
+      "duration": null,
+      "readyState": 0,
+      "controls": true,
+      "muted": false,
+      "tracks": []
+    }
+  ]
+}

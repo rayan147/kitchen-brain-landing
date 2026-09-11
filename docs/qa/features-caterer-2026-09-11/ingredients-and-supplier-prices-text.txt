@@ -1,0 +1,202 @@
+Every feature
+/
+Ingredients and supplier prices
+Compare supplier prices by what you can use.
+
+Enter the case price, pack size and usable yield for one ingredient. Compare suppliers per usable kilo, pound or item, and see which recipes a price change affects.
+
+Start free trial
+Book a 15-min demo
+
+15 days free, then $49/month per kitchen. Card required; $0 today. Cancel before day 16 in Settings → Billing, no call required. What to prepare · Plan and team limits
+
+ILLUSTRATIVE SUPPLIER COMPARISON
+
+INGREDIENT
+CURRENT
+Chicken thigh
+
+Purchased by weight · usable after trim
+
+$5.09 / kg
+NORTHLINE FOODS
+IN USE
+$46.80
+10 kg case · 92% usable
+
+$5.09 per usable kg
+
+MARKET SUPPLY
+OFFER
+$49.20
+22 lb case · 95% usable
+
+$5.19 per usable kg
+
+Illustrative values. Every offer keeps its source, supplier, and effective date.
+The old price still looks right.
+
+The invoice changed. The pack changed. The spreadsheet did not. By the time the food-cost percentage looks wrong, the number may already be in front of a customer.
+
+LAST COSTED
+$42.10
+10 kg case
+THIS INVOICE
+$46.80
+10 kg case
+The new case costs $4.70 more. Check the recipes that use it before quoting again.
+Ingredient records
+Keep purchase, yield, storage, and allergen facts on the food.
+Supplier prices
+Compare unlike packs by the usable unit and keep the source.
+One ingredient record, wherever the food is used.
+
+Start from scratch, a USDA reference, or a purchase. Keep the buying unit, usable yield, conversions, suppliers, allergens, storage area, and par level together.
+
+INGREDIENT RECORD
+COSTABLE
+Chicken thigh
+
+Protein · purchased by weight
+
+Purchase unit
+10 kg case
+Usable yield
+92%
+Purchased cost
+$4.68 / kg
+Usable cost
+$5.09 / kg
+Current source
+Northline Foods · effective 28 Aug
+KITCHEN FACTS
+Walk-in · Meat
+Par level 20 kg
+CONVERSIONS
+1 case = 10 kg
+Unit and yield chosen, never guessed
+USED BY
+3 recipes · 2 menus
+Checked before a change or delete
+Illustrative ingredient record built only from shipped CostCook fields and behavior.
+Enter it where you meet it.
+
+Create an ingredient from the catalog, from a purchase, or inside the recipe you are already building.
+
+Keep purchased and usable separate.
+
+See both costs side by side. Trim and cooking loss remain facts, not an invisible adjustment.
+
+Find what still needs attention.
+
+The ingredient list shows which items can be costed and which still need a price or unit conversion.
+
+Compare the food, not the shape of the case.
+
+A lower case price can still cost more after pack size and yield. Convert each offer to the same usable unit, keep its source and date, then choose the price you want to use.
+
+Chicken thigh
+Northline Foods
+Market Supply
+Pack
+10 kg case
+22 lb case
+Case price
+$46.80
+$49.20
+Usable yield
+92%
+95%
+Usable cost
+$5.09 / kg
+$5.19 / kg
+PREFERRED OFFER
+Northline Foods
+10¢ less per usable kg
+Illustrative comparison. CostCook orders concurrent offers by usable-unit cost.
+The source stays with the number.
+28 Aug
+$46.80 Northline invoice
+14 Aug
+$45.40 Northline purchase
+31 Jul
+$44.95 Market price list
+See what the change touches first.
+Herb roast chicken
+1.8 kg in recipe
++$0.18
+Grain bowl
+720 g in recipe
++$0.07
+Canapé tray
+450 g in recipe
++$0.04
+
+Illustrative recipe impact from adopting the changed supplier price.
+
+The supplier price keeps walking.
+
+Once the ingredient is inside a recipe, purchased amount, usable yield, quantity to buy, prep state, and cost contribution remain on the same line.
+
+Missing prices are named instead of reading as zero.
+Every ingredient line reconciles to the recipe total.
+The arithmetic opens when a number needs checking.
+Real CostCook interface: each ingredient carries its working into the recipe.
+The complete Ingredients list.
+
+Open the details to check what is available today.
+
+15
+shipped capabilities
+
+Ingredients and supplier prices
+Missing ingredient details. See which ingredients can be costed and which need a price, yield or conversion.
+Shareable filters. Bookmark or share a filtered ingredient list and reopen the same search.
+Fix a price in place. Edit a pack cost right from the list without losing your filters.
+Three ways to add an ingredient. Create from scratch, from the USDA reference, or from a purchase. Unit and yield are your choice, never a guess.
+Mid-recipe creation. Add a missing ingredient from inside the recipe builder without losing what you typed.
+Suppliers anywhere. Add a supplier from any screen that needs one. Same form, same result.
+Purchased vs usable. Each ingredient shows both costs side by side, with its purchase history underneath.
+Compare suppliers. Compare supplier offers per usable kilo, pound or item, cheapest first. Choose which price to use.
+Price source. Every current price says where it came from, from which supplier, effective when.
+Affected recipes and menus. Before a price changes, see every recipe and menu it touches.
+Check before deleting. Before deleting an ingredient, check the recipes that still use it.
+CSV import. Bulk ingredient import with a template whose example rows actually pass.
+USDA reference built in. Yields, densities, and unit weights offered as chips you tap to fill.
+Allergens. Fourteen-allergen tagging rolls up to every recipe, with chef overrides that require a written reason.
+Shelf facts. Storage areas and par levels live on the ingredient. An unset par is unset, not zero.
+Frequently asked questions
+
+The practical questions behind comparing a supplier price you can trust.
+
+Can one ingredient have prices from more than one supplier?
+
+Yes. Concurrent supplier offers sit on the same ingredient and compare per usable unit, cheapest first. You choose which offer becomes the current price.
+
+How does CostCook compare different pack sizes?
+
+Each offer keeps its pack quantity, purchase unit, price, and usable yield. CostCook converts those facts to the same usable-unit cost so a case and a bag can be compared on equal terms.
+
+Where did the current price come from?
+
+Every current price carries its source, supplier, and effective date. Purchase history remains underneath the ingredient instead of being replaced by one unexplained number.
+
+What happens when a supplier price changes?
+
+Before you adopt the change, CostCook shows the recipes and menus that use the ingredient. Once applied, recipes using it recost from the new ingredient price.
+
+What if a price or conversion is missing?
+
+The catalog names ingredients that still need a fact. Recipe totals that cannot be fully costed stay marked partial rather than quietly treating the missing line as free.
+
+Can I bring in existing ingredient data?
+
+Yes. Import ingredients from a CSV spreadsheet, or upload supplier paperwork. Review and confirm the suggested details before they change costs.
+
+A price you can trace. A quote you can defend.
+
+Bring one supplier sheet and one real ingredient. Follow the case price into the recipe with the working shown.
+
+Book a 15-min demo
+Start free trial
+See every CostCook feature

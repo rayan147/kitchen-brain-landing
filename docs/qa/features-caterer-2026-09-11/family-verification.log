@@ -1,0 +1,5 @@
+
+> costcook-landing@0.0.1 verify:feature-family
+> node scripts/verify-feature-family.mjs
+
+Site spacing verification passed: 25 routes, five viewports, specialist hero rhythm, and 200% text at 320px.

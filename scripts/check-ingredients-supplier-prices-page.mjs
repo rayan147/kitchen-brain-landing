@@ -7,7 +7,7 @@ const homeHtml = await readFile(homePath, 'utf8');
 
 const required = [
 	'id="ingredients-prices-heading"',
-	'Know which supplier price is inside the recipe.',
+	'Compare supplier prices by what you can use.',
 	'id="ingredient-records"',
 	'id="supplier-prices"',
 	'id="features-ingredients"',

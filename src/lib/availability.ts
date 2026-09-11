@@ -5,4 +5,4 @@
  * behavior selected or swapped at runtime.
  */
 export const comingDefinition =
-	'Not in the app you would start today. Each feature names whether it is being built or is already behind a release flag.';
+	'Not in the app you would start today. Coming features are not included in your trial or subscription.';

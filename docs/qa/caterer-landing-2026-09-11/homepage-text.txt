@@ -1,0 +1,530 @@
+Skip to content
+CostCook
+Features
+Menu
+Demo
+Free trial
+
+Back-of-house software for independent caterers, meal-prep kitchens, and restaurants that cater
+
+Cost it, buy it, prep it, pack it. Enter the numbers once.
+
+Follow one 180-guest wedding from quote to shelf. Then three events in one run.
+
+A catering order is one job pretending to be six. Enter the menu and the head count once. The same numbers run to the pack list and back.
+
+Start free trial
+
+15 days free, then $49/month per kitchen, unlimited crew during launch. Card up front, charged $0 today. Nothing to install.
+
+Watch the 2:53 product tour
+↓
+
+QUOTE CHECK · DRAFT ORDER
+
+180 guests × $68 = $12,240 revenue
+
+01
+Set the event
+Guests × price per head
+02
+Check the food
+$26.93 food per guest
+03
+Decide before sending
+Charge at least $89.78 / guest
+At $68 a head this wedding runs 39.6% food cost against a 30% target. That is food only: packaging, rentals, staff and anything you cook over the guarantee sit outside it. What you do about the gap is your call: swap a protein, drop a dish, raise the price, or take the job at that margin knowing it.
+
+PRICE IN
+
+A vendor price sheet or invoice
+
+COST IT
+
+Recipes and menus cost themselves
+
+ORDER
+
+A menu plus a head count
+
+SHOP
+
+By supplier, in whole packs
+
+PREP
+
+Scaled batches, whole pots
+
+PACK
+
+Portions, equipment, notes
+
+RECEIVE
+
+Tick off what actually arrived, and the price you paid becomes the price the next quote is costed from. You approve it; nothing changes behind your back.
+
+One chain, and it closes. Every step is a screen you already work in. The numbers move between them so you do not.
+SEE IT RUN
+
+This is the working product, not a mockup. The food cost before the quote goes out, the shopping and prep lists it turns into, the nutrition panel on the same recipe, purchase orders that really send, a delivery that arrives wrong, the price carried back, and Sage answering a question about the job.
+
+A silent, captioned screen recording of CostCook following one catering order from quote to shelf. There is no narration; a music bed plays and every claim is written on screen, so nothing is carried by audio alone. A title card: cost it, buy it, prep it, pack it, enter the numbers once. A year of jobs on the books, with the next one named: the Alvarez-Whitman wedding, 180 guests, three days out. The order’s pricing panel: 180 guests at $68 a head is $12,240.00 of revenue against $4,847.96 of food, which is 39.6 percent food cost against a 30 percent target, and the panel names $89.78 a guest as the price that would meet it, all before the quote is sent. The same order as a shopping list grouped by vendor in the whole packs you actually buy, Baldor totalling $690.82, beside a sub-recipe panel that treats the stock and the mirepoix as batches to make rather than as things to shop for: eight batches of Mirepoix Base, six of House Beef Stock, with an on-hand entry that reduces the purchasing when you have already made some. The same order’s prep list: thirty-four items scaled to the job, 75.6 kilograms of boneless beef short rib among them, sub-recipes carried as their own tagged lines, and a check-off box on every row that keeps its state. The Wild Mushroom Polenta from the same wedding menu, opened on its Nutrition section: a calculated estimate per portion of 531 calories, 18.5 grams of protein, 77.2 grams of carbohydrate and 18.6 grams of fat, computed from the USDA FoodData Central records matched to its four ingredients, with seven label rows left blank rather than counted as zero because the matched source does not report them, each blank naming the ingredient responsible. An aside: three events in the same week, 280 guests between them, planned as one production run and submitted together as three orders, opening on a combined Shop, Prep and Pack workspace that totals the shopping and the prep across all three while the pack list keeps a by-event column so each event’s trays stay separate. Each order still gets its own confirmation and its own purchase orders; the combined run does not confirm or buy. Back on the wedding: an inbox showing the purchase orders the confirmation actually emailed, one per vendor, each with its own number, and the one addressed to Green Valley Produce opened as the vendor receives it, five items in whole packs with a $516.08 subtotal. Receiving: arugula received three of four three-pound clamshells, the missing clamshell saved for purchasing follow-up; baby spinach ordered as fifteen three-pound clamshells and delivered as sixteen, $477.16 of received value against the $410.40 ordered. The ingredient’s cost panel showing the price actually paid as the current cost, $21.91 a kilogram, with the receiving it came from on record. Sage, the in-app assistant, asked in plain words what needs attention for the Alvarez-Whitman Wedding, answering from the records: the food cost is 39.6 percent against the 30 percent target, the same figure the pricing panel worked out at the start of the film, and 22 ingredients are still unreviewed for dietary checks. Under the answer, a “Where this came from” list of the order records it read, the wedding among them. Finally the order’s comparison band: quoted at $26.93 a guest, $27.13 at today’s prices, a 0.7 percent rise with the quote still holding. An end card: one job, quote to shelf, the same numbers the whole way.
+
+Follow the order in writing
+8 HANDOFFS
+
+That was one real order, start to finish. Yours will have different numbers.
+
+Start free trial
+
+15 days free. Card up front, charged $0 today.
+
+NEXT SECTION:
+NEXT ·
+WHAT GOES WRONG
+↓
+
+WHAT GOES WRONG
+
+The spreadsheet works until the job changes.
+
+Most kitchens cost on a spreadsheet, and it holds until something moves. A supplier price changes. The client adds forty guests. A case arrives short. Each one is a number somebody has to find and change by hand.
+
+So every job starts as the last job’s sheet, saved under a new name. That is the right move with the tools most kitchens have. It is also how the price you quote and the price you pay drift apart without anybody getting anything wrong.
+
+Those four are my own week, not a survey, and the last one is the one I built this for.
+
+01
+
+You quote from an old price
+
+The vendor moved the case price and you changed it where you saw it. The sheet you quoted this job from is a copy of last month’s, and it still holds the old one.
+
+02
+
+You rebuild the same order four times
+
+Forty more guests, and the same number has to change in the recipe math, the shopping list, the prep plan and the pack check. Four edits, and the one you miss turns up at the dock.
+
+03
+
+You retype the list to buy it
+
+You copy the rows out by hand: one message per supplier, then a checklist at the dock, then whatever the truck was short, typed back in.
+
+04
+
+You learn the margin after service
+
+The invoices arrive after the event and go in a folder, not in the sheet you quoted from. Weeks later, if you go and check, they decide whether the price worked.
+
+AND THE QUIET ONE
+
+Those four are the slow ones. The one that costs money is quieter. A sheet totals what is in it, so a missing fact does not stop the number. It shrinks it.
+
+A PRICE YOU HAVE NOT GOT YET
+
+The beef is blank while you wait on the invoice. The plate cost still prints, short by the beef and looking just as confident as a right answer.
+
+A CONVERSION NOBODY CHECKED
+
+The recipe is in grams, the pack is in pounds, and whoever typed the number between them is not in the kitchen today.
+
+Neither is slower. They are wrong, and the screen does not say so. CostCook stops instead. A missing price or a missing conversion holds the costing and names the line it is waiting on.
+
+NEXT SECTION:
+NEXT ·
+WHO THIS IS FOR
+↓
+
+WHO THIS IS FOR
+
+Built for the kitchen where the person who quotes the job also cooks it.
+
+Catering, meal prep, special dinners, and changing menus, whether you run a catering-only kitchen or a restaurant too. You price work that changes, buy for dates and guest counts, and need the plan to move when the event moves.
+
+And plainly, where it stops.
+
+Three requirements need a different setup. See the fullproduct comparison before you decide.
+
+LIMITS · THREE REQUIREMENTS
+
+You need several locations to see their own shelves
+
+One subscription covers one kitchen. There is no per-site inventory and no roll-up across sites.
+
+You need lot tracking for FSMA 204
+
+CostCook does not provide the lot tracking a facility under a traceability rule needs.
+
+You need a permission grid for a big team
+
+Owner and manager roles gate setup. Beyond that there is no per-screen control, so you cannot hand over the prep list and keep someone out of the costs.
+
+NEXT SECTION:
+NEXT ·
+WHAT IT DOES INSTEAD
+↓
+
+What it does instead: keeps one order moving.
+
+Price it, scale it, buy it, then bring the paid price back. Each step picks up where the last one finished, so there is no second copy of the numbers to keep in agreement with the first.
+
+QUOTE
+PLAN
+BUY
+COST AGAIN
+01
+QUOTE
+Quote with the food cost in front of you
+
+Pick the menu, enter guests and price per head, and see the job against your food-cost target before you say yes.
+
+BEFORE
+A price the copy never got
+INSTEAD
+Cost checked before the quote
+QUOTE · THE SCREEN THAT CARRIES IT
+02
+PLAN
+Change the count once
+
+Recipes scale, shared ingredients roll together, whole packs recalculate, and Shop, Prep and Pack stay on one plan. All three work on a phone, and one you opened earlier stays readable in a walk-in with no signal.
+
+BEFORE
+One number, four tabs
+INSTEAD
+One guest count carried through
+PLAN · THE SCREEN THAT CARRIES IT
+03
+BUY
+Send the buying without retyping it
+
+The shopping list groups by supplier, and receiving records what actually arrived: short, over, substituted, or missing.
+
+BEFORE
+Rows retyped into emails
+INSTEAD
+Whole packs grouped by supplier
+BUY · THE SCREEN THAT CARRIES IT
+04
+COST AGAIN
+Bring the real price back to the next quote
+
+Record what you paid. Approved prices update future costing; the confirmed event stays frozen.
+
+BEFORE
+An invoice in a folder, not the sheet
+INSTEAD
+The paid price in future costing
+COST AGAIN · THE SCREEN THAT CARRIES IT
+The next quote starts with what you paid.
+
+The loop closes without changing the price on the event you already confirmed.
+
+Need the implementation detail? See everything it does, area by area.
+
+NEXT SECTION:
+NEXT ·
+TRIM AND YIELD
+↓
+
+TRIM AND YIELD
+
+The case has the skins on it. Your recipe does not.
+
+The recipe uses 60 grams of cored tomato. The case price still has to pay for the part trimmed away. Follow that one line from the quantity in the dish to the cost on the recipe.
+
+Recorded purchase
+25 lb case · $29.14 · $2.57/kg as purchased
+
+Sixty grams used in the recipe, divided by a trim yield of zero point nine one, equals sixty-six grams required to buy. Sixty-six grams at two dollars and fifty-seven cents per kilogram equals a seventeen-cent line cost.
+
+USED IN RECIPE
+60 g
+
+Usable tomato in the dish.
+
+÷
+TRIM YIELD
+0.91
+
+91% remains after coring.
+
+=
+REQUIRED TO BUY
+66 g
+
+As-purchased quantity.
+
+×
+PURCHASE COST
+$2.57/kg
+
+From the recorded case.
+
+=
+LINE COST
+$0.17
+
+12% of the recipe-line subtotal.
+
+Set yield on the recipe line once. The amount to buy and the line cost move together; every ingredient stays at 100% until you change it.
+
+The same working, open on the recipe line
+
+No waste percentage is added at the end. The yield stays on the ingredient line, beside the quantity, preparation and cost it changes.
+
+NEXT SECTION:
+NEXT ·
+WHAT ELSE IS IN IT
+↓
+
+WHAT ELSE IS IN IT
+
+Four more areas, and where each one stops.
+
+The label numbers, the paperwork coming in, Sage, and who on your crew can do what. All four are in the app today, and each one says what it does not do.
+
+NUTRITION FACTS
+
+The numbers on the label, from the recipe you already costed.
+
+A meal-prep kitchen is asked for calories and protein before it is asked for a price. CostCook computes the fifteen numbers an FDA panel carries, per portion, from the lines that already cost the dish.
+
+How the fifteen numbers are arrived at
+Five steps, from the supplier record to the printed sheet
+The printed label, from this recipe
+One 297 g Chicken Burrito Bowl, captured from the live demo
+What it is not.
+The estimate is not a retail-label compliance claim, and the printed sheet says so.
+CostCook detects, it never certifies. Halal and kosher can only ever come back as a check. Slaughter and certification are facts the app cannot see.
+The ingredient statement is in recipe order, not a regulatory weight order.
+A label printer integration is being built and carries no date. Today the sheet prints from the browser.
+
+Every line of it is on the feature list, with the one Coming thing marked. Nutrition facts, area by area.
+
+INVOICES AND PRICE LISTS
+
+Paper in, staged facts out, you confirm.
+
+All of this runs on what your food costs this week, so something has to get the price board, the order guide and the invoices in. Four doors, one queue.
+
+The four doors and the one queue
+Photograph, PDF or doc, spreadsheet, pasted text
+
+What comes back is a list to look at, not a catalog that changed behind you.
+
+The awkward invoice you would rather key in by hand is still a supported way to do it. Reading the paper is the fast part. Saying yes to it is yours.
+
+Sage
+Available now
+Ask your kitchen a question. See where the answer came from.
+
+Sage reads the records you already keep in CostCook and answers in plain lines that carry their source.
+
+SAGE ANSWER · SOURCE LINKED
+
+A different kitchen from the wedding in the tour: cucumber rose from $24.00 to $33.00 across two linked purchases.
+11 CHECKS
+Read records
+Answers keep their source.
+1 TOOL
+Prepares a proposal
+Nothing changes yet.
+YOU
+Approve or discard
+The final say stays human.
+The five jobs, and asking during setup
+Eleven bounded checks, and Sage in the setup header
+Useful because the boundaries are visible.
+The nine rules, in full
+Three boundaries: evidence, access, action
+
+Available now. Available while you are still setting the records up. Watch Sage at work.
+
+TEAM & ACCESS
+
+Three roles. A short list of real boundaries.
+
+Bring the whole crew in; teammates are unlimited during launch. Owner, Manager and Staff protect specific sensitive actions, while the operational record stays shared.
+
+Owner
+Billing and owner-only recipe lifecycle decisions.
+Manager
+Setup, teammates and protected Sage work.
+Staff
+The shared kitchen records without higher-role actions.
+
+The limit: there is no custom role or per-screen permission grid. See every access boundary.
+
+The access check, as one ticket
+Role-aware actions, fine-grained screens, who may invite
+
+NEXT SECTION:
+NEXT ·
+THE OTHER TOOLS
+↓
+
+THE OTHER TOOLS
+
+Your regular week and your special events are two different plans.
+
+A restaurant can run both. Regular service may come back each week; event work moves by date, menu and guest count. CostCook is built for that changing side of the kitchen.
+
+Two calendars drawn at the same scale. A regular service week is seven identical marks, Monday to Sunday. A special-event calendar has twelve dates, only six with a job, each a different height for a different guest count.
+
+REGULAR SERVICE
+
+M
+T
+W
+T
+F
+S
+S
+
+One menu, served again. The order guide is the same one as last week.
+
+SPECIAL EVENTS
+
+A different menu on every date, and a guest count somebody else chooses.
+
+For event work, the unit is the job.
+
+So the question to take to any of them is not whether it costs a recipe. They all do. It is whether forty guests added on Thursday move the shopping list, the prep sheet and the pack list, or whether that part is still yours.
+
+Coming soon
+Three additions to the plan.
+
+None is in the CostCook you would start today, and no release date is promised. Kitchen labels are built behind a flag; the other three are on the build plan.
+
+Kitchen label printing
+
+Date and allergen stickers from the prep list are built behind a release flag and not in the launch plan, so they remain marked Coming. Nutrition sheets print from the recipe today.
+
+Coming soon
+
+Buying that tops you back up to par
+
+Build the buy from the par level you set, not only from the jobs already on the books.
+
+Coming soon
+
+Spanish
+
+Use CostCook in Spanish as well as English.
+
+Coming soon
+
+Every shipped, Coming and No row is on the comparison page, which names them and prints the date it was checked.
+
+NEXT SECTION:
+NEXT ·
+WHO MADE IT
+↓
+
+Rayan Ramirez
+Chef and founder
+
+WHO MADE IT
+
+I cooked professionally for twelve years before I built CostCook.
+
+I wanted one menu to become the quote, shopping list, prep plan and pack list without losing the cost on the way.
+
+Contact Rayan
+
+WHAT THAT CHANGED IN THE PRODUCT
+
+Missing facts stop the total
+
+It never quietly becomes zero.
+
+One event keeps one guest count
+
+All four stay connected as the order changes.
+
+Built for event production
+
+For catering, meal-prep, and restaurant kitchens that plan work from menus and guest counts. Not a POS and not an online-ordering system.
+
+NEXT SECTION:
+NEXT ·
+START HERE
+↓
+
+START HERE
+
+Put one real order through it.
+
+Bring the menu and guest count already on your calendar. Check the food cost, buy, prep and pack plan it gives back before you move the rest of the kitchen. Your numbers, not a sales demo’s.
+
+What it takes first: every dish on that menu goes in once. Upload its recipe card and the invoice its ingredients came on, confirm what CostCook read, and type any line it could not. The first dish takes about fifteen minutes; the rest come in the same way.See every setup screen
+
+YOUR TRIAL
+
+Start with the next order.
+$49/month
+Today
+$0 charged
+Trial
+15 days
+First charge
+Day 16
+Then
+$49/month
+
+Stripe holds the card. Cancel before day 16 and pay nothing.
+
+Start free trial
+
+Rather run it together? Book 15 minutes.
+
+One order in. Four working plans out.
+YOU BRING
+One menu
+Each dish on it, from the recipe card you already use.
+Guest count
+The number on the order.
+Current prices
+Off your latest invoices, as a photo or PDF.
+YOU INSPECT
+Food cost
+Per dish, per guest, and for the order.
+Shopping
+By supplier, in whole packs.
+Prep
+Scaled batches and checks for the crew.
+Pack
+Dishes, quantities, and equipment.
+Before you hand over a card.
+
+Three answers that should not be hidden behind the button.
+
+How do I cancel?
+The owner cancels from Settings → Billing through Stripe. No email, notice period, or retention call.
+Can I take my work with me?
+The whole recipe book exports as a spreadsheet. Ingredient prices do not export yet.
+What happens on day 16?
+Billing starts at $49/month if you did nothing, and at $0 if you cancelled first.
+
+More questions than three? Every answer, on one page.
+
+CostCook
+
+rayan@costcook.io
+973-870-6309
+Pricing
+Every feature
+Blog
+Product tour
+Who it's for
+Your initial setup
+How we compare
+FAQ
+Contact
+Sign in
+Book a demo
+
+© 2026 CostCook
