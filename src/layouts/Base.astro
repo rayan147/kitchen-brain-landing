@@ -30,6 +30,10 @@ const {
 } = Astro.props;
 // Slash form so canonical/og:url agree byte-for-byte with the sitemap.
 const canonical = new URL(path, site.url).href;
+// stage.costcook.io builds the release branch with PUBLIC_NOINDEX=1 (the app
+// repo's ADR 0010). Canonical already names costcook.io; this keeps the stage
+// copy out of the index entirely.
+const noindex = import.meta.env.PUBLIC_NOINDEX === '1';
 const ogImage = new URL('/og.png', site.url).href;
 ---
 
@@ -41,6 +45,7 @@ const ogImage = new URL('/og.png', site.url).href;
 		<meta name="description" content={description} />
 		<title>{title}</title>
 		<link rel="canonical" href={canonical} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
