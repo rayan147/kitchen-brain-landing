@@ -37,6 +37,22 @@
  * list, is a table.
  */
 
+import { spell, spellCapital } from './words';
+
+/**
+ * The allergens the app tags, the fixed US nine, in the app's seed order
+ * (kitchen-brain drizzle/0034_dizzy_klaw.sql:10-19; no custom allergens exist
+ * and no later migration inserts more). Every count sentence on the site reads
+ * its word from this list, so the number cannot drift from the list again: it
+ * said "fourteen" on six surfaces until 2026-09-27.
+ */
+export const allergenNames = [
+	'Milk', 'Egg', 'Fish', 'Crustacean shellfish', 'Tree nuts',
+	'Peanuts', 'Wheat', 'Soy', 'Sesame'
+] as const;
+export const allergenCount = spell(allergenNames.length);
+export const allergenCountCapital = spellCapital(allergenNames.length);
+
 /** The five diets the app judges a dish against, in the engine's order. */
 export const dietNames = ['Vegetarian', 'Vegan', 'Halal', 'Kosher', 'Gluten-free'] as const;
 
@@ -62,7 +78,7 @@ export const dietary = {
 	comparisonLabel: 'Guest restrictions checked per dish',
 	verdict: 'yes' as const,
 	comparisonNote:
-		'Five diets and fourteen allergens, judged from confirmed ingredient facts on every dish of an order, and printed on the prep and pack lists. It detects and never certifies: halal and kosher cap at check, and an unreviewed ingredient is never clear.',
+		`Five diets and the ${allergenCount} major US allergens, judged from confirmed ingredient facts on every dish of an order, and printed on the prep and pack lists. It detects and never certifies: halal and kosher cap at check, and an unreviewed ingredient is never clear.`,
 	faq:
 		'Yes. Record who is eating on the order, by allergen or by diet, and every dish is judged against them from the ingredient facts your kitchen confirmed. Vegetarian, vegan, halal, kosher and gluten-free. Each dish comes back conflict, check or clear, with the ingredient named, and the answer prints on the prep and pack lists. It detects, it never certifies: halal and kosher can only ever be a check, because slaughter and certification are facts the app cannot see, and an ingredient nobody reviewed is never counted as clear.',
 

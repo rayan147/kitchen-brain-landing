@@ -3,6 +3,7 @@
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
 import { orderingAvailability } from './ordering';
+import { allergenCount } from './dietary';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -182,7 +183,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Check before deleting.', detail: 'Before deleting an ingredient, check the recipes that still use it.' },
 			{ lead: 'CSV import.', detail: 'Bulk ingredient import with a template whose example rows actually pass.' },
 			{ lead: 'USDA reference built in.', detail: 'Yields, densities, and unit weights offered as chips you tap to fill.' },
-			{ lead: 'Allergens.', detail: 'Fourteen-allergen tagging rolls up to every recipe, with chef overrides that require a written reason.' },
+			{ lead: 'Allergens.', detail: `Tagging for the ${allergenCount} major US allergens rolls up to every recipe, with chef overrides that require a written reason.` },
 			{ lead: 'Shelf facts.', detail: 'Storage areas and par levels live on the ingredient. An unset par is unset, not zero.' }
 		]
 	},

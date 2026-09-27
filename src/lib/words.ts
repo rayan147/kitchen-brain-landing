@@ -2,7 +2,7 @@
  * Spelled numbers, for prose.
  *
  * Counts that appear in body copy are spelled, like every other number on this
- * site ("Fourteen allergens", "Two to twelve events"), and they stay COMPUTED
+ * site ("Nine allergens", "Two to twelve events"), and they stay COMPUTED
  * so a sentence cannot drift from the list it describes. The word is a
  * rendering of the count, not a second copy of it. Anything past twelve falls
  * back to the numeral rather than inventing prose nobody proofread.

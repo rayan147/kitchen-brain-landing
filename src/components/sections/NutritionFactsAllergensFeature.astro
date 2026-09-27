@@ -2,6 +2,7 @@
 import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureGroups } from '../../lib/features';
 import { nutrition } from '../../lib/nutrition';
+import { allergenCountCapital } from '../../lib/dietary';
 import { cta, demoCta } from '../../lib/site';
 
 const nutritionGroup = featureGroups.find((group) => group.id === 'nutrition');
@@ -73,7 +74,7 @@ const evidenceSteps = [
 	},
 	{
 		title: 'The ingredient carries it',
-		detail: 'Fourteen allergen tags stay attached to the ingredient rather than its name.'
+		detail: `${allergenCountCapital} allergen tags, the major US allergens, stay attached to the ingredient rather than its name.`
 	},
 	{
 		title: 'The recipe rolls it up',
@@ -112,7 +113,7 @@ const faqItems = [
 	{
 		question: 'How does CostCook track allergens?',
 		answer:
-			'Fourteen allergen tags live on ingredients and roll up through sub-recipes into recipes and pack lists. The evidence comes from a supplier record, a package label, or a kitchen review. A chef override requires a written reason.'
+			`${allergenCountCapital} allergen tags, the major US allergens, live on ingredients and roll up through sub-recipes into recipes and pack lists. The evidence comes from a supplier record, a package label, or a kitchen review. A chef override requires a written reason.`
 	},
 	{
 		question: 'Does CostCook make an allergen-free or compliance claim?',

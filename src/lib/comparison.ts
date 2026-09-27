@@ -55,7 +55,7 @@
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
-import { dietary } from './dietary';
+import { dietary, allergenCount, allergenCountCapital } from './dietary';
 
 export const VERIFIED_ON = 'August 30, 2026';
 
@@ -342,9 +342,9 @@ export const comparison: RowGroup[] = [
 			{
 				label: 'Allergen tagging',
 				sheet: 'key',
-				sheetNote: 'Fourteen allergens per ingredient, then rolled up to the recipe yourself.',
+				sheetNote: `${allergenCountCapital} allergens per ingredient, then rolled up to the recipe yourself.`,
 				costcook: 'yes',
-				note: 'Fourteen allergens, rolled up from ingredient to recipe, on the pack list. A name match alone does not confirm allergen information. A chef override needs a written reason.',
+				note: `The ${allergenCount} major US allergens, rolled up from ingredient to recipe, on the pack list. A name match alone does not confirm allergen information. A chef override needs a written reason.`,
 				parsley: 'Chef Plus, $189',
 				meez: 'Enterprise, custom'
 			},

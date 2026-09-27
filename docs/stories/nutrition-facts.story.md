@@ -150,3 +150,7 @@ lede and hand-off are gone; its h2 text survives as the block's h3.
 the homepage carries this proof still passes. What the working parts do now is
 fold under 64rem behind `FoldedDetail.astro`, shipping open in the served HTML.
 Every beat above still applies; only the frame around it changed.
+
+## Claim correction · 2026-09-27 (allergen count)
+
+- [x] 11 Revision: "Fourteen allergens" was false; the app tags the fixed US nine (milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soy, sesame; kitchen-brain drizzle/0034_dizzy_klaw.sql). The count word is now computed from `allergenNames` in `src/lib/dietary.ts`. Beats, scenes, point of view and snap line unchanged; only the number moved. Gap report S3.
