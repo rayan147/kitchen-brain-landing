@@ -10,8 +10,9 @@
  *
  * WHAT AN ANSWER MAY NOT DO. Soften a `no`. Promise a date for a `coming`.
  * Say what another product cannot do (RC-40, RC-47 scope that to /compare).
- * Use the two no-typing phrases the ledger excludes. Say "margin" when the
- * number is food cost.
+ * Use the two no-typing phrases the ledger excludes. Say "margin" for a
+ * food-cost number without saying it is food-only (the app shows a food-only
+ * gross-margin figure on event totals and recipe pricing; gap report S4).
  *
  * ORDER. Groups run in the order the reader asks them: the money first,
  * because that is what a cold-email visitor opens this page for, then fit,
@@ -206,7 +207,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'margin',
 				question: 'Will it tell me my margin?',
 				answer: [
-					'It tells you food cost: the theoretical food cost of an event, the food-cost percentage against a target you set, and the selling price that would meet that target. Labor and overhead are not in it, so the number is food cost and it is never called margin.'
+					'It tells you food cost: the theoretical food cost of an event, the food-cost percentage against a target you set, and the selling price that would meet that target. Labor and overhead are not in it. Where the event totals and recipe pricing show a food-only gross margin, it is the price less food cost, not your business margin after labor and overhead.'
 				],
 				claims: ['RC-04', 'RC-05', 'RC-30']
 			}

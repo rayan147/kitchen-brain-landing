@@ -132,3 +132,7 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 ## Claim correction · 2026-09-27 (allergen count)
 
 - [x] 11 Revision: "Fourteen allergens" was false; the app tags the fixed US nine (milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soy, sesame; kitchen-brain drizzle/0034_dizzy_klaw.sql). The count word is now computed from `allergenNames` in `src/lib/dietary.ts`. Beats, scenes, point of view and snap line unchanged; only the number moved. Gap report S3.
+
+## Claim correction · 2026-09-27 (margin wording)
+
+- [x] 11 Revision: The app does show "Gross margin" on event totals and recipe pricing, so "it is never called margin" was false. The true boundary stays: food cost is food only, and the gross margin the app shows is food-only, not business margin after labor and overhead. Gap report S4, W4.

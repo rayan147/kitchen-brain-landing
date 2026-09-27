@@ -128,3 +128,7 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 ## Claim correction · 2026-09-27 (purchase orders)
 
 - [x] 11 Revision: Confirming an order contacts no supplier. The owner presses Order from suppliers and picks email, print or manual per supplier, or I'll shop it myself (kitchen-brain PurchaseOrderReview.svelte). The sentence saying confirmation emails or creates purchase orders was false and is replaced. Beats and snap line unchanged. Gap report S2.
+
+## Claim correction · 2026-09-27 (margin wording)
+
+- [x] 11 Revision: The app does show "Gross margin" on event totals and recipe pricing, so "it is never called margin" was false. The true boundary stays: food cost is food only, and the gross margin the app shows is food-only, not business margin after labor and overhead. Gap report S4, W4.

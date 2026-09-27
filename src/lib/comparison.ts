@@ -186,7 +186,7 @@ export const comparison: RowGroup[] = [
 				label: 'Food cost percent against a target you set',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Food cost. Not labor, not overhead, so not business margin.',
+				note: 'Food cost only, not labor or overhead. Where the app shows a food-only gross margin, it is not business margin.',
 				parsley: 'Chef, $129',
 				meez: 'Starter, $24'
 			},
