@@ -1,6 +1,6 @@
 # CostCook landing-page release claim ledger
 
-Last reviewed: 2026-09-09
+Last reviewed: 2026-09-27 (discovery: docs/research/2026-09-27-app-inventory.yaml, app ed6ff5f01)
 
 ## Marketed release
 
@@ -173,3 +173,19 @@ The Resources review clarifies existing setup, tour, fit, FAQ and contact claims
 Targeted comparison corrections were checked against the linked Parsley and meez pricing pages on 2026-09-11: each has three priced plans plus Enterprise; Parsley lists a $69/month invoice-scanning add-on; meez lists additional recipe-viewer locations under Premium/Enterprise. The table’s overall August 30 verification date is retained because this was not a new full row-by-row competitor review. Spreadsheet notes still state CostCook’s three unsupported requirements and now explicitly say the reader must build and check the spreadsheet solution.
 
 Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`. No new deployed-release certification, feature flag, entitlement, or launch-limit decision.
+
+### Discovery corrections · 2026-09-27
+
+Read off kitchen-brain ed6ff5f01 (main = develop = release) and applied on branch `feat/landing-event-repositioning` under the owner rulings of 2026-09-27 (all production switches on; Square and QuickBooks stay Coming because `sandboxOnly()` blocks live credentials; no invoice-email claim). Evidence: `docs/research/2026-09-27-landing-gap-report.md`. New rows RC-61 onward are not part of this section.
+
+- RC-35 and RC-51: APPLIED. The premise "the whole feature sits behind label_printing" was false for Prep and Pack printing. The owner approved the labels launch decision; `LABELS_STATUS` is `yes` and every Coming surface was rewritten.
+- RC-43: APPLIED. Buying to par ships (Inventory > Build shopping list, `e2e/buy-to-par.spec.ts`). `parBuying` left `src/lib/coming-plans.ts`; the /compare row is Yes; the pinned Coming count is one.
+- RC-45: APPLIED to the evidence text only. QuickBooks is built, not unbuilt; Square and QuickBooks both run only in Sandbox (`sandboxOnly()`, `src/lib/server/integrations/config.ts:17-28,76-78`). Coming stays correct.
+- RC-46: APPLIED. Availability now rests on the owner statement of 2026-09-27 that SAGE_ENABLED is on in production.
+- RC-49: APPLIED. Sage has 22 read-only tools and 3 draft kinds (kitchen shopping list, one order's shopping list, a guest-count change on a draft order), not eleven checks and one proposal. Every surface says "draft".
+- RC-52: APPLIED to public copy. Staff do not see per-order money or client names on Today, the calendar hides money from Staff, and Clients is owner and manager only; Staff can open recipe costs and Analytics. The row text above is unchanged and should be restated when RC-61 onward land.
+- RC-59: APPLIED. The owner stated FEATURE_ORDERING_INTEGRATION_ENABLED is on as the deployment default. `ORDERING_STATUS` is `yes`; "Built, not deployed" and "Stripe is a handoff" are gone, replaced by request, approve, pay within 72 hours, payment confirms, one balance reminder, and the stated limits.
+- RC-60 and the allergen rows: APPLIED. The allergen count is nine, the US major nine (`drizzle/0034_dizzy_klaw.sql`), computed from `allergenNames` in `src/lib/dietary.ts`.
+- FAQ purchase orders (RC-26, RC-33 answer): APPLIED. Confirming an order contacts no supplier; purchase orders go out from Order from suppliers.
+- FAQ margin (RC-04, RC-05, RC-30 answer): APPLIED. The app shows a food-only gross margin on event totals and recipe pricing; the answer no longer says the word is never used.
+- NOT APPLIED here: the partner API (C-18) sits on the same ordering flag but stays marked Coming on the integrations answer; e-signature (DocuSeal) and invoice email get no claim.
