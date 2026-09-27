@@ -17,9 +17,9 @@ export const site = {
 	   the register a reader replies in. */
 	founderName: 'Rayan Ramirez',
 	// ≤60 chars so Google doesn't truncate the audience qualifier.
-	title: 'CostCook: shopping, prep & food cost for caterers',
+	title: 'CostCook: catering from first inquiry to closeout',
 	description:
-		'Enter a catering menu and guest count once. CostCook scales recipes, builds shopping, prep, and pack plans, and shows food cost before you quote.'
+		'Take the inquiry, send a priced proposal the client accepts on their phone, then build shopping, prep and pack lists from the same menu and guest count.'
 } as const;
 
 /**

@@ -15,8 +15,8 @@ try {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(base, { waitUntil: 'networkidle' });
-    await page.getByRole('heading', { name: 'Cost it, buy it, prep it, pack it.', exact: true }).waitFor();
-    const hero = page.getByRole('region', { name: 'Cost it, buy it, prep it, pack it.', exact: true });
+    await page.getByRole('heading', { name: 'The event you sold is the event you cook.', exact: true }).waitFor();
+    const hero = page.getByRole('region', { name: 'The event you sold is the event you cook.', exact: true });
     assert.match(await hero.innerText(), /First dish: about fifteen minutes/);
     assert.match(await hero.innerText(), /\$89\.78 per guest to meet a 30% food-cost target/);
     assert.match(await hero.innerText(), /packaging, rentals, staff/);
