@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 import { tourStopCount } from './lib/tour-stops.mjs';
+import { resourceCount, mobileMenuLinkCount } from './lib/resource-nav.mjs';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const previewHost = new URL(baseUrl).hostname;
@@ -209,9 +210,9 @@ try {
 			});
 		});
 	}))()`);
-	assert(resources.linkCount === 5, `desktop Resources: expected 5 links, received ${resources.linkCount}`);
-	assert(resources.icons === 5, `desktop Resources: expected 5 icons, received ${resources.icons}`);
-	assert(resources.descriptions === 5, `desktop Resources: expected 5 descriptions, received ${resources.descriptions}`);
+	assert(resources.linkCount === resourceCount, `desktop Resources: expected ${resourceCount} links, received ${resources.linkCount}`);
+	assert(resources.icons === resourceCount, `desktop Resources: expected ${resourceCount} icons, received ${resources.icons}`);
+	assert(resources.descriptions === resourceCount, `desktop Resources: expected ${resourceCount} descriptions, received ${resources.descriptions}`);
 	assert(resources.hasTour, 'desktop Resources: product tour is missing');
 	assert(resources.featuresClosed, 'desktop Resources: opening it did not close Features');
 	assert(resources.blogClosed, 'desktop Resources: opening it did not close Blog');
@@ -339,7 +340,7 @@ try {
 			featuresClosed: !features.open
 		})));
 	}))()`);
-	assert(mobileMenu.visibleLinks === 8, `mobile Menu: expected 8 visible links, received ${mobileMenu.visibleLinks}`);
+	assert(mobileMenu.visibleLinks === mobileMenuLinkCount, `mobile Menu: expected ${mobileMenuLinkCount} visible links, received ${mobileMenu.visibleLinks}`);
 	assert(mobileMenu.hasPricing, 'mobile Menu: Pricing is missing');
 	assert(mobileMenu.hasSignIn, 'mobile Menu: Sign in is missing');
 	assert(mobileMenu.featuresClosed, 'mobile Menu: opening it did not close Features');
