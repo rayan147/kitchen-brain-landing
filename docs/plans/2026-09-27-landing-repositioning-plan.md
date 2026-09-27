@@ -13,24 +13,34 @@ and no sample copy**. Prospect-facing wording is written in phase 3 through
   `CONTEXT.md` line 3.
 - **Now** (production at `ed6ff5f01`, where main = develop = release). The app
   runs the whole event:
-  - it takes the inquiry and records the customer;
-  - it builds menus, sends a proposal and receives the client's decision on the
-    client's own page;
-  - the contract is signed and becomes an agreement;
-  - the event is booked, and the calendar shows it;
-  - the event becomes the order, and the kitchen shops, preps, packs and
-    closes out;
-  - every step feeds the numbers.
-  
-  An online ordering site, with approval and capacity, is also shipped. So are
-  Square and QuickBooks connections, customer records and analytics.
+  - it takes the inquiry and records the client (the app says "Clients");
+  - it builds menus with live food cost, sends a proposal and receives the
+    client's decision on the client's own page, with no login;
+  - it sends an agreement for signature through DocuSeal (live status in
+    production unknown: the signing page says "Test environment");
+  - the accepted proposal becomes a tentative kitchen draft, the deposit is
+    **recorded by hand** (no card payment for events), and "Confirm order"
+    books it; the calendar shows it;
+  - the kitchen shops, preps and packs, and closes out food cost against the
+    agreed price, which also reaches Analytics and Today.
+
+  Merged but **behind switches that default off** (tier `production-flagged`
+  in `docs/research/2026-09-27-app-inventory.yaml`): the online ordering site
+  (`ordering_integration`), label printing settings, the Sage chat
+  (`SAGE_ENABLED`), invoice email, and Square and QuickBooks (test mode only).
+  None of these may be sold as available until the owner confirms the
+  production switch.
+
+  Not built: card payment for event deposits, customer invoices (PRD 06), BEO,
+  staffing, dispatch and delivery. Nothing is tracked after "Packed".
 - **Today** (assumed merged). The one-page proposal builder
   (`feat/proposal-build-20260926`) and deposit and balance terms carried from
   the accepted proposal to the order (`feat/client-payment-booking-loop`).
 
 The product answers a new question. It used to be "what does this event cost
-me to cook?". Now it is "take this event from the first email to the last
-invoice, and tell me what I made". The landing still answers only the first.
+me to cook?". Now it is "take this event from the first inquiry to the
+closeout, and tell me what I made". (Not "to the last invoice": customer
+invoices are not built.) The landing still answers only the first.
 
 ## Owner decisions (blocking, needed before phase 3)
 
@@ -43,7 +53,7 @@ invoice, and tell me what I made". The landing still answers only the first.
      cooks.
    
    Recommendation: **(a)**. The skeptical owner-operator reading on a phone
-   feels the inquiry-to-deposit chase as the more acute pain. Costing is the
+   feels the inquiry-to-booking chase as the more acute pain. Costing is the
    differentiator competitors lack, so it becomes the proof, not the headline.
    Option (c) splits the one-goal page.
 2. **Who the reader is.** Is it still "owner-operator caterers and meal-prep,
@@ -52,14 +62,23 @@ invoice, and tell me what I made". The landing still answers only the first.
 3. **What counts as shipped for this release.** Confirm the assumed-today set
    (proposal builder and client payment terms). Confirm that `ezcater`,
    `ordering-integration` and PO email stay off the page.
-4. **The client-money processor.** Decide what the landing may name: Stripe
-   Connect, Square, or neither. It depends on discovery section 5.
-5. **Pricing and tiers.** Does front-of-house sit behind a plan tier? If so,
-   `pricing`, `compare` and the trial terms all change.
+4. **Resolved by discovery: the client-money processor.** No processor
+   collects event deposits; they are recorded by hand. Stripe Connect handles
+   storefront orders only, and the storefront is flagged. Square never collects
+   client money. The landing names no processor for events.
+5. **Resolved by discovery: pricing and tiers.** One plan, CostCook Launch,
+   $49 per kitchen per month, 15-day trial, no feature gated by tier.
 6. **Anchor files.** Approve rewriting the product summary in the landing's
    `CLAUDE.md` (Design Context > Users, the one-goal line), the title and
    description in `site.ts`, and kitchen-brain's `CONTEXT.md` line 3. The last
    is a separate kitchen-brain PR, owned there.
+7. **Production switches (new, blocking).** Confirm the production values of
+   the checklist in `docs/research/2026-09-27-app-inventory.md` (group A):
+   `SAGE_ENABLED`, the four per-kitchen release flags, invoice email, the
+   DocuSeal environment, `BILLING_ENFORCEMENT` and `LAUNCH_PRICE_DISPLAY`.
+   They are not in any repo (`infra/env/production.env.example` leaves them
+   blank). The landing already prints Sage as "Available now"
+   (`src/lib/sage.ts:29`).
 
 ## Constraints
 
@@ -98,8 +117,8 @@ Exit criteria:
    | --- | --- |
    | `Hero` | the repositioned promise (decision 1) + primary CTA |
    | `CustomerOutcomes` | outcomes across the whole event, not only food cost |
-   | `SeeItRun` | **front-of-house owner**: inquiry → proposal → signed → deposit → booked, shown with real captures |
-   | `TheProblem` | the chase: email threads, a Word proposal, a PDF contract, a spreadsheet cost sheet, and the deposit follow-up |
+   | `SeeItRun` | **front-of-house owner**: inquiry → proposal → client accepts → agreement → booked ("Confirm order"), shown with real captures; the deposit appears only as something the app records, never collects |
+   | `TheProblem` | the chase: email threads, a Word proposal, a PDF contract, a spreadsheet cost sheet, and tracking who has paid the deposit |
    | `TheYield` | **the proof**: the accepted proposal becomes the order, which becomes the shop, prep and pack lists, which give the real food cost against agreed revenue at closeout |
    | `BuiltForKitchens` | the kitchen side (recipes, labels, nutrition) in one slot |
    | `WhoThisIsFor` | the reader from decision 2 |
@@ -180,7 +199,10 @@ These are not copy. They are the arguments the story can use.
   The accepted proposal *is* the order, and closeout compares food cost with
   the revenue that was agreed. That link is the claim no competitor can make.
   Show it as one event moving through the product, not as a feature grid.
-- **The client sees it too.** A client-facing offer page, decision and signing
+  Its limits go on the page with it: a kitchen draft holds one service, a
+  proposal with more than one food service or a split charge is refused, and
+  nothing is tracked after "Packed".
+- **The client sees it too.** A client-facing offer page and decision (and signing, once DocuSeal is confirmed live)
   are something the caterer can show their own customers. That is a trust
   signal and a demo moment.
 - **Frequency beats breadth.** Lead with what an owner does weekly (inquiries,
