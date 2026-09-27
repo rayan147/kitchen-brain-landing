@@ -52,7 +52,7 @@ export const eventProof = {
 	),
 	offer: shot(
 		'/proof/events-offer-mobile.png',
-		`The client’s proposal page on a phone, from Harbor & Hearth Catering, with a logo placeholder and a phone icon. Proposal for Priya Nair: Nair & Castellano wedding, please respond by Sunday October 4, 12:21 PM, 7 days left. Total for your event $14,250.00, 150 guests at $95.00 per guest. Your event: date October 10, 2026, 150 guests, venue to be confirmed, service time ${sampleServiceTime}, New York time, and the line We’ll confirm these details with you before the event. What we’ll serve: Wedding Plated Dinner, $14,250.00, 150 guests at $95.00 per guest, with six dishes: braised short rib, creamed spinach, focaccia and whipped goat cheese, lemon posset, roasted beet and citrus, and wild mushroom polenta. Buttons at the bottom: Ask for changes, and Accept proposal.`
+		`The client’s proposal page on a phone, from Harbor & Hearth Catering, with a logo placeholder and a phone icon. Proposal for Priya Nair: Nair & Castellano wedding, please respond by Sunday October 4, 7 days left. Total for your event $14,250.00, 150 guests at $95.00 per guest. Your event: date October 10, 2026, 150 guests, venue to be confirmed, service time ${sampleServiceTime}, New York time, and the line We’ll confirm these details with you before the event. What we’ll serve: Wedding Plated Dinner, $14,250.00, 150 guests at $95.00 per guest, with six dishes: braised short rib, creamed spinach, focaccia and whipped goat cheese, lemon posset, roasted beet and citrus, and wild mushroom polenta. Buttons at the bottom: Ask for changes, and Accept proposal.`
 	),
 	deposit: shot(
 		'/proof/events-deposit-desktop.png',

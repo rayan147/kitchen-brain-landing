@@ -8,10 +8,11 @@
 //   APP          the running app                      http://localhost:4188
 //   DB           the app's scratch SQLite file        required; must sit under
 //                                                     an e2e/.scratch/ directory
-//   KB_DIR       a kitchen-brain checkout whose       /home/rayan147/kitchen-brain
+//   KB_DIR       a kitchen-brain checkout whose       /home/rayan147/kitchen-brain-develop-demo
 //                node_modules provide playwright and
-//                @libsql/client (any checkout with deps
-//                installed; ~/kitchen-brain-develop-demo works too)
+//                @libsql/client (the primary ~/kitchen-brain
+//                checkout's dependencies did not load on
+//                2026-09-27; develop-demo's did)
 //   CHROME_PATH  the browser binary                   /usr/bin/google-chrome
 //
 // THE DATE IS FIXED, AND EVERY RE-SHOOT MUST UPDATE IT. EVENT.date below is
@@ -24,13 +25,17 @@
 //
 // STANDING THE APP UP (the script drives it, it does not build it)
 //
-// The app is kitchen-brain `develop`, from the develop-demo checkout
-// (~/kitchen-brain-develop-demo), exported clean so an in-progress merge in
-// the worktree cannot leak into the build (git archive reads the commit, it
-// touches nothing in the worktree). First run was against c88f2eed2.
+// The app is kitchen-brain PRODUCTION, origin/main, exported clean so nothing
+// unshipped reaches a marketing frame (git archive reads the commit and
+// touches no worktree). Use a NEW scratch folder each time: an older export
+// left in place mixes files and fails to build. First shot against develop
+// c88f2eed2; re-shot and confirmed against origin/main ed6ff5f01 on
+// 2026-09-27, seven frames byte-identical and the offer frame differing only
+// in its respond-by clock time.
 //
-//   APPDIR=<scratch dir>; mkdir -p $APPDIR
-//   git -C ~/kitchen-brain-develop-demo archive develop | tar -x -C $APPDIR
+//   git -C ~/kitchen-brain fetch -q
+//   APPDIR=<new scratch dir>; mkdir -p $APPDIR
+//   git -C ~/kitchen-brain archive origin/main | tar -x -C $APPDIR
 //   ln -s ~/kitchen-brain-develop-demo/node_modules $APPDIR/node_modules
 //   cd $APPDIR
 //   TURSO_DATABASE_URL= RESTAURANT_TIME_ZONE=America/New_York npm run demo:seed
@@ -40,9 +45,12 @@
 //   #   production runs this backfill on every boot (scripts/backfill-recipe-
 //   #   revisions.ts); the demo seed does not, and without it every dish is
 //   #   unpublished and "Use menu" refuses ("Publish every dish in that menu").
-//   #   Then rename the kitchen (organization.name and settings.business_name /
-//   #   reply_to_email / phone / delivery_address) to Harbor & Hearth Catering,
-//   #   with any SQLite client. The run below refuses to start if it has not.
+//   #   Then rename the kitchen with any SQLite client (sqlite3 may be missing;
+//   #   a few lines of @libsql/client from KB_DIR work): organization.name and
+//   #   settings.business_name = Harbor & Hearth Catering, reply_to_email =
+//   #   kitchen@harborhearth.example.com, phone = (207) 555-0142,
+//   #   delivery_address = 12 Commercial Street, Portland, ME 04101 (sample
+//   #   values, never a real business). The run refuses to start if not renamed.
 //   TURSO_DATABASE_URL= npm run build
 //   # serve with demo/serve.sh's env, on 4188, without its rebuild:
 //   DATABASE_URL=file:e2e/.scratch/demo.db RESTAURANT_TIME_ZONE=America/New_York \
@@ -77,7 +85,7 @@ import { resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const APP = process.env.APP ?? 'http://localhost:4188';
-const KB_DIR = process.env.KB_DIR ?? '/home/rayan147/kitchen-brain';
+const KB_DIR = process.env.KB_DIR ?? '/home/rayan147/kitchen-brain-develop-demo';
 const CHROME_PATH = process.env.CHROME_PATH ?? '/usr/bin/google-chrome';
 if (!process.env.DB) throw new Error('DB=<absolute path to the app scratch demo.db> is required (the date move writes it).');
 const DB = resolve(process.env.DB);
@@ -309,7 +317,7 @@ try {
 	if (!(await wedding.isChecked())) throw new Error('the Wedding event type did not select');
 	await dialog.getByLabel('Service start').fill(EVENT.start);
 	await dialog.getByLabel('Service end').fill(EVENT.end);
-	// No venue: on c88f2eed2 a free-text venue makes "Prepare the kitchen draft"
+	// No venue: on c88f2eed2 (and the same code on origin/main ed6ff5f01) a free-text venue makes "Prepare the kitchen draft"
 	// refuse with 409 "The venue changed" (tentative-order.ts readEvent does not
 	// select captureDetails, so the typed venue reads back as none). See notes.
 	await dialog.getByText('Plated', { exact: true }).click();
