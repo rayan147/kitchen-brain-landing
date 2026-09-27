@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { tourStopCount } from './lib/tour-stops.mjs';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const previewHost = new URL(baseUrl).hostname;
@@ -143,9 +144,10 @@ try {
 		};
 	})()`);
 	// Considered Strategy; not used because this pins one fixed navigation
-	// contract (fourteen curated entries since 2026-09-27, plus tour and
-	// all-features actions), not swappable behavior.
-	assert(desktop.linkCount === 16, `desktop: expected 16 links, received ${desktop.linkCount}`);
+	// contract (one curated entry per tour stop, read from src/lib/tour.ts, plus
+	// the tour and all-features actions), not swappable behavior.
+	const expectedMenuLinks = tourStopCount + 2;
+	assert(desktop.linkCount === expectedMenuLinks, `desktop: expected ${expectedMenuLinks} links, received ${desktop.linkCount}`);
 	assert(!desktop.flatTourVisible, 'desktop: product tour still occupies a flat header tab');
 	assert(desktop.demoVisible, 'desktop: Book a demo action is not visible');
 	assert(desktop.headerHeight < 150, `desktop: shared header is ${desktop.headerHeight}px tall`);
