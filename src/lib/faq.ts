@@ -223,7 +223,7 @@ export const faq: readonly FaqGroup[] = [
 				answer: [
 					'Build the event menu from your costed recipes or a saved menu, and the menu and service step shows the food cost before the proposal goes to the client. For a job you take by phone without a proposal, a draft order shows revenue, theoretical food cost, food cost per guest and the percentage against your target. While either is a draft, those numbers follow your current ingredient prices.'
 				],
-				claims: ['RC-03', 'RC-04', 'RC-06']
+				claims: ['RC-03', 'RC-04', 'RC-06', 'RC-61']
 			},
 			{
 				id: 'frozen',
