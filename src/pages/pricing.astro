@@ -6,6 +6,7 @@ import { spellCapital } from '../lib/words';
 import { comingDefinition } from '../lib/availability';
 import { labelsAvailability } from '../lib/labels';
 import { orderingAvailability } from '../lib/ordering';
+import { comingPlanList } from '../lib/coming-plans';
 
 // Included at launch, 2026-09-27 (gap report S11). One plan, no tier gating
 // (inventory plan_matrix). Labels and online ordering read their status files,
@@ -92,6 +93,14 @@ const included = [
 					</article>
 				))}
 			</div>
+			<!-- The owner-confirmed Coming plans (src/lib/coming-plans.ts) are not
+			     feature groups, so the cards above miss them. Card payment for
+			     booked events is the one a reader of this price most needs. -->
+			<ul role="list" class="mt-6 space-y-3 text-ink-soft" data-pricing-coming-plans>
+				{comingPlanList.map((plan) => (
+					<li><strong class="text-ink">{plan.title}.</strong> {plan.homepage}</li>
+				))}
+			</ul>
 		</div>
 
 		<div class="mt-12 space-y-2 text-ink-soft">
