@@ -19,6 +19,14 @@
  * gap report F1). Its /compare row is now a yes and RC-43 records it. One plan
  * left, and the count is pinned in scripts/check-landing-claims.mjs on
  * purpose: this list only ever shrinks by something shipping.
+ *
+ * ONE ADDED ON 2026-09-27, and that is the other legal way in: an owner
+ * ruling that the work is being built. Event deposits are recorded by hand in
+ * production (inventory A-14); a card payment page for a booked event's
+ * deposit and balance, and a reminder email before the balance is due, are
+ * on kitchen-brain feat/client-payment-booking-loop (A-18). The wording
+ * matches the Coming line in EventBooking.astro; the two are typed twice
+ * because that section is owned elsewhere, so change them together.
  */
 
 // Considered Strategy; not used because availability and wording vary as
@@ -33,6 +41,18 @@ export const comingPlans = {
 		comparisonNote: 'Coming soon. CostCook is English only today; no date is promised.',
 		faq:
 			'A Spanish version is Coming soon. CostCook is English only today, and no date is promised.'
+	},
+	eventPayments: {
+		id: 'eventPayments',
+		title: 'Card payment for booked events',
+		comparisonLabel: 'Card payment for event deposits and balances',
+		verdict: 'coming' as const,
+		homepage:
+			'Card payment and balance reminders for events you book by hand: a card payment page for the deposit and the balance, and a reminder email before the balance is due.',
+		comparisonNote:
+			'Coming soon. Today you record an event deposit by hand, as a check, cash, a transfer or your own card processor; no date is promised.',
+		faq:
+			'Card payment for events you book by hand is Coming soon: a card payment page for the deposit and the balance, and a reminder email before the balance is due. Today you record the deposit by hand.'
 	}
 } as const;
 

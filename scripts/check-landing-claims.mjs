@@ -338,17 +338,22 @@ if (costcookNoRows < 3) {
 // Coming row that quietly disappears is a promise nobody kept. RC-60 records
 // what replaced it, and the pins below moved to src/lib/dietary.ts rather than
 // being deleted. ONE SINCE 2026-09-27: buying to par shipped (RC-43, gap
-// report F1), and its pins moved to the /compare yes row below.
-for (const key of ['spanish']) {
+// report F1), and its pins moved to the /compare yes row below. TWO SINCE
+// 2026-09-27 (later the same day): the owner ruled that card payment for booked
+// events and a balance reminder are being built (inventory A-18), so they
+// joined as a plan. That is the only other way onto this list.
+for (const key of ['spanish', 'eventPayments']) {
 	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
 }
 for (const phrase of [
-	"title: 'Spanish'"
+	"title: 'Spanish'",
+	"title: 'Card payment for booked events'",
+	'a reminder email before the balance is due'
 ]) {
 	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
 }
-if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 1) {
-	failures.push('owner-confirmed Coming plans: the one remaining corrected capability must stay Coming');
+if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 2) {
+	failures.push('owner-confirmed Coming plans: the two remaining plans (Spanish, card payment for booked events) must stay Coming');
 }
 requireText(comparisonSource, "note: 'Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.'", 'buying to par is a shipped yes row (RC-43)');
 if (/parBuying/.test(comingPlansSource)) {
