@@ -24,7 +24,7 @@
 const gap = String.raw`(?:\s+[^\s.;:!?]+){0,3}?`;
 
 export const eventDepositClaim = new RegExp(
-	String.raw`\b(?:(?:collect|take|charge|accept)(?:s|ed|ing|n)?|took|get(?:s|ting)? paid on)\b${gap}\s+deposits?\b` +
+	String.raw`\b(?:collect(?:s|ed|ing)?|take[sn]?|taking|took|charg(?:e[sd]?|ing)|accept(?:s|ed|ing)?|(?:get(?:s|ting)?|got)\s+paid\s+on)\b${gap}\s+deposits?\b` +
 		String.raw`|\bdeposits?\s+(?:is|are|was|were|gets?|will\s+be|can\s+be)\s+(?:collected|taken|charged|accepted)\b`,
 	'i'
 );
@@ -51,6 +51,12 @@ const mustMatch = [
 	[eventDepositClaim, 'the deposit is collected when they accept'],
 	[eventDepositClaim, 'Deposits are charged to the card'],
 	[eventDepositClaim, 'collects\n\tthe deposit'],
+	[eventDepositClaim, 'charged a deposit'],
+	[eventDepositClaim, 'taking the deposit'],
+	[eventDepositClaim, 'charging your client a deposit'],
+	[eventDepositClaim, 'got paid on the deposit'],
+	[eventDepositClaim, 'accepted the deposit'],
+	[eventDepositClaim, 'deposits were taken'],
 	[clientInvoiceClaim, 'send the client an invoice'],
 	[clientInvoiceClaim, 'send clients an invoice'],
 	[clientInvoiceClaim, 'invoice your clients from the event'],
