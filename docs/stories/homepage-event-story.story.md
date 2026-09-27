@@ -84,7 +84,7 @@ place on `/who-its-for` and in the WhoThisIsFor section, not in the hero.
 - **Reader's words:** "the inquiry", "send them a proposal", "did they sign",
   "chase the deposit", "the count changed", "what did I actually make on it".
 - **App's words (quote exactly):** "+ New inquiry", "Send offer",
-  "Accept this selection", "Prepare the kitchen draft", "Ask for a deposit",
+  "Accept proposal", "Ask for changes", "Prepare the kitchen draft", "Ask for a deposit",
   "Confirm order", "This event is booked.", Clients (never customers).
 - **Product voice:** plain, calm, chef-to-chef. Banned: seamless, powerful,
   all-in-one, "in one click", "get paid", "collect deposits".

@@ -69,8 +69,8 @@
 - **Reader:** "send them something", "did they sign", "chase the deposit".
 - **App (exact):** "+ New inquiry", "Date not decided yet", "Needs attention",
   "Booked · coming up", "In pipeline", "Past & closed", "Send a reminder",
-  "Extend link", "Withdraw offer", "Accept this selection",
-  "Send change request", "Decline offer", "Attach the accepted proposal as
+  "Extend link", "Withdraw offer", "Accept proposal",
+  "Ask for changes" (and decline, per A-07; check the label), "Attach the accepted proposal as
   Schedule A", "Prepare the kitchen draft", "Ask for a deposit",
   "Confirm order", "This event is booked.", Clients.
 - **Banned:** collect/take/get paid (deposit), invoice (for the client),

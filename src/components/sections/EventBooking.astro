@@ -1,0 +1,137 @@
+---
+/**
+ * The front half of the event, inquiry to booked, added 2026-09-27 when the
+ * page moved from back-of-house to event-first. It owns ONE promise: the
+ * client decides on their phone and you book with Confirm order. The kitchen
+ * half (shop, prep, pack, food cost) stays with CustomerOutcomes below it.
+ *
+ * The six step names are the app's own step bar on the event page, in its
+ * order (inventory A-03), so a reader who starts a trial sees the same words.
+ * Every sentence traces to a production row in
+ * docs/research/2026-09-27-app-inventory.yaml; the row ids sit beside each
+ * step. The one-page proposal builder (A-05) and the proposal's structured
+ * deposit terms (A-17) are NOT described here until their kitchen-brain
+ * branches reach origin/main.
+ *
+ * TRUTH ON MONEY: an event deposit is recorded by hand in production (check,
+ * cash, transfer or the caterer's own processor, A-14). Card payment for a
+ * booked event and its balance reminder are being built on
+ * feat/client-payment-booking-loop, so they appear only in the Coming line.
+ * Never write "collect", "take" or "get paid" about an event deposit here.
+ *
+ * story: docs/stories/homepage-event-story.story.md
+ */
+import SectionHandoff from '../SectionHandoff.astro';
+
+// Considered Composite; not used because six fixed sibling steps are data, not
+// a part/whole tree, and they render with one loop.
+const steps = [
+	{
+		name: 'Inquiry',
+		rows: 'A-01',
+		body: 'Tap “+ New inquiry” while the client is still on the phone, even before the date is settled, and set who follows up and when.'
+	},
+	{
+		name: 'Menu & service',
+		rows: 'A-04',
+		body: 'Build the menu from your costed recipes, a saved menu or a past event, and watch the food cost as you go.'
+	},
+	{
+		name: 'Proposal',
+		rows: 'A-06',
+		body: 'Check exactly what the client will see, choose how long the link stays open, and send it.'
+	},
+	{
+		name: 'Client decision',
+		rows: 'A-07, A-08',
+		body: 'They open it on their phone with no login and accept it or ask for changes; you can send a reminder, extend the link or withdraw the offer.'
+	},
+	{
+		name: 'Agreement',
+		rows: 'A-10, A-11, A-12',
+		body: 'Send your own contract for signature with the accepted proposal attached, or keep a copy signed on paper.'
+	},
+	{
+		name: 'Booked',
+		rows: 'A-13, A-14, A-15',
+		body: 'Track the deposit, then press Confirm order: the event is booked and the kitchen has its plan.'
+	}
+];
+
+const offer = {
+	src: '/proof/events-offer-mobile.png',
+	width: 780,
+	height: 2204,
+	alt: 'The client’s proposal page on a phone, from Harbor & Hearth Catering: Proposal for Priya Nair, Nair & Castellano wedding, please respond by Sunday October 4, 7 days left. Total for your event $14,250.00, 150 guests at $95.00 per guest. Your event: October 10, 2026, 150 guests, The Boathouse at Casco Point, Portland, Maine, service 5 to 10 p.m. What we’ll serve: Wedding Plated Dinner, six dishes listed. Buttons at the bottom: Ask for changes, and Accept proposal.'
+};
+---
+
+<!-- story: docs/stories/homepage-event-story.story.md -->
+<section id="booking" class="event-booking" aria-labelledby="booking-heading" data-event-booking>
+	<div class="container-page py-section-tight">
+		<div class="booking-layout">
+			<div>
+				<p class="text-sm font-semibold text-amber-deep">Inquiry · Proposal · Booked</p>
+				<h2 id="booking-heading" class="mt-3 text-h2 font-semibold">
+					They say yes on their phone. You book it with Confirm order.
+				</h2>
+				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
+					Every event goes through the same six steps, and each one picks up the menu and
+					the numbers from the step before.
+				</p>
+
+				<ol role="list" class="booking-steps">
+					{steps.map((step, index) => (
+						<li data-booking-step={step.name} data-reveal style={`--reveal-delay: ${index * 60}ms`}>
+							<span class="step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+							<div>
+								<h3 class="font-semibold">{step.name}</h3>
+								<p class="mt-1 text-ink-soft">{step.body}</p>
+							</div>
+						</li>
+					))}
+				</ol>
+			</div>
+
+			<figure class="offer-proof" aria-labelledby="offer-proof-title">
+				<figcaption id="offer-proof-title">What the client sees · sample event</figcaption>
+				<div>
+					<a href={offer.src} target="_blank" rel="noopener noreferrer" aria-label="Open the full-size client offer screenshot in a new tab">
+						<img src={offer.src} alt={offer.alt} width={offer.width} height={offer.height} loading="lazy" decoding="async" style={`width: ${offer.width / 2}px`} />
+						<span class="block py-3 text-sm font-semibold text-green-deep underline">Open full-size (new tab)</span>
+					</a>
+				</div>
+			</figure>
+		</div>
+
+		<div class="draft-ticket" data-reveal data-booking-snap>
+			<p class="ticket-label">Kitchen draft</p>
+			<p class="mt-2 text-h3 font-semibold">Prepare the kitchen draft from their yes. It holds no day and draws no crew until you book the event.</p>
+		</div>
+
+		<div class="money-note" data-reveal data-booking-money>
+			<p><strong>The deposit today:</strong> you record it as a check, cash, a transfer or your own card processor, and CostCook shows what was asked and what came in.</p>
+			<p class="mt-2"><strong>Coming:</strong> a card payment page for the deposit and the balance, and a reminder email before the balance is due, for events you book this way.</p>
+		</div>
+
+		<SectionHandoff from="booking" />
+	</div>
+</section>
+
+<style>
+	.event-booking { background: var(--color-paper); }
+	.booking-layout { display: grid; gap: 2.5rem; align-items: start; }
+	.booking-steps { margin-top: 2rem; border-top: 1px solid var(--color-hairline-strong); }
+	.booking-steps li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px dashed var(--color-ticket-rule); }
+	.step-number { color: var(--color-amber-deep); font-size: var(--text-label-sm); font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.9; }
+	.offer-proof { min-width: 0; border-block: 1px solid var(--color-ticket-rule); background: var(--color-cream); box-shadow: var(--shadow-ticket); }
+	.offer-proof figcaption { padding: .75rem 1rem; border-bottom: 1px solid var(--color-hairline); color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+	.offer-proof > div { display: flex; justify-content: center; padding: clamp(1rem, 3vw, 1.75rem); }
+	.offer-proof img { height: auto; max-width: 100%; }
+	.draft-ticket { max-width: 46rem; margin-top: clamp(2.5rem, 6vw, 4rem); padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
+	.ticket-label { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+	.money-note { max-width: 46rem; margin-top: 1.5rem; font-size: var(--text-body-sm); }
+	@media (min-width: 64rem) {
+		.booking-layout { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2.5rem, 6vw, 5rem); }
+			}
+</style>

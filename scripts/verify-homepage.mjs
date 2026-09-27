@@ -250,10 +250,10 @@ try {
 		primary: Boolean(document.querySelector('main .btn-primary')),
 		sections: [...document.querySelectorAll('main > section')].map(section => section.id).filter(Boolean)
 	}))()`);
-	assert(noScript.heading?.startsWith('Cost it, buy it, prep it, pack it.'), 'no JavaScript: homepage identity is missing');
+	assert(noScript.heading?.startsWith('The event you sold is the event you cook.'), 'no JavaScript: homepage identity is missing');
 	assert(noScript.primary, 'no JavaScript: primary action is missing');
 	// Assert visitor destinations rather than an obsolete minimum section count.
-	assert(noScript.sections.join(',') === 'outcomes,demo,problem,yield,trust,who,more,alternatives,start', 'no JavaScript: homepage decision destinations are missing or out of order');
+	assert(noScript.sections.join(',') === 'booking,outcomes,demo,problem,yield,trust,who,more,alternatives,start', 'no JavaScript: homepage decision destinations are missing or out of order');
 
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

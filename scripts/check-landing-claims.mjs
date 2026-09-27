@@ -29,6 +29,9 @@ const surfaceFiles = [
 	// and heroSource are read by position below. Everything else resolves by
 	// indexOf and is safe to reorder.
 	'src/components/sections/WhoThisIsFor.astro',
+	// The event's front half, inquiry to booked (2026-09-27). Its risk is
+	// overclaiming money: a deposit is recorded, never taken, on this path.
+	'src/components/sections/EventBooking.astro',
 	'src/components/sections/CustomerOutcomes.astro',
 	'src/components/sections/WhatElse.astro',
 	// Beats nine and ten. Its whole risk is saying what another product cannot
@@ -277,8 +280,11 @@ requireText(await read('src/layouts/Base.astro'), 'import.meta.env.PROD', 'deplo
 // scroll instead of on the fourth. TheProblem and WhoThisIsFor keep their
 // order relative to each other and still land before the answers they set up.
 // The 2026-09-11 review puts one event's proof before optional diligence.
+// EventBooking sits right under the hero since 2026-09-27: the page is
+// event-first, so the inquiry-to-booked promise is the first thing proven.
+// docs/stories/homepage-event-story.story.md
 const expectedSectionOrder = [
- '<Hero />', '<CustomerOutcomes />', '<SeeItRun />', '<TheProblem />',
+ '<Hero />', '<EventBooking />', '<CustomerOutcomes />', '<SeeItRun />', '<TheProblem />',
  '<TheYield />', '<BuiltForKitchens />', '<WhoThisIsFor />', '<WhatElse />',
  '<TheOtherTools />', '<StartHere />'
 ];
@@ -660,7 +666,7 @@ for (let claim = 1; claim <= 60; claim += 1) {
 // third primary and must render cta.label like the other two.
 const stopsSource = await read('src/lib/stops.ts');
 const stopIds = [...stopsSource.matchAll(/\{ id: '([a-z]+)'/g)].map((m) => m[1]);
-const expectedStopIds = ['outcomes', 'demo', 'problem', 'yield', 'trust', 'who', 'more', 'alternatives', 'start'];
+const expectedStopIds = ['booking', 'outcomes', 'demo', 'problem', 'yield', 'trust', 'who', 'more', 'alternatives', 'start'];
 if (stopIds.join(',') !== expectedStopIds.join(',')) {
 	failures.push(
 		`hand-offs: src/lib/stops.ts reads [${stopIds.join(', ')}] but the homepage renders ` +
@@ -1018,6 +1024,11 @@ const forbiddenClaims = [
 	[/\bfree while/i, 'unapproved pricing promise'],
 	[/\beverything downstream re-reads/i, 'confirmed-order repricing implication'],
 	[/\bhandles it automatically\b/i, 'unqualified automation promise'],
+	// A booked event's deposit is recorded by hand in production (inventory A-14);
+	// card payment for it is still being built (feat/client-payment-booking-loop).
+	[/\b(collects?|takes?|get paid on)\s+(the |a |your )?(event |catering )?deposit/i, 'event deposit collection claim'],
+	// Customer invoices are an unbuilt PRD (front-of-house 06).
+	[/\b(send|sends|sending) (the |a |your )?(client|customer) (an )?invoice/i, 'client invoicing claim'],
 	// RC-49. The assistant's model and provider are configuration, not claims,
 	// and the default has never been evaluated on the marketed branch.
 	// CLAUDE.md is a filename that comments cite; the lookahead spares it.
