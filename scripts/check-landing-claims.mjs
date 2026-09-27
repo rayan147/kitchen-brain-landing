@@ -1,5 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { moneyClaims } from './lib/money-claims.mjs';
 
 const root = new URL('..', import.meta.url).pathname;
 const read = (path) => readFile(join(root, path), 'utf8');
@@ -1064,11 +1065,10 @@ const forbiddenClaims = [
 	[/\bfree while/i, 'unapproved pricing promise'],
 	[/\beverything downstream re-reads/i, 'confirmed-order repricing implication'],
 	[/\bhandles it automatically\b/i, 'unqualified automation promise'],
-	// A booked event's deposit is recorded by hand in production (inventory A-14);
-	// card payment for it is still being built (feat/client-payment-booking-loop).
-	[/\b(collects?|takes?|get paid on)\s+(the |a |your )?(event |catering )?deposit/i, 'event deposit collection claim'],
-	// Customer invoices are an unbuilt PRD (front-of-house 06).
-	[/\b(send|sends|sending) (the |a |your )?(client|customer) (an )?invoice/i, 'client invoicing claim'],
+	// A booked event's deposit is recorded by hand in production (inventory A-14),
+	// and customer invoices are an unbuilt PRD (front-of-house 06). Both patterns
+	// live in scripts/lib/money-claims.mjs, shared with the built events page.
+	...moneyClaims,
 	// RC-49. The assistant's model and provider are configuration, not claims,
 	// and the default has never been evaluated on the marketed branch.
 	// CLAUDE.md is a filename that comments cite; the lookahead spares it.

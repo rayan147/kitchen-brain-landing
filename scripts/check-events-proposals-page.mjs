@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { moneyClaims } from './lib/money-claims.mjs';
 
 /**
  * Built-page contract for /features/events-and-proposals.
@@ -32,10 +33,12 @@ const money =
 if (!html.includes('data-events-money')) fail('the deposit sentence lost its hook');
 if (!html.includes(money)) fail('the money boundary sentence changed; an event deposit is recorded by hand (A-14)');
 
-// No sentence on the page may say the deposit is taken or collected.
+// No sentence on the page may say the deposit is taken, collected, charged or
+// accepted, or that CostCook invoices the client. Same patterns as the source
+// scan (scripts/lib/money-claims.mjs), run on the rendered prose.
 const prose = html.replace(/<[^>]+>/g, ' ');
-if (/\b(collects?|takes?|get paid on)\s+(the |a |your )?(event |catering )?deposit/i.test(prose)) {
-	fail('the page says a deposit is collected or taken; it is recorded by hand');
+for (const [pattern, label] of moneyClaims) {
+	if (pattern.test(prose)) fail(`the page makes a forbidden ${label}`);
 }
 
 // The acceptance boundary.
