@@ -603,7 +603,12 @@ if (/\ball (\d+) things\b/i.test(featureIndexSource)) {
 	failures.push('features hub: the headline count is typed. Render {featureCount} instead.');
 }
 // B5: the hub is a hub. It may name the areas; it may not list the items.
-if (/item\.lead|group\.items\.map/.test(featureIndexSource)) {
+// Since 2026-09-27 it also lists the guide pages by NAME from the menu's own
+// data (featureMenuSections, rendered as `guide`), because the guides were
+// reachable only from the header. That list is signposts, not capability
+// lines, so the rule forbids the feature groups' items (item.lead, or items of
+// entry.groups) and a guide description, which would rebuild the wall.
+if (/item\.lead|entry\.groups[\s\S]{0,80}\.items\.map|guide\.description/.test(featureIndexSource)) {
 	failures.push(
 		'features hub: it is rendering feature items again. The hub carries five ' +
 			'signposts and no line items; depth lives on /features/[section].',

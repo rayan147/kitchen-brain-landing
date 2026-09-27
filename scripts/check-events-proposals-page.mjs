@@ -106,6 +106,11 @@ const mainOf = (source) => source.slice(source.indexOf('<main'), source.indexOf(
 if (!featuresMenu(homeHtml).includes('href="/features/events-and-proposals"')) {
 	fail('the Features menu does not link the page');
 }
+// Since 2026-09-27 the hub lists every guide under data-feature-guides, from
+// the menu's own data, so the hub's main content must link this guide itself.
+if (!mainOf(featureHub).includes('data-feature-guides') || !mainOf(featureHub).includes('href="/features/events-and-proposals"')) {
+	fail('the features hub guide list does not link the page');
+}
 if (!mainOf(featureHub).includes('href="/features/the-day-itself"')) {
 	fail('the features hub main content does not link the area page that carries events');
 }
