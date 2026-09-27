@@ -117,3 +117,15 @@ instead. Pinned by `scripts/check-events-proposals-page.mjs`.)
 - **One sentence per explanation** (owner rule): each section is a heading and
   one to three single-sentence paragraphs.
 - **Final Image:** unchanged `cta.label`.
+
+### Revision 2026-09-27 (single sources)
+- The six step names, the deposit list ("a check, cash, a transfer or your own
+  card processor") and the boundary line ("Their yes is not a signature or a
+  booking. Confirm order is.") now come from `src/lib/events.ts`; the capture
+  map and alt text from `src/lib/proof.ts` (`eventProof`), shared with the
+  homepage. Rendered wording unchanged except: the offer alt's service time
+  reads "17:00 to 22:00, New York time", as the capture prints it.
+- The Coming block's body now reads "A card payment page for the deposit and
+  the balance of a booked event, and a reminder email before the balance is
+  due." (it said "events you book by hand"; booking is Confirm order, only the
+  deposit is recorded by hand). The demo link renders `demoCta.label`.

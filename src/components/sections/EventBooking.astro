@@ -9,61 +9,40 @@
  * order (inventory A-03), so a reader who starts a trial sees the same words.
  * Every sentence traces to a production row in
  * docs/research/2026-09-27-app-inventory.yaml; the row ids sit beside each
- * step. The one-page proposal builder (A-05) and the proposal's structured
+ * step in src/lib/events.ts, which owns the names. The one-page proposal builder (A-05) and the proposal's structured
  * deposit terms (A-17) are NOT described here until their kitchen-brain
  * branches reach origin/main.
  *
  * TRUTH ON MONEY: an event deposit is recorded by hand in production (check,
  * cash, transfer or the caterer's own processor, A-14). Card payment for a
  * booked event and its balance reminder are being built on
- * feat/client-payment-booking-loop, so they appear only in the Coming line.
+ * feat/client-payment-booking-loop, so they appear only in the Coming line,
+ * which renders comingPlans.eventPayments (src/lib/coming-plans.ts) verbatim.
  * Never write "collect", "take" or "get paid" about an event deposit here.
  *
  * story: docs/stories/homepage-event-story.story.md
  */
 import SectionHandoff from '../SectionHandoff.astro';
+import { comingPlans } from '../../lib/coming-plans';
+import { depositMethods, eventSteps, type EventStepName } from '../../lib/events';
+import { eventProof } from '../../lib/proof';
 
-// Considered Composite; not used because six fixed sibling steps are data, not
-// a part/whole tree, and they render with one loop.
-const steps = [
-	{
-		name: 'Inquiry',
-		rows: 'A-01',
-		body: 'Tap “+ New inquiry” while the client is still on the phone, even before the date is settled, and set who follows up and when.'
-	},
-	{
-		name: 'Menu & service',
-		rows: 'A-04',
-		body: 'Build the menu from your costed recipes, a saved menu or a past event, and watch the food cost as you go.'
-	},
-	{
-		name: 'Proposal',
-		rows: 'A-06',
-		body: 'Check exactly what the client will see, choose how long the link stays open, and send it.'
-	},
-	{
-		name: 'Client decision',
-		rows: 'A-07, A-08',
-		body: 'They open it on their phone with no login and accept it or ask for changes; you can send a reminder, extend the link or withdraw the offer.'
-	},
-	{
-		name: 'Agreement',
-		rows: 'A-10, A-11, A-12',
-		body: 'Send your own contract for signature with the accepted proposal attached, or keep a copy signed on paper.'
-	},
-	{
-		name: 'Booked',
-		rows: 'A-13, A-14, A-15',
-		body: 'Track the deposit, then press Confirm order: the event is booked and the kitchen has its plan.'
-	}
-];
-
-const offer = {
-	src: '/proof/events-offer-mobile.png',
-	width: 780,
-	height: 2260,
-	alt: 'The client’s proposal page on a phone, from Harbor & Hearth Catering: Proposal for Priya Nair, Nair & Castellano wedding, please respond by Sunday October 4, 7 days left. Total for your event $14,250.00, 150 guests at $95.00 per guest. Your event: October 10, 2026, 150 guests, venue to be confirmed, service 5 to 10 p.m. What we’ll serve: Wedding Plated Dinner, six dishes listed. Buttons at the bottom: Ask for changes, and Accept proposal.'
+// One sentence per step, in the order and with the names src/lib/events.ts
+// owns (the inventory rows for each step live there too). A missing or extra
+// key is a type error, so a renamed step cannot leave a body behind.
+const stepBody: Record<EventStepName, string> = {
+	Inquiry: 'Tap “+ New inquiry” while the client is still on the phone, even before the date is settled, and set who follows up and when.',
+	'Menu & service': 'Build the menu from your costed recipes, a saved menu or a past event, and watch the food cost as you go.',
+	Proposal: 'Check exactly what the client will see, choose how long the link stays open, and send it.',
+	'Client decision': 'They open it on their phone with no login and accept it or ask for changes; you can send a reminder, extend the link or withdraw the offer.',
+	Agreement: 'Send your own contract for signature with the accepted proposal attached, or keep a copy signed on paper.',
+	Booked: 'Track the deposit, then press Confirm order: the event is booked and the kitchen has its plan.'
 };
+const steps = eventSteps.map((step) => ({ name: step.name, body: stepBody[step.name] }));
+
+// The same capture, alt text and measured size the events guide renders.
+const offer = eventProof.offer;
+const payments = comingPlans.eventPayments;
 ---
 
 <!-- story: docs/stories/homepage-event-story.story.md -->
@@ -96,11 +75,9 @@ const offer = {
 			<figure class="offer-proof" aria-labelledby="offer-proof-title">
 				<figcaption id="offer-proof-title">What the client sees · sample event</figcaption>
 				<div>
-					<a href={offer.src} target="_blank" rel="noopener noreferrer" aria-label="Open the full-size client offer screenshot in a new tab">
-						<img src={offer.src} alt={offer.alt} width={offer.width} height={offer.height} loading="lazy" decoding="async" class="offer-img" />
-						<span class="block py-3 text-sm font-semibold text-green-deep underline">Open full-size (new tab)</span>
-					</a>
+					<img src={offer.src} alt={offer.alt} width={offer.width} height={offer.height} loading="lazy" decoding="async" class="offer-img" />
 				</div>
+				<a class="full-size" href={offer.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
 			</figure>
 		</div>
 
@@ -110,8 +87,8 @@ const offer = {
 		</div>
 
 		<div class="money-note" data-reveal data-booking-money>
-			<p><strong>The deposit today:</strong> you record it as a check, cash, a transfer or your own card processor, and CostCook shows what was asked and what came in.</p>
-			<p class="mt-2"><strong>Coming:</strong> a card payment page for the deposit and the balance, and a reminder email before the balance is due, for events you book this way.</p>
+			<p><strong>The deposit today:</strong> you record it as {depositMethods}, and CostCook shows what was asked and what came in.</p>
+			<p class="mt-2" data-booking-coming={payments.id}><strong>Coming:</strong> {payments.homepage}</p>
 		</div>
 
 		<SectionHandoff from="booking" />
@@ -129,11 +106,14 @@ const offer = {
 	.offer-proof > div { display: flex; justify-content: center; padding: clamp(1rem, 3vw, 1.75rem); }
 	.offer-proof img { height: auto; max-width: 100%; }
 	.offer-img { width: 240px; }
+	/* Same full-size link as the events guide: visible text, outside the image,
+	   so the image keeps its own alt and the link's name is what it says. */
+	.full-size { display: inline-flex; min-height: 44px; align-items: center; padding-inline: 1rem; font-size: var(--text-body-sm); font-weight: 600; color: var(--color-green-deep); text-decoration: underline; }
 	.draft-ticket { max-width: 46rem; margin-top: clamp(2.5rem, 6vw, 4rem); padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
 	.ticket-label { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 	.money-note { max-width: 46rem; margin-top: 1.5rem; font-size: var(--text-body-sm); }
 	@media (min-width: 64rem) {
 		.booking-layout { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2.5rem, 6vw, 5rem); }
 		.offer-img { width: 390px; }
-			}
+	}
 </style>

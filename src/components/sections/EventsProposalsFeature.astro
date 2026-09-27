@@ -1,5 +1,4 @@
 ---
-import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 /**
  * /features/events-and-proposals
  * story: docs/stories/features-events-and-proposals.story.md
@@ -36,55 +35,23 @@ import FeatureTrialTerms from '../FeatureTrialTerms.astro';
  * the feature family shares semantic roles, not an algorithm. Same refusal as
  * DietaryGuardsFeature.astro and global.css .feature-display.
  */
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
 import { comingPlans } from '../../lib/coming-plans';
-import { pngSize } from '../../lib/proof';
+import { eventProof as proof } from '../../lib/proof';
+import { acceptanceBoundary, depositMethods, eventSteps, type EventStepName } from '../../lib/events';
 
-// The app's own step bar on the event page, in its order (A-03). Each step
-// points at the section that explains it, so the list doubles as the page map.
-// Considered Composite; not used because six fixed sibling steps are data, not
-// a part/whole tree.
-const steps = [
-	{ name: 'Inquiry', href: '#inquiry' },
-	{ name: 'Menu & service', href: '#inquiry' },
-	{ name: 'Proposal', href: '#proposal' },
-	{ name: 'Client decision', href: '#proposal' },
-	{ name: 'Agreement', href: '#agreement' },
-	{ name: 'Booked', href: '#booked' }
-] as const;
-
-const shot = (src: string, alt: string) => ({ src, alt, ...pngSize(src) });
-
-const proof = {
-	inquiry: shot(
-		'/proof/events-inquiry-mobile.png',
-		'The New inquiry form on a phone, with Save at the top and the note: Only a client or event name is required. Rough answers are fine. Who’s asking: client Priya Nair, marked New client, phone (207) 555-0187, reached by Phone call, with Email, Website form, Referral, Repeat client and Other as the other choices. The event: name Nair & Castellano wedding, no date chosen and Date not decided yet ticked, 150 guests with This is an estimate ticked, and a link to add time, venue, style and budget. Buttons at the bottom: Save and build menu, and Save inquiry only.'
-	),
-	workspace: shot(
-		'/proof/events-workspace-desktop.png',
-		'The event page for the Nair & Castellano wedding, marked Inquiry, with Edit details. Chips: Saturday October 10, 2026, in 13 days; 150 guests; 17:00 to 22:00; add a venue; Priya Nair. A warning: The event is coming up and isn’t booked. Confirm the plan with the client soon. A six-step bar: Inquiry, captured; Menu & service, 2 of 3, you are here; Proposal, price and send; Client decision, accept or decline; Agreement, send and collect signature; Booked, kitchen planning opens. The Next step card reads Set the menu and service, for 150 guests, with Dishes 1 saved, Service style plated and Staff & rentals optional, and the buttons Set menu and service and Start from a saved menu. Beside it, a follow-up for Monday September 28, tomorrow, owned by Marisol Vega, with Mark done and Snooze.'
-	),
-	offer: shot(
-		'/proof/events-offer-mobile.png',
-		'The client’s proposal page on a phone, from Harbor & Hearth Catering, with a logo placeholder and a phone icon. Proposal for Priya Nair: Nair & Castellano wedding, please respond by Sunday October 4, 12:21 PM, 7 days left. Total for your event $14,250.00, 150 guests at $95.00 per guest. Your event: date October 10, 2026, 150 guests, venue to be confirmed, service time 17:00 to 22:00 New York time, and the line We’ll confirm these details with you before the event. What we’ll serve: Wedding Plated Dinner, $14,250.00, 150 guests at $95.00 per guest, with six dishes: braised short rib, creamed spinach, focaccia and whipped goat cheese, lemon posset, roasted beet and citrus, and wild mushroom polenta. Buttons at the bottom: Ask for changes, and Accept proposal.'
-	),
-	deposit: shot(
-		'/proof/events-deposit-desktop.png',
-		'The Deposit panel on the event: Asked for $3,500.00, Received $0.00, Nothing received yet, and the link Record the money on the kitchen draft.'
-	),
-	draft: shot(
-		'/proof/events-kitchen-draft-desktop.png',
-		'The Kitchen draft section on the event: The kitchen draft is ready. It is tentative: it holds no day and draws no crew until you book the event. Below it, the link Open the kitchen draft.'
-	),
-	confirm: shot(
-		'/proof/events-confirm-desktop.png',
-		'A dialog titled Confirm this order?: Quantities, ingredient prices, and calculated totals will freeze as they are now. Later recipe or price changes will not alter this order. Order Nair & Castellano wedding, event date October 10, 2026, 150 guests, revenue $14,250.00. Buttons: Keep editing, and Confirm order.'
-	),
-	calendar: shot(
-		'/proof/events-calendar-desktop.png',
-		'The calendar in week view for October 4 to 10, 2026, with Month, Week, Today and + New order, and the filters Confirmed 1, Drafts 0 and Requests 0. Sunday to Friday each read 0 of 3 orders and 0 of 2 vans. Saturday the 10th reads 1 of 3 orders and 0 of 2 vans and holds one card: 5:00 PM, Nair & #783, Confirmed, 150 guests, $14,250.00, 28.4% food cost.'
-	)
+// The app's own step bar (src/lib/events.ts, A-03). Each step points at the
+// section that explains it, so the list doubles as the page map.
+const stepHref: Record<EventStepName, string> = {
+	Inquiry: '#inquiry',
+	'Menu & service': '#inquiry',
+	Proposal: '#proposal',
+	'Client decision': '#proposal',
+	Agreement: '#agreement',
+	Booked: '#booked'
 };
+const steps = eventSteps.map((step) => ({ name: step.name, href: stepHref[step.name] }));
 
 // The four pipeline tabs on Events, verbatim (A-03).
 const pipelineTabs = ['Needs attention', 'Booked · coming up', 'In pipeline', 'Past & closed'] as const;
@@ -121,7 +88,7 @@ const payments = comingPlans.eventPayments;
 				</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 			</div>
@@ -174,7 +141,7 @@ const payments = comingPlans.eventPayments;
 				<p>Check exactly what the client will see, choose how long the link stays open, and send it.</p>
 				<p>They open it with no login and press Accept proposal or Ask for changes.</p>
 				<p>While you wait, Send a reminder, Extend link or Withdraw offer, and update the offer when they ask for changes.</p>
-				<p class="snap" data-events-snap>Their yes is not a signature or a booking. Confirm order is.</p>
+				<p class="snap" data-events-snap>{acceptanceBoundary}</p>
 			</div>
 			<figure class="proof phone" data-reveal>
 				<figcaption>What the client sees · sample event</figcaption>
@@ -191,7 +158,7 @@ const payments = comingPlans.eventPayments;
 			<div data-reveal>
 				<h2 id="agreement-heading">The agreement and the deposit stay on the event.</h2>
 				<p>Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.</p>
-				<p data-events-money>You record the deposit by hand, as a check, cash, a transfer or your own card processor, and the event shows what you asked for and what came in.</p>
+				<p data-events-money>You record the deposit by hand, as {depositMethods}, and the event shows what you asked for and what came in.</p>
 			</div>
 			<figure class="proof panel" data-reveal>
 				<figcaption>Ask for a deposit · sample event</figcaption>
@@ -272,7 +239,7 @@ const payments = comingPlans.eventPayments;
 			</div>
 			<div class="closing-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">Book a 15-min demo</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
 		</div>
 		<nav class="container-page onward feature-onward" aria-label="Related feature guides">
@@ -297,9 +264,11 @@ const payments = comingPlans.eventPayments;
 	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
 	/* .btn-outline is scoped per feature page across this family; this is the
 	   seventh copy of four declarations, matching DietaryGuardsFeature.astro.
-	   Hoisting it touches every guide and belongs in its own pass. */
+	   Considered hoisting it into global.css; not done because it touches every
+	   guide and belongs in its own pass. The hover text is --color-paper, the
+	   theme's white (green on it is ~5:1, AA), not an ad-hoc color. */
 	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
-	.btn-outline:hover { background: var(--color-green); color: white; }
+	.btn-outline:hover { background: var(--color-green); color: var(--color-paper); }
 	@media (prefers-reduced-motion: reduce) {
 		.btn-outline { transition: none; }
 	}
@@ -348,7 +317,9 @@ const payments = comingPlans.eventPayments;
 	.booked-pair { display: grid; gap: 1.5rem; margin-top: 2.5rem; align-items: start; }
 	.booked-pair > * { min-width: 0; }
 
-	.snap { margin-top: 2rem !important; padding: 1.1rem 1.25rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: 1.25; color: var(--color-ink) !important; }
+	/* .split .snap outranks .split p (margin, color) by specificity, so the
+	   callout needs no !important. */
+	.split .snap { margin-top: 2rem; padding: 1.1rem 1.25rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: 1.25; color: var(--color-ink); }
 
 	.limit-list { display: grid; gap: 1.25rem; margin-top: 2.5rem; max-width: 76ch; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
 	.limit-list > li { padding-top: .9rem; border-top: 1px solid var(--color-hairline-strong); font-size: var(--text-body-sm); line-height: 1.55; color: var(--color-ink-soft); }

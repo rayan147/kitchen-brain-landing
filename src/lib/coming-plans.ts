@@ -24,10 +24,12 @@
  * ruling that the work is being built. Event deposits are recorded by hand in
  * production (inventory A-14); a card payment page for a booked event's
  * deposit and balance, and a reminder email before the balance is due, are
- * on kitchen-brain feat/client-payment-booking-loop (A-18). The wording
- * matches the Coming line in EventBooking.astro; the two are typed twice
- * because that section is owned elsewhere, so change them together.
+ * on kitchen-brain feat/client-payment-booking-loop (A-18). The homepage's
+ * EventBooking Coming line, the events guide, /pricing, /compare and the FAQ
+ * all render this entry, so the wording changes here and nowhere else.
  */
+
+import { depositMethods } from './events';
 
 // Considered Strategy; not used because availability and wording vary as
 // shared data, not as behavior selected or swapped at runtime.
@@ -48,11 +50,9 @@ export const comingPlans = {
 		comparisonLabel: 'Card payment for event deposits and balances',
 		verdict: 'coming' as const,
 		homepage:
-			'Card payment and balance reminders for events you book by hand: a card payment page for the deposit and the balance, and a reminder email before the balance is due.',
-		comparisonNote:
-			'Coming soon. Today you record an event deposit by hand, as a check, cash, a transfer or your own card processor; no date is promised.',
-		faq:
-			'Card payment for events you book by hand is Coming soon: a card payment page for the deposit and the balance, and a reminder email before the balance is due. Today you record the deposit by hand.'
+			'A card payment page for the deposit and the balance of a booked event, and a reminder email before the balance is due.',
+		comparisonNote: `Coming soon. Today you record an event deposit by hand, as ${depositMethods}; no date is promised.`,
+		faq: `Not yet. Card payment for booked events is Coming soon: a card payment page for the deposit and the balance, and a reminder email before the balance is due. Today you record the deposit by hand, as ${depositMethods}, and no date is promised.`
 	}
 } as const;
 

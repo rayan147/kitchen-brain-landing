@@ -1,6 +1,7 @@
 /** Product tour content. story: docs/stories/product-tour.story.md */
 import { featureMenuHref, featureMenuSections } from './features';
 import { labelsAvailability } from './labels';
+import { acceptanceBoundary, depositMethodsCapital, eventStep } from './events';
 
 export const tourSeedKey = 'product-tour-connected-event';
 
@@ -351,7 +352,7 @@ export const tourStops: readonly TourStop[] = [
 		appArea: 'Events / Garden wedding supper',
 		title: 'Send the proposal, then book the yes.',
 		intro: 'Take the inquiry, send the priced proposal to the client’s phone, and press Confirm order once they accept.',
-		callout: 'Their yes is not a signature or a booking. Confirm order is.',
+		callout: acceptanceBoundary,
 		featureHref: featureMenuHref('events'),
 		metrics: [
 			{ label: 'Guests', value: '180' },
@@ -361,11 +362,11 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Step', 'Where it stands', 'What happened'],
 		rows: [
-			['Inquiry', 'Captured', 'Date first, details later'],
-			['Proposal', 'Sent', 'Link open for 7 days'],
-			['Client decision', 'Accepted', 'On their phone, no login'],
-			['Agreement', 'Complete', 'Accepted proposal attached'],
-			['Booked', 'Confirm order', 'Quantities and prices frozen']
+			[eventStep.inquiry, 'Captured', 'Date first, details later'],
+			[eventStep.proposal, 'Sent', 'Link open for 7 days'],
+			[eventStep.decision, 'Accepted', 'On their phone, no login'],
+			[eventStep.agreement, 'Complete', 'Accepted proposal attached'],
+			[eventStep.booked, 'Confirm order', 'Quantities and prices frozen']
 		],
 		aside: {
 			title: 'Deposit',
@@ -373,7 +374,7 @@ export const tourStops: readonly TourStop[] = [
 			lines: [
 				{ label: 'Asked for', value: '$1,000.00' },
 				{ label: 'Received', value: '$0.00', tone: 'attention' },
-				{ label: 'Recorded as', value: 'Check, cash or transfer' },
+				{ label: 'Recorded as', value: depositMethodsCapital },
 				{ label: 'Card payment page', value: 'Coming' }
 			],
 			footnote: 'Illustrative tour values. You record an event deposit by hand; a card payment page for events is Coming.'

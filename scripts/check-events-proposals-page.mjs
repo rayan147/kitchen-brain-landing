@@ -52,7 +52,7 @@ if (steps.join('|') !== expected.join('|')) {
 
 // The Coming block, carrying both halves of the plan.
 if (!html.includes('data-events-coming')) fail('the Coming block is gone');
-for (const phrase of ['a card payment page for the deposit and the balance', 'a reminder email before the balance is due']) {
+for (const phrase of ['A card payment page for the deposit and the balance of a booked event', 'a reminder email before the balance is due']) {
 	if (!html.includes(phrase)) fail(`the Coming block no longer names "${phrase}"`);
 }
 

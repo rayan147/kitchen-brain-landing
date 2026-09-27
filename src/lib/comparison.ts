@@ -55,6 +55,7 @@
 import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
+import { acceptanceBoundary, depositMethods } from './events';
 import { dietary, allergenCount, allergenCountCapital } from './dietary';
 
 export const VERIFIED_ON = 'August 30, 2026';
@@ -279,7 +280,7 @@ export const comparison: RowGroup[] = [
 				label: 'Proposals the client accepts on their phone',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'No login for the client. Their yes is not a signature or a booking; Confirm order is.',
+				note: `No login for the client. ${acceptanceBoundary}`,
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},
@@ -295,7 +296,7 @@ export const comparison: RowGroup[] = [
 				label: 'Event deposits tracked',
 				sheet: 'key',
 				costcook: 'yes',
-				note: 'You record the deposit by hand, as a check, cash, a transfer or your own card processor, against what you asked for.',
+				note: `You record the deposit by hand, as ${depositMethods}, against what you asked for.`,
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},

@@ -22,3 +22,52 @@ export function pngSize(publicPath: string): { width: number; height: number } {
 	}
 	return { width: file.readUInt32BE(16), height: file.readUInt32BE(20) };
 }
+
+/**
+ * The event captures: one wedding carried through every frame by
+ * scripts/capture-events-proof.mjs (notes: docs/landing-capture/
+ * events-captures.md). The events guide renders all of them and the
+ * homepage's EventBooking section renders the offer, so both read this one
+ * map: the alt text and the pixel size cannot drift between the two.
+ *
+ * The service time is typed once because two alts name it, and on 2026-09-27
+ * they disagreed ("5 to 10 p.m." against "17:00 to 22:00"). The app prints
+ * 17:00 to 22:00, in the kitchen's zone (America/New_York), on both frames.
+ *
+ * Considered Factory Method (a capture class per frame kind); not used
+ * because every frame is the same three fields and `shot` builds them all.
+ */
+const sampleServiceTime = '17:00 to 22:00';
+
+const shot = (src: string, alt: string) => ({ src, alt, ...pngSize(src) });
+
+export const eventProof = {
+	inquiry: shot(
+		'/proof/events-inquiry-mobile.png',
+		'The New inquiry form on a phone, with Save at the top and the note: Only a client or event name is required. Rough answers are fine. Who’s asking: client Priya Nair, marked New client, phone (207) 555-0187, reached by Phone call, with Email, Website form, Referral, Repeat client and Other as the other choices. The event: name Nair & Castellano wedding, no date chosen and Date not decided yet ticked, 150 guests with This is an estimate ticked, and a link to add time, venue, style and budget. Buttons at the bottom: Save and build menu, and Save inquiry only.'
+	),
+	workspace: shot(
+		'/proof/events-workspace-desktop.png',
+		`The event page for the Nair & Castellano wedding, marked Inquiry, with Edit details. Chips: Saturday October 10, 2026, in 13 days; 150 guests; ${sampleServiceTime}; add a venue; Priya Nair. A warning: The event is coming up and isn’t booked. Confirm the plan with the client soon. A six-step bar: Inquiry, captured; Menu & service, 2 of 3, you are here; Proposal, price and send; Client decision, accept or decline; Agreement, send and collect signature; Booked, kitchen planning opens. The Next step card reads Set the menu and service, for 150 guests, with Dishes 1 saved, Service style plated and Staff & rentals optional, and the buttons Set menu and service and Start from a saved menu. Beside it, a follow-up for Monday September 28, tomorrow, owned by Marisol Vega, with Mark done and Snooze.`
+	),
+	offer: shot(
+		'/proof/events-offer-mobile.png',
+		`The client’s proposal page on a phone, from Harbor & Hearth Catering, with a logo placeholder and a phone icon. Proposal for Priya Nair: Nair & Castellano wedding, please respond by Sunday October 4, 12:21 PM, 7 days left. Total for your event $14,250.00, 150 guests at $95.00 per guest. Your event: date October 10, 2026, 150 guests, venue to be confirmed, service time ${sampleServiceTime}, New York time, and the line We’ll confirm these details with you before the event. What we’ll serve: Wedding Plated Dinner, $14,250.00, 150 guests at $95.00 per guest, with six dishes: braised short rib, creamed spinach, focaccia and whipped goat cheese, lemon posset, roasted beet and citrus, and wild mushroom polenta. Buttons at the bottom: Ask for changes, and Accept proposal.`
+	),
+	deposit: shot(
+		'/proof/events-deposit-desktop.png',
+		'The Deposit panel on the event: Asked for $3,500.00, Received $0.00, Nothing received yet, and the link Record the money on the kitchen draft.'
+	),
+	draft: shot(
+		'/proof/events-kitchen-draft-desktop.png',
+		'The Kitchen draft section on the event: The kitchen draft is ready. It is tentative: it holds no day and draws no crew until you book the event. Below it, the link Open the kitchen draft.'
+	),
+	confirm: shot(
+		'/proof/events-confirm-desktop.png',
+		'A dialog titled Confirm this order?: Quantities, ingredient prices, and calculated totals will freeze as they are now. Later recipe or price changes will not alter this order. Order Nair & Castellano wedding, event date October 10, 2026, 150 guests, revenue $14,250.00. Buttons: Keep editing, and Confirm order.'
+	),
+	calendar: shot(
+		'/proof/events-calendar-desktop.png',
+		'The calendar in week view for October 4 to 10, 2026, with Month, Week, Today and + New order, and the filters Confirmed 1, Drafts 0 and Requests 0. Sunday to Friday each read 0 of 3 orders and 0 of 2 vans. Saturday the 10th reads 1 of 3 orders and 0 of 2 vans and holds one card: 5:00 PM, Nair & #783, Confirmed, 150 guests, $14,250.00, 28.4% food cost.'
+	)
+};

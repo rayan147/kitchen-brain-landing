@@ -133,3 +133,16 @@ not as the page's snap.)
   environment"); anything after Packed.
 - **Final Image (CTA):** unchanged `cta.label`; the close asks for the next
   real inquiry, not a sample.
+
+### Revision 2026-09-27 (single sources)
+- EventBooking's step names, deposit list and offer capture (alt text and
+  measured size) are read from `src/lib/events.ts` and `src/lib/proof.ts`,
+  the same sources as the events guide. The offer alt now says "service time
+  17:00 to 22:00, New York time" (it said "5 to 10 p.m.", which the capture
+  does not print).
+- The Coming line renders `comingPlans.eventPayments.homepage` verbatim: "A
+  card payment page for the deposit and the balance of a booked event, and a
+  reminder email before the balance is due." ("events you book by hand" was
+  wrong: Confirm order books the event; only the deposit is recorded by hand.)
+- The full-size link is visible text beside the image, not an aria-label
+  wrapping it, so the image keeps its alt and the link's name is what it says.

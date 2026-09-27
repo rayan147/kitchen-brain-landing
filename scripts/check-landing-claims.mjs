@@ -32,6 +32,12 @@ const surfaceFiles = [
 	// The event's front half, inquiry to booked (2026-09-27). Its risk is
 	// overclaiming money: a deposit is recorded, never taken, on this path.
 	'src/components/sections/EventBooking.astro',
+	// The event facts EventBooking, the events guide, the tour, /compare and
+	// /features read (src/lib/events.ts), and the capture alt text both event
+	// surfaces render (src/lib/proof.ts). Moved out of the components on
+	// 2026-09-27, so they are scanned where they now live.
+	'src/lib/events.ts',
+	'src/lib/proof.ts',
 	'src/components/sections/CustomerOutcomes.astro',
 	'src/components/sections/WhatElse.astro',
 	// Beats nine and ten. Its whole risk is saying what another product cannot

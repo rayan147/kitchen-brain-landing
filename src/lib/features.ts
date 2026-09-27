@@ -4,6 +4,7 @@ import { SAGE_STATUS } from './sage';
 import { labelsAvailability } from './labels';
 import { orderingAvailability } from './ordering';
 import { allergenCount } from './dietary';
+import { depositMethods } from './events';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -152,7 +153,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Remind, extend, withdraw.', detail: 'Send a reminder, extend the link, withdraw the offer, or update it when they ask for changes.' },
 			{ lead: 'The agreement.', detail: 'Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.' },
 			{ lead: 'Kitchen draft.', detail: 'Prepare the kitchen draft from their yes; it holds no day and draws no crew until you book the event.' },
-			{ lead: 'Deposit, tracked.', detail: 'Ask for a deposit and record what arrives by check, cash, transfer or your own card processor, against what you asked for.' },
+			{ lead: 'Deposit, tracked.', detail: `Ask for a deposit and record what arrives as ${depositMethods}, against what you asked for.` },
 			{ lead: 'Confirm order is the booking.', detail: 'Confirm order freezes quantities and prices, and the event reads This event is booked.' },
 			{ lead: 'Calendar and the day’s room.', detail: 'The calendar counts orders and vans against the limits you set for each day, and an order says whether its day has room.' },
 			{ lead: 'Clients.', detail: 'Each client keeps contacts, venues with access notes, and their events and orders, for owners and managers.' }
