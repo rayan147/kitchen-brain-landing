@@ -363,7 +363,7 @@ requireText(comparisonSource, "note: 'Inventory > Build shopping list builds wha
 if (/parBuying/.test(comingPlansSource)) {
 	failures.push('buying to par shipped (RC-43); it may not return to the Coming plans');
 }
-for (const key of ['spanish']) {
+for (const key of ['spanish', 'eventPayments']) {
 	requireText(
 		comparisonSource,
 		`costcook: comingPlans.${key}.verdict`,

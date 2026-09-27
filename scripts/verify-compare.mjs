@@ -9,7 +9,7 @@ import { setTimeout as delay } from 'node:timers/promises';
  * one headless Chromium driven over DevTools, no Playwright dependency.
  *
  * WHY THIS ROUTE HAS ONE AT ALL, FROM 2026-09-05. It did not, and it had just
- * become the widest thing on the site: a five-column table over 37 rows in five
+ * become the widest thing on the site: a five-column table over 44 rows in five
  * groups, with a separate one-card-per-row path below sm. A change that lands
  * in the desktop path and is forgotten in the phone one is the failure mode
  * here, and no static contract can see it.
@@ -195,7 +195,7 @@ try {
 		};
 	})()`);
 	assert(!phone.tableVisible, 'phone: the wide table is rendering instead of the card path');
-	assert(phone.cards === 37, `phone: ${phone.cards} cards, expected 37`);
+	assert(phone.cards === 44, `phone: ${phone.cards} cards, expected 44`);
 	assert(
 		phone.withSheet === phone.cards,
 		`phone: ${phone.withSheet} of ${phone.cards} cards carry the spreadsheet cell`

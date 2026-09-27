@@ -4,6 +4,27 @@ import { contactCta, cta, demoCta, launchPlan } from '../lib/site';
 import { inDevelopmentFeatureGroups } from '../lib/features';
 import { spellCapital } from '../lib/words';
 import { comingDefinition } from '../lib/availability';
+import { labelsAvailability } from '../lib/labels';
+import { orderingAvailability } from '../lib/ordering';
+
+// Included at launch, 2026-09-27 (gap report S11). One plan, no tier gating
+// (inventory plan_matrix). Labels and online ordering read their status files,
+// so a status flip back to Coming drops them here instead of leaving pricing
+// promising them. The events line names the deposit boundary because card
+// payment for events is a Coming plan, not part of this price.
+// Considered Strategy; not used because this is a static list with two
+// status-read entries, not interchangeable behavior.
+const included = [
+	'Events and proposals, with the deposit recorded by hand',
+	'Clients and the calendar',
+	'Recipe and menu costing',
+	'Orders, shopping, prep, and pack plans',
+	'Purchasing, receiving, and inventory',
+	'Analytics',
+	...(labelsAvailability.isComing ? [] : ['Kitchen labels']),
+	...(orderingAvailability.isComing ? [] : ['Online ordering']),
+	'Unlimited teammates during launch'
+];
 
 // The in-development cards are read from features.ts, not typed here. They
 // used to be two hand-written articles (labels, ordering) and there are now
@@ -47,10 +68,7 @@ import { comingDefinition } from '../lib/availability';
 			<div>
 				<h2 class="text-h3 font-semibold">Included at launch</h2>
 				<ul role="list" class="mt-4 space-y-3 text-ink-soft">
-					<li>Recipe and menu costing</li>
-					<li>Orders, shopping, prep, and pack plans</li>
-					<li>Purchasing, receiving, and inventory</li>
-					<li>Unlimited teammates during launch</li>
+					{included.map((item) => <li>{item}</li>)}
 				</ul>
 			</div>
 		</div>

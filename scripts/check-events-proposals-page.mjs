@@ -20,6 +20,7 @@ const dist = new URL('../dist/', import.meta.url).pathname;
 const html = readFileSync(join(dist, 'features/events-and-proposals/index.html'), 'utf8');
 const featureHub = readFileSync(join(dist, 'features/index.html'), 'utf8');
 const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
+const compareHtml = readFileSync(join(dist, 'compare/index.html'), 'utf8');
 
 const fail = (message) => {
 	throw new Error(`Events & proposals page contract: ${message}`);
@@ -66,6 +67,14 @@ if (!html.includes('/proof/events-offer-mobile.png')) fail('the client offer cap
 // Reachable from the hub and the Features menu.
 if (!featureHub.includes('/features/events-and-proposals')) fail('the features hub does not link the page');
 if (!homeHtml.includes('href="/features/events-and-proposals"')) fail('the Features menu does not link the page');
+
+// /compare agrees the capability ships, and that card payment does not yet.
+if (!compareHtml.includes('Proposals the client accepts on their phone')) {
+	fail('/compare no longer carries the shipped proposals row this page documents');
+}
+if (!compareHtml.includes('Card payment for event deposits and balances')) {
+	fail('/compare no longer carries the Coming card-payment row');
+}
 
 console.log(
 	'Events & proposals page contract passed: the hand-recorded deposit sentence, the acceptance boundary, six steps in order, five limits, and the Coming block.'

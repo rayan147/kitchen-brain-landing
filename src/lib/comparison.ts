@@ -107,7 +107,7 @@ export type Verdict = 'yes' | 'no' | 'coming';
  * else. A glyph here would turn a description of work into a verdict, which is
  * the same mistake the competitor columns exist to avoid.
  *
- * THIS COLUMN READS build OR key ON ALL 40 ROWS, and that is not a clean sweep.
+ * THIS COLUMN READS build OR key ON ALL 44 ROWS, and that is not a clean sweep.
  * It describes labor, not merit: "You build it" is a real answer, and for a
  * kitchen with one repeating menu it is often the right one. On the three rows
  * CostCook marks No (lot tracking, fine-grained screen permissions, several
@@ -257,6 +257,72 @@ export const comparison: RowGroup[] = [
 	{
 		title: 'The day itself',
 		rows: [
+			/* FRONT OF HOUSE, added 2026-09-27 (gap report S11; RC-61, RC-63 to
+			   RC-67). The CostCook cells are production rows of
+			   docs/research/2026-09-27-app-inventory.yaml. The competitor cells
+			   were read off both pricing pages on 2026-09-27, NOT on VERIFIED_ON:
+			   Parsley's Business tier lists "Calendar & Table Views", so the
+			   calendar row names that tier; neither page lists inquiries,
+			   proposals, agreements, deposits or a client book, so those read
+			   NOT_LISTED, which means exactly that and nothing about either
+			   product (RC-40). VERIFIED_ON stays August 30 until a full re-read
+			   of every cell; the next RC-40 release check owns that. */
+			{
+				label: 'Inquiries and a follow-up pipeline',
+				sheet: 'key',
+				costcook: 'yes',
+				note: 'Take an inquiry before the date is decided, and name who follows up and when.',
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'Proposals the client accepts on their phone',
+				sheet: 'build',
+				costcook: 'yes',
+				note: 'No login for the client. Their yes is not a signature or a booking; Confirm order is.',
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'Agreements sent for e-signature',
+				sheet: 'build',
+				costcook: 'yes',
+				note: 'From your saved contract template, with the accepted proposal attached, or kept as a copy signed on paper.',
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'Event deposits tracked',
+				sheet: 'key',
+				costcook: 'yes',
+				note: 'You record the deposit by hand, as a check, cash, a transfer or your own card processor, against what you asked for.',
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: comingPlans.eventPayments.comparisonLabel,
+				sheet: 'key',
+				costcook: comingPlans.eventPayments.verdict,
+				note: comingPlans.eventPayments.comparisonNote,
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'A client book',
+				sheet: 'build',
+				costcook: 'yes',
+				note: 'Contacts, venues with access notes, and each client\u2019s events and orders, for owners and managers.',
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'A calendar of booked orders',
+				sheet: 'build',
+				costcook: 'yes',
+				note: 'Each day counts its orders and vans against the limits you set, and an order says whether its day has room.',
+				parsley: 'Business, $379',
+				meez: NOT_LISTED
+			},
 			{
 				label: 'Prep lists scaled to the job',
 				sheet: 'build',
