@@ -182,6 +182,12 @@ export const faq: readonly FaqGroup[] = [
 				claims: ['RC-47']
 			},
 			{
+				id: 'event-payments',
+				question: 'Can clients pay the event deposit by card?',
+				answer: [comingPlans.eventPayments.faq],
+				claims: ['RC-65']
+			},
+			{
 				id: 'sage',
 				icon: 'sage',
 				question: 'What is Sage?',

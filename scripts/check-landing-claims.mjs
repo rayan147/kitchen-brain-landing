@@ -731,6 +731,15 @@ const spanishAnswer = faqSource.slice(faqSource.indexOf("id: 'spanish'"));
 if (!spanishAnswer.slice(0, 400).includes('comingPlans.spanish.faq')) {
 	failures.push('faq: #spanish must read the shared Coming plan');
 }
+// RC-65. Card payment for an event is Coming; the answer reads the shared plan,
+// and the plan's answer must open with "Not yet." like the other not-shipped rows.
+const eventPaymentsAnswer = faqSource.slice(faqSource.indexOf("id: 'event-payments'"));
+if (faqSource.indexOf("id: 'event-payments'") === -1 || !eventPaymentsAnswer.slice(0, 400).includes('comingPlans.eventPayments.faq')) {
+	failures.push('faq: #event-payments must exist and read the shared Coming plan (RC-65)');
+}
+if (!/\bfaq: `Not yet\. Card payment for booked events is Coming soon/.test(comingPlansSource)) {
+	failures.push('faq: the event card payment answer must open with "Not yet." (RC-65: recorded by hand today)');
+}
 requireText(siteSource, "href: '/faq'", 'faq reachable from nav and footer');
 requireText(startHereSource, 'href="/faq"', 'close links to the faq');
 requireText(faqSource, "claims: ['RC-54']", 'offline FAQ cites its resilience boundary');

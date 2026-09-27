@@ -152,3 +152,11 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 ## Claim correction · 2026-09-27 (nutrition answer lead)
 
 - [x] 11 Revision: The nutrition-labels answer opened with a bare "Yes." while the app calls the panel a calculated estimate. It now opens "As a calculated estimate, yes." Gap report W8.
+
+### Revision 2026-09-27 (event card payment)
+- New answer `#event-payments`, "Can clients pay the event deposit by card?",
+  in the money chapter beside Spanish. It renders
+  `comingPlans.eventPayments.faq`: "Not yet." first, then what is Coming (a
+  card payment page for the deposit and the balance, a balance reminder) and
+  what is true today (the deposit is recorded by hand, as a check, cash, a
+  transfer or your own card processor). RC-65. The page now has 38 answers.
