@@ -148,3 +148,15 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 ## Claim correction · 2026-09-27 (what Staff can open)
 
 - [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+### Revision 2026-09-27 (Sage row)
+- The Sage row's note said Sage "can prepare a shopping-list draft", one of
+  the three it ships. It now reads: "Sage is available now. It reads your
+  records with twenty-two read-only tools, shows its sources, helps during
+  setup and can prepare three kinds of draft for a manager or owner to
+  approve: the kitchen shopping list, one order’s shopping list, and a
+  guest-count change on a draft order." The counts and kinds are spelled
+  from `src/lib/sage.ts` (RC-49), not typed.
+- The events rows read the deposit list and the acceptance boundary from
+  `src/lib/events.ts`; the proposals note now ends "Their yes is not a
+  signature or a booking. Confirm order is." (full stop, not a semicolon).
