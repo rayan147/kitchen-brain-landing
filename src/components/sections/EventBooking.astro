@@ -97,7 +97,7 @@ const offer = {
 				<figcaption id="offer-proof-title">What the client sees · sample event</figcaption>
 				<div>
 					<a href={offer.src} target="_blank" rel="noopener noreferrer" aria-label="Open the full-size client offer screenshot in a new tab">
-						<img src={offer.src} alt={offer.alt} width={offer.width} height={offer.height} loading="lazy" decoding="async" style={`width: ${offer.width / 2}px`} />
+						<img src={offer.src} alt={offer.alt} width={offer.width} height={offer.height} loading="lazy" decoding="async" class="offer-img" />
 						<span class="block py-3 text-sm font-semibold text-green-deep underline">Open full-size (new tab)</span>
 					</a>
 				</div>
@@ -107,7 +107,6 @@ const offer = {
 		<div class="draft-ticket" data-reveal data-booking-snap>
 			<p class="ticket-label">Kitchen draft</p>
 			<p class="mt-2 text-h3 font-semibold">Prepare the kitchen draft from their yes. It holds no day and draws no crew until you book the event.</p>
-			<img class="mt-4 h-auto w-full max-w-[681px] border border-hairline bg-paper" src="/proof/events-kitchen-draft-desktop.png" width="1362" height="380" loading="lazy" decoding="async" alt="The event page’s Kitchen draft section: The kitchen draft is ready. It is tentative: it holds no day and draws no crew until you book the event. A link below reads Open the kitchen draft." />
 		</div>
 
 		<div class="money-note" data-reveal data-booking-money>
@@ -123,16 +122,18 @@ const offer = {
 	.event-booking { background: var(--color-paper); }
 	.booking-layout { display: grid; gap: 2.5rem; align-items: start; }
 	.booking-steps { margin-top: 2rem; border-top: 1px solid var(--color-hairline-strong); }
-	.booking-steps li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px dashed var(--color-ticket-rule); }
+	.booking-steps li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: .75rem; padding-block: .75rem; border-bottom: 1px dashed var(--color-ticket-rule); }
 	.step-number { color: var(--color-amber-deep); font-size: var(--text-label-sm); font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.9; }
 	.offer-proof { min-width: 0; border-block: 1px solid var(--color-ticket-rule); background: var(--color-cream); box-shadow: var(--shadow-ticket); }
 	.offer-proof figcaption { padding: .75rem 1rem; border-bottom: 1px solid var(--color-hairline); color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 	.offer-proof > div { display: flex; justify-content: center; padding: clamp(1rem, 3vw, 1.75rem); }
 	.offer-proof img { height: auto; max-width: 100%; }
+	.offer-img { width: 240px; }
 	.draft-ticket { max-width: 46rem; margin-top: clamp(2.5rem, 6vw, 4rem); padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
 	.ticket-label { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 	.money-note { max-width: 46rem; margin-top: 1.5rem; font-size: var(--text-body-sm); }
 	@media (min-width: 64rem) {
 		.booking-layout { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2.5rem, 6vw, 5rem); }
+		.offer-img { width: 390px; }
 			}
 </style>
