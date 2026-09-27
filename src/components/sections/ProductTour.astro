@@ -279,6 +279,10 @@ import SageIcon from '../SageIcon.astro';
 			document.documentElement.dataset.tourDirection = index > current ? 'forward' : 'backward';
 			const transition = startViewTransition(() => renderStop(index, moveFocus));
 			activeSceneTransition = transition;
+			// A quick second tab skips this transition, which rejects `ready`
+			// (AbortError). Nothing waits on it, so an unhandled rejection is all
+			// it would produce; the scene itself is rendered either way.
+			transition.ready.catch(() => {});
 			transition.finished
 				.catch(() => {})
 				.finally(() => {
