@@ -253,7 +253,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'orders',
 				question: 'Does it send the purchase orders?',
 				answer: [
-					'Confirming an order emails one purchase order per supplier, each with its own number, in whole packs. Email is email: the app records the send, and I do not promise delivery into anyone’s inbox.'
+					'Yes, when you say so. Confirming an order contacts no supplier. When you are ready, press Order from suppliers and pick, for each supplier, email, print or handle it yourself, or choose I’ll shop it myself. Each purchase order has its own number, in whole packs. Email is email: the app records the send, and I do not promise delivery into anyone’s inbox.'
 				],
 				claims: ['RC-26', 'RC-33']
 			},

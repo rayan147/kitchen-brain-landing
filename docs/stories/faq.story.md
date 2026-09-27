@@ -124,3 +124,7 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 ## Claim correction · 2026-09-27 (Sage tools and drafts)
 
 - [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.
+
+## Claim correction · 2026-09-27 (purchase orders)
+
+- [x] 11 Revision: Confirming an order contacts no supplier. The owner presses Order from suppliers and picks email, print or manual per supplier, or I'll shop it myself (kitchen-brain PurchaseOrderReview.svelte). The sentence saying confirmation emails or creates purchase orders was false and is replaced. Beats and snap line unchanged. Gap report S2.
