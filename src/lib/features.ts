@@ -316,7 +316,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Waste, valued.', detail: 'Logged waste explains part of the difference using the cost saved with that waste record.' },
 			{ lead: 'Stock turnover, when counts support it.', detail: 'Stock turnover is shown only when a trusted count is available at each end of the period.' },
 			{ lead: 'Purchases needing attention.', detail: 'Find orders waiting for your action or already sent. Open a sent purchase order to record its delivery.' },
-			{ lead: 'Filter purchase history.', detail: 'Filter purchases by ingredient and date. Longer results continue on the next page.' }
+			{ lead: 'Filter purchase history.', detail: 'Filter purchases by ingredient and date. Longer results continue on the next page.' },
+			// RC-70, 2026-09-27. Analytics has no page of its own; it answers the
+			// same month question from the numbers side, so it lives here.
+			{ lead: 'Analytics.', detail: 'Overview says whether this week is on track, What to charge gives the price per guest that reaches your target, and Month review compares the month\u2019s plan with purchases.' }
 		]
 	},
 	{

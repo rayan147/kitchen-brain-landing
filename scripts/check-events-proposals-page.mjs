@@ -68,6 +68,12 @@ if (!html.includes('/proof/events-offer-mobile.png')) fail('the client offer cap
 if (!featureHub.includes('/features/events-and-proposals')) fail('the features hub does not link the page');
 if (!homeHtml.includes('href="/features/events-and-proposals"')) fail('the Features menu does not link the page');
 
+// The homepage's "Also in the app" line deep-links two sections here.
+for (const id of ['clients', 'booked']) {
+	if (!html.includes(`id="${id}"`)) fail(`#${id} is gone, and the homepage links to it`);
+	if (!homeHtml.includes(`href="/features/events-and-proposals#${id}"`)) fail(`the homepage no longer links #${id}`);
+}
+
 // /compare agrees the capability ships, and that card payment does not yet.
 if (!compareHtml.includes('Proposals the client accepts on their phone')) {
 	fail('/compare no longer carries the shipped proposals row this page documents');
