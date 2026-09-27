@@ -40,7 +40,9 @@ const required = [
 if (coming) required.push('Kitchen date labels are coming. Preview how they will work.', 'data-labels-status="coming"', 'data-labels-status-sentence', 'Not included in the CostCook subscription', 'See what ships today');
 // Available since 2026-09-27 (RC-35 approved): the page must say so and may not
 // keep any sentence that calls the feature Coming or excluded.
-else required.push('Kitchen date labels, printed from Prep and Pack.', 'data-labels-status="yes"', 'Available now', 'Settings');
+// The Settings pin is the whole sentence naming where the stock is set: the
+// bare word 'Settings' was on every page through the shared header's menu.
+else required.push('Kitchen date labels, printed from Prep and Pack.', 'data-labels-status="yes"', 'Available now', 'Printing goes through your browser, onto the label stock you set once in Settings.');
 
 const missing = required.filter((fragment) => !html.includes(fragment));
 if (missing.length > 0) throw new Error(`Labels page build is missing: ${missing.join(', ')}`);
