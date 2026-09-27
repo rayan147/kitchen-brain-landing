@@ -1,0 +1,633 @@
+# Lane E: Recipes and menus (all of /catalog/*, /import/recipe-csv, dietary guards)
+# Production code read at ~/kitchen-brain-develop-demo, HEAD = origin/main = origin/develop = ed6ff5f01 (checked 2026-09-27).
+# Paths in evidence are relative to that checkout. "src/..:N" = file:line opened during this lane.
+# Assumed-today worktrees (proposal-build, kb-client-payment) and kb-stage-diagnosis do not change any lane-E surface (see E-notes.md).
+# overlaps: other lanes that may also list this workflow; the merge step should dedupe, not drop routes.
+
+rows:
+  - id: E-01
+    lane: E
+    workflow: "Find a recipe in the book"
+    job_to_be_done: "Get to the right dish or batch fast, including 'which dishes are vegan?' and 'what is on Saturday's orders?'"
+    actors: [owner, manager, staff]
+    routes: ["/catalog", "/catalog/recipes"]
+    entry: "Sidebar 'Kitchen records' > Recipes; list has 'Search recipes', type toggle 'All / Dishes / Sub-recipes', 'Filters' (dietary, filing, status, order dates 'On orders between')"
+    done_marker: "result count line \"{n} of {total} recipes\" (src/routes/catalog/recipes/+page.svelte:534); strict diet filter shows \"… held back until their ingredients are reviewed\" (:346)"
+    hands_off_to: E-02
+    tier: production
+    evidence:
+      - "e2e/recipes-ux.spec.ts"
+      - "e2e/catalog/dietary-characteristics-journey.spec.ts"
+      - "e2e/catalog-overview.spec.ts ('the global palette searches every register from any screen')"
+      - "src/routes/catalog/+page.svelte:23 (title 'Kitchen records')"
+      - "src/routes/catalog/recipes/+page.svelte:376-378,532-600"
+    plan_gate: "none (single Launch plan; docs/billing.md)"
+    limits:
+      - "A dietary filter is strict: recipes with unreviewed ingredients are held back, not shown as matching."
+      - "List columns are Recipe, Cost, Price and food cost, Biggest cost, Used by; cost is theoretical (current pack prices), not actual spend."
+    glossary_terms: [Collection, Tag, Station, Archived, Plate Cost]
+    capture_worthy: "yes: recipe list at phone width with the Vegan filter chip and the 'held back' count"
+
+  - id: E-02
+    lane: E
+    workflow: "Build a costed dish or sub-recipe"
+    job_to_be_done: "Know what one portion (or one batch) really costs, with trim and cooking loss charged"
+    actors: [owner, manager]
+    routes: ["/catalog/recipes", "/catalog/recipes/[id]"]
+    entry: "Recipes > 'New recipe' (or 'Create your first recipe') > 'Start blank' | 'Duplicate one you have' | 'Import from a file'; in the builder 'Add ingredient or sub-recipe', 'New sub-recipe'"
+    done_marker: "first save of a never-published draft: \"Recipe saved. Menus and orders can use it now.\" (src/routes/catalog/recipes/[id]/+page.svelte:894) and records version 1; then the 'Next: put {name} to work' panel with 'Put it on a menu' / 'Cost an order' (:913-921)"
+    hands_off_to: E-03
+    tier: production
+    evidence:
+      - "e2e/recipe-start-blank.spec.ts ('Start blank stays private until a valid Save recipe')"
+      - "e2e/recipe-builder-add-line.spec.ts"
+      - "e2e/recipe-kind-toggle.spec.ts"
+      - "e2e/recipe-scaling.spec.ts"
+      - "apps/regression-workbook/catalog/cases/sub-recipes-and-dishes.json"
+      - "src/lib/components/recipes/NewRecipeDialog.svelte:129-154,163,258"
+      - "src/lib/components/recipes/BuilderAddRow.svelte:326,342,441-449 ('Prepped weight (going into the pan)' / 'Cooked weight (coming out of the pan)')"
+      - "src/lib/components/recipes/RecipeBatchOutputForm.svelte:82 ('Round up to whole batches')"
+      - "src/routes/catalog/recipes/[id]/+page.svelte:595-596 ('Dish · per portion' / 'Sub-recipe · per batch')"
+    plan_gate: "none; editing lines needs owner/manager for prices, publishing later versions is owner-only"
+    limits:
+      - "A missing price or missing unit conversion is never counted as zero; the cost shows as incomplete and links to the fix."
+      - "Misc cost is one business-wide percent, shown as its own line."
+      - "Plate cost is food only: no packaging, rentals or labour."
+      - "A sub-recipe draft cannot be used in a dish until it is published ('Draft: publish it to use it here', BuilderAddRow.svelte:126)."
+    glossary_terms: [Batch, Whole-Batch Rounding, Trim Yield, Cooking Yield, Quantity Basis, Plate Cost, Misc Cost Percent]
+    capture_worthy: "yes: builder with a sub-recipe line expanded to show its line math and the per-portion cost card"
+
+  - id: E-03
+    lane: E
+    workflow: "Price a dish against a food-cost target"
+    job_to_be_done: "Set a selling price that hits my food-cost %, one dish or the whole book at once"
+    actors: [owner, manager]
+    routes: ["/catalog/recipes/[id]", "/catalog/recipes"]
+    entry: "Recipe > 'Pricing per portion' panel > 'Change price or target'; list > 'Price dishes' sheet ('Fill in all suggestions', 'Use $x', 'Save prices')"
+    done_marker: "\"Recipe saved.\" (or on a working copy \"Saved to your draft. The kitchen sees it after you review and publish.\") (src/routes/catalog/recipes/[id]/+page.svelte:869-870); bulk: \"Priced {n} dishes\" (src/routes/catalog/recipes/+page.svelte:494)"
+    hands_off_to: E-15
+    tier: production
+    evidence:
+      - "e2e/recipe-builder-pricing.spec.ts ('sells-for drives live food cost with over-target guidance')"
+      - "src/lib/components/recipes/RecipePricingSummary.svelte:60-107 ('Plate cost', 'Sells for', '% food cost', 'Gross margin', 'Price at exactly N%', 'Target source')"
+      - "src/lib/components/recipes/list/RecipeBulkPricing.svelte:61-140"
+    plan_gate: "none; price fields locked to owner/manager (canSetPrices)"
+    limits:
+      - "Dishes with an open working copy are skipped by bulk pricing ('not saved, it has an open working copy')."
+      - "Target defaults to one workspace-wide %, overridable per dish."
+    glossary_terms: [Plate Cost, Misc Cost Percent, Per-Guest Price]
+    capture_worthy: "yes: 'Price dishes' sheet with suggested prices beside each dish's cost and target"
+
+  - id: E-04
+    lane: E
+    workflow: "Write the method as steps a cook can follow"
+    job_to_be_done: "Get the recipe out of my head and onto the station, with times, temps and safety checks"
+    actors: [owner, manager]
+    routes: ["/catalog/recipes/[id]"]
+    entry: "Recipe > 'Method' tab; legacy text shows 'Split this into steps'"
+    done_marker: "not pinned in source as a single message; published method appears on the kitchen sheet (see E-09)"
+    hands_off_to: E-05
+    tier: production
+    evidence:
+      - "e2e/recipe-method.spec.ts ('a method is authored, reordered with the keyboard, and published')"
+      - "src/lib/components/recipes/RecipeMethodEditor.svelte:186-201,228,291,307"
+      - "src/lib/features/catalog/recipe-views.ts:17-22 (tabs 'Cost', 'Method', 'Allergens & nutrition', 'Filing')"
+    plan_gate: "none"
+    limits:
+      - "No step photos or video (PRD item, not built; see E-25)."
+      - "Splitting old free text into steps is deterministic, not AI; the original text is kept."
+    glossary_terms: [Method, Revision]
+    capture_worthy: "maybe: a method step with 'Food-safety check:' note"
+
+  - id: E-05
+    lane: E
+    workflow: "Change a live recipe without changing what the kitchen cooks until I publish"
+    job_to_be_done: "Edit a recipe that is on menus and orders and see exactly what the change will reach before it goes live"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/recipes/[id]", "/catalog/recipes/[id]/publish"]
+    entry: "Recipe > 'Edit recipe' (dialog 'This starts a draft' > 'Start draft') > edit > 'Review and publish' / 'Publish version N+1'"
+    done_marker: "publish page button \"Publish version {n}\" (src/routes/catalog/recipes/[id]/publish/+page.svelte:163) then recipe header \"Version {n} · Live\" / \"The kitchen cooks from this version.\" (src/lib/components/recipes/RecipeRevisionBar.svelte); blocked: \"Version {n} cannot go to the kitchen yet. Fix what is listed above, then publish.\""
+    hands_off_to: E-09
+    tier: production
+    evidence:
+      - "e2e/recipe-revisions.spec.ts ('a live recipe is revised, reviewed, published, and restored'; 'draft changes can be discarded without touching the live recipe')"
+      - "e2e/recipe-shared-impact.spec.ts"
+      - "apps/regression-workbook/catalog/cases/recipe-detail-shared-use.json"
+      - "src/routes/catalog/recipes/[id]/publish/+page.svelte (sections 'What changed', 'What publishing does', 'What this reaches', 'Before this version goes to the kitchen', field 'What changed, in a few words')"
+      - "src/routes/catalog/recipes/[id]/+page.svelte:773-783,983 ('Ready to serve and sell: N of 6 done')"
+      - "src/lib/domain/production/recipe-detail-readiness.ts:34-85 (Cost, Method, Allergens, Nutrition, Portion, Prep time)"
+      - "src/routes/catalog/recipes/[id]/+page.server.ts:472-473 (owner check)"
+    plan_gate: "none; publish and discard are owner-only ('Only the owner can publish or discard recipe changes.')"
+    limits:
+      - "Confirmed orders never change: 'A confirmed order keeps the costs and quantities it was confirmed with.' Draft orders recost."
+      - "Readiness can block a publish; costing does not wait on the other five items."
+      - "Staff can view but not publish."
+    glossary_terms: [Working Copy, Revision, Readiness]
+    capture_worthy: "yes: publish review page listing 'What this reaches' with dishes, menus, draft orders and the confirmed-orders-will-not-change line"
+
+  - id: E-06
+    lane: E
+    workflow: "Read an old version and bring it back"
+    job_to_be_done: "See how we made it last spring, and go back to it without losing history"
+    actors: [owner, staff]
+    routes: ["/catalog/recipes/[id]/history"]
+    entry: "Recipe > More actions > 'Versions' > 'Read version N' / 'Restore version N as draft'"
+    done_marker: "redirect to the recipe with draft changes open: 'Draft changes: not live yet' (RecipeRevisionBar.svelte); restore never publishes"
+    hands_off_to: E-05
+    tier: production
+    evidence:
+      - "e2e/recipe-revisions.spec.ts"
+      - "src/routes/catalog/recipes/[id]/history/+page.svelte:36-143"
+      - "src/routes/catalog/recipes/[id]/history/+page.server.ts:77"
+    plan_gate: "none; restore is owner-only ('Anyone can read these versions. Only the owner can bring an older one back.')"
+    limits:
+      - "Refused while a working copy is open: 'Publish or discard them before restoring an older version.'"
+      - "Recipes saved before versioning have no history until their next publish."
+    glossary_terms: [Revision, Working Copy]
+    capture_worthy: "no"
+
+  - id: E-07
+    lane: E
+    workflow: "File recipes into collections, tags and stations"
+    job_to_be_done: "Keep the banquet book, the summer menu and the pastry station findable"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/recipes/[id]", "/catalog/recipes/shelves"]
+    entry: "Recipe > 'Filing' tab; Recipes > Actions > 'Collections, tags and stations'"
+    done_marker: "station: 'Saved just now' (src/lib/components/recipes/RecipeOrganization.svelte:30); shelves: 'Renamed to {name}.' (src/routes/catalog/recipes/shelves/+page.server.ts:61), '{name} taken down.' (src/lib/components/recipes/ShelfList.svelte:80)"
+    hands_off_to: E-01
+    tier: production
+    evidence:
+      - "e2e/recipe-filing.spec.ts ('a recipe is filed, found by its shelf, and the filing is not a version')"
+      - "src/lib/components/recipes/RecipeOrganization.svelte:38-147"
+      - "src/routes/catalog/recipes/shelves/+page.svelte:22"
+    plan_gate: "none"
+    limits:
+      - "Station is printed on the recipe sheet and filters the book; 'The prep list doesn't group by it.' (RecipeOrganization.svelte:76)"
+      - "Filing takes effect immediately and never creates a version."
+    glossary_terms: [Collection, Tag, Station]
+    capture_worthy: "no"
+
+  - id: E-08
+    lane: E
+    workflow: "Retire a recipe without breaking old orders"
+    job_to_be_done: "Take last season's dish out of the pickers while past orders and costings still resolve"
+    actors: [owner]
+    routes: ["/catalog/recipes/[id]/archive", "/catalog/recipes/[id]", "/catalog/recipes"]
+    entry: "Recipe > More actions > 'Archive this recipe' (page 'What still uses it' > 'Archive {name}'); archived recipe > 'Put it back in the book'; row menu > 'Delete recipe'"
+    done_marker: "\"This recipe is archived. It is not offered when you build a menu or pick a sub-recipe. Everything already using it still works.\" (src/routes/catalog/recipes/[id]/+page.svelte:933-936)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/recipe-filing.spec.ts ('a retired recipe leaves the book, stays findable, and comes back')"
+      - "apps/regression-workbook/catalog/cases/recipe-organization-and-lifecycle.json"
+      - "src/routes/catalog/recipes/[id]/archive/+page.svelte:21-100"
+      - "src/lib/components/recipes/DeleteRecipeDialog.svelte:69,98"
+    plan_gate: "none; archive/restore owner-only"
+    limits:
+      - "Delete is refused for recipes used by dishes or menus: 'Recipes used by dishes or menus cannot be deleted.'; Archive is offered instead."
+    glossary_terms: [Archived, Delete vs Remove]
+    capture_worthy: "no"
+
+  - id: E-09
+    lane: E
+    workflow: "Cook from the kitchen sheet on a tablet"
+    job_to_be_done: "Weigh and cook a confirmed order's batch without doing scaling math, and not lose my place when the screen locks"
+    actors: [staff, owner, manager]
+    routes: ["/catalog/recipes/[id]/kitchen"]
+    entry: "Recipe > 'Kitchen view' (only once published); Versions > 'Read version N'"
+    done_marker: "per step 'Done, next step' (src/routes/catalog/recipes/[id]/kitchen/+page.svelte:499); no whole-sheet completion state"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/recipe-method.spec.ts ('the kitchen view is read-only and prints with its version on it')"
+      - "apps/regression-workbook/catalog/cases/recipe-kitchen-station.json"
+      - "src/routes/catalog/recipes/[id]/kitchen/+page.svelte:250-499 ('Cooking for', 'Other…', 'Mise en place', 'Allergens not confirmed', 'The night before', 'Food-safety check:', 'Reset progress', 'Print sheet')"
+    plan_gate: "none"
+    limits:
+      - "Reads the published version only; an unpublished recipe points back to its detail page."
+      - "Checked lines, steps and timers are kept on that device (browser storage), not shared across devices or with the order's prep list."
+      - "Shows allergen status as 'Allergens not confirmed' when ingredients are unreviewed; never implies free-from."
+    glossary_terms: [Revision, Method, Batch]
+    capture_worthy: "yes: kitchen sheet on a tablet with 'Cooking for' the next confirmed order, mise ticked, current step and timer"
+
+  - id: E-10
+    lane: E
+    workflow: "Scale, print or export a recipe"
+    job_to_be_done: "Get amounts for 60 portions, or for the 3 kg of short rib I have, and a printed card or spreadsheet"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/recipes/[id]", "/catalog/recipes/[id]/print"]
+    entry: "Recipe > More actions > 'Scale recipe' ('Make an amount' / 'Use what I have'), 'Print recipe', 'Download CSV'; Recipes > Actions > 'Export all recipes'"
+    done_marker: "scale dialog 'Scaled recipe lines' and 'Open scaled kitchen sheet'; print page 'Print recipe' button; CSV download"
+    hands_off_to: E-09
+    tier: production
+    evidence:
+      - "e2e/recipe-scaling.spec.ts"
+      - "e2e/recipe-scale.spec.ts"
+      - "e2e/recipe-export.spec.ts ('print sheet, one CSV, and the whole book')"
+      - "src/lib/components/recipes/RecipeScaleDialog.svelte:156-341"
+      - "src/routes/catalog/recipes/[id]/print/+page.svelte:82-229"
+      - "src/routes/catalog/recipes/[id]/export.csv/+server.ts, src/routes/catalog/recipes/export.csv/+server.ts"
+    plan_gate: "none"
+    limits:
+      - "Scaling is a calculator: 'This calculator does not change the recipe.'"
+      - "Whole-book export is always every recipe, never the filtered view."
+    glossary_terms: [Batch, Plate Cost]
+    capture_worthy: "maybe: 'Use what I have' scaling from an on-hand amount"
+
+  - id: E-11
+    lane: E
+    workflow: "Review a recipe's allergens and dietary fit"
+    job_to_be_done: "Answer 'does this contain nuts?' and 'is it vegan?' from confirmed ingredient facts, with gaps shown"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/recipes/[id]", "/catalog/recipes/[id]/facts-review"]
+    entry: "Recipe > 'Allergens & nutrition' tab > 'Allergens & dietary' grid; 'Draft answers with Sage' > 'Review drafts' / 'Confirm drafts'; 'Review ingredient facts'; 'Add an override'"
+    done_marker: "readiness 'All {n} ingredients reviewed' (recipe-detail-readiness.ts:54-58); review dialog '{n} saved this visit.' (RecipeFactsReviewDialog.svelte:293); override: 'Override saved for {allergen}.' (RecipeAllergenOverrides.svelte:70)"
+    hands_off_to: E-12
+    tier: production
+    evidence:
+      - "e2e/catalog/dietary-characteristics.spec.ts"
+      - "e2e/recipe-allergen-overrides.spec.ts"
+      - "e2e/recipe-scoped-reviews.spec.ts"
+      - "apps/regression-workbook/catalog/cases/allergens-dietary-restrictions-nutrition.json"
+      - "src/lib/components/recipes/RecipeDietaryGrid.svelte:71-99"
+      - "src/lib/components/recipes/RecipeAllergenDrafts.svelte:141-223 ('Sage drafts from the ingredient name only. Nothing is saved until you confirm.')"
+      - "src/lib/domain/allergens/guards.ts:30-106 (diets and rules)"
+      - "drizzle/0034_dizzy_klaw.sql:10-19 (allergen list)"
+    plan_gate: "none; overrides owner/manager ('Only an owner or manager can change these.')"
+    limits:
+      - "Allergen list is the fixed US nine: milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soy, sesame. No custom allergens."
+      - "Diets are five: vegetarian, vegan, halal, kosher, gluten-free. Halal meat and kosher meat-with-dairy can only ever read as 'check', never clear."
+      - "Recipe allergens are derived from confirmed ingredient facts through sub-recipes; unreviewed = unknown, never free-from."
+      - "Sage drafts are suggestions from the ingredient name only; nothing counts until a person confirms. Empty with the stub AI provider (lane H)."
+      - "Detection aid, not certification."
+    glossary_terms: [Ingredient Allergen, Derived Recipe Allergens, Recipe Allergen Override, Reference Allergen Declaration]
+    capture_worthy: "yes: dietary grid (ingredients x Vegan/Vegetarian/Halal/Kosher/Gluten-free) with one 'check' cell"
+
+  - id: E-12
+    lane: E
+    workflow: "Print the allergen matrix for the pass or front of house"
+    job_to_be_done: "Hand servers one sheet that says what every dish contains"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/recipes/allergen-matrix"]
+    entry: "Recipes > Actions > 'Allergen matrix (printable)' > 'Print allergen matrix'"
+    done_marker: "printed sheet with legend 'C contains · M may contain · X cross-contact · ? not sure · blank: no confirmed claim.' (src/routes/catalog/recipes/allergen-matrix/+page.svelte:68)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/catalog/dietary-characteristics.spec.ts ('recipe panel, strict diet filter with held-back count, and allergen matrix')"
+      - "src/routes/catalog/recipes/allergen-matrix/+page.svelte:50-189"
+    plan_gate: "none"
+    limits:
+      - "Rows with unreviewed ingredients carry †: 'a blank on its row does not mean free from.'"
+      - "Whole book only; no per-menu or per-event matrix."
+    glossary_terms: [Derived Recipe Allergens, Recipe Allergen Override]
+    capture_worthy: "yes: the printed matrix sheet"
+
+  - id: E-13
+    lane: E
+    workflow: "Check a recipe's nutrition and print a nutrition label"
+    job_to_be_done: "Give a meal-prep client calories and macros per portion without paying a lab"
+    actors: [owner, manager]
+    routes: ["/catalog/recipes/[id]", "/catalog/recipes/[id]/nutrition-sources", "/catalog/recipes/[id]/nutrition-label"]
+    entry: "Recipe > 'Allergens & nutrition' > Nutrition > 'Review sources' / 'Draft missing nutrition with Sage' / 'Confirm no added sugars' > 'Preview nutrition label' > 'Print nutrition label'"
+    done_marker: "badge 'Complete' (src/lib/components/recipes/RecipeNutrition.svelte:342) and readiness 'Nutrition: Calculated'; label page 'Print nutrition label'"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/recipe-nutrition.spec.ts ('dish, sub-recipe, and source-repair nutrition workflow')"
+      - "e2e/nutrition-empty-profile-recovery.spec.ts"
+      - "src/routes/catalog/recipes/[id]/nutrition-label/+page.svelte, +page.server.ts:14 (409 for drafts)"
+      - "src/lib/components/recipes/NutritionLabelSheet.svelte:85-133"
+      - "src/lib/components/recipes/NutritionSourceReviewDialog.svelte:301-358 ('Reading USDA for every ingredient…')"
+      - "src/lib/server/nutrition/food-data-central.ts (USDA FoodData Central nutrient map)"
+    plan_gate: "none; depends on USDA FoodData Central and AI provider configuration"
+    limits:
+      - "Label says 'Calculated estimate' and 'This estimate is not a claim of retail-label regulatory compliance.'"
+      - "Ingredient statement is 'Shown in recipe order; not a regulatory weight-order claim.'"
+      - "A value the source does not report prints as a dash and is never counted as zero."
+      - "Basis: per serving, per batch or per 100 g. FDA-style panel nutrients: calories, fats, cholesterol, sodium, carbs, fiber, sugars, added sugars, protein, vitamin D, calcium, iron, potassium."
+      - "Unpublished drafts cannot print a label; preview only."
+      - "Sources are USDA matches or Sage drafts that a person confirms; nothing is lab-tested."
+    glossary_terms: [Quantity Basis, Cooking Yield, Reference Suggestion]
+    capture_worthy: "yes: nutrition label sheet with the 'Calculated estimate · Per serving · Complete source coverage' line"
+
+  - id: E-14
+    lane: E
+    workflow: "Check guests' restrictions against an order's dishes"
+    job_to_be_done: "Know before I cook that the bride's tree-nut allergy hits the pesto"
+    actors: [owner, manager]
+    routes: ["/orders/new", "/orders/[id]"]
+    entry: "New order or order > \"Guests' restrictions\" > 'Add a restriction'; region 'What to look at' > 'View dish checks' > 'Re-check'"
+    done_marker: "'Checked at confirm' / 'Checked at re-check' (src/lib/components/orders/DietaryGuards.svelte:144); conflict line 'Conflict: {ingredient} (contains) · {who}: {allergen}'"
+    hands_off_to: null
+    tier: production
+    overlaps: [D]
+    evidence:
+      - "e2e/order-dietary-guards.spec.ts ('a guest restriction is checked live, frozen at confirm, and re-checked on demand')"
+      - "src/routes/orders/[id]/+page.svelte:386"
+      - "src/lib/components/orders/OrderGuestRestrictions.svelte:63-78"
+      - "src/lib/domain/allergens/guards.ts:1-30"
+    plan_gate: "none"
+    limits:
+      - "Outcomes are conflict / check / clear; unknown is never clear."
+      - "The reading is frozen at confirm; a later catalog change needs an explicit 'Re-check'."
+      - "Restrictions are stored per order (table order_guest_restrictions, src/lib/server/db/schema.ts:4389), not on the customer."
+    glossary_terms: [Ingredient Allergen, Derived Recipe Allergens]
+    capture_worthy: "yes: 'What to look at' region with one named conflict"
+
+  - id: E-15
+    lane: E
+    workflow: "Build a menu and cost it per guest"
+    job_to_be_done: "Combine dishes with portions per guest, see cost per guest and food-cost %, and carry the equipment list to every pack list"
+    actors: [owner, manager]
+    routes: ["/catalog/menus", "/catalog/menus/new", "/catalog/menus/[id]"]
+    entry: "Kitchen records > Menus > 'New menu' ('Create menu'); recipe > 'Put it on a menu'; menu > 'Add dish', 'Add equipment', 'Save menu'"
+    done_marker: "flash 'Menu saved.' (src/routes/catalog/menus/new/+page.server.ts:37, [id]/+page.server.ts:73)"
+    hands_off_to: "D (order from a menu) / A (event menu)"
+    tier: production
+    evidence:
+      - "e2e/menus-workflow.spec.ts ('menu workspace prices, persists, protects, and feeds the order pack list')"
+      - "e2e/edit-menu-dish.spec.ts"
+      - "src/lib/components/menus/MenuWorkspace.svelte:486-795"
+      - "src/lib/components/menus/MenuCostSummary.svelte:102-224"
+      - "src/lib/components/menus/MenuEquipmentEditor.svelte:88-258"
+    plan_gate: "none; selling price owner/manager ('An owner or manager sets the price.')"
+    limits:
+      - "'Totals are not shown because missing prices are never treated as zero.'"
+      - "Equipment 'Quantities do not scale with guest count.'"
+      - "Menu price is only the starting price for new orders; confirmed orders keep what they were confirmed with."
+      - "Menu description is what a customer reads on the storefront (ordering site is lane C)."
+    glossary_terms: [Equipment Template, Pack List, Per-Guest Price, Menu Publication]
+    capture_worthy: "yes: menu workspace with 'Cost per guest' card and linked-orders warning"
+
+  - id: E-16
+    lane: E
+    workflow: "Import recipes from photos, PDFs, documents, links or pasted text"
+    job_to_be_done: "Get my existing recipe binder into CostCook without retyping it"
+    actors: [owner, manager]
+    routes: ["/import", "/import/[id]"]
+    entry: "Recipes > 'Import recipes' (/import?kind=recipe); import review > 'Create recipe' / 'Import reviewed recipes'"
+    done_marker: "lands on the recipe with \"Recipe imported. Check it before using it.\" (src/routes/catalog/recipes/[id]/+page.svelte:456)"
+    hands_off_to: E-02
+    tier: production
+    overlaps: [F]
+    evidence:
+      - "e2e/canonical-import.spec.ts ('all supplied recipe PDFs reach canonical human review through the file chooser')"
+      - "src/lib/components/import/ImportDropzone.svelte:15 (jpeg/png/webp/heic, pdf, csv, xlsx, docx)"
+      - "src/lib/components/import/ImportWorkspace.svelte:303-333 (pasted links read as recipes)"
+      - "src/lib/components/import/RecipeImportReview.svelte:614-625"
+    plan_gate: "none; needs the AI extraction provider configured"
+    limits:
+      - "Extraction is a draft; units, yields, item type and matches are forced choices a person confirms."
+      - "Stub AI provider returns placeholder/empty extraction (lane H to confirm)."
+    glossary_terms: [Staged Import]
+    capture_worthy: "yes: review screen of a photographed recipe with dish and sub-recipe kept linked"
+
+  - id: E-17
+    lane: E
+    workflow: "Import a recipe spreadsheet by mapping its columns"
+    job_to_be_done: "Bring in recipes kept in Excel/CSV"
+    actors: [owner, manager]
+    routes: ["/import/recipe-csv"]
+    entry: "Import > 'Map recipe columns' (title 'Map a recipe spreadsheet')"
+    done_marker: "redirect to the staged review /import/{batchId} (src/routes/import/recipe-csv/+page.server.ts:187), then as E-16"
+    hands_off_to: E-16
+    tier: production
+    overlaps: [F]
+    evidence:
+      - "e2e/recipe-csv-import.spec.ts ('recipe CSV: map columns, confirm, review with one gated line, commit to a costed recipe')"
+      - "src/routes/import/recipe-csv/+page.svelte:13-38"
+    plan_gate: "none"
+    limits:
+      - "Max 1 MB, CSV or .xlsx."
+      - "Only column names and a few sample rows go to the reading service; rows are parsed deterministically. If that service fails the owner maps columns by hand."
+      - "Required columns: ingredient name, quantity, unit; optional yield %, prep note, recipe name."
+    glossary_terms: [Staged Import]
+    capture_worthy: "no"
+
+  - id: E-18
+    lane: E
+    workflow: "Accept yield and prep-time suggestions learned from past events"
+    job_to_be_done: "Let real events correct my recipe sheet instead of guessing"
+    actors: [owner]
+    routes: ["/catalog/recipes/[id]"]
+    entry: "Recipe > 'Buying patterns' > 'Use this yield for future quotes' / 'Undo learned change'; Method > 'Prep estimate per batch' > 'Updates from corrections' > 'Update to' / 'Not now'"
+    done_marker: "'Prep estimate updated. You can undo it below.' (src/lib/components/recipes/PrepEstimateProposal.svelte:37); yield: '{ingredient} yield updated to …' (LearnedYieldReview.svelte:179)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/learned-recipe-yield.spec.ts ('the owner audits, applies, and reverses a learned recipe yield without moving history')"
+      - "src/lib/components/recipes/LearnedYieldReview.svelte:63-192"
+      - "src/lib/components/recipes/PrepEstimateField.svelte:95-190"
+    plan_gate: "none; owner-only"
+    limits:
+      - "Yield suggestions appear only after five clean events with four of five missing by more than 5% in one direction."
+      - "Prep suggestions need the latest 5 corrections, 80% missing by more than 10%."
+      - "Confirmed orders stay frozen; changes affect future quotes only."
+    glossary_terms: [Prep Estimate, Estimate Correction, Cooking Yield]
+    capture_worthy: "maybe: 'Buying patterns' card showing N clean events buying more than the sheet"
+
+  - id: E-19
+    lane: E
+    workflow: "Print a container label for a batch"
+    job_to_be_done: "Label the hotel pan of demi with made date, use-by and allergens"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/recipes/[id]"]
+    entry: "Recipe > More actions > 'Print container label' (dialog 'Label {name}' > 'Print 1 label'); 'Recent labels' > 'Reprint · made {date}'"
+    done_marker: "not pinned in source on the recipe page (label flow is lane D)"
+    hands_off_to: null
+    tier: production
+    overlaps: [D]
+    evidence:
+      - "e2e/kitchen-labels.spec.ts ('label a prep batch: forced state, honest dates, and a reprint that does not drift')"
+      - "src/lib/components/recipes/RecipeActionsMenu.svelte:145-170"
+      - "src/lib/server/features/access.ts:15 (FEATURE_LABEL_PRINTING_ENABLED)"
+    plan_gate: "release flag label_printing (default off, per-business override); not a plan entitlement"
+    limits:
+      - "Hidden unless label printing is enabled for the business."
+      - "No nutrition on the container label; allergen coverage line states unreviewed ingredients."
+    glossary_terms: [Ingredient Allergen]
+    capture_worthy: "no (lane D owns it)"
+
+  - id: E-20
+    lane: E
+    workflow: "Send a repriced dish, or a menu's dishes, to Square"
+    job_to_be_done: "Change a price once and have the register match"
+    actors: [owner]
+    routes: ["/catalog/recipes/[id]", "/catalog/menus/[id]", "/settings/integrations/square/catalog"]
+    entry: "Recipe > More actions > 'Publish to Square' or pricing panel 'Publish the new price'; menu > 'Publish dishes to Square'"
+    done_marker: "not pinned in lane E (Square batch page is lane I)"
+    hands_off_to: null
+    tier: production
+    overlaps: [I]
+    evidence:
+      - "e2e/square-dish-menu-publish.spec.ts"
+      - "src/lib/components/recipes/RecipeActionsMenu.svelte:140"
+      - "src/lib/components/menus/MenuWorkspace.svelte:473"
+      - "src/lib/components/recipes/RecipePricingSummary.svelte:110 ('Square: listed/not listed')"
+    plan_gate: "release flag square_integration (default off) plus a connected Square account"
+    limits:
+      - "Unpriced and draft dishes are skipped with reasons."
+      - "One direction: CostCook to Square catalog."
+    glossary_terms: []
+    capture_worthy: "no (lane I)"
+
+  - id: E-21
+    lane: E
+    workflow: "Keep ingredient prices in the catalog list"
+    job_to_be_done: "See what I buy, how it comes and what I pay, and which recipes move when a price changes"
+    actors: [owner, manager]
+    routes: ["/catalog/ingredients"]
+    entry: "Kitchen records > Ingredients"
+    done_marker: "not pinned in lane E (ingredient flows are lane F)"
+    hands_off_to: E-02
+    tier: production
+    overlaps: [F]
+    evidence:
+      - "e2e/catalog-list-consistency.spec.ts"
+      - "src/routes/catalog/ingredients/+page.svelte:382-383,656"
+    plan_gate: "none"
+    limits: ["See lane F."]
+    glossary_terms: [Current Cost]
+    capture_worthy: "no"
+
+  - id: E-22
+    lane: E
+    workflow: "Count the shelf and build a par shopping list"
+    job_to_be_done: "Know what is on the shelf and buy only what upcoming confirmed events and pars need"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/inventory", "/catalog/inventory/shopping-list"]
+    entry: "Kitchen records > Inventory > 'Save count', 'Set par for {name}', 'Shopping list' > 'Build shopping list'"
+    done_marker: "'Saved. The buy is now {n} × {pack}.' (src/lib/components/inventory/IncomingCoverageForm.svelte:69)"
+    hands_off_to: "D"
+    tier: production
+    overlaps: [D]
+    evidence:
+      - "e2e/catalog/inventory.spec.ts"
+      - "src/routes/catalog/inventory/+page.svelte:350-351"
+      - "src/lib/components/inventory/BuildShoppingListDialog.svelte:177"
+      - "src/lib/components/inventory/InventoryCountDialog.svelte:237"
+    plan_gate: "none"
+    limits:
+      - "On-hand is computed and always overruled by a count; no lot tracking, expiry or FIFO valuation."
+    glossary_terms: [Computed Inventory, Shelf Check, On Hand]
+    capture_worthy: "no (lane D)"
+
+  # ---- off-page ----
+  - id: E-23
+    lane: E
+    workflow: "Share one catalog across several kitchens with local prices"
+    job_to_be_done: "Run two locations from one recipe book"
+    actors: [owner]
+    routes: [""]
+    entry: "n/a"
+    done_marker: "n/a"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["branch feat/487-shared-catalog-overrides-v2 (13 commits ahead of origin/main, last 2026-09-16; #485-#487)"]
+    plan_gate: "n/a"
+    limits: ["Not on main. Production is one business = one catalog."]
+    glossary_terms: [Business]
+    capture_worthy: "no"
+
+  - id: E-24
+    lane: E
+    workflow: "Define custom dietary characteristics (e.g. 'Nut-free kitchen')"
+    job_to_be_done: "Filter by my own house rules"
+    actors: [owner]
+    routes: [""]
+    entry: "n/a"
+    done_marker: "n/a"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/dietary-characteristics-prompt.md:94-100 (Phase 4, 'only if time allows'); no code found for custom characteristics"]
+    plan_gate: "n/a"
+    limits: ["Not built. Only the five fixed diets exist."]
+    glossary_terms: []
+    capture_worthy: "no"
+
+  - id: E-25
+    lane: E
+    workflow: "Attach photos or video to method steps"
+    job_to_be_done: "Show the plating, not just describe it"
+    actors: [owner]
+    routes: [""]
+    entry: "n/a"
+    done_marker: "n/a"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/recipe-management-system-implementation-prompt.md:175-193 (optional image/video per step); no step media in schema or RecipeMethodEditor"]
+    plan_gate: "n/a"
+    limits: ["Not built. Method steps are text with times, temperature and a safety note."]
+    glossary_terms: [Method]
+    capture_worthy: "no"
+
+  - id: E-26
+    lane: E
+    workflow: "Print a client-facing (grab-and-go) allergen label"
+    job_to_be_done: "Put a complete allergen statement on food that leaves with the client"
+    actors: [owner]
+    routes: [""]
+    entry: "n/a"
+    done_marker: "n/a"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/client-label-allergens-prompt.md:234-248 ('Step 1 is done … Steps 2 onward are open'); src/lib/domain/labeling/labels.ts:200 comment anticipates it"]
+    plan_gate: "n/a"
+    limits: ["Only step 1 shipped: the prep sticker states how many ingredients are unreviewed. The client label itself is not built."]
+    glossary_terms: [Ingredient Allergen]
+    capture_worthy: "no"
+
+internal_routes:
+  - route: /catalog/recipes/[id]/export.csv
+    reason: "CSV download endpoint (+server.ts), part of E-10, not a page"
+  - route: /catalog/recipes/export.csv
+    reason: "whole-book CSV endpoint, part of E-10"
+  - route: /catalog/recipes/[id]/facts-review
+    reason: "full-page fallback of the ingredient facts review dialog; covered by E-11, not a separate workflow"
+  - route: /catalog/recipes/[id]/nutrition-sources
+    reason: "full-page fallback of the nutrition source review dialog; covered by E-13"
+  - route: /events/[id]/menus
+    reason: "event menu drafts, owned by lane A"
+  - route: /ingredients/[id]/allergens
+    reason: "ingredient allergen checklist, owned by lane F (feeds E-11)"
+  - route: /settings/integrations/square/catalog
+    reason: "Square batch publish, owned by lane I (target of E-20)"
+
+terms:
+  - term: "Working copy vs draft"
+    app_meaning: "CONTEXT.md: Working Copy = unpublished edit of a live recipe; 'draft' = a never-published builder. UI uses 'draft' for both ('Save draft', 'Draft changes: not live yet', 'Restore version N as draft', 'Discard draft changes')."
+    not_to_confuse_with: "order drafts and approved-but-unconfirmed orders"
+  - term: "Version / Revision"
+    app_meaning: "Frozen published snapshot, numbered from 1 ('Version 3 · Live'). Restoring copies an old one into draft changes and publishes a NEW number."
+    not_to_confuse_with: "rollback"
+  - term: "Readiness"
+    app_meaning: "Server findings on Cost, Method, Allergens, Nutrition, Portion, Prep time. UI shows 'Ready to serve and sell: N of 6 done', although CONTEXT.md says avoid completeness scores."
+    not_to_confuse_with: "a percent-complete checklist"
+  - term: "Kitchen records"
+    app_meaning: "The UI name for /catalog (ingredients, recipes, menus, inventory). 'Catalog' is the route word; 'the book' is the recipe list's word."
+    not_to_confuse_with: "records of work done"
+  - term: "Archive / Delete / Remove / Take down"
+    app_meaning: "Archive = out of the pickers, still resolves ('Put it back in the book'). Delete = gone, refused when used. Remove = detach (line, dish, equipment). 'Take down' = delete a collection/tag/station shelf."
+    not_to_confuse_with: "each other"
+  - term: "Allergen"
+    app_meaning: "One of the fixed US nine, with relationship contains / may contain / cross-contact / free from / not sure, confirmed per ingredient."
+    not_to_confuse_with: "dietary characteristic (vegan etc.) or an allergen-free claim"
+  - term: "Dietary characteristic / diet"
+    app_meaning: "Vegetarian, Vegan, Halal, Kosher, Gluten-free, derived from ingredient traits; outcome clear / check / conflict."
+    not_to_confuse_with: "certification (halal/kosher are always 'check' for meat)"
+  - term: "Dietary guard / guests' restrictions"
+    app_meaning: "Per-order restrictions checked against dishes; frozen at confirm, 'Re-check' on demand."
+    not_to_confuse_with: "customer profile preferences"
+  - term: "Nutrition label"
+    app_meaning: "Calculated estimate from USDA FoodData Central or Sage-drafted, person-confirmed ingredient profiles; not a regulatory label."
+    not_to_confuse_with: "lab analysis, FDA-compliant retail label"
+  - term: "Menu"
+    app_meaning: "Internal catalog menu: dishes x portions per guest, equipment template, selling price per guest; starting price for new orders."
+    not_to_confuse_with: "Menu Publication (storefront, lane C), event menu (lane A), proposal menu lines"
+  - term: "Station"
+    app_meaning: "Where a recipe is made (one per recipe). Filters the book and prints on the recipe sheet; prep list does not group by it."
+    not_to_confuse_with: "section of a method, inventory area"
+  - term: "Sage (in catalog)"
+    app_meaning: "Drafts allergen/trait answers and missing nutrition from the ingredient name; nothing saved until confirmed."
+    not_to_confuse_with: "automatic allergen detection"

@@ -1,0 +1,611 @@
+# Lane C: online ordering and requests (2026-09-27)
+# Production code: ~/kitchen-brain-develop-demo, HEAD ed6ff5f01 == origin/main (checked).
+# Paths are relative to that checkout unless prefixed with a worktree name.
+# The public storefront is a SEPARATE SvelteKit app: apps/ordering (hosted at ORDERING_APP_ORIGIN/<siteId>,
+# default https://order.costcook.io per src/lib/server/ordering-payments/config.ts:49). It is not in src/routes.
+#
+# GATE THAT APPLIES TO MOST ROWS (read before tiering anything onto the page):
+#   release flag `ordering_integration`: src/lib/server/features/access.ts:8-19,96-98 (true only for 'true'/'1'),
+#   enforced for /settings/ordering* in src/hooks.server.ts:516-521 and src/routes/settings/ordering/+layout.server.ts:13-15
+#   ("Ordering integrations are in development." 404). infra/env/production.env.example:50 leaves it blank (= off).
+#   docs/billing.md:50-52: "not subscription entitlements and default off"; a business_feature_overrides row wins.
+#   Rows marked plan_gate "ordering flag" are on origin/main but unreachable for a kitchen without that flag.
+
+rows:
+  - id: C-01
+    lane: C
+    overlap: [A]
+    workflow: "Set the days you book, the notice you need, and close holidays"
+    job_to_be_done: "Stop clients (and my own order form) booking a day I am closed, without remembering to close it each time"
+    actors: [owner, manager]
+    routes: ["/settings/booking", "/orders/new"]
+    entry: "Settings > Booking > 'Days and notice' ('Save days and notice') and 'Closed dates' > 'Close dates' ('Close these dates')"
+    done_marker: "'Days and notice saved. Every ordering site reads them now.' (DaysAndNoticeForm.svelte:72); 'Dates closed. They are in the list above.' (CloseDatesForm.svelte:46)"
+    hands_off_to: C-06
+    tier: production
+    evidence:
+      - "e2e/booking-rules.spec.ts"
+      - "apps/ordering/e2e/closed-dates.spec.ts:48,73"
+      - "src/routes/settings/booking/+page.svelte:51-57,172"
+      - "src/lib/components/settings/booking/DaysAndNoticeForm.svelte:80-129"
+      - "src/lib/components/settings/booking/CloseDatesForm.svelte:39-92"
+      - "src/routes/orders/new/+page.svelte:78 (closedDates passed to the in-app order form)"
+    plan_gate: "none (/settings/booking is not behind the ordering flag); storefront effect needs the ordering flag"
+    limits:
+      - "Dates are open unless closed; 'Reason' is 'Optional. For you, not customers.' (CloseDatesForm.svelte:86)"
+      - "No time slots within a day; the day is the unit (PRD 00 Out of Scope)"
+      - "Inside the app the owner can still book a closed date; only the storefront refuses it"
+    glossary_terms: [Booking Settings, Day Closure]
+    capture_worthy: "yes: Settings > Booking with 'Closed weekdays' ticked and one holiday range in 'Closed dates'"
+
+  - id: C-02
+    lane: C
+    overlap: [A]
+    workflow: "Tell the app how many vans and orders a day you can handle"
+    job_to_be_done: "Never take a fourth delivery when I own three vans"
+    actors: [owner, manager]
+    routes: ["/settings/booking", "/calendar"]
+    entry: "Settings > Booking > 'Capacity' ('Vans', 'Most orders a day', 'Save capacity')"
+    done_marker: "'Capacity saved. The storefront stops offering a day once it is full.' (CapacityForm.svelte:80)"
+    hands_off_to: C-14
+    tier: production
+    evidence:
+      - "e2e/day-verdict.spec.ts:69"
+      - "apps/ordering/e2e/full-dates.spec.ts:61,103"
+      - "src/lib/components/settings/booking/CapacityForm.svelte:99-172"
+      - "src/routes/calendar/+page.svelte:293-343 ('Full', 'n/m orders', 'n/m vans')"
+    plan_gate: "none for the setting and calendar; storefront greying needs the ordering flag"
+    limits:
+      - "'Each delivery takes one van for its day. Pickups take none.' (CapacityForm.svelte:99). No runs per van"
+      - "Blank means no limit; a blank number never closes a date"
+      - "A full delivery day stays open for pickup"
+      - "One kitchen per business; no separate pools for multiple kitchens"
+    glossary_terms: [Counted Resource, Day Closure]
+    capture_worthy: "yes: /calendar week view showing '3/3 vans' beside a day marked Full"
+
+  - id: C-03
+    lane: C
+    overlap: [A]
+    workflow: "Decide which requests you price yourself and how the rest pay"
+    job_to_be_done: "Big or bespoke jobs come to me for a price; plain menu orders pay a deposit or in full without me writing rules twice"
+    actors: [owner, manager]
+    routes: ["/settings/booking"]
+    entry: "Settings > Booking > 'Booking rules' > new rule: 'When it applies' ('Order value over', 'Event more than a number of days out', 'Asks for anything bespoke') / 'What happens' ('Custom Request: no price until you reply', 'Fixed menu: pay in full', 'Fixed menu: deposit, then the balance')"
+    done_marker: "rule listed in order under 'Booking rules'; description 'The first rule that matches wins; the last one always does.' (settings/booking/+page.svelte:144-145); each order names the rule that routed it"
+    hands_off_to: C-06
+    tier: production
+    evidence:
+      - "e2e/booking-rules.spec.ts:44"
+      - "src/lib/components/settings/booking/BookingRuleForm.svelte:119-189"
+      - "src/lib/server/booking/rules.ts"
+      - "CONTEXT.md:271-277"
+    plan_gate: "none for the screen; rules only act on storefront and partner requests (ordering flag)"
+    limits:
+      - "Guest count alone never routes a request (CONTEXT.md:271)"
+      - "One deposit and one balance at most; no installment plans beyond that"
+      - "On develop a hand-typed event gets no terms from the rules (kb-client-payment plan Gate 0/1); the assumed-today branch changes rules.ts for that"
+    glossary_terms: [Booking Rule, Custom Request]
+    capture_worthy: "yes: the rule list with a 'Big orders' rule above the default"
+
+  - id: C-04
+    lane: C
+    workflow: "Put your menus online as an ordering page and go live"
+    job_to_be_done: "Let clients order from my website or a link without me building a shop"
+    actors: [owner, manager]
+    routes: ["/settings/ordering/site", "apps/ordering/src/routes/[store]"]
+    entry: "Settings > Ordering site: 'Your storefront' > 'How you get paid' > 'Delivery and tax' > 'Menus customers can order' (switch per menu, 'Price customers see (USD per guest)') > 'Put it on your website' ('Link, if you have no website', 'Snippet for your web person') > 'Go live'"
+    done_marker: "'Storefront live. Place a test order from the link above and cancel it in Orders.' (GoLivePreflight.svelte:54)"
+    hands_off_to: C-06
+    tier: production
+    evidence:
+      - "e2e/ordering-site.spec.ts"
+      - "e2e/storefront-brand-readability.spec.ts"
+      - "src/routes/settings/ordering/site/+page.svelte:48-240"
+      - "src/lib/components/settings/ordering-site/PublishableMenuRow.svelte:103,120"
+      - "src/lib/components/settings/ordering-site/EmbedHandoff.svelte:57-87"
+      - "src/lib/server/public-ordering/site-preflight.ts"
+    plan_gate: "ordering flag (release flag, off by default, not a plan tier)"
+    limits:
+      - "Go live is blocked until the storefront is saved, one priced menu is on it, pickup or delivery is on, and Stripe is active if CostCook collects deposits (docs/ordering-integration.md:43-46)"
+      - "Once live, 'every save changes what they see within a minute' (site/+page.svelte:218-219); no draft/publish snapshot"
+      - "Brand colours below WCAG 4.5:1 warn but do not block"
+      - "Price is per guest per menu; no per-item daily limits"
+    glossary_terms: [Public Ordering Site, Menu Publication]
+    capture_worthy: "yes: the 'Go live' card with the customer preview beside the preflight list"
+
+  - id: C-05
+    lane: C
+    workflow: "Connect Stripe and choose how storefront clients pay"
+    job_to_be_done: "Get deposits into my own bank account without card numbers touching my laptop"
+    actors: [owner, manager]
+    routes: ["/settings/ordering/site", "/settings/ordering/stripe/refresh"]
+    entry: "Settings > Ordering site > 'How you get paid' > 'Connect Stripe' (or 'Continue with Stripe'); collection choice 'CostCook' / 'External' / 'Offline'; 'Deposit': 'No deposit' / 'Percentage of estimate' / 'Fixed amount'"
+    done_marker: "'Stripe is ready for card payments and payouts.' (StorefrontStripeSetup.svelte:40), badge 'Stripe ready' (:61); 'Payment settings saved. New requests will use these terms.' (StorefrontPaymentTerms.svelte:64)"
+    hands_off_to: C-09
+    tier: production
+    evidence:
+      - "src/lib/components/settings/ordering-site/StorefrontStripeSetup.svelte:20-120"
+      - "src/lib/components/settings/ordering-site/StorefrontPaymentTerms.svelte:38-48"
+      - "src/lib/server/ordering-payments/stripe-gateway.ts:22-160 (Stripe Connect, Accounts v2)"
+      - "src/lib/server/ordering-payments/config.ts:21-28 (STRIPE_ORDERING_* keys, separate from subscription keys)"
+      - "src/lib/server/ordering-payments/stripe-onboarding-gateway.test.ts"
+    plan_gate: "ordering flag"
+    limits:
+      - "Stripe Connect is the only card rail for client money; Square is not used on this path (grep of ordering-payments, orders, events, proposals, apps/ordering found none)"
+      - "The kitchen is merchant of record on its connected account; CostCook's application fee exists but is null for every account today (application-fee.ts:1-14)"
+      - "Only storefront orders can take a card on develop; event/proposal deposits are offline or external (see C-20)"
+      - "Stripe Tax on the connected account computes sales tax (StripeTaxStatus on the same page)"
+    glossary_terms: [Payment mode, Stripe Connect]
+    capture_worthy: "no: Stripe onboarding frames are Stripe's, not ours"
+
+  - id: C-06
+    lane: C
+    workflow: "A client picks a menu, a date and guests on your ordering page and sends a request"
+    job_to_be_done: "Client: book catering without a phone call. Kitchen: get a complete, priced request without retyping"
+    actors: [client, owner, manager]
+    routes: ["apps/ordering/src/routes/[store]", "/api/ordering/v1/sites/[siteId]/catalog", "/api/ordering/v1/sites/[siteId]/quote", "/api/ordering/v1/sites/[siteId]/orders"]
+    entry: "Client: kitchen's link or website widget > 'Choose a menu' > 'Choose dishes and options' > 'When and where is the event?' > contact > 'Review the estimate and request' > 'Send request to kitchen'"
+    done_marker: "Client: 'Awaiting kitchen confirmation' / 'Your request reached the kitchen' with a 'Request reference' ([store]/+page.svelte:639-656) and payment row 'Nothing charged' (apps/ordering/src/lib/ordering/payment-copy.ts:84). Kitchen: the order sits in Home as 'Awaiting approval' (src/lib/features/home/order-queue.ts:42)"
+    hands_off_to: C-08
+    tier: production
+    evidence:
+      - "apps/ordering/e2e/hosted-ordering.spec.ts"
+      - "apps/ordering/e2e/closed-dates.spec.ts:48"
+      - "apps/ordering/e2e/full-dates.spec.ts:61"
+      - "apps/ordering/e2e/custom-request.spec.ts:105"
+      - "e2e/booking-approve-then-pay.spec.ts:83"
+      - "apps/ordering/src/routes/[store]/+page.svelte:779-1330"
+      - "apps/ordering/src/routes/[store]/EventDateField.svelte:106"
+    plan_gate: "ordering flag"
+    limits:
+      - "Closed and full dates are greyed: 'Greyed dates are closed or too soon.' ([store]/+page.svelte:949); a full delivery day says '<Delivery> is full on <day>. <Pickup> is still open that day.' (EventDateField.svelte:106)"
+      - "A date that closed after the page loaded is refused server-side with the nearest open dates"
+      - "The client sees an 'estimate'; the price is recalculated by the server when sent. Nothing is charged at submit"
+      - "Receipt copy: 'Your request has a reference, not a promise.' The client is not booked until approved and paid"
+      - "Allergen and dietary asks are captured as requirements and notes; the kitchen reviews them"
+    glossary_terms: [Public Order Request, Price Quote, External Order Intake, Fulfillment]
+    capture_worthy: "yes: phone-width date step with greyed closed days and the 'is full on' line"
+
+  - id: C-07
+    lane: C
+    overlap: [A]
+    workflow: "A bespoke or large request comes to you for a price instead of taking money"
+    job_to_be_done: "Never quote a fixed price for a wedding I have not scoped"
+    actors: [client, owner, manager]
+    routes: ["apps/ordering/src/routes/[store]", "/orders/[id]", "/events/[id]"]
+    entry: "Client ticks a bespoke need on the storefront ('Tick any of these and the kitchen replies with a price') or trips a Custom Request rule. Older/partner Custom Requests: order page 'Custom Request' card > 'Move to Inquiries'"
+    done_marker: "Client: 'Needs a price from the kitchen' and 'Nothing was charged.' ([store]/+page.svelte:639,645). Kitchen: a storefront custom request is written straight in as an Inquiry (commit 0b395f961); a partner Custom Request shows 'No price yet. Nothing was charged.' (CustomRequestCard.svelte:46) and after 'Move to Inquiries' links 'Open the inquiry' (:60,80)"
+    hands_off_to: "A (Inquiry to proposal)"
+    tier: production
+    evidence:
+      - "e2e/custom-request-inquiry.spec.ts:29"
+      - "e2e/booking-rules.spec.ts:44"
+      - "apps/ordering/e2e/custom-request.spec.ts:50-56,65"
+      - "src/routes/orders/[id]/+page.server.ts:29,285 (convertCustomRequest)"
+    plan_gate: "ordering flag"
+    limits:
+      - "A Custom Request takes no money, holds no capacity, and cannot be confirmed as a kitchen order"
+      - "The partner API still writes Custom Request orders (partners poll the order id); only the storefront writes Inquiries directly"
+    glossary_terms: [Custom Request, Inquiry, Booking Rule]
+    capture_worthy: "yes: client receipt 'Needs a price from the kitchen' with 'Beyond the menu' listed"
+
+  - id: C-08
+    lane: C
+    workflow: "Look at a request against the day and approve or decline it"
+    job_to_be_done: "Say yes only to days I can cook, with the evidence in front of me, and say no without refunding anyone"
+    actors: [owner, manager, client]
+    routes: ["/orders/[id]", "/"]
+    entry: "Home queue item 'Awaiting approval' > order page 'Approve this request?' > 'Approve' / 'Decline' ('Why, in a line the client reads', 'Decline and tell the client')"
+    done_marker: "Heading 'Approved. Waiting on the payment' (ApprovalReview.svelte:118); decline flash 'Declined. The client has been told.' (src/lib/server/orders/approval/actions.ts:173); zero-payment terms: 'Approved and confirmed. No payment was due.' (actions.ts:152). Client email subject '<kitchen> can take <event>. Pay to hold the date' or on decline '<kitchen> cannot take <event>' (booking-approval-copy.ts:84,233)"
+    hands_off_to: C-09
+    tier: production
+    evidence:
+      - "e2e/booking-approve-then-pay.spec.ts:83,185"
+      - "src/lib/components/orders/ApprovalReview.svelte:117-313"
+      - "src/lib/components/orders/ApprovalDeclinePanel.svelte:19-21"
+      - "src/lib/server/orders/approval/commands.ts:312"
+    plan_gate: "ordering flag"
+    limits:
+      - "'An owner or manager decides on requests.' (ApprovalReview.svelte:248)"
+      - "Approved is not confirmed: an approved order is still a draft and Shop, Prep and Pack do not read it (CONTEXT.md:245-247)"
+      - "Approving over a counted limit needs a reason: 'Why approve over the limit?' (ApprovalReview.svelte:271,301)"
+      - "The day is re-checked at approval; two approvals cannot take the last van"
+    glossary_terms: [Approval, Day Verdict, Payment Window]
+    capture_worthy: "yes: 'Approve this request?' with 'The day' card beside it (verdict, prep, crew lines)"
+
+  - id: C-09
+    lane: C
+    workflow: "The client pays the deposit (or the whole thing) from the emailed link, and the payment confirms the order"
+    job_to_be_done: "Client: hold the date in one tap. Kitchen: a confirmed order lands on the Shop list only when money actually arrived"
+    actors: [client, owner]
+    routes: ["apps/ordering/src/routes/[store]/pay", "/api/ordering/v1/sites/[siteId]/payments/checkout", "/api/ordering/v1/sites/[siteId]/payments/status", "/api/ordering/v1/payments/stripe/webhook", "/orders/[id]"]
+    entry: "Client: email '<kitchen> can take <event>. Pay to hold the date' > page 'Pay to hold your date' > 'Pay $<amount>' > Stripe Checkout"
+    done_marker: "Client: 'Payment received. Your confirmation comes by email from the kitchen.' (apps/ordering/src/routes/[store]/pay/+page.svelte:46). Kitchen: order confirmed and on the Shop list (spec asserts the Shop link appears, booking-approve-then-pay.spec.ts:127); transitional state 'Paid. Confirming the order' (ApprovalReview.svelte:119)"
+    hands_off_to: "C-12, then D (Shop, Prep, Pack)"
+    tier: production
+    evidence:
+      - "e2e/booking-approve-then-pay.spec.ts:131-180"
+      - "apps/ordering/e2e/release-gate.spec.ts"
+      - "src/lib/server/ordering-payments/webhook.ts"
+      - "src/lib/server/ordering-payments/checkout.ts"
+    plan_gate: "ordering flag, plus a Stripe-ready connected account"
+    limits:
+      - "A browser return never confirms; only Stripe's webhook does"
+      - "Card details stay on Stripe's page"
+      - "No saved cards, no automatic refunds (nothing is charged before approval)"
+      - "The link is only good inside the Payment Window (72 hours, see C-10)"
+    glossary_terms: [Approval, Payment Window, Payment Obligation, Confirmed]
+    capture_worthy: "yes: phone-width 'Pay to hold your date' with the 'Pay $650.00' button"
+
+  - id: C-10
+    lane: C
+    workflow: "Handle a request whose payment window closed, or whose numbers changed after you approved"
+    job_to_be_done: "Silent clients do not hold my Saturdays, and a guest-count change asks the new amount"
+    actors: [owner, manager, client]
+    routes: ["/orders/[id]"]
+    entry: "Home 'Payment window closed' (order-queue.ts:52) > order page 'The payment window closed' > 'Approve again'. Guest/price/date edit while the link is out > 'Approval withdrawn'"
+    done_marker: "'Nothing was paid by <time>. The day is free again.' (ApprovalReview.svelte:146); after edit: 'Approval withdrawn' and the client's link stops working (ApprovalReview.svelte:168-171); late money: 'A payment arrived late' (:178)"
+    hands_off_to: C-08
+    tier: production
+    evidence:
+      - "e2e/booking-approve-then-pay.spec.ts:211,241"
+      - "src/lib/server/orders/approval/state.ts:39-41"
+      - "src/lib/server/orders/approval/withdraw.ts"
+    plan_gate: "ordering flag"
+    limits:
+      - "The Payment Window is fixed at 72 hours (DEFAULT_PAYMENT_WINDOW_HOURS, state.ts:39); the PRD's owner-set window is not built"
+      - "Money that arrives after the window is recorded and shown, never confirms on its own"
+    glossary_terms: [Payment Window, Approval]
+    capture_worthy: "no"
+
+  - id: C-11
+    lane: C
+    workflow: "Approve a request and collect the money yourself (check, cash, invoice) or through a partner"
+    job_to_be_done: "Use the approval flow even if I do not take cards online"
+    actors: [owner, manager, client]
+    routes: ["/orders/[id]", "/api/ordering/v2/orders/[orderId]/payments/external"]
+    entry: "Order page 'Approve and collect it yourself' (ApprovalReview.svelte:280) when Stripe is not ready; payment card 'Has the customer paid?' > 'Record received payment'; or 'Confirm without payment' with 'Why it is confirmed without the payment'"
+    done_marker: "'Payment record saved.' (PaymentTrackingCard.svelte:115); client email '<kitchen> can take <event>. Here is what is owed' (booking-approval-copy.ts:135)"
+    hands_off_to: "C-12, then D"
+    tier: production
+    evidence:
+      - "e2e/booking-approve-then-pay.spec.ts:342-382"
+      - "src/lib/components/orders/PaymentTrackingCard.svelte:8-9,150-196"
+      - "src/lib/components/orders/ConfirmWithoutPaymentPanel.svelte:31-39"
+      - "src/lib/components/orders/PaymentDialog.svelte:55-75"
+    plan_gate: "ordering flag"
+    limits:
+      - "CostCook does not move offline money; the owner records it"
+      - "'External' means an outside partner system reports the payment through the v2 API"
+      - "Tracks bank inquiries and chargebacks on Stripe payments ('Chargeback opened', PaymentTrackingCard.svelte:24-30)"
+    glossary_terms: [Payment mode, Approval]
+    capture_worthy: "no"
+
+  - id: C-12
+    lane: C
+    workflow: "Collect the balance: a due date per order and an automatic reminder with a pay link"
+    job_to_be_done: "Not buy groceries for a big job against money I have not been paid, and not chase it by hand"
+    actors: [owner, manager, client]
+    routes: ["/orders/[id]", "apps/ordering/src/routes/[store]/pay", "/"]
+    entry: "Order page 'Balance' card > 'Due day' > 'Save due day'"
+    done_marker: "'Balance now due <day>.' (actions.ts:273); card lines 'The client gets a reminder with a pay link on <day>.' then 'Reminder emailed <date>.' then 'Paid.' (BalanceSchedule.svelte:46-65); client email subject '<Event>: the <amount> balance is due <day>' (booking-approval-copy.ts:197)"
+    hands_off_to: "G (numbers)"
+    tier: production
+    evidence:
+      - "e2e/booking-approve-then-pay.spec.ts:275-336"
+      - "src/lib/server/orders/approval/balance-reminders.ts"
+      - "src/lib/server/home/balance-due.ts"
+      - "src/lib/components/orders/BalanceSchedule.svelte:46-80"
+    plan_gate: "ordering flag"
+    limits:
+      - "Default due day is 14 days before the event (payment-terms.ts DEFAULT_BALANCE_DUE_DAYS_BEFORE_EVENT), set by the booking rule, changeable per order"
+      - "Offline collection: 'You collect this one, so it goes on Home on <day>. No email goes to the client.' (BalanceSchedule.svelte:52)"
+      - "No client email on file: 'The order has no client email, so no reminder goes out.'"
+      - "Reminders only fire for storefront approve-then-pay orders; the sweep requires paymentFlow approve_then_pay and a site (kb-client-payment plan Gate 3). A hand-booked event gets no reminder, even on the assumed-today branch"
+      - "One reminder per balance and due date; no dunning sequence, no customer invoice (#504 unbuilt)"
+    glossary_terms: [Balance, Payment Obligation]
+    capture_worthy: "yes: order 'Balance' card reading '$0.00 received of $1,950.00 due' with the reminder date"
+
+  - id: C-13
+    lane: C
+    workflow: "Let clear requests approve themselves"
+    job_to_be_done: "The client gets the payment link while still deciding, and I only see the requests that need thought"
+    actors: [owner, manager, client]
+    routes: ["/settings/booking", "/orders/[id]", "/"]
+    entry: "Settings > Booking > 'Approving requests' > 'Approve clear requests automatically' > 'Save'"
+    done_marker: "'Saved.' (AutomaticApprovalForm.svelte:39); Home 'Approved automatically. Awaiting payment' (order-queue.ts:47); order page 'Approved automatically' (ApprovalReview.svelte:154)"
+    hands_off_to: C-09
+    tier: production
+    evidence:
+      - "e2e/booking-auto-approve.spec.ts:85,100,152,177"
+      - "apps/regression-workbook/catalog/cases/auto-approve-clear-requests.json"
+      - "src/lib/components/settings/booking/AutomaticApprovalForm.svelte:52-90"
+      - "src/lib/server/orders/approval/automatic.ts"
+    plan_gate: "ordering flag (switch is visible on /settings/booking regardless)"
+    limits:
+      - "Off by default"
+      - "'Still comes to you: a Custom Request, a day you have closed, a day that would go over a counted limit, a day short on prep time or servers, and any dish with no Prep Estimate' (AutomaticApprovalForm.svelte:74-76)"
+      - "With no limits set, every menu request is approved; the form warns about this"
+      - "Owner can still decline before payment"
+    glossary_terms: [Approval, Day Verdict]
+    capture_worthy: "yes: the switch with its 'Approved automatically' / 'Still comes to you' explanation"
+
+  - id: C-14
+    lane: C
+    overlap: [A, D, H]
+    workflow: "See whether a day has room before you say yes"
+    job_to_be_done: "Know in one glance what a day already holds, for any order however it arrived"
+    actors: [owner, manager]
+    routes: ["/orders/[id]", "/calendar", "/sage"]
+    entry: "Any order page > 'The day' card; /calendar month or week; Sage tool checkDayRoom ('Can I take another order on the 14th?')"
+    done_marker: "'<day> has room.' / '<day> is full. You can still approve with a reason.' / '<day> is over its limit.' with lines like '0 of 1 already booked. This order needs 1.' (DayVerdictCard.svelte:59-110; asserted in e2e/day-verdict.spec.ts)"
+    hands_off_to: C-08
+    tier: production
+    evidence:
+      - "e2e/day-verdict.spec.ts:69"
+      - "src/routes/orders/[id]/+page.server.ts:106-171"
+      - "src/lib/components/orders/DayVerdictCard.svelte"
+      - "src/lib/server/sage/tools-booking.ts:66"
+    plan_gate: "none (the order page verdict works on hand-entered orders without the ordering flag)"
+    limits:
+      - "Counts vans and orders per day; estimates (prep, crew) never block"
+      - "A Custom Request and an unsigned event are shown as pending, never counted"
+      - "An event's booking review does not show the verdict yet (C-22)"
+    glossary_terms: [Day Verdict, Counted Resource, Estimated Load]
+    capture_worthy: "yes: 'The day' card reading 'is full. You can still approve with a reason.'"
+
+  - id: C-15
+    lane: C
+    overlap: [E]
+    workflow: "See the prep hours a request needs against your day, correct them, and let the recipe learn"
+    job_to_be_done: "'This needs 6 hours, you have 4 left', and the software stops guessing after I correct it a few times"
+    actors: [owner, manager]
+    routes: ["/orders/[id]", "/settings/booking", "/catalog/recipes/[id]"]
+    entry: "Settings > Booking > Capacity 'Prep hours a day'; order 'The day' > 'Correct the prep' > 'Save hours'; recipe page 'Prep estimate' section > 'Update to <n> min'"
+    done_marker: "'Prep for <dish> updated for this order.' (DayPrepLine.svelte:81); recipe: 'Prep estimate updated. You can undo it below.' (src/lib/components/recipes/PrepEstimateProposal.svelte:37)"
+    hands_off_to: C-16
+    tier: production
+    evidence:
+      - "e2e/prep-estimates.spec.ts:52"
+      - "e2e/estimate-corrections.spec.ts:68"
+      - "src/lib/components/orders/DayPrepLine.svelte:54-122"
+      - "src/lib/server/booking/prep-corrections.ts"
+    plan_gate: "none for settings and order page; storefront requests need the ordering flag"
+    limits:
+      - "Hands-on minutes only; recipes with no estimate are listed, never counted as zero"
+      - "Prep hours never grey a date on their own"
+      - "The recipe offer appears only after enough corrections (latest 5, 80% one direction; CONTEXT.md:291)"
+      - "PRD README marks slices 5-7 and 10 'Held for design-partner feedback'; they are merged and visible anyway (owner question)"
+    glossary_terms: [Prep Estimate, Estimate Correction, Estimated Load]
+    capture_worthy: "yes: 'Prep by dish' table with one row marked 'yours'"
+
+  - id: C-16
+    lane: C
+    workflow: "Close a day that is full, reopen it, or let full days close themselves"
+    job_to_be_done: "Answer 'Close it?' once so clients stop picking a Saturday I cannot cook"
+    actors: [owner, manager]
+    routes: ["/orders/[id]", "/settings/booking"]
+    entry: "After an approval over the prep budget: 'Close it?' > 'Close it' / 'Keep it open'; Settings > Booking > 'Full days' > 'Reopen this day'; 'Close full days automatically'"
+    done_marker: "'Approved. <date> is now closed: ... Reopen it if you want the work.' / '<date> is closed. The storefront is not offering it.' (src/lib/features/booking/full-day.ts:38-56)"
+    hands_off_to: C-06
+    tier: production
+    evidence:
+      - "e2e/closing-a-full-day.spec.ts:57"
+      - "src/lib/components/orders/FullDayQuestion.svelte:56-118"
+      - "src/lib/components/settings/booking/AutomaticClosingForm.svelte:79-135"
+    plan_gate: "none for the question; the storefront effect needs the ordering flag"
+    limits:
+      - "Automatic closing is locked until enough confirmed estimates were accepted without correction"
+      - "Closing never cancels booked orders ('Your booked orders keep it.')"
+    glossary_terms: [Day Closure, Day Verdict]
+    capture_worthy: "yes: the 'Close it?' card with its evidence sentence"
+
+  - id: C-17
+    lane: C
+    workflow: "See how many servers an event likely needs"
+    job_to_be_done: "Know I am short on staff for Saturday before I say yes"
+    actors: [owner, manager]
+    routes: ["/orders/[id]", "/settings/booking"]
+    entry: "Settings > Booking > Capacity 'Guests per server' and 'Servers a day'; order 'The day' > 'How the food is served' > 'Servers'"
+    done_marker: "crew line on the order's day card (DayCrewLine.svelte:89-108)"
+    hands_off_to: C-08
+    tier: production
+    evidence:
+      - "e2e/likely-crew.spec.ts:53"
+      - "src/lib/server/booking/crew.ts"
+      - "src/lib/components/settings/booking/CapacityForm.svelte:145-157"
+    plan_gate: "none"
+    limits:
+      - "An estimate only; never greys a date. Pickup and delivery storefront orders are drop-off and need no crew"
+      - "No rosters, shifts or hours (PRD 00 Out of Scope, #506)"
+    glossary_terms: [Estimated Load]
+    capture_worthy: "no"
+
+  - id: C-18
+    lane: C
+    overlap: [D, I]
+    workflow: "Connect an outside ordering system so its orders arrive as drafts"
+    job_to_be_done: "Orders from my other booking tool land in the kitchen without retyping"
+    actors: [owner, manager]
+    routes: ["/settings/ordering", "/api/ordering/v1/menus", "/api/ordering/v1/recipes", "/api/ordering/v1/orders", "/api/ordering/v1/orders/[id]", "/api/ordering/v2/orders", "/api/ordering/v1/sales", "/"]
+    entry: "Settings > Ordering integration > 'Create a key' > 'Create key'; webhooks under 'Connected systems'"
+    done_marker: "'Copy <name> now' with the key shown once (settings/ordering/+page.svelte:70-79); Home '<order> came in from <source> and is waiting for you to review it.' (src/lib/features/orders/arrived-orders.ts:70); order 'Mark reviewed' (CustomerCard.svelte:252)"
+    hands_off_to: C-08
+    tier: production
+    evidence:
+      - "e2e/ordering-integration.spec.ts"
+      - "e2e/ordering-security.spec.ts"
+      - "e2e/home-arrived-orders.spec.ts:46-175"
+      - "e2e/webhook-settings.spec.ts"
+      - "docs/ordering-integration.md"
+    plan_gate: "ordering flag"
+    limits:
+      - "A developer on the other system has to call the API; there is no packaged ezCater, Square or other connector on main"
+      - "The partner cannot confirm an order or set its price; CostCook reprices"
+      - "Partner custom requests stay Custom Request orders (not Inquiries)"
+    glossary_terms: [External Order Intake, External Order Source, Idempotent Submission]
+    capture_worthy: "no (developer-facing); the Home 'came in from' line is D's frame"
+
+  # ---------- assumed-today ----------
+  - id: C-19
+    lane: C
+    overlap: [A]
+    workflow: "An accepted proposal's deposit and balance become the terms on the order that collects them"
+    job_to_be_done: "The deposit I agreed in the proposal is the one the kitchen order asks for"
+    actors: [owner, manager, client]
+    routes: ["/events/[id]/proposal", "/orders/[id]"]
+    entry: "kb-client-payment: proposal states deposit and balance (commit 6c395b764); acceptance carries them to the tentative order (514c56982)"
+    done_marker: "not asserted in a spec that a caterer sees; commit 87449f95e pins $1,450.00 deposit on a $5,800.00 agreement in tentative-order.test.ts"
+    hands_off_to: C-20
+    tier: assumed-today
+    evidence:
+      - "kb-client-payment: src/lib/server/events/tentative-order.ts"
+      - "kb-client-payment: src/lib/server/ordering-payments/agreed-terms.ts"
+      - "kb-client-payment: docs/plans/client-payment-in-the-booking-loop-2026-09-27.md"
+    plan_gate: "none known"
+    limits:
+      - "No obligation rows until someone asks for a deposit; the balance still reads 'no balance'"
+      - "Client still cannot pay an event deposit by card (C-20)"
+      - "Balance reminders still do not fire for a booked event"
+    glossary_terms: [Deposit, Balance, Acceptance]
+    capture_worthy: "no"
+
+  # ---------- off-page ----------
+  - id: C-20
+    lane: C
+    overlap: [A]
+    workflow: "A client pays a booked event's deposit by card from a link"
+    job_to_be_done: "Take a wedding deposit by card without a storefront"
+    actors: [client, owner]
+    routes: ["/api/ordering/v1/payments/agreements/[obligationId]/checkout", "/api/ordering/v1/payments/agreements/[obligationId]/status"]
+    entry: "none reachable"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence:
+      - "kb-client-payment working tree: untracked routes above and modified src/lib/server/ordering-payments/checkout.ts (siteless 'paymentDoor')"
+      - "develop: src/lib/server/ordering-payments/event-deposit.ts (siteId null; offline/external only)"
+    plan_gate: "n/a"
+    limits:
+      - "Uncommitted API only; no client pay page in apps/ordering for a siteless obligation"
+      - "On develop, an event deposit is asked on /events/[id] and recorded offline or external on /orders/[id]"
+    glossary_terms: [Deposit]
+    capture_worthy: "no"
+
+  - id: C-21
+    lane: C
+    workflow: "Flag and close a day that goes over after a confirmed order grows"
+    job_to_be_done: "See the collision early when 80 guests become 140"
+    actors: [owner, manager]
+    routes: ["/calendar", "/"]
+    entry: "none"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence:
+      - "docs/prd/booking-capacity/09-day-load-flag.md"
+      - "issue #521 OPEN"
+      - "src/lib/server/booking/full-day.ts:13-22 ('capacity_auto' closure type exists; no writer)"
+    plan_gate: "n/a"
+    limits: ["Not built"]
+    glossary_terms: [Day Closure]
+    capture_worthy: "no"
+
+  - id: C-22
+    lane: C
+    overlap: [A]
+    workflow: "Check the day's room in an event's booking review"
+    job_to_be_done: "Book a custom event knowing what else is on that day"
+    actors: [owner, manager]
+    routes: ["/events/[id]"]
+    entry: "none"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence:
+      - "docs/prd/booking-capacity/11-front-of-house-integration.md criteria 3-5 unchecked"
+      - "issue #523 OPEN; no caller of assessDay/assessOrderDay under src/lib/server/events or src/routes/events"
+    plan_gate: "n/a"
+    limits: ["Not built; the order-side verdict (C-14) exists"]
+    glossary_terms: [Day Verdict]
+    capture_worthy: "no"
+
+  - id: C-23
+    lane: C
+    workflow: "Pull ezCater orders in for review and turn them into kitchen drafts"
+    job_to_be_done: "ezCater orders reach Shop, Prep, Pack without retyping"
+    actors: [owner, manager]
+    routes: ["/settings/integrations/ezcater"]
+    entry: "branch feat/ezcater-order-intake only"
+    done_marker: "n/a"
+    hands_off_to: null
+    tier: off-page
+    evidence:
+      - "branch feat/ezcater-order-intake commit 187524469 (worktree ~/kitchen-brain-ezcater)"
+      - "docs/qa/ezcater-order-intake-2026-09-13.md on that branch: fixture-only; 'live provider delivery remains unverified'"
+    plan_gate: "n/a"
+    limits: ["Fixture adapter only", "Creates no payment obligations"]
+    glossary_terms: [External Order Source]
+    capture_worthy: "no"
+
+internal_routes:
+  - route: /o/[token]
+    reason: "Client-facing PROPOSAL page (publicOfferPath, src/lib/server/proposals/public-link.ts:8-10; /proposals/[businessId]/[offerId] redirects to it). It is not the ordering storefront. It belongs to lane A's proposal and decision rows; the brief assigned it to lane C by mistake"
+  - route: /settings/ordering/stripe/refresh
+    reason: "Stripe onboarding return/refresh endpoint, part of C-05"
+  - route: "/api/ordering/** (v1 menus, recipes, orders, sales, sites/*, payments/*, v2 orders, [...rest])"
+    reason: "Machine endpoints behind C-06, C-09, C-11 and C-18; there are no screens"
+  - route: "apps/ordering/src/routes/+page.svelte"
+    reason: "Bare-origin fallback 'This link is missing the caterer'"
+  - route: "apps/ordering/src/routes/[store]/+error.svelte"
+    reason: "Storefront error page ('Try again')"
+
+prd_status:
+  source: docs/prd/booking-capacity (issues #512-#524)
+  "00-prd": { status: partial, note: "Slices 1-8, 10 and 12 built; 9 not built; 11 partial" }
+  "01-settings-and-closed-dates": { status: built, issue: "#513 CLOSED", code: "src/routes/settings/booking; src/lib/server/booking/day-closure.ts; apps/ordering/e2e/closed-dates.spec.ts" }
+  "02-booking-rules-and-custom-requests": { status: built, issue: "#514 CLOSED", code: "src/lib/server/booking/rules.ts; BookingRuleForm.svelte; CustomRequestCard.svelte", note: "Storefront custom requests now become Inquiries (0b395f961); partner API still writes Custom Request orders" }
+  "03-approve-then-pay": { status: built, issue: "#515 CLOSED", code: "src/lib/server/orders/approval/*; ApprovalReview.svelte; apps/ordering/src/routes/[store]/pay", note: "Payment Window hard-coded to 72 h (state.ts:39); user story 44's owner-set window is not built" }
+  "04-counted-capacity-and-day-verdict": { status: built, issue: "#516 CLOSED", code: "src/lib/server/booking/day-verdict.ts, committed-load.ts; DayVerdictCard.svelte; calendar/+page.svelte:293-358" }
+  "05-prep-estimates-in-the-verdict": { status: built, issue: "#517 CLOSED", code: "src/lib/server/booking/prep-load.ts; DayPrepLine.svelte", note: "README says held for design-partner feedback; merged and visible" }
+  "06-estimate-corrections": { status: built, issue: "#518 CLOSED", code: "src/lib/server/booking/prep-corrections.ts; PrepEstimateProposal.svelte" }
+  "07-closing-a-full-day": { status: built, issue: "#519 CLOSED", code: "src/lib/server/booking/full-day.ts, full-day-settlement.ts; FullDayQuestion.svelte; AutomaticClosingForm.svelte" }
+  "08-balance-and-reminders": { status: built, issue: "#520 CLOSED", code: "src/lib/server/orders/approval/balance-reminders.ts; home/balance-due.ts; BalanceSchedule.svelte", note: "Storefront approve-then-pay orders only" }
+  "09-day-load-flag": { status: not built, issue: "#521 OPEN", code: "none; 'capacity_auto' type in full-day.ts:22 has no writer" }
+  "10-crew-by-service-style": { status: built, issue: "#522 CLOSED", code: "src/lib/server/booking/crew.ts, crew-load.ts; DayCrewLine.svelte" }
+  "11-front-of-house-integration": { status: partial, issue: "#523 OPEN", code: "criteria 1-2 built (0b395f961, custom-request-conversion); criteria 3-5 (event booking review shows verdict, booked event counted) not built" }
+  "12-auto-approve-clear-requests": { status: built, issue: "#524 still OPEN", code: "src/lib/server/orders/approval/automatic.ts; AutomaticApprovalForm.svelte; e2e/booking-auto-approve.spec.ts", note: "Last issue comment (2026-09-20) predates merge 1cb886fed" }
+  "docs/ordering-integration.md": { status: built, note: "Partner API v1/v2, keys, storefront, payments all on main behind the ordering flag. Step 4 is stale: payment terms now render under 'How you get paid' on /settings/ordering/site, not on Settings > Ordering integration" }
+
+branches:
+  feat/ordering-integration: { tier: off-page, note: "Stale July branch (last commit 2026-07-28). Its issues #449-#452 are CLOSED and the capability (keys, catalog, intake, Today arrivals) is on main by another merge path. Superseded; adds nothing on-page" }
+  feat/ezcater-order-intake: { tier: off-page, note: "See C-23" }
+  kb-client-payment: { tier: assumed-today, note: "Touches this lane's ledger: C-19 committed, C-20 uncommitted and incomplete" }
+  kitchen-brain-proposal-build: { note: "No files in this lane touched" }
+  kb-stage-diagnosis: { note: "No files in this lane touched" }
+
+terms:
+  - term: "Payment processor for client money"
+    app_meaning: "Stripe Connect only (Accounts v2 connected account, STRIPE_ORDERING_* keys, stripe-gateway.ts), for storefront orders in payment mode 'kitchen_brain' (label 'CostCook'). 'External' = a partner reports payment; 'Offline' = the kitchen records it. Square is never used for client money. Event deposits on develop are offline/external only"
+    not_to_confuse_with: "CostCook's own subscription (Stripe platform account, /api/auth/stripe/webhook, docs/billing.md)"
+  - term: "Approval (#512)"
+    app_meaning: "The chef's yes to a fixed-menu storefront request; fixes terms, opens the Payment Window; the order is still a draft"
+    not_to_confuse_with: "Acceptance (client accepting a proposal, #501); Confirmed"
+  - term: "Payment Window"
+    app_meaning: "72 hours the approval holds the day awaiting payment; not owner-configurable today"
+    not_to_confuse_with: "Stripe checkout session expiry"
+  - term: "Estimate (client) vs quote (owner)"
+    app_meaning: "The same server-priced number: the storefront says 'Current estimate' / 'Estimated total'; the owner sees 'Deposit (25%): $650.00 of the $2,600.00 quote.'"
+    not_to_confuse_with: "Proposal (lane A); Price Quote is the server's time-limited price"
+  - term: "Ordering site / Online ordering / Ordering integration / storefront"
+    app_meaning: "Four names for one area: page titles 'Ordering site' and 'Ordering integration', settings hub row 'Online ordering' (settings/+page.server.ts:110), code and copy 'storefront'"
+    not_to_confuse_with: "The landing should pick one caterer word"
+  - term: "Partner"
+    app_meaning: "On screen it means an outside payment/ordering system ('A trusted partner reports payment.', 'Partner reported', 'Your payment partner collects this one.')"
+    not_to_confuse_with: "docs/ordering-integration.md:6-7 says CONTEXT.md binds 'partner' to the caterer; say 'ordering integration'"
+  - term: "Custom Request"
+    app_meaning: "A request the rules send to the chef for a price; takes no money; storefront ones now become Inquiries"
+    not_to_confuse_with: "Quote; Inquiry (lane A)"
+  - term: "Deposit / balance"
+    app_meaning: "Payment obligations on the ORDER ('Catering deposit', 'Catering balance'), created at Approval from the booking rule"
+    not_to_confuse_with: "Subscription billing; a customer invoice (#504, not built)"

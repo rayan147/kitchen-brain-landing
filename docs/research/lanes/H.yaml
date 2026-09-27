@@ -1,0 +1,331 @@
+# Lane H: Sage (the in-app AI assistant)
+# Source of truth: ~/kitchen-brain-develop-demo, HEAD ed6ff5f0130f443025ae96c0da971eca40468f93 (= origin/main, verified 2026-09-27).
+# All paths below are relative to that checkout unless prefixed with ~/kb-sage-redesign.
+# ~/kb-sage-redesign (design/sage-panel-redesign): its HEAD a76c01b8 IS an ancestor of develop (merged);
+# its 40 uncommitted files are NOT on develop -> tiered off-page (H-14).
+#
+# IMPORTANT tier caveat: the Sage agent (H-01..H-08) is on main, but it is off unless the deployment sets
+# SAGE_ENABLED=enabled exactly (src/lib/server/sage/config.ts:23). /sage 404s otherwise
+# (src/routes/sage/+page.server.ts:22). Whether production sets it was NOT verified (see H-notes open questions).
+# Rows are tiered "production" on code presence; the flag is recorded in plan_gate/limits.
+
+lane: H
+source_commit: ed6ff5f0130f443025ae96c0da971eca40468f93
+
+sage_model:
+  agent:
+    config: "src/lib/server/sage/config.ts:88-92"
+    default: "anthropic:claude-sonnet-5 (SAGE_AI_PROVIDER default 'anthropic'; SAGE_AI_MODEL default 'claude-sonnet-5')"
+    alternative: "google:gemini-3.5-flash when SAGE_AI_PROVIDER=google"
+    test_double: "SAGE_AI_PROVIDER=fake, only honoured when BETTER_AUTH_URL starts with http://localhost (config.ts:100-104)"
+    sdk: "Vercel AI SDK streamText + stepCountIs (src/lib/server/sage/agent.ts:20, 270)"
+  drafting_passes:   # the Sage-branded one-shot drafts (H-09..H-12) use the IMPORT pipeline's model, not the agent's
+    config: "src/lib/server/import/provider.ts:63-103"
+    default: "google:gemini-3.5-flash-lite (IMPORT_AI_PROVIDER default 'google'); anthropic:claude-sonnet-5 if IMPORT_AI_PROVIDER=anthropic"
+    stub: "IMPORT_AI_PROVIDER=stub, localhost only (provider.ts:51-52)"
+    gate: "ingredientFactClassifierIsConfigured(): not killed AND (stub OR API key present). NOT gated on SAGE_ENABLED (provider.ts:63-74)"
+
+sage_limits:   # src/lib/server/sage/config.ts:69-78, enforced in agent.ts:270-285, request.ts:79-88, repository.ts:306
+  maxSteps: 8
+  maxRunMs: 60000
+  maxQuestionChars: 2000
+  maxOutputTokens: 2000
+  maxConcurrentRunsPerTenant: 3
+  maxRunsPerUserPerHour: 60
+  maxTokensPerTenantPerDay: 1500000
+  maxRowsPerTool: 25
+  kill_switch: "SAGE_KILL_SWITCH=stop closes the agent AND every Sage-branded drafting pass (config.ts:35-37; provider.ts:63-74)"
+  refusal_messages: "src/lib/server/sage/request.ts:96-113 (e.g. 'Sage needs an active subscription.', 'That is a lot of questions in one hour. Try again shortly.', 'Sage has used its allowance for this kitchen today. It frees up over the next day; the kitchen screens all still work.')"
+
+# Registry: READ_TOOLS (src/lib/server/sage/tools.ts:398-411) + PROPOSAL_KINDS (src/lib/server/sage/proposals.ts:27).
+# Every tool is registered for every run (agent.ts:212-225); the role check runs inside the wrapper at call time
+# against the request's own membership (tool-contract.ts). No COMMIT-classified tool exists ("None are registered in
+# this release", tool-contract.ts ToolClassification doc).
+sage_tools:
+  - {name: getOrderAttentionSummary, does: "What needs attention across upcoming orders, purchasing, receiving and costing, optionally for one event date; includes each order's dietary-guard conflicts. Same getHomeDashboard the Today screen renders.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools.ts:111-119"}
+  - {name: findOrders, does: "Orders by name, event date or date range, with id, date, guests, status (drafts included). Turns 'the Rodriguez order' / 'Saturday' into ids.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-orders.ts:68-75"}
+  - {name: getOrderList, does: "One order's shop list (by supplier, net of shelf), prep list, or pack list (with equipment).", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-orders.ts:132-140"}
+  - {name: explainOrderMoney, does: "One order's revenue, food cost incl. misc line, food cost per guest, food cost % vs target, price that would meet target; for confirmed orders frozen figures plus planned vs actual spend.", access: read-only, min_role: MANAGER, confirmation_required: no, evidence: "src/lib/server/sage/tools-money.ts:51-59"}
+  - {name: explainMenuMargin, does: "One menu's cost per guest vs price per guest, food cost % vs target, target price, costliest dish.", access: read-only, min_role: MANAGER, confirmation_required: no, evidence: "src/lib/server/sage/tools-money.ts:151-159"}
+  - {name: summarizeSpending, does: "Month food cost (usage and invoice spend vs event revenue, waste, unaccounted gap) or spend by supplier/category over 30/90/365 days vs previous period.", access: read-only, min_role: MANAGER, confirmation_required: no, evidence: "src/lib/server/sage/tools-money.ts:247-255"}
+  - {name: explainIngredient, does: "One ingredient: pack and pack cost with price source, supplier, trusted on-hand vs par, allergen review, every recipe/menu/order using it; for managers recent purchases and price moves.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-ingredients.ts:37-45"}
+  - {name: getPriceImpact, does: "Open price-change reviews and which recipes, menus and upcoming events got more expensive and by how much; or one review in full.", access: read-only, min_role: MANAGER, confirmation_required: no, evidence: "src/lib/server/sage/tools-ingredients.ts:167-175"}
+  - {name: explainRecipeCost, does: "One recipe's cost by ingredient line plus anything blocking a complete cost.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools.ts:222-230"}
+  - {name: findIngredientPrices, does: "Ingredient prices that moved in the recent buying window, size of move, purchases read.", access: read-only, min_role: MANAGER, confirmation_required: no, evidence: "src/lib/server/sage/tools.ts:278-286"}
+  - {name: getReceivingStatus, does: "Open receiving follow-ups: deliveries that came up short.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools.ts:329-336"}
+  - {name: getStagedImports, does: "Import batches staged in review and what each needs before commit.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools.ts:369-377"}
+  - {name: getSetupProgress, does: "First-Run Setup progress and, per stage, why it exists, what it needs, what its words mean.", access: read-only, min_role: MANAGER, confirmation_required: no, evidence: "src/lib/server/sage/tools-kitchen.ts:233-241"}
+  - {name: findRecipes, does: "Recipes whose name contains a query, with ids.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-kitchen.ts:38-46"}
+  - {name: findRecipesWithAllergen, does: "Recipes that contain or may contain one allergen (from reviewed ingredient allergens), plus recipes that cannot be judged.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-kitchen.ts:70-78"}
+  - {name: getIngredientsBelowPar, does: "Ingredients whose trusted on-hand count is below par, plus pars that cannot be judged.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-kitchen.ts:132-140"}
+  - {name: explainRecipeNutrition, does: "Nutrition facts for one recipe with %DV, ingredient gaps, blockers; optional USDA candidate comparison for one ingredient (repair advice). Never treats absent as zero.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-kitchen.ts:178-186"}
+  - {name: describeOrderingSite, does: "Whether the public ordering site is live, which menus customers can order, what is missing to go live.", access: read-only, min_role: MANAGER, confirmation_required: no, evidence: "src/lib/server/sage/tools-kitchen.ts:281-289"}
+  - {name: getPrepForDate, does: "Prep for every order on one event date, as the Prep tab prints it.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-prep.ts:151-159"}
+  - {name: getOrderProgress, does: "How far one order's shop, prep and pack lists are checked off, and lines still to do. Never ticks anything.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-prep.ts:233-241"}
+  - {name: getLikelyLeftovers, does: "Likely leftover sub-recipes from recent confirmed orders' whole-batch rounding. An estimate, never counted stock.", access: read-only, min_role: STAFF, confirmation_required: no, evidence: "src/lib/server/sage/tools-prep.ts:288-296"}
+  - {name: checkDayRoom, does: "What one date holds (orders, vans, prep minutes, servers) vs booking numbers, closed-day status, pending, and whether one more delivery/pickup order fits. Does not estimate prep/crew for the new order.", access: read-only, min_role: MANAGER, confirmation_required: no, evidence: "src/lib/server/sage/tools-booking.ts:66-74"}
+  # PROPOSE tools: write only a sage_proposals draft row; the real change happens only in approveProposal
+  # (src/lib/server/sage/proposals.ts:58-138), which the model cannot call, after a person presses the card's button,
+  # with role and record fingerprint re-checked (stale -> nothing written).
+  - {name: prepareShoppingList, does: "Drafts a kitchen-wide shopping list from current inventory gaps. On approval: builds the inventory shopping list (/catalog/inventory/shopping-list).", access: "writes draft; commit on approval", min_role: MANAGER, confirmation_required: "yes: 'Create the shopping list' / 'Discard this draft'", evidence: "src/lib/server/sage/proposal-shopping-list.ts:48,140-147,220-248; src/lib/sage/proposal-copy.ts:31-38"}
+  - {name: prepareOrderShoppingList, does: "Drafts saving one order's shopping list (exactly what the order's Shop tab would save). On approval: saves it to the order.", access: "writes draft; commit on approval", min_role: MANAGER, confirmation_required: "yes: 'Save the shopping list' / 'Discard this draft'", evidence: "src/lib/server/sage/proposal-order-shopping-list.ts:32,95-101,168-184; src/lib/sage/proposal-copy.ts:40-47"}
+  - {name: prepareGuestCountChange, does: "Drafts a new guest count for a DRAFT order; price per guest held, total follows. On approval: runs the order screen's own updateGuests; withdraws a client approval if one was given.", access: "writes draft; commit on approval", min_role: MANAGER, confirmation_required: "yes: 'Change the guest count' / 'Discard this draft'", evidence: "src/lib/server/sage/proposal-guest-count.ts:45,128-137,207-239; src/lib/sage/proposal-copy.ts:49-56"}
+
+rows:
+  - id: H-01
+    lane: H
+    workflow: "Ask Sage a question about the kitchen, beside whatever screen you are on"
+    job_to_be_done: "Get a straight, cited answer (what needs attention Saturday, what's below par, what prep is due) without hunting through screens"
+    actors: [owner, manager, staff]
+    routes: ["/sage/api/chat", "/sage/api/panel", "(panel in AppShell on every signed-in screen)"]
+    entry: "Sidebar item 'Sage' (tooltip 'Sage (⌘J)' / 'Sage (Ctrl+J)'), src/lib/components/shell/AppSidebar.svelte:205-212; composer label 'Ask about your kitchen', placeholder 'What needs my attention on Saturday?' (src/lib/components/sage/SageComposer.svelte:73,85)"
+    done_marker: "Answer article 'Sage’s answer' with a 'Where this came from' source list linking to the cited records (SageMessage.svelte:135; SageSourceList.svelte:70). Empty state: 'Ask your first question' + 'Sage never changes anything on its own.' (SageConversation.svelte:332,337)"
+    hands_off_to: [H-02, H-03, H-04, H-05, H-07]
+    tier: production
+    evidence: ["e2e/sage.spec.ts:38 (opens beside the screen, rides along, survives reload)", "e2e/sage.spec.ts:365 (first use offers real questions)", "e2e/sage.spec.ts:406 (stopped question, 'Send again')", "e2e/sage.spec.ts:445 (answer cites records and links)", "e2e/sage.spec.ts:468 (order named the way a caterer says it)", "e2e/sage.spec.ts:744 (keyboard reachable)", "e2e/import-sage.spec.ts:14 (cites staged import)", "src/lib/server/sage/tools.ts:398-411", "src/lib/server/sage/policy.ts:24-60"]
+    plan_gate: "Launch (only plan). Refused with 'Sage needs an active subscription.' when subscriptionAccess.canUseProduct is false (request.ts:60-62,104-105). Also requires deployment flag SAGE_ENABLED=enabled."
+    limits:
+      - "Read-only: answers only from the 22 read tools; policy forbids stating any number not returned by a tool (policy.ts:27)."
+      - "8 steps, 60 s, 2,000-char question, 2,000 output tokens, 60 questions/user/hour, 3 concurrent runs/kitchen, 1.5M tokens/kitchen/day."
+      - "No links in prose, no tables/headings; no memory across conversations ('Never claim you learn the business, remember preferences')."
+      - "Money tools (order/menu/spending/price moves/price impact), setup progress, ordering site and day-room are MANAGER+; staff get 'needs an owner or a manager'."
+      - "Not covered: sales (Square), label printing, customers, events/proposals/contracts, customer invoices. Staff answers redact accepted-proposal names/totals (regression case inquiry-to-signing-usability)."
+      - "Off entirely unless SAGE_ENABLED=enabled; kill switch shows 'Sage is turned off right now. Every kitchen screen still works as usual.' (SagePanel.svelte:290)."
+    glossary_terms: [Sage, Attention, Par, Food Cost %, Misc cost percent, Prep list, Pack list, Shopping list]
+    capture_worthy: "yes: panel docked beside Today with a cited answer and the 'Where this came from' list"
+
+  - id: H-02
+    lane: H
+    workflow: "Ask Sage about the order, recipe, menu, ingredient or import on screen"
+    job_to_be_done: "Ask 'what goes in the van for this one' or 'why does this dish cost what it costs' without retyping which record"
+    actors: [owner, manager, staff]
+    routes: ["/orders/[id]", "/catalog/recipes/[id]", "/catalog/recipes/[id]/kitchen", "/catalog/menus/[id]", "/ingredients/[id]", "/import/[id]"]
+    entry: "Open Sage on a record screen; panel shows 'About' <Order · name> and 'New conversation about this' (SagePanel.svelte:265,269). Screen suggestions e.g. 'What goes in the van for {name}?', 'Why does {name} cost what it costs?', 'What uses {name}?', 'Is {name} priced right?' (src/lib/server/sage/suggestions.ts:76-98). Recipe nutrition repair: 'Ask Sage for suggestions' opens a prepared question (RecipeNutritionRepair.svelte:83,125-126)"
+    done_marker: "Answer citing the pinned record; thread pinned via contextRef (sage-schema.ts:53)"
+    hands_off_to: [H-04, H-05]
+    tier: production
+    evidence: ["e2e/sage.spec.ts:516 (manager asks order food cost; staff never offered)", "e2e/sage.spec.ts:545 (cook asks what goes in the van)", "e2e/sage.spec.ts:558 (what is left to pack)", "src/lib/sage/screen-context.ts:13-33", "src/routes/orders/[id]/+layout.server.ts:161", "src/routes/catalog/recipes/[id]/+page.server.ts:541", "src/routes/catalog/menus/[id]/+page.server.ts:39", "src/routes/ingredients/[id]/+page.server.ts:177", "src/routes/import/[id]/+page.server.ts:262"]
+    plan_gate: "same as H-01"
+    limits:
+      - "Pin is an opaque type:id re-validated server-side; never page text (screen-context.ts:1-7)."
+      - "Pinned context only on those six screens; events, customers, purchases screens do not pin (WORDS lists purchase/supplier/receiving/priceImpact but no loader passes them)."
+      - "Manager-only suggestions hidden from staff (suggestions.ts:46)."
+    glossary_terms: [Order, Recipe, Dish, Sub-recipe, Menu, Import batch]
+    capture_worthy: "yes: order screen with panel open, 'About · Order <name>' and 'What goes in the van' answer"
+
+  - id: H-03
+    lane: H
+    workflow: "Have Sage draft the kitchen's shopping list, then approve it"
+    job_to_be_done: "Turn 'what do I need to buy' into a real shopping list after checking it"
+    actors: [owner, manager]
+    routes: ["/sage/api/chat", "/sage/api/proposal", "/catalog/inventory/shopping-list"]
+    entry: "Ask e.g. 'What do I need to buy?'; card 'Draft shopping list' with sections 'What this creates' / 'What it does not touch' ('No order is placed and no supplier is contacted'); buttons 'Create the shopping list' / 'Discard this draft' (SageProposalCard.svelte:60,71,152-155; proposal-shopping-list.ts:110,123; proposal-copy.ts:32)"
+    done_marker: "'Shopping list created.' with link 'Open the shopping list' (proposal-shopping-list.ts:248; proposal-copy.ts:34). Discard: 'Discarded. Nothing was created.' (presentation.ts:21). Stale: 'The kitchen’s numbers changed, so nothing was created. Ask Sage to prepare it again.'"
+    hands_off_to: "D (shopping list / buying)"
+    tier: production
+    evidence: ["e2e/sage.spec.ts:378 (chef reviews, approves, returns to durable result)", "e2e/sage.spec.ts:618 (interrupted decision reports unconfirmed outcome)", "src/lib/server/sage/proposals.ts:58-138"]
+    plan_gate: "same as H-01; approve requires MANAGER"
+    limits:
+      - "Nothing changes until a person presses the button; double-submit cannot commit twice (claim-before-commit, proposals.ts:95-107)."
+      - "Buys nothing, emails no supplier, creates no purchase order."
+      - "If inventory changed since drafting, commit is refused as stale."
+    glossary_terms: [Shopping list, Par, On hand]
+    capture_worthy: "yes: the draft card with 'What it does not touch' and the approve button"
+
+  - id: H-04
+    lane: H
+    workflow: "Have Sage draft one order's shopping list, then save it"
+    job_to_be_done: "Get the buy list for the Rodriguez order saved without opening the Shop tab"
+    actors: [owner, manager]
+    routes: ["/sage/api/chat", "/sage/api/proposal", "/orders/[id]"]
+    entry: "Suggestion from orderShoppingDraftQuestion (suggestions.ts:78, MANAGER); card 'Draft shopping list'; buttons 'Save the shopping list' / 'Discard this draft' (proposal-copy.ts:41)"
+    done_marker: "'Saved a shopping list of {n} items for {order name}.' + 'Open the order' (proposal-order-shopping-list.ts:182-184; proposal-copy.ts:43)"
+    hands_off_to: "D (order Shop tab)"
+    tier: production
+    evidence: ["e2e/sage.spec.ts:871 (manager saves one order's shopping list through a reviewed draft)", "src/lib/server/sage/proposal-order-shopping-list.ts:95-184"]
+    plan_gate: "same as H-01; MANAGER"
+    limits: ["Saves exactly what the Shop tab would; places no order, contacts no supplier.", "Stale if the order changed after drafting: 'The order changed after this was prepared, so nothing was saved. Ask Sage to prepare it again.'"]
+    glossary_terms: [Order, Shopping list]
+    capture_worthy: "no (H-03 carries the same card)"
+
+  - id: H-05
+    lane: H
+    workflow: "Change a draft order's guest count through a Sage draft"
+    job_to_be_done: "Client said 32 now: update the headcount and see the new total before committing"
+    actors: [owner, manager]
+    routes: ["/sage/api/chat", "/sage/api/proposal", "/orders/[id]"]
+    entry: "Ask on the order (e.g. 'change it to 32 guests'); card 'Draft guest change'; buttons 'Change the guest count' / 'Discard this draft' (proposal-guest-count.ts:106; proposal-copy.ts:50)"
+    done_marker: "'Guests changed from {a} to {b}.' plus, if the client had an approval link, 'Approval withdrawn. … so the client's link no longer works. Approve again to send the new amount.' (proposal-guest-count.ts:231-238; src/lib/features/orders/approval-review.ts:31-33)"
+    hands_off_to: "D (order), C (re-approval of online request)"
+    tier: production
+    evidence: ["e2e/sage.spec.ts:839 (manager changes a draft order to 32 guests)", "src/lib/server/sage/proposal-guest-count.ts:128-239"]
+    plan_gate: "same as H-01; MANAGER"
+    limits: ["Draft (unconfirmed) orders only: 'A confirmed order cannot be changed this way.'", "Per-guest price held; no re-quote, no flat-total negotiation (PRD sage-capabilities ruling 2)."]
+    glossary_terms: [Order, Guests, Approval]
+    capture_worthy: "yes: card showing old vs new total before approval"
+
+  - id: H-06
+    lane: H
+    workflow: "Hand a Sage draft to a manager (staff asks, manager approves)"
+    job_to_be_done: "A cook can start the shopping list; the owner signs it off later"
+    actors: [staff, manager, owner]
+    routes: ["/sage", "/sage/api/proposal"]
+    entry: "Staff sees the draft card with no buttons"
+    done_marker: "'This needs a manager. The draft is saved for one of them to review.' (SageProposalCard.svelte:128-131); draft stays PREPARED (proposals.ts:74-78)"
+    hands_off_to: [H-03, H-04, H-05]
+    tier: production
+    evidence: ["e2e/sage.spec.ts:573 (manager handoff is role-safe through the interface and direct HTTP)", "src/lib/server/sage/visibility.test.ts", "src/lib/server/sage/repository.ts:85-97 (redaction text)"]
+    plan_gate: "same as H-01"
+    limits: ["Answers that used manager-only records are replaced for staff with 'This answer used records only a manager can read. Ask them, or use the kitchen screens for what your role shows.' (repository.ts:97)", "Conversations are shared by the whole kitchen (thread per business)."]
+    glossary_terms: [Role, Owner, Manager, Staff]
+    capture_worthy: "no"
+
+  - id: H-07
+    lane: H
+    workflow: "Keep, find and tidy Sage conversations"
+    job_to_be_done: "Come back to last week's thread, or clear one out"
+    actors: [owner, manager, staff]
+    routes: ["/sage", "/sage/api/thread"]
+    entry: "/sage (title 'Conversations | CostCook', description 'Every conversation with Sage, kept. Read one in full here, or take it back beside the screen you are working on.'); 'New conversation'; row menu 'Options for {title}' -> 'Pin'/'Unpin', 'Rename', delete (src/routes/sage/+page.svelte:60,91,128; SageThreadList.svelte:102-123)"
+    done_marker: "Rename dialog 'Rename conversation' / 'Everyone in the kitchen sees the new name.' / 'Save name'; delete 'Delete {title}?' / 'The transcript goes for everyone in the kitchen. Any shopping list already approved from it stays.' (SageThreadList.svelte:144-172)"
+    hands_off_to: H-01
+    tier: production
+    evidence: ["e2e/sage.spec.ts:760 (pinned, renamed and deleted)", "e2e/sage.spec.ts:635 (survives reload via deep link)", "e2e/sage.spec.ts:665 (cannot open another kitchen's conversation)", "e2e/sage.spec.ts:705", "src/routes/sage/api/thread/+server.ts:16-23"]
+    plan_gate: "same as H-01"
+    limits: ["No search in the conversation list on develop (search is in the uncommitted redesign, H-14).", "Threads are kitchen-wide, not private per user."]
+    glossary_terms: [Sage]
+    capture_worthy: "no"
+
+  - id: H-08
+    lane: H
+    workflow: "Ask Sage what a setup step means while setting up the kitchen"
+    job_to_be_done: "Get unstuck on 'what is trim yield' or 'what is left to finish setup' without leaving setup"
+    actors: [owner, manager]
+    routes: ["/setup", "/setup/*", "import shell during setup"]
+    entry: "'Ask Sage' button in the setup header (src/lib/components/setup/SetupHeader.svelte:43-48); stage questions such as 'What does the {stage} stage need from me?', 'What is left to finish setup?', 'What is trim yield, and when do I need it?' (suggestions.ts:113-146)"
+    done_marker: "Answer beside the stage; setup empty text 'Sage answers from the records you have entered so far. Setup is not finished, so some questions will come back with what is still missing. That is a real answer, too.' (src/lib/sage/empty-copy.ts:13-14)"
+    hands_off_to: "I (setup)"
+    tier: production
+    evidence: ["e2e/sage.spec.ts:793 (during setup, Ask Sage opens beside the stage and never leaves it)", "e2e/sage.spec.ts:824", "src/routes/setup/+layout.svelte:154,183-187", "src/lib/server/sage/tools-kitchen.ts:233-241"]
+    plan_gate: "same as H-01"
+    limits: ["getSetupProgress is MANAGER+; staff cannot run setup."]
+    glossary_terms: [First-Run Setup]
+    capture_worthy: "maybe: setup stage with Sage docked"
+
+  - id: H-09
+    lane: H
+    workflow: "Let Sage draft an ingredient's nutrition when USDA has no match"
+    job_to_be_done: "Fill a nutrition profile for an odd ingredient so recipe nutrition isn't blocked"
+    actors: [owner, manager, staff]
+    routes: ["/ingredients/[id]"]
+    entry: "Nutrition section: 'Draft with Sage' / 'Draft with Sage instead' / 'Use a Sage draft instead' (IngredientNutritionSection.svelte:259,298,311); recipe review dialog 'Draft missing nutrition with Sage' (NutritionSourceReviewDialog.svelte:346)"
+    done_marker: "Profile labelled 'Sage estimate'; after review badge 'Sage estimate: checked in your kitchen' (IngredientNutritionSection.svelte:99,147). Refusal copy: 'This ingredient already has a nutrition source, so Sage left it alone.' (src/routes/ingredients/[id]/+page.server.ts:434)"
+    hands_off_to: "E (recipe nutrition label)"
+    tier: production
+    evidence: ["src/routes/ingredients/[id]/+page.server.ts:408-437", "src/lib/server/nutrition/auto-suggestion.ts:107-114", "src/lib/server/import/provider.ts:420-448", "regression case apps/regression-workbook/catalog/cases/ingredient-detail-redesign.json"]
+    plan_gate: "Launch; NOT gated on SAGE_ENABLED, only on the import AI key + kill switch"
+    limits: ["Name-only estimate per 100 g; saved as a suggested (unverified) profile, never as USDA or package facts.", "Only when the ingredient has no nutrition source."]
+    glossary_terms: [Nutrition profile, Sage estimate]
+    capture_worthy: "no"
+
+  - id: H-10
+    lane: H
+    workflow: "Let Sage draft an ingredient's allergens, then confirm each answer"
+    job_to_be_done: "Speed up the allergen checklist without trusting a guess blindly"
+    actors: [owner, manager, staff]
+    routes: ["/ingredients/[id]", "/ingredients/[id]/allergens"]
+    entry: "'Draft with Sage' (IngredientAllergenSection.svelte:208; src/routes/ingredients/[id]/allergens/+page.svelte:134), replace-all confirm 'Replace the current answers with Sage drafts? Nothing is saved until you confirm each answer.' (:141)"
+    done_marker: "Rows marked 'Sage draft, not confirmed' (allergens/+page.svelte:88); message 'Sage drafts from the ingredient name only. Nothing is saved until you confirm.' (:129)"
+    hands_off_to: "E (allergen matrix)"
+    tier: production
+    evidence: ["src/routes/ingredients/[id]/+page.server.ts:488-518", "apps/regression-workbook/catalog/cases/ingredients.json (Draft with Sage shows unconfirmed notes without changing selections)"]
+    plan_gate: "Launch; import AI key + kill switch, not SAGE_ENABLED"
+    limits: ["Ingredient name only, no label/photo evidence.", "Nothing saved until confirmed; button absent when the drafting model is not configured."]
+    glossary_terms: [Allergen review, Contains, May contain]
+    capture_worthy: "no"
+
+  - id: H-11
+    lane: H
+    workflow: "Let Sage draft the missing allergen and dietary answers for a recipe's ingredients"
+    job_to_be_done: "Clear a recipe's facts review in one pass, then confirm or discard"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/recipes/[id]"]
+    entry: "'Draft these with Sage' (RecipeAllergenDrafts.svelte:206-207); 'Draft answers with Sage' (RecipeDietaryGrid.svelte:79); per-row 'Sage drafted an answer for {name}. Read it, then use it or answer yourself.' (RecipeFactsReviewDialog.svelte:321)"
+    done_marker: "'Sage drafted {n}' then confirm/discard actions confirmIngredientFactDrafts / discardIngredientFactDrafts (src/routes/catalog/recipes/[id]/+page.server.ts:1063,1096-1110)"
+    hands_off_to: "E"
+    tier: production
+    evidence: ["src/routes/catalog/recipes/[id]/+page.server.ts:1063-1110", "apps/regression-workbook/catalog/cases/recipe-detail-actions.json"]
+    plan_gate: "Launch; import AI key + kill switch"
+    limits: ["Drafts are unconfirmed until confirmed; a draft never overwrites a cook's own answer silently."]
+    glossary_terms: [Allergen review, Dietary characteristics]
+    capture_worthy: "no"
+
+  - id: H-12
+    lane: H
+    workflow: "Let Sage draft missing food facts (and yield/conversion estimates) during setup and import"
+    job_to_be_done: "Get through the setup Food facts stage and import review without typing every fact"
+    actors: [owner, manager]
+    routes: ["/setup", "/import/[id]", "/ingredients/new"]
+    entry: "'Draft missing food facts with Sage' (src/lib/features/onboarding/action-labels.ts:12; setup action draftAllReviews src/routes/setup/+page.server.ts:692); 'Match the exact USDA food from its row, or let Sage draft an estimate.' (SetupFoodFactsStage.svelte:297); yield/conversion 'Sage estimate · not confirmed' (RecipeConversionReviewDialog.svelte:186), 'Sage estimate: approximately {n} {unit}' (IngredientConversionsDialog.svelte:137)"
+    done_marker: "'Sage drafted … Nothing is recorded until you take it or answer yourself.' (SetupFoodFactsReview.svelte:337)"
+    hands_off_to: "I (setup), F (import)"
+    tier: production
+    evidence: ["src/routes/setup/+page.server.ts:692-705,860,899", "src/lib/server/import/ai-estimate.ts:2-10,114", "apps/regression-workbook/catalog/cases/first-run-setup.json"]
+    plan_gate: "Launch; import AI key + kill switch"
+    limits: ["Estimates the chef confirms, never numbers CostCook writes on its own (ai-estimate.ts:10).", "Setup 'Build the dish with Sage' / 'Build another with Sage' (SetupRecipesStage.svelte:163,199,249) is just a link to /import?kind=recipe: the recipe importer, not the Sage agent (lane E/F)."]
+    glossary_terms: [Trim yield, Costing unit, Sage estimate]
+    capture_worthy: "no"
+
+  - id: H-13
+    lane: H
+    workflow: "Sage never writes without a person: stop, retry, and recover an unconfirmed outcome"
+    job_to_be_done: "Trust that pressing a button is the only way a record changes, and know what happened if the connection dropped"
+    actors: [owner, manager, staff]
+    routes: ["/sage/api/chat", "/sage/api/proposal"]
+    entry: "Composer Stop (SageComposer.svelte:95); 'Send again' on a turn that ended without an answer (SageMessage.svelte:208)"
+    done_marker: "'Sage could not confirm the outcome. Check the shopping list, then safely retry this draft.' (proposal-copy.ts:35-36); 'That draft failed. Nothing was changed.' (presentation.ts:28)"
+    hands_off_to: [H-03, H-04, H-05]
+    tier: production
+    evidence: ["e2e/sage.spec.ts:406", "e2e/sage.spec.ts:618", "src/lib/server/sage/tool-contract.ts (READ/PROPOSE/COMMIT; no COMMIT tools)", "src/lib/server/sage/policy.ts:1-22 (prompt-injection boundary)"]
+    plan_gate: "same as H-01"
+    limits: ["This is a property of H-01..H-05, listed as a row because it is the claim most worth putting on a page."]
+    glossary_terms: [Sage]
+    capture_worthy: "no (fold into H-03 capture)"
+
+  - id: H-14
+    lane: H
+    workflow: "Redesigned Sage panel: greeting, grouped prompts, structured answers with a next step, thumbs feedback, conversation search"
+    job_to_be_done: "Faster first question and scannable answers on a phone"
+    actors: [owner, manager, staff]
+    routes: ["/api/sage/suggestions", "/api/sage/feedback", "/sage/api/panel"]
+    entry: "Worktree only: ~/kb-sage-redesign (design/sage-panel-redesign), uncommitted: src/lib/components/sage/SageStart.svelte, SageStructuredAnswer.svelte, src/lib/server/sage/start.ts, structured-answer.ts, drizzle/0158_sage_feedback.sql, src/routes/api/sage/{suggestions,feedback}"
+    done_marker: "n/a (not built on develop). Workbook case (uncommitted) apps/regression-workbook/catalog/cases/sage-panel.json"
+    hands_off_to: H-01
+    tier: off-page
+    evidence: ["~/kb-sage-redesign git status: 27 modified + untracked files, HEAD a76c01b8 already an ancestor of develop; the uncommitted work is not"]
+    plan_gate: "n/a"
+    limits: ["Not merged; do not describe on the landing."]
+    glossary_terms: []
+    capture_worthy: "no"
+
+  - id: H-15
+    lane: H
+    workflow: "Sage drafts a menu price change or a supplier purchase order"
+    job_to_be_done: "Act on 'brunch is at 38%, what hits 30%?' or turn a shortage into a PO"
+    actors: [owner, manager]
+    routes: [""]
+    entry: "none"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/sage-capabilities-prompt.md:96-110 (rulings 3-4: supplier drafts 'Not this round'; menu price draft 'not in this build'; no COMMIT tools, no memory, no Square sales or label reads)", "src/lib/server/sage/proposals.ts:27 (only 3 kinds registered)"]
+    plan_gate: "n/a"
+    limits: ["PRD only. Not built."]
+    glossary_terms: []
+    capture_worthy: "no"
+
+internal_routes:
+  - {route: /sage/api/chat, reason: "POST endpoint behind the panel/composer (H-01)"}
+  - {route: /sage/api/panel, reason: "GET endpoint that hydrates the docked panel (H-01/H-02)"}
+  - {route: /sage/api/proposal, reason: "POST approve/deny endpoint behind the draft card (H-03..H-06)"}
+  - {route: /sage/api/thread, reason: "POST rename/pin/delete endpoint (H-07)"}

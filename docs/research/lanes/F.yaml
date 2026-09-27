@@ -1,0 +1,589 @@
+# Lane F: Buying and supplier invoices
+# Source: ~/kitchen-brain-develop-demo (develop = origin/main = ed6ff5f01, HEAD confirmed 2026-09-27).
+# "Invoice" unqualified = SUPPLIER invoice throughout.
+# Paths in evidence are relative to the kitchen-brain repo root. Labels quoted from source.
+# Plan gate: docs/billing.md describes one paid plan (Launch, $49/month); no buying
+# feature checks a plan tier. Gates listed below are role gates or release flags.
+
+rows:
+  - id: F-01
+    lane: F
+    workflow: "Log what was just bought"
+    job_to_be_done: "Get a shop run or a single receipt into the books so pack costs, recipe costs and month spend move with it"
+    actors: [owner, manager, staff]
+    routes: ["/purchases"]
+    entry: "Purchases > 'Log purchase' (header, wide screens) or the phone action bar; 'More' > 'Log one item'; ingredient page > 'Log a purchase'"
+    done_marker: "'Purchase logged' alert: names which recipes change cost, or 'No recipe costs change: nothing in the catalog uses these ingredients yet.' When an upcoming event is affected: 'Purchase saved. It changes what an upcoming event costs.' with 'Review affected events'"
+    hands_off_to: F-08
+    tier: production
+    evidence:
+      - "e2e/manual-entry.spec.ts ('manual-entry composer prices lines, gates Add, and commits the run')"
+      - "src/routes/purchases/+page.svelte:134 ('Log purchase'), :138 ('Import invoice'), :202-205"
+      - "src/lib/components/purchases/ManualEntryDialog.svelte:225, :343 ('Purchase logged'), :365 ('Log $X purchase'), :367 ('Each line shows the new pack cost before you save.')"
+      - "src/lib/components/purchases/PurchaseEntryMenu.svelte:98 ('Log one item', hint 'One line, with a note')"
+      - "src/routes/ingredients/[id]/IngredientOverviewRedesign.svelte:218 ('Log a purchase')"
+    plan_gate: "none (any signed-in role; /purchases action guard requireRole at src/routes/purchases/+page.server.ts:222)"
+    limits:
+      - "Needs at least one ingredient first; an empty kitchen sees 'Start with an invoice' instead of the log button"
+      - "Current Cost follows purchase DATE, not entry order: back-logging an older receipt records history but never overwrites a newer price (CONTEXT.md 'Current Cost')"
+      - "Supplier is a field on the purchase; it does not create a purchase order"
+    glossary_terms: [Purchase, Current Cost, Actual Spend]
+    capture_worthy: "yes: the Log purchase dialog showing each line's new pack cost before save"
+
+  - id: F-02
+    lane: F
+    workflow: "Import a supplier invoice and update costs"
+    job_to_be_done: "Turn a paper or PDF invoice into purchases and current pack costs without typing every line"
+    actors: [owner, manager, staff]
+    routes: ["/import", "/import/source/[id]", "/import/result"]
+    entry: "Purchases > 'Import invoice'; Supplier invoices > 'Add supplier invoice' (/import?kind=invoice); Import page type toggle 'Invoice'; drop zone 'Drop invoices & price lists'; phone camera 'Add document to queue'"
+    done_marker: "/import/result heading 'Invoice imported', card 'What changed', buttons 'View purchases' / 'Review affected events'. Before commit the review says 'Ready to import' ('Extraction, required decisions, and consequence checks are complete.')"
+    hands_off_to: F-08
+    tier: production
+    evidence:
+      - "e2e/canonical-import.spec.ts ('mobile invoice review keeps catalog decisions visible...', 'an OCR-only PDF preserves the source and offers isolated retry', 'setup invoice review stays focused and lands on a durable setup result')"
+      - "e2e/photo-import.spec.ts ('invoice photo is preserved for OCR recovery when provider is unavailable')"
+      - "src/routes/import/+page.svelte:12 ('Import and review'), :21 (lead copy: 'CostCook reads it, and you check anything it wasn't sure of before it goes into your records.')"
+      - "src/lib/components/import/SourceTypeSelector.svelte:56 ('Invoice')"
+      - "src/lib/components/import/CanonicalSourceReview.svelte:1161 ('Import invoice and update costs'), :924 ('Create supplier on import'), :1347-1353 ('Ready to import')"
+      - "src/lib/components/import/InvoiceLineReviewAccordion.svelte:275 ('Exclude this line'), :370 ('Catalog decision'), :720 ('Create new ingredient'), :774 ('Edit purchase unit and invoice values')"
+      - "src/lib/server/import/invoice-commit.ts:412-437, :567, :581, :670-675 (blockers)"
+      - "src/routes/import/result/+page.svelte:14 ('Invoice imported')"
+    plan_gate: "none"
+    limits:
+      - "Nothing is written until a person presses 'Import invoice and update costs'; extraction alone never creates records"
+      - "One invoice per review; a batch of files keeps each invoice's review separate"
+      - "PDFs with a text layer are read by CostCook's own rule-based parser. Scans and phone photos need an AI reader (OCR through the configured provider: Google Gemini 'gemini-3.5-flash-lite' by default, or Claude Sonnet 5 when IMPORT_AI_PROVIDER=anthropic; src/lib/server/import/provider.ts:93-103, ocr-adapter.ts:30)"
+      - "Where no AI reader is configured, a scan stops at 'Scan not readable' / 'This PDF needs OCR' ('This is a scan, and no scan reader is set up here...'); the file is kept and can be replaced with a text PDF"
+      - "Lines the reader is unsure of are NOT guessed into the books: low-confidence quantity or money becomes a blocker ('Confirm the low-confidence quantity for ...', 'Confirm the low-confidence financial values for ...'); every line needs a catalog decision, a new ingredient, or 'Exclude this line'"
+      - "Import is blocked when printed and calculated totals differ ('The lines do not add up to the invoice total.'), when no supplier is chosen, or when it looks like an invoice already imported ('Blocked: this looks like an invoice you already imported.')"
+      - "Upload limit 3.5 MB per prepared file, 4.4 MB per request (src/lib/server/import/upload-validation.ts:15, :71)"
+      - "The reading is never described as complete or accurate by the app; the owner confirms"
+    glossary_terms: [Staged Import, Purchase Evidence Suggestion, Current Cost, Reviewed Supplier Invoice]
+    capture_worthy: "yes: phone invoice review with a line card showing 'Needs review' beside the catalog decision, then 'Invoice imported'"
+
+  - id: F-03
+    lane: F
+    workflow: "Have suppliers email invoices straight into CostCook"
+    job_to_be_done: "Stop re-keying or uploading invoices that already arrive by email"
+    actors: [owner, manager, supplier]
+    routes: ["/settings/invoice-inbox", "/purchases/inbox", "/purchases/inbox/[id]/files/[ordinal]"]
+    entry: "Settings > 'Invoice email'; Purchases > 'Waiting on you' tip 'Set up invoice email'; Purchases > 'More' > 'Invoice inbox'"
+    done_marker: "Inbox row labelled 'Invoice' with 'Waiting in review. It counts once you confirm it.' and a 'Review' link into the same invoice review as F-02"
+    hands_off_to: F-02
+    tier: off-page
+    tier_note: "Code is on origin/main, but infra/cdk/environments.ts:156 sets production inbox { domain: 'in.costcook.io', nameServers: [], worker: false }. Only the test environment runs the mail worker end to end (environments.ts:98-108, 'The first environment the inbox runs end to end in (2026-09-25)'). In production the settings page can show an address (src/lib/server/inbox/domain.ts maps production to in.costcook.io) that mail cannot reach yet. Owner to confirm."
+    evidence:
+      - "e2e/invoice-inbox.spec.ts ('an emailed invoice waits in Purchases and its review says who sent it', 'an emailed credit memo and statement arrive, each saying what became of it')"
+      - "src/routes/settings/invoice-inbox/+page.svelte:53-54 ('Invoice email' / 'Invoices sent to this address wait in review. Nothing counts until you check it...'), :81 ('Ask your suppliers to send invoices here'), :96 ('Forward from Gmail'), :117 ('Change the address'), :155 ('See what has arrived')"
+      - "src/routes/purchases/inbox/+page.svelte:26-27 ('Invoice inbox' / 'Every email sent to your invoice address, and what became of it.')"
+      - "src/lib/inbox/outcomes.ts (outcome labels: 'Invoice', 'Credit memo', 'Statement', 'Held as spam', 'Blocked', 'Nothing to read', 'Over today's limit', 'Needs a look')"
+      - "infra/cdk/environments.ts:98-108, :131, :156"
+    plan_gate: "none in code; deployment-gated (mail worker off in production)"
+    limits:
+      - "Emailed invoices are never counted automatically; each waits in review"
+      - "Only PDF or photo attachments are read ('No PDF or photo came with it. Ask the sender for a PDF.')"
+      - "Caps: 200 emails per kitchen per day (src/lib/server/inbox/receive.ts:20) and 100 OCR pages per day (ocr-budget.ts:2)"
+      - "Statements, order confirmations and promotions are kept but not imported"
+      - "Gmail forwarding needs a one-time confirmation code the owner enters in Gmail"
+    glossary_terms: [Invoice inbox, Credit memo, Reviewed Supplier Invoice]
+    capture_worthy: "yes once live: inbox list with outcome badges and the 'Message for your sales rep' copy block"
+
+  - id: F-04
+    lane: F
+    workflow: "See every supplier invoice and where it stands"
+    job_to_be_done: "Answer 'did we get and check the Sysco invoice?' in one look"
+    actors: [owner, manager]
+    routes: ["/purchases/invoices", "/purchases/invoices/[id]"]
+    entry: "Purchases > 'More' > 'Supplier invoices'"
+    done_marker: "Invoice detail page titled '<Supplier> · <number>' with 'Invoice evidence' (supplier, number, date, total) and 'Where it stands'"
+    hands_off_to: F-05
+    tier: production
+    evidence:
+      - "e2e/invoice-accounting.spec.ts"
+      - "src/routes/purchases/invoices/+page.svelte:50-53 ('Supplier invoices' / 'Check what was captured from each supplier invoice.'), :64 ('Add supplier invoice')"
+      - "src/routes/purchases/invoices/[id]/+page.svelte:60-64, :123 ('Invoice evidence')"
+    plan_gate: "none for viewing; route guarded by requireRole"
+    limits:
+      - "Only invoices that were imported and committed appear ('Add an invoice, review the captured lines, and commit it before it appears here.')"
+      - "This is supplier-invoice evidence, not a customer invoice or receivable"
+    glossary_terms: [Reviewed Supplier Invoice]
+    capture_worthy: "no"
+
+  - id: F-05
+    lane: F
+    workflow: "Send a checked supplier invoice to QuickBooks as a bill, and record supplier credits"
+    job_to_be_done: "Get the bill into the books without typing it twice"
+    actors: [owner]
+    routes: ["/purchases/invoices", "/purchases/invoices/[id]", "/import/source/[id]"]
+    entry: "Invoice review > 'Send it to QuickBooks too' checkbox; Invoice detail > 'Mark ready to send' then 'Send to QuickBooks as a bill'; 'Record a supplier credit'"
+    done_marker: "'QuickBooks bill' section showing Vendor, Due date, Bill total; retry state 'CostCook will check QuickBooks again.'"
+    hands_off_to: null
+    tier: production
+    tier_note: "Behind the release flag quickbooks_integration (FEATURE_QUICKBOOKS_INTEGRATION_ENABLED, src/lib/server/features/access.ts) AND an active subscription (src/lib/server/integrations/execution-access.ts). Whether the flag is on in production is an env value this lane cannot see. Integration setup belongs to lane I."
+    evidence:
+      - "e2e/invoice-accounting.spec.ts ('reviews supplier evidence and exports one provider-neutral payable', 'a stale tab makes no second bill', 'bulk send holds back an unmatched supplier with its reason')"
+      - "src/lib/components/accounting/invoice/QuickBooksBillSection.svelte:77, :194 ('Send to QuickBooks as a bill')"
+      - "src/lib/components/accounting/invoice/InvoiceStandingCard.svelte:64 ('Mark ready to send')"
+      - "src/lib/components/accounting/invoice/SupplierCreditsSection.svelte:82 ('Record a supplier credit'), :60 ('Send credit to QuickBooks')"
+      - "src/lib/components/import/CanonicalSourceReview.svelte:1146 ('Send it to QuickBooks too')"
+      - "src/routes/purchases/invoices/[id]/+page.server.ts:206 ('Only a workspace owner can record a supplier credit.')"
+    plan_gate: "owner role (BILLING_ROLES) + release flag quickbooks_integration"
+    limits:
+      - "QuickBooks only; no other accounting system"
+      - "Owner-only actions"
+      - "Approval is not payment: CostCook makes a bill, it does not pay the supplier"
+    glossary_terms: [Reviewed Supplier Invoice, Approved Payable, Accounting Export]
+    capture_worthy: "maybe: the 'Send it to QuickBooks too' tick on the import screen"
+
+  - id: F-06
+    lane: F
+    workflow: "Refresh catalog prices from a supplier price sheet"
+    job_to_be_done: "Update many pack prices at once when the supplier's order guide changes"
+    actors: [owner, manager, staff]
+    routes: ["/import", "/import/[id]", "/import/csv"]
+    entry: "Import > type 'Price sheet' (PDF, photo, pasted text) or 'Map supplier columns' (/import/csv 'Map a supplier spreadsheet')"
+    done_marker: "'Apply reviewed changes' then /import/result heading 'Catalog prices updated'"
+    hands_off_to: F-08
+    tier: production
+    evidence:
+      - "e2e/sheet-import.spec.ts ('stubbed sheet: match+apply a price diff, match+skip another, create a new row')"
+      - "e2e/csv-import.spec.ts"
+      - "src/lib/components/import/PriceSheetReview.svelte:573 ('Apply reviewed changes'), :583 ('Included lines update current catalog pack and price fields without adding purchases.'), :455 ('Ignore this line'), :514 ('New ingredient'), :262 ('Some source text could not be read')"
+      - "src/routes/import/csv/+page.svelte:34-35 ('Map a supplier spreadsheet' / '...proposes which column is which, and you confirm before the rest is read.')"
+      - "src/routes/import/result/+page.svelte:16"
+    plan_gate: "none"
+    limits:
+      - "Every price change is a reviewed line; nothing is auto-applied"
+      - "A price sheet is an asking price, not a purchase: it never enters the purchase log or month spend"
+      - "For a foreign spreadsheet the AI only names the columns; the numbers are read by rules ('Only the column names and a few sample rows go to the reading service')"
+      - "Rows it could not read are listed under 'Some source text could not be read'"
+    glossary_terms: [Price Sheet, Current Cost]
+    capture_worthy: "yes: a price diff row with match / ignore choices"
+
+  - id: F-07
+    lane: F
+    workflow: "Bring in an ingredient list in bulk"
+    job_to_be_done: "Stand up the ingredient catalog from a spreadsheet or document instead of one by one"
+    actors: [owner, manager]
+    routes: ["/ingredients/import", "/import", "/import/[id]"]
+    entry: "'Import ingredients' (/ingredients/import, 'Download the template', 'CSV or Excel file'); or Import > type 'Ingredient list'"
+    done_marker: "/ingredients/import 'Result' section with 'See the catalog' and a table of 'Rows that were not imported, with reasons'; document path ends at /import/result 'Ingredients added'"
+    hands_off_to: F-20
+    tier: production
+    evidence:
+      - "e2e/setup-wizard.spec.ts, e2e/ingredient-bulk.spec.ts"
+      - "src/routes/ingredients/import/+page.svelte:26, :33, :43, :73, :110"
+      - "src/routes/import/result/+page.svelte:17 ('Ingredients added')"
+    plan_gate: "none"
+    limits:
+      - "Template CSV is imported directly; other lists go through review"
+      - "Rows with problems are reported, not silently fixed"
+    glossary_terms: [Staged Import]
+    capture_worthy: "no"
+
+  - id: F-08
+    lane: F
+    workflow: "Check what a price rise does to upcoming events and decide"
+    job_to_be_done: "Know which booked or draft events a supplier price change hurts before the margin quietly shrinks"
+    actors: [owner, manager]
+    routes: ["/purchases/price-impact", "/purchases/price-impact/[id]"]
+    entry: "Purchases 'Waiting on you' > 'Check price changes'; post-save link 'Review affected events'"
+    done_marker: "'Decision saved' after 'I changed a price or menu' or 'Checked, no change needed' ('Either choice closes this review for good.')"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/price-impact-action-queue.spec.ts ('a price edit becomes a ranked, resolvable event-level decision'), e2e/price-impact-navigation.spec.ts"
+      - "src/routes/purchases/price-impact/+page.svelte:82-83 ('Price impact' / 'See which price changes affect your upcoming events, then record what you checked.')"
+      - "src/routes/purchases/price-impact/[id]/+page.svelte:88, :207-213 ('Upcoming events' / 'Draft events are repriced at the new cost. Confirmed events keep the price you quoted, so a rise there comes out of your margin.'), :425, :438, :446"
+      - "src/lib/components/purchases/DishPriceWarning.svelte ('Use this price' for a dish's selling price; Square publish only when Square is on)"
+      - "src/lib/components/purchases/WaitingOnYou.svelte:119 ('Check price changes')"
+    plan_gate: "owner or manager for decisions ('An owner or manager decides this one')"
+    limits:
+      - "It does not reprice confirmed events; they keep the quoted price"
+      - "A decision cannot be reopened"
+      - "Dish price change pushes to Square only when Square is switched on (lane I)"
+    glossary_terms: [Price impact, Current Cost]
+    capture_worthy: "yes: the 'Upcoming events' block with previous vs new pack price"
+
+  - id: F-09
+    lane: F
+    workflow: "See which ingredient prices moved"
+    job_to_be_done: "Spot the supplier who raised prices this month"
+    actors: [owner, manager, staff]
+    routes: ["/purchases/prices", "/purchases"]
+    entry: "Purchases > card 'Prices that moved'"
+    done_marker: "list 'Every ingredient whose pack price changed in this window, biggest move first.'"
+    hands_off_to: F-08
+    tier: production
+    evidence:
+      - "e2e/purchases-month-view.spec.ts"
+      - "src/routes/purchases/prices/+page.svelte:38-39"
+      - "src/lib/components/purchases/PricesThatMoved.svelte:52, :112 ('Price trends in Analytics')"
+    plan_gate: "none"
+    limits: ["Only prices CostCook has recorded (purchases, invoices, price sheets); no market price feed"]
+    glossary_terms: [Current Cost]
+    capture_worthy: "no (lane G owns analytics/prices)"
+
+  - id: F-10
+    lane: F
+    workflow: "Check in a delivery against the purchase order"
+    job_to_be_done: "Record what actually came off the truck and what it cost, at the back door"
+    actors: [owner, manager, staff]
+    routes: ["/purchases/receiving/[poId]"]
+    entry: "Purchases 'Waiting on you' item button; 'More' > 'Receive a sent order' / 'Sent purchase orders (n)'"
+    done_marker: "'Log received' then 'All received: every line on this order is logged.' (or 'Nothing left to receive: every line is logged or closed.')"
+    hands_off_to: F-11
+    tier: production
+    evidence:
+      - "e2e/home-receiving-task-identity.spec.ts, e2e/receiving-rest-not-coming.spec.ts"
+      - "src/routes/purchases/receiving/[poId]/+page.svelte:18 ('Receive: <supplier>')"
+      - "src/lib/components/purchases/ReceivingChecklist.svelte:47 ('Enter what you actually paid...'), :90 ('None of it is coming' / 'The rest is not coming'), :178 ('Log received'), :183-184"
+      - "src/lib/components/purchases/PurchaseEntryMenu.svelte:130, :155"
+    plan_gate: "none"
+    limits:
+      - "Only for purchase orders already sent from an order (sending is lane D, /orders/[id]); the event-linked receiving screen /orders/[id]/receiving is lane D"
+      - "No automated ordered-vs-invoiced matching; the checklist is the record (CONTEXT.md 'Purchase Order')"
+    glossary_terms: [Purchase Order, Receiving Decision]
+    capture_worthy: "yes: phone receiving checklist"
+
+  - id: F-11
+    lane: F
+    workflow: "Follow up short deliveries and substitutions"
+    job_to_be_done: "Not lose track of what the supplier still owes"
+    actors: [owner, manager]
+    routes: ["/purchases/follow-up"]
+    entry: "Purchases > 'More' > 'Receiving follow-up'"
+    done_marker: "'Mark handled' moves the item to Handled ('Moves to Handled; reopen it there if needed.'); empty state 'Nothing to follow up'"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/post-confirmation-receiving.spec.ts, e2e/home-attention.spec.ts"
+      - "src/routes/purchases/follow-up/+page.svelte:48-49 ('Substitution follow-up' / 'Short delivery'), :106-111, :193, :201"
+    plan_gate: "none"
+    limits: ["A tracking list only; it does not contact the supplier or create a credit"]
+    glossary_terms: [Receiving Decision]
+    capture_worthy: "no"
+
+  - id: F-12
+    lane: F
+    workflow: "Log waste"
+    job_to_be_done: "Put a known loss on the record so the food-cost gap explains itself"
+    actors: [owner, manager, staff]
+    routes: ["/purchases"]
+    entry: "Purchases > 'More' > 'Log waste'"
+    done_marker: "'Waste logged: <qty unit ingredient>.' / 'It now shows in this month's food cost below.'"
+    hands_off_to: F-14
+    tier: production
+    evidence:
+      - "e2e/log-waste.spec.ts ('log-waste dialog re-labels the gap and the header grows the waste slice')"
+      - "src/lib/components/purchases/LogWasteDialog.svelte:108, :135-177"
+      - "src/routes/purchases/+page.svelte:257-258"
+    plan_gate: "none"
+    limits: ["Optional and minimal: ingredient, amount, unit, optional note; no reason taxonomy"]
+    glossary_terms: [Logged Waste, Unaccounted Gap]
+    capture_worthy: "no"
+
+  - id: F-13
+    lane: F
+    workflow: "Correct a purchase that was logged wrong"
+    job_to_be_done: "Fix a typo'd quantity or amount without erasing the original"
+    actors: [owner, manager]
+    routes: ["/purchases"]
+    entry: "Purchases ledger row > correct (dialog 'Correct <ingredient> purchase?')"
+    done_marker: "success alert with the correction message; ledger shows the corrected pack cost"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/purchases-month-view.spec.ts"
+      - "src/lib/components/purchases/PurchaseCorrectionDialog.svelte:82, :103 ('Corrected packs'), :116 ('Corrected total paid ($)'), :140"
+    plan_gate: "role-gated (data.canCorrect)"
+    limits: ["Additive: the original purchase stays as evidence; purchases are not deleted"]
+    glossary_terms: [Purchase Correction]
+    capture_worthy: "no"
+
+  - id: F-14
+    lane: F
+    workflow: "Work out why the month's food spend and usage do not match"
+    job_to_be_done: "Explain the gap between what food should have cost and what was spent"
+    actors: [owner, manager]
+    routes: ["/purchases/reconcile"]
+    entry: "Purchases month header > 'Review food-cost gap'"
+    done_marker: "'Remaining gap' with 'Ingredient contributions'; four steps '1. Review orders', '2. Review deliveries', '3. Check shelf counts', '4. Review known waste'"
+    hands_off_to: F-15
+    tier: production
+    evidence:
+      - "e2e/order-gap-reconciliation.spec.ts"
+      - "src/routes/purchases/reconcile/+page.svelte:29 ('Reconcile food cost'), :44, :65, :85, :106, :118, :130"
+      - "src/lib/components/purchases/MonthFoodCostHeader.svelte:418 ('Review food-cost gap')"
+    plan_gate: "none"
+    limits:
+      - "Food only; the gap is never called waste unless waste was logged (CONTEXT.md 'Unaccounted Gap')"
+      - "Can only count purchases that were entered"
+    glossary_terms: [Unaccounted Gap, Usage Cost to Date ('Should have cost'), Actual Spend ('Did cost'), Logged Waste]
+    capture_worthy: "maybe (lane G owns the numbers story)"
+
+  - id: F-15
+    lane: F
+    workflow: "Count the shelf and set par levels"
+    job_to_be_done: "Know what is on hand so the shopping list does not over- or under-buy"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/inventory", "/ingredients/[id]"]
+    entry: "Kitchen records > 'Inventory'; ingredient page 'Count on shelf'; Purchases 'More' > 'Shelf check'"
+    done_marker: "'Save count' (conflict path 'Keep their count' / 'Replace with my count'); par saved via 'Par level'"
+    hands_off_to: F-16
+    tier: production
+    evidence:
+      - "e2e/catalog/inventory.spec.ts"
+      - "src/routes/catalog/inventory/+page.svelte:350-351 ('Inventory' / 'What is on the shelf, what to count, and what to buy for upcoming events.')"
+      - "src/lib/components/inventory/InventoryCountDialog.svelte:181 ('New count'), :228, :237"
+      - "src/lib/components/inventory/InventoryParDialog.svelte:101 ('Par level')"
+      - "src/routes/ingredients/[id]/IngredientOverviewRedesign.svelte:217 ('Count on shelf')"
+    plan_gate: "none"
+    limits:
+      - "On-hand is computed (purchases in, confirmed-order usage out, waste out) and a fresh count overrules it"
+      - "No lot tracking, expiry dates, FIFO/LIFO valuation or negative-stock alerts (CONTEXT.md 'Computed Inventory')"
+    glossary_terms: [Computed Inventory, True-up, Shelf Check, On Hand, Shelf Value]
+    capture_worthy: "yes: phone count dialog"
+
+  - id: F-16
+    lane: F
+    workflow: "Build a shopping list from par and confirmed events"
+    job_to_be_done: "Know what to buy this week, grouped by supplier, without doing the math"
+    actors: [owner, manager]
+    routes: ["/catalog/inventory", "/catalog/inventory/shopping-list"]
+    entry: "Inventory > 'Build shopping list' (dialog 'Build the shopping list?')"
+    done_marker: "'Shopping list created' / 'Shopping list updated' / 'Shopping list is already current', then 'Open shopping list'; page 'Shopping list' ('What to buy for confirmed events and your par, by supplier.')"
+    hands_off_to: F-10
+    tier: production
+    evidence:
+      - "e2e/buy-to-par.spec.ts ('buy to par without events')"
+      - "src/lib/components/inventory/BuildShoppingListDialog.svelte:66-69, :123, :177"
+      - "src/routes/catalog/inventory/+page.svelte:418, :423"
+      - "src/routes/catalog/inventory/shopping-list/+page.svelte:81-86, :223 ('Only a recent count comes off'), :302 ('Review supplier timing')"
+    plan_gate: "none"
+    limits:
+      - "Only a recent count is subtracted; lines with missing prices or suppliers stay visible and flagged"
+      - "Draft events are not committed demand; only confirmed events count"
+      - "Overlaps lane D's order shopping list; dedupe at merge"
+    glossary_terms: [Purchase Recommendation, Committed Demand, On Hand]
+    capture_worthy: "maybe"
+
+  - id: F-17
+    lane: F
+    workflow: "See how fast the shelf turned over this month"
+    job_to_be_done: "Tell whether money is sitting on the shelf"
+    actors: [owner, manager]
+    routes: ["/purchases"]
+    entry: "Purchases > 'More' > 'Stock turnover' ('How fast the shelf moved this month')"
+    done_marker: "Turnover dialog shows turns and days-on-shelf, or names the missing fact"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/catalog/inventory.spec.ts"
+      - "src/lib/components/purchases/PurchaseEntryMenu.svelte:108-113"
+      - "src/lib/components/purchases/MonthTurnover.svelte"
+    plan_gate: "none"
+    limits: ["Needs a real count near each end of the month; counted ingredients only; otherwise it says which fact is missing instead of a number"]
+    glossary_terms: [Turnover, Shelf Value]
+    capture_worthy: "no"
+
+  - id: F-18
+    lane: F
+    workflow: "Keep a list of suppliers with their purchase-order email"
+    job_to_be_done: "Have each supplier's contact and PO email on file so orders go to the right place"
+    actors: [owner, manager]
+    routes: ["/settings/vendors"]
+    entry: "Settings > 'Vendors & suppliers' > 'Add vendor'"
+    done_marker: "vendor detail with 'Contact details', 'Purchase-order email', 'Purchasing history'"
+    hands_off_to: F-19
+    tier: production
+    evidence:
+      - "e2e/business-setup.spec.ts, e2e/settings-visual-contract.spec.ts"
+      - "src/routes/settings/vendors/+page.svelte:13-14 ('Vendors & suppliers' / 'Manage suppliers, purchase-order details, and price history.')"
+      - "src/lib/components/settings/AddSupplierDialog.svelte:47 ('Add vendor')"
+      - "src/lib/components/settings/VendorDetail.svelte:58, :67, :74, :92-93 ('View price history')"
+    plan_gate: "none"
+    limits: ["Suppliers can also be created from an invoice review ('Create supplier on import') or from the ingredient form"]
+    glossary_terms: [Supplier, Vendor]
+    capture_worthy: "no"
+
+  - id: F-19
+    lane: F
+    workflow: "Set each supplier's lead time, cutoff, delivery days and minimums"
+    job_to_be_done: "Catch a shopping list that is complete but will arrive too late or fall under the order minimum"
+    actors: [owner]
+    routes: ["/settings/vendors/[id]/timing"]
+    entry: "Vendor detail > 'Supplier timing'; shopping list 'Review supplier timing'"
+    done_marker: "'Save supplier timing'"
+    hands_off_to: F-16
+    tier: production
+    evidence:
+      - "e2e/business-setup.spec.ts, e2e/catalog/inventory.spec.ts"
+      - "src/routes/settings/vendors/[id]/timing/+page.svelte:40-41 ('Supplier timing · <name>' / 'A full shopping list can still arrive too late.'), fields 'Lead time (calendar days)', 'Order cutoff (supplier local time)', 'Supplier timezone', 'Delivery weekdays', 'Minimum merchandise subtotal (USD)', 'Minimum total packs per order', :113"
+      - "src/routes/settings/vendors/[id]/timing/+page.server.ts:11 ('Only an owner can change supplier timing and minimums.')"
+    plan_gate: "owner role"
+    limits: ["No timezone is assumed; owner must enter it"]
+    glossary_terms: [Supplier timing]
+    capture_worthy: "no"
+
+  - id: F-20
+    lane: F
+    workflow: "Keep one ingredient's cost, pack and price history straight"
+    job_to_be_done: "See what recipes pay for an ingredient and fix its pack or price in one place"
+    actors: [owner, manager, staff]
+    routes: ["/ingredients/[id]", "/ingredients/[id]/edit"]
+    entry: "Kitchen records > Ingredients > <ingredient>"
+    done_marker: "overview card 'What recipes pay' reflects the saved pack cost; 'Save price' in 'Change pack price only'"
+    hands_off_to: F-21
+    tier: production
+    evidence:
+      - "e2e/ingredient-workspace.spec.ts, e2e/ingredient-redesign.spec.ts, e2e/ingredient-price-recovery.spec.ts"
+      - "src/routes/ingredients/[id]/IngredientOverviewRedesign.svelte:217-219, :244 ('Change price only'), :253 ('Price history'), :328 ('Pack & measuring'), :545, :574"
+      - "src/routes/ingredients/[id]/edit/+page.svelte:1 (legacy URL redirects to overview)"
+    plan_gate: "none"
+    limits: ["Nutrition and allergen sections live on the same page; nutrition belongs to lane E"]
+    glossary_terms: [Current Cost]
+    capture_worthy: "maybe"
+
+  - id: F-21
+    lane: F
+    workflow: "Compare buying options and cost recipes from the better buy"
+    job_to_be_done: "Pick the supplier pack that is actually cheaper after trim"
+    actors: [owner, manager]
+    routes: ["/ingredients/[id]"]
+    entry: "Ingredient > 'Compare buying options'; Actions > add a buying option"
+    done_marker: "'Use this price' confirmed through 'Use \"<supplier>\" for recipe costs?'; badge 'Cheapest after trim'"
+    hands_off_to: F-08
+    tier: production
+    evidence:
+      - "e2e/comparative-costing.spec.ts ('a quote wins on usable cost, the flip sentence appears, and adopting it moves the catalog')"
+      - "src/lib/components/ingredients/CompareBuyingOptionsTable.svelte:236, :320 ('The cheaper pack is not the cheaper buy. Trim eats the difference.'), :336, :398"
+      - "src/lib/components/ingredients/AddBuyingOptionDialog.svelte:116-265"
+    plan_gate: "none"
+    limits: ["Quotes are entered by hand; no supplier catalog feed"]
+    glossary_terms: [Price Quote, Current Cost]
+    capture_worthy: "yes: the comparison with 'Cheapest after trim'"
+
+  - id: F-22
+    lane: F
+    workflow: "Record an ingredient's allergens from the label"
+    job_to_be_done: "Have confirmed allergen answers per ingredient so recipes inherit them"
+    actors: [owner, manager, staff]
+    routes: ["/ingredients/[id]/allergens"]
+    entry: "Ingredient > 'Review allergens'"
+    done_marker: "'Save N changes'; summary line 'all N are answered, so recipes treat <ingredient> as checked.'"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/ingredient-allergen-checklist.spec.ts"
+      - "src/routes/ingredients/[id]/allergens/+page.svelte:113-116 ('Go down the list with the package label or spec sheet in hand...'), :134 ('Draft with Sage'), :129 ('Sage drafts from the ingredient name only. Nothing is saved until you confirm.'), :245-249"
+    plan_gate: "none; 'Draft with Sage' shows only when the AI provider is configured and Sage is not switched off"
+    limits:
+      - "Sage's draft uses the ingredient NAME only and is unconfirmed until saved"
+      - "Overlaps lane E (allergen matrix, recipe inheritance)"
+    glossary_terms: [Ingredient Allergen, Derived Recipe Allergens]
+    capture_worthy: "no (lane E)"
+
+  - id: F-23
+    lane: F
+    workflow: "Look back through what was bought, by month, supplier or ingredient"
+    job_to_be_done: "Find a receipt or check what a supplier charged"
+    actors: [owner, manager, staff]
+    routes: ["/purchases"]
+    entry: "Kitchen records > Purchases (ledger 'What was bought', month selector, filters)"
+    done_marker: "ledger rows with source origin (invoice, manual, received order, email)"
+    hands_off_to: F-13
+    tier: production
+    evidence:
+      - "e2e/purchases-month-view.spec.ts, e2e/purchase-navigation.spec.ts, e2e/search-filters.spec.ts"
+      - "src/routes/purchases/+page.svelte:104 ('Receipts, food cost and price changes, month by month.'), :324"
+      - "src/lib/components/purchases/SourceOrigin.svelte, SpendSources.svelte"
+    plan_gate: "none"
+    limits: ["Shows only what was entered"]
+    glossary_terms: [Actual Spend, Month-to-Date Food Cost]
+    capture_worthy: "no"
+
+  - id: F-24
+    lane: F
+    workflow: "Choose and edit who each purchase order email goes to (hardened PO email)"
+    job_to_be_done: "Send each supplier its order to the right inbox with a clear result"
+    actors: [owner, manager, supplier]
+    routes: ["/orders/[id]", "/orders/[id]/receiving"]
+    entry: "branch only: PurchaseOrderSelectionDialog recipient editor"
+    done_marker: "n/a (not merged)"
+    hands_off_to: F-10
+    tier: off-page
+    evidence:
+      - "~/kitchen-brain/.gitworktrees/po-email-workflow, branch feat/purchase-order-email-workflow, 3 commits ahead of origin/main, last 2026-07-29 ('feat(orders): harden purchase order email delivery'); 36 files incl. drizzle migration 0050"
+    plan_gate: n/a
+    limits: ["Develop already emails purchase orders (src/lib/server/orders/post-confirmation.ts, lane D); this branch adds recipient editing and delivery hardening only"]
+    glossary_terms: [Purchase Order]
+    capture_worthy: "no"
+
+  - id: F-25
+    lane: F
+    workflow: "Move stock between two kitchens (operating units)"
+    job_to_be_done: "Transfer inventory between locations with an audit trail"
+    actors: [owner, manager]
+    routes: [""]
+    entry: "branch only"
+    done_marker: "n/a (not merged)"
+    hands_off_to: null
+    tier: off-page
+    evidence:
+      - "branch feat/488-inter-unit-inventory-transfers-v2 (14 ahead, 2026-09-16, 'feat(multi-unit): move stock between two operating units through an auditable transfer (#488)'); worktree ~/kitchen-brain-issue-488"
+    plan_gate: n/a
+    limits: ["Not on main; do not mention"]
+    glossary_terms: []
+    capture_worthy: "no"
+
+internal_routes:
+  - route: /purchases/inbox/[id]/files/[ordinal]
+    reason: "+server.ts file download endpoint for an emailed attachment; part of F-03, not a page"
+  - route: /ingredients/[id]/count
+    reason: "+server.ts endpoint behind the count dialog (F-15)"
+  - route: /ingredients/[id]/edit
+    reason: "legacy URL; server redirects to /ingredients/[id] (covered by F-20)"
+  - route: /ingredients
+    reason: "redirect-only (inventory.json redirectOnly) to /catalog/ingredients"
+  - route: /ingredients/new
+    reason: "redirect-only (inventory.json redirectOnly); ingredient creation lives in the catalog (lane E)"
+  - route: /analytics/suppliers
+    reason: "redirect-only (inventory.json redirectOnly)"
+  - route: /import/recipe-csv
+    reason: "recipe spreadsheet import; belongs to lane E (recipes)"
+  - route: /catalog/ingredients
+    reason: "ingredient list page; lane E owns the catalog. Buying entry points from it ('Import prices', supplier) feed F-06/F-18"
+
+terms:
+  - term: "Invoice (unqualified)"
+    app_meaning: "The SUPPLIER invoice: an imported document whose lines become purchases and update pack costs (/purchases/invoices 'Supplier invoices'). Once reviewed it is a 'Reviewed Supplier Invoice'; for QuickBooks it becomes an 'Approved Payable' then a bill."
+    not_to_confuse_with: "customer invoice / receivable (client money), CostCook's own Stripe subscription invoices (docs/billing.md)"
+  - term: "Credit memo"
+    app_meaning: "A supplier document that, once confirmed, takes its total off cost for its month; adds no purchases and changes no prices (CanonicalSourceReview.svelte:415-421)"
+    not_to_confuse_with: "Supplier credit recorded for QuickBooks (SupplierCreditsSection), refunds to clients"
+  - term: "Price sheet"
+    app_meaning: "A supplier's asking prices; updates catalog pack cost directly, never enters the purchase log"
+    not_to_confuse_with: "an invoice or a purchase"
+  - term: "Purchase"
+    app_meaning: "A ledger row of something bought (manual, invoice line, or received PO line); drives Current Cost and Actual Spend"
+    not_to_confuse_with: "Purchase order (outbound request to a supplier)"
+  - term: "Purchase order"
+    app_meaning: "Per-supplier order generated from the shopping list, emailed or printed; the sent PO doubles as the receiving checklist; no PO numbers or statuses"
+    not_to_confuse_with: "client order / catering order; Purchase Recommendation"
+  - term: "Supplier vs Vendor"
+    app_meaning: "Same thing. Settings page says 'Vendors & suppliers' and 'Add vendor'; purchases, invoices and import say 'supplier'. QuickBooks section says 'Vendor'."
+    not_to_confuse_with: "landing should pick 'supplier' (the dominant app word)"
+  - term: "Price impact"
+    app_meaning: "A review item created when a new cost changes what an upcoming (draft or confirmed) event costs; closed by 'I changed a price or menu' or 'Checked, no change needed'"
+    not_to_confuse_with: "Prices that moved (a plain list of changed pack prices)"
+  - term: "Should have cost / Did cost"
+    app_meaning: "UI labels for Usage Cost to Date and Actual Spend (CONTEXT.md)"
+    not_to_confuse_with: "theoretical vs actual food cost % (landing may say 'food cost' loosely)"
+  - term: "Invoice email / Invoice inbox"
+    app_meaning: "A per-kitchen address suppliers send invoices to; everything waits in review"
+    not_to_confuse_with: "a live production feature (mail worker is off in production as of ed6ff5f01)"
+  - term: "Reading / OCR"
+    app_meaning: "Text PDFs are parsed by rules; scans and photos are read by an AI provider (Gemini flash-lite default, Claude Sonnet 5 optional). The app says 'CostCook reads it, and you check anything it wasn't sure of'."
+    not_to_confuse_with: "'Sage' (the assistant brand; import extraction is not labelled Sage unless Sage is on)"
