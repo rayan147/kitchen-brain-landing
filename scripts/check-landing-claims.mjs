@@ -784,6 +784,15 @@ if (/class="btn-primary[^"]*"[\s\S]{0,200}demoCta\.label/.test(startHereSource))
 const sageSource = surfaces[surfaceFiles.indexOf('src/lib/sage.ts')];
 const sageSection = surfaces[surfaceFiles.indexOf('src/components/more/SageBlock.astro')];
 requireText(sageSource, 'export const SAGE_STATUS', 'sage status lives in sage.ts');
+// RC-49's counts, one place. Every sentence that counts Sage's tools or drafts
+// spells these, so the number is pinned here and a hand-typed copy is refused.
+requireText(sageSource, 'export const sageReadToolCount = 22;', 'Sage read-only tool count (RC-49: 22)');
+if ((sageSource.match(/export const sageDraftKinds = \[([\s\S]*?)\] as const/)?.[1].match(/^\s*'[^']+'/gm) ?? []).length !== 3) {
+	failures.push('Sage draft kinds: RC-49 ships exactly three (kitchen shopping list, one order shopping list, guest-count change)');
+}
+if (/twenty-two|\b22 read/i.test(publicCopy.replace(sageSource, ''))) {
+	failures.push('Sage tool count is typed by hand; spell sageReadToolCount from src/lib/sage.ts');
+}
 requireText(comparisonSource, 'costcook: SAGE_STATUS', 'compare reads the sage status');
 requireText(featuresSource, "status: SAGE_STATUS === 'yes'", 'features reads the sage status');
 requireText(sageSection, '{sageStatusWord}', 'sage section prints its status');

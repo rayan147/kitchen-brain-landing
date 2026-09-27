@@ -52,11 +52,12 @@
  * release-owner checks named there.
  */
 
-import { SAGE_STATUS } from './sage';
+import { SAGE_STATUS, sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } from './sage';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
 import { acceptanceBoundary, depositMethods } from './events';
 import { dietary, allergenCount, allergenCountCapital } from './dietary';
+import { spell } from './words';
 
 export const VERIFIED_ON = 'August 30, 2026';
 
@@ -549,7 +550,7 @@ export const comparison: RowGroup[] = [
 				icon: 'sage',
 				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
 				costcook: SAGE_STATUS,
-				note: 'Sage is available now. It reads your records, shows its sources, helps during setup and can prepare a shopping-list draft for you to approve.',
+				note: `Sage is available now. It reads your records with ${spell(sageReadToolCount, { compound: true })} read-only tools, shows its sources, helps during setup and can prepare ${spell(sageDraftKinds.length)} kinds of draft for a manager or owner to approve: ${sageDraftKindsAnd}.`,
 				parsley: NOT_LISTED,
 				meez: 'Enterprise, custom'
 			},

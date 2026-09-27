@@ -1,6 +1,7 @@
 // story: docs/stories/features-navigation.story.md
 // Considered Strategy; not used because feature wording varies as static data, not runtime behavior.
-import { SAGE_STATUS } from './sage';
+import { SAGE_STATUS, sageDraftKinds, sageDraftKindsOr, sageReadToolCount } from './sage';
+import { spell, spellCapital } from './words';
 import { labelsAvailability } from './labels';
 import { orderingAvailability } from './ordering';
 import { allergenCount } from './dietary';
@@ -506,7 +507,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		status: SAGE_STATUS === 'yes' ? 'available' : 'in-development',
 		items: [
 			{ lead: 'Ask during setup.', detail: 'Setup keeps an Ask Sage entry, offers questions that fit the stage and records entered so far, and gives you a direct route back.' },
-			{ lead: 'Twenty-two read-only tools, three drafts.', detail: 'Ask about the shift, orders, recipes, stock, buying or setup. Sage can also draft the kitchen shopping list, one order’s shopping list, or a guest-count change on a draft order, for a manager or owner to approve.' },
+			{ lead: `${spellCapital(sageReadToolCount, { compound: true })} read-only tools, ${spell(sageDraftKinds.length)} drafts.`, detail: `Ask about the shift, orders, recipes, stock, buying or setup. Sage can also draft ${sageDraftKindsOr}, for a manager or owner to approve.` },
 			{ lead: 'Sources under the answer.', detail: 'Each answer shows the records and checks behind its numbers, and says when evidence is missing.' },
 			{ lead: 'A draft is not a change.', detail: 'Answers read your records. Nothing changes until an Owner or Manager approves the draft, and the records are checked again before saving.' }
 		]

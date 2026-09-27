@@ -1,6 +1,7 @@
 ---
 import FeatureTrialTerms from "../FeatureTrialTerms.astro";
-import { sage, sageStatusWord } from '../../lib/sage';
+import { sage, sageDraftKinds, sageDraftKindsAnd, sageReadToolCount, sageStatusWord } from '../../lib/sage';
+import { spell, spellCapital } from '../../lib/words';
 import { cta, demoCta } from '../../lib/site';
 import SageIcon from '../SageIcon.astro';
 
@@ -20,7 +21,7 @@ const faqItems = [
 	{
 		question: 'What can I ask Sage?',
 		answer:
-			'Sage has twenty-two read-only tools across the shift, orders, recipes, stock, buying and setup. It can also prepare three kinds of draft for an owner or manager to approve: the kitchen shopping list, one order’s shopping list, and a guest-count change on a draft order.'
+			`Sage has ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. It can also prepare ${spell(sageDraftKinds.length)} kinds of draft for an owner or manager to approve: ${sageDraftKindsAnd}.`
 	},
 	{
 		question: 'Can Sage change my kitchen records?',
@@ -214,7 +215,7 @@ const videoChapters = [
 				<h2 id="guardrails-heading">Useful because the boundaries are visible.</h2>
 				<p>An answer stays separate from an action. A prepared draft stays separate from approval.</p>
 			</div>
-			<div class="approval-path" data-reveal aria-label="Twenty-two tools read records, three kinds of draft can be prepared, and a person approves">
+			<div class="approval-path" data-reveal aria-label={`${spellCapital(sageReadToolCount, { compound: true })} tools read records, ${spell(sageDraftKinds.length)} kinds of draft can be prepared, and a person approves`}>
 				<div><span>22 tools</span><strong>Read records</strong></div>
 				<i aria-hidden="true"></i>
 				<div><span>3 drafts</span><strong>Prepares a draft</strong></div>

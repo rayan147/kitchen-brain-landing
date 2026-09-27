@@ -29,6 +29,25 @@ import type { Verdict } from './comparison';
 
 export const SAGE_STATUS = 'yes' as Verdict;
 
+/**
+ * The counts kitchen-brain ships (RC-49): read-only tools, and the kinds of
+ * draft Sage may prepare for approval. Every sentence that counts them spells
+ * these through words.ts, so a count cannot drift between /features, the FAQ,
+ * the homepage and /compare. The draft kinds are listed, not counted, so the
+ * count and the names are one fact.
+ */
+export const sageReadToolCount = 22;
+export const sageDraftKinds = [
+	'the kitchen shopping list',
+	'one order’s shopping list',
+	'a guest-count change on a draft order'
+] as const;
+
+/** "The kitchen shopping list, one order’s shopping list, and a guest-count change on a draft order". */
+export const sageDraftKindsAnd = new Intl.ListFormat('en', { type: 'conjunction' }).format(sageDraftKinds);
+/** The same three, as alternatives: "..., or a guest-count change on a draft order". */
+export const sageDraftKindsOr = new Intl.ListFormat('en', { type: 'disjunction' }).format(sageDraftKinds);
+
 export const sage = {
 	name: 'Sage',
 	/** The app's own one-line description, verbatim from its page header. */
