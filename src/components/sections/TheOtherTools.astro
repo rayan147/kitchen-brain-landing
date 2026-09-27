@@ -234,7 +234,11 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 					</h3>
 				</div>
 				<p>
-					{`${comingItems.length === 1 ? 'It is not' : 'None is'} in the CostCook you would start today, and no release date is promised. ${comingItems.map((item) => item.title).join(' and ')} ${comingItems.length === 1 ? 'is' : 'are'} not available in the launch plan.`}
+					{/* The titles are not joined into this sentence: they are list labels
+					     in title case ("Card payment for booked events"), and read
+					     mid-sentence they came out as "Spanish and Card payment...". The
+					     list beside it names each one. */}
+					{`${comingItems.length === 1 ? 'It is not' : 'None is'} in the CostCook you would start today or in the launch plan, and no release date is promised.`}
 				</p>
 			</div>
 			<ul role="list" class="coming-list">
