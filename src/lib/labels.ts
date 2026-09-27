@@ -123,7 +123,8 @@ export const labels = {
 	],
 	/** Boundaries, each from the app's own code or screen. */
 	notClaimed: [
-		labelsAvailability.pageSentence,
+		// The Coming sentence belongs under "What it is not" only while labels are Coming.
+		...(labelsAreComing ? [labelsAvailability.pageSentence] : []),
 		'The only output is the browser’s print dialog. A direct connection to a label printer is not built; the app cannot confirm that paper moved.',
 		'A blank allergen line is not an all-clear, and the sticker preview says so. Allergens print only from confirmed evidence on the ingredient.',
 		'The app never picks a use-by date. A saved shelf life, a number you enter, an exact date, or the made date only.'
