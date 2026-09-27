@@ -45,7 +45,7 @@ export const comingPlans = {
 			'A Spanish version is Coming soon. CostCook is English only today, and no date is promised.'
 	},
 	eventPayments: {
-		id: 'eventPayments',
+		id: 'event-payments',
 		title: 'Card payment for booked events',
 		comparisonLabel: 'Card payment for event deposits and balances',
 		verdict: 'coming' as const,

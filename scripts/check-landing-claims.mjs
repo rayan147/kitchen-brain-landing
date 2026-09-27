@@ -352,7 +352,8 @@ if (costcookNoRows < 3) {
 // 2026-09-27 (later the same day): the owner ruled that card payment for booked
 // events and a balance reminder are being built (inventory A-18), so they
 // joined as a plan. That is the only other way onto this list.
-for (const key of ['spanish', 'eventPayments']) {
+const comingPlanKeys = ['spanish', 'eventPayments'];
+for (const key of comingPlanKeys) {
 	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
 }
 for (const phrase of [
@@ -362,14 +363,20 @@ for (const phrase of [
 ]) {
 	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
 }
-if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 2) {
-	failures.push('owner-confirmed Coming plans: the two remaining plans (Spanish, card payment for booked events) must stay Coming');
+if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== comingPlanKeys.length) {
+	failures.push(`owner-confirmed Coming plans: every plan (${comingPlanKeys.join(', ')}) must stay Coming, and no other may be added unpinned`);
+}
+// Each plan's id is the key in kebab case, as its siblings' ids are, and it is
+// what the homepage renders as data-coming-plan (check-dist.mjs).
+for (const key of comingPlanKeys) {
+	const id = key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
+	requireText(comingPlansSource, `id: '${id}'`, `Coming plan ${key} id`);
 }
 requireText(comparisonSource, "note: 'Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.'", 'buying to par is a shipped yes row (RC-43)');
 if (/parBuying/.test(comingPlansSource)) {
 	failures.push('buying to par shipped (RC-43); it may not return to the Coming plans');
 }
-for (const key of ['spanish', 'eventPayments']) {
+for (const key of comingPlanKeys) {
 	requireText(
 		comparisonSource,
 		`costcook: comingPlans.${key}.verdict`,

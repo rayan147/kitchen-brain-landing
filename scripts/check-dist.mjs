@@ -340,20 +340,24 @@ for (const stage of yieldStages) {
 	}
 }
 
-// Three since 2026-09-09: dietary characteristics shipped and left the band.
-// RC-60, src/lib/dietary.ts. Two since 2026-09-27: buying to par shipped and
-// left it (RC-43). One since 2026-09-27: kitchen labels shipped (RC-35).
-// Two since 2026-09-27: card payment for booked events joined (owner ruling).
-const comingPlans = ['spanish', 'eventPayments'];
+// The homepage Coming band, as the exact set of plans it renders. Today that is
+// Spanish and card payment for booked events (the owner ruling of 2026-09-27
+// added the second). Dietary characteristics (RC-60), buying to par (RC-43)
+// and kitchen labels (RC-35) all left the band by shipping, which is the only
+// way off it. The set is compared exactly, not by presence, so a plan that
+// appears without being added here fails as loudly as one that vanishes.
+const comingPlans = ['event-payments', 'spanish'];
 if (!homeHtml.includes('data-coming-plans')) {
 	console.error('check-dist: homepage is missing the Coming soon plan');
 	failed = true;
 }
-for (const plan of comingPlans) {
-	if (!homeHtml.includes(`data-coming-plan="${plan}"`)) {
-		console.error(`check-dist: homepage Coming plan is missing ${plan}`);
-		failed = true;
-	}
+const renderedComingPlans = [...homeHtml.matchAll(/data-coming-plan="([^"]+)"/g)].map((m) => m[1]).sort();
+if (renderedComingPlans.join(',') !== comingPlans.join(',')) {
+	console.error(
+		`check-dist: homepage Coming band renders [${renderedComingPlans.join(', ')}]; ` +
+			`expected exactly [${comingPlans.join(', ')}]`,
+	);
+	failed = true;
 }
 
 const realOrderInputs = ['One menu', 'Guest count', 'Current prices'];
