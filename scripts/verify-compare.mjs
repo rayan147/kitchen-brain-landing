@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { readFile } from 'node:fs/promises';
 
 /**
  * Browser verification for /compare. Same CDP harness as verify-onboarding.mjs:
@@ -20,6 +21,12 @@ import { setTimeout as delay } from 'node:timers/promises';
  * that stays constant against a baseline and looks exactly like a real
  * pre-existing defect. It cost a wrong bug report on 2026-09-05.
  */
+// The row count is read from src/lib/comparison.ts (one `costcook:` verdict
+// per row), not typed: it was 44 by hand, and a row added to the table is
+// exactly the change this phone-path check exists to follow.
+const comparisonSource = await readFile(new URL('../src/lib/comparison.ts', import.meta.url), 'utf8');
+const comparisonRows = (comparisonSource.match(/^\t{4}costcook: /gm) ?? []).length;
+if (comparisonRows < 1) throw new Error('verify-compare: could not count the rows in src/lib/comparison.ts');
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const route = `${baseUrl}/compare`;
 const profile = await mkdtemp(join(tmpdir(), 'costcook-compare-'));
@@ -195,7 +202,7 @@ try {
 		};
 	})()`);
 	assert(!phone.tableVisible, 'phone: the wide table is rendering instead of the card path');
-	assert(phone.cards === 44, `phone: ${phone.cards} cards, expected 44`);
+	assert(phone.cards === comparisonRows, `phone: ${phone.cards} cards, expected ${comparisonRows} (src/lib/comparison.ts)`);
 	assert(
 		phone.withSheet === phone.cards,
 		`phone: ${phone.withSheet} of ${phone.cards} cards carry the spreadsheet cell`

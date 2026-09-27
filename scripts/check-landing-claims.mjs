@@ -678,8 +678,12 @@ requireText(publicCopy, 'Watch the 2:53 product tour', 'hero proof link');
 requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
-// unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 60; claim += 1) {
+// unguarded; RC-36 (multi-event planning) would have made three. It was then
+// typed as 60 while the ledger ran to RC-72. The top is now read from the
+// ledger's own table rows, never below 60, and every number up to it must
+// have its row: a gap is a claim that lost its record.
+const ledgerTop = Math.max(60, ...[...ledger.matchAll(/^\| RC-(\d+) \|/gm)].map((m) => Number(m[1])));
+for (let claim = 1; claim <= ledgerTop; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
