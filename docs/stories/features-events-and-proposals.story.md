@@ -4,7 +4,7 @@
 
 - **Piece:** feature explainer, `/features/events-and-proposals` (new,
   2026-09-27). The detailed companion to the homepage's EventBooking section.
-- **Hero:** Dana, owner-caterer; a client just called about a June wedding.
+- **Hero:** Dana, owner-caterer; a client just called about an October wedding.
 - **Content files:** `src/pages/features/events-and-proposals.astro`,
   `src/components/sections/EventsProposalsFeature.astro`.
 - **Evidence:** inventory rows A-01 to A-16, B-01 to B-09, C-14/C-15 (day
@@ -40,7 +40,7 @@
 ### Step 3: The Plot
 | Beat | In this piece |
 |------|---------------|
-| 1 Opening Image | "June 14, about 150, garden ceremony, can you send something?" |
+| 1 Opening Image | "October 10, about 150, a wedding. Can you send something?" (the date and count match every capture) |
 | 2 Theme | One event record from the first call to Confirm order. |
 | 3 Set-Up | Email thread, document, PDF, sticky note, sheet. |
 | 4 Catalyst | The client asks for changes after the proposal went out. |
