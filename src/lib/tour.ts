@@ -339,6 +339,47 @@ export const tourStops: readonly TourStop[] = [
 		}
 	},
 	{
+		/* RC-61, RC-63, RC-65, added 2026-09-27 with the capability's feature
+		   page. It opens the Run the event column, as it does in the Features
+		   dropdown: the event starts at the inquiry, and the order stop after it
+		   is what Confirm order hands the kitchen. Same illustrative world as the
+		   menu stop (Garden wedding supper, 180 guests at $28.00). The deposit
+		   is recorded by hand; the aside says so and names the Coming line. */
+		id: 'events-proposals',
+		featureId: 'events',
+		label: 'Events & proposals',
+		appArea: 'Events / Garden wedding supper',
+		title: 'Send the proposal, then book the yes.',
+		intro: 'Take the inquiry, send the priced proposal to the client’s phone, and press Confirm order once they accept.',
+		callout: 'Their yes is not a signature or a booking. Confirm order is.',
+		featureHref: featureMenuHref('events'),
+		metrics: [
+			{ label: 'Guests', value: '180' },
+			{ label: 'Price per guest', value: '$28.00' },
+			{ label: 'Proposal total', value: '$5,040.00' },
+			{ label: 'Client decision', value: 'Accepted', tone: 'good' }
+		],
+		columns: ['Step', 'Where it stands', 'What happened'],
+		rows: [
+			['Inquiry', 'Captured', 'Date first, details later'],
+			['Proposal', 'Sent', 'Link open for 7 days'],
+			['Client decision', 'Accepted', 'On their phone, no login'],
+			['Agreement', 'Complete', 'Accepted proposal attached'],
+			['Booked', 'Confirm order', 'Quantities and prices frozen']
+		],
+		aside: {
+			title: 'Deposit',
+			status: 'Recorded by hand',
+			lines: [
+				{ label: 'Asked for', value: '$1,000.00' },
+				{ label: 'Received', value: '$0.00', tone: 'attention' },
+				{ label: 'Recorded as', value: 'Check, cash or transfer' },
+				{ label: 'Card payment page', value: 'Coming' }
+			],
+			footnote: 'Illustrative tour values. You record an event deposit by hand; a card payment page for events is Coming.'
+		}
+	},
+	{
 		id: 'orders-plan',
 		featureId: 'orders',
 		label: 'Orders, shop, prep & pack',

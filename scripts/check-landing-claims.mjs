@@ -142,6 +142,10 @@ const surfaceFiles = [
 	// inserted: siteSource and heroSource above resolve by position.
 	'src/pages/onboarding.astro',
 	'src/components/sections/OnboardingPage.astro',
+	// 2026-09-27. Events and proposals: the deposit is recorded by hand, so the
+	// money patterns above must read this page. APPENDED, like the two above.
+	'src/pages/features/events-and-proposals.astro',
+	'src/components/sections/EventsProposalsFeature.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([

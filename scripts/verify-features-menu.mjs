@@ -143,8 +143,9 @@ try {
 		};
 	})()`);
 	// Considered Strategy; not used because this pins one fixed navigation
-	// contract (twelve curated entries plus tour and all-features actions), not swappable behavior.
-	assert(desktop.linkCount === 14, `desktop: expected 14 links, received ${desktop.linkCount}`);
+	// contract (fourteen curated entries since 2026-09-27, plus tour and
+	// all-features actions), not swappable behavior.
+	assert(desktop.linkCount === 16, `desktop: expected 16 links, received ${desktop.linkCount}`);
 	assert(!desktop.flatTourVisible, 'desktop: product tour still occupies a flat header tab');
 	assert(desktop.demoVisible, 'desktop: Book a demo action is not visible');
 	assert(desktop.headerHeight < 150, `desktop: shared header is ${desktop.headerHeight}px tall`);

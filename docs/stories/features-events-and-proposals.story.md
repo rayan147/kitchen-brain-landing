@@ -84,9 +84,13 @@
   menu, the proposal, their answer, the agreement and the booked order.
 
 ### Step 8: Snap
-> Acceptance is not a signature or a booking, and the client's page says so.
+> Their yes is not a signature or a booking. Confirm order is.
 
-(The app's own statement on the offer page, A-07.)
+(Revised 2026-09-27 at build. The earlier line added "and the client's page
+says so", which is the older `/proposals/...` route's sentence (A-07); the
+client's link is now `/o/<token>` and no capture shows that page printing it,
+so the page states the boundary in its own voice and names the booking step
+instead. Pinned by `scripts/check-events-proposals-page.mjs`.)
 
 ### Step 9: Scene
 - The call comes in during Saturday prep; the inquiry is saved before the
@@ -101,4 +105,15 @@
   proposal (Coming block only); the one-page builder's charge lines (deploy
   gate); e-signature status track captures (the signing page prints "Test
   environment"); customer invoices, BEO, staffing, dispatch.
+- **Also removed at build (2026-09-27):** the client's decline button (only
+  "Accept proposal" and "Ask for changes" are captured on `/o/`); the closeout
+  capture (its event date was moved by SQL to open closeout and contradicts
+  every other frame, and the scenes end at the day's room); a Clients capture
+  (none exists, so the slot is left out, not mocked).
+- **Captures used:** events-inquiry-mobile (hero), events-workspace-desktop
+  (§2), events-offer-mobile (§3), events-deposit-desktop (§4),
+  events-kitchen-draft-desktop, events-confirm-desktop and
+  events-calendar-desktop (§5). Sizes are read from the PNGs at build time.
+- **One sentence per explanation** (owner rule): each section is a heading and
+  one to three single-sentence paragraphs.
 - **Final Image:** unchanged `cta.label`.

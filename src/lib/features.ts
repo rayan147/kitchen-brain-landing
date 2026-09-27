@@ -128,6 +128,37 @@ export type FeatureGroup = {
 
 export const featureGroups: readonly FeatureGroup[] = [
 	{
+		/* RC-61, RC-63 to RC-67, 2026-09-27. FIRST in the file because the site
+		   went event-first that day: this is the front half of every job, and the
+		   rest of this list is what happens after Confirm order. It reads under
+		   'The day itself' because the five section names are the /compare row
+		   groups verbatim and a sixth section would split both pages.
+
+		   Production rows only (docs/research/2026-09-27-app-inventory.yaml A-01
+		   to A-16, B-01 to B-09, C-14). The one-page proposal builder's charge
+		   lines, choice groups and payment terms (A-05, A-17, RC-62) are behind
+		   the deploy gate and are not described here. The deposit is recorded by
+		   hand in production: the verbs for it are ask, record and track. */
+		id: 'events',
+		section: 'The day itself',
+		kicker: 'Events & proposals',
+		title: 'From the first call to Confirm order, on one event.',
+		items: [
+			{ lead: 'New inquiry.', detail: 'Take the call with + New inquiry, even before the date is decided, and set who follows up and when.' },
+			{ lead: 'The pipeline.', detail: 'Events sorts every job into Needs attention, Booked · coming up, In pipeline and Past & closed.' },
+			{ lead: 'Menu with live food cost.', detail: 'Build the event menu from your costed recipes, a saved menu or a past event, and see food cost as you go.' },
+			{ lead: 'Preview, then send.', detail: 'Check exactly what the client will see, choose how long the link stays open, and send the proposal.' },
+			{ lead: 'The client decides on their phone.', detail: 'They open the link with no login and press Accept proposal or Ask for changes.' },
+			{ lead: 'Remind, extend, withdraw.', detail: 'Send a reminder, extend the link, withdraw the offer, or update it when they ask for changes.' },
+			{ lead: 'The agreement.', detail: 'Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.' },
+			{ lead: 'Kitchen draft.', detail: 'Prepare the kitchen draft from their yes; it holds no day and draws no crew until you book the event.' },
+			{ lead: 'Deposit, tracked.', detail: 'Ask for a deposit and record what arrives by check, cash, transfer or your own card processor, against what you asked for.' },
+			{ lead: 'Confirm order is the booking.', detail: 'Confirm order freezes quantities and prices, and the event reads This event is booked.' },
+			{ lead: 'Calendar and the day’s room.', detail: 'The calendar counts orders and vans against the limits you set for each day, and an order says whether its day has room.' },
+			{ lead: 'Clients.', detail: 'Each client keeps contacts, venues with access notes, and their events and orders, for owners and managers.' }
+		]
+	},
+	{
 		id: 'math',
 		section: 'Recipes and costing',
 		kicker: 'The costing math',
@@ -611,6 +642,14 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 	{
 		label: 'Run the event',
 		items: [
+			// Added 2026-09-27, FIRST in this column because the event starts at the
+			// inquiry (RC-61). Shipped group, so no chip.
+			{
+				label: 'Events & proposals',
+				description: 'Take the inquiry, send the proposal, book the yes with Confirm order.',
+				featureId: 'events',
+				icon: 'orders'
+			},
 			{
 				label: 'Orders, shop, prep & pack',
 				description: 'Turn one menu and guest count into the plan for the day.',
@@ -668,6 +707,7 @@ const featureGroupsById = new Map(featureGroups.map((group) => [group.id, group]
 // Considered Strategy; not used because the destinations
 // are static route data, not interchangeable navigation algorithms.
 const dedicatedFeatureRoutes = new Map<string, string>([
+	['events', '/features/events-and-proposals'],
 	['math', '/features/recipes-and-costing'],
 	['menus', '/features/menus-and-quotes'],
 	['ingredients', '/features/ingredients-and-supplier-prices'],

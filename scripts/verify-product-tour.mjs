@@ -134,8 +134,8 @@ try {
 			mobileControlVisible: Boolean(document.querySelector('[data-tour-select]')?.getClientRects().length),
 			railVisible: Boolean(document.querySelector('.tour-rail')?.getClientRects().length)
 		}))()`);
-		assert(layout.tabs === 12, `${width}: expected twelve tabs`);
-		assert(layout.scenes === 12, `${width}: expected twelve scenes`);
+		assert(layout.tabs === 14, `${width}: expected fourteen tabs`);
+		assert(layout.scenes === 14, `${width}: expected fourteen scenes`);
 		assert(layout.visibleScenes === 1, `${width}: expected one visible scene`);
 		assert(layout.selected === '0', `${width}: first stop is not selected`);
 		assert(layout.scrollWidth === layout.innerWidth, `${width}: horizontal page overflow`);

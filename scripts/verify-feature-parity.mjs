@@ -7,9 +7,11 @@ import { setTimeout as delay } from 'node:timers/promises';
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
 const routes = [
-	{ slug: 'sage', path: '/features/sage', h1: 'Ask your kitchen. Check the answer.', selector: '.question-list > li', count: 12 },
-	{ slug: 'recipes', path: '/features/recipes-and-costing', h1: 'The recipe has to work on the line and in the quote.', selector: '.lifecycle-path li', count: 5 },
-	{ slug: 'team', path: '/features/team-and-access', h1: 'Three roles. A short list of real boundaries.', selector: '[data-team-disclosure]', count: 4 }
+	{ slug: 'sage', path: '/features/sage', h1: 'Ask Sage about your kitchen.', selector: '.question-list > li', count: 13 },
+	{ slug: 'recipes', path: '/features/recipes-and-costing', h1: 'Cost a recipe before you quote.', selector: '.lifecycle-path li', count: 5 },
+	{ slug: 'team', path: '/features/team-and-access', h1: 'Give your crew their own sign-in.', selector: '[data-team-disclosure]', count: 4 },
+	// 2026-09-27 (RC-61): the six steps of the app's event step bar.
+	{ slug: 'events', path: '/features/events-and-proposals', h1: '\u201cJune 14, about 150, garden ceremony. Can you send something?\u201d', selector: '[data-event-step]', count: 6 }
 ];
 const viewports = [[1440, 900], [1280, 800], [1024, 768], [768, 1024], [390, 844]];
 
@@ -138,7 +140,7 @@ try {
 
 	if (pageErrors.length) throw new Error(`Console exceptions: ${pageErrors.join(', ')}`);
 	if (failedRequests.length) throw new Error(`Failed requests: ${failedRequests.join(', ')}`);
-	console.log('Feature parity browser contract passed for Sage, Recipes & Costing, and Team & Access at five viewports, 200% text, reduced motion, and no JavaScript.');
+	console.log('Feature parity browser contract passed for Sage, Recipes & Costing, Team & Access, and Events & Proposals at five viewports, 200% text, reduced motion, and no JavaScript.');
 } finally {
 	if (socket?.readyState === WebSocket.OPEN) socket.close();
 	browser.kill('SIGTERM');

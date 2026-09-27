@@ -99,6 +99,7 @@ if (failed) process.exit(1);
 // template that stopped rendering one side of that contract.
 const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
 const menuTargets = [
+	{ id: 'events', area: 'events-and-proposals', href: '/features/events-and-proposals' },
 	{ id: 'math', area: 'recipes-and-costing', href: '/features/recipes-and-costing' },
 	{ id: 'menus', area: 'menus-and-quotes', href: '/features/menus-and-quotes' },
 	{

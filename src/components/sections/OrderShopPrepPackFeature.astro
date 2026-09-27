@@ -151,7 +151,9 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the van on the same plan you priced, shopped, and cooked.</h2><p>Bring one real event. Follow it from menu and guest count to the final pack line.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
-		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
+		<!-- Added 2026-09-27 with RC-61. This page starts at Confirm order; the
+		     inquiry, the proposal and the booking that lead to it live there. -->
+		<div class="container-page onward"><a href="/features/events-and-proposals">Before the order: events &amp; proposals</a><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>
 
@@ -250,7 +252,7 @@ const faqItems = [
 	.faq-list details p { max-width: 64ch; padding: 0 2.5rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.6; }
 	.closing { border-top: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
 	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
-	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
+	.onward { display: flex; flex-wrap: wrap; gap: 0 1.5rem; padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
 
 	@media (min-width: 720px) {
 		.hero-grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
