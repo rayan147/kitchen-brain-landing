@@ -219,9 +219,9 @@ export const faq: readonly FaqGroup[] = [
 		entries: [
 			{
 				id: 'quote',
-				question: 'How does a quote get its food cost?',
+				question: 'How does a proposal get its food cost?',
 				answer: [
-					'Pick a costed menu, enter the guest count and the price per head, and the draft order shows revenue, theoretical food cost, food cost per guest and the percentage against your target, before anything is sent. While it is a draft, those numbers follow your current ingredient prices.'
+					'Build the event menu from your costed recipes or a saved menu, and the menu and service step shows the food cost before the proposal goes to the client. For a job you take by phone without a proposal, a draft order shows revenue, theoretical food cost, food cost per guest and the percentage against your target. While either is a draft, those numbers follow your current ingredient prices.'
 				],
 				claims: ['RC-03', 'RC-04', 'RC-06']
 			},

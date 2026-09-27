@@ -22,7 +22,11 @@ const required = [
 	'id="faq-heading"',
 	'What is menu management software?',
 	'Can I reopen a confirmed event?',
-	'Ready for the customer. Ready for the kitchen.',
+	// "client" since 2026-09-27: the app's word (Clients), gap report W1.
+	'Ready for the client. Ready for the kitchen.',
+	// The quote the client sees is a proposal now, and this page says where.
+	'data-proposal-bridge',
+	'href="/features/events-and-proposals"',
 	'menus-quotes-one-commitment'
 ];
 

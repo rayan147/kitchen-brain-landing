@@ -250,14 +250,15 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Self-pricing.', detail: 'Cost per guest against selling price, plus the price that would hit your target.' },
 			{ lead: 'Equipment templates.', detail: 'Each menu carries its equipment counts. Chafers times three stays times three regardless of guests.' },
 			{ lead: 'Used-by guards.', detail: 'A menu that orders still use will not delete out from under them.' },
-			{ lead: 'Overridable pricing.', detail: 'The menu’s per-guest price is the default an order can override.' }
+			{ lead: 'Overridable pricing.', detail: 'The menu’s per-guest price is the default an order can override.' },
+			{ lead: 'Into the proposal.', detail: 'Start an event from a saved menu and its dishes and food cost come with it into the proposal the client sees.' }
 		]
 	},
 	{
 		id: 'orders',
 		section: 'The day itself',
 		kicker: 'Orders, the event',
-		title: 'Quote it, freeze it, run it.',
+		title: 'Price it, confirm it, run it.',
 		items: [
 			{ lead: 'Costed before commitment.', detail: 'A new order is a menu, a date, guests, and a price, estimated live as you set it up.' },
 			{ lead: 'Three tabs, one plan.', detail: 'Shop, Prep, and Pack all read the same computed plan.' },
