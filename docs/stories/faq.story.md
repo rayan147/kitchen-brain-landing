@@ -140,3 +140,7 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 ## Claim correction · 2026-09-27 (kitchen labels available)
 
 - [x] 11 Revision: The owner approved the RC-35 labels launch decision on 2026-09-27 and LABELS_STATUS is now yes. Kitchen date labels print from Prep and Pack through the browser; label stock is set once in Settings > Labels. The premise that the whole feature sat behind the label_printing flag was false (gap report F2). Every Coming sentence about kitchen labels is gone; the browser-only, never-guessed-date and blank-allergen boundaries stay. Beats and point of view unchanged; the labels page hero now states availability instead of a preview.
+
+## Claim correction · 2026-09-27 (online ordering available)
+
+- [x] 11 Revision: The ordering answer now says Yes and names the limits: request, approve, the client pays within 72 hours and that payment confirms the order; one balance reminder; online card payment only. The question says "clients". Gap report S9; RC-59.

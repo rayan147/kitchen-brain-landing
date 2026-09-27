@@ -332,10 +332,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'ordering',
 		section: 'The day itself',
 		kicker: 'Taking orders',
-		title: 'The enquiry, arriving as something you can quote from.',
+		title: 'Online orders: the client requests, you approve, their payment confirms.',
 		// Status is read from src/lib/ordering.ts, the one place it may change
-		// (RC-59). Hardcoding it here would let the menu chip and this badge
-		// disagree the day the storefront is deployed.
+		// (RC-59, 'yes' since 2026-09-27). Hardcoding it here would let the menu
+		// chip and this badge disagree.
 		status: orderingAvailability.isComing ? 'in-development' : 'available',
 		items: [
 			{ lead: orderingAvailability.featureLead, detail: orderingAvailability.featureDetail }

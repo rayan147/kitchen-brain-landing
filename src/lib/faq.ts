@@ -199,7 +199,7 @@ export const faq: readonly FaqGroup[] = [
 			},
 			{
 				id: 'ordering',
-				question: 'Can customers order from me through CostCook?',
+				question: 'Can clients order from me through CostCook?',
 				answer: orderingAvailability.faqStatus,
 				claims: ['RC-59']
 			},

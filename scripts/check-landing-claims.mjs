@@ -992,16 +992,17 @@ if (renderedBefores.join('|') !== outcomeBefores.join('|')) {
 	);
 }
 
-// Ordering: built in the app, deployed nowhere, marked Coming (RC-59). The one
-// word lives in src/lib/ordering.ts and is pinned here until the ledger row
-// changes with it. The evidence is the deployment, not the branch: there is no
-// Vercel project for the storefront, order.costcook.io does not resolve, and
-// FEATURE_ORDERING_INTEGRATION_ENABLED is unset in production, which
-// featureDefault() reads as off for every workspace.
+// Ordering: available since 2026-09-27 (RC-59). Until then it was built and
+// deployed nowhere; the owner stated on 2026-09-27 that
+// FEATURE_ORDERING_INTEGRATION_ENABLED is on as the deployment default, so
+// every trial kitchen has it. The one word lives in src/lib/ordering.ts and is
+// pinned here with the ledger row.
 const orderingSource = surfaces[surfaceFiles.indexOf('src/lib/ordering.ts')];
-if (!/ORDERING_STATUS = 'coming'/.test(orderingSource)) {
-	failures.push('ordering status: RC-59 says the storefront is not deployed; ORDERING_STATUS must read coming until the ledger row changes');
+if (!/ORDERING_STATUS = 'yes'/.test(orderingSource)) {
+	failures.push('ordering status: RC-59 says online ordering is on for every kitchen since 2026-09-27; ORDERING_STATUS must read yes until the ledger row changes');
 }
+requireText(orderingSource, 'payment confirms the order', 'ordering copy says payment, not approval, confirms (RC-59)');
+requireText(orderingSource, '72 hours', 'ordering copy carries the payment window (RC-59)');
 requireText(orderingSource, 'awaiting kitchen confirmation', 'ordering copy carries the confirmation boundary');
 requireText(orderingSource, 'without prices', 'ordering copy carries the price-authority boundary');
 requireText(orderingSource, 'no inbound command', 'ordering copy carries the widget protocol boundary');
@@ -1035,7 +1036,7 @@ const forbiddenClaims = [
 	// RC-59. The four sentences an ordering feature makes it easy to write and
 	// impossible to defend on a demo call.
 	[/\bconfirms? the (order|booking) automatically\b/i, 'automatic order confirmation (RC-59: a submission awaits kitchen confirmation)'],
-	[/\b(gets?|getting) you paid\b/i, 'a payment promise (RC-59: Stripe is a handoff, and the app states when no charge occurred)'],
+	[/\b(gets?|getting) you paid\b/i, 'a payment promise (RC-59: the client pays your own Stripe account for online orders only; CostCook promises no payout)'],
 	[/\bcustomers? sees? (the|their|a) price\b[^.]{0,40}\binstantly\b/i, 'a price computed in the browser (RC-59: selections travel without prices)'],
 	[/\btakes? orders? while you (sleep|cook)\b/i, 'the stock automation promise the confirmation gate contradicts'],
 ];
