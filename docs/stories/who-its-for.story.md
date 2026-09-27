@@ -146,3 +146,7 @@ Content: `src/components/sections/WhoItsForPage.astro` and its shared data/respo
 ### Closing layout correction · 2026-09-11
 
 Copy and story beats unchanged. Trial terms were moved below the button row and both columns constrained so the heading keeps a readable measure. The failed-then-passed geometry test and screenshots are in `docs/qa/resources-closing-regression/`. This corrects a defect missed by the earlier first-viewport review.
+
+## Claim correction · 2026-09-27 (what Staff can open)
+
+- [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.

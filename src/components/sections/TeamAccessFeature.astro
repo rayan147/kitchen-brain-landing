@@ -25,7 +25,7 @@ const roles = [
 		name: 'Staff',
 		mark: 'S',
 		summary: 'Works from the shared kitchen record without the manager-only Sage or owner-only controls.',
-		workspaceAccess: 'Open the shared operational workspace, including cost screens.',
+		workspaceAccess: 'Open the shared kitchen record, including recipe costs and Analytics. Order money and client names on Today, money on the calendar, and the Clients book stay with owners and managers.',
 		protectedWork: 'Use day-to-day kitchen records and ask Sage the questions available to Staff.',
 		boundary: 'Manager- and Owner-only actions remain unavailable.'
 	}
@@ -34,7 +34,7 @@ const roles = [
 const faqItems = [
 	{
 		question: 'Can I hide food costs from a cook?',
-		answer: 'No. CostCook does not have per-screen permissions, so a workspace teammate can open cost screens. The role boundaries protect specific sensitive actions, not every view.'
+		answer: 'No. CostCook does not have per-screen permissions, so a teammate on Staff can open recipe costs and Analytics. The role boundaries protect specific sensitive actions and a few views: Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers.'
 	},
 	{
 		question: 'Can I build a custom role?',
@@ -61,7 +61,7 @@ const faqItems = [
 				</nav>
 				<h1 id="team-access-heading" class="feature-display">Give your crew their own sign-in.</h1>
 				<p class="hero-lede">Invite your crew by email to the same kitchen account. Compare what Owners, Managers and Staff can do, from daily prep to recipe publishing and billing.</p>
-				<p class="hero-constraint"><strong>Before you invite:</strong> Staff can open cost screens, and custom roles are not available.</p>
+				<p class="hero-constraint"><strong>Before you invite:</strong> Staff can open cost screens, including recipe costs and Analytics, and custom roles are not available.</p>
 				<div class="hero-actions">
 					<a href="#role-boundaries" class="btn-primary">Compare team roles</a>
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-outline">{cta.label}</a>

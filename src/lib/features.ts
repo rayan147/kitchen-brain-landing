@@ -101,7 +101,7 @@ export const SECTION_META: Readonly<
 		slug: 'team-and-connections',
 		blurb: 'Who can change what, how a new kitchen gets started, and the connections being built.',
 		wall: 'You need the crew ready for Saturday, without spending the week learning new software.',
-		lede: 'Set up your kitchen, invite your crew and check what each role can do. Staff can open cost screens. Previously opened order pages can be read without signal; reconnect to make changes. Connections marked Coming are not included today.'
+		lede: 'Set up your kitchen, invite your crew and check what each role can do. Staff can open cost screens, including recipe costs and Analytics. Previously opened order pages can be read without signal; reconnect to make changes. Connections marked Coming are not included today.'
 	}
 };
 
@@ -417,7 +417,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Vendor manager.', detail: 'Contacts, per-vendor purchasing method, and insight into what you actually buy from each.' },
 			{ lead: 'Metric or imperial.', detail: 'Choose metric or US units for your kitchen.' },
 			{ lead: 'Invite by email.', detail: 'Send an email invitation. Invitations expire, and you can revoke them.' },
-			{ lead: 'Three team roles.', detail: 'Owner, Manager and Staff control specific actions. All teammates can open cost screens; custom roles are not available.' },
+			{ lead: 'Three team roles.', detail: 'Owner, Manager and Staff control specific actions. Staff can open recipe costs and Analytics, but not order money on Today or the calendar, or the Clients book; custom roles are not available.' },
 			{ lead: 'Separate kitchen accounts.', detail: 'Your kitchen account does not give access to another kitchen’s records.' },
 			{ lead: 'Unassigned records stay separate.', detail: 'Older records without an assigned kitchen are not added to your account automatically.' }
 		]

@@ -134,7 +134,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'permissions',
 				question: 'Can I give a cook the prep list without showing them the costs?',
 				answer: [
-					'No. Owner, Manager and Staff protect specific sensitive actions, but there is no per-screen control, so anyone on the workspace can open the costs. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
+					'No. Owner, Manager and Staff protect specific sensitive actions, but there is no per-screen control, so a cook on Staff can still open recipe costs and Analytics. A little is held back: Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
 				],
 				claims: ['RC-44', 'RC-52']
 			},
@@ -142,7 +142,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'roles',
 				question: 'What do Owner, Manager and Staff mean?',
 				answer: [
-					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and approve Sage drafts. Staff use the shared kitchen lists and can open cost screens. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
+					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and approve Sage drafts. Staff use the shared kitchen lists and can open cost screens, including recipe costs and Analytics. Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
 				],
 				claims: ['RC-52']
 			},
@@ -156,7 +156,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'labels',
 				question: 'Does it do nutrition labels?',
 				answer: [
-					'Yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Print nutrition label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
+					'As a calculated estimate, yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Print nutrition label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
 					labelsAvailability.nutritionFaqCrosslink
 				],
 				claims: ['RC-42', 'RC-47', 'RC-50']
@@ -310,7 +310,7 @@ export const faq: readonly FaqGroup[] = [
 				question: 'What do I do after setup, and how does my crew get in?',
 				answer: [
 					'Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, ready for you to review before saving.',
-					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
+					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens, including recipe costs and Analytics, and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
 				],
 				claims: ['RC-38', 'RC-39', 'RC-52']
 			},

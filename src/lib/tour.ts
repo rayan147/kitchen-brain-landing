@@ -480,7 +480,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Team & access',
 		appArea: 'Settings / Team & access',
 		title: 'See what each team role can do.',
-		intro: 'Invite teammates by email. Owners, Managers and Staff have different actions; all can open cost screens. Invitations join as Staff.',
+		intro: 'Invite teammates by email. Owners, Managers and Staff have different actions; Staff can open recipe costs and Analytics. Invitations join as Staff.',
 		callout: 'The cook can open the work. Publishing, billing, and approvals still have named owners.',
 		featureHref: featureMenuHref('team'),
 		metrics: [

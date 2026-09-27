@@ -144,3 +144,11 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 ## Claim correction · 2026-09-27 (online ordering available)
 
 - [x] 11 Revision: The ordering answer now says Yes and names the limits: request, approve, the client pays within 72 hours and that payment confirms the order; one balance reminder; online card payment only. The question says "clients". Gap report S9; RC-59.
+
+## Claim correction · 2026-09-27 (what Staff can open)
+
+- [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+## Claim correction · 2026-09-27 (nutrition answer lead)
+
+- [x] 11 Revision: The nutrition-labels answer opened with a bare "Yes." while the app calls the panel a calculated estimate. It now opens "As a calculated estimate, yes." Gap report W8.

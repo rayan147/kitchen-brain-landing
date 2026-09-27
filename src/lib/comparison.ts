@@ -423,7 +423,7 @@ export const comparison: RowGroup[] = [
 				label: 'Role-aware sensitive actions',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Owner, Manager and Staff have different permissions for billing, team setup, recipe publishing and Sage approvals. All can open cost screens.',
+				note: 'Owner, Manager and Staff have different permissions for billing, team setup, recipe publishing and Sage approvals. Staff can open recipe costs and Analytics; order money, client names on Today and the Clients book are kept to owners and managers.',
 				parsley: 'Business, $379',
 				meez: 'Starter, $24'
 			},
@@ -432,7 +432,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'build',
 				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
 				costcook: 'no',
-				note: 'No custom roles or per-screen permission grid. A workspace teammate can open cost screens.',
+				note: 'No custom roles or per-screen permission grid. A teammate on Staff can open recipe costs and Analytics.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},
