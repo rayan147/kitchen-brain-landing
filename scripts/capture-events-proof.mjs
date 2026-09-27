@@ -4,9 +4,28 @@
 //   APP=http://localhost:4188 DB=/abs/path/to/app/e2e/.scratch/demo.db \
 //     node scripts/capture-events-proof.mjs
 //
+// ENVIRONMENT (defaults are the values the 2026-09-27 captures used)
+//   APP          the running app                      http://localhost:4188
+//   DB           the app's scratch SQLite file        required; must sit under
+//                                                     an e2e/.scratch/ directory
+//   KB_DIR       a kitchen-brain checkout whose       /home/rayan147/kitchen-brain
+//                node_modules provide playwright and
+//                @libsql/client (any checkout with deps
+//                installed; ~/kitchen-brain-develop-demo works too)
+//   CHROME_PATH  the browser binary                   /usr/bin/google-chrome
+//
+// THE DATE IS FIXED, AND EVERY RE-SHOOT MUST UPDATE IT. EVENT.date below is
+// October 10, 2026, and the page copy and the alt text in src/lib/proof.ts
+// name that date ("October 10, about 150, a wedding"), so it is not computed:
+// a moving date would make every new capture disagree with the words beside
+// it. Before a re-shoot, pick a Saturday about two weeks out, set EVENT.date,
+// and change the copy and alts with it. The script refuses a date that is not
+// in the future, because the calendar frame needs the event still ahead.
+//
 // STANDING THE APP UP (the script drives it, it does not build it)
 //
-// The app is kitchen-brain `develop`, exported clean so an in-progress merge in
+// The app is kitchen-brain `develop`, from the develop-demo checkout
+// (~/kitchen-brain-develop-demo), exported clean so an in-progress merge in
 // the worktree cannot leak into the build (git archive reads the commit, it
 // touches nothing in the worktree). First run was against c88f2eed2.
 //
@@ -53,14 +72,22 @@
 // used because the walk is linear, runs once, and each frame's precondition is
 // the previous frame's irreversible action, so there is no seam to vary. Plain
 // sequential code with one clip helper and one text guard.
-import { chromium } from '/home/rayan147/kitchen-brain/node_modules/playwright/index.mjs';
-import { createClient } from '/home/rayan147/kitchen-brain/node_modules/@libsql/client/lib-esm/node.js';
 import { mkdir } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { resolve, sep } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const APP = process.env.APP ?? 'http://localhost:4188';
-const DB = process.env.DB;
-if (!DB) throw new Error('DB=<absolute path to the app scratch demo.db> is required (the date move writes it).');
+const KB_DIR = process.env.KB_DIR ?? '/home/rayan147/kitchen-brain';
+const CHROME_PATH = process.env.CHROME_PATH ?? '/usr/bin/google-chrome';
+if (!process.env.DB) throw new Error('DB=<absolute path to the app scratch demo.db> is required (the date move writes it).');
+const DB = resolve(process.env.DB);
+// The walk writes this database twice with raw SQL (see header). Only ever a
+// scratch copy: refuse anything outside an e2e/.scratch/ directory.
+if (!DB.includes(`${sep}e2e${sep}.scratch${sep}`)) {
+	throw new Error(`DB is ${DB}; this script writes it with raw SQL and only runs against a file under e2e/.scratch/`);
+}
+const { chromium } = await import(pathToFileURL(resolve(KB_DIR, 'node_modules/playwright/index.mjs')).href);
+const { createClient } = await import(pathToFileURL(resolve(KB_DIR, 'node_modules/@libsql/client/lib-esm/node.js')).href);
 const OUT = resolve(import.meta.dirname, '../public/proof');
 const OWNER = 'marisol@example.com';
 const KITCHEN = 'Harbor & Hearth Catering';
@@ -74,7 +101,7 @@ const EVENT = {
 	name: 'Nair & Castellano wedding',
 	guests: '150',
 	menu: 'Wedding Plated Dinner',
-	date: '2026-10-10', // a Saturday two weeks out; the week has no other orders
+	date: '2026-10-10', // a Saturday two weeks out; the week has no other orders. Fixed: see header
 	start: '17:00',
 	end: '22:00',
 	terms: 'Final guest count is due two weeks before the wedding.',
@@ -84,6 +111,12 @@ const EVENT = {
 // Text that must never be in a shipped frame (brief: no Load out, no signing
 // page, no storefront/Square/QuickBooks, no internal product name, no fixture).
 const FORBIDDEN = [/Load out/i, /Kitchen Brain/i, /Test environment/i, /Maple & Main/, /\bE2E\b/, /Square/, /QuickBooks/i, /Probe/];
+
+// The kitchen's own zone: the app reads dates there, and so does this check.
+const todayInKitchen = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
+if (EVENT.date <= todayInKitchen()) {
+	throw new Error(`EVENT.date ${EVENT.date} is not in the future; pick a new Saturday and update the copy and alts with it (see header)`);
+}
 
 const db = createClient({ url: `file:${DB}` });
 const one = async (sql, args = []) => (await db.execute({ sql, args })).rows[0];
@@ -100,7 +133,7 @@ const one = async (sql, args = []) => (await db.execute({ sql, args })).rows[0];
 
 await mkdir(OUT, { recursive: true });
 const browser = await chromium.launch({
-	executablePath: '/usr/bin/google-chrome',
+	executablePath: CHROME_PATH,
 	headless: true,
 	args: ['--no-sandbox', '--disable-dev-shm-usage', '--font-render-hinting=none']
 });
@@ -163,7 +196,7 @@ async function shoot(page, name, clip, { fullPage = true } = {}) {
 	const text = await textIn(page, box, fullPage);
 	for (const bad of FORBIDDEN) if (bad.test(text)) throw new Error(`${name}: forbidden text ${bad} in frame: ${text.slice(0, 400)}`);
 	await page.screenshot({ path: `${OUT}/${name}.png`, clip: box, fullPage, animations: 'disabled', caret: 'hide' });
-	shots.push({ name, css: `${box.width}x${box.height}`, px: `${box.width * 2}x${box.height * 2}` });
+	shots.push({ name, px: `${box.width * 2}x${box.height * 2}` });
 	console.log(`captured ${name} (${box.width}x${box.height} CSS px, ${box.width * 2}x${box.height * 2} PNG)`);
 	return text;
 }
@@ -268,7 +301,12 @@ try {
 	const dialog = page.getByRole('dialog', { name: 'Edit event details' });
 	await dialog.waitFor();
 	await dialog.getByLabel('Date not decided yet').uncheck();
-	await dialog.getByRole('radio', { name: 'Wedding' }).check({ force: true }).catch(() => dialog.getByText('Wedding', { exact: true }).click());
+	// The radio's input is visually hidden behind its label, so check() is
+	// forced; then assert it took, rather than falling back to a label click
+	// that could silently choose nothing.
+	const wedding = dialog.getByRole('radio', { name: 'Wedding' });
+	await wedding.check({ force: true });
+	if (!(await wedding.isChecked())) throw new Error('the Wedding event type did not select');
 	await dialog.getByLabel('Service start').fill(EVENT.start);
 	await dialog.getByLabel('Service end').fill(EVENT.end);
 	// No venue: on c88f2eed2 a free-text venue makes "Prepare the kitchen draft"
@@ -328,9 +366,7 @@ try {
 		await accept.waitFor();
 		// A phone screen tall enough that the fixed Accept bar sits under the
 		// dish list: the price, the event, the menu and the button, one screen.
-		const lastDish = cp.getByRole('heading', { name: /what we.ll serve/i }).locator('xpath=following::li').last();
 		const listBottom = (await docBox(cp.getByRole('heading', { name: /what we.ll serve/i }).locator('xpath=following::ul[1]'))).b;
-		void lastDish;
 		const barTop = await accept.evaluate((el) => {
 			let n = el;
 			while (n.parentElement && !['fixed', 'sticky'].includes(getComputedStyle(n).position)) n = n.parentElement;
@@ -416,7 +452,7 @@ try {
 	// ------------------------------------------------ 7. calendar week, desktop
 	await page.goto(`${APP}/calendar?date=${EVENT.date}&view=week`);
 	await hydrate(page);
-	if (!(await page.locator('[role="gridcell"]').count()) || (await page.locator('[role="gridcell"]').count()) !== 7) {
+	if ((await page.locator('[role="gridcell"]').count()) !== 7) {
 		await page.getByRole('radio', { name: 'Week' }).click();
 		await page.waitForTimeout(1000);
 	}
@@ -434,6 +470,14 @@ try {
 	// the app's own zone) in the scratch data: the only write not done through
 	// the UI, and recorded in the notes.
 	const yesterday = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(Date.now() - 86_400_000));
+	// Guard the raw writes: the event and order this walk created through the
+	// app must be the rows about to move, in this database.
+	{
+		const event = await one('select id from events where id = ? and description = ?', [eventId, EVENT.name]);
+		if (!event) throw new Error(`event ${eventId} ("${EVENT.name}") is not in ${DB}; refusing the date move`);
+		const order = await one('select id from orders where id = ? and event_date = ?', [orderId, EVENT.date]);
+		if (!order) throw new Error(`order ${orderId} on ${EVENT.date} is not in ${DB}; refusing the date move`);
+	}
 	await db.execute({ sql: 'update orders set event_date = ? where id = ?', args: [yesterday, orderId] });
 	await db.execute({ sql: 'update events set service_date = ? where id = ?', args: [yesterday, eventId] });
 	await page.goto(`${APP}/orders/${orderId}/closeout`);
