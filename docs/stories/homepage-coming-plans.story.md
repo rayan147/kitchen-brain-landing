@@ -122,3 +122,7 @@ three surfaces apart.
 
 No beat, section order, heading or value turn changed. Every cut was a claim
 the page was making twice; nothing was removed for being unprovable.
+
+## Claim correction · 2026-09-27 (buying to par shipped)
+
+- [x] 11 Revision: Buying to par left the Coming list by shipping. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier (kitchen-brain e2e/buy-to-par.spec.ts). The Coming band now carries two plans, the /compare row is Yes, and the inventory answers say so. Beats and snap line unchanged. Gap report F1; RC-43.

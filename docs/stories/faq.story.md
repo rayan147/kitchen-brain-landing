@@ -132,3 +132,7 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 ## Claim correction · 2026-09-27 (margin wording)
 
 - [x] 11 Revision: The app does show "Gross margin" on event totals and recipe pricing, so "it is never called margin" was false. The true boundary stays: food cost is food only, and the gross margin the app shows is food-only, not business margin after labor and overhead. Gap report S4, W4.
+
+## Claim correction · 2026-09-27 (buying to par shipped)
+
+- [x] 11 Revision: Buying to par left the Coming list by shipping. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier (kitchen-brain e2e/buy-to-par.spec.ts). The Coming band now carries two plans, the /compare row is Yes, and the inventory answers say so. Beats and snap line unchanged. Gap report F1; RC-43.

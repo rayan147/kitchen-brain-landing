@@ -11,26 +11,19 @@
  * false negative on four published surfaces and a Coming row on /compare
  * against products that ship it. What replaced it is RC-60 and
  * src/lib/dietary.ts, which owns the shipped wording the way this file owns the
- * unshipped. Two plans left, and the count is pinned in
- * scripts/check-landing-claims.mjs on purpose: this list only ever shrinks by
- * something shipping.
+ * unshipped.
+ *
+ * BUYING TO PAR LEFT THIS FILE ON 2026-09-27, the same way. Inventory > Build
+ * shopping list builds what to buy for confirmed events and your par, by
+ * supplier (kitchen-brain e2e/buy-to-par.spec.ts, production and unflagged;
+ * gap report F1). Its /compare row is now a yes and RC-43 records it. One plan
+ * left, and the count is pinned in scripts/check-landing-claims.mjs on
+ * purpose: this list only ever shrinks by something shipping.
  */
 
 // Considered Strategy; not used because availability and wording vary as
 // shared data, not as behavior selected or swapped at runtime.
 export const comingPlans = {
-	parBuying: {
-		id: 'par-buying',
-		title: 'Buying that tops you back up to par',
-		comparisonLabel: 'Buying that tops up to par',
-		verdict: 'coming' as const,
-		homepage:
-			'Build the buy from the par level you set, not only from the jobs already on the books.',
-		comparisonNote:
-			'Coming soon. Today shopping covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par.',
-		faq:
-			'Buying that tops stock back up to the par level you set is Coming soon. Today the shopping list covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par. No date is promised.'
-	},
 	spanish: {
 		id: 'spanish',
 		title: 'Spanish',

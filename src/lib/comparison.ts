@@ -317,8 +317,9 @@ export const comparison: RowGroup[] = [
 				   catalog and nutrition rows were both wrong off a stale local
 				   branch. Par levels ship: core/inventory-planning.ts carries
 				   below-par / at-or-above-par / unevaluable / no-par, judged
-				   only from a trusted count. Buying does not read them today; the
-				   separate replenishment row is Coming. RC-43. */
+				   only from a trusted count. Since 2026-09-27 the buying row below
+				   is a yes too: Build shopping list reads confirmed events and
+				   par (e2e/buy-to-par.spec.ts). RC-43. */
 				label: 'Par levels per ingredient',
 				sheet: 'build',
 				costcook: 'yes',
@@ -327,10 +328,10 @@ export const comparison: RowGroup[] = [
 				meez: NOT_LISTED
 			},
 			{
-				label: comingPlans.parBuying.comparisonLabel,
+				label: 'Buying that tops up to par',
 				sheet: 'build',
-				costcook: comingPlans.parBuying.verdict,
-				note: comingPlans.parBuying.comparisonNote,
+				costcook: 'yes',
+				note: 'Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			}

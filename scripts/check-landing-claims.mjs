@@ -331,20 +331,24 @@ if (costcookNoRows < 3) {
 // list by SHIPPING, which is the only way anything is allowed to leave it: a
 // Coming row that quietly disappears is a promise nobody kept. RC-60 records
 // what replaced it, and the pins below moved to src/lib/dietary.ts rather than
-// being deleted.
-for (const key of ['parBuying', 'spanish']) {
+// being deleted. ONE SINCE 2026-09-27: buying to par shipped (RC-43, gap
+// report F1), and its pins moved to the /compare yes row below.
+for (const key of ['spanish']) {
 	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
 }
 for (const phrase of [
-	"title: 'Buying that tops you back up to par'",
 	"title: 'Spanish'"
 ]) {
 	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
 }
-if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 2) {
-	failures.push('owner-confirmed Coming plans: both remaining corrected capabilities must stay Coming');
+if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 1) {
+	failures.push('owner-confirmed Coming plans: the one remaining corrected capability must stay Coming');
 }
-for (const key of ['parBuying', 'spanish']) {
+requireText(comparisonSource, "note: 'Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.'", 'buying to par is a shipped yes row (RC-43)');
+if (/parBuying/.test(comingPlansSource)) {
+	failures.push('buying to par shipped (RC-43); it may not return to the Coming plans');
+}
+for (const key of ['spanish']) {
 	requireText(
 		comparisonSource,
 		`costcook: comingPlans.${key}.verdict`,

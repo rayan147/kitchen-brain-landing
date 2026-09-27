@@ -286,7 +286,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'inventory',
 				question: 'Is the inventory a live count?',
 				answer: [
-					`No. A physical count sets the baseline; purchases, waste and completed Pack move it from there, and the app tells you how fresh the number is. You can set a par level per ingredient and it will tell you whether you are below it, judged only from a trusted count. ${comingPlans.parBuying.faq}`
+					`No. A physical count sets the baseline; purchases, waste and completed Pack move it from there, and the app tells you how fresh the number is. You can set a par level per ingredient and it will tell you whether you are below it, judged only from a trusted count. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.`
 				],
 				claims: ['RC-31', 'RC-43']
 			}
