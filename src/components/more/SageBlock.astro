@@ -19,14 +19,14 @@
  *
  * CUT 2026-09-09, copy-density pass. BRIEF-copy-density-2026-09-09.md, tracker
  * at docs/stories/homepage-copy-density.story.md. This section said one thing
- * six times: eleven checks read, one tool prepares, a person approves. It was
+ * six times: its checks read, a draft is prepared, a person approves. It was
  * in the lede, in a .sage-promise rail, in the approval-path aria-label, in the
  * approval-path's own three stages, in the scope heading, and again in the
  * change guardrail's detail. The approval-path band is the one that SHOWS it, so
  * that is the one that kept it.
  *
  * .sage-promise IS GONE, markup and styles. It sat directly above the approval
- * path and read "Eleven checks read / One proposal waits", which is what the
+ * path and read the tool and draft counts, which is what the
  * band beneath it renders as three labelled stages with the numbers on them.
  *
  * THE LEDE STOPPED MARKING THE LINES. It said each answer line is marked "from
@@ -118,7 +118,7 @@ const guardrailGroups = [
 			</figure>
 		</div>
 
-		<div class="approval-path" aria-label="Read records, review a proposal, then approve or discard" data-reveal>
+		<div class="approval-path" aria-label="Read records, review a draft, then approve or discard" data-reveal>
 			<div data-sage-stage="read">
 				<span>Your records</span>
 				<strong>Read records</strong>
@@ -126,8 +126,8 @@ const guardrailGroups = [
 			</div>
 			<i aria-hidden="true"></i>
 			<div data-sage-stage="prepare">
-				<span>A proposal</span>
-				<strong>Prepares a proposal</strong>
+				<span>A draft</span>
+				<strong>Prepares a draft</strong>
 				<small>Nothing changes yet.</small>
 			</div>
 			<i aria-hidden="true"></i>

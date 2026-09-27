@@ -120,3 +120,7 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 - [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
 - [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
 - [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.
+
+## Claim correction · 2026-09-27 (Sage tools and drafts)
+
+- [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.

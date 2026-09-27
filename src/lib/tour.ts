@@ -494,7 +494,7 @@ export const tourStops: readonly TourStop[] = [
 			['Manage billing', 'Allowed', 'Not allowed', 'Not allowed'],
 			['Invite teammates', 'Allowed', 'Allowed', 'Not allowed'],
 			['Publish recipes', 'Allowed', 'Not allowed', 'Not allowed'],
-			['Review Sage proposals', 'Allowed', 'Allowed', 'Not allowed']
+			['Approve Sage drafts', 'Allowed', 'Allowed', 'Not allowed']
 		],
 		aside: {
 			title: 'Pending invitation',
@@ -515,7 +515,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Sage, the assistant',
 		appArea: 'Sage / Saturday event check',
 		title: 'Ask the question, then inspect the records behind the answer.',
-		intro: 'Sage checks your own CostCook records, names missing evidence, and keeps proposed shopping-list changes behind your review.',
+		intro: 'Sage checks your own CostCook records, names missing evidence, and keeps its drafts behind your approval.',
 		callout: 'An answer without its source is just another number to recheck.',
 		featureHref: featureMenuHref('assistant'),
 		metrics: [
@@ -538,9 +538,9 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Order', value: 'Garden wedding supper' },
 				{ label: 'Purchase order', value: 'PO-1047' },
 				{ label: 'Inventory area', value: 'Walk-in 1' },
-				{ label: 'Proposed changes', value: '0', tone: 'good' }
+				{ label: 'Drafts waiting', value: '0', tone: 'good' }
 			],
-			footnote: 'Shopping-list proposals wait for a manager or owner to review.'
+			footnote: 'Sage drafts wait for a manager or owner to approve.'
 		}
 	}
 ];

@@ -388,7 +388,7 @@ for (const consequence of founderConsequences) {
 	}
 }
 
-// Sage is one bounded path: records are read, one proposal can be prepared,
+// Sage is one bounded path: records are read, a draft can be prepared,
 // and a person decides whether it moves. Preserve that story and both pieces
 // of product evidence when the homepage section is edited.
 const sageStages = ['read', 'prepare', 'approve'];

@@ -141,7 +141,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'roles',
 				question: 'What do Owner, Manager and Staff mean?',
 				answer: [
-					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and review Sage shopping proposals. Staff use the shared kitchen lists and can open cost screens. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
+					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and approve Sage drafts. Staff use the shared kitchen lists and can open cost screens. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
 				],
 				claims: ['RC-52']
 			},
@@ -183,7 +183,7 @@ export const faq: readonly FaqGroup[] = [
 				icon: 'sage',
 				question: 'What is Sage?',
 				answer: [
-					'An assistant inside CostCook with eleven read-only checks across the shift, recipes, stock, buying and setup. Every answer shows where its numbers came from, and the one thing it can prepare, a shopping-list proposal, waits for a manager or owner to approve it. It cannot reach another kitchen and it never changes a record on its own.',
+					'An assistant inside CostCook with twenty-two read-only tools across the shift, orders, recipes, stock, buying and setup. Every answer shows where its numbers came from. It can prepare three kinds of draft (the kitchen shopping list, one order’s shopping list, and a guest-count change on a draft order), and nothing changes until a manager or owner approves the draft. It cannot reach another kitchen and it never changes a record on its own.',
 					'Sage is available now and stays within reach during setup. Its starting questions follow the setup stage and the records entered so far, and a Back to setup action returns you to the unfinished stage. See the <a href="/features/sage">Sage feature guide and video</a>.'
 				],
 				claims: ['RC-46', 'RC-49']

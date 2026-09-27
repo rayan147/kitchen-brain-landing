@@ -147,3 +147,7 @@ Content: `src/components/sections/ProductTour.astro` and its shared data/respons
 ### Closing layout correction · 2026-09-11
 
 Copy and story beats unchanged. Trial terms were moved below the button row and both columns constrained so the heading keeps a readable measure. The failed-then-passed geometry test and screenshots are in `docs/qa/resources-closing-regression/`. This corrects a defect missed by the earlier first-viewport review.
+
+## Claim correction · 2026-09-27 (Sage tools and drafts)
+
+- [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.

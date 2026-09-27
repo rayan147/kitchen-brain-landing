@@ -15,3 +15,7 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 - [x] 9 Scene: A phone at the prep bench between services.
 - [x] 10 Connection: You throughout; choose a task, inspect what it does, read limits, decide.
 - [x] 11 Revision: Built pages, shared consumers, status wording, five responsive widths and 320px/200% text verified. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+## Claim correction · 2026-09-27 (Sage tools and drafts)
+
+- [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.

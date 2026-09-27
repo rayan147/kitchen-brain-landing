@@ -470,9 +470,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		status: SAGE_STATUS === 'yes' ? 'available' : 'in-development',
 		items: [
 			{ lead: 'Ask during setup.', detail: 'Setup keeps an Ask Sage entry, offers questions that fit the stage and records entered so far, and gives you a direct route back.' },
-			{ lead: 'Eleven checks, one proposal.', detail: 'Ask about the shift, recipes, stock, buying or setup. Sage can also prepare a shopping-list proposal for a manager or owner to approve.' },
+			{ lead: 'Twenty-two read-only tools, three drafts.', detail: 'Ask about the shift, orders, recipes, stock, buying or setup. Sage can also draft the kitchen shopping list, one order’s shopping list, or a guest-count change on a draft order, for a manager or owner to approve.' },
 			{ lead: 'Sources under the answer.', detail: 'Each answer shows the records and checks behind its numbers, and says when evidence is missing.' },
-			{ lead: 'A proposal is not a change.', detail: 'Answers read your records. A shopping-list draft waits for an Owner or Manager to approve it, with the records checked again before saving.' }
+			{ lead: 'A draft is not a change.', detail: 'Answers read your records. Nothing changes until an Owner or Manager approves the draft, and the records are checked again before saving.' }
 		]
 	},
 	{
