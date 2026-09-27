@@ -92,7 +92,7 @@ export const ordering = {
 		}
 	],
 	stages: ['Menu', 'Choices', 'Event', 'Contact', 'Review'],
-	/** The four boundaries, in the words a surface would have to keep. */
+	/** The five boundaries, in the words a surface would have to keep. */
 	notClaimed: [
 		'What arrives is awaiting kitchen confirmation. Approval is not confirmation: the client’s payment confirms the order, and nothing on the site may call a request booked.',
 		'The browser sends the selections without prices. CostCook re-reads what is published and available and works out every amount.',
