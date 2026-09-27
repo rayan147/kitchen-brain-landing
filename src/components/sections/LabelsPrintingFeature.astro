@@ -6,7 +6,9 @@
  * word; this page prints it in the eyebrow, says it in a full sentence under
  * the headline, and repeats it in the FAQ, so a skimmer and a reader get the
  * same fact. Nothing here may read as "available" while that word is Coming
- * (RC-35), and nothing may say a label reaches a printer on its own.
+ * (RC-35), and nothing may say a label reaches a printer on its own. The word
+ * has been 'yes' since 2026-09-27 (RC-35 approved), so the hero and the close
+ * branch on it rather than carrying a Coming sentence in fixed markup.
  *
  * Built with the site's utility classes rather than a scoped stylesheet: the
  * page is print discipline, type and hairlines, like the homepage stops.
@@ -79,10 +81,10 @@ const faqItems = [
 						</span>
 					</div>
 					<h1 id="labels-feature-heading" class="mt-4 text-display font-semibold">
-						Kitchen date labels are coming. Preview how they will work.
+						{coming ? 'Kitchen date labels are coming. Preview how they will work.' : 'Kitchen date labels, printed from Prep and Pack.'}
 					</h1>
 					<p class="mt-5 max-w-[58ch] text-lede text-ink">
-						Choose the storage condition, use-by date and number of containers before printing. The label record keeps the wording for later reprints. This preview shows a feature you cannot use in the trial today.
+						Choose the storage condition, use-by date and number of containers before printing. The label record keeps the wording for later reprints.{coming ? ' This preview shows a feature you cannot use in the trial today.' : ' Printing goes through your browser, onto the label stock you set once in Settings.'}
 					</p>
 					{
 						coming && (
@@ -92,7 +94,9 @@ const faqItems = [
 						)
 					}
 					<div class="mt-8 flex flex-wrap items-center gap-4">
-						<a href="/features" class="btn-primary">See what ships today</a>
+						{coming
+							? <a href="/features" class="btn-primary">See what ships today</a>
+							: <a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>}
 						<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 					</div>
 				</div>
@@ -296,17 +300,20 @@ const faqItems = [
 		<div class="container-page py-section">
 			<h2 id="closing-heading" class="text-h2 font-semibold">Print what you chose. Keep the record.</h2>
 			<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
-				Recipe costing, event planning, prep, purchasing, inventory and nutrition are available today. Start
-				the trial for that work; labels remain excluded until the word above changes.
+				{coming
+					? 'Recipe costing, event planning, prep, purchasing, inventory and nutrition are available today. Start the trial for that work; labels remain excluded until the word above changes.'
+					: 'Kitchen labels come with recipe costing, event planning, prep, purchasing, inventory and nutrition in the one plan. Start the trial and print the first label from your own prep list.'}
 			</p>
 			<div class="mt-8 flex flex-wrap items-center gap-4">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				<a href="/features" class="btn-quiet">Every feature, area by area</a>
 			</div>
 			<FeatureTrialTerms />
-			<p class="mt-4 text-sm text-ink-soft">
-				Labels remain excluded while marked Coming.
-			</p>
+			{coming && (
+				<p class="mt-4 text-sm text-ink-soft">
+					Labels remain excluded while marked Coming.
+				</p>
+			)}
 		</div>
 	</section>
 </article>

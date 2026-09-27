@@ -30,7 +30,7 @@ const required = [
 	'Follow one event from quote to pack list.',
 	'Garden wedding supper',
 	'Illustrative tour data',
-	'Labels & printing is marked Coming.',
+	'Each stop follows its public status.',
 	'data-seed-key="product-tour-connected-event"',
 	// Thirteen since 2026-09-09: the guests' restrictions stop landed with the
 	// capability's feature page (RC-60). This number is pinned rather than derived

@@ -358,8 +358,8 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Partial is said out loud.', detail: 'A missing profile or a missing conversion reports the dish as partial rather than totalling an incomplete recipe.' },
 			/* RC-50, 2026-08-29. The print page on sandbox/demo,
 			   src/routes/catalog/recipes/[id]/nutrition-label, is a live read model
-			   with no flag in front of it. Browser print onto label stock; the
-			   printer integration is the labels group below and is still Coming. */
+			   with no flag in front of it. Browser print onto label stock; kitchen
+			   date labels are the labels group below, also printed by the browser. */
 			{ lead: 'Printed from the recipe.', detail: 'Print nutrition label makes a sheet with the kitchen name, the panel, the ingredient statement, the allergen line and the print time, for the browser to put on label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.' }
 		]
 	},
@@ -392,9 +392,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		section: 'Compliance and labels',
 		kicker: 'Labels & printing',
 		title: 'Kitchen date and allergen labels, from the prep list.',
-		/* Built behind the label_printing flag and not in the launch plan (RC-35,
-		   RC-51). The word comes from src/lib/labels.ts; while it is Coming the
-		   area page renders only items[0].detail, so that line is the summary. */
+		/* Available since 2026-09-27 (RC-35 approved, RC-51). The word comes from
+		   src/lib/labels.ts; while it was Coming the area page rendered only
+		   items[0].detail, so that line is still the summary. */
 		status: labelsAvailability.isComing ? 'in-development' : 'available',
 		items: [
 			{ lead: labelsAvailability.featureLead, detail: labelsAvailability.featureDetail },
@@ -597,8 +597,8 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				featureId: 'guards',
 				icon: 'nutrition'
 			},
-			// Added 2026-08-29 at the owner's request. Coming (RC-35), so the chip
-			// shows unless src/lib/labels.ts says otherwise.
+			// Added 2026-08-29 at the owner's request. Available since 2026-09-27
+			// (RC-35), so the chip is off while src/lib/labels.ts says yes.
 			{
 				label: 'Labels & printing',
 				description: 'Date and allergen stickers from the prep list, frozen for reprints.',

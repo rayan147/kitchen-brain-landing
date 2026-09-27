@@ -310,11 +310,11 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Labels & printing',
 		appArea: 'Prep / Garden wedding supper / Labels',
 		title: 'Choose the date and allergen facts before a sticker prints.',
-		intro: 'This feature is Coming. The preview starts from the prep list, asks the cook to settle the storage and use-by facts, then freezes what each sticker said for reprints.',
+		intro: 'Labels start from the prep list. The cook settles the storage and use-by facts, then CostCook freezes what each sticker said for reprints.',
 		callout: 'A label can repeat the date you chose. It cannot choose a food-safety date for you.',
 		featureHref: featureMenuHref('labels', labelsAvailability.isComing),
 		metrics: [
-			{ label: 'Availability', value: labelsAvailability.word, tone: 'attention' },
+			{ label: 'Availability', value: labelsAvailability.word, tone: labelsAvailability.isComing ? 'attention' : 'good' },
 			{ label: 'Containers', value: '24' },
 			{ label: 'Output', value: 'Browser print dialog' },
 			{ label: 'Reprint', value: 'Frozen record', tone: 'good' }
@@ -328,14 +328,14 @@ export const tourStops: readonly TourStop[] = [
 		],
 		aside: {
 			title: 'Label setup',
-			status: 'Coming',
+			status: labelsAvailability.word,
 			lines: [
 				{ label: 'Stock', value: '2 × 1 in roll' },
 				{ label: 'Made on', value: 'Aug 29, 2026' },
 				{ label: 'Use-by source', value: 'Cook chose', tone: 'attention' },
 				{ label: 'Sticker count', value: '24' }
 			],
-			footnote: 'Coming, not included at launch. Output opens the browser print dialog; no direct printer connection is built.'
+			footnote: 'Output opens the browser print dialog; no direct printer connection is built. Label stock is set once in Settings > Labels.'
 		}
 	},
 	{

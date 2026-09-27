@@ -407,11 +407,12 @@ if (!printedPanel.slice(0, 400).includes("costcook: 'yes'")) {
 if (!/not a retail-label compliance claim/.test(printedPanel.slice(0, 600))) {
 	failures.push('comparison honesty: the printed-labels note must carry the estimate-not-compliance boundary');
 }
-// Kitchen labels: built behind a flag, marked Coming (RC-35, RC-51). The one
-// word lives in src/lib/labels.ts and is pinned here until the ledger changes.
+// Kitchen labels: available since 2026-09-27, when the owner approved the RC-35
+// launch decision (RC-35, RC-51). The one word lives in src/lib/labels.ts and
+// is pinned here with the ledger row.
 const labelsSource = surfaces[surfaceFiles.indexOf('src/lib/labels.ts')];
-if (!/LABELS_STATUS = 'coming'/.test(labelsSource)) {
-	failures.push('labels status: RC-35 says not included at launch; LABELS_STATUS must read coming until the ledger row changes');
+if (!/LABELS_STATUS = 'yes'/.test(labelsSource)) {
+	failures.push('labels status: RC-35 was approved on 2026-09-27; LABELS_STATUS must read yes until the ledger row changes');
 }
 requireText(labelsSource, 'browser', 'labels copy names the browser as the only output');
 requireText(labelsSource, 'never guesses', 'labels copy carries the no-guessed-date rule');
@@ -422,7 +423,7 @@ for (const [name, source] of [['src/lib/labels.ts', labelsSource], ['src/compone
 }
 const printerRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Kitchen label printing'"));
 if (!printerRow.slice(0, 220).includes('costcook: labelsAvailability.verdict')) {
-	failures.push('comparison honesty: the label printer is not connected (RC-35); that row may not claim yes');
+	failures.push('comparison honesty: the kitchen label row must read the shared labels word (RC-35), never a typed verdict');
 }
 requireText(printerRow.slice(0, 260), "parsley: '$59/month add-on'", 'current Parsley label-printing add-on');
 const roleRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Role-aware sensitive actions'"));

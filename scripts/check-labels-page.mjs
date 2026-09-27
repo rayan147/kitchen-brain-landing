@@ -17,7 +17,6 @@ const coming = /LABELS_STATUS = 'coming'/.test(labelsSource);
 const required = [
 	'id="features-labels"',
 	'id="labels-feature-heading"',
-	'Kitchen date labels are coming. Preview how they will work.',
 	'id="how-a-label-is-made"',
 	'id="the-record"',
 	'id="what-it-prints-on"',
@@ -38,12 +37,16 @@ const required = [
 	'Does it send labels straight to a label printer?',
 	'Print what you chose. Keep the record.'
 ];
-if (coming) required.push('data-labels-status="coming"', 'data-labels-status-sentence', 'Not included in the CostCook subscription', 'See what ships today');
+if (coming) required.push('Kitchen date labels are coming. Preview how they will work.', 'data-labels-status="coming"', 'data-labels-status-sentence', 'Not included in the CostCook subscription', 'See what ships today');
+// Available since 2026-09-27 (RC-35 approved): the page must say so and may not
+// keep any sentence that calls the feature Coming or excluded.
+else required.push('Kitchen date labels, printed from Prep and Pack.', 'data-labels-status="yes"', 'Available now', 'Settings');
 
 const missing = required.filter((fragment) => !html.includes(fragment));
 if (missing.length > 0) throw new Error(`Labels page build is missing: ${missing.join(', ')}`);
 
 if (coming && /Available now/.test(html)) throw new Error('Labels page says Available now while src/lib/labels.ts says coming.');
+if (!coming && /cannot use in the trial|remain excluded|Not included in the CostCook subscription|labels are coming/i.test(html)) throw new Error('Labels page still calls labels Coming while src/lib/labels.ts says yes.');
 if (/sandbox(?:\/demo| build)/i.test(html)) throw new Error('Labels page exposes internal sandbox provenance.');
 const forbidden = [/direct(ly)? to (the |a |your )?(label )?printer/i, /sends? (it |them |labels )?to (the |a |your )?printer/i, /Brother|DYMO|Dymo|Zebra|Avery/];
 for (const pattern of forbidden) {

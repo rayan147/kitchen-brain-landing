@@ -233,8 +233,7 @@ const cateringDates = [0, 3, 0, 7, 2, 0, 9, 0, 4, 0, 0, 6];
 					</h3>
 				</div>
 				<p>
-					None is in the CostCook you would start today, and no release date is promised.
-					Kitchen labels and Spanish are not available in the launch plan.
+					{`${comingItems.length === 1 ? 'It is not' : 'None is'} in the CostCook you would start today, and no release date is promised. ${comingItems.map((item) => item.title).join(' and ')} ${comingItems.length === 1 ? 'is' : 'are'} not available in the launch plan.`}
 				</p>
 			</div>
 			<ul role="list" class="coming-list">
