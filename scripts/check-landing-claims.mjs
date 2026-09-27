@@ -1,6 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { moneyClaims } from './lib/money-claims.mjs';
+import { homepageComponentOrder, homepageStopIds } from './lib/homepage-stops.mjs';
 
 const root = new URL('..', import.meta.url).pathname;
 const read = (path) => readFile(join(root, path), 'utf8');
@@ -26,9 +27,9 @@ const surfaceFiles = [
 	// overclaiming automation.
 	'src/components/LoopBand.astro',
 	'src/components/sections/TheProblem.astro',
-	// Third homepage stop. MUST NOT go first or second in this array: siteSource
-	// and heroSource are read by position below. Everything else resolves by
-	// indexOf and is safe to reorder.
+	// A homepage stop (order: scripts/lib/homepage-stops.mjs). MUST NOT go first
+	// or second in this array: siteSource and heroSource are read by position
+	// below. Everything else resolves by indexOf and is safe to reorder.
 	'src/components/sections/WhoThisIsFor.astro',
 	// The event's front half, inquiry to booked (2026-09-27). Its risk is
 	// overclaiming money: a deposit is recorded, never taken, on this path.
@@ -285,22 +286,13 @@ requireText(contactPage, 'demoCta.href', 'contact demo action');
 requireText(askSupportSource, 'Do not include passwords, payment card details', 'contact safety copy');
 requireText(await read('src/layouts/Base.astro'), 'import.meta.env.PROD', 'deployment-only analytics');
 
-// Ten stops, one claim each. SeeItRun sits SECOND since 2026-09-06, at the
-// owner's request: the footage runs before the page argues anything, so a
-// reader arriving cold from an email settles "is this real" on the first
-// scroll instead of on the fourth. TheProblem and WhoThisIsFor keep their
-// order relative to each other and still land before the answers they set up.
-// The 2026-09-11 review puts one event's proof before optional diligence.
-// EventBooking sits right under the hero since 2026-09-27: the page is
-// event-first, so the inquiry-to-booked promise is the first thing proven.
-// docs/stories/homepage-event-story.story.md
-const expectedSectionOrder = [
- '<Hero />', '<EventBooking />', '<CustomerOutcomes />', '<SeeItRun />', '<TheProblem />',
- '<TheYield />', '<BuiltForKitchens />', '<WhoThisIsFor />', '<WhatElse />',
- '<TheOtherTools />', '<StartHere />'
-];
+// Eleven stops, the hero and ten sections, one claim each. EventBooking sits
+// right under the hero since 2026-09-27 (the page is event-first); SeeItRun is
+// fourth, still ahead of the diagnosis it proves. The one explicit order, and
+// why, is scripts/lib/homepage-stops.mjs, shared with check-dist.mjs and
+// verify-homepage.mjs. docs/stories/homepage-event-story.story.md
 let previousSectionIndex = -1;
-for (const component of expectedSectionOrder) {
+for (const component of homepageComponentOrder) {
 	const sectionIndex = index.indexOf(component);
 	if (sectionIndex <= previousSectionIndex) {
 		failures.push(
@@ -693,7 +685,7 @@ for (let claim = 1; claim <= ledgerTop; claim += 1) {
 // third primary and must render cta.label like the other two.
 const stopsSource = await read('src/lib/stops.ts');
 const stopIds = [...stopsSource.matchAll(/\{ id: '([a-z]+)'/g)].map((m) => m[1]);
-const expectedStopIds = ['booking', 'outcomes', 'demo', 'problem', 'yield', 'trust', 'who', 'more', 'alternatives', 'start'];
+const expectedStopIds = homepageStopIds;
 if (stopIds.join(',') !== expectedStopIds.join(',')) {
 	failures.push(
 		`hand-offs: src/lib/stops.ts reads [${stopIds.join(', ')}] but the homepage renders ` +

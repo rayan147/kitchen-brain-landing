@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { homepageStopIds } from './lib/homepage-stops.mjs';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const route = `${baseUrl}/`;
@@ -253,7 +254,8 @@ try {
 	assert(noScript.heading?.startsWith('The event you sold is the event you cook.'), 'no JavaScript: homepage identity is missing');
 	assert(noScript.primary, 'no JavaScript: primary action is missing');
 	// Assert visitor destinations rather than an obsolete minimum section count.
-	assert(noScript.sections.join(',') === 'booking,outcomes,demo,problem,yield,trust,who,more,alternatives,start', 'no JavaScript: homepage decision destinations are missing or out of order');
+	// The one explicit stop order, shared with check-landing-claims and check-dist.
+	assert(noScript.sections.join(',') === homepageStopIds.join(','), `no JavaScript: homepage sections read [${noScript.sections.join(', ')}]; expected [${homepageStopIds.join(', ')}]`);
 
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

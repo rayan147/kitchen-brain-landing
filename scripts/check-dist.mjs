@@ -5,6 +5,7 @@
 // Runs as postbuild, so `npm run build` (local and Vercel) enforces it.
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { homepageStopIds } from './lib/homepage-stops.mjs';
 
 const dist = new URL('../dist', import.meta.url).pathname;
 // \s so stroke-width can't satisfy the check; a bare number before the
@@ -265,9 +266,19 @@ for (const [text, label] of [
 
 // SECTION ORDER, at the rendered level. src/lib/stops.ts and index.astro are
 // pinned to each other in check-landing-claims.mjs, but nothing checked that
-// the HTML actually comes out in that order. The proof video runs SECOND since
-// 2026-09-06, ahead of the diagnosis; see the note in src/pages/index.astro.
+// the HTML actually comes out in that order. The stops, in order, are
+// scripts/lib/homepage-stops.mjs: every one must render, in that order. The
+// proof video runs fourth since 2026-09-27 (it was second from 2026-09-06),
+// still ahead of the diagnosis; see the note in src/pages/index.astro.
 const homeSectionIds = [...homeHtml.matchAll(/<section[^>]*\sid="([a-z-]+)"/g)].map((m) => m[1]);
+const renderedStops = homeSectionIds.filter((id) => homepageStopIds.includes(id));
+if (renderedStops.join(',') !== homepageStopIds.join(',')) {
+	console.error(
+		`check-dist: homepage stops render as [${renderedStops.join(', ')}]; ` +
+			`expected [${homepageStopIds.join(', ')}] (scripts/lib/homepage-stops.mjs)`,
+	);
+	failed = true;
+}
 const demoIndex = homeSectionIds.indexOf('demo');
 const problemIndex = homeSectionIds.indexOf('problem');
 if (demoIndex === -1 || problemIndex === -1 || demoIndex > problemIndex) {
