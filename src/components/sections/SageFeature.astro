@@ -1,6 +1,7 @@
 ---
 import FeatureTrialTerms from "../FeatureTrialTerms.astro";
-import { sage, sageStatusWord } from '../../lib/sage';
+import { sage, sageDraftKinds, sageDraftKindsAnd, sageReadToolCount, sageStatusWord } from '../../lib/sage';
+import { spell, spellCapital } from '../../lib/words';
 import { cta, demoCta } from '../../lib/site';
 import SageIcon from '../SageIcon.astro';
 
@@ -20,12 +21,12 @@ const faqItems = [
 	{
 		question: 'What can I ask Sage?',
 		answer:
-			'Sage supports eleven read-only checks across the shift, recipes, stock, buying and setup. It can also prepare one shopping-list proposal for an owner or manager to review.'
+			`Sage has ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. It can also prepare ${spell(sageDraftKinds.length)} kinds of draft for an owner or manager to approve: ${sageDraftKindsAnd}.`
 	},
 	{
 		question: 'Can Sage change my kitchen records?',
 		answer:
-			'Not on its own. Eleven checks read records. The twelfth tool can prepare a shopping-list proposal. A person reviews the impact, and CostCook checks the underlying records again before an approved proposal is created.'
+			'Not on its own. Its tools read records, and a draft changes nothing. An owner or manager approves or discards each draft, and CostCook checks the underlying records again before an approved draft is saved. If they moved, nothing is written.'
 	},
 	{
 		question: 'What happens when the evidence is missing?',
@@ -35,7 +36,7 @@ const faqItems = [
 	{
 		question: 'Who can see price moves or approve a shopping-list draft?',
 		answer:
-			'Ingredient price moves and shopping-list preparation require a manager or owner. Staff can ask about attention, orders, recipe costs and receiving follow-ups without using Sage as a way around CostCook roles.'
+			'Price moves, order and menu money, spending, and every draft require a manager or owner. Staff can ask about attention, orders, prep, recipe costs and receiving follow-ups. A staff member sees a draft without its buttons: it waits for a manager.'
 	}
 ] as const;
 
@@ -214,10 +215,10 @@ const videoChapters = [
 				<h2 id="guardrails-heading">Useful because the boundaries are visible.</h2>
 				<p>An answer stays separate from an action. A prepared draft stays separate from approval.</p>
 			</div>
-			<div class="approval-path" data-reveal aria-label="Eleven checks read records, one tool prepares a proposal, and a person approves">
-				<div><span>11 checks</span><strong>Read records</strong></div>
+			<div class="approval-path" data-reveal aria-label={`${spellCapital(sageReadToolCount, { compound: true })} tools read records, ${spell(sageDraftKinds.length)} kinds of draft can be prepared, and a person approves`}>
+				<div><span>22 tools</span><strong>Read records</strong></div>
 				<i aria-hidden="true"></i>
-				<div><span>1 draft</span><strong>Prepares a proposal</strong></div>
+				<div><span>3 drafts</span><strong>Prepares a draft</strong></div>
 				<i aria-hidden="true"></i>
 				<div class="person"><span>You</span><strong>Approve or discard</strong></div>
 			</div>

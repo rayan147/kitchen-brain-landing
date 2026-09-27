@@ -10,8 +10,9 @@
  *
  * WHAT AN ANSWER MAY NOT DO. Soften a `no`. Promise a date for a `coming`.
  * Say what another product cannot do (RC-40, RC-47 scope that to /compare).
- * Use the two no-typing phrases the ledger excludes. Say "margin" when the
- * number is food cost.
+ * Use the two no-typing phrases the ledger excludes. Say "margin" for a
+ * food-cost number without saying it is food-only (the app shows a food-only
+ * gross-margin figure on event totals and recipe pricing; gap report S4).
  *
  * ORDER. Groups run in the order the reader asks them: the money first,
  * because that is what a cold-email visitor opens this page for, then fit,
@@ -26,6 +27,8 @@ import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
 import { orderingAvailability } from './ordering';
 import { dietary } from './dietary';
+import { sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } from './sage';
+import { spell } from './words';
 
 export interface FaqEntry {
 	/** Stable id for deep links (#cancel). Lowercase, hyphenated. */
@@ -133,7 +136,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'permissions',
 				question: 'Can I give a cook the prep list without showing them the costs?',
 				answer: [
-					'No. Owner, Manager and Staff protect specific sensitive actions, but there is no per-screen control, so anyone on the workspace can open the costs. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
+					'No. Owner, Manager and Staff protect specific sensitive actions, but there is no per-screen control, so a cook on Staff can still open recipe costs and Analytics. A little is held back: Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
 				],
 				claims: ['RC-44', 'RC-52']
 			},
@@ -141,7 +144,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'roles',
 				question: 'What do Owner, Manager and Staff mean?',
 				answer: [
-					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and review Sage shopping proposals. Staff use the shared kitchen lists and can open cost screens. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
+					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and approve Sage drafts. Staff use the shared kitchen lists and can open cost screens, including recipe costs and Analytics. Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
 				],
 				claims: ['RC-52']
 			},
@@ -155,7 +158,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'labels',
 				question: 'Does it do nutrition labels?',
 				answer: [
-					'Yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Print nutrition label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
+					'As a calculated estimate, yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Print nutrition label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
 					labelsAvailability.nutritionFaqCrosslink
 				],
 				claims: ['RC-42', 'RC-47', 'RC-50']
@@ -179,11 +182,17 @@ export const faq: readonly FaqGroup[] = [
 				claims: ['RC-47']
 			},
 			{
+				id: 'event-payments',
+				question: 'Can clients pay the event deposit by card?',
+				answer: [comingPlans.eventPayments.faq],
+				claims: ['RC-65']
+			},
+			{
 				id: 'sage',
 				icon: 'sage',
 				question: 'What is Sage?',
 				answer: [
-					'An assistant inside CostCook with eleven read-only checks across the shift, recipes, stock, buying and setup. Every answer shows where its numbers came from, and the one thing it can prepare, a shopping-list proposal, waits for a manager or owner to approve it. It cannot reach another kitchen and it never changes a record on its own.',
+					`An assistant inside CostCook with ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. Every answer shows where its numbers came from. It can prepare ${spell(sageDraftKinds.length)} kinds of draft (${sageDraftKindsAnd}), and nothing changes until a manager or owner approves the draft. It cannot reach another kitchen and it never changes a record on its own.`,
 					'Sage is available now and stays within reach during setup. Its starting questions follow the setup stage and the records entered so far, and a Back to setup action returns you to the unfinished stage. See the <a href="/features/sage">Sage feature guide and video</a>.'
 				],
 				claims: ['RC-46', 'RC-49']
@@ -198,7 +207,7 @@ export const faq: readonly FaqGroup[] = [
 			},
 			{
 				id: 'ordering',
-				question: 'Can customers order from me through CostCook?',
+				question: 'Can clients order from me through CostCook?',
 				answer: orderingAvailability.faqStatus,
 				claims: ['RC-59']
 			},
@@ -206,7 +215,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'margin',
 				question: 'Will it tell me my margin?',
 				answer: [
-					'It tells you food cost: the theoretical food cost of an event, the food-cost percentage against a target you set, and the selling price that would meet that target. Labor and overhead are not in it, so the number is food cost and it is never called margin.'
+					'It tells you food cost: the theoretical food cost of an event, the food-cost percentage against a target you set, and the selling price that would meet that target. Labor and overhead are not in it. Where the event totals and recipe pricing show a food-only gross margin, it is the price less food cost, not your business margin after labor and overhead.'
 				],
 				claims: ['RC-04', 'RC-05', 'RC-30']
 			}
@@ -218,11 +227,11 @@ export const faq: readonly FaqGroup[] = [
 		entries: [
 			{
 				id: 'quote',
-				question: 'How does a quote get its food cost?',
+				question: 'How does a proposal get its food cost?',
 				answer: [
-					'Pick a costed menu, enter the guest count and the price per head, and the draft order shows revenue, theoretical food cost, food cost per guest and the percentage against your target, before anything is sent. While it is a draft, those numbers follow your current ingredient prices.'
+					'Build the event menu from your costed recipes or a saved menu, and the menu and service step shows the food cost before the proposal goes to the client. For a job you take by phone without a proposal, a draft order shows revenue, theoretical food cost, food cost per guest and the percentage against your target. While either is a draft, those numbers follow your current ingredient prices.'
 				],
-				claims: ['RC-03', 'RC-04', 'RC-06']
+				claims: ['RC-03', 'RC-04', 'RC-06', 'RC-61']
 			},
 			{
 				id: 'frozen',
@@ -253,7 +262,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'orders',
 				question: 'Does it send the purchase orders?',
 				answer: [
-					'Confirming an order emails one purchase order per supplier, each with its own number, in whole packs. Email is email: the app records the send, and I do not promise delivery into anyone’s inbox.'
+					'Yes, when you say so. Confirming an order contacts no supplier. When you are ready, press Order from suppliers and pick, for each supplier, email, print or handle it yourself, or choose I’ll shop it myself. Each purchase order has its own number, in whole packs. Email is email: the app records the send, and I do not promise delivery into anyone’s inbox.'
 				],
 				claims: ['RC-26', 'RC-33']
 			},
@@ -285,7 +294,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'inventory',
 				question: 'Is the inventory a live count?',
 				answer: [
-					`No. A physical count sets the baseline; purchases, waste and completed Pack move it from there, and the app tells you how fresh the number is. You can set a par level per ingredient and it will tell you whether you are below it, judged only from a trusted count. ${comingPlans.parBuying.faq}`
+					`No. A physical count sets the baseline; purchases, waste and completed Pack move it from there, and the app tells you how fresh the number is. You can set a par level per ingredient and it will tell you whether you are below it, judged only from a trusted count. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.`
 				],
 				claims: ['RC-31', 'RC-43']
 			}
@@ -309,7 +318,7 @@ export const faq: readonly FaqGroup[] = [
 				question: 'What do I do after setup, and how does my crew get in?',
 				answer: [
 					'Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, ready for you to review before saving.',
-					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
+					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens, including recipe costs and Analytics, and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
 				],
 				claims: ['RC-38', 'RC-39', 'RC-52']
 			},

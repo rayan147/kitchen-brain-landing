@@ -169,3 +169,7 @@ The same component follows Sage from the feature dropdown to the homepage, speci
 ### 11. Revision ☒
 
 Cut the old generic chat-bubble symbol, rejected a robot face and sparkle, kept one color, three internal strokes and a printable outline. No capability sentence or claim changed.
+
+## Claim correction · 2026-09-27 (Sage tools and drafts)
+
+- [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.

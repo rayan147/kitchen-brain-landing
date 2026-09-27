@@ -101,3 +101,11 @@
 - **Claims removed:** That an order is confirmed. That prices are worked out in the customer's browser. That Stripe means money arriving. That the widget can be driven from the page around it.
 - **The ending is the word Coming**, and it has to be the least ambiguous word in the group. Four guard regexes exist so the four tempting sentences fail the build rather than the demo call.
 - **Final image:** Built, not deployed, no date, and five steps that end with him saying yes.
+
+## Claim correction · 2026-09-27 (online ordering available)
+
+- [x] 1 Idea: A caterer who takes orders by text wants clients to request from her own page, but she will not hand a stranger a booked date or a promise about money.
+- [x] 3 Plot: The ending is no longer the word Coming. The client requests, she approves, and the client's payment confirms the order.
+- [x] 7 Headline: "Online orders: the client requests, you approve, their payment confirms." Subhead: Available now.
+- [x] 8 Snap: kept, reworded to the new truth: it arrives awaiting kitchen confirmation, and you approve or decline.
+- [x] 11 Revision: ORDERING_STATUS is yes after the owner ruling of 2026-09-27 (FEATURE_ORDERING_INTEGRATION_ENABLED on as the deployment default). "Built, not deployed" and "Stripe is a handoff" were removed. Limits stated plainly: nothing is charged at request; approval is not confirmation; 72-hour payment window; one balance reminder with a pay link; card payment for online orders only, no saved cards, no automatic refunds, no client invoices; custom requests become inquiries. "Client", not "customer", in every rewritten line. Gap report S9, W9; RC-59.

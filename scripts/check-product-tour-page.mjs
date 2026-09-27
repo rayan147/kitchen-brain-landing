@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { tourStopCount } from './lib/tour-stops.mjs';
 
 const pagePath = new URL('../dist/tour/main/index.html', import.meta.url);
 const homePath = new URL('../dist/index.html', import.meta.url);
@@ -7,6 +8,7 @@ const [html, homeHtml] = await Promise.all([readFile(pagePath, 'utf8'), readFile
 const featureStops = [
 	'Recipes &amp; food costing',
 	'Menus &amp; quotes',
+	'Events &amp; proposals',
 	'Ingredients &amp; supplier prices',
 	'Invoices &amp; price-list import',
 	'Nutrition facts &amp; allergens',
@@ -30,12 +32,11 @@ const required = [
 	'Follow one event from quote to pack list.',
 	'Garden wedding supper',
 	'Illustrative tour data',
-	'Labels & printing is marked Coming.',
+	'Each stop follows its public status.',
 	'data-seed-key="product-tour-connected-event"',
-	// Thirteen since 2026-09-09: the guests' restrictions stop landed with the
-	// capability's feature page (RC-60). This number is pinned rather than derived
-	// because a stop silently disappearing is the failure it is here to catch.
-	'Stop 1 of 13',
+	// The count is read from src/lib/tour.ts (scripts/lib/tour-stops.mjs), which
+	// holds the floor that catches a stop silently disappearing.
+	`Stop 1 of ${tourStopCount}`,
 	'$127.66 / 10 kg',
 	'$14.03 / kg',
 	'$109.42',
@@ -62,14 +63,14 @@ for (const forbidden of ['Gross margin', 'Unaccounted gap', 'Alvarez–Whitman w
 	if (html.includes(forbidden)) throw new Error(`Product tour still contains stale claim copy: ${forbidden}`);
 }
 
-// Thirteen since 2026-09-09 (RC-60). One tab per Features dropdown destination;
-// src/lib/tour.ts throws if those two lists ever stop matching, and this is the
-// built-page half of the same contract.
-if ((html.match(/id="tour-tab-/g) ?? []).length !== 13) {
-	throw new Error('Product tour must render exactly thirteen feature tabs.');
+// One tab per Features dropdown destination; src/lib/tour.ts throws if those
+// two lists ever stop matching, and this is the built-page half of the same
+// contract: every stop in the source renders as a tab and a scene.
+if ((html.match(/id="tour-tab-/g) ?? []).length !== tourStopCount) {
+	throw new Error(`Product tour must render exactly ${tourStopCount} feature tabs (src/lib/tour.ts).`);
 }
-if ((html.match(/id="tour-panel-/g) ?? []).length !== 13) {
-	throw new Error('Product tour must render exactly thirteen seeded feature scenes.');
+if ((html.match(/id="tour-panel-/g) ?? []).length !== tourStopCount) {
+	throw new Error(`Product tour must render exactly ${tourStopCount} seeded feature scenes (src/lib/tour.ts).`);
 }
 if (!homeHtml.includes('href="/tour/main"') || !homeHtml.includes('Take the product tour')) {
 	throw new Error('Features menu is missing the product-tour entry point.');

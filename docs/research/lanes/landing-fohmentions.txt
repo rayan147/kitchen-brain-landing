@@ -1,0 +1,155 @@
+src/pages/index.astro:7:import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
+src/pages/index.astro:22:  <CustomerOutcomes />
+src/pages/demo.astro:5:const directionContract = `request-demo-working-session
+src/pages/demo.astro:18:	{directionContract}
+src/pages/faq.astro:27:const directionContract = `THESIS: Reveal the catch before asking for trust; refuse the accordion wall and generic feature-card FAQ.
+src/pages/faq.astro:35:<Base title="CostCook questions, answered plainly" description={description} path="/faq" directionContract={directionContract}>
+src/pages/blog/index.astro:16:const directionContract = `THESIS: A working chef should leave with the number worked through, not another list of software opinions; refuse the generic publication grid 
+src/pages/blog/index.astro:28:	{directionContract}
+src/pages/blog/[slug].astro:35:const directionContract = `THESIS: Work one kitchen question all the way through; refuse the generic SEO article, floating table of contents, and product pitch disguised
+src/pages/blog/[slug].astro:43:<Base title={`${post.data.title} | CostCook`} description={post.data.description} {path} {directionContract}>
+src/pages/blog/[slug].astro:138:	.article-body :global(ul) { list-style: square; }
+src/pages/features/inventory.astro:8:const directionContract = [
+src/pages/features/inventory.astro:10:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber state rules, square shelf records, green actions.',
+src/pages/features/inventory.astro:22:	directionContract={directionContract}
+src/pages/compare.astro:26:// exist to prevent. src/lib/comparison.ts holds the full contract.
+src/pages/features/guest-restrictions-and-dietary-guards.astro:7:const directionContract = [
+src/pages/features/guest-restrictions-and-dietary-guards.astro:21:	directionContract={directionContract}
+src/pages/who-its-for.astro:8:const directionContract = [
+src/pages/who-its-for.astro:10:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, square records, green actions.',
+src/pages/who-its-for.astro:11:	'STORY: Category doubt becomes a work-based fit test, then a shared service calendar, connected plan, honest limits, and one real-menu next step.',
+src/pages/who-its-for.astro:14:	'FINISH: Navigation, no-JS, reduced motion, keyboard, 200% text, desktop, mobile, build contract, review, and documentation all close.'
+src/pages/who-its-for.astro:22:	directionContract={directionContract}
+src/pages/features/sage.astro:7:const directionContract = [
+src/pages/features/sage.astro:9:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, restrained amber, square evidence records and green actions.',
+src/pages/features/sage.astro:10:	'STORY: A chef-owner asks during setup, watches the question reach a sourced answer, sees eleven checks and one approval-bound proposal, then starts or books a demo.'
+src/pages/features/sage.astro:22:	directionContract={directionContract}
+src/pages/features/team-and-access.astro:7:const directionContract = [
+src/pages/features/team-and-access.astro:9:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, square access slips and green actions.',
+src/pages/features/team-and-access.astro:21:	directionContract={directionContract}
+src/pages/features/nutrition-facts-and-allergens.astro:7:const directionContract = [
+src/pages/features/nutrition-facts-and-allergens.astro:9:	'OWN-WORLD: CostCook Kitchen Ticket paper, pale-green working fields, ink-heavy label rules, green reviewed states, restrained amber incomplet
+src/pages/features/nutrition-facts-and-allergens.astro:21:	directionContract={directionContract}
+src/pages/features/ingredients-and-supplier-prices.astro:8:const directionContract = [
+src/pages/features/ingredients-and-supplier-prices.astro:10:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, square operational records, green actions.',
+src/pages/features/ingredients-and-supplier-prices.astro:22:	directionContract={directionContract}
+src/pages/onboarding.astro:8:const directionContract = [
+src/pages/onboarding.astro:22:	directionContract={directionContract}
+src/pages/features/order-shop-prep-pack.astro:8:const directionContract = [
+src/pages/features/order-shop-prep-pack.astro:10:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber attention states, square production sheets, green actions.',
+src/pages/features/order-shop-prep-pack.astro:22:	directionContract={directionContract}
+src/pages/features/recipes-and-costing.astro:7:const directionContract = [
+src/pages/features/recipes-and-costing.astro:9:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber rules, square records, green actions.',
+src/pages/features/recipes-and-costing.astro:21:	directionContract={directionContract}
+src/pages/features/labels-and-printing.astro:8:const directionContract = [
+src/pages/features/labels-and-printing.astro:22:	directionContract={directionContract}
+src/pages/features/purchases-and-month-cost.astro:8:const directionContract = [
+src/pages/features/purchases-and-month-cost.astro:9:	'THESIS: A month-end difference should remain an inspectable question until the records explain it; refuse the generic analytics dashboard, decorat
+src/pages/features/purchases-and-month-cost.astro:10:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber variance states, square ledger and month-close sheets, gre
+src/pages/features/purchases-and-month-cost.astro:22:	directionContract={directionContract}
+src/pages/features/purchasing-and-receiving.astro:8:const directionContract = [
+src/pages/features/purchasing-and-receiving.astro:10:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber variance rules, square purchase records, green actions.',
+src/pages/features/purchasing-and-receiving.astro:22:	directionContract={directionContract}
+src/pages/demo/not-sent.astro:12: * is down, and it is offered beside a phone number and a calendar rather than
+src/pages/demo/sent.astro:10: * It carries the same booking calendar the scripted path shows in step 3,
+src/pages/demo/sent.astro:20:	description="Your demo request reached Rayan. Pick a 15-minute time on his calendar."
+src/pages/demo/sent.astro:46:				>Calendar not loading? Open it in a new tab</a
+src/components/CellMark.astro:24:// a rule. Twelve-square with intrinsic width and height, per check-dist.
+src/pages/features/invoices-and-price-list-import.astro:7:const directionContract = [
+src/pages/features/invoices-and-price-list-import.astro:9:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber review signals, square records, green actions.',
+src/pages/features/invoices-and-price-list-import.astro:21:	directionContract={directionContract}
+src/components/LoopBand.astro:35: * invoices are reviewed, extracted values are proposals, and price changes are
+src/components/FeatureAreaFigure.astro:172:				Everything to the left of it is a proposal. Reading the paper is the fast part;
+src/components/sections/Integrations.astro:20:// Square and QuickBooks are RC-45. QuickBooks is genuinely unbuilt. Square is
+src/components/sections/Integrations.astro:23:// integrationExecutionAllowed(businessId, 'square_integration',
+src/components/sections/Integrations.astro:24:// env.FEATURE_SQUARE_INTEGRATION_ENABLED), which defaults off. "Coming" is
+src/components/sections/Integrations.astro:77:			<h3 class="text-h3 font-semibold">Square and QuickBooks are not available yet</h3>
+src/components/sections/Integrations.astro:91:							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.label === 'Point of sale' ? 'Square is not available today. You cannot send menus to your till or b
+src/components/sections/NutritionFactsAllergensFeature.astro:178:					A customer asks how much protein is in the bowl and whether it contains milk.
+src/components/sections/WhatElse.astro:24: * documented contracts in scripts/check-dist.mjs that assert the homepage
+src/components/sections/WhatElse.astro:25: * carries this proof. Every claim, every figure and every one of those contracts
+src/components/sections/WhatElse.astro:29: * ships open so a no-JS reader and every build contract still see all of it.
+src/components/sections/TheProblem.astro:149:		     answers in CustomerOutcomes; a heading here would make that list six and
+src/components/sections/StartHere.astro:73:					Bring the menu and guest count already on your calendar. Check the food cost,
+src/components/sections/BuiltForKitchens.astro:32:		icon: 'calendar'
+src/components/sections/BuiltForKitchens.astro:109:									{consequence.icon === 'calendar' && (
+src/components/sections/TheOtherTools.astro:102:		<!-- FIGURE LEADS SINCE 2026-08-29. The two calendars are the best drawing on
+src/components/sections/TheOtherTools.astro:130:					Two calendars drawn at the same scale. A regular service week is seven
+src/components/sections/TheOtherTools.astro:131:					identical marks, Monday to Sunday. A special-event calendar has twelve dates,
+src/components/sections/SageFeature.astro:8:// view of Sage's static product contract; no behavior is swapped at runtime.
+src/components/sections/SageFeature.astro:23:			'Sage supports eleven read-only checks across the shift, recipes, stock, buying and setup. It can also prepare one shopping-list proposal for an owner o
+src/components/sections/SageFeature.astro:28:			'Not on its own. Eleven checks read records. The twelfth tool can prepare a shopping-list proposal. A person reviews the impact, and CostCook checks the
+src/components/sections/SageFeature.astro:217:			<div class="approval-path" data-reveal aria-label="Eleven checks read records, one tool prepares a proposal, and a person approves">
+src/components/sections/SageFeature.astro:220:				<div><span>1 draft</span><strong>Prepares a proposal</strong></div>
+src/components/sections/WhoItsForPage.astro:84:				<h2 id="fit-heading">Look at the calendar, not the category.</h2>
+src/components/more/SageBlock.astro:10: * /compare. It is not a fifth CustomerOutcomes card: that
+src/components/more/SageBlock.astro:29: * path and read "Eleven checks read / One proposal waits", which is what the
+src/components/more/SageBlock.astro:121:		<div class="approval-path" aria-label="Read records, review a proposal, then approve or discard" data-reveal>
+src/components/more/SageBlock.astro:129:				<span>A proposal</span>
+src/components/more/SageBlock.astro:130:				<strong>Prepares a proposal</strong>
+src/components/sections/TeamAccessFeature.astro:13:		protectedWork: 'Manage billing; publish, archive and restore recipes; manage Square when that connection is enabled.',
+src/components/sections/TeamAccessFeature.astro:21:		protectedWork: 'Complete kitchen setup; invite and revoke teammates; ask Sage about price moves; review Sage shopping-list proposals.',
+src/components/sections/TeamAccessFeature.astro:22:		boundary: 'Billing, recipe publishing, archiving and restoration stay with the Owner. Square controls apply only when that connection becomes avail
+src/components/more/IntakeBlock.astro:34:// NOT A SECOND TELLING OF OUTCOME FOUR. CustomerOutcomes' "Bring the real
+src/lib/comparison.ts:459:				note: 'Square is not available today. CostCook does not send menus to your till or import its sales.',
+src/lib/comparison.ts:467:				note: 'QuickBooks Online is not available today. There is no accounting sync and no release date is promised.',
+src/lib/smtp.ts:72: * That is the same contract the Resend branch keeps, and it is the reason the
+src/lib/faq.ts:144:					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and review Sage shopping proposals. Staff use the shared kitchen lists 
+src/lib/faq.ts:186:					'An assistant inside CostCook with eleven read-only checks across the shift, recipes, stock, buying and setup. Every answer shows where its numbers came from, and the one thing
+src/lib/faq.ts:193:				question: 'Does it connect to Square or QuickBooks?',
+src/lib/faq.ts:195:					'No. Square, QuickBooks and an API for custom connections are marked Coming and are not available in your trial or subscription. No release date is promised. Check the <a href=
+src/lib/faq.ts:201:				question: 'Can customers order from me through CostCook?',
+src/lib/ordering.ts:27: *     every amount. No surface may suggest a customer's browser knows a price.
+src/lib/ordering.ts:32: *     navigation, HTML, script, customer-contact or payment payload crosses
+src/lib/ordering.ts:63:		? 'A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives aw
+src/lib/ordering.ts:64:		: 'A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives aw
+src/lib/ordering.ts:70:				'Not in the app you would start today. The storefront and the widget are built and are not deployed anywhere a customer could reach them, so this stays marked Coming and car
+src/lib/ordering.ts:71:				'When it lands, a customer picks from a menu you published, sizes the choices, gives you the date, the headcount and their contact, and reads it back before sending. What ar
+src/lib/ordering.ts:74:				'Yes. A customer picks from a menu you published, sizes the choices, gives you the date, the headcount and their contact, and reads it back before sending. What arrives is a
+src/lib/ordering.ts:75:				'Every amount is worked out by CostCook after the selections arrive: the browser sends what the customer chose, without prices, and never a number of its own. Card details a
+src/components/sections/IngredientsSupplierPricesFeature.astro:120:					percentage looks wrong, the number may already be in front of a customer.
+src/lib/site.ts:26: * Owner-supplied Google Calendar appointment schedule, in its two forms. Both
+src/lib/site.ts:31: * calendar.google.com, and a CSP allowlist written against calendar.app.google
+src/lib/site.ts:36: * `frame-src https://calendar.google.com` in vercel.json, which is checked
+src/lib/site.ts:39: * the calendar going blank in production.
+src/lib/site.ts:42:	url: 'https://calendar.app.google/CtvTiAXfbNBB4cXE6',
+src/lib/site.ts:44:		'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0xfUOfjHtWWy-FW4DGE8Ree6p29tr6zrGH3iZ0oYWhLJWqZhtszmFJqGa-JtB3yJ9bmEoT69Ll?gv=true',
+src/lib/site.ts:45:	embedOrigin: 'https://calendar.google.com'
+src/lib/sage.ts:46:	/** Eleven read tools and one approval-bound proposal, in kitchen words. */
+src/lib/sage.ts:67:		{ name: 'Prepare one change', detail: 'A shopping-list proposal, for a manager or owner.' }
+src/lib/sage.ts:72:		{ lead: 'It never changes a record on its own.', detail: 'Nothing sends, buys, reprices or adjusts. The one proposal waits for a person.' },
+src/lib/tour.ts:497:			['Review Sage proposals', 'Allowed', 'Allowed', 'Not allowed']
+src/lib/tour.ts:543:			footnote: 'Shopping-list proposals wait for a manager or owner to review.'
+src/lib/nutrition.ts:14: * fact about the customer, and the section says it as one. Every sentence
+src/lib/nutrition.ts:57:			detail: 'The four a customer asks for sit at the top of every recipe. The other eleven sit under them.'
+src/pages/features/menus-and-quotes.astro:7:const directionContract = [
+src/pages/features/menus-and-quotes.astro:8:	'THESIS: The menu the customer chooses is the menu the kitchen can cost and run.',
+src/pages/features/menus-and-quotes.astro:9:	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, amber commitment signals, square records, green actions.',
+src/pages/features/menus-and-quotes.astro:13:	'FINISH: The customer has the number and the kitchen has the same plan; verify the route, evidence, disclosures, and mobile reflow.'
+src/pages/features/menus-and-quotes.astro:21:	directionContract={directionContract}
+src/lib/demo-request.ts:176:			'They were shown the booking calendar on the page after this was sent.',
+src/lib/demo-request.ts:177:			'A confirmed time arrives separately, from Google Calendar.'
+src/components/sections/RecipesCostingFeature.astro:159:					waiting in a spreadsheet. The split feels harmless until the kitchen and the customer
+src/components/sections/MenusQuotesFeature.astro:33:	{ label: 'Date', note: 'Put the job on the calendar.' },
+src/components/sections/MenusQuotesFeature.astro:145:				<h2 id="handoff-heading">Three files. One customer waiting.</h2>
+src/components/sections/MenusQuotesFeature.astro:157:				<figcaption>One event record should carry what the customer chose and what the kitchen has to run.</figcaption>
+src/components/sections/MenusQuotesFeature.astro:348:			<div><h2 id="closing-heading">Ready for the customer. Ready for the kitchen.</h2><p>Bring one real menu, set the guest count, and follow the num
+src/components/sections/DemoRequest.astro:18: * The calendar is embedded rather than linked. Booking used to open
+src/components/sections/DemoRequest.astro:19: * calendar.app.google in a new tab beside an "Email Rayan directly" exit, so
+src/components/sections/DemoRequest.astro:22: * calendar.google.com; check-demo-page.mjs holds the two together, because a
+src/components/sections/DemoRequest.astro:23: * CSP is a deploy-only header and a blank calendar would reach production
+src/components/sections/DemoRequest.astro:200:						<p>Rayan has what you brought. Pick a time on his calendar below and Google sends you both the invite.</p>
+src/components/sections/DemoRequest.astro:206:						  MEASURED: with src in the markup, the calendar rendered as a
+src/components/sections/DemoRequest.astro:236:							<a href={booking.url} target="_blank" rel="noopener noreferrer" class="btn-quiet">Calendar not loading? Open it in a new tab</a>
+src/components/sections/DemoRequest.astro:242:						<p class="noscript-note">JavaScript is off, so both steps stay open and the calendar sits below them. Send the form and you land on a page that conf
+src/components/sections/DemoRequest.astro:569:		   1440: inside the 5fr column the booking calendar gets about 455px, and
+src/components/sections/DemoRequest.astro:575:		   left column argues; step 3 is not an argument, it is a calendar. */
+src/components/sections/DemoRequest.astro:578:		/* Without script every step is open at once, so the calendar is on the
+src/pages/tour/main.astro:6:const directionContract = [
+src/pages/tour/main.astro:21:	directionContract={directionContract}
+src/lib/features.ts:75:		lede: 'A price arrives on a case. It has to travel through a yield, a sub-recipe, a portion size and a guest count before it becomes a number you can put in front of a custome
+src/lib/features.ts:368:		   square_integration and quickbooks_integration and nothing dietary. Every
+src/lib/features.ts:472:			{ lead: 'Eleven checks, one proposal.', detail: 'Ask about the shift, recipes, stock, buying or setup. Sage can also prepare a shopping-list proposal for a manager or owner 
+src/lib/features.ts:474:			{ lead: 'A proposal is not a change.', detail: 'Answers read your records. A shopping-list draft waits for an Owner or Manager to approve it, with the records checked again 
+src/lib/features.ts:481:		title: 'Square and QuickBooks.',
+src/lib/features.ts:484:			{ lead: 'Not included at launch.', detail: 'Square and QuickBooks connections are being built. Until they land, nothing here reads from or writes to your books.' }

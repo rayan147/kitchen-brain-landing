@@ -62,7 +62,7 @@ your data" loses her at the fold.
 | Debate | "Do I have to tag everything?" Setup drafts the rows; you review. |
 | Break into Two | bride, Tree nuts, 1 guest. Now the order knows. |
 | B Story | The 5 a.m. cook, who reads the pack list, not the text thread. |
-| Fun and Games | Five diets, fourteen allergens, one answer per dish. |
+| Fun and Games | Five diets, the nine major US allergens, one answer per dish. |
 | Midpoint | "Conflict. Pesto: walnuts (contains)." Seen before confirm. |
 | Bad Guys Close In | Three ingredients nobody reviewed. Halal depends on the source. |
 | All Is Lost | The catalog moves after confirm. Does the answer still hold? |
@@ -194,3 +194,7 @@ rest of it is worth believing.
 - [x] 9 Scene: A phone at the prep bench between services.
 - [x] 10 Connection: You throughout; choose a task, inspect what it does, read limits, decide.
 - [x] 11 Revision: Built pages, shared consumers, status wording, five responsive widths and 320px/200% text verified. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+## Claim correction · 2026-09-27 (allergen count)
+
+- [x] 11 Revision: "Fourteen allergens" was false; the app tags the fixed US nine (milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soy, sesame; kitchen-brain drizzle/0034_dizzy_klaw.sql). The count word is now computed from `allergenNames` in `src/lib/dietary.ts`. Beats, scenes, point of view and snap line unchanged; only the number moved. Gap report S3.

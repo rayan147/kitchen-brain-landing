@@ -15,8 +15,8 @@ try {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(base, { waitUntil: 'networkidle' });
-    await page.getByRole('heading', { name: 'Cost it, buy it, prep it, pack it.', exact: true }).waitFor();
-    const hero = page.getByRole('region', { name: 'Cost it, buy it, prep it, pack it.', exact: true });
+    await page.getByRole('heading', { name: 'The event you sold is the event you cook.', exact: true }).waitFor();
+    const hero = page.getByRole('region', { name: 'The event you sold is the event you cook.', exact: true });
     assert.match(await hero.innerText(), /First dish: about fifteen minutes/);
     assert.match(await hero.innerText(), /\$89\.78 per guest to meet a 30% food-cost target/);
     assert.match(await hero.innerText(), /packaging, rentals, staff/);
@@ -41,7 +41,14 @@ try {
       assert(geometry.proofTop < height, `${width}: proof must begin in the first viewport`);
       assert(geometry.setupTop < height * 2, `${width}: preparation must appear within two viewports`);
     }
-    if (width === 390) assert(geometry.pageHeight < 16000, 'default mobile read must stay below the new 16,000px budget');
+    // PHONE LENGTH BUDGET. 16,000px was set on 2026-09-11 for the back-of-house
+    // page, which then measured about 15,670px. On 2026-09-27 the page became
+    // event-first and gained its lead promise, EventBooking (about 2,470px at
+    // 390 after trimming; docs/stories/homepage-event-story.story.md), taking
+    // the page to about 18,240px. The budget moves once, to 18,500px, by the
+    // owner's instruction to finish the repositioning. It is still a budget:
+    // any further section has to pay for itself by cutting elsewhere.
+    if (width === 390) assert(geometry.pageHeight < 18500, 'default mobile read must stay below the 18,500px budget');
     await page.screenshot({ path: `${evidence}/after-${width}.png` });
     const booking = page.getByRole('banner').getByRole('link', { name: 'Book a demo: prepare a 15-minute CostCook session', exact: true });
     assert.equal((await booking.innerText()).trim(), 'Book a demo');

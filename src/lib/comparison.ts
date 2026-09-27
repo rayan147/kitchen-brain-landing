@@ -52,10 +52,12 @@
  * release-owner checks named there.
  */
 
-import { SAGE_STATUS } from './sage';
+import { SAGE_STATUS, sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } from './sage';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
-import { dietary } from './dietary';
+import { acceptanceBoundary, depositMethods } from './events';
+import { dietary, allergenCount, allergenCountCapital } from './dietary';
+import { spell } from './words';
 
 export const VERIFIED_ON = 'August 30, 2026';
 
@@ -107,7 +109,7 @@ export type Verdict = 'yes' | 'no' | 'coming';
  * else. A glyph here would turn a description of work into a verdict, which is
  * the same mistake the competitor columns exist to avoid.
  *
- * THIS COLUMN READS build OR key ON ALL 40 ROWS, and that is not a clean sweep.
+ * THIS COLUMN READS build OR key ON ALL 44 ROWS, and that is not a clean sweep.
  * It describes labor, not merit: "You build it" is a real answer, and for a
  * kitchen with one repeating menu it is often the right one. On the three rows
  * CostCook marks No (lot tracking, fine-grained screen permissions, several
@@ -186,7 +188,7 @@ export const comparison: RowGroup[] = [
 				label: 'Food cost percent against a target you set',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Food cost. Not labor, not overhead, so not business margin.',
+				note: 'Food cost only, not labor or overhead. Where the app shows a food-only gross margin, it is not business margin.',
 				parsley: 'Chef, $129',
 				meez: 'Starter, $24'
 			},
@@ -257,6 +259,72 @@ export const comparison: RowGroup[] = [
 	{
 		title: 'The day itself',
 		rows: [
+			/* FRONT OF HOUSE, added 2026-09-27 (gap report S11; RC-61, RC-63 to
+			   RC-67). The CostCook cells are production rows of
+			   docs/research/2026-09-27-app-inventory.yaml. The competitor cells
+			   were read off both pricing pages on 2026-09-27, NOT on VERIFIED_ON:
+			   Parsley's Business tier lists "Calendar & Table Views", so the
+			   calendar row names that tier; neither page lists inquiries,
+			   proposals, agreements, deposits or a client book, so those read
+			   NOT_LISTED, which means exactly that and nothing about either
+			   product (RC-40). VERIFIED_ON stays August 30 until a full re-read
+			   of every cell; the next RC-40 release check owns that. */
+			{
+				label: 'Inquiries and a follow-up pipeline',
+				sheet: 'key',
+				costcook: 'yes',
+				note: 'Take an inquiry before the date is decided, and name who follows up and when.',
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'Proposals the client accepts on their phone',
+				sheet: 'build',
+				costcook: 'yes',
+				note: `No login for the client. ${acceptanceBoundary}`,
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'Agreements sent for e-signature',
+				sheet: 'build',
+				costcook: 'yes',
+				note: 'From your saved contract template, with the accepted proposal attached, or kept as a copy signed on paper.',
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'Event deposits tracked',
+				sheet: 'key',
+				costcook: 'yes',
+				note: `You record the deposit by hand, as ${depositMethods}, against what you asked for.`,
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: comingPlans.eventPayments.comparisonLabel,
+				sheet: 'key',
+				costcook: comingPlans.eventPayments.verdict,
+				note: comingPlans.eventPayments.comparisonNote,
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'A client book',
+				sheet: 'build',
+				costcook: 'yes',
+				note: 'Contacts, venues with access notes, and each client\u2019s events and orders, for owners and managers.',
+				parsley: NOT_LISTED,
+				meez: NOT_LISTED
+			},
+			{
+				label: 'A calendar of booked orders',
+				sheet: 'build',
+				costcook: 'yes',
+				note: 'Each day counts its orders and vans against the limits you set, and an order says whether its day has room.',
+				parsley: 'Business, $379',
+				meez: NOT_LISTED
+			},
 			{
 				label: 'Prep lists scaled to the job',
 				sheet: 'build',
@@ -317,8 +385,9 @@ export const comparison: RowGroup[] = [
 				   catalog and nutrition rows were both wrong off a stale local
 				   branch. Par levels ship: core/inventory-planning.ts carries
 				   below-par / at-or-above-par / unevaluable / no-par, judged
-				   only from a trusted count. Buying does not read them today; the
-				   separate replenishment row is Coming. RC-43. */
+				   only from a trusted count. Since 2026-09-27 the buying row below
+				   is a yes too: Build shopping list reads confirmed events and
+				   par (e2e/buy-to-par.spec.ts). RC-43. */
 				label: 'Par levels per ingredient',
 				sheet: 'build',
 				costcook: 'yes',
@@ -327,10 +396,10 @@ export const comparison: RowGroup[] = [
 				meez: NOT_LISTED
 			},
 			{
-				label: comingPlans.parBuying.comparisonLabel,
+				label: 'Buying that tops up to par',
 				sheet: 'build',
-				costcook: comingPlans.parBuying.verdict,
-				note: comingPlans.parBuying.comparisonNote,
+				costcook: 'yes',
+				note: 'Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			}
@@ -342,9 +411,9 @@ export const comparison: RowGroup[] = [
 			{
 				label: 'Allergen tagging',
 				sheet: 'key',
-				sheetNote: 'Fourteen allergens per ingredient, then rolled up to the recipe yourself.',
+				sheetNote: `${allergenCountCapital} allergens per ingredient, then rolled up to the recipe yourself.`,
 				costcook: 'yes',
-				note: 'Fourteen allergens, rolled up from ingredient to recipe, on the pack list. A name match alone does not confirm allergen information. A chef override needs a written reason.',
+				note: `The ${allergenCount} major US allergens, rolled up from ingredient to recipe, on the pack list. A name match alone does not confirm allergen information. A chef override needs a written reason.`,
 				parsley: 'Chef Plus, $189',
 				meez: 'Enterprise, custom'
 			},
@@ -367,8 +436,8 @@ export const comparison: RowGroup[] = [
 				label: 'Printed USDA nutrition labels',
 				sheet: 'build',
 				/* Moved from coming to yes on 2026-08-29 (RC-50): the print page is on
-				   sandbox/demo with no flag. Browser print; the printer integration is
-				   the "Kitchen label printing" row below and stays coming. */
+				   sandbox/demo with no flag. Browser print; kitchen date labels are the
+				   "Kitchen label printing" row below, a yes since 2026-09-27 (RC-35). */
 				costcook: 'yes',
 				note: 'Printed from the recipe through the browser onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
 				parsley: 'Chef Plus, $189',
@@ -422,7 +491,7 @@ export const comparison: RowGroup[] = [
 				label: 'Role-aware sensitive actions',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Owner, Manager and Staff have different permissions for billing, team setup, recipe publishing and Sage approvals. All can open cost screens.',
+				note: 'Owner, Manager and Staff have different permissions for billing, team setup, recipe publishing and Sage approvals. Staff can open recipe costs and Analytics; order money, client names on Today and the Clients book are kept to owners and managers.',
 				parsley: 'Business, $379',
 				meez: 'Starter, $24'
 			},
@@ -431,7 +500,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'build',
 				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
 				costcook: 'no',
-				note: 'No custom roles or per-screen permission grid. A workspace teammate can open cost screens.',
+				note: 'No custom roles or per-screen permission grid. A teammate on Staff can open recipe costs and Analytics.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},
@@ -481,7 +550,7 @@ export const comparison: RowGroup[] = [
 				icon: 'sage',
 				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
 				costcook: SAGE_STATUS,
-				note: 'Sage is available now. It reads your records, shows its sources, helps during setup and can prepare a shopping-list draft for you to approve.',
+				note: `Sage is available now. It reads your records with ${spell(sageReadToolCount, { compound: true })} read-only tools, shows its sources, helps during setup and can prepare ${spell(sageDraftKinds.length)} kinds of draft for a manager or owner to approve: ${sageDraftKindsAnd}.`,
 				parsley: NOT_LISTED,
 				meez: 'Enterprise, custom'
 			},

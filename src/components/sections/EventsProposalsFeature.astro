@@ -1,0 +1,339 @@
+---
+/**
+ * /features/events-and-proposals
+ * story: docs/stories/features-events-and-proposals.story.md
+ * ledger: RC-61, RC-63 to RC-67
+ *
+ * The detailed companion to the homepage's EventBooking section: one event,
+ * from the call to Confirm order, in the app's own step order. Every sentence
+ * traces to a production row in docs/research/2026-09-27-app-inventory.yaml,
+ * and the owner's rule for this page is one sentence per explanation.
+ *
+ * WHAT IS DELIBERATELY NOT HERE.
+ *  - The one-page proposal builder's charge lines, choice groups and payment
+ *    terms (A-05, A-17, RC-62). They are behind the deploy gate.
+ *  - The client's decline path. Only "Accept proposal" and "Ask for changes"
+ *    are captured on the client's /o/ page, so only those two are named.
+ *  - The e-signature status track. E-signature is claimable (owner ruling of
+ *    2026-09-27) but the signing page prints a test line, so it is never shown.
+ *  - Closeout. A capture exists, but its event date was moved by SQL to open
+ *    it and contradicts every other frame; the story's scenes end at the day's
+ *    room. The kitchen half lives on /features/order-shop-prep-pack.
+ *
+ * MONEY. An event deposit is recorded by hand in production (A-14). The only
+ * verbs for it on this page are ask, record and track, and the card payment
+ * page is in the Coming block, read from src/lib/coming-plans.ts. The built-
+ * page contract (scripts/check-events-proposals-page.mjs) pins that sentence.
+ *
+ * CAPTURES. Every screenshot is a real frame of one wedding from
+ * scripts/capture-events-proof.mjs (notes: docs/landing-capture/
+ * events-captures.md). Width and height are read from the PNG at build time
+ * because those frames get re-taken. Where no capture exists (Clients), the
+ * slot is left out rather than mocked.
+ *
+ * Considered Template Method (a shared FeatureGuide shell); not used because
+ * the feature family shares semantic roles, not an algorithm. Same refusal as
+ * DietaryGuardsFeature.astro and global.css .feature-display.
+ */
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
+import { cta, demoCta } from '../../lib/site';
+import { comingPlans } from '../../lib/coming-plans';
+import { eventProof as proof } from '../../lib/proof';
+import { acceptanceBoundary, depositMethods, eventSteps, type EventStepName } from '../../lib/events';
+
+// The app's own step bar (src/lib/events.ts, A-03). Each step points at the
+// section that explains it, so the list doubles as the page map.
+const stepHref: Record<EventStepName, string> = {
+	Inquiry: '#inquiry',
+	'Menu & service': '#inquiry',
+	Proposal: '#proposal',
+	'Client decision': '#proposal',
+	Agreement: '#agreement',
+	Booked: '#booked'
+};
+const steps = eventSteps.map((step) => ({ name: step.name, href: stepHref[step.name] }));
+
+// The four pipeline tabs on Events, verbatim (A-03).
+const pipelineTabs = ['Needs attention', 'Booked · coming up', 'In pipeline', 'Past & closed'] as const;
+
+// Where it stops. One sentence each, and each one is a production fact
+// (A-13, D-04, A-19 to A-23, B notes).
+const limits = [
+	'A kitchen draft holds one service, so an event with a lunch and a dinner is booked by hand for now.',
+	'Confirm order checks the day’s room, not whether the agreement is signed or the deposit has arrived.',
+	'There is no customer invoice in CostCook.',
+	'Nothing is tracked after Packed: no delivery step, no drivers and no staffing roster.',
+	'Clients is for owners and managers, and a client’s page shows no money.'
+] as const;
+
+const payments = comingPlans.eventPayments;
+---
+
+<!-- story: docs/stories/features-events-and-proposals.story.md -->
+<article id="features-events" class="events-page">
+	<section class="hero" aria-labelledby="events-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
+					<a href="/features">Every feature</a>
+					<span aria-hidden="true">/</span>
+					<span>Events &amp; proposals</span>
+				</nav>
+				<h1 id="events-heading" class="feature-display">
+					&ldquo;October 10, about 150, a wedding. Can you send something?&rdquo;
+				</h1>
+				<p class="hero-lede">
+					Put it in as an inquiry, and the same record carries the menu, the proposal, their
+					answer, the agreement and the booked order.
+				</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+				</div>
+				<FeatureTrialTerms />
+			</div>
+
+			<figure class="proof phone anim-enter" style="--enter-delay: 120ms">
+				<figcaption>New inquiry · sample event</figcaption>
+				<div>
+					<img src={proof.inquiry.src} alt={proof.inquiry.alt} width={proof.inquiry.width} height={proof.inquiry.height} decoding="async" style={`width: ${proof.inquiry.width / 2}px`} />
+				</div>
+			</figure>
+		</div>
+	</section>
+
+	<nav class="container-page step-bar" aria-label="The six steps of an event">
+		<p class="ticket-label">The event page, step by step</p>
+		<ol role="list">
+			{steps.map((step, index) => (
+				<li data-event-step={step.name}>
+					<a href={step.href}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{step.name}</a>
+				</li>
+			))}
+		</ol>
+	</nav>
+
+	<section id="inquiry" class="product-section" aria-labelledby="inquiry-heading">
+		<div class="container-page">
+			<div class="section-head" data-reveal>
+				<h2 id="inquiry-heading">Save the inquiry before the stock comes off.</h2>
+				<p>Tap + New inquiry mid-prep, tick Date not decided yet if it is, and name who follows up and when.</p>
+			</div>
+			<ul role="list" class="chip-row" aria-label="The four tabs on Events">
+				{pipelineTabs.map((tab) => <li>{tab}</li>)}
+			</ul>
+			<p class="section-note" data-reveal>Then set the menu and service from your costed recipes, a saved menu or a past event, with food cost beside it as you build.</p>
+			<figure class="proof wide" data-reveal>
+				<figcaption>The event page · sample event</figcaption>
+				<div class="scroll" tabindex="0" role="region" aria-label="Event page capture, scrolls sideways on a phone">
+					<img src={proof.workspace.src} alt={proof.workspace.alt} width={proof.workspace.width} height={proof.workspace.height} loading="lazy" decoding="async" />
+				</div>
+				<a class="full-size" href={proof.workspace.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
+			</figure>
+			<p class="handoff">Next: Proposal.</p>
+		</div>
+	</section>
+
+	<section id="proposal" class="product-section soft" aria-labelledby="proposal-heading">
+		<div class="container-page split">
+			<div data-reveal>
+				<h2 id="proposal-heading">They decide on their phone, at their own pace.</h2>
+				<p>Check exactly what the client will see, choose how long the link stays open, and send it.</p>
+				<p>They open it with no login and press Accept proposal or Ask for changes.</p>
+				<p>While you wait, Send a reminder, Extend link or Withdraw offer, and update the offer when they ask for changes.</p>
+				<p class="snap" data-events-snap>{acceptanceBoundary}</p>
+			</div>
+			<figure class="proof phone" data-reveal>
+				<figcaption>What the client sees · sample event</figcaption>
+				<div>
+					<img src={proof.offer.src} alt={proof.offer.alt} width={proof.offer.width} height={proof.offer.height} loading="lazy" decoding="async" style={`width: ${proof.offer.width / 2}px`} />
+				</div>
+			</figure>
+		</div>
+		<p class="container-page handoff">Next: Agreement.</p>
+	</section>
+
+	<section id="agreement" class="product-section" aria-labelledby="agreement-heading">
+		<div class="container-page split">
+			<div data-reveal>
+				<h2 id="agreement-heading">The agreement and the deposit stay on the event.</h2>
+				<p>Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.</p>
+				<p data-events-money>You record the deposit by hand, as {depositMethods}, and the event shows what you asked for and what came in.</p>
+			</div>
+			<figure class="proof panel" data-reveal>
+				<figcaption>Ask for a deposit · sample event</figcaption>
+				<div>
+					<!-- The PNG is the panel at full page width, and everything in it sits
+					     in its left 300 CSS px. Shown at its own size and cropped to that
+					     strip, rather than shrunk until the numbers are unreadable. -->
+					<span class="crop">
+						<img src={proof.deposit.src} alt={proof.deposit.alt} width={proof.deposit.width} height={proof.deposit.height} loading="lazy" decoding="async" style={`width: ${proof.deposit.width / 2}px`} />
+					</span>
+				</div>
+			</figure>
+		</div>
+		<p class="container-page handoff">Next: Booked.</p>
+	</section>
+
+	<section id="booked" class="product-section" aria-labelledby="booked-heading">
+		<div class="container-page">
+			<div class="section-head" data-reveal>
+				<h2 id="booked-heading">Confirm order is the booking.</h2>
+				<p>Prepare the kitchen draft from their yes; it holds no day and draws no crew until you book the event.</p>
+			</div>
+			<div class="booked-pair">
+				<figure class="proof panel" data-reveal>
+					<figcaption>Kitchen draft · sample event</figcaption>
+					<div class="scroll" tabindex="0" role="region" aria-label="Kitchen draft capture, scrolls sideways on a phone">
+						<img src={proof.draft.src} alt={proof.draft.alt} width={proof.draft.width} height={proof.draft.height} loading="lazy" decoding="async" style={`width: ${proof.draft.width / 2}px`} />
+					</div>
+				</figure>
+				<figure class="proof panel" data-reveal>
+					<figcaption>Confirm order · sample event</figcaption>
+					<div>
+						<img src={proof.confirm.src} alt={proof.confirm.alt} width={proof.confirm.width} height={proof.confirm.height} loading="lazy" decoding="async" style={`width: ${proof.confirm.width / 2}px`} />
+					</div>
+				</figure>
+			</div>
+			<p class="section-note" data-reveal>Confirm order freezes quantities and prices, the event reads &ldquo;This event is booked.&rdquo; and shop, prep and pack take it from there.</p>
+			<p class="section-note" data-reveal>The calendar counts each day’s orders and vans against the limits you set, and an order tells you whether its day has room.</p>
+			<figure class="proof wide" data-reveal>
+				<figcaption>The calendar, week view · sample event</figcaption>
+				<div class="scroll" tabindex="0" role="region" aria-label="Calendar capture, scrolls sideways on a phone">
+					<img src={proof.calendar.src} alt={proof.calendar.alt} width={proof.calendar.width} height={proof.calendar.height} loading="lazy" decoding="async" />
+				</div>
+				<a class="full-size" href={proof.calendar.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
+			</figure>
+		</div>
+	</section>
+
+	<section id="clients" class="product-section soft" aria-labelledby="clients-heading">
+		<div class="container-page"><div class="section-head" data-reveal>
+			<h2 id="clients-heading">Type the client once.</h2>
+			<p>A client saved from the inquiry lands in Clients, with contacts, venues and access notes like a gate code, and their events and orders grouped as Upcoming, No date yet and Past.</p>
+			<p>When they call again, Start an order for this client carries those details onto the new order.</p>
+		</div></div>
+	</section>
+
+	<section id="limits" class="product-section" aria-labelledby="limits-heading">
+		<div class="container-page">
+			<div class="section-head" data-reveal>
+				<h2 id="limits-heading">Where it stops, and what is coming.</h2>
+			</div>
+			<ul role="list" class="limit-list">
+				{limits.map((line) => <li data-events-limit data-reveal>{line}</li>)}
+			</ul>
+			<div class="coming-note" data-events-coming data-reveal>
+				<p class="ticket-label">Coming</p>
+				<p class="coming-title">{payments.title}</p>
+				<p>{payments.homepage}</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid" data-reveal>
+			<div>
+				<h2 id="closing-heading">Bring the next real inquiry.</h2>
+				<p>Put it in as an inquiry during the trial and take it as far as Confirm order.</p>
+			</div>
+			<div class="closing-actions">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+			</div>
+		</div>
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides">
+			<a href="/features/menus-and-quotes">Menus &amp; quotes</a>
+			<a href="/features/order-shop-prep-pack">Orders, shop, prep &amp; pack</a>
+			<a href="/features">Every CostCook feature</a>
+		</nav>
+	</section>
+</article>
+
+<style>
+	.events-page { background: var(--color-cream); }
+	.hero-grid, .split, .closing-grid { display: grid; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+	.hero-grid > *, .split > *, .closing-grid > * { min-width: 0; }
+	.hero-grid { padding-block: clamp(3rem, 6vw, 5rem) var(--spacing-section-tight); }
+	.closing-grid { padding-block: var(--spacing-section-tight); }
+	.product-section { border-top: 1px solid var(--color-hairline); padding-block: var(--spacing-section); }
+	.product-section.soft { background: var(--color-paper); }
+	.feature-breadcrumb { margin-bottom: 1.6rem; }
+	.hero-lede { margin-top: 1.5rem; max-width: 56ch; font-size: var(--text-lede); line-height: var(--text-lede--line-height); color: var(--color-ink-soft); }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
+	/* .btn-outline is scoped per feature page across this family; this is the
+	   seventh copy of four declarations, matching DietaryGuardsFeature.astro.
+	   Considered hoisting it into global.css; not done because it touches every
+	   guide and belongs in its own pass. The hover text is --color-paper, the
+	   theme's white (green on it is ~5:1, AA), not an ad-hoc color. */
+	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
+	.btn-outline:hover { background: var(--color-green); color: var(--color-paper); }
+	@media (prefers-reduced-motion: reduce) {
+		.btn-outline { transition: none; }
+	}
+	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.12; text-wrap: balance; }
+	.section-head { max-width: 62ch; }
+	.section-head p, .split p { margin-top: 1.25rem; max-width: 60ch; color: var(--color-ink-soft); }
+	.section-note { margin-top: 2rem; max-width: 66ch; color: var(--color-ink-soft); }
+	.handoff { padding-top: 2rem; font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.ticket-label { font-family: var(--font-mono); font-size: var(--text-eyebrow); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-amber-deep); }
+
+	/* The step bar: the app's six steps, in its order, as the page map. */
+	.step-bar { padding-block: 1.5rem; border-top: 1px solid var(--color-hairline); }
+	.step-bar ol { display: grid; gap: .5rem; margin-top: .9rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+	.step-bar a { display: flex; align-items: center; gap: .6rem; min-height: 44px; padding: .5rem .8rem; border-top: 2px solid var(--color-hairline-strong); font-weight: 600; color: var(--color-ink); text-decoration: none; }
+	.step-bar a:hover { border-top-color: var(--color-green); }
+	.step-bar a:focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
+	.step-bar a span { font-size: var(--text-micro); font-variant-numeric: tabular-nums; color: var(--color-amber-deep); }
+
+	.chip-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.75rem; }
+	.chip-row > li { padding: .5rem 1rem; border: 1px solid var(--color-hairline-strong); border-radius: 999px; font-weight: 600; }
+
+	/* Captures. Same frame as EventBooking's offer proof: ticket rules, cream
+	   field, mono caption. Phone and panel frames render at CSS size (half the
+	   2x PNG); wide frames fill the column. */
+	.proof { min-width: 0; border-block: 1px solid var(--color-ticket-rule); background: var(--color-cream); box-shadow: var(--shadow-ticket); }
+	.product-section:not(.soft) .proof { background: var(--color-paper); }
+	.proof figcaption { padding: .75rem 1rem; border-bottom: 1px solid var(--color-hairline); color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+	.proof > div { display: flex; justify-content: center; padding: clamp(1rem, 3vw, 1.75rem); }
+	.proof img { height: auto; max-width: 100%; }
+	.proof.wide { margin-top: 2.5rem; }
+	.proof.wide img { width: 100%; }
+	/* A wide desktop frame shrunk to a phone is unreadable, so under 48rem it
+	   keeps a readable minimum width and scrolls inside its own frame. The page
+	   itself never scrolls sideways; the frame is a focusable region so a
+	   keyboard can scroll it too. */
+	.proof .scroll { justify-content: flex-start; overflow-x: auto; }
+	.proof .scroll:focus-visible { outline: 2px solid var(--color-green); outline-offset: -2px; }
+	.proof.wide .scroll img { min-width: 44rem; }
+	.proof.panel .scroll img { min-width: 34rem; max-width: none; }
+	@media (min-width: 48rem) {
+		.proof.panel .scroll img { min-width: 0; max-width: 100%; }
+	}
+	.crop { display: block; width: min(100%, 300px); overflow: hidden; }
+	.crop img { max-width: none; }
+	.full-size { display: inline-flex; min-height: 44px; align-items: center; padding-inline: 1rem; font-size: var(--text-body-sm); font-weight: 600; color: var(--color-green-deep); text-decoration: underline; }
+	.booked-pair { display: grid; gap: 1.5rem; margin-top: 2.5rem; align-items: start; }
+	.booked-pair > * { min-width: 0; }
+
+	/* .split .snap outranks .split p (margin, color) by specificity, so the
+	   callout needs no !important. */
+	.split .snap { margin-top: 2rem; padding: 1.1rem 1.25rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: 1.25; color: var(--color-ink); }
+
+	.limit-list { display: grid; gap: 1.25rem; margin-top: 2.5rem; max-width: 76ch; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+	.limit-list > li { padding-top: .9rem; border-top: 1px solid var(--color-hairline-strong); font-size: var(--text-body-sm); line-height: 1.55; color: var(--color-ink-soft); }
+	.coming-note { max-width: 46rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
+	.coming-title { margin-top: .4rem; font-weight: 700; }
+	.coming-note p:last-child { margin-top: .4rem; color: var(--color-ink-soft); }
+
+	.closing { border-top: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.onward { display: flex; flex-wrap: wrap; gap: 1.5rem; padding-bottom: var(--spacing-section-tight); }
+
+	@media (min-width: 60rem) {
+		.hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+		.split { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: start; }
+		.closing-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+		.booked-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+	}
+</style>

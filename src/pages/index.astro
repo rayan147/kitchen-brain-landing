@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/sections/Hero.astro';
+import EventBooking from '../components/sections/EventBooking.astro';
 import TheProblem from '../components/sections/TheProblem.astro';
 import WhoThisIsFor from '../components/sections/WhoThisIsFor.astro';
 import SeeItRun from '../components/sections/SeeItRun.astro';
@@ -12,6 +13,7 @@ import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
 import StartHere from '../components/sections/StartHere.astro';
 import StickyCta from '../components/StickyCta.astro';
 ---
+<!-- story: docs/stories/homepage-event-story.story.md -->
 <!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <!-- Considered Composite; not used because this fixed editorial sequence has no
      recursive behavior. One event carries the proof; supporting depth is optional.
@@ -19,6 +21,7 @@ import StickyCta from '../components/StickyCta.astro';
      keep-every-section-expanded budget. No application routes change. -->
 <Base>
   <Hero />
+  <EventBooking />
   <CustomerOutcomes />
   <SeeItRun />
   <TheProblem />

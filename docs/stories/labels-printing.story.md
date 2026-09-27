@@ -115,3 +115,7 @@ Wet hands, the walk-in door held with a foot, a phone propped on the lowboy. Ref
 - [x] 9 Scene: A phone at the prep bench between services.
 - [x] 10 Connection: You throughout; choose a task, inspect what it does, read limits, decide.
 - [x] 11 Revision: Built pages, shared consumers, status wording, five responsive widths and 320px/200% text verified. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+## Claim correction · 2026-09-27 (kitchen labels available)
+
+- [x] 11 Revision: The owner approved the RC-35 labels launch decision on 2026-09-27 and LABELS_STATUS is now yes. Kitchen date labels print from Prep and Pack through the browser; label stock is set once in Settings > Labels. The premise that the whole feature sat behind the label_printing flag was false (gap report F2). Every Coming sentence about kitchen labels is gone; the browser-only, never-guessed-date and blank-allergen boundaries stay. Beats and point of view unchanged; the labels page hero now states availability instead of a preview.

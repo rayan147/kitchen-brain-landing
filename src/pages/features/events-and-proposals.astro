@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import EventsProposalsFeature from '../../components/sections/EventsProposalsFeature.astro';
+
+// Considered Factory Method; not used because this route is one editorial
+// composition, not a family of objects whose creation varies by subclass.
+const directionContract = [
+	'THESIS: One event record carries the inquiry, the proposal, the client’s decision, the agreement, the deposit and the booked order, and Confirm order is the booking.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-amber fields, ink type, amber step numbers, real captures of one wedding in ticket frames.',
+	'STORY: A call comes in mid-prep; the inquiry is saved, the proposal goes to the client’s phone, their yes becomes a kitchen draft, the deposit is recorded, Confirm order books it, and the limits are named before the ask.',
+	'FIRST VIEWPORT: The call in the client’s own words as the headline, with the New inquiry capture beside it and the six-step bar under it.',
+	'FORM: Capture-led editorial extension of the established feature family; one sentence per explanation.',
+	'FINISH: Verify the money boundary, the acceptance boundary, the six steps in order, the Coming block, navigation, and five-width reflow.'
+].join(' ');
+---
+
+<Base
+	title="Catering events, proposals and booking | CostCook"
+	description="Take the inquiry, send a priced proposal the client accepts on their phone, keep the agreement and the deposit on the event, and book it with Confirm order."
+	path="/features/events-and-proposals"
+	directionContract={directionContract}
+>
+	<EventsProposalsFeature />
+</Base>

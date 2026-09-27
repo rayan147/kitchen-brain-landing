@@ -1,15 +1,19 @@
 /**
  * Kitchen label printing, as data. story: docs/stories/labels-printing.story.md
  *
- * BUILT, BEHIND A FLAG, AND NOT IN THE LAUNCH PLAN. Read off sandbox/demo
- * c01bf751 on 2026-08-29: `src/routes/labels/{new,print/[id],shelf-life}`,
- * `src/lib/domain/labeling/*`, `src/lib/components/labels/*` (PRD #442).
- * The whole feature sits behind the `label_printing` release flag
- * (`src/lib/server/features/access.ts`, env `FEATURE_LABEL_PRINTING_ENABLED`,
- * default off, per-business override), and RC-35 is the owner's decision that
- * it is not included at launch. So every surface prints Coming from the one
- * word below, exactly as Sage did. Internal provenance stays in this file and
- * the release ledger instead of appearing in public capture labels.
+ * AVAILABLE SINCE 2026-09-27. Read off sandbox/demo c01bf751 on 2026-08-29:
+ * `src/routes/labels/{new,print/[id],shelf-life}`, `src/lib/domain/labeling/*`,
+ * `src/lib/components/labels/*` (PRD #442). Until 2026-09-27 this comment said
+ * the whole feature sat behind the `label_printing` release flag. That premise
+ * was false (discovery, kitchen-brain ed6ff5f01; gap report F2):
+ * `src/hooks.server.ts:507-514` gates only `/settings/labels`, while
+ * `/labels/new` and `/labels/print/[id]` carry no flag guard and Prep and Pack
+ * read the saved label settings or the defaults. On 2026-09-27 the owner
+ * approved the RC-35 launch decision and stated FEATURE_LABEL_PRINTING_ENABLED
+ * is on in production, so the recipe entry and Settings > Labels are on too.
+ * Every surface reads the one word below, exactly as Sage does. Internal
+ * provenance stays in this file and the release ledger instead of appearing
+ * in public capture labels.
  *
  * WHAT MAY NOT BE SAID. That a label reaches a printer on its own: the only
  * output today is the browser's print dialog (`src/lib/labels/transport.ts`,
@@ -20,17 +24,17 @@
  * only). No printer brand is endorsed: the stock profiles are measured in
  * millimetres and the app says nothing is tied to a brand.
  *
- * FLIPPING THE WORD. When the owner changes RC-35 and the deployed default
- * is on, set LABELS_STATUS to 'yes' here; the menu chip, the /features badge,
- * the /compare row, the FAQ and the feature page all read it. The claim guard
- * pins the word to 'coming' until the ledger row changes with it.
+ * THE WORD. The owner changed RC-35 on 2026-09-27, so LABELS_STATUS is 'yes';
+ * the menu chip, the /features badge, the /compare row, the FAQ, the tour and
+ * the feature page all read it. The claim guard pins the word to 'yes' with
+ * the ledger row; if the owner ever withdraws labels, both change together.
  *
  * No pattern: a table the sections render.
  */
 
 import type { Verdict } from './comparison';
 
-export const LABELS_STATUS = 'coming' as Verdict;
+export const LABELS_STATUS = 'yes' as Verdict;
 
 export const labelsStatusWord = LABELS_STATUS === 'yes' ? 'Available now' : 'Coming';
 const labelsAreComing = LABELS_STATUS !== 'yes';
@@ -119,7 +123,8 @@ export const labels = {
 	],
 	/** Boundaries, each from the app's own code or screen. */
 	notClaimed: [
-		labelsAvailability.pageSentence,
+		// The Coming sentence belongs under "What it is not" only while labels are Coming.
+		...(labelsAreComing ? [labelsAvailability.pageSentence] : []),
 		'The only output is the browser’s print dialog. A direct connection to a label printer is not built; the app cannot confirm that paper moved.',
 		'A blank allergen line is not an all-clear, and the sticker preview says so. Allergens print only from confirmed evidence on the ingredient.',
 		'The app never picks a use-by date. A saved shelf life, a number you enter, an exact date, or the made date only.'

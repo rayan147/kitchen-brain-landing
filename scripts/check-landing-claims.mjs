@@ -1,5 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { moneyClaims } from './lib/money-claims.mjs';
+import { homepageComponentOrder, homepageStopIds } from './lib/homepage-stops.mjs';
 
 const root = new URL('..', import.meta.url).pathname;
 const read = (path) => readFile(join(root, path), 'utf8');
@@ -25,10 +27,19 @@ const surfaceFiles = [
 	// overclaiming automation.
 	'src/components/LoopBand.astro',
 	'src/components/sections/TheProblem.astro',
-	// Third homepage stop. MUST NOT go first or second in this array: siteSource
-	// and heroSource are read by position below. Everything else resolves by
-	// indexOf and is safe to reorder.
+	// A homepage stop (order: scripts/lib/homepage-stops.mjs). MUST NOT go first
+	// or second in this array: siteSource and heroSource are read by position
+	// below. Everything else resolves by indexOf and is safe to reorder.
 	'src/components/sections/WhoThisIsFor.astro',
+	// The event's front half, inquiry to booked (2026-09-27). Its risk is
+	// overclaiming money: a deposit is recorded, never taken, on this path.
+	'src/components/sections/EventBooking.astro',
+	// The event facts EventBooking, the events guide, the tour, /compare and
+	// /features read (src/lib/events.ts), and the capture alt text both event
+	// surfaces render (src/lib/proof.ts). Moved out of the components on
+	// 2026-09-27, so they are scanned where they now live.
+	'src/lib/events.ts',
+	'src/lib/proof.ts',
 	'src/components/sections/CustomerOutcomes.astro',
 	'src/components/sections/WhatElse.astro',
 	// Beats nine and ten. Its whole risk is saying what another product cannot
@@ -139,6 +150,10 @@ const surfaceFiles = [
 	// inserted: siteSource and heroSource above resolve by position.
 	'src/pages/onboarding.astro',
 	'src/components/sections/OnboardingPage.astro',
+	// 2026-09-27. Events and proposals: the deposit is recorded by hand, so the
+	// money patterns above must read this page. APPENDED, like the two above.
+	'src/pages/features/events-and-proposals.astro',
+	'src/components/sections/EventsProposalsFeature.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -271,19 +286,13 @@ requireText(contactPage, 'demoCta.href', 'contact demo action');
 requireText(askSupportSource, 'Do not include passwords, payment card details', 'contact safety copy');
 requireText(await read('src/layouts/Base.astro'), 'import.meta.env.PROD', 'deployment-only analytics');
 
-// Ten stops, one claim each. SeeItRun sits SECOND since 2026-09-06, at the
-// owner's request: the footage runs before the page argues anything, so a
-// reader arriving cold from an email settles "is this real" on the first
-// scroll instead of on the fourth. TheProblem and WhoThisIsFor keep their
-// order relative to each other and still land before the answers they set up.
-// The 2026-09-11 review puts one event's proof before optional diligence.
-const expectedSectionOrder = [
- '<Hero />', '<CustomerOutcomes />', '<SeeItRun />', '<TheProblem />',
- '<TheYield />', '<BuiltForKitchens />', '<WhoThisIsFor />', '<WhatElse />',
- '<TheOtherTools />', '<StartHere />'
-];
+// Eleven stops, the hero and ten sections, one claim each. EventBooking sits
+// right under the hero since 2026-09-27 (the page is event-first); SeeItRun is
+// fourth, still ahead of the diagnosis it proves. The one explicit order, and
+// why, is scripts/lib/homepage-stops.mjs, shared with check-dist.mjs and
+// verify-homepage.mjs. docs/stories/homepage-event-story.story.md
 let previousSectionIndex = -1;
-for (const component of expectedSectionOrder) {
+for (const component of homepageComponentOrder) {
 	const sectionIndex = index.indexOf(component);
 	if (sectionIndex <= previousSectionIndex) {
 		failures.push(
@@ -331,20 +340,36 @@ if (costcookNoRows < 3) {
 // list by SHIPPING, which is the only way anything is allowed to leave it: a
 // Coming row that quietly disappears is a promise nobody kept. RC-60 records
 // what replaced it, and the pins below moved to src/lib/dietary.ts rather than
-// being deleted.
-for (const key of ['parBuying', 'spanish']) {
+// being deleted. ONE SINCE 2026-09-27: buying to par shipped (RC-43, gap
+// report F1), and its pins moved to the /compare yes row below. TWO SINCE
+// 2026-09-27 (later the same day): the owner ruled that card payment for booked
+// events and a balance reminder are being built (inventory A-18), so they
+// joined as a plan. That is the only other way onto this list.
+const comingPlanKeys = ['spanish', 'eventPayments'];
+for (const key of comingPlanKeys) {
 	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
 }
 for (const phrase of [
-	"title: 'Buying that tops you back up to par'",
-	"title: 'Spanish'"
+	"title: 'Spanish'",
+	"title: 'Card payment for booked events'",
+	'a reminder email before the balance is due'
 ]) {
 	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
 }
-if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== 2) {
-	failures.push('owner-confirmed Coming plans: both remaining corrected capabilities must stay Coming');
+if ((comingPlansSource.match(/verdict: 'coming' as const/g) ?? []).length !== comingPlanKeys.length) {
+	failures.push(`owner-confirmed Coming plans: every plan (${comingPlanKeys.join(', ')}) must stay Coming, and no other may be added unpinned`);
 }
-for (const key of ['parBuying', 'spanish']) {
+// Each plan's id is the key in kebab case, as its siblings' ids are, and it is
+// what the homepage renders as data-coming-plan (check-dist.mjs).
+for (const key of comingPlanKeys) {
+	const id = key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
+	requireText(comingPlansSource, `id: '${id}'`, `Coming plan ${key} id`);
+}
+requireText(comparisonSource, "note: 'Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.'", 'buying to par is a shipped yes row (RC-43)');
+if (/parBuying/.test(comingPlansSource)) {
+	failures.push('buying to par shipped (RC-43); it may not return to the Coming plans');
+}
+for (const key of comingPlanKeys) {
 	requireText(
 		comparisonSource,
 		`costcook: comingPlans.${key}.verdict`,
@@ -403,11 +428,12 @@ if (!printedPanel.slice(0, 400).includes("costcook: 'yes'")) {
 if (!/not a retail-label compliance claim/.test(printedPanel.slice(0, 600))) {
 	failures.push('comparison honesty: the printed-labels note must carry the estimate-not-compliance boundary');
 }
-// Kitchen labels: built behind a flag, marked Coming (RC-35, RC-51). The one
-// word lives in src/lib/labels.ts and is pinned here until the ledger changes.
+// Kitchen labels: available since 2026-09-27, when the owner approved the RC-35
+// launch decision (RC-35, RC-51). The one word lives in src/lib/labels.ts and
+// is pinned here with the ledger row.
 const labelsSource = surfaces[surfaceFiles.indexOf('src/lib/labels.ts')];
-if (!/LABELS_STATUS = 'coming'/.test(labelsSource)) {
-	failures.push('labels status: RC-35 says not included at launch; LABELS_STATUS must read coming until the ledger row changes');
+if (!/LABELS_STATUS = 'yes'/.test(labelsSource)) {
+	failures.push('labels status: RC-35 was approved on 2026-09-27; LABELS_STATUS must read yes until the ledger row changes');
 }
 requireText(labelsSource, 'browser', 'labels copy names the browser as the only output');
 requireText(labelsSource, 'never guesses', 'labels copy carries the no-guessed-date rule');
@@ -418,7 +444,7 @@ for (const [name, source] of [['src/lib/labels.ts', labelsSource], ['src/compone
 }
 const printerRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Kitchen label printing'"));
 if (!printerRow.slice(0, 220).includes('costcook: labelsAvailability.verdict')) {
-	failures.push('comparison honesty: the label printer is not connected (RC-35); that row may not claim yes');
+	failures.push('comparison honesty: the kitchen label row must read the shared labels word (RC-35), never a typed verdict');
 }
 requireText(printerRow.slice(0, 260), "parsley: '$59/month add-on'", 'current Parsley label-printing add-on');
 const roleRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Role-aware sensitive actions'"));
@@ -577,7 +603,12 @@ if (/\ball (\d+) things\b/i.test(featureIndexSource)) {
 	failures.push('features hub: the headline count is typed. Render {featureCount} instead.');
 }
 // B5: the hub is a hub. It may name the areas; it may not list the items.
-if (/item\.lead|group\.items\.map/.test(featureIndexSource)) {
+// Since 2026-09-27 it also lists the guide pages by NAME from the menu's own
+// data (featureMenuSections, rendered as `guide`), because the guides were
+// reachable only from the header. That list is signposts, not capability
+// lines, so the rule forbids the feature groups' items (item.lead, or items of
+// entry.groups) and a guide description, which would rebuild the wall.
+if (/item\.lead|entry\.groups[\s\S]{0,80}\.items\.map|guide\.description/.test(featureIndexSource)) {
 	failures.push(
 		'features hub: it is rendering feature items again. The hub carries five ' +
 			'signposts and no line items; depth lives on /features/[section].',
@@ -644,8 +675,12 @@ requireText(publicCopy, 'Watch the 2:53 product tour', 'hero proof link');
 requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
-// unguarded; RC-36 (multi-event planning) would have made three.
-for (let claim = 1; claim <= 60; claim += 1) {
+// unguarded; RC-36 (multi-event planning) would have made three. It was then
+// typed as 60 while the ledger ran to RC-72. The top is now read from the
+// ledger's own table rows, never below 60, and every number up to it must
+// have its row: a gap is a claim that lost its record.
+const ledgerTop = Math.max(60, ...[...ledger.matchAll(/^\| RC-(\d+) \|/gm)].map((m) => Number(m[1])));
+for (let claim = 1; claim <= ledgerTop; claim += 1) {
 	requireText(ledger, `RC-${String(claim).padStart(2, '0')}`, 'release ledger');
 }
 
@@ -655,7 +690,7 @@ for (let claim = 1; claim <= 60; claim += 1) {
 // third primary and must render cta.label like the other two.
 const stopsSource = await read('src/lib/stops.ts');
 const stopIds = [...stopsSource.matchAll(/\{ id: '([a-z]+)'/g)].map((m) => m[1]);
-const expectedStopIds = ['outcomes', 'demo', 'problem', 'yield', 'trust', 'who', 'more', 'alternatives', 'start'];
+const expectedStopIds = homepageStopIds;
 if (stopIds.join(',') !== expectedStopIds.join(',')) {
 	failures.push(
 		`hand-offs: src/lib/stops.ts reads [${stopIds.join(', ')}] but the homepage renders ` +
@@ -704,6 +739,15 @@ for (const id of ['locations', 'permissions', 'fsma']) {
 const spanishAnswer = faqSource.slice(faqSource.indexOf("id: 'spanish'"));
 if (!spanishAnswer.slice(0, 400).includes('comingPlans.spanish.faq')) {
 	failures.push('faq: #spanish must read the shared Coming plan');
+}
+// RC-65. Card payment for an event is Coming; the answer reads the shared plan,
+// and the plan's answer must open with "Not yet." like the other not-shipped rows.
+const eventPaymentsAnswer = faqSource.slice(faqSource.indexOf("id: 'event-payments'"));
+if (faqSource.indexOf("id: 'event-payments'") === -1 || !eventPaymentsAnswer.slice(0, 400).includes('comingPlans.eventPayments.faq')) {
+	failures.push('faq: #event-payments must exist and read the shared Coming plan (RC-65)');
+}
+if (!/\bfaq: `Not yet\. Card payment for booked events is Coming soon/.test(comingPlansSource)) {
+	failures.push('faq: the event card payment answer must open with "Not yet." (RC-65: recorded by hand today)');
 }
 requireText(siteSource, "href: '/faq'", 'faq reachable from nav and footer');
 requireText(startHereSource, 'href="/faq"', 'close links to the faq');
@@ -758,6 +802,15 @@ if (/class="btn-primary[^"]*"[\s\S]{0,200}demoCta\.label/.test(startHereSource))
 const sageSource = surfaces[surfaceFiles.indexOf('src/lib/sage.ts')];
 const sageSection = surfaces[surfaceFiles.indexOf('src/components/more/SageBlock.astro')];
 requireText(sageSource, 'export const SAGE_STATUS', 'sage status lives in sage.ts');
+// RC-49's counts, one place. Every sentence that counts Sage's tools or drafts
+// spells these, so the number is pinned here and a hand-typed copy is refused.
+requireText(sageSource, 'export const sageReadToolCount = 22;', 'Sage read-only tool count (RC-49: 22)');
+if ((sageSource.match(/export const sageDraftKinds = \[([\s\S]*?)\] as const/)?.[1].match(/^\s*'[^']+'/gm) ?? []).length !== 3) {
+	failures.push('Sage draft kinds: RC-49 ships exactly three (kitchen shopping list, one order shopping list, guest-count change)');
+}
+if (/twenty-two|\b22 read/i.test(publicCopy.replace(sageSource, ''))) {
+	failures.push('Sage tool count is typed by hand; spell sageReadToolCount from src/lib/sage.ts');
+}
 requireText(comparisonSource, 'costcook: SAGE_STATUS', 'compare reads the sage status');
 requireText(featuresSource, "status: SAGE_STATUS === 'yes'", 'features reads the sage status');
 requireText(sageSection, '{sageStatusWord}', 'sage section prints its status');
@@ -987,16 +1040,17 @@ if (renderedBefores.join('|') !== outcomeBefores.join('|')) {
 	);
 }
 
-// Ordering: built in the app, deployed nowhere, marked Coming (RC-59). The one
-// word lives in src/lib/ordering.ts and is pinned here until the ledger row
-// changes with it. The evidence is the deployment, not the branch: there is no
-// Vercel project for the storefront, order.costcook.io does not resolve, and
-// FEATURE_ORDERING_INTEGRATION_ENABLED is unset in production, which
-// featureDefault() reads as off for every workspace.
+// Ordering: available since 2026-09-27 (RC-59). Until then it was built and
+// deployed nowhere; the owner stated on 2026-09-27 that
+// FEATURE_ORDERING_INTEGRATION_ENABLED is on as the deployment default, so
+// every trial kitchen has it. The one word lives in src/lib/ordering.ts and is
+// pinned here with the ledger row.
 const orderingSource = surfaces[surfaceFiles.indexOf('src/lib/ordering.ts')];
-if (!/ORDERING_STATUS = 'coming'/.test(orderingSource)) {
-	failures.push('ordering status: RC-59 says the storefront is not deployed; ORDERING_STATUS must read coming until the ledger row changes');
+if (!/ORDERING_STATUS = 'yes'/.test(orderingSource)) {
+	failures.push('ordering status: RC-59 says online ordering is on for every kitchen since 2026-09-27; ORDERING_STATUS must read yes until the ledger row changes');
 }
+requireText(orderingSource, 'payment confirms the order', 'ordering copy says payment, not approval, confirms (RC-59)');
+requireText(orderingSource, '72 hours', 'ordering copy carries the payment window (RC-59)');
 requireText(orderingSource, 'awaiting kitchen confirmation', 'ordering copy carries the confirmation boundary');
 requireText(orderingSource, 'without prices', 'ordering copy carries the price-authority boundary');
 requireText(orderingSource, 'no inbound command', 'ordering copy carries the widget protocol boundary');
@@ -1012,6 +1066,10 @@ const forbiddenClaims = [
 	[/\bfree while/i, 'unapproved pricing promise'],
 	[/\beverything downstream re-reads/i, 'confirmed-order repricing implication'],
 	[/\bhandles it automatically\b/i, 'unqualified automation promise'],
+	// A booked event's deposit is recorded by hand in production (inventory A-14),
+	// and customer invoices are an unbuilt PRD (front-of-house 06). Both patterns
+	// live in scripts/lib/money-claims.mjs, shared with the built events page.
+	...moneyClaims,
 	// RC-49. The assistant's model and provider are configuration, not claims,
 	// and the default has never been evaluated on the marketed branch.
 	// CLAUDE.md is a filename that comments cite; the lookahead spares it.
@@ -1030,7 +1088,7 @@ const forbiddenClaims = [
 	// RC-59. The four sentences an ordering feature makes it easy to write and
 	// impossible to defend on a demo call.
 	[/\bconfirms? the (order|booking) automatically\b/i, 'automatic order confirmation (RC-59: a submission awaits kitchen confirmation)'],
-	[/\b(gets?|getting) you paid\b/i, 'a payment promise (RC-59: Stripe is a handoff, and the app states when no charge occurred)'],
+	[/\b(gets?|getting) you paid\b/i, 'a payment promise (RC-59: the client pays your own Stripe account for online orders only; CostCook promises no payout)'],
 	[/\bcustomers? sees? (the|their|a) price\b[^.]{0,40}\binstantly\b/i, 'a price computed in the browser (RC-59: selections travel without prices)'],
 	[/\btakes? orders? while you (sleep|cook)\b/i, 'the stock automation promise the confirmation gate contradicts'],
 ];

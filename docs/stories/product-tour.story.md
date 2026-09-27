@@ -147,3 +147,15 @@ Content: `src/components/sections/ProductTour.astro` and its shared data/respons
 ### Closing layout correction · 2026-09-11
 
 Copy and story beats unchanged. Trial terms were moved below the button row and both columns constrained so the heading keeps a readable measure. The failed-then-passed geometry test and screenshots are in `docs/qa/resources-closing-regression/`. This corrects a defect missed by the earlier first-viewport review.
+
+## Claim correction · 2026-09-27 (Sage tools and drafts)
+
+- [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.
+
+## Claim correction · 2026-09-27 (kitchen labels available)
+
+- [x] 11 Revision: The owner approved the RC-35 labels launch decision on 2026-09-27 and LABELS_STATUS is now yes. Kitchen date labels print from Prep and Pack through the browser; label stock is set once in Settings > Labels. The premise that the whole feature sat behind the label_printing flag was false (gap report F2). Every Coming sentence about kitchen labels is gone; the browser-only, never-guessed-date and blank-allergen boundaries stay. Beats and point of view unchanged; the labels page hero now states availability instead of a preview.
+
+## Claim correction · 2026-09-27 (what Staff can open)
+
+- [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.

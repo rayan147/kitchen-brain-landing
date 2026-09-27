@@ -1,13 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
 import SageFeature from '../../components/sections/SageFeature.astro';
+import { sageDraftKinds, sageReadToolCount } from '../../lib/sage';
+import { spell } from '../../lib/words';
 
 // Considered Strategy; not used because this route is one deliberate editorial
 // composition selected at build time, not a runtime-swappable layout family.
 const directionContract = [
 	'THESIS: Sage is a shipped kitchen assistant whose answers remain checkable and whose prepared work remains human-approved.',
 	'OWN-WORLD: CostCook Kitchen Ticket paper, cream and soft-green fields, ink type, restrained amber, square evidence records and green actions.',
-	'STORY: A chef-owner asks during setup, watches the question reach a sourced answer, sees eleven checks and one approval-bound proposal, then starts or books a demo.',
+	`STORY: A chef-owner asks during setup, watches the question reach a sourced answer, sees ${spell(sageReadToolCount, { compound: true })} read-only tools and ${spell(sageDraftKinds.length)} approval-bound drafts, then starts or books a demo.`,
 	'FIRST VIEWPORT: Editorial statement at left; authentic answer capture and authentic setup entry overlap as evidence at right.',
 	'FORM: Code-led evidence-sheet composition informed by the preview comp; authentic product captures outrank generated imagery.',
 	'VIDEO: Twenty-second silent product walkthrough from captured app states, native controls, open captions, caption track and text transcript.',

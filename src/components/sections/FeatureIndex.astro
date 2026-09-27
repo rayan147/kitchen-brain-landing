@@ -1,6 +1,6 @@
 ---
 import FeatureTrialTerms from "../FeatureTrialTerms.astro";
-import { featureSections, featureCount, inDevelopmentFeatureGroups } from '../../lib/features';
+import { featureSections, featureCount, inDevelopmentFeatureGroups, featureMenuSections, featureMenuHref } from '../../lib/features';
 import { spellCapital } from '../../lib/words';
 import { cta, demoCta } from '../../lib/site';
 import FeatureAreaIcon from '../FeatureAreaIcon.astro';
@@ -100,10 +100,40 @@ import { comingDefinition } from '../../lib/availability';
 			}
 		</ul>
 
+		{/* THE GUIDES, ADDED 2026-09-27. The dedicated guide pages were reachable
+		    only from the header's Features menu, so a reader who scrolled this hub
+		    never met them. This list renders the menu's own data
+		    (featureMenuSections, featureMenuHref), so the two paths cannot drift:
+		    a guide added to the menu appears here with the same label and link.
+		    Labels only, no descriptions: the hub stays five signposts plus one
+		    terse list of guide names, never the capability lines (the guard in
+		    check-landing-claims.mjs B5 still forbids those).
+		    Considered Composite; not used because this is the same fixed
+		    two-level list the menu renders, with one rendering here. */}
+		<section class="mt-16 border-t border-ticket-rule pt-8" aria-labelledby="feature-guides-heading" data-feature-guides>
+			<h2 id="feature-guides-heading" class="text-h3 font-semibold">Or open one guide</h2>
+			<p class="mt-3 max-w-[66ch] text-ink-soft">Each guide follows one job through the app, with its limits stated.</p>
+			<div class="mt-6 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+				{featureMenuSections.map((group) => (
+					<div>
+						<p class="eyebrow">{group.label}</p>
+						<ul role="list" class="mt-3">
+							{group.items.map((guide) => (
+								<li class="border-b border-hairline">
+									<a href={featureMenuHref(guide.featureId, guide.coming === true)} class="inline-flex min-h-11 items-center font-semibold underline decoration-ticket-rule decoration-1 underline-offset-4 hover:decoration-ink">{guide.label}</a>
+									{guide.coming && <span class="ml-2 font-mono text-xs text-amber-deep">Coming</span>}
+								</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</div>
+		</section>
+
 		<p class="mt-16 max-w-[66ch] border-t border-ticket-rule pt-6 text-ink-soft">
 			Want a guided look? Bring one menu to a 15-minute demo.{' '}
 			<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet"
-				>Book a 15-min demo</a
+				>{demoCta.label}</a
 			>
 		</p>
 	</div>

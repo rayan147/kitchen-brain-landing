@@ -1,0 +1,311 @@
+# Lane G: Numbers (Analytics, closeout food cost, what Today reports, Square counter sales)
+# Source of truth: ~/kitchen-brain-develop-demo, HEAD ed6ff5f0130f443025ae96c0da971eca40468f93 (= origin/main, verified 2026-09-27).
+# Paths are relative to that checkout unless prefixed.
+# Assumed-today worktrees checked for Numbers changes:
+#   ~/kb-client-payment (feat/client-payment-booking-loop, merge-base 00cdd6d78): 22 committed + 3 modified + 1 untracked path.
+#     NONE touch src/lib/server/analytics, src/lib/domain/analytics, src/routes/analytics, closeout, home/, month-cost,
+#     or order-revenue. It adds payment TERMS (deposit/balance) to the tentative order (tentative-order.ts, orders/repository.ts
+#     paymentTermsJson). Revenue math is unchanged. => no assumed-today row in lane G.
+#   ~/kitchen-brain-proposal-build: only proposal builder UI files under charges; server bridge (tentative-order.ts) untouched.
+#   ~/kb-stage-diagnosis: no Numbers files.
+# KEY ANSWER: agreed proposal revenue ALREADY reaches the order, closeout and analytics in production (EV-07,
+#   src/lib/domain/profitability/order-revenue.ts:1-48; src/lib/server/events/tentative-order.ts:209-221).
+#   It is the ONE accepted food-service charge's net, not the proposal grand total (see terms: "Revenue / event sales").
+
+lane: G
+source_commit: ed6ff5f0130f443025ae96c0da971eca40468f93
+
+plan_gating_summary:
+  subscription: "One plan (Launch, $49/workspace/month, 15-day trial; docs/billing.md). No per-feature plan tiers. Analytics has no plan gate; a lapsed subscription blocks the whole workspace only when BILLING_ENFORCEMENT=enforce."
+  release_flags: "Square is a release flag, not a plan entitlement: square_integration <- FEATURE_SQUARE_INTEGRATION_ENABLED, default off, per-business override in business_feature_overrides (src/lib/server/features/access.ts:8-22; docs/billing.md 'Label printing and ordering integrations use separate release flags')."
+  roles: "Every /analytics route calls requireScope only (any active member, STAFF included). The only role check in the lane is the Square refresh action (OWNER/MANAGER, src/routes/analytics/sales/+page.server.ts:22-27). Sidebar 'Analytics' link is not role-filtered (src/lib/components/shell/AppSidebar.svelte:76-89)."
+
+rows:
+  - id: G-01
+    lane: G
+    workflow: "Check whether this week (or month, or last 90 days) is on track"
+    job_to_be_done: "Know in one screen if food cost is inside target, what needs me, and why"
+    actors: [owner, manager, staff]
+    routes: ["/analytics"]
+    entry: "Sidebar 'Analytics' (AppSidebar.svelte:76) > tab 'Overview' (src/routes/analytics/+layout.svelte:23); period switch 'This week' / 'This month' / 'Last 90 days' (PeriodSwitch.svelte:26-28)"
+    done_marker: "Verdict headline '<This week> is on track.' or '<n> things need your attention.' (src/lib/domain/analytics/pulse.ts:293-298); calm text 'No price rise reaches a dish over target, and nothing is waiting on you. An empty list is an answer.' (src/routes/analytics/+page.svelte:31)"
+    hands_off_to: G-02
+    tier: production
+    evidence:
+      - e2e/analytics-decisions.spec.ts
+      - src/routes/analytics/+page.server.ts:7-14
+      - src/lib/server/analytics/pulse.ts:34-98
+      - src/lib/domain/analytics/pulse.ts:79-104,161-277
+      - src/lib/domain/analytics/callouts.ts
+      - src/routes/analytics/pulse-ssr.test.ts
+    numbers:
+      - "'Food cost on events' = sum(planned food usage) / sum(event sales) over confirmed events that have a price AND a frozen confirmed plan with no skipped lines (counted(), pulse.ts:79). THEORETICAL (planned from recipes, misc included), not purchases. Note on tile: 'Food only, planned from your recipes. Staff, rentals and packaging are not in it.' (pulse.ts:197)"
+      - "'Food margin on events' = sales minus planned food cost, same cohort (pulse.ts:202-215)"
+      - "'Event sales booked' = sum of orderRevenueCents (price x guests + revenue adjustment) for confirmed priced events (pulse.ts:217-228). Booked value, not cash received."
+      - "'Actual food cost against plan' = (sum closeout actual - sum planned) / planned for events closed out in the period; within 5% counts as on plan (pulse.ts:15,230-242). Source: latest closeout revisions (listLatestCloseoutsBetween)."
+      - "'What price changes added' = price effect of comparable purchase lines vs the previous period (priceVolume over recorded purchases) (pulse.ts:243-264)"
+      - "'Dishes and menus over target' = count of dishes/menus over target at TODAY's catalog prices (pulse.ts:265-275)"
+      - "Callouts (callouts.ts): top 3 price rises traced to over-target dishes; an event over target with 'Charging $X a guest instead of $Y brings it to target.'; closeouts over plan ('<event> cost N% more than planned.'); staged invoices/price sheets waiting in Import; unpriced events; missing selling prices/costing; purchase lines with no pack size."
+      - "Event ledger 'Events this week' + 'Next week' and a lazily loaded trend chart (src/routes/analytics/+page.svelte:35-56)."
+    plan_gate: "none (Launch plan; any active member incl. STAFF)"
+    limits:
+      - "Food only: staffing, rentals, packaging and overproduction are not modelled anywhere (pulse.ts:197; CONTEXT.md 'Event Food-Cost Percent')."
+      - "Events without a price, or without a frozen confirmed plan, are left out of the percentages and the page says so (pulse.ts:170-173)."
+      - "Sales are booked event value, not money collected; there is no deposit/balance/receivables figure anywhere in Analytics (grep of analytics modules for deposit|balance|stripe: none)."
+      - "Square counter sales are NOT in the Overview; they live only on the Counter sales tab."
+      - "Empty workspace shows 'Nothing to report yet' with 'Add an invoice' (src/routes/analytics/+page.svelte:19-24)."
+    glossary_terms: [Event Food-Cost Percent, Per-Guest Price, Target Food Cost, Closeout]
+    capture_worthy: "yes: the attention panel with a traced price rise ('1 dish or menu using it is over target.') above the six figures"
+
+  - id: G-02
+    lane: G
+    workflow: "Find which dishes and menus are over target and what to charge"
+    job_to_be_done: "Reprice or trim before quoting, with the price worked out for me"
+    actors: [owner, manager, staff]
+    routes: ["/analytics/food-cost"]
+    entry: "Analytics > tab 'What to charge' (+layout.svelte:27); Overview figure link 'See what to charge' (pulse.ts:273-274) -> /analytics/food-cost?review=over"
+    done_marker: "Row shows '<n> points above target' and 'Charge at least $X per guest|portion to reach N%' (FoodCostCurrent.svelte:66-71; TargetPrice.svelte); groups 'Needs costing details', 'Over target', 'Near target', 'Needs a selling price', 'Within target' (FoodCostCurrent.svelte:30-36)"
+    hands_off_to: "E (catalog recipe/menu edit: rows link to /catalog/recipes/[id] or /catalog/menus/[id], FoodCostCurrent.svelte:91)"
+    tier: production
+    evidence:
+      - "e2e/analytics-decisions.spec.ts (lines ~101-127: over-target filter, 'Charge at least $.. per guest to reach N%', 'Add a selling price')"
+      - src/routes/analytics/food-cost/+page.svelte:19-24
+      - src/lib/server/analytics/food-cost.ts:13-57
+      - src/lib/components/analytics/TargetPrice.svelte
+    numbers:
+      - "Dish: plate cost per portion (recipe lines at current pack prices, misc included) vs the dish's selling price. Menu: menu cost per guest vs menu per-guest price (food-cost.ts:19-38). All THEORETICAL at today's prices."
+      - "Suggested price = food cost / target %, rounded up to the cent ('Food cost ÷ N%, rounded up to the cent. Or lower the cost.', TargetPrice.svelte)."
+    plan_gate: none
+    limits:
+      - "Priced at today's catalog prices only; it does not look at what was paid for any event."
+      - "Sub-recipes are excluded (counted separately); archived dishes are excluded (food-cost.ts:21)."
+      - "It suggests a price; it does not change the price. The owner edits the recipe or menu."
+    glossary_terms: [Plate Cost, Target Food Cost, Misc Cost Percent, Selling Price, Per-Guest Price]
+    capture_worthy: "yes: an over-target menu row with 'Charge at least $.. per guest to reach 30%'"
+
+  - id: G-03
+    lane: G
+    workflow: "Review a month: what the events should have cost against what I bought"
+    job_to_be_done: "See the gap between planned food and invoices, without calling it waste"
+    actors: [owner, manager, staff]
+    routes: ["/analytics/food-cost?mode=month"]
+    entry: "Analytics > tab 'Month review' (+layout.svelte:28); form 'Event month' + button 'Review month' (FoodCostMonth.svelte:67-77)"
+    done_marker: "Summary strip 'Planned food usage cost' / 'Recorded ingredient purchases' / 'Priced confirmed-event value' / 'Planned food-cost %' / 'Recorded food-cost %' (FoodCostMonth.svelte:86-107) and sentence 'You bought $X more than the plan called for...' (FoodCostMonth.svelte:115-121)"
+    hands_off_to: "F (/purchases?month=..., 'Review monthly purchase evidence'; /purchases/reconcile) and /catalog/inventory 'Review shelf counts' (FoodCostMonth.svelte:232-235)"
+    tier: production
+    evidence:
+      - e2e/analytics.spec.ts
+      - src/routes/analytics/month-food-cost-misc-ssr.test.ts
+      - src/lib/server/analytics/food-cost.ts:84-149
+      - src/lib/server/purchases/month-cost/aggregates.ts:15-101
+      - src/lib/components/analytics/FoodCostMonth.svelte:80-237
+    numbers:
+      - "Planned (theoretical) = sum of confirmed events' frozen usage cost + misc for events dated in the elapsed month (aggregates.ts:21-43)."
+      - "Recorded (actual spend) = sum of invoice/purchase lines dated in the month (inputs.spend.invoiceSumCents)."
+      - "Revenue = sum orderRevenueCents over priced confirmed events (aggregates.ts:26-32). Both %s are held at null ('Not comparable') if any confirmed event is unpriced (types.ts unpricedOrdersCount)."
+      - "'Keep these amounts separate' table: 'Invoice adjustments', 'Logged waste', 'Purchases minus planned usage' (FoodCostMonth.svelte:198-228)."
+      - "Each event row shows its frozen cost and the verdict against the target set at confirm (food-cost.ts:118-149, SET-03)."
+    plan_gate: none
+    limits:
+      - "'Confirmed-event value is the price on those events, not cash received.' (FoodCostMonth.svelte:225-226)"
+      - "'Stock-based actual food used needs matching opening and closing counts and stock movements; it is not inferred from purchases.' (FoodCostMonth.svelte:226-227)"
+      - "The gap is never called waste; only Logged Waste entries are waste."
+      - "Draft, cancelled and future events are excluded (FoodCostMonth.svelte:81-82)."
+      - "Same math as the Purchases month header (MonthFoodCostHeader.svelte, lane F) which labels it 'Should have cost (recipe estimate)' / 'Did cost'; this tab uses different words for the same figures."
+    glossary_terms: [Usage Cost to Date, Actual Spend, Unaccounted Gap, Logged Waste, Month-to-Date Food Cost]
+    capture_worthy: "yes: the five-figure strip plus the 'You bought $X more than the plan called for' sentence"
+
+  - id: G-04
+    lane: G
+    workflow: "See which ingredient prices moved and which dishes each rise reaches"
+    job_to_be_done: "Catch a supplier price rise before it eats an event's margin"
+    actors: [owner, manager, staff]
+    routes: ["/analytics/prices"]
+    entry: "Analytics > tab 'What things cost' (+layout.svelte:24); row link 'view history' to G-05"
+    done_marker: "Figures 'What price changes added' / 'Biggest single move' / 'Prices you can compare' (src/lib/domain/analytics/price-report.ts:113,135,148); table 'Every price, biggest effect first' (prices/+page.svelte:77) with row e.g. '+50.0%' '+$20.00'"
+    hands_off_to: G-05
+    tier: production
+    evidence:
+      - "e2e/analytics-decisions.spec.ts (~lines 132-139)"
+      - e2e/analytics.spec.ts
+      - src/lib/server/analytics/reports.ts:22-56
+      - src/lib/server/analytics/repository.ts:9-60
+    numbers:
+      - "Source: recorded purchase lines (purchases table, corrected figures), per ingredient+supplier+unit, compared with the latest purchase before the window (repository.ts:21-47). ACTUAL paid unit prices."
+      - "Impact $ = the price move times the quantity bought in the period (priceChanges/priceVolume)."
+    plan_gate: none
+    limits:
+      - "Only purchases with a recorded pack size can form a unit price; others 'still count toward spending, but cannot establish a per-unit price trend.' (prices/+page.svelte:87)"
+      - "Only as good as invoices entered; lines still staged in Import are left out (callouts.ts 'still waiting in Import')."
+    glossary_terms: [Purchase, Price Sheet, Invoice (supplier)]
+    capture_worthy: "no (G-05 is the stronger frame)"
+
+  - id: G-05
+    lane: G
+    workflow: "Dig into one ingredient: price history, costing price vs paid, and supplier comparison"
+    job_to_be_done: "Decide whether to update my costing price or switch supplier"
+    actors: [owner, manager, staff]
+    routes: ["/analytics/prices/[ingredientId]", "/analytics/suppliers"]
+    entry: "'view history' from G-04, or header button 'Compare suppliers' (#buying-options) (prices/[ingredientId]/+page.svelte:48); old /analytics/suppliers?ingredient=N redirects 307 here (suppliers/+page.server.ts:14-25)"
+    done_marker: "Sentence 'You are costing at $X. You last paid $Y on <date>.' (prices/[ingredientId]/+page.svelte:67-78); section 'What this change does to your dishes' (DishImpact.svelte:29) with Before/After per dish or menu"
+    hands_off_to: "F (/ingredients/[id] 'Review ingredient and price source'; 'Record or review a supplier offer') and E ('See affected recipes')"
+    tier: production
+    evidence:
+      - "e2e/analytics.spec.ts ('record purchases, inspect price history, compare an offer and export the same spending'; 'the retired supplier route lands on the ingredient it was asking about')"
+      - src/lib/server/analytics/reports.ts:63-139
+      - src/routes/analytics/prices/[ingredientId]/+page.svelte:45-121
+    numbers:
+      - "Costing price (catalog pack cost / pack size) vs last paid unit price from purchases (reports.ts:88-97)."
+      - "Buying options table: current costing price plus each recorded supplier quote, priced per usable unit so trim yield is in the number ('Usable unit cost', 'Trim yield') (reports.ts:109-139)."
+      - "Dish impact: before/after cost of each dish (per portion) and menu (per guest) using this ingredient (dish-impact.ts)."
+    plan_gate: none
+    limits:
+      - "'A dated purchase is evidence. Gaps between purchases do not tell you what the supplier charged on those days.' (page description, line 47)"
+      - "Quotes are ones the owner recorded; nothing fetches supplier prices."
+      - "Does not change the costing price; it links to the ingredient page to do so."
+    glossary_terms: [Trim Yield, Price Quote, Current costing price, Plate Cost]
+    capture_worthy: "yes: 'You are costing at $X. You last paid $Y' sentence above the paid-price chart"
+
+  - id: G-06
+    lane: G
+    workflow: "See where the buying money went and export it"
+    job_to_be_done: "Tell whether I paid more or bought more, by supplier, ingredient and category, and hand it to my bookkeeper"
+    actors: [owner, manager, staff]
+    routes: ["/analytics/spending", "/analytics/spending/export.csv"]
+    entry: "Analytics > tab 'Where the money went' (+layout.svelte:25); header button 'Export filtered purchases CSV' (spending/+page.svelte:53-56)"
+    done_marker: "'Why recorded spending changed' table ending 'Total recorded spending change' (spending/+page.svelte:71-100); CSV download 'purchases-<from>-<to>.csv' (export.csv/+server.ts:9-11)"
+    hands_off_to: "F ('Open filtered purchase ledger' -> /purchases, spending/+page.svelte:137)"
+    tier: production
+    evidence:
+      - e2e/analytics.spec.ts
+      - e2e/analytics-decisions.spec.ts
+      - src/lib/server/analytics/reports.ts:140-216
+      - src/lib/domain/analytics/spend-report.ts:164-207
+    numbers:
+      - "Figures 'Ingredient purchases', 'What price changes added', 'What buying more or less added', 'Fees, tax, discounts and credits' (spend-report.ts:164-207); price effect vs quantity effect on comparable purchases."
+      - "Groups 'By category' / 'By supplier' / 'By ingredient' (spending/+page.svelte:114-129)."
+      - "CSV: one row per recorded purchase line with corrected packs/cost and cents per base unit (reports.ts:181-216)."
+    plan_gate: none
+    limits:
+      - "Supplier (vendor) spend only; this is not a profit and loss statement and has no sales, labour or overhead."
+      - "Invoice-level adjustments cannot be split by ingredient or supplier, so they drop out when the view is filtered (reports.ts:143-146)."
+      - "CSV only; no direct accounting push from this tab (QuickBooks is lane I)."
+    glossary_terms: [Actual Spend, Invoice (supplier), Invoice adjustments]
+    capture_worthy: "no"
+
+  - id: G-07
+    lane: G
+    workflow: "Read what sold at the register (Square), what it cost to make, and how much to cook again"
+    job_to_be_done: "For a cafe case, hot bar or market table: know food cost on counter sales and get a prep quantity from what sold"
+    actors: [owner, manager, staff]
+    routes: ["/analytics/sales"]
+    entry: "Analytics > tab 'Counter sales' (+layout.svelte:26); button 'Refresh sales details' (SalesRefresh.svelte:41, OWNER/MANAGER only); 'Preview quantities to cook' (SalesReport.svelte:200)"
+    done_marker: "Verdict 'Counter sales are within your N% target.' / 'Counter sales ran over your N% target.' (src/lib/domain/analytics/sales-lead.ts:124-129); section 'Make these dishes again' with ingredient totals (SalesReport.svelte:155); refresh success 'Refresh queued for this period across your connected Square locations. Check Square activity, then reload this report.' (sales/+page.server.ts:33-35)"
+    hands_off_to: "I (/settings/integrations/square 'Connection and activity'; dish matches)"
+    tier: production
+    evidence:
+      - "e2e/sales-intelligence.spec.ts ('completed Square sales drive food cost, dish mix and a scaled prep preview')"
+      - src/routes/analytics/sales/+page.server.ts
+      - src/lib/server/analytics/sales-report.ts:40-195
+      - src/lib/server/analytics/sales-repository.ts:20-40
+      - src/lib/server/analytics/sales-route.test.ts
+    numbers:
+      - "Source: square_sales + square_sale_lines, state COMPLETED, closed in the window, for the deployment's Square environment (sales-repository.ts:26-33). Filled by Square webhooks (order.created/updated, payment.updated, refund.*; square/webhook.ts:14-18) and 'square.sales.reconcile' jobs (square/jobs.ts:58-60)."
+      - "Revenue = each line's net (tax-free) revenue; cost = recipe cost per portion at TODAY's prices x quantity x (1 + misc %) (sales.ts:155). A Square item counts only if it is linked to a CostCook dish."
+      - "Figures 'Food cost on counter sales', 'Food margin on counter sales', 'Dishes needing a check' (sales-lead.ts:142-175); dish mix '% of portions'; prep preview scaled 10-300% through the production engine (sales-report.ts:139-151)."
+    plan_gate: "No plan gate. Needs the square_integration release flag (default off) and a connected Square account; the refresh action also requires an active subscription (integrationExecutionAllowed) and OWNER/MANAGER. The tab itself shows for everyone and reads 'No sales in this view' when nothing is connected (SalesReport.svelte:62-65)."
+    limits:
+      - "Square only. The generic POS sales intake API (/api/ordering/v1/sales -> 'sales' table, lane C/I) is NOT read by this report; only square_sales is."
+      - "USD only for cost comparison; other currencies show 'Recipe costs are in USD. This currency needs an exchange-rate basis before cost comparison.' (sales-report.ts:88-94)."
+      - "Refunded, modified or unlinked lines are excluded from prep and flagged; the page states coverage ('food margin compares N lines...')."
+      - "Counter sales never reach a shopping list or an event's food cost; they are not in the Overview pulse."
+      - "Sandbox connections are labelled 'Sandbox · test only' (SalesReport.svelte:37)."
+    glossary_terms: [Sale, Counter sales, Dish match, Misc Cost Percent]
+    capture_worthy: "yes: Counter sales with '66.7% of portions' dish mix and the 'Make these dishes again' prep preview (only with a real or sandbox Square feed)"
+
+  - id: G-08
+    lane: G
+    workflow: "Close out an event: planned food cost against what it actually cost, as a share of the agreed price"
+    job_to_be_done: "Learn whether the event made its food margin, and save that answer"
+    actors: [owner, manager]
+    routes: ["/orders/[id]/closeout"]
+    entry: "Order > closeout (route owned by lane D); buttons 'Save as a likely estimate' / 'Close food-cost review' (CloseoutConclusion.svelte:104)"
+    done_marker: "'Closed by <name>' or 'Saved as a likely estimate by <name>' (CloseoutConclusion.svelte:134); card 'Planned vs actual food cost' (closeout/+page.svelte:195)"
+    hands_off_to: G-01
+    tier: production
+    evidence:
+      - "e2e/event-food-cost-closeout.spec.ts ('a finished event moves from reviewed estimate through changed evidence to closed')"
+      - src/lib/server/orders/event-closeout.ts:437-510
+      - src/routes/orders/[id]/closeout/+page.svelte:195-240
+      - src/lib/server/orders/queries.ts:60-80
+    numbers:
+      - "'Planned food cost' = frozen snapshot exact cost incl. misc (event-closeout.ts:457)."
+      - "'Actual food cost, at what you paid' = attributed ingredient draws priced from purchases; null while any draw is unpriced (event-closeout.ts:458-459)."
+      - "'Food cost, share of the event price' = actual / frozen revenue from the confirm-time snapshot (snapshot.money.event.revenueCents), which is orderRevenueCents = price x guests + revenue adjustment; for a proposal-made order that is the accepted food charge's net (event-closeout.ts:460-461; queries.ts:60-80)."
+      - "Label switches 'Observed event food cost' vs 'Estimated event food cost' by readiness (event-closeout.ts:506)."
+    plan_gate: none (route role checks are lane D)
+    limits:
+      - "Food only, and the page says 'food only' in its description (closeout/+page.svelte:114)."
+      - "'You planned to buy $X in full packs. Leftover packs stay on the shelf for later events, so that figure is not this event's food cost.' (closeout/+page.svelte:237-238)"
+      - "Revenue used is the frozen price at confirm, not payments received; deposits/balances do not enter it."
+      - "Dedupe note: lane D owns the closeout workflow row; keep one row in the merged inventory."
+    glossary_terms: [Closeout, Event Food-Cost Percent, Per-Guest Price, Revenue adjustment]
+    capture_worthy: "yes: the four-figure 'Planned vs actual food cost' card"
+
+  - id: G-09
+    lane: G
+    workflow: "Glance at this month's food cost and this week's price moves on Today"
+    job_to_be_done: "See the running number every morning without opening a report"
+    actors: [owner, manager, staff]
+    routes: ["/"]
+    entry: "Today (home, title 'Today · CostCook', src/routes/+page.svelte:109) > card 'FOOD COST, <MONTH>' (line 237)"
+    done_marker: "'<n.n>% ... your N%' with a 0%-target-max bar, and '$X of food and $Y of misc on $Z of confirmed events.' (src/routes/+page.svelte:238-258); empty: 'No confirmed events to cost this month.'"
+    hands_off_to: "F ('Cost details' -> /purchases, +page.svelte:271); G-03"
+    tier: production
+    evidence:
+      - e2e/today-calendar-redesign.spec.ts
+      - src/routes/+page.svelte:236-272
+      - src/lib/server/home/queries.ts:444-478,613-618
+      - src/lib/server/home/signals.ts:583-595
+      - src/lib/domain/purchasing/drift.ts:61
+    numbers:
+      - "Percent = theoretical month-to-date: getMonthFoodCost(...).theoreticalPct, i.e. planned usage + misc over priced confirmed events' revenue (queries.ts:444-458). Same source as G-03's 'Planned food-cost %'."
+      - "'Price moves this month' lists up to 3 ingredients by |%| from the purchase pulse, whose window is today and the 6 days before (RECENT_PURCHASE_DAYS = 6, drift.ts:61; signals.ts:583)."
+      - "Per-event cards show revenue and '<n.n>% food cost' for today's events (+page.svelte:167-176); 'Drafts with no date' shows value totals when the viewer can see money."
+    plan_gate: "none; per-order money on the redesign rows is withheld from STAFF (today-work.ts:40), but the month food-cost card is not role-filtered"
+    limits:
+      - "Theoretical only: Today shows no actual/purchases percentage (actualSpendCents is loaded but not rendered on this card)."
+      - "Heading says 'Price moves this month' but the window is the last 7 days (wording drift, see notes)."
+    glossary_terms: [Month-to-Date Food Cost, Usage Cost to Date, Target Food Cost]
+    capture_worthy: "maybe: the food-cost card is small; the whole Today screen is lane D's frame"
+
+internal_routes:
+  - route: /analytics/suppliers
+    reason: "Server-only 307 redirect to /analytics/prices/[ingredientId]#buying-options (or /analytics/prices). Kept for old links (suppliers/+page.server.ts). Folded into G-05."
+  - route: /analytics/spending/export.csv
+    reason: "GET endpoint behind G-06's 'Export filtered purchases CSV' button; not a page."
+  - route: /analytics (+error.svelte)
+    reason: "Error boundary for the Analytics section; not a workflow."
+
+terms:
+  - term: "Analytics (in-app)"
+    app_meaning: "The caterer-facing reports section: Overview, What things cost, Where the money went, Counter sales, What to charge, Month review."
+    not_to_confuse_with: "docs/analytics/dashboards.md and tracking-plan.md, which are CostCook's own PostHog product telemetry (server-side events), not a caterer feature."
+  - term: "Food cost % (event)"
+    app_meaning: "Planned (theoretical, recipe-based, misc-inclusive) food cost / event revenue, judged against the target set at confirm."
+    not_to_confuse_with: "Closeout 'Food cost, share of the event price', which uses ACTUAL draws at what was paid over the same frozen revenue; and Month review 'Recorded food-cost %', which uses invoice totals."
+  - term: "Theoretical vs actual"
+    app_meaning: "Theoretical = recipe/plan cost at pack prices ('Planned', 'Should have cost'). Actual has two different meanings: (a) month: 'Recorded ingredient purchases' = invoices dated in the month (what you bought, not what you used); (b) event closeout: 'Actual food cost, at what you paid' = attributed ingredient draws priced from purchases."
+    not_to_confuse_with: "Waste. The gap between them is never called waste unless logged."
+  - term: "Revenue / event sales / event value"
+    app_meaning: "orderRevenueCents = per-guest price x guests + revenue adjustment. For an order prepared from an accepted proposal, it is exactly the ONE accepted food-service charge's net (after discount), split into a whole-cent per-guest price plus leftover cents (priceForAgreedRevenue). Staff, rental and other charges are not in it; proposals with more than one service or a split charge are refused by the bridge ('many-services', 'split-charges', tentative-order.ts:199-203)."
+    not_to_confuse_with: "Cash received, deposits, balances or the proposal grand total. UI says 'Confirmed-event value is the price on those events, not cash received.'"
+  - term: "Counter sales / Sale"
+    app_meaning: "Completed Square register sales linked to CostCook dishes. Deliberately not orders or events."
+    not_to_confuse_with: "Event sales ('Event sales booked') and online-ordering requests. CONTEXT.md 'Sale' says sales are 'Posted by a register through the ordering integration'; the report actually reads only Square's tables."
+  - term: "Target (food cost)"
+    app_meaning: "One business-wide target % (settings.targetFoodCostPct); frozen onto an event at confirm so a later change does not restate past events (SET-03)."
+    not_to_confuse_with: "A per-dish or per-menu target (none exists)."
+  - term: "Plan tier"
+    app_meaning: "There is one plan (Launch). Square and ordering are release flags, not tiers."
+    not_to_confuse_with: "Any landing claim of feature-gated plans."

@@ -1,0 +1,496 @@
+# Lane I: Setup, team, integrations, billing
+# Source: /home/rayan147/kitchen-brain-develop-demo (develop = origin/main = ed6ff5f0130f443025ae96c0da971eca40468f93, checked 2026-09-27)
+# All file:line citations are relative to that checkout unless prefixed with a worktree path.
+# Tier values: production | assumed-today | off-page. Rows with on_main: true + off-page are
+# merged code that no customer can use today (reason in why_off_page).
+
+rows:
+  - id: I-01
+    lane: I
+    workflow: "Start a kitchen from the free-trial link"
+    job_to_be_done: "Open an account without a password or a sales call"
+    actors: [owner]
+    routes: ["/start", "/auth/email-link", "/auth/complete"]
+    entry: "Landing CTA opens /start?plan=launch (docs/billing.md:18). Page 'Start your kitchen' (src/routes/start/+page.svelte:53), fields 'Kitchen or business name' and 'Your email', button 'Email me a start link' (src/lib/features/onboarding/action-labels.ts:11). Email opens /auth/email-link with button 'Sign in to CostCook' (src/routes/auth/email-link/+page.svelte:64)"
+    done_marker: "Lands on /settings/billing?welcome=1 showing 'Email confirmed. One step left: add a card to start your {15} free days. Nothing is charged today.' (src/routes/settings/billing/+page.svelte:65; next target set at src/routes/start/+page.server.ts:58)"
+    hands_off_to: I-02
+    tier: production
+    evidence:
+      - "e2e/signup-onboarding.spec.ts"
+      - "e2e/start-public-frame.spec.ts"
+      - "e2e/resend-email-system.spec.ts"
+      - "apps/regression-workbook/catalog/cases/start-trial-signup-journey.json"
+      - "src/routes/start/+page.server.ts:28-74 (pending signup + magic link)"
+      - "src/routes/start/+page.svelte:25-27 (trial sentence: 'Start with 15 days free. No charge today: you add a card after you open the email link, and $49/month begins when the trial ends unless you cancel.')"
+    plan_gate: "none (this is how the Launch plan begins)"
+    limits:
+      - "No password sign-in; email link only ('No password. You sign in with a link sent here.' src/routes/start/+page.svelte:120)"
+      - "One email runs one kitchen: 'This email already runs {kitchen}. Use a different email to start another kitchen.' (src/routes/start/+page.server.ts:44)"
+      - "Link works once, for 8 minutes (src/routes/auth/email-link/+page.svelte:35)"
+    glossary_terms: [Business, Membership]
+    capture_worthy: "yes: /start card at 390px, 'Step 1 of 3' with the trial sentence under 'Start your kitchen'"
+
+  - id: I-02
+    lane: I
+    workflow: "Activate the 15-day free trial with a card"
+    job_to_be_done: "Unlock the whole kitchen for 15 days without being charged today"
+    actors: [owner]
+    routes: ["/settings/billing"]
+    entry: "Settings > Billing, button 'Add card and start trial' (src/lib/components/settings/BillingPlanCard.svelte:200) opens Stripe hosted Checkout"
+    done_marker: "'Your free trial is active. Next: set up your kitchen.' (src/routes/settings/billing/+page.svelte:96), with button 'Set up your kitchen' (src/lib/components/settings/BillingPlanCard.svelte:182). While the webhook lands: 'Stripe is confirming your trial. This page updates on its own in a few seconds.' (+page.svelte:103)"
+    hands_off_to: I-03
+    tier: production
+    evidence:
+      - "e2e/signup-onboarding.spec.ts"
+      - "apps/regression-workbook/catalog/cases/billing-settings.json"
+      - "src/routes/settings/billing/+page.server.ts:44-69 (upgradeSubscription plan 'launch')"
+      - "src/lib/server/billing/plan.ts:1-8 (CostCook Launch, $49/month, 4900 cents, usd, month, trialDays 15)"
+      - "src/lib/components/settings/BillingPlanCard.svelte:134 ('15 days free, then billed monthly. Cancel before the trial ends to avoid the first charge.')"
+    plan_gate: "Launch (the only plan)"
+    limits:
+      - "Owner only: 'Only a workspace owner can manage billing.' (src/routes/settings/billing/+page.server.ts:18)"
+      - "One plan; plan switching disabled in the Stripe portal (docs/billing.md:81-85)"
+      - "A card is required to start the trial (charged $0 today)"
+    glossary_terms: [Subscription, Trial]
+    capture_worthy: "yes: plan card 'CostCook Launch' $49/month, 'about $1.63/day', 12-item feature grid"
+
+  - id: I-03
+    lane: I
+    workflow: "Set up your kitchen: cost one real dish and one real order"
+    job_to_be_done: "Get from an empty account to a real shopping list in one sitting"
+    actors: [owner, manager]
+    routes: ["/setup", "/setup/recipes/[id]"]
+    entry: "Billing 'Set up your kitchen' (BillingPlanCard.svelte:182). Welcome 'Three questions so the rest fits your kitchen.' (src/lib/components/setup/SetupWelcome.svelte:97): 'What kind of kitchen do you run?' (Catering / Meal prep / Restaurant with events / Something else, src/lib/features/onboarding/setup.ts:31-36), 'One dish you know well', 'What do you most want to know?'; buttons 'Start setup' (SetupWelcome.svelte:168) or 'Skip these questions' (SetupWelcome.svelte:184). Five stages: 'Identify your kitchen', 'Add the ingredients for one dish', 'Review food facts', 'Build your first dish', 'Cost your first order' (src/lib/features/onboarding/stage-guide.ts:36,58,83,110,131)"
+    done_marker: "'Your kitchen is ready' (src/lib/components/setup/SetupCompletionSummary.svelte:101) with a checklist of suppliers, ingredients, dish, menu, order for N guests; 'Next: your shopping list' and buttons 'Open shopping list' / 'Go to Today' (SetupCompletionSummary.svelte:148,150)"
+    hands_off_to: "D (order to van: Shop)"
+    tier: production
+    evidence:
+      - "e2e/setup-wizard.spec.ts:230 ('owner creates the minimum real chain and lands at the shopping handoff')"
+      - "e2e/setup-wizard.spec.ts:198 ('staff cannot enter or mutate the setup workflow')"
+      - "e2e/setup-wizard.spec.ts:1279 ('Start over restarts the guide without deleting what the kitchen built')"
+      - "apps/regression-workbook/catalog/cases/first-run-setup.json"
+      - "src/routes/setup/+page.server.ts (22 actions incl. scanLabel, scanLabelPhoto, draftAllReviews, createOrder)"
+      - "src/routes/setup/recipes/[id]/+page.svelte:45 ('Save dish and continue')"
+    plan_gate: "Launch (subscription gate applies)"
+    limits:
+      - "Owner and manager only (KITCHEN_SETUP_ROLES, src/lib/server/tenancy/roles.ts:59)"
+      - "Covers one dish and one order, not the whole catalog; import of a list or document is a side door ('Import a list', SetupIngredientsStage.svelte)"
+      - "Food facts drafting uses Sage ('Draft missing food facts with Sage', action-labels.ts:12); if Sage fails, nothing is saved and the owner answers by hand (src/routes/setup/+page.server.ts:733)"
+      - "Loading sample data from inside setup is off unless SETUP_SAMPLE_DATA_ENABLED=true or dev (src/routes/setup/+page.server.ts:94,1141)"
+      - "Setup ends at Shop; it does not cover proposals, events, booking or online ordering"
+    glossary_terms: [First-Run Setup, Supplier, Pack, Trim yield, Plate cost, Menu, Order, Shop]
+    capture_worthy: "yes: 'Your kitchen is ready' completion card listing what setup built"
+
+  - id: I-04
+    lane: I
+    workflow: "Sign in with an emailed link"
+    job_to_be_done: "Get back into the kitchen from any phone without a password"
+    actors: [owner, manager, staff]
+    routes: ["/login", "/auth/email-link"]
+    entry: "'Sign in to CostCook' (src/routes/login/+page.svelte:69), field 'Email address', button 'Send sign-in link' (action-labels.ts:10); then 'Check your email' (src/lib/components/auth/EmailLinkSent.svelte:50)"
+    done_marker: "Email link page 'Tap once to open your kitchen. The link then stops working.' (src/routes/auth/email-link/+page.svelte:36); tapping 'Sign in to CostCook' lands on Today"
+    hands_off_to: I-05
+    tier: production
+    evidence:
+      - "e2e/auth.spec.ts:13 ('sign-in lands on the front door; sign-out returns to a locked login')"
+      - "e2e/auth.spec.ts:39 ('an unknown address gets the same non-enumerating confirmation')"
+    plan_gate: "none"
+    limits:
+      - "No passwords, no SSO; each link works once, for 8 minutes"
+    glossary_terms: [Membership]
+    capture_worthy: "no"
+
+  - id: I-05
+    lane: I
+    workflow: "Choose which kitchen to open, or recover lost access"
+    job_to_be_done: "Know which kitchen you are in and why you cannot get in"
+    actors: [owner, manager, staff]
+    routes: ["/access"]
+    entry: "Shown automatically after sign-in when there is no single active membership (src/hooks.server.ts:498-506, redirect at :505)"
+    done_marker: "'Choose a kitchen' then a kitchen button opens it (src/routes/access/+page.svelte:21,61-72). Other states: 'Your CostCook access has ended', 'Your kitchen is getting ready', 'This email is not part of a kitchen yet' (+page.svelte:25,29,34) with 'Start your own kitchen' / 'Sign out and use a different email' / 'Email CostCook support'"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/organization-access.spec.ts:7 ('a member of multiple ready kitchens chooses the active organization')"
+      - "src/routes/access/access-actions.test.ts"
+    plan_gate: "none"
+    limits:
+      - "A person can belong to several kitchens only by invitation; one email can start only one kitchen (I-01)"
+    glossary_terms: [Business, Membership]
+    capture_worthy: "no"
+
+  - id: I-06
+    lane: I
+    workflow: "Invite the crew and control who has access"
+    job_to_be_done: "Give cooks the lists without giving them the recipes, prices or billing"
+    actors: [owner, manager, staff]
+    routes: ["/settings/team"]
+    entry: "Settings > 'Team & access' (src/lib/features/settings/settings-sections.ts:31); card 'Invite a teammate', field 'Email address', button 'Send invitation' (src/routes/settings/team/+page.svelte:55,95)"
+    done_marker: "Flash 'Invitation sent to {email}.' (src/routes/settings/team/+page.server.ts:76); person appears under 'Pending invitations', then 'People with access' with a role badge Owner/Manager/Staff (+page.svelte:31,105,169)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/auth.spec.ts:47 ('an invited teammate joins the kitchen and cannot reuse the link')"
+      - "e2e/role-access.spec.ts:39-116 (staff / manager / owner reach)"
+      - "src/routes/settings/team/+page.server.ts:33 (INVITED_ROLE = 'STAFF')"
+    plan_gate: "Launch; unlimited teammates (docs/billing.md:11)"
+    limits:
+      - "Every invite joins as Staff: 'They join as Staff: they can work from the kitchen's orders and lists, but cannot change recipes, ingredients, settings or billing.' (+page.svelte:57-59)"
+      - "No in-app way to change a role (no promote/demote action on the team page; grep for updateMemberRole/changeRole finds nothing). A code comment says 'a manager promotes from the team page' (+page.server.ts:32) but no such control exists"
+      - "Only an owner can remove an owner or manager; the last owner cannot be removed (+page.server.ts:107,110)"
+      - "No per-location or per-unit roles (that is branch feat/486-unit-scoped-access, off-page)"
+    glossary_terms: [Membership, Owner, Manager, Staff]
+    capture_worthy: "maybe: 'People with access' with role badges"
+
+  - id: I-07
+    lane: I
+    workflow: "Manage the subscription: card, invoices, cancel, restore"
+    job_to_be_done: "Keep the kitchen running, or stop paying, without calling anyone"
+    actors: [owner, manager, staff]
+    routes: ["/settings/billing", "/subscription-required"]
+    entry: "Settings > Billing, 'Manage billing securely' opens the Stripe portal (BillingPlanCard.svelte:100); 'Restore subscription' after a scheduled cancel (BillingPlanCard.svelte:148)"
+    done_marker: "'Subscription restored. It renews as normal.' (src/routes/settings/billing/+page.svelte:81). Failed payment: 'Stripe could not take the last payment.' (+page.svelte:112). Non-owners on a lapsed kitchen see '{kitchen} needs its owner to restart billing' with 'Check again' (src/routes/subscription-required/+page.svelte:19,28)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/role-access.spec.ts"
+      - "src/lib/server/billing/access.ts:42-63 (access policy by status)"
+      - "src/lib/server/billing/billing-page-ssr.test.ts"
+      - "src/routes/subscription-required/subscription-required-actions.test.ts"
+    plan_gate: "Launch"
+    limits:
+      - "Owner only (BILLING_ROLES, src/lib/server/tenancy/roles.ts:68)"
+      - "past_due keeps access with a warning; canceled/unpaid/paused block the kitchen only when BILLING_ENFORCEMENT=enforce (docs/billing.md:40-47; src/lib/server/billing/access.ts:56-62)"
+      - "Invoices and receipts live in the Stripe portal, not in CostCook"
+    glossary_terms: [Subscription]
+    capture_worthy: "no"
+
+  - id: I-08
+    lane: I
+    workflow: "Set the kitchen's costing defaults"
+    job_to_be_done: "Judge every plate and order against my own target, in my own units"
+    actors: [owner, manager]
+    routes: ["/settings/costing"]
+    entry: "Settings > 'Costing & display' (settings-sections.ts:26): 'Target food cost' ('Menus and orders above this percentage are flagged.'), 'Miscellaneous cost' ('Adds a percentage for salt, oil, garnish, and other unlisted costs.'), 'Small differences', 'Display units', 'Counts stay trusted for' (src/routes/settings/costing/+page.svelte:181-195,226,302; src/lib/components/settings/CountTrustSettingCard.svelte:62)"
+    done_marker: "'Changes saved.' (src/routes/settings/costing/+page.svelte:123); idle hint 'Targets, small differences and display units save automatically.' (+page.svelte:124)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/business-setup.spec.ts:4"
+      - "e2e/settings-impact.spec.ts"
+      - "apps/regression-workbook/catalog/cases/business-costing-suppliers.json"
+    plan_gate: "none beyond subscription"
+    limits:
+      - "One business-wide target and misc percent, not per menu or per client"
+    glossary_terms: [Target food cost, Misc cost percent, Count trust]
+    capture_worthy: "no"
+
+  - id: I-09
+    lane: I
+    workflow: "Set how the kitchen appears to vendors"
+    job_to_be_done: "Purchase orders go out with the right name, reply-to and delivery address"
+    actors: [owner, manager]
+    routes: ["/settings/business"]
+    entry: "Settings > 'Business profile' ('Who you are to the vendors you buy from.' src/routes/settings/business/+page.svelte:29); card 'What vendors see' with 'Business name', 'Reply-to email', 'Phone', 'Delivery address' (src/lib/components/settings/BusinessProfileForm.svelte:40-42,96,137)"
+    done_marker: "'Profile saved.' (BusinessProfileForm.svelte:172) after 'Save profile' (:169)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/business-setup.spec.ts:37,109"
+    plan_gate: "none beyond subscription"
+    limits: []
+    glossary_terms: [Business]
+    capture_worthy: "no"
+
+  - id: I-10
+    lane: I
+    workflow: "Choose which email alerts you get"
+    job_to_be_done: "Hear about a failed PO or a new booking right away, and everything else once a day"
+    actors: [owner, manager, staff]
+    routes: ["/settings/notifications"]
+    entry: "Settings > 'Notifications' ('We only write when something changed. Turn off anything you would rather find on Today.' src/routes/settings/notifications/+page.svelte:33); groups 'Right away' and 'In the daily summary' (+page.server.ts:18); each category is a checkbox, e.g. 'A client accepted a proposal', 'New bookings came in', 'A balance you collect is due' (src/lib/features/notifications/labels.ts:12-31)"
+    done_marker: "'Saved. Ticked items keep coming; the rest stop.' (+page.svelte:76) after 'Save notifications' (:73)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/notifications.spec.ts:135"
+      - "src/routes/settings/notifications/notifications-settings.test.ts"
+      - "src/lib/server/notifications/triage.ts (which role gets which kind, interrupt vs digest)"
+      - "src/routes/api/internal/notifications/digest/+server.ts (daily digest job)"
+    plan_gate: "none beyond subscription"
+    limits:
+      - "Email only (no SMS or push)"
+      - "Each role sees only the kinds it receives; most kinds are owner-only (triage.ts)"
+      - "Staff can open this one settings screen and no other (src/routes/settings/+layout.server.ts:15)"
+    glossary_terms: []
+    capture_worthy: "no"
+
+  - id: I-11
+    lane: I
+    workflow: "Tell CostCook what label stock is in the printer"
+    job_to_be_done: "Nobody picks a label size at 5 a.m."
+    actors: [owner, manager]
+    routes: ["/settings/labels"]
+    entry: "Settings > Integrations > 'Labels & printing' card, link 'Manage labels' (src/routes/settings/integrations/+page.svelte:172-186); page 'Labels & printing' ('What kitchen labels print on, and how they reach the printer. Chosen once, so nobody is asked at 5 a.m.' src/routes/settings/labels/+page.svelte:120-121)"
+    done_marker: "'Save label stock' / 'Save output' complete (src/routes/settings/labels/+page.svelte:202,295)"
+    hands_off_to: "D (/labels/print from prep/pack)"
+    tier: production
+    evidence:
+      - "e2e/kitchen-labels.spec.ts:24"
+      - "e2e/kitchen-labels-responsive.spec.ts"
+      - "apps/regression-workbook/catalog/cases/kitchen-labels.json"
+    plan_gate: "release flag label_printing (FEATURE_LABEL_PRINTING_ENABLED, default off, or per-business override row); gates only this settings screen: 404 'Labels and printing are in development.' (src/hooks.server.ts:507-513). Printing from order prep/pack reads the saved settings, not the flag (src/routes/orders/[id]/prep/+page.server.ts:22). Production flag value unverified"
+    limits:
+      - "One output method: the browser's print dialog (src/lib/labels/transport.ts:66-68); no direct thermal-printer driver"
+      - "Stock is any size you measure ('nothing here is tied to a brand')"
+      - "The print simulator (/settings/labels/simulator) is a test tool behind LABEL_PRINT_SIMULATOR_ENABLED (src/lib/server/printing/flag.ts)"
+    glossary_terms: []
+    capture_worthy: "no (the label itself belongs to lane D)"
+
+  - id: I-12
+    lane: I
+    workflow: "Explore with sample records, then remove them safely"
+    job_to_be_done: "Try the product on example data without polluting the real kitchen"
+    actors: [owner, manager]
+    routes: ["/settings/sample-data", "/settings"]
+    entry: "Settings overview sample row or Settings > 'Sample data' ('Example records to explore with. They sit beside your own records until you remove them.' src/routes/settings/sample-data/+page.svelte:23); button 'Load sample data', later 'Remove samples…' (src/lib/components/settings/SampleDataControls.svelte:27,31)"
+    done_marker: "After removal: 'Sample data deleted: {summary}.' plus 'Records kept' list of anything edited or used in an order (src/lib/components/settings/SampleDataSection.svelte:58,64)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/settings-sample-safety.spec.ts:7 ('sample deletion is reviewed and cancellable')"
+      - "src/routes/settings/sample-data/+page.server.ts:13-14 (TEAM_ROLES)"
+    plan_gate: "none beyond subscription"
+    limits:
+      - "Removal keeps anything you edited or used in an order, and shows the list first"
+      - "Setup's completion card links sample deletion to Team settings ('Delete the sample in Team settings' -> /settings/team, SetupCompletionSummary.svelte:108-109), but deletion lives at /settings/sample-data (app bug, not a landing issue)"
+    glossary_terms: [Demo Instance (not the same thing)]
+    capture_worthy: "no"
+
+  - id: I-13
+    lane: I
+    workflow: "Publish costed dishes to a Square register"
+    job_to_be_done: "Sell counter dishes at the price CostCook worked out, without retyping"
+    actors: [owner]
+    routes: ["/settings/integrations/square", "/settings/integrations/square/catalog"]
+    entry: "Settings > Integrations > Square 'Set up or manage Square' (src/routes/settings/integrations/+page.svelte:124); 'Connect Square', then 'Choose dishes to publish' (src/routes/settings/integrations/square/+page.svelte:220,274); 'Publish dishes to Square' page, 'Review changes' (square/catalog/+page.svelte:83,361)"
+    done_marker: "'Publication completed' / 'Square accepted your publication. Check the items in your Square test account, then review sales here.' (square/+page.svelte:77-78)"
+    hands_off_to: I-14
+    tier: off-page
+    on_main: true
+    why_off_page: "Sandbox only. squareEnvironment() calls sandboxOnly(), which throws 'Live Square credentials are not wired yet.' on a live deployment (src/lib/server/integrations/config.ts:17-28). The app itself says 'Currently test mode only.' (src/routes/settings/integrations/+page.svelte:116) and 'Square Sandbox · test only' (square/+page.svelte:151). Also behind release flag square_integration (default off)"
+    evidence:
+      - "e2e/square-integration.spec.ts:226,280,319,371,608"
+      - "e2e/square-dish-menu-publish.spec.ts"
+      - "apps/regression-workbook/catalog/cases/square-per-menu-publish.json"
+      - "docs/integrations/square.md:5 ('real Square Sandbox acceptance gate not yet passed')"
+    plan_gate: "release flag square_integration + Sandbox only; owner only (BILLING_ROLES)"
+    limits:
+      - "Sends only dish name, description, selling price and locations; no ingredients, yield, allergens, menu composition or inventory (docs/integrations/square.md:17)"
+      - "Never pulls catalog changes back; a price changed at the register becomes a conflict for the owner (e2e/square-integration.spec.ts:319)"
+    glossary_terms: [Square, Publication]
+    capture_worthy: "no (test mode only)"
+
+  - id: I-14
+    lane: I
+    workflow: "Review Square counter sales and refunds against food cost"
+    job_to_be_done: "See what the counter sold and what it should have cost"
+    actors: [owner, manager]
+    routes: ["/settings/integrations/square/sales"]
+    entry: "'Square sales and refunds' ('Review completed counter sales received from Square. Refund amounts are shown separately...' square/sales/+page.svelte:22-23); 'View sales food cost' links to /analytics/sales (:38, lane G)"
+    done_marker: "Sale card 'Sale #{id}' with 'No refund recorded' / 'Partial refund recorded' / 'Full refund recorded' and 'Dish matched' per line (square/sales/+page.svelte:81-120)"
+    hands_off_to: "G (/analytics/sales)"
+    tier: off-page
+    on_main: true
+    why_off_page: "Same Sandbox-only block as I-13 (src/lib/server/integrations/config.ts:17-28); no live seller can connect"
+    evidence:
+      - "e2e/square-integration.spec.ts:415,475,526"
+    plan_gate: "release flag square_integration + Sandbox only"
+    limits:
+      - "Sales are evidence, never orders: they never reach a shopping list (CONTEXT.md 'Sale' entry; docs/integrations/square.md:21)"
+      - "Refreshing Square sales is owner/manager only (src/routes/analytics/sales/+page.server.ts:23-27)"
+    glossary_terms: [Sale, Square]
+    capture_worthy: "no"
+
+  - id: I-15
+    lane: I
+    workflow: "Send checked supplier invoices to QuickBooks as bills"
+    job_to_be_done: "The bookkeeper never retypes an invoice"
+    actors: [owner]
+    routes: ["/settings/integrations/quickbooks"]
+    entry: "Settings > Integrations > QuickBooks 'Set up or manage QuickBooks' (src/routes/settings/integrations/+page.svelte:159); 'Connect QuickBooks' (src/routes/settings/integrations/quickbooks/+page.svelte:187), then pick default accounts and match suppliers (actions saveAccounts, matchSupplier)"
+    done_marker: "'QuickBooks connected' / 'Nothing was sent. Next, pick where purchases go and match your suppliers.' (quickbooks/+page.svelte:36-37). The send itself happens on /purchases/invoices (lane F)"
+    hands_off_to: "F (/purchases/invoices send to QuickBooks)"
+    tier: off-page
+    on_main: true
+    why_off_page: "quickbooksEnvironment() is sandboxOnly(), which throws on a live deployment (src/lib/server/integrations/config.ts:76-78); the connected company reads 'Test company (QuickBooks Sandbox)' (quickbooks/+page.svelte:166); docs/integrations/quickbooks.md:3 'implemented behind FEATURE_QUICKBOOKS_INTEGRATION_ENABLED, Sandbox only'"
+    evidence:
+      - "e2e/invoice-accounting.spec.ts:288,538,642"
+      - "src/routes/settings/integrations/quickbooks/+page.server.ts:33 (owner only)"
+    plan_gate: "release flag quickbooks_integration + Sandbox only; owner only"
+    limits:
+      - "Supplier bills and vendor credits only; no customer invoices, no payroll, no sales"
+      - "Reads back paid state of a bill (e2e/invoice-accounting.spec.ts:642)"
+    glossary_terms: [Invoice (supplier), Bill]
+    capture_worthy: "no"
+
+  - id: I-16
+    lane: I
+    workflow: "Tell another system when orders or recipes change (outgoing webhooks)"
+    job_to_be_done: "An outside ordering or accounting tool hears about changes without polling"
+    actors: [owner, manager]
+    routes: ["/settings/ordering"]
+    entry: "Settings > Integrations > 'Ordering integration' card (src/routes/settings/integrations/+page.svelte:65-73) > section 'Add a webhook', 'Tell me when…', 'Sign each delivery so your endpoint can check it came from us', button 'Add webhook' (src/lib/components/settings/WebhookSection.svelte:148,179,208,211)"
+    done_marker: "'Copy the signing secret now' (WebhookSection.svelte:128), then the webhook listed under 'Webhooks' with 'Send test event', 'Turn off', 'Rotate signing secret', 'Replay delivery' (:225-316)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/webhook-settings.spec.ts:24,77,144"
+      - "docs/webhooks.md (v1 events order.received/confirmed/needs_attention/updated/cancelled/completed; legacy RecipeCreated/Updated/Deleted, OrderCreated/Updated/Deleted, SaleRecorded)"
+    plan_gate: "release flag ordering_integration (FEATURE_ORDERING_INTEGRATION_ENABLED, default off, or per-business override); /settings/ordering 404s 'Ordering integrations are in development.' without it (src/hooks.server.ts:515-521). Production flag value unverified"
+    limits:
+      - "Developer-facing: needs an HTTPS endpoint someone builds"
+      - "Payload carries no costs, margins, staff identity or customer contact (docs/webhooks.md)"
+      - "Same screen also issues partner API keys ('Create a key'); keys and the storefront are lane C"
+    glossary_terms: [Ordering integration]
+    capture_worthy: "no"
+
+  - id: I-17
+    lane: I
+    workflow: "See which settings need attention"
+    job_to_be_done: "One place that says what is unfinished, instead of hunting through pages"
+    actors: [owner, manager]
+    routes: ["/settings"]
+    entry: "Sidebar Settings; page 'Settings' ('Your kitchen's defaults, people, billing and connections. Select a card to change it.' src/routes/settings/+page.svelte:26); nav order Costing & display, Business profile, Booking, Contracts, Team & access, Billing, Vendors & suppliers, Invoice email, Notifications, Integrations, then Sample data (src/lib/components/settings/SettingsNavigation.svelte:38-49; settings-sections.ts:25-37)"
+    done_marker: "Attention banner and card pills from one list (src/lib/server/settings/attention.ts); no single done state"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/settings-overview-clarity.spec.ts"
+      - "e2e/settings-integration-grouping.spec.ts"
+      - "e2e/business-setup.spec.ts:4"
+    plan_gate: "none beyond subscription"
+    limits:
+      - "Staff see only Notifications (SettingsNavigation.svelte:52-54)"
+      - "Team and Sample data hidden from non-team roles; Billing hidden from non-owners (settings-sections.ts:42-48)"
+    glossary_terms: []
+    capture_worthy: "no"
+
+roles:
+  source: "src/lib/server/tenancy/roles.ts (three roles, no permission grid by owner decision)"
+  owner: "Everything. Only role for BILLING_ROLES: subscription, Square connect/publish, QuickBooks connect and sending bills/credits, Stripe connect for the ordering site, supplier timing and minimums (src/routes/settings/vendors/[id]/timing/+page.server.ts:11), publishing and restoring recipe revisions and archiving recipes (src/routes/catalog/recipes/[id]/publish/+page.server.ts:28, history/+page.server.ts:48, archive/+page.server.ts:24), bulk-approving invoices."
+  manager: "Setup and all settings except Billing (KITCHEN_SETUP_ROLES); invite/revoke/remove Staff (TEAM_ROLES; cannot remove an owner or manager); sample data; client directory (CUSTOMER_DIRECTORY_ROLES); proposals, events, contracts (SALES_ROLES); record a payment on an order; correct prep; close event food-cost review; price-impact decisions; refresh Square sales."
+  staff: "Works from orders and lists; catalog and lists open. Cannot open any settings screen except Notifications, cannot run setup, cannot see the client directory, cannot mark an order paid, cannot add suppliers (e2e/role-access.spec.ts:39-270)."
+  gaps:
+    - "Invites always create Staff (src/routes/settings/team/+page.server.ts:33) and there is no in-app role change; how a manager is made today is unknown (owner question)."
+
+plan_matrix:
+  plans:
+    - name: "CostCook Launch"
+      price: "$49 USD per kitchen workspace per month (amountCents 4900, currency usd, interval month)"
+      trial: "15 days, card collected, $0 charged today"
+      seats: "unlimited teammates (docs/billing.md:11); Stripe checkout sends seats: 1 (src/routes/settings/billing/+page.server.ts:53)"
+      source: "src/lib/server/billing/plan.ts:1-8; docs/billing.md:7-12"
+      display_override: "LAUNCH_PRICE_DISPLAY env can change the price text shown; the Stripe price id is the real charge (src/lib/server/billing/launch-terms.ts:9-14)"
+  headline: "One plan. No feature in the code is gated by plan tier. Access is controlled by four other layers below."
+  gates:
+    subscription:
+      rule: "All or nothing per kitchen. active, trialing, cancel-at-period-end and past_due keep access; missing/canceled/unpaid/paused block only when BILLING_ENFORCEMENT=enforce (off is the default, warn shows a banner)"
+      source: "src/lib/server/billing/access.ts:34-63; src/hooks.server.ts:523-537"
+      production_value: "unverified (open question)"
+    release_flags:
+      note: "Per-business override row in business_feature_overrides, else env default; all default off; no admin UI to flip them (src/lib/server/features/access.ts:43-97)"
+      label_printing: "gates only /settings/labels (hooks.server.ts:507-513). Label printing from prep/pack does not read the flag."
+      ordering_integration: "gates /settings/ordering (partner keys + outgoing webhooks), /settings/ordering/site (storefront setup, Stripe Connect for client payments), and /api/ordering/* keys (src/lib/server/ordering/route.ts:73-79)"
+      square_integration: "gates Square connect/publish/sales jobs (src/lib/server/integrations/execution-access.ts:6-15); also hard Sandbox-only"
+      quickbooks_integration: "gates QuickBooks connect/export; also hard Sandbox-only"
+    env_flags:
+      SETUP_SAMPLE_DATA_ENABLED: "only the sample load inside /setup (src/routes/setup/+page.server.ts:94). /settings/sample-data is not gated by it."
+      LABEL_PRINT_SIMULATOR_ENABLED: "/settings/labels/simulator test tool"
+      BILLING_TEST_MODE: "local-only /settings/billing/test-checkout rehearsal; requires localhost + AUTH_RATE_LIMIT_DISABLED=1 (src/lib/server/billing/local-test-mode.ts)"
+    roles: "see roles: above"
+  features_advertised_in_app: "The plan card lists 12 inclusions (src/lib/components/settings/BillingPlanCard.svelte:240-289): Recipe and menu costing; Menus and event proposals; Orders and prep lists; Purchasing and receiving; Vendor price tracking; Inventory workflows; Food cost analytics; Customer management; Team access; Label printing; Square and QuickBooks sync; Online ordering. 'Square and QuickBooks sync' (:283) is Sandbox-only, and 'Label printing' (:279) / 'Online ordering' (:287) depend on flags that default off."
+  feature_map:
+    - {feature: "Sign-up, trial, setup, settings, team", gate: "subscription"}
+    - {feature: "Recipe/menu costing, orders, shop/prep/pack, purchasing, analytics, customers, events/proposals", gate: "subscription (+ roles)"}
+    - {feature: "Label settings screen", gate: "subscription + label_printing flag"}
+    - {feature: "Ordering site setup, partner API keys, outgoing webhooks", gate: "subscription + ordering_integration flag; Stripe connect owner only"}
+    - {feature: "Square publish and sales", gate: "subscription + square_integration flag + Sandbox only (not live)"}
+    - {feature: "QuickBooks bills", gate: "subscription + quickbooks_integration flag + Sandbox only (not live)"}
+
+internal_routes:
+  - {route: /settings/billing/test-checkout, reason: "Local checkout rehearsal ('Checkout rehearsal', 'Simulate successful checkout'); only when BILLING_TEST_MODE=stub on http://localhost with rate limits disabled (src/lib/server/billing/local-test-mode.ts:128-142)"}
+  - {route: /settings/labels/simulator, reason: "'Test label output' simulator; 404 unless LABEL_PRINT_SIMULATOR_ENABLED=true (src/routes/settings/labels/simulator/+page.server.ts:41)"}
+  - {route: /auth/complete, reason: "Server redirect after magic-link verification; no page of its own (part of I-01/I-04)"}
+  - {route: /api/auth/stripe/webhook, reason: "Stripe subscription webhook (docs/billing.md:27)"}
+  - {route: /api/integrations/square/callback, reason: "OAuth callback (I-13)"}
+  - {route: /api/integrations/square/webhook, reason: "Square sale/refund webhook (I-14)"}
+  - {route: /api/integrations/quickbooks/callback, reason: "OAuth callback (I-15)"}
+  - {route: /api/integrations/quickbooks/webhook, reason: "QuickBooks webhook (I-15)"}
+  - {route: /api/internal/integrations/jobs, reason: "cron job runner"}
+  - {route: /api/internal/integrations/reconcile, reason: "cron reconciliation"}
+  - {route: /api/internal/notifications/digest, reason: "cron daily email digest (I-10)"}
+  - {route: /settings/ordering/stripe/refresh, reason: "Stripe Connect return endpoint for the ordering site (lane C)"}
+
+deferred_to_other_lanes:
+  - {route: /settings/booking, lane: A}
+  - {route: /settings/contracts, lane: A}
+  - {route: /settings/ordering/site, lane: C}
+  - {route: "/settings/ordering (partner keys half)", lane: C, note: "webhooks half is I-16; same page, do not double count"}
+  - {route: /settings/vendors, lane: F}
+  - {route: "/settings/vendors/[id]/timing", lane: F}
+  - {route: /settings/invoice-inbox, lane: F}
+
+unmerged_branches:
+  # status: landed = git cherry shows every commit patch-equivalent on origin/main;
+  # likely-superseded = July-era branch whose commits are not patch-equivalent but whose feature
+  # exists on main (squash/rewrite), not verified line by line; unique-unmerged = real work not on main.
+  - {name: hotfix/stage-integration-diagnosis, adds: "Truthful Square/QuickBooks connection status on overview and detail screens (#561, #562)", status: landed, tier: production, note: "all 4 commits already on origin/main (224b89d78, 85f56f3a7); ~/kb-stage-diagnosis working tree clean; nothing extra is assumed-today"}
+  - {name: feat/proposal-build-20260926, adds: "One-page proposal builder with choice groups, custom categories, Stripe tax; retires the step editor", status: unique-unmerged, tier: assumed-today, note: "lane A describes it"}
+  - {name: feat/client-payment-booking-loop, adds: "Proposal states deposit and balance; accepted terms reach the order that collects them", status: unique-unmerged, tier: assumed-today, note: "lane A/C"}
+  - {name: feat/ezcater-order-intake, adds: "ezCater fixture order intake with reviewed planning", status: unique-unmerged, tier: off-page}
+  - {name: feat/ordering-integration, adds: "Original ordering API PRD, keys, catalog read, order intake (#449-#452)", status: likely-superseded, tier: off-page, note: "ordering API ships on main under /api/ordering/v1 and v2; sub-branches -449..-452 same"}
+  - {name: feat/purchase-order-email-workflow, adds: "Hardened purchase-order email delivery", status: unique-unmerged, tier: off-page}
+  - {name: feat/485-operating-units, adds: "Operating units (multiple locations/kitchens) under one organization", status: unique-unmerged, tier: off-page}
+  - {name: feat/486-unit-scoped-access, adds: "Per-unit roles and unit-scoped authorization", status: unique-unmerged, tier: off-page, note: "would change lane I's role model"}
+  - {name: feat/487-shared-catalog-overrides-v2, adds: "Shared catalog published per operating unit with one local price", status: unique-unmerged, tier: off-page}
+  - {name: feat/488-inter-unit-inventory-transfers-v2, adds: "Auditable stock transfers between two operating units", status: unique-unmerged, tier: off-page}
+  - {name: feat/489-commissary-production-allocation-v2, adds: "Allocate catering and meal-prep demand through commissary production", status: unique-unmerged, tier: off-page}
+  - {name: feat/490-unit-consolidated-reporting-v2, adds: "Unit and consolidated reporting", status: unique-unmerged, tier: off-page, note: "485-490 v1 branches (-foundation, -authorization, -overrides, -transfers, -allocation, -reporting) are earlier drafts of the same series"}
+  - {name: design/client-to-order-guidance, adds: "Guides a client selection through to a confirmed order handoff", status: unique-unmerged, tier: off-page}
+  - {name: feat/order-shelf-prompt-20260730, adds: "Shelf evidence cue on the draft shopping stage (computed inventory, never prefilled)", status: unique-unmerged, tier: off-page}
+  - {name: feat/popovers-and-walkthrough-fixes-20260729, adds: "Walkthrough help popovers; live on-hand in POs; chef-scale unit costs", status: unique-unmerged, tier: off-page}
+  - {name: integration/502-contracts-signatures, adds: "Contract e-signature ops (DocuSeal retention, automation bypass revocation); docs/ops only", status: unique-unmerged, tier: off-page, note: "no caterer-visible change in the unique commits"}
+  - {name: integrate/470-477-469, adds: "Sample-data test import fix only", status: unique-unmerged, tier: off-page, note: "test-only"}
+  - {name: hotfix/edge-and-name-taken, adds: "Import confirm says a new ingredient name is taken instead of crashing", status: landed, tier: production}
+  - {name: codex/541-archive-customers, adds: "Archive clients", status: landed, tier: production}
+  - {name: feat/446-labels, adds: "Kitchen labels", status: landed, tier: production}
+  - {name: integrate/front-of-house, adds: "Versioned proposals and client acceptance (#501)", status: landed, tier: production}
+  - {name: "feat/285-bulk-add-ingredients, feat/290-line-cost-contributions, feat/327-order-check(-state), feat/335-catalog-hub, feat/336-catalog-nav, feat/337-catalog-crosslinks, feat/354-home-stage-progress, feat/menus-orders, feat/order-outputs, fix/162-shelf-check-autosave, worktree-issue-327..332, rr/redesign-streamline-daily-loop, improve/full-workflow-audit, improve/workflow-consistency(-audit)", adds: "July 2026 catalog/order/home UI work", status: likely-superseded, tier: off-page, note: "features present on main in later form; not verified commit by commit"}
+  - {name: "feat/117..feat/146, feat/171, feat/173, feat/210, feat/211, feat/253..259, feat/349, feat/46..51, feat/85, feat/costcook-brand, feat/design-tokens, feat/ingredients-recipes, feat/shell-redesign, feat/reopen-discards-snapshot-20260731, feat/ordering-contracts, feat/ordering-monorepo-foundation, fix/163..221, fix/import-model-default, fix/ordering-hardening-20260729, fix/toast-region-pointer-events, integrate/price-trend-window-*, ux/buy-and-receive, worktree-issue-400-inventory-engine", adds: "Early catalog, import, order, shell and brand work", status: landed, tier: production, note: "git cherry shows 0 unique commits"}
+
+terms:
+  - term: "Kitchen / workspace / business"
+    app_meaning: "UI says 'kitchen' to owners ('Start your kitchen', 'Choose a kitchen') and 'workspace' in role refusals and integration cards ('Only a workspace owner can manage billing.', 'Not available for this workspace yet.'). CONTEXT.md's term is Business; 'organization' is the storage word only."
+    not_confused_with: "a location or operating unit (off-page branches 485-490); one subscription covers one kitchen"
+  - term: "Subscription / billing / plan"
+    app_meaning: "CostCook's own charge to the caterer: Stripe via the Better Auth Stripe plugin, one plan 'CostCook Launch'"
+    not_confused_with: "client money (deposits and balances on orders, Stripe Connect on the ordering site, lanes A/C). Square is POS sales evidence only, never a client-payment path"
+  - term: "Set up your kitchen"
+    app_meaning: "UI name for CONTEXT.md's First-Run Setup: five stages ending at a costed order and its shopping list"
+    not_confused_with: "Concierge Onboarding (same workflow, support-assisted) and Sample data"
+  - term: "Sample data"
+    app_meaning: "Example suppliers, recipes, menus and orders loaded beside a real kitchen's records, removable after review"
+    not_confused_with: "CONTEXT.md Demo Instance (a separate hosted instance with a shared login)"
+  - term: "In development (integration badge)"
+    app_meaning: "Badge on an integration card when the release flag is off for this kitchen ('In development', src/routes/settings/integrations/+page.svelte:43,69,111,147,176)"
+    not_confused_with: "Square/QuickBooks 'Available': even with the flag on they are Sandbox test mode"
+  - term: "Owner / Manager / Staff"
+    app_meaning: "The only three roles; invites always start as Staff; billing and money-moving integrations are owner only"
+    not_confused_with: "a permission grid or per-location roles (not built)"
+  - term: "Notifications"
+    app_meaning: "Emails, either 'Right away' or 'In the daily summary', per person and per role"
+    not_confused_with: "the Today screen's attention list (home-only kinds are never mailed)"
+  - term: "Webhook"
+    app_meaning: "Outgoing HTTP POST to an address the kitchen adds, signed, under Ordering integration"
+    not_confused_with: "the Stripe, Square and QuickBooks inbound webhooks CostCook receives"

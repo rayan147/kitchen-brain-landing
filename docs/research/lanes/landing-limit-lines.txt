@@ -1,0 +1,294 @@
+src/pages/pricing.astro:6:import { comingDefinition } from '../lib/availability';
+src/pages/pricing.astro:59:			<h2 class="text-h3 font-semibold">Coming, and not in this price.</h2>
+src/pages/pricing.astro:61:				{spellCapital(inDevelopmentFeatureGroups.length)} feature groups contain work marked Coming. {comingDefinition}
+src/pages/pricing.astro:69:								Coming
+src/pages/features/order-shop-prep-pack.astro:9:	'THESIS: One confirmed event should become three working lists without becoming three versions of the truth; refuse the generic task dashboard and feature-card catalogue.'
+src/pages/compare.astro:9:import { comingDefinition } from '../lib/availability';
+src/pages/compare.astro:49:	{ status: 'coming', meaning: comingDefinition },
+src/pages/compare.astro:50:	{ status: 'no', meaning: 'CostCook does not do this.' },
+src/pages/compare.astro:53:		meaning: 'Not named on their own pricing page on the date below. It does not mean their product cannot do it.'
+src/pages/compare.astro:307:					does not quietly become zero and hand you a plate cost that is wrong by the
+src/pages/compare.astro:311:					<span class="font-semibold text-ink">The month says what it does not know.</span> What
+src/components/CellMark.astro:3:	status: 'yes' | 'coming' | 'no';
+src/components/CellMark.astro:27:	coming: { label: 'Coming', tone: 'text-amber-deep' },
+src/components/CellMark.astro:43:			status === 'coming' && (
+src/pages/features/invoices-and-price-list-import.astro:8:	'THESIS: Supplier documents share an intake queue without becoming the same kind of truth.',
+src/components/LoopBand.astro:34: * next price. It does not say the software buys, keys, or decides anything:
+src/pages/who-its-for.astro:20:	description="See whether CostCook fits your kitchen's work: catering, meal prep, special dinners, changing menus, and restaurant event work planned by date and guest count."
+src/components/FeatureMenuContents.astro:35:								href={featureMenuHref(item.featureId, item.coming === true)}
+src/components/FeatureMenuContents.astro:36:								aria-current={path === featureMenuHref(item.featureId, item.coming === true) ? 'page' : undefined}
+src/components/FeatureMenuContents.astro:60:										{item.coming && (
+src/components/FeatureMenuContents.astro:62:												Coming
+src/components/FeatureMenuContents.astro:93:	<p class="text-xs text-ink-soft">Every line is shipped unless it is marked Coming.</p>
+src/pages/features/index.astro:13:	description="Explore recipe costing, supplier prices, shopping, prep, packing and team access. Check what is available, what to prepare and what is still Coming."
+src/components/sections/Integrations.astro:33:const comingRows = comparison
+src/components/sections/Integrations.astro:44:				Your supplier does not have to be plugged in. CostCook reads the paper.
+src/components/sections/Integrations.astro:83:					comingRows.map((row) => (
+src/components/sections/Integrations.astro:88:									Coming
+src/components/sections/Integrations.astro:91:							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.label === 'Point of sale' ? 'Square is not available today. You cannot send menus to your till or bring sales into Cost
+src/components/FeatureAreaFigure.astro:24: * column does not and ends up clipped inside a row that still reports zero page
+src/components/FeatureAreaFigure.astro:36: * figure ever needs a sentence its area page does not already carry, it needs a
+src/components/FeatureAreaFigure.astro:60:		label: 'A photograph, a PDF or a doc, a spreadsheet, pasted text. The queue does not care which it was.'
+src/components/FeatureAreaFigure.astro:217:							is marked Coming below, the same word the comparison page defines.
+src/components/FeatureAreaFigure.astro:223:				<strong class="font-semibold text-ink">The numbers ship, and so does the paper. The printer does not, yet.</strong>{' '}
+src/components/sections/RecipesCostingFeature.astro:63:			'Yes. Recipe history keeps earlier published versions available to read. The current published version remains clear, so opening history does not silently replace
+src/components/sections/FeatureIndex.astro:7:import { comingDefinition } from '../../lib/availability';
+src/components/sections/FeatureIndex.astro:50:				Explore recipes, food costs, supplier prices and event lists. The {featureCount} available features below are grouped by kitchen task; future additions are marked Coming.
+src/components/sections/FeatureIndex.astro:56:				{spellCapital(inDevelopmentFeatureGroups.length)} feature groups below contain work marked Coming. {comingDefinition}{' '}
+src/components/sections/FeatureIndex.astro:77:							{/* The count, not the bare word. "Coming" alone beside an area
+src/components/sections/FeatureIndex.astro:80:							{entry.comingCount > 0 && (
+src/components/sections/FeatureIndex.astro:82:									{entry.comingCount} coming
+src/components/sections/OnboardingPage.astro:25:		body: 'The card, a photo of the card, a PDF, a link to it, or the text. It does not need to be tidy.'
+src/components/sections/OnboardingPage.astro:84:			caption: 'One ingredient’s card, as Sage drafted it. What it does not know stays “don’t know”, and don’t know is never read as clear.'
+src/components/sections/OnboardingPage.astro:155:	'Leave a pack price blank and the ingredient does not go on. The screen says what it needs and puts your cursor in the field.',
+src/components/sections/InvoicesPriceListImportFeature.astro:72:			'Current cost follows the newest qualifying purchase date, not the order in which documents were typed or imported. Backlogging an older invoice does not
+src/components/sections/InvoicesPriceListImportFeature.astro:184:				<article data-reveal><h3>Post once.</h3><p>Saving the same import twice returns its existing receipt. Ingredient prices follow the purchase date, so an
+src/components/sections/InvoicesPriceListImportFeature.astro:203:				<figcaption>Illustrative price-list review. Applying an asking price does not create a purchase.</figcaption>
+src/content/blog/expected-vs-actual-food-cost.md:33:This is the baseline you approved before production. It does not prove what the kitchen consumed; it states what the plan should have consumed under its recorded assump
+src/components/sections/MenusQuotesFeature.astro:291:						original number does not disappear just because a supplier price moved later.
+src/components/sections/TheProblem.astro:151:		     does not read as a continuation of the four tickets above.
+src/components/sections/TheProblem.astro:159:				what is in it, so a missing fact does not stop the number. It shrinks it.
+src/components/sections/TheProblem.astro:182:				Neither is slower. They are wrong, and the screen does not say so. CostCook stops
+src/components/sections/DemoRequest.astro:208:						  deliberately does NOT lazy-load a display:none iframe, it loads it
+src/components/sections/DemoRequest.astro:221:						  animates the ticket to the incoming step's measured height, and an
+src/components/sections/DemoRequest.astro:295:			const incoming = form.querySelector<HTMLElement>(`[data-step="${step}"]`);
+src/components/sections/DemoRequest.astro:296:			if (!outgoing || !incoming) return false;
+src/components/sections/DemoRequest.astro:334:				const toHeight = incoming.getBoundingClientRect().height;
+src/components/sections/DemoRequest.astro:340:					incoming.animate(
+src/components/sections/DemoRequest.astro:511:	   to say does not exist at the moment it is given something to say, and the
+src/components/sections/ProductTour.astro:20:					See sample screens for a 180-guest wedding, from recipe costs to buying, prep and packing. No account needed. Choose any stop; kitchen date labels are a Coming preview.
+src/components/sections/ProductTour.astro:48:				<p class="tour-truth">All figures are illustrative. Each stop follows its public status; Labels & printing is marked Coming.</p>
+src/components/sections/DietaryGuardsFeature.astro:20: * does not mock a screen. So the page is figure-led with diagrams whose every
+src/components/sections/DietaryGuardsFeature.astro:62:		a: 'No, and the screen says so. Confirming an order freezes the reading it was checked on and carries the date it was checked. A later edit to a recipe does not sil
+src/components/sections/DietaryGuardsFeature.astro:196:					Check what has not yet been reviewed. An ingredient nobody has
+src/components/sections/DietaryGuardsFeature.astro:198:					outstanding ingredients where you can see it. No news does not mean good news
+src/components/sections/StartHere.astro:84:				     allows that approximation and nothing tighter). It does NOT say
+src/components/more/SageBlock.astro:191:			     THEM DOES NOT. The h3 is the promise a skeptic needs, and it stays on
+src/components/more/NutritionBlock.astro:18: * SHIPPED, so it carries no Coming badge; the one Coming thing near it (the
+src/components/more/NutritionBlock.astro:69:			     reader deciding whether this is worth fifteen minutes does not read
+src/components/more/NutritionBlock.astro:147:			Every line of it is on the feature list, with the one Coming thing marked.{' '}
+src/components/sections/SageFeature.astro:128:					Your browser does not support embedded video. The transcript follows beside the player.
+src/components/sections/SageFeature.astro:151:					Sage does not pretend a half-built catalog is finished. It starts from what you
+src/lib/ordering.ts:17: * take an order. That sentence is why the word below is `coming`.
+src/lib/ordering.ts:42: * NOT YET HERE, AND ON PURPOSE: no `comparisonNote` and no `seoDescription`.
+src/lib/ordering.ts:51:export const ORDERING_STATUS = 'coming' as Verdict;
+src/lib/ordering.ts:53:export const orderingStatusWord = ORDERING_STATUS === 'yes' ? 'Available now' : 'Coming';
+src/lib/ordering.ts:54:const orderingIsComing = ORDERING_STATUS !== 'yes';
+src/lib/ordering.ts:58:	isComing: orderingIsComing,
+src/lib/ordering.ts:61:	featureLead: orderingIsComing ? 'Built, not deployed, marked Coming.' : 'Available now.',
+src/lib/ordering.ts:62:	featureDetail: orderingIsComing
+src/lib/ordering.ts:63:		? 'A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives awaiting kitchen confi
+src/lib/ordering.ts:65:	menuDescription: orderingIsComing
+src/lib/ordering.ts:66:		? 'A storefront and an embeddable widget, built and not yet deployed.'
+src/lib/ordering.ts:68:	faqStatus: orderingIsComing
+src/lib/ordering.ts:70:				'Not in the app you would start today. The storefront and the widget are built and are not deployed anywhere a customer could reach them, so this stays marked Coming and carries no date.',
+src/pages/tour/main.astro:19:	description="Explore thirteen sample screens for a catering event, from recipe costs to shopping, prep, packing and cost review. No account needed; Coming features are marked."
+src/lib/coming-plans.ts:2: * Owner-confirmed additions that are Coming soon as of 2026-08-30.
+src/lib/coming-plans.ts:3: * Story: docs/stories/homepage-coming-plans.story.md
+src/lib/coming-plans.ts:9: * was here from 2026-08-30 saying the app does not assess vegan or gluten-free
+src/lib/coming-plans.ts:11: * false negative on four published surfaces and a Coming row on /compare
+src/lib/coming-plans.ts:21:export const comingPlans = {
+src/lib/coming-plans.ts:26:		verdict: 'coming' as const,
+src/lib/coming-plans.ts:30:			'Coming soon. Today shopping covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par.',
+src/lib/coming-plans.ts:32:			'Buying that tops stock back up to the par level you set is Coming soon. Today the shopping list covers the jobs on the books minus trusted on-hand quantity; it does not yet replenish to par
+src/lib/coming-plans.ts:38:		verdict: 'coming' as const,
+src/lib/coming-plans.ts:40:		comparisonNote: 'Coming soon. CostCook is English only today; no date is promised.',
+src/lib/coming-plans.ts:42:			'A Spanish version is Coming soon. CostCook is English only today, and no date is promised.'
+src/lib/coming-plans.ts:46:export const comingPlanList = Object.values(comingPlans);
+src/lib/site.ts:229: * hover does not exist, so it opens on click and on Enter, in the same way at
+src/content/blog/delivery-arrived-wrong.md:3:description: "Compare the purchase order, delivered cases, and invoice line by line so a shortage or substitution does not become the new stock record."
+src/content/blog/delivery-arrived-wrong.md:67:A usable substitution can still create a shortage. A correct quantity can still carry the wrong price. Accepting the food does not require pretending every other fact agreed.
+src/content/blog/client-added-40-guests.md:29:A recipe quantity planned at 18 lb for 180 guests becomes:
+src/content/blog/client-added-40-guests.md:39:A recipe can need 22 lb while the supplier sells 10 lb packs. The buy becomes three packs, not 2.2. Check whether the extra product has a planned use and whether any trusted 
+src/lib/tour.ts:273:		   tour that promises something the product does not. */
+src/lib/tour.ts:313:		intro: 'This feature is Coming. The preview starts from the prep list, asks the cook to settle the storage and use-by facts, then freezes what each sticker said for reprints.',
+src/lib/tour.ts:315:		featureHref: featureMenuHref('labels', labelsAvailability.isComing),
+src/lib/tour.ts:331:			status: 'Coming',
+src/lib/tour.ts:338:			footnote: 'Coming, not included at launch. Output opens the browser print dialog; no direct printer connection is built.'
+src/lib/tour.ts:453:			{ label: 'Planned food use', value: '$8,420.00' },
+src/lib/tour.ts:474:			footnote: '$8,891.40 spent − $8,420 planned = $471.40. Subtract $186.50 recorded waste: $284.90 still needs checking. Price changes compare current and previous prices; three of the month’s ing
+src/components/sections/InventoryFeature.astro:5:import { comingPlans } from '../../lib/coming-plans';
+src/components/sections/InventoryFeature.astro:42:		answer: `Not today. A par level can mark an ingredient below par, at or above par, unevaluable, or without a par. ${comingPlans.parBuying.faq}`
+src/components/sections/InventoryFeature.astro:132:				<article><h3>History keeps its old price.</h3><p>The pack cost freezes at count time, so a later correction does not rewrite what the shelf was worth then.</p></arti
+src/components/sections/TheOtherTools.astro:20: * FOUR COMING PLANS. On 2026-08-30 the release owner changed buying-to-par,
+src/components/sections/TheOtherTools.astro:21: * dietary characteristics and Spanish from No to Coming soon. Kitchen label
+src/components/sections/TheOtherTools.astro:22: * printing was already Coming. The homepage and /compare move together so a
+src/components/sections/TheOtherTools.astro:24: * Story: docs/stories/homepage-coming-plans.story.md
+src/components/sections/TheOtherTools.astro:51: * out of coming-plans.ts and into src/lib/dietary.ts. Three left. RC-60.
+src/components/sections/TheOtherTools.astro:53: * The Coming bodies were NOT touched: they are shared with /compare and the
+src/components/sections/TheOtherTools.astro:57:import { comingPlanList } from '../../lib/coming-plans';
+src/components/sections/TheOtherTools.astro:59:const comingItems = [
+src/components/sections/TheOtherTools.astro:65:	...comingPlanList.map((plan) => ({ id: plan.id, title: plan.title, body: plan.homepage }))
+src/components/sections/TheOtherTools.astro:77:const comingIcons: Record<string, readonly string[]> = {
+src/components/sections/TheOtherTools.astro:94:<!-- story: docs/stories/homepage-coming-plans.story.md -->
+src/components/sections/TheOtherTools.astro:107:        <h2 id="alternatives-heading" class="text-h2 font-semibold">What is still coming</h2>
+src/components/sections/TheOtherTools.astro:228:		<div class="coming-plans" data-coming-plans data-reveal>
+src/components/sections/TheOtherTools.astro:229:			<div class="coming-heading">
+src/components/sections/TheOtherTools.astro:231:					<span>Coming soon</span>
+src/components/sections/TheOtherTools.astro:233:						{comingItems.length === 1 ? 'One addition' : `${countWord(comingItems.length)} additions`} to the plan.
+src/components/sections/TheOtherTools.astro:241:			<ul role="list" class="coming-list">
+src/components/sections/TheOtherTools.astro:243:					comingItems.map((entry) => (
+src/components/sections/TheOtherTools.astro:244:						<li data-coming-plan={entry.id}>
+src/components/sections/TheOtherTools.astro:245:							<span class="coming-icon" aria-hidden="true">
+src/components/sections/TheOtherTools.astro:247:									{comingIcons[entry.id].map((path) => <path d={path} />)}
+src/components/sections/TheOtherTools.astro:254:							<strong>Coming soon</strong>
+src/components/sections/TheOtherTools.astro:259:			<p class="coming-footnote">
+src/components/sections/TheOtherTools.astro:260:				Every shipped, Coming and No row is on the{' '}
+src/components/sections/TheOtherTools.astro:271:	.coming-plans {
+src/components/sections/TheOtherTools.astro:277:	.coming-heading {
+src/components/sections/TheOtherTools.astro:284:	.coming-heading span,
+src/components/sections/TheOtherTools.astro:285:	.coming-list > li > strong {
+src/components/sections/TheOtherTools.astro:297:	.coming-heading > p,
+src/components/sections/TheOtherTools.astro:298:	.coming-footnote {
+src/components/sections/TheOtherTools.astro:305:	.coming-list {
+src/components/sections/TheOtherTools.astro:311:	.coming-list > li {
+src/components/sections/TheOtherTools.astro:320:	.coming-icon {
+src/components/sections/TheOtherTools.astro:331:	.coming-icon svg {
+src/components/sections/TheOtherTools.astro:338:	.coming-list > li > strong {
+src/components/sections/TheOtherTools.astro:343:	.coming-footnote {
+src/components/sections/TheOtherTools.astro:348:		.coming-list > li {
+src/components/sections/TheOtherTools.astro:352:		.coming-list > li > strong {
+src/components/sections/PurchasingReceivingFeature.astro:18:	{ label: 'Unexpected line', action: 'Review before posting', note: 'Do not turn an unplanned item into a silent purchase.' }
+src/components/sections/OrderShopPrepPackFeature.astro:40:		answer: 'Checks stay saved to the order. A plan change clears only the checks it made stale, so completed work is not erased without reason and outdated work do
+src/lib/features.ts:63: * NO COUNTS IN THIS COPY. `count`, `comingCount` and `featureCount` are all
+src/lib/features.ts:103:		lede: 'Set up your kitchen, invite your crew and check what each role can do. Staff can open cost screens. Previously opened order pages can be read without signal; reconnect to make changes. Co
+src/lib/features.ts:296:			{ lead: 'Dated count history.', detail: 'Each count keeps the unit cost recorded at the time. A later correction does not replace the old count.' },
+src/lib/features.ts:326:			{ lead: 'Repeat matching without duplicates.', detail: 'Refreshing ingredient matches does not create duplicate ingredient records.' },
+src/lib/features.ts:338:		status: orderingAvailability.isComing ? 'in-development' : 'available',
+src/lib/features.ts:348:		   anything absent here is something CostCook does not do yet. The
+src/lib/features.ts:349:		   PRINTED panel stays off: that is a separate coming row. */
+src/lib/features.ts:361:			   printer integration is the labels group below and is still Coming. */
+src/lib/features.ts:385:			{ lead: 'Checked at confirm.', detail: 'Confirming freezes the reading it was checked on and carries the date. A later recipe edit does not restate it; a re-check appends a new one.' },
+src/lib/features.ts:395:		   RC-51). The word comes from src/lib/labels.ts; while it is Coming the
+src/lib/features.ts:397:		status: labelsAvailability.isComing ? 'in-development' : 'available',
+src/lib/features.ts:420:			{ lead: 'Separate kitchen accounts.', detail: 'Your kitchen account does not give access to another kitchen’s records.' },
+src/lib/features.ts:449:			{ lead: 'Service status.', detail: 'The service status check does not repeatedly reload kitchen records.' }
+src/lib/features.ts:508:		comingCount: groups.filter((group) => group.status === 'in-development').length
+src/lib/features.ts:539:	/** Set only for a group that is in development. The menu renders the Coming chip. */
+src/lib/features.ts:540:	coming?: true;
+src/lib/features.ts:599:			// Added 2026-08-29 at the owner's request. Coming (RC-35), so the chip
+src/lib/features.ts:606:				...(labelsAvailability.isComing ? { coming: true as const } : {})
+src/lib/features.ts:638:			// both read the group's status, so this item cannot say Coming after the
+src/lib/features.ts:645:				...(SAGE_STATUS === 'yes' ? {} : { coming: true })
+src/lib/features.ts:685:export const featureMenuHref = (featureId: string, coming = false) => {
+src/lib/features.ts:686:	// A shipped item must point at a shipped group. A Coming item may point at
+src/lib/features.ts:689:	const group = coming ? featureGroupsById.get(featureId) : shippedFeatureGroupsById.get(featureId);
+src/lib/features.ts:691:	if (coming && group.status !== 'in-development') {
+src/lib/features.ts:692:		throw new Error(`Feature menu marks ${featureId} as coming, but the group has shipped. Drop the chip.`);
+src/lib/features.ts:701:		featureMenuHref(item.featureId, item.coming === true);
+src/components/sections/FeatureSection.astro:92:									Coming
+src/components/sections/TeamAccessFeature.astro:37:		answer: 'No. CostCook does not have per-screen permissions, so a workspace teammate can open cost screens. The role boundaries protect specific sensitive actions, not 
+src/components/sections/TeamAccessFeature.astro:126:				<p>CostCook does not let you hide one screen, expose one field, or assemble a custom role. If a cook must receive a prep list without being able to open costs, that
+src/components/sections/SeeItRun.astro:193:				Watch the sample 180-guest wedding move from quote to delivery, then see three events planned together. Read the same tour below if you prefer. The recording is captioned; n
+src/components/sections/SeeItRun.astro:242:				zero because the matched source does not report them, each blank naming the
+src/components/sections/SeeItRun.astro:245:				planned as one production run and submitted together as three orders, opening
+src/components/sections/SeeItRun.astro:249:				and its own purchase orders; the combined run does not confirm or buy. Back on
+src/content/blog/scale-catering-prep-list.md:22:Keep the guaranteed guest count and any planned buffer separate. That lets the quote retain its real head count while production shows why it is preparing more.
+src/content/blog/scale-catering-prep-list.md:51:Planned cushion = 192 − 189 = 3 portions
+src/content/blog/scale-catering-prep-list.md:114:→ 189 planned portions
+src/content/blog/scale-catering-prep-list.md:122:Each arrow crosses a real operating boundary. Keep those boundaries visible, and tomorrow's board can show four full kettle runs and three planned spare portions instead o
+src/components/sections/PurchasesMonthCostFeature.astro:49:		answer: 'Only when two trusted inventory counts bracket the selected period. Without those rails, CostCook does not manufacture a turnover number.'
+src/components/sections/PurchasesMonthCostFeature.astro:60:				<h1 id="ledger-heading" class="feature-display">Compare planned food cost with what you spent.</h1>
+src/lib/faq.ts:11: * WHAT AN ANSWER MAY NOT DO. Soften a `no`. Promise a date for a `coming`.
+src/lib/faq.ts:26:import { comingPlans } from './coming-plans';
+src/lib/faq.ts:151:				answer: ['No. CostCook does not provide the lot tracking a facility under a traceability rule needs.'],
+src/lib/faq.ts:178:				answer: [comingPlans.spanish.faq],
+src/lib/faq.ts:195:					'No. Square, QuickBooks and an API for custom connections are marked Coming and are not available in your trial or subscription. No release date is promised. Check the <a href="/compare">compariso
+src/lib/faq.ts:280:					'Yes, for the planning. Two to twelve events can be created together and open a combined Shop, Prep and Pack workspace that totals the shopping and the prep across all of them, with the pack list 
+src/lib/faq.ts:288:					`No. A physical count sets the baseline; purchases, waste and completed Pack move it from there, and the app tells you how fresh the number is. You can set a par level per ingredient and it will t
+src/components/sections/WhoItsForPage.astro:125:					CostCook does not support these three requirements. If any is essential to your kitchen, compare the alternatives before starting a trial.
+src/components/sections/WhoThisIsFor.astro:37:		body: 'CostCook does not provide the lot tracking a facility under a traceability rule needs.'
+src/components/sections/TheYield.astro:64:					The case has the skins on it. Your recipe does not.
+src/lib/dietary.ts:6: * src/lib/coming-plans.ts saying the app does not assess vegan or gluten-free
+src/lib/dietary.ts:8: * false negative on four published surfaces at once (the homepage Coming band,
+src/lib/dietary.ts:10: * Coming verdict against products that do ship it. Every surface reads this file
+src/lib/dietary.ts:33: * does not: confirm freezes the reading and the screen says so.
+src/lib/dietary.ts:77:		'Confirming an order freezes the reading it was checked on. A later change to a recipe does not restate it, and the screen says when it was checked.'
+src/lib/labels.ts:10: * it is not included at launch. So every surface prints Coming from the one
+src/lib/labels.ts:26: * pins the word to 'coming' until the ledger row changes with it.
+src/lib/labels.ts:33:export const LABELS_STATUS = 'coming' as Verdict;
+src/lib/labels.ts:35:export const labelsStatusWord = LABELS_STATUS === 'yes' ? 'Available now' : 'Coming';
+src/lib/labels.ts:36:const labelsAreComing = LABELS_STATUS !== 'yes';
+src/lib/labels.ts:40:	isComing: labelsAreComing,
+src/lib/labels.ts:43:	featureLead: labelsAreComing ? 'Coming; not included today.' : 'Available now.',
+src/lib/labels.ts:44:	pageSentence: labelsAreComing
+src/lib/labels.ts:45:		? 'Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.'
+src/lib/labels.ts:47:	featureDetail: labelsAreComing
+src/lib/labels.ts:48:		? 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. 
+src/lib/labels.ts:50:	sectionBlurb: labelsAreComing
+src/lib/labels.ts:51:		? 'Calculate nutrition per portion and print an estimate. Review allergens and guest restrictions. Kitchen date labels are Coming.'
+src/lib/labels.ts:53:	sectionLede: labelsAreComing
+src/lib/labels.ts:54:		? 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen stickers are a separate featur
+src/lib/labels.ts:56:	nutritionFaqCrosslink: labelsAreComing
+src/lib/labels.ts:57:		? 'Kitchen date labels are a separate feature marked Coming and are not included today; see the next answer.'
+src/lib/labels.ts:59:	seoDescription: labelsAreComing
+src/lib/labels.ts:60:		? 'Date and allergen labels from the prep list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record. Coming; not include
+src/lib/labels.ts:62:	comparisonNote: labelsAreComing
+src/lib/labels.ts:63:		? 'Coming; not included today. The preview lets you choose storage, settle the use-by date, print one numbered label per container through the browser, and keep the frozen record for reprints. No d
+src/lib/labels.ts:65:	faqStatus: labelsAreComing
+src/lib/labels.ts:67:				'Coming; not included in your trial or subscription. In the preview, tap Label on the prep list, pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourse
+src/lib/labels.ts:74:	homepageTradeoff: labelsAreComing
+src/lib/labels.ts:75:		? 'Date and allergen stickers from the prep list are built behind a release flag and not in the launch plan, so they remain marked Coming. Nutrition sheets print from the recipe today.'
+src/lib/availability.ts:7:export const comingDefinition =
+src/lib/availability.ts:8:	'Not in the app you would start today. Coming features are not included in your trial or subscription.';
+src/lib/stops.ts:11:  { id: 'alternatives', label: 'What is still coming' },
+src/lib/nutrition.ts:7: * no feature flag in front of it), so "printed" moved from Coming to Yes in
+src/lib/nutrition.ts:8: * one deliberate act, recorded as RC-50. What is STILL Coming is the label
+src/lib/nutrition.ts:19: * characteristics ship today (they are Coming, RC-47); that the ingredient
+src/lib/nutrition.ts:78:		// WAS THE COMING SENTENCE UNTIL 2026-09-09. Dietary characteristics shipped,
+src/lib/sage.ts:12: * already knows how to render 'coming' and 'yes'.
+src/lib/sage.ts:42:			'Starting questions follow the setup stage and the records entered so far, so an empty kitchen is not prompted to ask about orders it does not have.',
+src/lib/sage.ts:59:		{ ask: 'Prepare the shopping list', does: 'Drafts one. You see what it creates and what it does not touch, then you approve or discard it. Managers and owners only.' }
+src/lib/sage.ts:97:export const sageStatusWord = SAGE_STATUS === 'yes' ? 'Available now' : 'Coming';
+src/lib/workflow.ts:14: * does not belong on the page at all.
+src/lib/workflow.ts:32: * The final step does not end the list, it returns to step 1, because the
+src/lib/workflow.ts:102:		// does not get to fake the screen where the numbers change.
+src/lib/workflow.ts:128:		body: 'This is the whole point of the three steps above. Two hundred guests at $16.50 is $3,300 coming in against $1,354.04 of food, which is 41 percent when you set 30. It does not stop at flag
+src/lib/workflow.ts:191:	// Quoting copy the app does not say is the same class of mistake as a
+src/lib/comparison.ts:3: * Coming-plan revision: docs/stories/homepage-coming-plans.story.md
+src/lib/comparison.ts:16: *   'coming'   CostCook only. Being built, not in that build. Never a tick.
+src/lib/comparison.ts:29: *              verification date". It does NOT mean the product cannot do it,
+src/lib/comparison.ts:57:import { comingPlans } from './coming-plans';
+src/lib/comparison.ts:81:export type Verdict = 'yes' | 'no' | 'coming';
+src/lib/comparison.ts:90: * sheet does nothing; anything a sheet holds, somebody built and now maintains.
+src/lib/comparison.ts:114: * locations) the sheet is the BETTER cell, and the page does not hide it.
+src/lib/comparison.ts:320:				   only from a trusted count. Buying does not read them today; the
+src/lib/comparison.ts:321:				   separate replenishment row is Coming. RC-43. */
+src/lib/comparison.ts:330:				label: comingPlans.parBuying.comparisonLabel,
+src/lib/comparison.ts:332:				costcook: comingPlans.parBuying.verdict,
+src/lib/comparison.ts:333:				note: comingPlans.parBuying.comparisonNote,
+src/lib/comparison.ts:347:				note: 'Fourteen allergens, rolled up from ingredient to recipe, on the pack list. A name match alone does not confirm allergen information. A chef override needs a written reason.',
+src/lib/comparison.ts:369:				/* Moved from coming to yes on 2026-08-29 (RC-50): the print page is on
+src/lib/comparison.ts:371:				   the "Kitchen label printing" row below and stays coming. */
+src/lib/comparison.ts:378:				/* WAS A COMING ROW UNTIL 2026-09-09 and it should not have been by
+src/lib/comparison.ts:393:				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
+src/lib/comparison.ts:395:				note: 'CostCook does not provide lot tracking. Check this requirement before choosing a tool.',
+src/lib/comparison.ts:432:				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
+src/lib/comparison.ts:439:				label: comingPlans.spanish.comparisonLabel,
+src/lib/comparison.ts:441:				costcook: comingPlans.spanish.verdict,
+src/lib/comparison.ts:442:				note: comingPlans.spanish.comparisonNote,
+src/lib/comparison.ts:449:				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
+src/lib/comparison.ts:458:				costcook: 'coming',
+src/lib/comparison.ts:459:				note: 'Square is not available today. CostCook does not send menus to your till or import its sales.',
+src/lib/comparison.ts:466:				costcook: 'coming',
+src/lib/comparison.ts:474:				costcook: 'coming',
+src/components/sections/WhatElse.astro:62:				The label numbers, the paperwork coming in, Sage, and who on your crew can do
+src/components/sections/WhatElse.astro:63:				what. All four are in the app today, and each one says what it does not do.
+src/components/sections/LabelsPrintingFeature.astro:8: * same fact. Nothing here may read as "available" while that word is Coming
+src/components/sections/LabelsPrintingFeature.astro:21:const coming = labelsAvailability.isComing;
+src/components/sections/LabelsPrintingFeature.astro:46:			'No. The output is your browser’s print dialog. A direct connection to a label printer is designed as a seam in the code and is not built, and the app does not 
+src/components/sections/LabelsPrintingFeature.astro:74:								coming ? 'bg-softamber text-amber-deep' : 'bg-paper text-ink'
+src/components/sections/LabelsPrintingFeature.astro:82:						Kitchen date labels are coming. Preview how they will work.
+src/components/sections/LabelsPrintingFeature.astro:88:						coming && (
+src/components/sections/LabelsPrintingFeature.astro:216:						It does not print.
+src/components/sections/LabelsPrintingFeature.astro:308:				Labels remain excluded while marked Coming.
+src/content/blog/supplier-price-changes.md:51:3. Draft quotes not yet sent or confirmed.
+src/content/blog/shopping-list-whole-packs.md:20:Scale each dish to the event, including sub-recipes and the quantity intentionally cooked above the guarantee. Keep that planned overage explicit. Hiding it inside an infl
+src/content/blog/shopping-list-whole-packs.md:39:160 lb − 132 lb = 28 lb above the planned need
+src/content/blog/shopping-list-whole-packs.md:42:That difference is useful. It may cover trim and uncertainty already modeled elsewhere, become planned inventory, or signal that a different pack is a better fit. Do not h
+src/components/sections/NutritionFactsAllergensFeature.astro:120:			'No. Unreviewed ingredients remain visible, and the recipe does not claim to be allergen-free. The printed nutrition sheet also says it is a calculated 
+src/pages/features/labels-and-printing.astro:10:	'OWN-WORLD: CostCook Kitchen Ticket paper, hairline rules, mono micro-labels, amber Coming chip; captures inside the ticket frame only.',
+src/pages/features/labels-and-printing.astro:11:	'STORY: A cook at the prep bench labels a batch in six steps; the owner reads that it is built, behind a flag, and marked Coming until the ledger changes.',
+src/content/blog/review-supplier-invoice.md:90:The case increased by $4.20, but this recipe line changes by about $0.18 per batch. Keep the unit path visible so the small downstream number does not look disconnected from
+src/content/blog/food-cost-per-guest.md:27:Theoretical food cost means the expected ingredient cost of the planned menu. It is not the same as the invoice total, and it does not automatically include labor, rentals, pack
+src/content/blog/food-cost-per-guest.md:59:That does not make $89.78 the correct market price. It tells you what the menu and target imply. You still have to decide whether to change the selling price, change the menu, a

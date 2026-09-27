@@ -1,0 +1,507 @@
+# Lane D: Order to van. App discovery 2026-09-27.
+# Production = /home/rayan147/kitchen-brain-develop-demo at ed6ff5f01 (HEAD == origin/main, checked).
+# Assumed-today = /home/rayan147/kb-client-payment working tree (feat/client-payment-booking-loop).
+# kitchen-brain-proposal-build and kb-stage-diagnosis touch nothing in this lane (checked diff stats).
+# All paths below are relative to kitchen-brain-develop-demo unless prefixed with kb-client-payment/.
+# Quotes are verbatim from source; {x} marks an interpolated value.
+
+rows:
+  - id: D-01
+    lane: D
+    workflow: "Turn an accepted proposal into the kitchen's order (the kitchen draft)"
+    job_to_be_done: "Get what the client agreed to onto the kitchen's books without retyping guests, menu or price"
+    actors: [owner, manager]
+    routes: ["/events/[id]", "/orders/[id]"]
+    entry: "Events > <event> > Kitchen draft card > 'Prepare the kitchen draft' (src/lib/components/events/KitchenDraft.svelte:77)"
+    done_marker: "'The kitchen draft is ready. It is tentative: it holds no day and draws no crew until you book the event.' then link 'Open the kitchen draft' (KitchenDraft.svelte:45-51)"
+    hands_off_to: D-04
+    tier: production
+    evidence:
+      - 'e2e/tentative-order.spec.ts'
+      - 'src/lib/server/events/tentative-order.ts:118-165 (prepareTentativeOrder; insertOrder with menu, guests, per-guest price, client name and email, agreement ids)'
+      - 'src/lib/components/events/KitchenDraft.svelte:36-86'
+      - 'src/lib/domain/events/kitchen-draft.ts:126-150 (refusal sentences)'
+    plan_gate: "none (subscription only). Role: owner or manager (SALES_ROLES, tentative-order.ts:122)"
+    limits:
+      - "One service per event. More than one: 'This proposal agreed to {n} services. One kitchen draft can hold one service today, so preparing it here would drop the rest. Book this event by hand until multi service drafts land.' (kitchen-draft.ts:139)"
+      - "Refuses when the event changed since acceptance (stale), when nothing was accepted, when the accepted proposal has no food, or when one service has split charges"
+      - "Only the food service becomes the order. Labor, rentals and delivery charges on the proposal do not become kitchen lines; a revenue adjustment keeps the order total equal to the accepted total (MoneyBar.svelte:105 'Includes {x} so the total matches the accepted proposal.')"
+      - "Prepared from /events/[id], not from the order screens; /orders/new cannot pull a proposal"
+    glossary_terms: [Kitchen draft, Tentative order, Acceptance, Booked]
+    capture_worthy: "yes: the Kitchen draft card in 'ready' state showing Service / Serving / Price / Date with 'Prepare the kitchen draft'"
+
+  - id: D-02
+    lane: D
+    workflow: "Write up an order by hand from a menu and a head count"
+    job_to_be_done: "Price and plan a job that came in by phone without building a proposal"
+    actors: [owner, manager, staff]
+    routes: ["/orders/new", "/orders"]
+    entry: "Orders > 'New order' (src/lib/components/orders/hub/OrdersOverviewCard.svelte:78); also Today header 'New order' (src/lib/components/home/HomeHeaderActions.svelte:17)"
+    done_marker: "Redirect to /orders/{id}; the order header reads 'Draft · Prices update live' (src/lib/components/orders/OrderIdentity.svelte:160). Submit label 'Create order' (src/lib/components/orders/new/NewOrderForm.svelte:77)"
+    hands_off_to: D-04
+    tier: production
+    evidence:
+      - 'e2e/new-order-sequence.spec.ts'
+      - 'e2e/new-order-refinement.spec.ts'
+      - 'e2e/order-client-selection.spec.ts'
+      - 'src/routes/orders/new/+page.server.ts:157-165'
+    plan_gate: "none"
+    limits:
+      - "Needs a menu first: 'Build a menu first' / 'Create a menu' (src/routes/orders/new/+page.svelte:57,65)"
+      - "Per-guest pricing only (guests x price per guest); 'The menu sets this price. An owner or manager can change it.' (PricePerGuestField.svelte:94)"
+      - "The live quote on the form is food cost and margin for the kitchen, not a client-facing quote document"
+    glossary_terms: [Order, Draft, Theoretical food cost]
+    capture_worthy: "yes: the new-order form with the 'Live quote' side panel filling in as the menu and guests are chosen"
+
+  - id: D-03
+    lane: D
+    workflow: "Plan several events at once and shop, prep and pack them as one run"
+    job_to_be_done: "Buy and cook once when three drop-offs share recipes on the same days"
+    actors: [owner, manager, staff]
+    routes: ["/orders/new", "/orders/batch"]
+    entry: "New order > 'Add another event' (NewOrderForm.svelte:706), submit becomes 'Create {n} orders' (NewOrderForm.svelte:720)"
+    done_marker: "Lands on 'Combined production' (src/routes/orders/batch/+page.svelte:44-47) with tabs 'Combined shopping list' / 'Combined prep list' / 'Combined pack list' (batch/+page.svelte:30-33)"
+    hands_off_to: D-06
+    tier: production
+    evidence:
+      - 'e2e/multi-order-creation.spec.ts'
+      - 'src/routes/orders/new/+page.server.ts:116-142 (2 to 12 events; redirect to /orders/batch?ids=)'
+      - 'src/routes/orders/batch/+page.svelte'
+    plan_gate: "none"
+    limits:
+      - "'Create between 2 and 12 events at a time.' (orders/new/+page.server.ts:129)"
+      - "The combined run is only reached right after creating the orders (or by keeping the URL). Nothing else in the app links to /orders/batch"
+      - "The combined page records shelf checks but has no check-offs; check-offs live on each order"
+    glossary_terms: [Combined production, Production run, Batch]
+    capture_worthy: "maybe: 'Combined production' shopping tab with one supplier list across three orders"
+
+  - id: D-04
+    lane: D
+    workflow: "Confirm (book) the order and lock its quantities and prices"
+    job_to_be_done: "Freeze what was quoted so later price moves do not change the job, and tell the client it is on"
+    actors: [owner, manager, client]
+    routes: ["/orders/[id]"]
+    entry: "Order > Shop tab > 'Confirm order' card > 'Confirm order' then dialog 'Confirm this order?' > 'Confirm order' (src/lib/components/orders/ConfirmOrderCard.svelte:110,130,134,187)"
+    done_marker: "'Confirmed. Quantities and prices are frozen.' (ConfirmOrderCard.svelte:199); header 'Confirmed · Quantities and prices frozen' (OrderIdentity.svelte:157); on the event: 'The order is confirmed. This event is booked.' (KitchenDraft.svelte:40)"
+    hands_off_to: D-05
+    tier: production
+    evidence:
+      - 'e2e/order-shell.spec.ts'
+      - 'e2e/reopen-order.spec.ts'
+      - 'e2e/golden-loop.spec.ts'
+      - 'src/lib/server/orders/shell-actions.ts:129 (confirm), :193 (reopen)'
+      - 'src/lib/server/orders/commands.ts:600-640 (confirm freezes plan; queues client mail when the order has an email)'
+      - 'src/lib/server/notifications/customer-order-copy.ts:28 (''{kitchen} confirmed {event}.'')'
+    plan_gate: "none"
+    limits:
+      - "Confirming does not check whether a deposit was received; the deposit is not a gate on this path (ConfirmWithoutPaymentPanel is used only in the storefront ApprovalReview)"
+      - "Full day: 'The day is full. An owner or manager can confirm it over the limit.' and 'Why confirm over the limit?' (ConfirmOrderCard.svelte:153,159)"
+      - "Reopen ('Reopen to edit', ConfirmOrderCard.svelte:216) discards frozen prices and re-costs at today's prices; blocked once purchasing has started ('Purchasing has started, so this order stays frozen.', :204)"
+      - "Client email on confirm goes only if the order carries a client email; it states date, time and guests, no money"
+      - "A storefront Custom Request cannot be confirmed until priced (commands.ts:606)"
+    glossary_terms: [Confirmed, Frozen, Booked, Draft]
+    capture_worthy: "yes: the 'Confirm this order?' dialog listing Order / Event date / Guests / Revenue with 'Keep editing' and 'Confirm order'"
+
+  - id: D-05
+    lane: D
+    workflow: "Send purchase orders to suppliers, by email or on paper, or shop it yourself"
+    job_to_be_done: "Get the order to each supplier before their cutoff without writing it out"
+    actors: [owner, manager, supplier]
+    routes: ["/orders/[id]", "/orders/[id]/receiving", "/orders/[id]/purchase-orders/[poId]/print"]
+    entry: "Confirmed order > 'Order from suppliers' (ConfirmOrderCard.svelte:254) or 'Review suppliers' > panel 'Review supplier orders' (src/lib/components/orders/PurchaseOrderReview.svelte:120); alternative 'I'll shop it myself' (:113,182)"
+    done_marker: "Redirect to receiving with ?purchase=prepared; per supplier the PO is SENT (email), PRINT_READY or MANUAL (src/lib/server/orders/post-confirmation.ts:259,294). Print page button 'Print purchase order' / 'Print all {n} purchase orders' (purchase-orders/[poId]/print/+page.svelte:36)"
+    hands_off_to: D-07
+    tier: production
+    evidence:
+      - 'e2e/post-confirmation-receiving.spec.ts (''Review supplier orders'', ''Review suppliers'')'
+      - 'e2e/purchase-order-dismissal.spec.ts'
+      - 'e2e/purchase-request-retry.spec.ts'
+      - 'src/routes/orders/[id]/+page.server.ts:454-490 (preparePurchaseOrders, skipPurchaseOrders)'
+      - 'src/lib/server/orders/post-confirmation.ts:9,395-457 (sendEmail, retry never double-sends)'
+      - 'src/lib/server/home/redesign.ts:160-194 (Today to-do ''Send POs'', ''Print sheet'' / ''Print both'' / ''Print all'')'
+    plan_gate: "none"
+    limits:
+      - "Confirming the order contacts no supplier: 'Confirming the kitchen order has not contacted any supplier.' (PurchaseOrderReview.svelte:122-123)"
+      - "Email needs a valid supplier purchasing email, else 'Add a valid purchasing email or choose a printable purchase order.' (post-confirmation.ts:139)"
+      - "No supplier portal, no EDI, no ordering through a distributor's site; email or a printed sheet only"
+      - "A failed send is kept and retried; it appears on Today (po-failure) and as an announcement"
+    glossary_terms: [Purchase order, Supplier, Receiving checklist]
+    capture_worthy: "yes: 'Review supplier orders' with vendor rows showing email vs print badges and the '{n} selected · {n} email · {n} print · {n} manual' line"
+
+  - id: D-06
+    lane: D
+    workflow: "Shop the order: see what to buy after what's on the shelf, and check it off"
+    job_to_be_done: "Buy only what the event needs, not what's already in the walk-in"
+    actors: [owner, manager, staff]
+    routes: ["/orders/[id]", "/orders/list?purpose=shelf-check"]
+    entry: "Order > 'Shop' tab (src/lib/components/orders/OrderStageTabs.svelte:16); Today event card 'Open shopping list' (src/lib/features/home/redesign.ts:143)"
+    done_marker: "No all-bought message exists. Progress is the group toggle 'Check off all' / 'Check off the {n} left' / 'Clear all' (src/lib/components/orders/GroupCheckToggle.svelte:48-51) and Today's step 'Shop {done} of {total} items'. Empty state 'Nothing to buy' + 'Go to Prep' is for an order whose shelf already covers it (orders/[id]/+page.svelte:230,235)"
+    hands_off_to: D-08
+    tier: production
+    evidence:
+      - 'e2e/lists-checkoff.spec.ts'
+      - 'e2e/order-live-shelf-counts.spec.ts'
+      - 'e2e/mobile-shop-row.spec.ts'
+      - 'src/routes/orders/[id]/+page.server.ts:492-533 (setOnHand, setSubOnHand, orderCheckActions(''shopping''), refreshShoppingList)'
+      - 'src/routes/orders/[id]/+page.svelte:300 (''Shop list''), :318 (''What to buy for this confirmed order, less what is already on the shelf.'')'
+    plan_gate: "none"
+    limits:
+      - "Quantities round up to whole supplier packs; 'Total to buy' / 'Cash still to spend' (OrderTotals.svelte:33)"
+      - "Quantity changes clear affected check-offs (ClearedChecksNotice)"
+      - "Refreshing a saved list is owner or manager only ('An owner or manager can refresh it.', SavedShoppingListNotice.svelte:41)"
+      - "Printing uses 'Print this sheet' (OrderStageTabs.svelte:73); money is hidden on print"
+    glossary_terms: [Shelf check, Check-off, On hand, Sub-recipe]
+    capture_worthy: "yes: the Shop list grouped by supplier with Need / On hand / Buy on one line, on a phone"
+
+  - id: D-07
+    lane: D
+    workflow: "Check in deliveries against the order"
+    job_to_be_done: "Know what actually arrived before prep counts on it, and chase what didn't"
+    actors: [owner, manager, staff]
+    routes: ["/orders/[id]/receiving"]
+    entry: "Order actions > 'Check in deliveries' (src/lib/components/orders/OrderActionsMenu.svelte:121,136) > 'Start the checklist' (:234); Today event card 'Start receiving' (src/lib/features/home/redesign.ts:142); Today 'DELIVERIES TO RECEIVE' > 'Receive' (src/routes/+page.svelte)"
+    done_marker: "'Finish check-in' (src/lib/components/receiving/ReceivingCommitBar.svelte:29) > dialog 'Finish checking in?' (ReceivingReviewDialog.svelte:96) > alert 'Delivery checked in' / 'Nothing is missing.' or 'Missing items saved' (ReceivingSuccessSummary.svelte:48-56); bar reads 'Checked in.' (ReceivingCommitBar.svelte:60)"
+    hands_off_to: D-08
+    tier: production
+    evidence:
+      - 'e2e/post-confirmation-receiving.spec.ts'
+      - 'e2e/receiving-rest-not-coming.spec.ts'
+      - 'e2e/close-the-loop.spec.ts'
+      - 'src/routes/orders/[id]/receiving/+page.server.ts (decision, addUnexpected, removeUnexpected, retryPurchaseOrder, commit)'
+      - 'src/lib/components/receiving/ReceivingLine.svelte:184-208 (''All here'', ''Fewer came'', ''More came'', ''Swapped'')'
+    plan_gate: "none"
+    limits:
+      - "Starting receiving locks the order: 'Once it starts, the order can no longer be reopened to change guests, price or menu.' (OrderActionsMenu.svelte:222-223)"
+      - "Only what was kept goes on the shelf: 'Only what you kept goes on the shelf. Your order stays the same.' (ReceivingReviewDialog.svelte:101)"
+      - "Shortages go to the Purchases follow-up list (lane F), not back to the supplier automatically"
+    glossary_terms: [Receiving checklist, Purchase order, Follow-up]
+    capture_worthy: "yes: a receiving line with 'All here / Fewer came / More came / Swapped' on a phone"
+
+  - id: D-08
+    lane: D
+    workflow: "Work the prep list"
+    job_to_be_done: "Hand the cook one list of what to prep, how much, from the recipe as confirmed"
+    actors: [owner, manager, staff]
+    routes: ["/orders/[id]/prep"]
+    entry: "Order > 'Prep' tab (OrderStageTabs.svelte:22); Today 'Open prep list' (features/home/redesign.ts:144)"
+    done_marker: "'All prep is checked off' + 'Show all prep items' (src/routes/orders/[id]/prep/+page.svelte:198,204); on screen '{done} of {total} prepped.' (:119)"
+    hands_off_to: D-10
+    tier: production
+    evidence:
+      - 'e2e/lists-checkoff.spec.ts'
+      - 'e2e/prep-estimates.spec.ts'
+      - 'e2e/kitchen-mode.spec.ts'
+      - 'src/routes/orders/[id]/prep/+page.svelte:116 (''Prep list''), :68-74 (''Current recipe. It locks when you confirm.'' / ''As confirmed {date}'')'
+    plan_gate: "none"
+    limits:
+      - "'Weights are after trimming.' (prep/+page.svelte:119)"
+      - "Prep comes only from the menu's recipes: 'Nothing to prep' when no dish has an ingredient to prep (:178-180)"
+      - "No staff assignment, no timers, no station scheduling on the prep list"
+      - "Dietary guards show on prep and pack when guests have restrictions (DietaryGuards)"
+    glossary_terms: [Prep list, Check-off, Sub-recipe, Frozen]
+    capture_worthy: "yes: the printed prep sheet with 'As confirmed Sep 11' and the 'Printed {date} · by {initial surname}' stamp"
+
+  - id: D-09
+    lane: D
+    workflow: "Print container labels for what was made"
+    job_to_be_done: "Put a made date, use-by and allergens on every container without handwriting them"
+    actors: [owner, manager, staff]
+    routes: ["/orders/[id]/prep", "/orders/[id]/pack", "/labels/print/[id]"]
+    entry: "Prep list recipe row label strip, or Pack list dish row 'Label' (src/lib/components/labels/LabelTrigger.svelte:34) > dialog 'Label {name}' > 'Print {n} label(s)' (src/lib/domain/labeling/labels.ts:237)"
+    done_marker: "Opens the label print view and the browser print dialog; button 'Print 1 label' / 'Print {n} labels' (src/routes/labels/print/[id]/+page.svelte:76); 'These labels print exactly as first recorded, even if the recipe has changed since.' (:94-95)"
+    hands_off_to: D-10
+    tier: production
+    evidence:
+      - 'e2e/kitchen-labels.spec.ts (''Print 1 label'', ''Print made-date only'', ''Add shelf life to print'')'
+      - 'e2e/kitchen-labels-responsive.spec.ts'
+      - 'e2e/printed-stamp.spec.ts'
+      - 'src/lib/labels/transport.ts:1-25 (browser print only)'
+      - 'src/lib/domain/labeling/labels.ts:216-230 (''KEEP FROZEN'', ''USE BY {date}'', ''CONTAINS: ...'', ''May contain: ...'', event and date on order-tied labels)'
+    plan_gate: "none for printing from prep and pack. /settings/labels (stock choice) is behind release flag FEATURE_LABEL_PRINTING_ENABLED, default off (src/hooks.server.ts:507-514, docs/billing.md 'Access policy')"
+    limits:
+      - "Browser print only; no direct thermal-printer driver ('Only the browser's own print pipeline exists today', transport.ts:5)"
+      - "No use-by is guessed: a missing shelf life asks 'Add shelf life to print' or prints made-date only"
+      - "Allergen lines reflect reviewed ingredients; unreviewed ones print a coverage line instead of a clean bill"
+    glossary_terms: [Label, Shelf life, Stock profile]
+    capture_worthy: "yes: a printed sticker showing name, USE BY, CONTAINS line and the event name"
+
+  - id: D-10
+    lane: D
+    workflow: "Pack the order for the van, with equipment, and record anything that came up short"
+    job_to_be_done: "Nothing left behind at the kitchen, and a record of what was short and why"
+    actors: [owner, manager, staff]
+    routes: ["/orders/[id]/pack"]
+    entry: "Order > 'Pack' tab (OrderStageTabs.svelte:28); Today 'Open pack list' (features/home/redesign.ts:145)"
+    done_marker: "'Everything is packed' (src/routes/orders/[id]/pack/+page.svelte:83); finish bar 'Finish packing' (src/lib/components/orders/PackFinishBar.svelte:76) then 'Packed' and 'Finished {when} by {name}.' (:44,30)"
+    hands_off_to: D-11
+    tier: production
+    evidence:
+      - 'e2e/pack-finish-durable.spec.ts'
+      - 'e2e/execution-shortfalls.spec.ts'
+      - 'e2e/lists-checkoff.spec.ts'
+      - 'src/routes/orders/[id]/pack/+page.server.ts (finishPack, reviewShortfall, recordDirectShortfall, resolveShortfall, addEquipment, removeOneOff, hideLine, restoreLine)'
+      - 'src/lib/components/orders/PackShortfallReview.svelte:295-381 (''Was {item} short, or packed?'' Short / Packed / Not sure; ''Mark resolved'')'
+      - 'src/lib/components/orders/ExecutionExceptions.svelte:78 (''Shortfalls on this order'')'
+    plan_gate: "none"
+    limits:
+      - "Finishing with items unchecked records them as questions, not shortages: 'Closing the list records unchecked items as questions, not confirmed shortages.' (PackFinishBar.svelte:61)"
+      - "Pack needs a confirmed order: 'Confirm the order before closing the pack list.' (:62)"
+      - "Stops at packed. There is no load-out, driver, delivery route, dispatch or proof-of-delivery step. Today draws a 'Load out' step (features/home/redesign.ts:114) but both callers pass vans=null, so it always reads 'Nothing to load'"
+      - "Pack lists stay on each order; the weekly view does not combine them"
+    glossary_terms: [Pack list, Shortfall, Check-off, Equipment]
+    capture_worthy: "yes: the shortfall question 'Was the hummus short, or packed?' with Short / Packed / Not sure"
+
+  - id: D-11
+    lane: D
+    workflow: "Close out the event's food cost: planned against actual"
+    job_to_be_done: "Find out after the event whether the job made the food-cost number it was priced on"
+    actors: [owner, manager]
+    routes: ["/orders/[id]/closeout", "/orders/[id]?money=1"]
+    entry: "Today to-do 'Review closeout' (src/lib/server/home/queries.ts:347), or order 'Where the money went' > 'Open food-cost closeout' (src/lib/components/orders/WhereTheMoneyWent.svelte:200)"
+    done_marker: "'Close food-cost review' (or 'Save as a likely estimate') then 'Closed by {name}' / 'Saved as a likely estimate by {name}' (src/routes/orders/[id]/closeout/CloseoutConclusion.svelte:104,134); confirm card then reads 'This event is closed out, so its order is the final record.' (ConfirmOrderCard.svelte:201)"
+    hands_off_to: G
+    tier: production
+    evidence:
+      - 'e2e/event-food-cost-closeout.spec.ts (''Close food-cost review'', ''Save amount used'')'
+      - 'e2e/event-cost-attribution.spec.ts (''Where the money went'')'
+      - 'src/routes/orders/[id]/closeout/+page.server.ts (recordObservation, attachCandidate, dismissCandidate, detachCandidate, close)'
+    plan_gate: "none. Role: requireRole (owner or manager)"
+    limits:
+      - "Food only: page description '{event} · {date} · food only' (closeout/+page.svelte:114); labor, rentals and overhead are not in it"
+      - "'Closeout opens the day after the event.' (closeout/+page.svelte:89)"
+      - "Actual cost comes from purchases the owner links to the event and amounts used they type; nothing is weighed or counted automatically"
+    glossary_terms: [Closeout, Theoretical food cost, Frozen]
+    capture_worthy: "yes: 'Planned vs actual food cost' with 'What moved the food cost' table, biggest differences first"
+
+  - id: D-12
+    lane: D
+    workflow: "See what the client has paid on the order and record a check, cash or transfer"
+    job_to_be_done: "Know, on the job itself, what is paid and what is still owed"
+    actors: [owner, manager, client]
+    routes: ["/orders/[id]", "/events/[id]", "/"]
+    entry: "Event deposit: Events > <event> > Kitchen draft > 'Deposit amount' + 'How you will take it' ('A check, cash or a transfer' / 'My own card processor') > 'Ask for a deposit' (src/lib/components/events/EventDeposit.svelte:72-99). Recording: order > Payment card > 'Record received payment' (src/lib/components/orders/PaymentTrackingCard.svelte:196)"
+    done_marker: "Dialog 'Record {amount} by {method}?' then 'Payment record saved.' (PaymentTrackingCard.svelte:115); card description '{paid} received of {due} due'; event card shows 'Paid in full.' / 'Part paid.' / 'Nothing received yet.' (src/lib/domain/events/kitchen-draft.ts:45-47)"
+    hands_off_to: D-04
+    tier: production
+    evidence:
+      - 'e2e/tentative-order.spec.ts (Ask for a deposit)'
+      - 'src/lib/server/orders/payment-tracking-ssr.test.ts'
+      - 'src/lib/server/ordering-payments/event-deposit.ts:15-60 (offline or external only; no hosted checkout for events)'
+      - 'src/lib/components/orders/OrderPaymentCards.svelte (one card per obligation; ''Deposit'' and ''Balance'' only when there are two, else ''Payment'')'
+      - 'src/lib/components/orders/BalanceSchedule.svelte:46-65 (due day, reminder state)'
+      - 'src/lib/server/home/balance-due.ts:57-78 (Today ''Balance due: {name}'', ''Record payment'')'
+    plan_gate: "none. Recording is owner or manager: 'An owner or manager records payments received for this order.' (PaymentTrackingCard.svelte)"
+    limits:
+      - "Event orders (production): the client cannot pay by card from CostCook. Deposit amount is typed by hand. Only a deposit, no balance line, no reminder email ('Nothing is sent to the client from here.', EventDeposit.svelte:67-68)"
+      - "On an event order with only a deposit the card is titled 'Payment', not 'Deposit' (OrderPaymentCards.svelte titles)"
+      - "'My own card processor' (external) has no record form in the app; it is reported through the partner API"
+      - "'This records an offline result. CostCook did not process the money.' (PaymentTrackingCard.svelte:199); 'A recorded payment cannot be edited later.'"
+      - "Deposit + balance with a due day, client reminder email with a pay link, refunds and chargeback states exist for storefront orders (Stripe Connect hosted checkout, lane C), not for event orders"
+      - "No customer invoice document is generated (PRD 06-customer-invoices, unbuilt)"
+    glossary_terms: [Deposit, Balance, Payment Window, Offline payment, Partner reported]
+    capture_worthy: "maybe: the order's Deposit and Balance cards on a storefront order ('Due {day}.', 'Reminder emailed {date}.'); not for event orders yet"
+
+  - id: D-13
+    lane: D
+    workflow: "Start the day on Today: today's events, their next step, and what needs you"
+    job_to_be_done: "Open the app at 5 a.m. and know the one thing to do next for each event"
+    actors: [owner, manager, staff]
+    routes: ["/"]
+    entry: "Sign in (Today is the home screen, title 'Today · CostCook', src/routes/+page.svelte:109)"
+    done_marker: "No end state; the event card names the current step with 'Now' and one action ('Start receiving' / 'Open shopping list' / 'Open prep list' / 'Open pack list'); to-do empties to '✓ Nothing needs you right now.' (src/lib/components/home/TodayTodoSection.svelte:64)"
+    hands_off_to: D-14
+    tier: production
+    evidence:
+      - 'e2e/home-command-center.spec.ts'
+      - 'e2e/today-calendar-redesign.spec.ts'
+      - 'e2e/home-attention.spec.ts'
+      - 'e2e/home-arrived-orders.spec.ts'
+      - 'src/routes/+page.svelte:139-340 (''TODAY''S EVENT · {time}'', ''Event progress'' Receive / Shop / Prep / Pack / Load out, ''FOOD COST, {MONTH}'', ''Next 7 days'', ''DELIVERIES TO RECEIVE'', ''Drafts with no date'', ''REQUESTS FROM YOUR STOREFRONT'')'
+      - 'src/lib/features/home/redesign.ts:74-168 (eventProgress)'
+      - 'apps/regression-workbook/catalog/cases/today-calendar-redesign.json'
+    plan_gate: "none. Staff never see client names or money (today-work.ts:35-37, redesign.ts canSeeMoney)"
+    limits:
+      - "Refreshes itself once a minute while visible (+page.svelte REFRESH_MS)"
+      - "'Load out' step is drawn but never tracked (vans always null)"
+      - "Food cost headline is theoretical, for confirmed events this month"
+    glossary_terms: [Today, Theoretical food cost, Draft]
+    capture_worthy: "yes: today's event card with the five-step progress rail and 'Now' on Prep, plus the to-do grouped OVERDUE / TODAY / TOMORROW"
+
+  - id: D-14
+    lane: D
+    workflow: "Work the full to-do list"
+    job_to_be_done: "See every open decision, oldest first, each with the one button that clears it"
+    actors: [owner, manager, staff]
+    routes: ["/todo"]
+    entry: "Today > 'To do' > 'All {n}' (TodayTodoSection.svelte:41)"
+    done_marker: "'✓ Nothing needs you right now.' (src/routes/todo/+page.svelte:27); header '{n} items need a decision.' (:13)"
+    hands_off_to: D-05
+    tier: production
+    evidence:
+      - 'src/routes/todo/+page.server.ts (listTodo with no row limit)'
+      - 'src/lib/server/home/redesign.ts:98-303 (groups OVERDUE, TODAY, TOMORROW, BEFORE YOU BUY, THIS WEEK; items ''Send POs'', ''Print sheet'', ''Reply or decline'', ''Count now'', ''Review pricing'', ''Review and confirm'')'
+      - 'src/lib/server/home/today-work-golden.test.ts'
+    plan_gate: "none"
+    limits:
+      - "Read-only list of links; nothing is done on /todo itself"
+      - "No e2e spec opens /todo directly; covered by server tests"
+    glossary_terms: [To do]
+    capture_worthy: "no (Today's to-do card is the better frame)"
+
+  - id: D-15
+    lane: D
+    workflow: "Get one shopping list and one prep list for the whole week"
+    job_to_be_done: "Shop once on Monday for every confirmed event this week"
+    actors: [owner, manager, staff]
+    routes: ["/orders/week"]
+    entry: "Orders > 'This week’s lists' (src/routes/orders/+page.svelte:51, shown only when a confirmed order falls this week); Today 'Next 7 days' > 'This week's lists'"
+    done_marker: "Page 'This week' with tabs 'Shop' / 'Prep' and a print button; 'One shopping list and one prep list for every confirmed order in these dates. Pack lists stay on each order.' (src/routes/orders/week/+page.svelte:79)"
+    hands_off_to: D-06
+    tier: production
+    evidence:
+      - 'e2e/week-lists.spec.ts'
+      - 'src/routes/orders/week/+page.svelte:68-69, 91-97 (''Previous week'' / ''Next week'', date range ''Orders between'')'
+    plan_gate: "none"
+    limits:
+      - "Confirmed orders only; drafts are left out"
+      - "No check-offs and no pack list on the week view"
+    glossary_terms: [Production run, Check-off]
+    capture_worthy: "maybe: the week's combined shopping list grouped by supplier"
+
+  - id: D-16
+    lane: D
+    workflow: "Build a shopping list from inventory for every confirmed event (and par)"
+    job_to_be_done: "One buy list across all upcoming events and house par, by supplier"
+    actors: [owner, manager, staff]
+    routes: ["/catalog/inventory/shopping-list"]
+    entry: "Inventory > Shopping list > 'Build shopping list' / 'Rebuild from current inventory' (src/routes/catalog/inventory/shopping-list/+page.svelte:112-113)"
+    done_marker: "'Shopping list' grouped by supplier; 'Have it. Nothing to buy.' when nothing is needed (shopping-list/+page.svelte:200)"
+    hands_off_to: F
+    tier: production
+    evidence:
+      - 'e2e/buy-to-par.spec.ts'
+      - 'e2e/catalog/inventory.spec.ts'
+      - 'src/routes/catalog/inventory/shopping-list/+page.server.ts (rebuild, updateBuy)'
+    plan_gate: "none"
+    limits:
+      - "'Only a recent count comes off' (shopping-list/+page.svelte:223): stale counts are assumed empty"
+      - "Missing prices or suppliers stay on the list and are flagged"
+      - "Separate from the per-order Shop list; the two can differ"
+    glossary_terms: [Par, Shelf check, On hand]
+    capture_worthy: "no (overlaps D-06 and D-15)"
+
+  - id: D-17
+    lane: D
+    workflow: "Find an order: the orders hub, views and the full list"
+    job_to_be_done: "See the booked book of business and pull up any order fast"
+    actors: [owner, manager, staff]
+    routes: ["/orders", "/orders/list"]
+    entry: "Sidebar Orders; hub 'View all orders' (OrdersOverviewCard.svelte:75); views 'Incoming' / 'Kitchen drafts' / 'Service' / 'All orders' (src/routes/orders/+page.svelte:73-83)"
+    done_marker: "n/a (navigation). Order actions menu adds 'Duplicate order' (OrderActionsMenu.svelte:174) and the list adds 'Delete order' (src/lib/components/orders/list/DeleteOrderDialog.svelte:64)"
+    hands_off_to: D-04
+    tier: production
+    evidence:
+      - 'e2e/order-shell.spec.ts (Duplicate order)'
+      - 'e2e/order-visual-contract.spec.ts'
+      - 'src/routes/orders/+page.server.ts (views incoming, drafts, service)'
+      - 'src/routes/orders/list/+page.server.ts (loadSample, delete)'
+    plan_gate: "none"
+    limits:
+      - "Duplicate copies menu, guests and price per guest only, date left blank"
+      - "The hub also carries the purchase ledger summary and 'Import invoice…' (lane F)"
+    glossary_terms: [Order, Draft, Kitchen draft]
+    capture_worthy: "no"
+
+  - id: D-18
+    lane: D
+    workflow: "Carry the accepted proposal's deposit and balance terms onto the order"
+    job_to_be_done: "The order knows what deposit and balance the client signed up to, so nobody retypes it"
+    actors: [owner, manager]
+    routes: ["/events/[id]", "/orders/[id]"]
+    entry: "Same as D-01: 'Prepare the kitchen draft' on an event whose accepted proposal states payment terms (kb-client-payment)"
+    done_marker: "None visible. The order row stores paymentTermsJson from the accepted revision (kb-client-payment/src/lib/server/orders/repository.ts insertOrder, agreement.paymentTerms); no screen reads it yet"
+    hands_off_to: D-12
+    tier: assumed-today
+    evidence:
+      - 'kb-client-payment commit 514c56982 ''feat(events): an accepted proposal''s terms reach the order that collects them'''
+      - 'kb-client-payment/src/lib/server/events/tentative-order.ts (agreedTerms read in planKitchenDraft; written via insertOrder agreement.paymentTerms)'
+      - 'kb-client-payment/src/lib/server/ordering-payments/agreed-terms.ts:75 (agreedDepositSplit, called only from tests)'
+      - 'kb-client-payment/src/lib/server/events/tentative-order.test.ts ($5,800 agreed, deposit $1,450 on the whole total)'
+      - 'kb-client-payment working tree, uncommitted: checkout.ts siteless ''paymentDoor'' and src/routes/api/ordering/v1/payments/agreements/[obligationId]/{checkout,status}/+server.ts'
+    plan_gate: "none"
+    limits:
+      - "No UI change on /orders/[id] or /events/[id] in this branch (git diff --stat shows no routes or components)"
+      - "No deposit or balance is created from the terms: 'Nothing collects yet. mode is offline' (commit 514c56982 message). The owner still types the deposit amount on the event"
+      - "Siteless Stripe checkout endpoints are uncommitted and have no client pay page; a client still cannot pay an event deposit by card"
+      - "Balance reminders still only fire for storefront approve-then-pay orders (plan Gate 3)"
+    glossary_terms: [Deposit, Balance, Acceptance, Kitchen draft]
+    capture_worthy: "no: nothing on screen"
+
+internal_routes:
+  - route: /labels/new
+    reason: "Form endpoint (+page.server.ts only, no page). Label dialogs post here and are redirected to /labels/print/[id]; covered by D-09"
+  - route: /labels/shelf-life
+    reason: "Server-only endpoint for the shelf-life resolver in the label dialog; no page"
+  - route: /orders/[id]/receiving/items
+    reason: "JSON endpoint (+server.ts) feeding the receiving substitute search; part of D-07"
+  - route: /orders/batch (+error.svelte)
+    reason: "Error page for a bad ids= list; part of D-03"
+  - route: /orders/[id]/purchase-orders/[poId]/print
+    reason: "Covered as part of D-05 (print step), not its own workflow"
+  - route: /settings/labels
+    reason: "Label stock and output settings; lane I. Behind FEATURE_LABEL_PRINTING_ENABLED"
+  - route: /settings/labels/simulator
+    reason: "Developer label-print simulator behind LABEL_PRINT_SIMULATOR_ENABLED; not for marketing"
+
+off_page_branches_seen:
+  - branch: feat/purchase-order-email-workflow
+    note: "1 unmerged commit 'harden purchase order email delivery'. Supplier PO email itself is production (post-confirmation.ts), so only this hardening is off-page"
+  - branch: design/client-to-order-guidance
+    note: "1 unmerged commit (2026-09-24) 'guide client to confirmed order handoff': ConfirmOrderCard, CustomerCard, NewOrderForm, restriction review. Off-page"
+  - branch: feat/order-shelf-prompt-20260730
+    note: "10 unmerged commits: shelf-evidence prompt on the draft shopping stage. Off-page"
+  - branch: "feat/257-shopping-tab-restyle, feat/258-prep-tab-restyle, feat/259-pack-tab-restyle, feat/354-home-stage-progress, feat/order-outputs, feat/menus-orders, feat/327-order-check*, worktree-issue-32x"
+    note: "July branches with 1-2 unmerged commits each; stale, not verified, not classified further"
+  - branch: "feat/446-labels, ux/buy-and-receive"
+    note: "git cherry shows 0 unmerged commits; effectively merged"
+
+terms:
+  - term: Kitchen draft
+    app_meaning: "The tentative order CostCook prepares from an accepted proposal. Real enough to open and price; holds no capacity day and draws no crew until the order is confirmed (KitchenDraft.svelte:45, tentative-order.ts:100-103)"
+    not_to_confuse_with: "a Draft order typed by hand (/orders?view=drafts shows both), or a proposal draft"
+  - term: Booked
+    app_meaning: "The event's kitchen-draft order is confirmed. There is no separate Book button; 'Confirm order' on /orders/[id] is the act, and the event then reads 'The order is confirmed. This event is booked.' (KitchenDraft.svelte:40). Confirming does not check the deposit on this path"
+    not_to_confuse_with: "paid; Approval (#512) of a storefront request"
+  - term: Confirmed / frozen
+    app_meaning: "Confirming freezes quantities, ingredient prices and totals ('Confirmation freezes the current quantities and prices.', ConfirmOrderCard.svelte:114). 'Reopen to edit' re-costs at today's prices until purchasing starts"
+    not_to_confuse_with: "frozen food; the prep screen now says 'As confirmed {date}' for this reason"
+  - term: Deposit / balance
+    app_meaning: "Payment obligations held on the order, one card each ('Deposit', 'Balance'; a single obligation is titled 'Payment'). Event orders: deposit only, typed by hand, offline or owner's own processor. Storefront orders: deposit + dated balance with reminder"
+    not_to_confuse_with: "the CostCook subscription; a customer invoice (not built)"
+  - term: Payment processor for client money
+    app_meaning: "Stripe Connect hosted Checkout, the caterer as merchant of record (docs/architecture/ordering-payments.md:52-62), storefront orders only in production. Event deposits: 'A check, cash or a transfer' or 'My own card processor' (no CostCook card collection). No Square code in src/lib/server/ordering-payments/ (grep 'square' returns nothing)"
+    not_to_confuse_with: "CostCook's own Stripe platform subscription; Square catalog/sales integration (lane I)"
+  - term: Invoice (as a payment method)
+    app_meaning: "'Invoice' is one of the method labels when recording a client payment (PaymentTrackingCard.svelte:16) alongside Check, Cash, ACH, POS, Pay later"
+    not_to_confuse_with: "Invoice unqualified = supplier invoice. This label collides with the glossary"
+  - term: Purchase order (PO)
+    app_meaning: "The order CostCook sends a supplier for a confirmed order: email, printable sheet, or manual (post-confirmation.ts)"
+    not_to_confuse_with: "the client's order; a supplier invoice"
+  - term: Shelf check
+    app_meaning: "Typing what is already on hand for an order's Shop list so the buy drops (OnHandEntry; 'Choose an order to shelf check', orders/list)"
+    not_to_confuse_with: "an inventory count on /catalog/inventory (related, not the same screen)"
+  - term: Check-off
+    app_meaning: "The one verb for marking a Shop, Prep or Pack line done: 'Check off all' / 'Check off the {n} left' / 'Clear all' (GroupCheckToggle.svelte:48-51)"
+    not_to_confuse_with: "tick, complete, mark (banned in the order-to-van story)"
+  - term: Shortfall
+    app_meaning: "Something that came up short at pack or receiving, with a cause and how the kitchen covered it ('Shortfalls on this order', ExecutionExceptions.svelte:78)"
+    not_to_confuse_with: "a receiving shortage alone (that also feeds the Purchases follow-up list)"
+  - term: Closeout
+    app_meaning: "After-event review of planned vs actual food cost, food only, opening the day after the event ('Food-cost closeout')"
+    not_to_confuse_with: "closing the books, P&L, or labor costing"
+  - term: Combined production
+    app_meaning: "One shopping, prep and pack view across 2 to 12 orders created together (/orders/batch)"
+    not_to_confuse_with: "'This week' lists (/orders/week), which cover confirmed orders by date and have no pack list"
+  - term: Load out / Vans
+    app_meaning: "Today shows a 'Load out' step that is never tracked; Calendar 'Vans out' counts booked capacity per day from Booking settings, not vans actually loaded"
+    not_to_confuse_with: "delivery dispatch or route planning (not built)"

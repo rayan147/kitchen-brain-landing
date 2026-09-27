@@ -3,6 +3,16 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { readFileSync } from 'node:fs';
+import { tourStopCount } from './lib/tour-stops.mjs';
+
+// The labels stop prints its status word from src/lib/labels.ts; read the same
+// status here instead of assuming Coming (labels shipped on 2026-09-27, RC-35).
+const labelsStatusWord = /LABELS_STATUS = 'yes'/.test(
+	readFileSync(new URL('../src/lib/labels.ts', import.meta.url), 'utf8')
+)
+	? 'Available now'
+	: 'Coming';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const artifacts = new URL('../.impeccable/review', import.meta.url).pathname;
@@ -134,8 +144,8 @@ try {
 			mobileControlVisible: Boolean(document.querySelector('[data-tour-select]')?.getClientRects().length),
 			railVisible: Boolean(document.querySelector('.tour-rail')?.getClientRects().length)
 		}))()`);
-		assert(layout.tabs === 12, `${width}: expected twelve tabs`);
-		assert(layout.scenes === 12, `${width}: expected twelve scenes`);
+		assert(layout.tabs === tourStopCount, `${width}: expected ${tourStopCount} tabs, received ${layout.tabs}`);
+		assert(layout.scenes === tourStopCount, `${width}: expected ${tourStopCount} scenes, received ${layout.scenes}`);
 		assert(layout.visibleScenes === 1, `${width}: expected one visible scene`);
 		assert(layout.selected === '0', `${width}: first stop is not selected`);
 		assert(layout.scrollWidth === layout.innerWidth, `${width}: horizontal page overflow`);
@@ -186,7 +196,9 @@ try {
 			transition = nativeStartViewTransition(update);
 			return transition;
 		};
-		document.querySelectorAll('[data-tour-tab]')[5].click();
+		// By id, not position: index 5 was labels until the guests' restrictions
+		// stop landed before it on 2026-09-09, and this check has failed since.
+		document.getElementById('tour-tab-labels-printing').click();
 		await transition.ready;
 		const result = {
 			supported: true,
@@ -207,7 +219,7 @@ try {
 		text: document.querySelector('[data-tour-scene]:not([hidden])')?.textContent
 	}))()`);
 	assert(labelsStop.visibleId === 'labels-printing', 'Labels and printing scene did not become visible');
-	assert(labelsStop.text?.includes('Coming'), 'Labels and printing scene does not expose its Coming status');
+	assert(labelsStop.text?.includes(labelsStatusWord), `Labels and printing scene does not expose its ${labelsStatusWord} status`);
 	await evaluate(`[...document.querySelectorAll('[data-tour-tab]')].at(-1).click()`);
 	await waitForStop('sage');
 	await waitForSceneTransitions();
@@ -217,7 +229,7 @@ try {
 		next: document.querySelector('[data-tour-next]')?.textContent.trim(),
 		hash: location.hash
 	}))()`);
-	assert(finalStop.selected === '11', 'last tab did not become selected');
+	assert(finalStop.selected === String(tourStopCount - 1), 'last tab did not become selected');
 	assert(finalStop.visibleId === 'sage', 'Sage scene did not become visible');
 	assert(finalStop.next === 'Finish the tour', 'last action does not finish the tour');
 	assert(finalStop.hash === '#tour-sage', 'last stop hash was not written');

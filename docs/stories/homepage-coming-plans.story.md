@@ -122,3 +122,21 @@ three surfaces apart.
 
 No beat, section order, heading or value turn changed. Every cut was a claim
 the page was making twice; nothing was removed for being unprovable.
+
+## Claim correction · 2026-09-27 (buying to par shipped)
+
+- [x] 11 Revision: Buying to par left the Coming list by shipping. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier (kitchen-brain e2e/buy-to-par.spec.ts). The Coming band now carries two plans, the /compare row is Yes, and the inventory answers say so. Beats and snap line unchanged. Gap report F1; RC-43.
+
+## Claim correction · 2026-09-27 (kitchen labels available)
+
+- [x] 11 Revision: The owner approved the RC-35 labels launch decision on 2026-09-27 and LABELS_STATUS is now yes. Kitchen date labels print from Prep and Pack through the browser; label stock is set once in Settings > Labels. The premise that the whole feature sat behind the label_printing flag was false (gap report F2). Every Coming sentence about kitchen labels is gone; the browser-only, never-guessed-date and blank-allergen boundaries stay. Beats and point of view unchanged; the labels page hero now states availability instead of a preview.
+
+### Revision 2026-09-27 (rendering)
+- The band's sentence reads "None is in the CostCook you would start today or
+  in the launch plan, and no release date is promised." It used to join the
+  plan titles mid-sentence ("Spanish and Card payment for booked events are
+  not available..."), which capitalised a list label inside prose; the list
+  beside it already names each plan.
+- The card-payment plan's body no longer restates its title (it opened "Card
+  payment and balance reminders for events you book by hand"); /pricing
+  renders title then body, so the old body read as the title twice.

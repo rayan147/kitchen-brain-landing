@@ -1,6 +1,7 @@
 /** Product tour content. story: docs/stories/product-tour.story.md */
 import { featureMenuHref, featureMenuSections } from './features';
 import { labelsAvailability } from './labels';
+import { acceptanceBoundary, depositMethodsCapital, eventStep } from './events';
 
 export const tourSeedKey = 'product-tour-connected-event';
 
@@ -310,11 +311,11 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Labels & printing',
 		appArea: 'Prep / Garden wedding supper / Labels',
 		title: 'Choose the date and allergen facts before a sticker prints.',
-		intro: 'This feature is Coming. The preview starts from the prep list, asks the cook to settle the storage and use-by facts, then freezes what each sticker said for reprints.',
+		intro: 'Labels start from the prep list. The cook settles the storage and use-by facts, then CostCook freezes what each sticker said for reprints.',
 		callout: 'A label can repeat the date you chose. It cannot choose a food-safety date for you.',
 		featureHref: featureMenuHref('labels', labelsAvailability.isComing),
 		metrics: [
-			{ label: 'Availability', value: labelsAvailability.word, tone: 'attention' },
+			{ label: 'Availability', value: labelsAvailability.word, tone: labelsAvailability.isComing ? 'attention' : 'good' },
 			{ label: 'Containers', value: '24' },
 			{ label: 'Output', value: 'Browser print dialog' },
 			{ label: 'Reprint', value: 'Frozen record', tone: 'good' }
@@ -328,14 +329,55 @@ export const tourStops: readonly TourStop[] = [
 		],
 		aside: {
 			title: 'Label setup',
-			status: 'Coming',
+			status: labelsAvailability.word,
 			lines: [
 				{ label: 'Stock', value: '2 × 1 in roll' },
 				{ label: 'Made on', value: 'Aug 29, 2026' },
 				{ label: 'Use-by source', value: 'Cook chose', tone: 'attention' },
 				{ label: 'Sticker count', value: '24' }
 			],
-			footnote: 'Coming, not included at launch. Output opens the browser print dialog; no direct printer connection is built.'
+			footnote: 'Output opens the browser print dialog; no direct printer connection is built. Label stock is set once in Settings > Labels.'
+		}
+	},
+	{
+		/* RC-61, RC-63, RC-65, added 2026-09-27 with the capability's feature
+		   page. It opens the Run the event column, as it does in the Features
+		   dropdown: the event starts at the inquiry, and the order stop after it
+		   is what Confirm order hands the kitchen. Same illustrative world as the
+		   menu stop (Garden wedding supper, 180 guests at $28.00). The deposit
+		   is recorded by hand; the aside says so and names the Coming line. */
+		id: 'events-proposals',
+		featureId: 'events',
+		label: 'Events & proposals',
+		appArea: 'Events / Garden wedding supper',
+		title: 'Send the proposal, then book the yes.',
+		intro: 'Take the inquiry, send the priced proposal to the client’s phone, and press Confirm order once they accept.',
+		callout: acceptanceBoundary,
+		featureHref: featureMenuHref('events'),
+		metrics: [
+			{ label: 'Guests', value: '180' },
+			{ label: 'Price per guest', value: '$28.00' },
+			{ label: 'Proposal total', value: '$5,040.00' },
+			{ label: 'Client decision', value: 'Accepted', tone: 'good' }
+		],
+		columns: ['Step', 'Where it stands', 'What happened'],
+		rows: [
+			[eventStep.inquiry, 'Captured', 'Date first, details later'],
+			[eventStep.proposal, 'Sent', 'Link open for 7 days'],
+			[eventStep.decision, 'Accepted', 'On their phone, no login'],
+			[eventStep.agreement, 'Complete', 'Accepted proposal attached'],
+			[eventStep.booked, 'Confirm order', 'Quantities and prices frozen']
+		],
+		aside: {
+			title: 'Deposit',
+			status: 'Recorded by hand',
+			lines: [
+				{ label: 'Asked for', value: '$1,000.00' },
+				{ label: 'Received', value: '$0.00', tone: 'attention' },
+				{ label: 'Recorded as', value: depositMethodsCapital },
+				{ label: 'Card payment page', value: 'Coming' }
+			],
+			footnote: 'Illustrative tour values. You record an event deposit by hand; a card payment page for events is Coming.'
 		}
 	},
 	{
@@ -480,7 +522,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Team & access',
 		appArea: 'Settings / Team & access',
 		title: 'See what each team role can do.',
-		intro: 'Invite teammates by email. Owners, Managers and Staff have different actions; all can open cost screens. Invitations join as Staff.',
+		intro: 'Invite teammates by email. Owners, Managers and Staff have different actions; Staff can open recipe costs and Analytics. Invitations join as Staff.',
 		callout: 'The cook can open the work. Publishing, billing, and approvals still have named owners.',
 		featureHref: featureMenuHref('team'),
 		metrics: [
@@ -494,7 +536,7 @@ export const tourStops: readonly TourStop[] = [
 			['Manage billing', 'Allowed', 'Not allowed', 'Not allowed'],
 			['Invite teammates', 'Allowed', 'Allowed', 'Not allowed'],
 			['Publish recipes', 'Allowed', 'Not allowed', 'Not allowed'],
-			['Review Sage proposals', 'Allowed', 'Allowed', 'Not allowed']
+			['Approve Sage drafts', 'Allowed', 'Allowed', 'Not allowed']
 		],
 		aside: {
 			title: 'Pending invitation',
@@ -515,7 +557,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Sage, the assistant',
 		appArea: 'Sage / Saturday event check',
 		title: 'Ask the question, then inspect the records behind the answer.',
-		intro: 'Sage checks your own CostCook records, names missing evidence, and keeps proposed shopping-list changes behind your review.',
+		intro: 'Sage checks your own CostCook records, names missing evidence, and keeps its drafts behind your approval.',
 		callout: 'An answer without its source is just another number to recheck.',
 		featureHref: featureMenuHref('assistant'),
 		metrics: [
@@ -538,9 +580,9 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Order', value: 'Garden wedding supper' },
 				{ label: 'Purchase order', value: 'PO-1047' },
 				{ label: 'Inventory area', value: 'Walk-in 1' },
-				{ label: 'Proposed changes', value: '0', tone: 'good' }
+				{ label: 'Drafts waiting', value: '0', tone: 'good' }
 			],
-			footnote: 'Shopping-list proposals wait for a manager or owner to review.'
+			footnote: 'Sage drafts wait for a manager or owner to approve.'
 		}
 	}
 ];

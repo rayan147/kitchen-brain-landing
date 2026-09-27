@@ -1,6 +1,10 @@
 # CostCook Landing
 
-Marketing one-pager for CostCook (back-of-house software for small caterers).
+Marketing site for CostCook, catering software that runs an event from the
+first inquiry to closeout: inquiry, priced proposal the client accepts on
+their phone, agreement, deposit tracked, Confirm order, then shop, prep, pack
+and food cost against the agreed price (repositioned 2026-09-27; story in
+`docs/stories/homepage-event-story.story.md`).
 Single goal: start the 15-day free trial. The booking link (`demoCta`) is the
 one quiet alternative for a visitor who will not start cold, never a second
 primary action. Fully static Astro + Tailwind v4, deployed to Vercel on every
@@ -10,7 +14,8 @@ merge to `main`.
 
 ### Users
 
-Owner-operator caterers and meal-prep businesses (1–15 staff), usually reading
+Owner-operator caterers and restaurants that cater, selling events (1–15
+staff; meal-prep kitchens are served on /who-its-for), usually reading
 on a phone, often mid-shift, arriving skeptical from a cold email or text. They
 have been burned by big-platform sales funnels. The job to be done: decide in
 under a minute whether a 15-minute demo is worth their time. Every claim must

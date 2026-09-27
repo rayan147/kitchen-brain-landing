@@ -45,7 +45,7 @@
  *
  * No pattern: a table the section renders once.
  */
-import { dietary } from './dietary';
+import { dietary, allergenCount } from './dietary';
 
 export const nutrition = {
 	verified: { sha: 'dff9469c', branch: 'sandbox/demo', on: '2026-08-29' },
@@ -70,7 +70,7 @@ export const nutrition = {
 		},
 		{
 			lead: 'Allergens ride along, with evidence.',
-			detail: 'Fourteen-allergen tagging per ingredient, recorded only from evidence. A recipe with unreviewed ingredients says so, and no screen ever claims allergen-free.'
+			detail: `Tagging for the ${allergenCount} major US allergens per ingredient, recorded only from evidence. A recipe with unreviewed ingredients says so, and no screen ever claims allergen-free.`
 		}
 	],
 	notClaimed: [

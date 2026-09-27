@@ -120,3 +120,43 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 - [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
 - [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
 - [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.
+
+## Claim correction · 2026-09-27 (Sage tools and drafts)
+
+- [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.
+
+## Claim correction · 2026-09-27 (purchase orders)
+
+- [x] 11 Revision: Confirming an order contacts no supplier. The owner presses Order from suppliers and picks email, print or manual per supplier, or I'll shop it myself (kitchen-brain PurchaseOrderReview.svelte). The sentence saying confirmation emails or creates purchase orders was false and is replaced. Beats and snap line unchanged. Gap report S2.
+
+## Claim correction · 2026-09-27 (margin wording)
+
+- [x] 11 Revision: The app does show "Gross margin" on event totals and recipe pricing, so "it is never called margin" was false. The true boundary stays: food cost is food only, and the gross margin the app shows is food-only, not business margin after labor and overhead. Gap report S4, W4.
+
+## Claim correction · 2026-09-27 (buying to par shipped)
+
+- [x] 11 Revision: Buying to par left the Coming list by shipping. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier (kitchen-brain e2e/buy-to-par.spec.ts). The Coming band now carries two plans, the /compare row is Yes, and the inventory answers say so. Beats and snap line unchanged. Gap report F1; RC-43.
+
+## Claim correction · 2026-09-27 (kitchen labels available)
+
+- [x] 11 Revision: The owner approved the RC-35 labels launch decision on 2026-09-27 and LABELS_STATUS is now yes. Kitchen date labels print from Prep and Pack through the browser; label stock is set once in Settings > Labels. The premise that the whole feature sat behind the label_printing flag was false (gap report F2). Every Coming sentence about kitchen labels is gone; the browser-only, never-guessed-date and blank-allergen boundaries stay. Beats and point of view unchanged; the labels page hero now states availability instead of a preview.
+
+## Claim correction · 2026-09-27 (online ordering available)
+
+- [x] 11 Revision: The ordering answer now says Yes and names the limits: request, approve, the client pays within 72 hours and that payment confirms the order; one balance reminder; online card payment only. The question says "clients". Gap report S9; RC-59.
+
+## Claim correction · 2026-09-27 (what Staff can open)
+
+- [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+## Claim correction · 2026-09-27 (nutrition answer lead)
+
+- [x] 11 Revision: The nutrition-labels answer opened with a bare "Yes." while the app calls the panel a calculated estimate. It now opens "As a calculated estimate, yes." Gap report W8.
+
+### Revision 2026-09-27 (event card payment)
+- New answer `#event-payments`, "Can clients pay the event deposit by card?",
+  in the money chapter beside Spanish. It renders
+  `comingPlans.eventPayments.faq`: "Not yet." first, then what is Coming (a
+  card payment page for the deposit and the balance, a balance reminder) and
+  what is true today (the deposit is recorded by hand, as a check, cash, a
+  transfer or your own card processor). RC-65. The page now has 38 answers.

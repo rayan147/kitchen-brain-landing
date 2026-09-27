@@ -34,7 +34,7 @@ import FeatureTrialTerms from "../FeatureTrialTerms.astro";
  * global.css for .feature-display.
  */
 import { cta, demoCta } from '../../lib/site';
-import { dietary, dietNames, guardOutcomes } from '../../lib/dietary';
+import { dietary, dietNames, guardOutcomes, allergenCount } from '../../lib/dietary';
 
 // The engine's own outcome ranking, rendered as the reader meets it: worst
 // first, because that is the order the order screen sorts in.
@@ -160,7 +160,7 @@ const faqItems = [
 				{dietNames.map((diet) => <li data-diet={diet}>{diet}</li>)}
 			</ul>
 			<p class="diet-note" data-reveal>
-				Five diets, and fourteen allergens beside them. A diet is judged from the traits
+				Five diets, and the {allergenCount} major US allergens beside them. A diet is judged from the traits
 				your ingredients carry, never from what an ingredient is called.
 			</p>
 		</div>

@@ -1,0 +1,572 @@
+# Lane A: Front of house (events), inquiry to booked.
+# Production = ~/kitchen-brain-develop-demo at ed6ff5f01 (HEAD == origin/main, checked 2026-09-27).
+# Assumed-today = ~/kitchen-brain-proposal-build (feat/proposal-build-20260926, working tree now clean, 8 commits
+#   past merge-base 00cdd6d78) and ~/kb-client-payment (feat/client-payment-booking-loop, 4 commits + 3 modified
+#   files + 1 untracked route dir, delta taken against merge-base 00cdd6d78, not ed6ff5f01, to drop base drift).
+# Paths without a prefix are relative to ~/kitchen-brain-develop-demo. Line numbers were re-grepped on the file.
+# Plan: CostCook has one plan (Launch, $49/mo after a 15-day trial, docs/billing.md:8); no feature in this lane is
+#   plan-gated. Role gate: events, proposals, decisions and deposits are OWNER/MANAGER only (SALES_ROLES,
+#   src/lib/server/tenancy/roles.ts:65; e2e/event-inquiries.spec.ts:50 "ordinary staff cannot open or post an inquiry").
+
+rows:
+  - id: A-01
+    lane: A
+    workflow: "Capture a new catering inquiry from a call, email or form"
+    job_to_be_done: "Get the lead down while the client is still on the phone, rough answers allowed"
+    actors: [owner, manager]
+    routes: ["/events", "/events/new"]
+    entry: "Events > '+ New inquiry' (src/routes/events/+page.svelte:162)"
+    done_marker: "'Save and build menu' redirects to /events/<id>/menu; 'Save inquiry only' redirects to /events/<id> (src/routes/events/new/+page.server.ts:118). Footer note: 'Saving doesn’t book the event or contact the client.' (src/routes/events/new/+page.svelte:671)"
+    hands_off_to: A-04
+    tier: production
+    evidence:
+      - e2e/new-inquiry.spec.ts:4 "a caller can become a new client and proceed to the menu"
+      - e2e/new-inquiry.spec.ts:23 "warns about a nearby open inquiry without blocking a second save"
+      - e2e/new-inquiry.spec.ts:51 "an unsaved draft restores after reload"
+      - e2e/event-inquiries.spec.ts:5,22
+      - src/routes/events/new/+page.svelte:679,687 ("Save and build menu", "Save inquiry only")
+    plan_gate: "none (Launch); owner/manager only"
+    limits:
+      - "No public inquiry form of its own: web leads arrive through the ordering site's Custom Request (A-02) or are typed in"
+      - "Duplicate-lead check warns ('Open it instead?', new/+page.svelte:484) but does not block"
+      - "Date may be left 'Date not decided yet'; guests may be an estimate"
+    glossary_terms: [Inquiry, Client, Follow-up]
+    capture_worthy: "yes: phone-width New inquiry with the summary rail and the 'Save and build menu' bar"
+
+  - id: A-02
+    lane: A
+    workflow: "Move an online Custom Request into Inquiries"
+    job_to_be_done: "Turn a web request the storefront cannot price into a proper event lead"
+    actors: [owner, manager, client]
+    routes: ["/orders/[id]", "/events/[id]"]
+    entry: "Orders > Incoming > <request> > 'Move to Inquiries' (src/lib/components/orders/CustomRequestCard.svelte:80)"
+    done_marker: "Redirect to /events/<id> (src/routes/orders/[id]/+page.server.ts:290); card then offers 'Open the inquiry' (CustomRequestCard.svelte:60)"
+    hands_off_to: A-04
+    tier: production
+    evidence: [e2e/custom-request-inquiry.spec.ts:153, src/lib/server/events/custom-request-conversion.ts:47]
+    plan_gate: "none; owner/manager ('An owner or manager can move it to Inquiries.' CustomRequestCard.svelte:84)"
+    limits: ["Cross-lane with C (the request itself comes from the ordering site); the card says 'No price yet. Nothing was charged.'"]
+    glossary_terms: [Custom Request, Inquiry]
+    capture_worthy: "no (lane C owns the frame)"
+
+  - id: A-03
+    lane: A
+    workflow: "Work the event pipeline: follow-ups, owners, notes, lost and duplicate events"
+    job_to_be_done: "Know which leads need a call today and never lose one silently"
+    actors: [owner, manager]
+    routes: ["/events", "/events/[id]"]
+    entry: "Events tabs 'Needs attention' / 'Booked · coming up' / 'In pipeline' / 'Past & closed' / 'All' (src/routes/events/+page.svelte:18-21); per-row next task e.g. 'Follow up on offer', 'Build menu', 'Reschedule or close' (:75-79)"
+    done_marker: "Toast 'Event closed as lost' (src/routes/events/[id]/+page.svelte:317) moves it to Past & closed; follow-up card completes/snoozes in place; 'Activity & change history' sheet lists 'Revision N · <change>' (:367-373)"
+    hands_off_to: A-04
+    tier: production
+    evidence:
+      - e2e/event-workspace.spec.ts:15 "follow-up completion, rescheduling and assignment update in place"
+      - e2e/event-workspace.spec.ts:66 "closing as lost moves the event to Past & closed"
+      - e2e/event-workspace.spec.ts:112 "passed-date alert and populated workspace match both reference viewports"
+      - src/lib/events/derive.ts:166-190 (alerts 'The event date has passed and it isn’t booked.', 'Add a client before sending the proposal.', 'The event is coming up and isn’t booked.')
+    plan_gate: "none; owner/manager"
+    limits:
+      - "'Delete event' refuses once menu, proposal or agreement work exists; close as lost instead ([id]/+page.server.ts:403)"
+      - "Follow-up is a date and an owner, not an automated email sequence"
+    glossary_terms: [Inquiry, Follow-up, Lost]
+    capture_worthy: "yes: event workspace with the six-step stepper (Inquiry, Menu & service, Proposal, Client decision, Agreement, Booked; derive.ts:34-41) and the Next step card"
+
+  - id: A-04
+    lane: A
+    workflow: "Set the menu and service for an event, with live food cost"
+    job_to_be_done: "Build what you will serve from your own recipes and see the margin before you quote"
+    actors: [owner, manager]
+    routes: ["/events/[id]/menu"]
+    entry: "Event > Next step 'Set menu and service' (src/lib/events/derive.ts:124); start options 'Start from a saved menu', 'Start blank service', 'Choose event' (copy a past event) (src/lib/components/events/menu/MenuStartOptions.svelte:35,45,50)"
+    done_marker: "'✓ All changes saved' (SaveStatus.svelte:7) and 'Continue to proposal →' enabled (EventTotals.svelte:58); totals card shows 'Food cost' and 'Gross margin' (EventTotals.svelte:34,38)"
+    hands_off_to: A-05
+    tier: production
+    evidence:
+      - e2e/event-menu-workspace.spec.ts:6 "start an event service from a saved menu, autosave its price, and show mobile totals"
+      - src/routes/events/[id]/menu/+page.svelte:285 (h1 'Menu & service' / 'What are you serving?')
+      - src/lib/components/events/menu/ServiceCard.svelte:91,106 ('Swap menu', 'Save as new menu')
+    plan_gate: "none; owner/manager"
+    limits:
+      - "Several services per event are allowed here, but only a single-service acceptance can become a kitchen draft (see A-13)"
+      - "'Staff, rentals, delivery and tax are added on the proposal.' (EventTotals.svelte:52); no staffing roster"
+    glossary_terms: [Service, Saved menu, Food cost]
+    capture_worthy: "yes: service card with dishes and the Event totals card showing food cost % against target"
+
+  - id: A-05
+    lane: A
+    workflow: "Build and price the proposal on one page"
+    job_to_be_done: "Turn the menu into a priced offer with staff, rentals, delivery, discount, tax and terms"
+    actors: [owner, manager]
+    routes: ["/events/[id]/proposal"]
+    entry: "Event > 'Prepare proposal' (src/lib/features/events/event-journey.ts:128) or menu 'Continue to proposal'"
+    done_marker: "Autosave 'Draft saved' (proposal-build worktree src/routes/events/[id]/proposal/+page.svelte:221) then 'Preview & send' (:424, builder/ProposalTotals.svelte:89) saves a revision and opens /proposal/send"
+    hands_off_to: A-06
+    tier: assumed-today
+    evidence:
+      - "~/kitchen-brain-proposal-build e2e/proposal-build.spec.ts, e2e/proposal-builder-journeys.spec.ts (new in branch)"
+      - "~/kitchen-brain-proposal-build src/routes/events/[id]/proposal/+page.svelte:236 h1 'Build the proposal'"
+      - "~/kitchen-brain-proposal-build src/lib/components/proposals/builder/AddChargeBar.svelte:5-10 ('+ Staff', '+ Rentals', '+ Delivery', '+ Service fee', '+ Another menu', 'Custom item')"
+      - "~/kitchen-brain-proposal-build builder/ChargeRowMenu.svelte:36,42,53 ('Taxable', 'Discountable', 'Optional for client'); ChargeOfferingFields.svelte:127 'Choice group'"
+      - "~/kitchen-brain-proposal-build builder/ProposalTermsCard.svelte:33,37 ('Terms on the proposal', 'Use saved terms')"
+      - "production counterpart: src/lib/components/proposals/ProposalEditor.svelte (step editor: 'Continue to what it includes', 'Continue to tax and terms', 'Save and review offer'), deleted by the branch"
+    plan_gate: "none; owner/manager"
+    limits:
+      - "Food cost % shows to the caterer only ('only you see this', builder page:394)"
+      - "When the kitchen's tax source is Stripe, the live total is before tax; Stripe calculates tax at preview (ProposalTotals.svelte:49); otherwise the owner types a 'Sales tax rate'"
+      - "Once an offer is live the builder is locked: 'An offer is live' / 'Update the offer' (builder page:279,286), see A-09"
+      - "No deposit/balance fields on the builder (payment terms in A-17 have no UI)"
+      - "Staff/rentals/delivery are priced lines only; no crew scheduling or dispatch behind them"
+    glossary_terms: [Proposal, Revision, Choice group, Optional add-on, Stripe Tax]
+    capture_worthy: "yes: the one-page builder at desktop, charges table plus sticky totals with 'Preview & send'"
+
+  - id: A-06
+    lane: A
+    workflow: "Review the client's exact copy and send the offer"
+    job_to_be_done: "Email the client a link to a fixed, priced offer without writing the email from scratch"
+    actors: [owner, manager]
+    routes: ["/events/[id]/proposal/send", "/events/[id]/proposal/preview"]
+    entry: "Builder 'Preview & send', or journey 'Review and send new offer' (event-journey.ts:97)"
+    done_marker: "Button 'Send offer to <name>' (src/routes/events/[id]/proposal/send/+page.svelte:304) then flash 'Proposal sent.' (send/+page.server.ts:297) and redirect to /decision. If mail lags: 'Proposal issued. The email has not gone out yet, so check Issued proposals below.'"
+    hands_off_to: A-07
+    tier: production
+    evidence:
+      - e2e/proposal-workflow-redesign.spec.ts:36 "send, view, and accept a proposal across desktop and phone"
+      - e2e/proposal-workflow-redesign.spec.ts:141 "terms fix updates the preview, and owner actions stay on the decision page"
+      - e2e/proposal-drafts.spec.ts:221 "explain incomplete choices and missing delivery email before sending"
+      - src/routes/events/[id]/proposal/send/+page.svelte:149,260,312 ('Before you send', 'Offer link valid for' 3/7/14/30 days, 'Send a test to me')
+    plan_gate: "none; owner/manager"
+    limits:
+      - "PDF is browser print ('Download PDF' on preview calls window.print, proposal/preview/+page.svelte:21), not a generated file"
+      - "Send is blocked until a client email and a priced service exist ('Add the customer email and a priced service before sending.')"
+      - "'The event isn't booked until the customer accepts.' (send/+page.svelte:374)"
+    glossary_terms: [Proposal, Offer, Revision, Offer link]
+    capture_worthy: "yes: split screen, email fields left, 'What the customer sees' Desktop/Phone/Email preview right"
+
+  - id: A-07
+    lane: A
+    workflow: "Client reviews the offer, picks options, and accepts, asks for changes, or declines"
+    job_to_be_done: "Let the client say yes on their phone without a login"
+    actors: [client]
+    routes: ["/proposals/[businessId]/[offerId]"]
+    entry: "Link in the proposal email; page title 'Review your proposal' (+page.svelte:76,101)"
+    done_marker: "'Accept this selection' (src/lib/components/proposals/ClientResponse.svelte:127) then heading 'Proposal accepted' and 'Your response to revision N is recorded. Acceptance is not an e-signature or a booking confirmation.' (src/routes/proposals/[businessId]/[offerId]/+page.svelte:86-90). Other outcomes: 'Send change request', 'Decline offer' (ClientResponse.svelte:129-130)"
+    hands_off_to: A-08
+    tier: production
+    evidence:
+      - e2e/proposal-offers.spec.ts:8 "issue exact proposal choices and record ${outcome}"
+      - e2e/proposal-workflow-redesign.spec.ts:175 "customer can accept the public offer without JavaScript"
+      - e2e/proposal-workflow-redesign.spec.ts:85,117 (changes requested; decline closes the event)
+      - src/routes/proposals/[businessId]/[offerId]/+page.server.ts:91 (owner is emailed on acceptance via announceOperationalChange)
+    plan_gate: "none (public page, bearer link)"
+    limits:
+      - "Acceptance is not a signature and not a booking (said on the page itself)"
+      - "No payment on this page; no deposit is taken at acceptance"
+      - "'Print or save PDF' is browser print (+page.svelte:220)"
+    glossary_terms: [Acceptance, Proposal, Choice, Optional add-on]
+    capture_worthy: "yes, the top frame for the lane: phone-width client offer with 'Choose your services' and 'Accept this selection'"
+
+  - id: A-08
+    lane: A
+    workflow: "Track the client's decision: remind, extend, withdraw, or record a phone yes/no"
+    job_to_be_done: "Chase the decision without re-sending anything by hand"
+    actors: [owner, manager]
+    routes: ["/events/[id]/decision"]
+    entry: "After send (redirect), or Event > 'View proposal'; eyebrow 'STEP 4 OF 6 · CLIENT DECISION'"
+    done_marker: "h1 'Proposal accepted' with 'Client accepted this offer.' and 'Send agreement' (src/routes/events/[id]/decision/+page.svelte:110,149,155). Manual record flashes 'Client acceptance recorded.' (decision/+page.server.ts:225); withdraw flashes 'Offer withdrawn. The customer link is no longer active.' (:250)"
+    hands_off_to: A-10
+    tier: production
+    evidence:
+      - e2e/proposal-workflow-redesign.spec.ts:85 "customer requests changes and the owner withdraws the old link"
+      - src/routes/events/[id]/decision/+page.svelte:229,236,241,294,295,341 ('Send a reminder', 'Copy offer link', 'Extend link' 3/7 days, 'They accepted', 'They declined', 'Withdraw offer')
+    plan_gate: "none; owner/manager"
+    limits: ["Reminder is manual (a button), not scheduled", "A client decline closes the event as lost (redirect to /events?view=closed)"]
+    glossary_terms: [Acceptance, Offer link, Withdraw]
+    capture_worthy: "no (A-07 and A-06 carry the offer story; the Waiting on <client> frame is a fallback)"
+
+  - id: A-09
+    lane: A
+    workflow: "Update an offer the client already has"
+    job_to_be_done: "Change guests, price or menu after sending, and say what changed in plain words"
+    actors: [owner, manager, client]
+    routes: ["/events/[id]/proposal/update", "/events/[id]/proposal/send"]
+    entry: "Decision > 'Edit proposal' (decision/+page.svelte:126) or builder 'Update the offer'"
+    done_marker: "'Review & send update' (proposal/update/+page.svelte:249,270) then 'Send update to <name>' (send/+page.svelte:303) and flash 'Update sent.' (send/+page.server.ts:296); warning 'The version N link stops working when you send this.'"
+    hands_off_to: A-07
+    tier: production
+    evidence:
+      - e2e/proposal-offer-update.spec.ts:47 "update a sent offer and compare desktop and phone states"
+      - e2e/proposal-offer-update.spec.ts:161 "discarding an unsent update leaves the live version in place"
+    plan_gate: "none; owner/manager"
+    limits: ["An update replaces the live link; the old revision stops working", "'Update services' / 'Keep as is' when the event menu changed underneath (update/+page.svelte:189-191)"]
+    glossary_terms: [Revision, Offer update]
+    capture_worthy: "no"
+
+  - id: A-10
+    lane: A
+    workflow: "Prepare the agreement and send it for e-signature"
+    job_to_be_done: "Get a signed contract that matches the accepted offer, with the proposal attached"
+    actors: [owner, manager]
+    routes: ["/events/[id]/agreement", "/settings/contracts"]
+    entry: "Decision 'Send agreement' or journey 'Prepare agreement' (event-journey.ts:88); eyebrow 'STEP 5 OF 6 · AGREEMENT'"
+    done_marker: "'Send for signature' (src/routes/events/[id]/agreement/+page.svelte:210,249) returns to the page in status view: 'Agreement status' / 'Waiting for signatures' with stages Sent, Client viewed, Client signed, You countersign, Completed (src/lib/components/contracts/AgreementStatus.svelte:33,40-43)"
+    hands_off_to: A-11
+    tier: production
+    evidence:
+      - e2e/agreement-redesign.spec.ts:7 "accepted proposal opens agreement, uploads a contract, and renders at both widths"
+      - e2e/contract-preparation.spec.ts:9
+      - e2e/contract-signing-flow.mjs (local DocuSeal harness, not a Playwright spec)
+      - src/lib/components/contracts/ContractSourcePicker.svelte:81,87,94,119 ('Saved template', 'Write terms', 'Upload a file', 'Attach the accepted proposal as Schedule A')
+      - src/lib/components/contracts/SignersCard.svelte:46-47 ('Client signs first, then you', 'Either order')
+    plan_gate: "none; owner/manager"
+    limits:
+      - "Online signing runs through DocuSeal and only when DOCUSEAL_* env is configured (src/lib/server/contracts/docuseal/runtime.ts:7-17, onlineSigningAvailable :38); otherwise the path is an externally signed PDF"
+      - "'Please sign within' 3/7/14 days"
+      - "Copy conflict: agreement says 'Kitchen planning opens as soon as you send.' (:221) while the event card says it 'Opens once the client accepts a proposal.' ([id]/+page.svelte:230)"
+    glossary_terms: [Agreement, Contract template, Schedule A, Signer]
+    capture_worthy: "yes: agreement status with the five-stage signing track"
+
+  - id: A-11
+    lane: A
+    workflow: "Collect both signatures (or file a paper-signed PDF) and keep the signed files"
+    job_to_be_done: "Have the signed contract and audit file on the event before cooking starts"
+    actors: [owner, manager, client]
+    routes: ["/events/[id]/agreement", "/events/[id]/contract", "/events/[id]/contract/preview", "/events/[id]/contract/signing"]
+    entry: "Agreement status 'Send reminder' / 'Copy signing link' / 'Void & resend' / 'Download current PDF' / 'Sign now' (AgreementStatus.svelte:77,98,104,110); journey actions 'Check customer signature', 'Sign agreement as caterer', 'Retain signed files' (src/lib/features/contracts/next-action.ts:76-89)"
+    done_marker: "'Agreement complete' (AgreementStatus.svelte:40); next action 'Prepare kitchen draft' with 'The signed files are retained. Prepare the accepted service, then confirm the order to book it.' (next-action.ts:100-105). Paper path: 'Record a signed PDF received outside CostCook' (contract/preview/+page.svelte:67) with 'An uploaded PDF records the copy you received. It does not verify signatures or book the event.' (contract/signing/+page.svelte:40-41)"
+    hands_off_to: A-13
+    tier: production
+    evidence:
+      - e2e/contract-preparation.spec.ts:9 "prepare the accepted selection, recover an uncertain save and reopen immutable contract revisions"
+      - src/routes/events/[id]/contract/signing/artifacts/[artifactId]/artifact-route.test.ts
+      - src/routes/events/[id]/agreement/current.pdf/+server.ts (download 'agreement.pdf'); contract/pdf/+server.ts ('contract-revision-N.pdf')
+    plan_gate: "none; owner/manager"
+    limits:
+      - "The signing page always shows 'Test environment. Use controlled test recipients only.' when online signing is on (contract/signing/+page.svelte:49); live DocuSeal in production is unverified here"
+      - "Uploaded PDF does not verify signatures"
+      - "/events/[id]/contract ('Prepare contract') is the older contract screen, still reachable via 'Review saved contract'"
+    glossary_terms: [Agreement, Signing request, Countersign, Retained files]
+    capture_worthy: "no (status frame in A-10 carries it)"
+
+  - id: A-12
+    lane: A
+    workflow: "Keep your own contract templates"
+    job_to_be_done: "Reuse your standard contract instead of rewriting it per event"
+    actors: [owner, manager]
+    routes: ["/settings/contracts"]
+    entry: "Settings > Contracts: 'Upload contract', 'Write terms' (src/routes/settings/contracts/+page.svelte:28,32)"
+    done_marker: "'Saved.' (settings/contracts/+page.svelte:23); template listed under 'Saved templates' with 'Set default', 'Edit terms', 'Archive' (:46,61,68,77)"
+    hands_off_to: A-10
+    tier: production
+    evidence: ["e2e/agreement-redesign.spec.ts:7", "src/routes/settings/contracts/+page.svelte:17-77", "src/routes/settings/contracts/+page.server.ts"]
+    plan_gate: "none"
+    limits: ["Subtitle: 'Keep the contract your business sends after a client accepts an offer.' (:18); no clause library"]
+    glossary_terms: [Contract template]
+    capture_worthy: "no"
+
+  - id: A-13
+    lane: A
+    workflow: "Turn the accepted proposal into a tentative kitchen draft"
+    job_to_be_done: "Start planning the cook from exactly what the client accepted, before the day is locked"
+    actors: [owner, manager]
+    routes: ["/events/[id]", "/orders/[id]"]
+    entry: "Event > Kitchen planning > 'Prepare the kitchen draft' (src/lib/components/events/KitchenDraft.svelte:77); journey 'Prepare kitchen draft' (next-action.ts:102)"
+    done_marker: "'The kitchen draft is ready. It is tentative: it holds no day and draws no crew until you book the event.' plus 'Open the kitchen draft' (KitchenDraft.svelte:47,51)"
+    hands_off_to: A-14
+    tier: production
+    evidence:
+      - e2e/tentative-order.spec.ts:70 "an accepted proposal becomes one tentative kitchen draft that holds no day" (draft/deposit steps; its send step drives old labels, see open questions)
+      - src/lib/server/events/tentative-order.ts:175-213 (states booked/prepared/no-acceptance/stale/no-food/many-services/split-charges)
+    plan_gate: "none; owner/manager"
+    limits:
+      - "One service only: 'This proposal agreed to N services. One kitchen draft can hold one service today ... Book this event by hand until multi service drafts land.' (src/lib/domain/events/kitchen-draft.ts:139)"
+      - "Refuses split charges on one service, and refuses when the event changed since acceptance (stale)"
+      - "Staff/rentals/delivery lines do not become crew or delivery jobs"
+    glossary_terms: [Kitchen draft, Tentative order, Acceptance]
+    capture_worthy: "yes: event workspace Kitchen planning card showing the tentative draft and the Deposit panel"
+
+  - id: A-14
+    lane: A
+    workflow: "Ask for a deposit and record what the client pays"
+    job_to_be_done: "Know the deposit amount owed and whether it has arrived, on the job it belongs to"
+    actors: [owner, manager]
+    routes: ["/events/[id]", "/orders/[id]"]
+    entry: "Event > Kitchen planning > Deposit: 'Deposit amount', 'How you will take it' = 'A check, cash or a transfer' | 'My own card processor', then 'Ask for a deposit' (src/lib/components/events/EventDeposit.svelte:72,87,90,94,99)"
+    done_marker: "Panel shows 'Asked for' / 'Received' and one of 'Nothing received yet.' / 'Part paid.' / 'Paid in full.' (src/lib/domain/events/kitchen-draft.ts:45-47); link 'Record the money on the kitchen draft' (EventDeposit.svelte:63) to /orders/<id> 'Record payment' (src/lib/components/orders/PaymentTrackingCard.svelte:220)"
+    hands_off_to: A-15
+    tier: production
+    evidence:
+      - "e2e/tentative-order.spec.ts (deposit steps: 'Ask for a deposit', '$2,500.00', 'Nothing received yet.', 'Record the money on the kitchen draft')"
+      - src/lib/server/ordering-payments/event-deposit.ts:16-26,56-104 (modes offline|external only; siteId null; one deposit per order)
+      - src/routes/events/[id]/+page.server.ts:417-452 (askForDeposit)
+    plan_gate: "none; owner/manager ('Only an owner or manager can ask for a deposit.' event-deposit.ts:62)"
+    limits:
+      - "'Nothing is sent to the client from here.' (EventDeposit.svelte:67-68): no pay link, no email"
+      - "CostCook does not take the card for an event deposit: 'Hosted checkout is not offered here' (event-deposit.ts:20-23); money is recorded by hand"
+      - "Amount is typed by hand, never derived from the proposal; it cannot be changed once asked; one deposit per order"
+      - "No balance, no due date, no reminder, no customer invoice for an event on production"
+    glossary_terms: [Deposit, Kitchen draft, Offline payment, External payment]
+    capture_worthy: "yes (with A-13): Deposit panel 'Asked for $2,500.00 / Received $0.00 / Nothing received yet.'"
+
+  - id: A-15
+    lane: A
+    workflow: "Book the event by confirming its order"
+    job_to_be_done: "Lock the date and quantities so the kitchen can shop and prep"
+    actors: [owner, manager]
+    routes: ["/orders/[id]", "/events/[id]"]
+    entry: "Kitchen draft /orders/<id> > 'Confirm order' (src/lib/components/orders/ConfirmOrderCard.svelte:119,130), dialog 'Confirm this order?'; 'Confirmation freezes the current quantities and prices.'"
+    done_marker: "Event workspace: 'The order is confirmed. This event is booked.' + 'Open confirmed order' (KitchenDraft.svelte:40,43); journey title 'Event booked', action 'View confirmed order' (src/lib/features/events/event-journey.ts:68,70)"
+    hands_off_to: "lane D (order to van)"
+    tier: production
+    evidence:
+      - src/lib/server/events/tentative-order.ts:181-183 (linked order status confirmed => state booked)
+      - src/lib/server/orders/shell-actions.ts:129-160 (confirm: refuses a storefront approve-then-pay draft, re-checks the day and asks for a reason when it is over capacity, 'The day is full now. Say why you are confirming anyway.'; no agreement/signature/deposit check)
+    plan_gate: "none; owner/manager"
+    limits:
+      - "Booking is the owner's act; Confirm order checks the day's capacity, not a signed agreement or a paid deposit"
+      - "Workspace chip/stepper reads 'Booked' as soon as an agreement is completed even with no confirmed order ([id]/+page.server.ts:145 booked = kitchenDraft booked || completedAgreement), while the journey says 'Event booked' only after Confirm order"
+      - "Multi-service acceptances must be booked by hand (see A-13)"
+    glossary_terms: [Booked, Confirm order, Kitchen draft]
+    capture_worthy: "no (lane D owns the order frame)"
+
+  - id: A-16
+    lane: A
+    workflow: "See booked work and drafts on a month or week calendar"
+    job_to_be_done: "Check whether a date has room before saying yes"
+    actors: [owner, manager, staff]
+    routes: ["/calendar"]
+    entry: "Calendar: 'Month' / 'Week', filters '✓ Confirmed N', '✓ Drafts N', '✓ Requests N' (src/routes/calendar/+page.svelte:215,220,240,244,248)"
+    done_marker: "Selected day panel 'Orders <booked> of <capacity>', 'Vans out N of M' (:358,366); 'NO DATE YET · N' list with 'Set date' (:419,461)"
+    hands_off_to: A-01
+    tier: production
+    evidence: [e2e/today-calendar-redesign.spec.ts:3, src/routes/calendar/+page.server.ts:24-46]
+    plan_gate: "none; money hidden from staff (canSeeMoney, calendar/+page.server.ts:31)"
+    limits:
+      - "Shows orders only; an inquiry without a kitchen draft is not on the calendar. Tentative kitchen drafts count under Drafts"
+      - "Capacity and vans are counts from Booking settings (lane C), not a dispatch plan"
+    glossary_terms: [Capacity, Draft, Request]
+    capture_worthy: "no (useful for a capacity story, which lane C owns)"
+
+  - id: A-17
+    lane: A
+    workflow: "Carry the accepted proposal's deposit and balance terms onto the order"
+    job_to_be_done: "Make the deposit the order asks for be the one the client agreed to"
+    actors: [owner, manager]
+    routes: ["/events/[id]/proposal", "/events/[id]"]
+    entry: "No screen. A first proposal is prefilled from the default Booking Rule's payment terms when that rule is fixed-path with terms (kb-client-payment src/lib/server/proposals/service.ts); 'Prepare the kitchen draft' writes them to the order"
+    done_marker: "none visible; order row gets paymentTermsJson (kb-client-payment src/lib/server/events/tentative-order.ts, paymentTerms: plan.source.agreedTerms)"
+    hands_off_to: A-14
+    tier: assumed-today
+    evidence:
+      - "~/kb-client-payment commits 6c395b764, 514c56982, 87449f95e"
+      - "~/kb-client-payment src/lib/domain/proposals/draft.ts (paymentTerms nullable default null), src/lib/server/ordering-payments/agreed-terms.ts"
+      - "~/kb-client-payment src/lib/server/events/tentative-order.test.ts ($5,800 agreement => $1,450 deposit)"
+    plan_gate: "none"
+    limits:
+      - "Commit 514c56982 says 'Nothing collects yet.' Mode stays offline; the deposit ask on the event is still typed by hand"
+      - "No builder field or client-page line shows the terms, so the client never sees them on the offer"
+      - "Both assumed-today branches edit src/lib/domain/proposals/draft.ts; the builder does not send paymentTerms, so its autosave may null the prefill after merge (unverified)"
+    glossary_terms: [Payment terms, Deposit, Balance, Booking Rule]
+    capture_worthy: "no (nothing to show)"
+
+  - id: A-18
+    lane: A
+    workflow: "Client pays the event deposit or balance online by card, with balance reminders"
+    job_to_be_done: "Get paid without chasing checks"
+    actors: [client, owner]
+    routes: ["(planned) /pay/<obligation> on the ordering app", "/api/ordering/v1/payments/agreements/[obligationId]/checkout|status (uncommitted)"]
+    entry: "none today"
+    done_marker: "none"
+    hands_off_to: A-15
+    tier: off-page
+    evidence:
+      - "~/kb-client-payment untracked src/routes/api/ordering/v1/payments/agreements/ and uncommitted checkout.ts 'siteless door'; no pay page exists (apps/ordering/src/routes has only [store])"
+      - "~/kb-client-payment docs/plans/client-payment-in-the-booking-loop-2026-09-27.md sections 3 and 6 (gates 2-4 still shut)"
+    plan_gate: "n/a"
+    limits: ["Not reachable by any caterer or client today", "Balance reminders exist for storefront approve-then-pay orders only (orders/approval/balance-reminders.ts:79-80)"]
+    glossary_terms: [Deposit, Balance, Stripe Connect, Payment Window]
+    capture_worthy: "no"
+
+  - id: A-19
+    lane: A
+    workflow: "Send the client a numbered invoice with installments and track the balance"
+    job_to_be_done: "Bill a corporate client through their accounts payable"
+    actors: [owner, client]
+    routes: [""]
+    entry: "none"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/front-of-house/06-customer-invoices.md (#504); no customer_invoice/receivable table or route in src (grep)"]
+    plan_gate: "n/a"
+    limits: ["PRD only. 'Invoice' in the app means the supplier invoice"]
+    glossary_terms: [Customer invoice]
+    capture_worthy: "no"
+
+  - id: A-20
+    lane: A
+    workflow: "Publish a versioned BEO (banquet event order) to staff and client"
+    job_to_be_done: "One sheet the crew works from, re-sent when the event changes"
+    actors: [owner, staff, client]
+    routes: [""]
+    entry: "none"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/front-of-house/07-beo.md (#505); no BEO schema or route (schema.ts 'Banquet' hits are recipe-book examples only)"]
+    plan_gate: "n/a"
+    limits: ["PRD only. Nearest shipped thing is the order and its prep/pack sheets (lane D)"]
+    glossary_terms: [BEO]
+    capture_worthy: "no"
+
+  - id: A-21
+    lane: A
+    workflow: "Staff an event: roster, shifts, coverage, actual hours"
+    job_to_be_done: "Know who is working the event and what labor really cost"
+    actors: [owner, staff]
+    routes: [""]
+    entry: "none"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/front-of-house/08-staffing.md (#506); no roster/shift tables in schema"]
+    plan_gate: "n/a"
+    limits: ["PRD only. Staff appear only as a priced proposal line ('+ Staff')"]
+    glossary_terms: [Shift]
+    capture_worthy: "no"
+
+  - id: A-22
+    lane: A
+    workflow: "Dispatch deliveries: driver routes, load manifest, delivered/failed on a phone"
+    job_to_be_done: "Get the right boxes to the right venue and know they arrived"
+    actors: [owner, driver]
+    routes: [""]
+    entry: "none"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/front-of-house/09-delivery-dispatch.md (#507); no delivery job/driver/manifest tables"]
+    plan_gate: "n/a"
+    limits: ["PRD only. 'Vans' is a per-day capacity count in Booking settings, not dispatch"]
+    glossary_terms: [Delivery job]
+    capture_worthy: "no"
+
+  - id: A-23
+    lane: A
+    workflow: "Get suggested delivery routes from addresses and travel times"
+    job_to_be_done: "Plan a multi-drop day without doing the map by hand"
+    actors: [owner]
+    routes: [""]
+    entry: "none"
+    done_marker: "none"
+    hands_off_to: null
+    tier: off-page
+    evidence: ["docs/prd/front-of-house/10-route-optimization.md (#508); no geocoding or travel-time code (grep geocod|travel.?time: none)"]
+    plan_gate: "n/a"
+    limits: ["PRD only, blocked by #507"]
+    glossary_terms: [Route suggestion]
+    capture_worthy: "no"
+
+  - id: A-24
+    lane: A
+    workflow: "Set booking limits: working days and notice, daily capacity and vans, full days, approvals, booking rules, closed dates"
+    job_to_be_done: "Stop saying yes to a day the kitchen cannot cover"
+    actors: [owner, manager]
+    routes: ["/settings/booking"]
+    entry: "Settings > Booking; cards 'Days and notice', 'Capacity', 'Full days', 'Approving requests', booking rules, 'Closed dates' (src/routes/settings/booking/+page.svelte:57,75,93,115,133,172)"
+    done_marker: "each card saves through its own action (saveDaysAndNotice, saveCapacity, saveRule, addBlock...; settings/booking/+page.server.ts); calendar then shows 'Orders N of capacity' and 'Vans out N of M'"
+    hands_off_to: A-16
+    tier: production
+    evidence: ["e2e/booking-rules.spec.ts:44", "e2e/booking-auto-approve.spec.ts", "src/routes/settings/booking/booking-ssr.test.ts", "docs/qa/workflow-paths/inventory.json (/settings/booking actions)"]
+    plan_gate: "none; settings scope (requireSettingsScope)"
+    limits: ["Cross-lane C: rules and approvals mainly govern online storefront requests; for events the capacity feeds the calendar and the day check on 'Confirm order'", "Merge should dedupe with lane C's row"]
+    glossary_terms: [Booking Rule, Capacity, Closed date, Approval]
+    capture_worthy: "no (lane C owns it)"
+
+internal_routes:
+  - route: /events/[id]/menus
+    reason: "Legacy URL; 303 redirect to /events/[id]/menu (menus/+page.server.ts). Covered by A-04."
+  - route: /events/[id]/proposal/delivery (+server)
+    reason: "JSON endpoint for retry/withdraw of an issued offer's email; no screen of its own."
+  - route: /events/new/clients, /events/new/duplicates (+server)
+    reason: "Client picker and duplicate-lead lookups behind A-01."
+  - route: /events/[id]/agreement/pdf, /events/[id]/agreement/page/[number]
+    reason: "Preview PDF and page images for the agreement preview in A-10."
+  - route: /events/[id]/agreement/current.pdf, /events/[id]/contract/pdf
+    reason: "Downloads behind 'Download current PDF' / 'Download signing PDF' in A-11; the event PDF is these plus browser print of the proposal."
+  - route: /events/[id]/contract/evidence/[evidenceId], /events/[id]/contract/signing/artifacts/[artifactId]
+    reason: "Retained evidence and signed-file downloads behind A-11."
+  - route: /sage/api/proposal
+    reason: "Sage drafting a proposal; lane H owns it."
+
+prd_status:
+  - prd: "00-program (#498)"
+    status: partial
+    where: "inquiry through booked is built (A-01..A-15); invoice, BEO, crew, dispatch are not"
+  - prd: "01-customers-inquiries (#499)"
+    status: built
+    where: "src/routes/events/new, src/routes/events/[id] (follow-up, owner, notes, history); customers side is lane B"
+  - prd: "02-multiple-menus (#500)"
+    status: partial
+    where: "multiple timed services per event in src/routes/events/[id]/menu; but a kitchen draft holds one service (src/lib/domain/events/kitchen-draft.ts:139 'Book this event by hand until multi service drafts land')"
+  - prd: "03-proposals (#501)"
+    status: built
+    where: "src/routes/events/[id]/proposal*, decision, src/routes/proposals/[businessId]/[offerId]; PDF is browser print; one-page builder assumed-today in ~/kitchen-brain-proposal-build"
+  - prd: "04-contracts-signatures (#502, HITL)"
+    status: built
+    where: "src/routes/events/[id]/agreement, contract/*, src/lib/server/contracts/docuseal; caveat: needs DocuSeal env, signing page still labels itself 'Test environment', live production signing unverified"
+  - prd: "05-booking-deposits (#503)"
+    status: partial
+    where: "tentative draft src/lib/server/events/tentative-order.ts; deposit ask src/lib/server/ordering-payments/event-deposit.ts (offline/external only); booking = 'Confirm order'. Missing: card collection, booking checklist gate (signatures, deposit, availability), amendments (a stale refusal instead), agreed terms (assumed-today A-17)"
+  - prd: "06-customer-invoices (#504)"
+    status: not built
+    where: "none; unblocked since #503 merged (kb-client-payment plan section 4)"
+  - prd: "07-beo (#505)"
+    status: not built
+    where: "none"
+  - prd: "08-staffing (#506)"
+    status: not built
+    where: "none; staff is a priced proposal line only"
+  - prd: "09-delivery-dispatch (#507)"
+    status: not built
+    where: "none; vans are a capacity count (src/lib/server/db/schema.ts:1223-1225)"
+  - prd: "10-route-optimization (#508, HITL)"
+    status: not built
+    where: "none"
+  - prd: "11-lifecycle-pilot (HITL)"
+    status: not built
+    where: "a rollout/pilot process, not a feature; no code expected"
+
+terms:
+  - term: "Invoice (unqualified)"
+    app_meaning: "The supplier invoice (/purchases/invoices). No customer invoice exists (A-19)."
+    not_to_confuse: "customer invoice / receivable"
+  - term: "Acceptance (#501)"
+    app_meaning: "The client's recorded 'Accept this selection' on one offer revision. The page says 'Acceptance is not an e-signature or a booking confirmation.'"
+    not_to_confuse: "Approval (#512, kitchen approving a storefront request); signature; booking"
+  - term: "Approval (#512)"
+    app_meaning: "Lane C: the kitchen approving an online order request, which opens a Payment Window. Not used anywhere on the event path."
+    not_to_confuse: "Acceptance; booked"
+  - term: "Booked"
+    app_meaning: "The event's linked order is confirmed via 'Confirm order' (tentative-order.ts:181-183). It checks day capacity, not a signature or deposit (shell-actions.ts:129-160). Caveat: the workspace chip/stepper also say 'Booked' once an agreement completes ([id]/+page.server.ts:145)."
+    not_to_confuse: "paid; signed; accepted"
+  - term: "Deposit / balance"
+    app_meaning: "A deposit obligation on the event-linked order (siteId null, modes offline|external), asked from the event screen, recorded on /orders/[id]. Balance: none for events on production. Owner words 'Catering deposit' / 'Catering balance' (ordering-payments/payment-terms.ts:225-227)."
+    not_to_confuse: "subscription billing; storefront deposit via Payment Window"
+  - term: "Payment processor for client money"
+    app_meaning: "Storefront (lane C) card payments: Stripe Connect direct charges on the caterer's connected account, caterer is merchant of record (docs/architecture/ordering-payments.md:52-62). Event deposits on production: no processor in CostCook, check/cash/transfer or 'My own card processor' recorded by hand (event-deposit.ts:16-26). Square is catalog and sales import only (src/lib/server/integrations/square), never client money. A siteless Stripe Checkout for events exists only as uncommitted API in kb-client-payment (off-page)."
+    not_to_confuse: "CostCook's own subscription (Stripe platform account, docs/billing.md)"
+  - term: "Sales tax on a proposal"
+    app_meaning: "Stripe Tax on the caterer's connected account when the kitchen's tax source is Stripe (src/lib/server/proposals/tax.ts; fails closed, never $0); otherwise a rate the owner types."
+    not_to_confuse: "a tax rate CostCook knows"
+  - term: "Kitchen draft"
+    app_meaning: "The tentative order prepared from an accepted proposal; 'holds no day and draws no crew until you book the event'."
+    not_to_confuse: "a storefront draft order; a proposal draft"
+  - term: "Agreement vs contract"
+    app_meaning: "UI says Agreement (step 5, /agreement); the older screens and code say contract (/contract, 'Prepare contract', Settings > Contracts for templates)."
+    not_to_confuse: "proposal acceptance"
+  - term: "Client vs customer"
+    app_meaning: "Screens mostly say Client; offer/agreement screens and code also say customer ('Customer preview', 'Send offer', 'customer link')."
+    not_to_confuse: "n/a (same person)"
+  - term: "Proposal vs offer vs quote"
+    app_meaning: "Proposal is the document; an offer is one sent revision with a link; 'quote' is the storefront's pricing arm in payment terms."
+    not_to_confuse: "landing's 'menus and quotes'"

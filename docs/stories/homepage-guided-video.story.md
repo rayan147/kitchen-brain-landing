@@ -232,3 +232,7 @@ sheet. No allergen claim, and no dietary-characteristics claim: the beat had
 room for one idea and it spent it on the blanks. No card says what Sage does
 not do on screen in this beat, which means the "it changes nothing on its own"
 line stays on the feature page where the screen supports it.
+
+## Claim correction · 2026-09-27 (purchase orders)
+
+- [x] 11 Revision: Confirming an order contacts no supplier. The owner presses Order from suppliers and picks email, print or manual per supplier, or I'll shop it myself (kitchen-brain PurchaseOrderReview.svelte). The sentence saying confirmation emails or creates purchase orders was false and is replaced. Beats and snap line unchanged. Gap report S2.

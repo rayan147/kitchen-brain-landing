@@ -128,3 +128,35 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 - [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
 - [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
 - [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.
+
+## Claim correction · 2026-09-27 (allergen count)
+
+- [x] 11 Revision: "Fourteen allergens" was false; the app tags the fixed US nine (milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soy, sesame; kitchen-brain drizzle/0034_dizzy_klaw.sql). The count word is now computed from `allergenNames` in `src/lib/dietary.ts`. Beats, scenes, point of view and snap line unchanged; only the number moved. Gap report S3.
+
+## Claim correction · 2026-09-27 (margin wording)
+
+- [x] 11 Revision: The app does show "Gross margin" on event totals and recipe pricing, so "it is never called margin" was false. The true boundary stays: food cost is food only, and the gross margin the app shows is food-only, not business margin after labor and overhead. Gap report S4, W4.
+
+## Claim correction · 2026-09-27 (buying to par shipped)
+
+- [x] 11 Revision: Buying to par left the Coming list by shipping. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier (kitchen-brain e2e/buy-to-par.spec.ts). The Coming band now carries two plans, the /compare row is Yes, and the inventory answers say so. Beats and snap line unchanged. Gap report F1; RC-43.
+
+## Claim correction · 2026-09-27 (kitchen labels available)
+
+- [x] 11 Revision: The owner approved the RC-35 labels launch decision on 2026-09-27 and LABELS_STATUS is now yes. Kitchen date labels print from Prep and Pack through the browser; label stock is set once in Settings > Labels. The premise that the whole feature sat behind the label_printing flag was false (gap report F2). Every Coming sentence about kitchen labels is gone; the browser-only, never-guessed-date and blank-allergen boundaries stay. Beats and point of view unchanged; the labels page hero now states availability instead of a preview.
+
+## Claim correction · 2026-09-27 (what Staff can open)
+
+- [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+### Revision 2026-09-27 (Sage row)
+- The Sage row's note said Sage "can prepare a shopping-list draft", one of
+  the three it ships. It now reads: "Sage is available now. It reads your
+  records with twenty-two read-only tools, shows its sources, helps during
+  setup and can prepare three kinds of draft for a manager or owner to
+  approve: the kitchen shopping list, one order’s shopping list, and a
+  guest-count change on a draft order." The counts and kinds are spelled
+  from `src/lib/sage.ts` (RC-49), not typed.
+- The events rows read the deposit list and the acceptance boundary from
+  `src/lib/events.ts`; the proposals note now ends "Their yes is not a
+  signature or a booking. Confirm order is." (full stop, not a semicolon).

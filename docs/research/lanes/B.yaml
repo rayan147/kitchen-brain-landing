@@ -1,0 +1,382 @@
+# Lane B: Clients (route family /customers). Discovery 2026-09-27, read-only.
+# Production = /home/rayan147/kitchen-brain-develop-demo at ed6ff5f01 (HEAD == origin/main, checked).
+# Paths in evidence are relative to that checkout unless prefixed.
+# The screen and sidebar say "Clients"; code/tables/route say `customer` (CONTEXT.md:221-223).
+# Plan gate: the app has one plan (LAUNCH_PLAN, src/lib/server/billing/plan.ts:1) and the only
+# release flags are label_printing, ordering_integration, square_integration, quickbooks_integration
+# (src/lib/server/features/access.ts). Clients is not plan- or flag-gated; it is ROLE-gated to
+# OWNER and MANAGER (src/lib/server/tenancy/roles.ts:81; sidebar hides it otherwise,
+# src/lib/components/shell/AppSidebar.svelte:67,88).
+# E2E status: kitchen-brain qa/full-workflow-walk-suites run of 2026-09-26
+# (~/kb-qa-suites docs/qa/evidence-suites-2026-09-26/05-e2e.log lines ~62-88, 325-327):
+# every customer/client spec green EXCEPT order-client-selection.spec.ts:52 (red at both viewports).
+
+rows:
+  - id: B-01
+    lane: B
+    workflow: "Look a caller up in the client book, and save them if they are not there"
+    job_to_be_done: "Answer 'have we cooked for you before?' with the phone still in hand, without retyping a returning client"
+    actors: [owner, manager]
+    routes: ["/customers"]
+    entry: "Sidebar 'Clients' > search 'Name or phone' + 'Search clients'; right-hand card 'Add a client' > 'Person or company' (Person / Company) > Name > 'Save client'"
+    done_marker: "Flash '{name} is saved.' and the app lands on the new client's profile (src/routes/customers/+page.server.ts:150-151)"
+    hands_off_to: B-02
+    tier: production
+    evidence:
+      - "e2e/customer-directory.spec.ts:14 (an owner saves a person and a company, then finds each one again by name), :50, :70, :97 (a11y); green 2026-09-26"
+      - "src/routes/customers/+page.svelte:49 PageHeader 'Clients'; :53 'The book'; :81 placeholder 'Name or phone'; :93 'Include archived'; :95 'Search clients'; :109-110 empty state 'No clients yet' / 'Save the people and companies you cook for. Next time they call, the details are already here.'; :164 'Showing {n} of {total}. Search by name or phone to find the rest.'"
+      - "src/lib/components/customers/CustomerForm.svelte:82 legend 'Person or company'; :225 'Save client' / 'Saving client…'"
+      - "src/lib/components/customers/CustomerForm.svelte:190-207 duplicate prompt: 'You already have {name, phone, email}. Two records for one client split its orders between them. Open it, or save a second client if this is someone else.' buttons 'Open {name}' / 'Save a second client'"
+      - "src/routes/customers/+page.server.ts:119-133 duplicate check (exact phone or exact name) before save; :112-115 double-tap makes one client"
+      - "src/lib/server/customers/repository.ts:109 DIRECTORY_PAGE_SIZE = 100; :252-265 search matches name, email, phone digits and merged-away aliases"
+    plan_gate: "none (single Launch plan); owner or manager role only"
+    limits:
+      - "Only name and Person/Company are required; email, phone and note are optional."
+      - "The list shows 100 clients at a time; the rest are reached by search."
+      - "Search label says 'Name or phone' but it also matches email and old (merged) names."
+      - "The duplicate question fires only on an exact phone or exact name match; '555 0101' vs '5550101' is not matched."
+      - "No import of clients from a spreadsheet, Square, QuickBooks or anywhere else; no sample clients (grep of src/lib/server/sample-data, src/routes/import, src/lib/server/import finds no customers use). PRD 01 puts automatic imports out of scope (docs/prd/front-of-house/01-customers-inquiries.md:70)."
+      - "A cook (ordinary staff) cannot open the directory: 'Only an owner or manager can open the client directory.' (src/routes/customers/+page.server.ts:32)."
+      - "No delete. Archive is the removal (B-05)."
+    glossary_terms: [Client, Client directory, Archived]
+    capture_worthy: "yes: /customers at 390px with the 'You already have …' duplicate prompt showing 'Open {name}' and 'Save a second client'"
+
+  - id: B-02
+    lane: B
+    workflow: "Fix a client's name, phone, email or note"
+    job_to_be_done: "Keep one correct record so the next order and proposal copy the right details"
+    actors: [owner, manager]
+    routes: ["/customers/[id]"]
+    entry: "Clients > {client} > Details card > 'Edit details' > 'Save details'"
+    done_marker: "'Details saved.' (src/routes/customers/[id]/+page.server.ts:170, shown role=status by RecordEditForm.svelte:106)"
+    hands_off_to: B-03
+    tier: production
+    evidence:
+      - "e2e/client-edits.spec.ts:43 (an owner edits a client and its contact, and a reload shows them), :73 (two editors: the second keeps its draft), :103 (a cook cannot post an edit); green 2026-09-26"
+      - "src/routes/customers/[id]/+page.svelte:62 'Details'; :67-110 Email / Phone / Note / 'Also known as' / 'Saved'; :115-138 RecordEditForm summary 'Edit details' submitLabel 'Save details'"
+    plan_gate: "none; owner or manager"
+    limits:
+      - "An edit never reaches orders or events that already copied the client (see B-09, B-10). Those records keep their copy."
+      - "Two people editing at once: the second save is refused, shown what was saved, and keeps its draft (not a silent overwrite)."
+      - "A merged-away client is read-only (B-07)."
+    glossary_terms: [Client, Client Selection]
+    capture_worthy: "no"
+
+  - id: B-03
+    lane: B
+    workflow: "Keep a client's contacts and venues (who books, where the van goes)"
+    job_to_be_done: "Store the booker's name/role and each venue's address and access instructions once, so they are picked instead of retyped"
+    actors: [owner, manager]
+    routes: ["/customers/[id]"]
+    entry: "Clients > {client} > Contacts > 'Add contact' > 'Save contact'; Venues > 'Add venue' > 'Save venue'; per row 'Edit' / 'Remove'. Also 'Add venue' inside the client picker on an order or inquiry (NewVenueDialog 'Add a venue' > 'Save venue')"
+    done_marker: "'Contact saved.' / 'Venue saved.' (src/routes/customers/[id]/+page.server.ts:130); remove: 'Contact removed. The client is still saved.' / 'Venue removed. The client is still saved.' (:218)"
+    hands_off_to: B-09
+    tier: production
+    evidence:
+      - "e2e/customer-contacts-venues.spec.ts:12 (persist, recover and remove at 1280/390), :96 (ordinary staff cannot read the profile); green 2026-09-26"
+      - "src/lib/components/customers/CustomerContacts.svelte:78 'Contacts'; :148 'Add contact'; :154-191 'Contact name', 'Contact email (optional)', 'Contact phone (optional)', 'Role or responsibility (optional)'; :209 'Save contact'"
+      - "src/lib/components/customers/CustomerVenues.svelte:85 'Venues'; :162 'Add venue'; :168-233 'Venue name', 'Venue address', 'State (optional)', 'ZIP code (optional)', 'Access instructions (optional)'; :252 'Save venue'"
+      - "src/lib/components/customers/NewVenueDialog.svelte:74 'Add a venue'; :105 'Save venue'"
+      - "apps/regression-workbook/catalog/cases/customer-contacts-venues.json"
+    plan_gate: "none; owner or manager"
+    limits:
+      - "A venue is an address and access note, not a kitchen location or operating unit."
+      - "No map, geocoding, distance or delivery routing from a venue."
+      - "A failed save keeps what was typed ('Check the marked fields. Your entries are still here.')."
+    glossary_terms: [Contact, Venue]
+    capture_worthy: "maybe: profile Venues card with access instructions (gate code) filled"
+
+  - id: B-04
+    lane: B
+    workflow: "See what we have done for a client and what is coming, and start their next order"
+    job_to_be_done: "Prepare a repeat booking from last time's events and orders"
+    actors: [owner, manager]
+    routes: ["/customers/[id]"]
+    entry: "Clients > {client} > 'Events and orders' card (Upcoming / No date yet / Past) > 'Start an order for this client'"
+    done_marker: "Lines grouped 'Upcoming', 'No date yet', 'Past', each '{status}, {n} guests' with a date; 'Start an order for this client' opens /orders/new?clientId={id} with the client preselected (src/lib/components/customers/ClientHistory.svelte:36-38,134-135; src/routes/orders/new/+page.server.ts:30)"
+    hands_off_to: D (new order) / B-09
+    tier: production
+    evidence:
+      - "e2e/client-history.spec.ts:71 (a client's profile lists its own orders by date at 1280/390); green 2026-09-26"
+      - "src/lib/components/customers/ClientHistory.svelte:61 'Events and orders'; :44-53 status words 'Confirmed order' / 'Draft order' / 'Inquiry' / 'Inquiry with a kitchen draft' / 'Lost inquiry'; :68-69 'Nothing booked for this client yet' / 'Orders and events you link to this client will show here.'; :100 'Open the kitchen draft'; :132 'This client is archived. Restore it in Clients to start an order for it.'"
+      - "src/lib/server/customers/history.ts:78-145 (events + direct orders, including those of clients merged into this one; split by the kitchen's own time zone)"
+    plan_gate: "none; owner or manager"
+    limits:
+      - "No money on the profile: no totals, deposits, balances or lifetime spend (ClientHistory.svelte:15-16 by design)."
+      - "Event lines only ever say Inquiry, Inquiry with a kitchen draft, or Lost inquiry; a proposal sent, signed, booked or paid event is not labelled as such here."
+      - "Profile starts an ORDER only. There is no 'new inquiry/event for this client' button, and /events/new reads no clientId (grep of src/routes/events/new/+page.server.ts: no searchParams)."
+      - "Orders typed with the client's name but never linked are not listed; the profile says so and points to B-08."
+    glossary_terms: [Client, Event, Inquiry, Order]
+    capture_worthy: "yes: a repeat client's profile with Upcoming and Past lines and 'Start an order for this client'"
+
+  - id: B-05
+    lane: B
+    workflow: "Archive a client you no longer need in the list, and restore them later"
+    job_to_be_done: "Keep the pick list short without losing any order or event history"
+    actors: [owner, manager]
+    routes: ["/customers"]
+    entry: "Clients > row 'Archive'; to restore: tick 'Include archived' > 'Search clients' > row 'Restore'"
+    done_marker: "'Client archived. Their record is still available under Include archived.' / 'Client restored to the directory.' (src/routes/customers/+page.server.ts:75-76)"
+    hands_off_to: null
+    tier: production
+    evidence:
+      - "e2e/customer-archive.spec.ts:4 (archive hides a customer, preserves its profile and restores through explicit discovery); green 2026-09-26"
+      - "src/routes/customers/+page.svelte:55 'Archive clients you no longer need in this list. Their records stay available, and you can restore them.'; :153 'Restore' / 'Archive'"
+      - "apps/regression-workbook/catalog/cases/customer-archive.json"
+    plan_gate: "none; owner or manager"
+    limits:
+      - "Archived clients cannot be picked for a new order or inquiry until restored."
+      - "There is no delete."
+    glossary_terms: [Archived]
+    capture_worthy: "no"
+
+  - id: B-06
+    lane: B
+    workflow: "Review possible duplicate clients"
+    job_to_be_done: "Find the two records for one client before their orders split between them"
+    actors: [owner, manager]
+    routes: ["/customers/duplicates"]
+    entry: "Clients > 'Review possible duplicates'"
+    done_marker: "Groups headed 'Same phone: {phone}' / 'Same name: {name}' with per-record 'Archive' and 'Review a merge of {A} and {B}'; empty state 'No possible duplicates' / 'Every client has its own phone number and name.'; archive flash 'Client archived. Its record and history are still there under Include archived.' (src/routes/customers/duplicates/+page.svelte:55-56,66,102,114; +page.server.ts:68)"
+    hands_off_to: B-07
+    tier: production
+    evidence:
+      - "e2e/client-duplicates.spec.ts:37 (an owner reviews a pair sharing a phone and archives one at 1280/390); green 2026-09-26"
+      - "src/routes/customers/duplicates/+page.svelte:28-29 title 'Possible duplicates', description 'Clients that share a phone number or an exact name. Review a pair to merge it into one client, or archive the one you no longer need: its record and history stay, and you can restore it.'"
+      - "src/lib/server/customers/duplicates.ts:1-20 (grouping by exact phone then exact name; nothing is merged or created automatically)"
+    plan_gate: "none; owner or manager"
+    limits:
+      - "Matches exact phone or exact name only. Not email, not fuzzy names, not phone numbers formatted differently."
+      - "Nothing merges automatically; every merge is an owner's reviewed choice."
+    glossary_terms: [Possible duplicates, Archived]
+    capture_worthy: "no"
+
+  - id: B-07
+    lane: B
+    workflow: "Merge two records that are the same client"
+    job_to_be_done: "End up with one client whose history includes both records' events and orders"
+    actors: [owner, manager]
+    routes: ["/customers/duplicates/merge"]
+    entry: "Possible duplicates > 'Review a merge of {A} and {B}' > 'Which client do you keep?' ('Keep {A}' / 'Keep {B}') > 'Merge into {name}'"
+    done_marker: "Flash 'Clients merged. The other name is kept as an alias, and its history now shows here.' and the app lands on the kept client (src/routes/customers/duplicates/merge/+page.server.ts:59-63); the merged-away record then reads 'Merged into {name}. This record is kept so older orders and events still find it, and it cannot be changed.' (src/routes/customers/[id]/+page.svelte:52-57)"
+    hands_off_to: B-04
+    tier: production
+    evidence:
+      - "e2e/client-duplicates.spec.ts:107 (an owner merges a pair and links a typed order at 1280/390, #544); green 2026-09-26"
+      - "src/routes/customers/duplicates/merge/+page.svelte:51-52 title 'Merge two clients', description 'Keep one record. The other becomes an alias of it, and its contacts, venues, events and orders go with it. A merge cannot be undone; if you are not sure, archive one instead.'; :77 'Which client do you keep?'; :88 'Keep {name}'; :145 'Merge into {name}' / 'Merge clients' / 'Merging…'; :44 outcome sentence before submit"
+      - "src/lib/server/customers/merge.ts:23-44 (owner rulings Q2-Q7: survivor keeps its facts, other becomes alias, nothing historical rewritten, no undo)"
+      - "src/lib/server/customers/merge-route.test.ts, merge.test.ts"
+    plan_gate: "none; owner or manager"
+    limits:
+      - "A merge cannot be undone. Archive is the reversible alternative, and the screen says so."
+      - "The kept client keeps its own name, phone, email and note; the other's details become 'Also known as' aliases, not merged field by field."
+      - "Old orders and events keep the id they were saved with and resolve to the kept client; nothing historical is rewritten."
+    glossary_terms: [Merge, Alias]
+    capture_worthy: "yes: the side-by-side merge review with one card chosen and the outcome sentence under it"
+
+  - id: B-08
+    lane: B
+    workflow: "Link old orders that were typed before the client was saved"
+    job_to_be_done: "Bring earlier orders (typed names, storefront requests) into the right client's history"
+    actors: [owner, manager]
+    routes: ["/customers/duplicates", "/customers/[id]", "/orders/[id]"]
+    entry: "Possible duplicates > 'Orders typed before the client was saved' > 'Link the order to {name}' / 'Link {n} orders to {name}'. Doors: the profile sentence '… not linked yet … Link it/them in Possible duplicates'; the order card's 'View in Clients' link"
+    done_marker: "'1 order linked. It now shows in the client’s history.' / '{n} orders linked. They now show in the client’s history.' (src/routes/customers/duplicates/+page.server.ts:37-40)"
+    hands_off_to: B-04
+    tier: production
+    evidence:
+      - "e2e/client-duplicates.spec.ts:107 (… and links a typed order); green 2026-09-26"
+      - "src/routes/customers/duplicates/+page.svelte:125-128 'Orders typed before the client was saved' / 'These orders name a saved client but are not linked to it. They are not counted in the client's history until you link them.'; :161-164 'Linking copies {name}'s saved name, phone and email onto this order. Nothing on them is cleared, and a storefront order keeps its email.'; :168-170 button labels"
+      - "src/lib/components/customers/ClientHistory.svelte:116-123 unlinked-orders sentence"
+      - "src/lib/components/orders/CustomerCard.svelte:278-286 'View in Clients' (shown when a typed customer matches a saved client and the order is not linked)"
+      - "src/lib/server/orders/client-selection.ts:432-447 (all-or-nothing re-check)"
+    plan_gate: "none; owner or manager"
+    limits:
+      - "Candidates are found by exact name or phone match only, among the 300 most recent unlinked orders (duplicates.ts LEGACY_ORDERS_SCANNED)."
+      - "Never automatic: a typed name on an order is never linked without this explicit step (CONTEXT.md:226)."
+      - "Orders prepared from an event are excluded; their client comes from the event."
+    glossary_terms: [Client Selection, Public Order Request]
+    capture_worthy: "no"
+
+  - id: B-09
+    lane: B
+    workflow: "Put a saved client, contact and venue on an order, and keep it right when the client's details change"
+    job_to_be_done: "Fill an order's customer, delivery address and access from the book instead of retyping, and be told if the book changed later"
+    actors: [owner, manager]
+    shared_with: D
+    routes: ["/orders/new", "/orders/[id]"]
+    entry: "New order > 'Customer and delivery' > 'Saved client' (first option 'None: type the customer below') > 'Contact' > 'Venue' (or 'Add venue'). Existing order card: 'Link a saved client' / 'Change client' > 'Link client'; 'Unlink client'. Drift notice: 'Update this order from {name}' / 'Keep this order as it is'"
+    done_marker: "Preview 'This order will carry' before saving, with 'Copied when you save. Editing the client later leaves this order as it is.' (ClientPicker.svelte:231,264). After a card change: '{name} is linked to this order.' / 'This order now carries {name}'s saved details.' / 'This order moved to {name}.' / 'Client unlinked. This order keeps the details it copied.' (src/lib/server/orders/client-selection.ts:417-424); keep: 'This order keeps its own details. You will be told if the client's saved details change again.' (src/routes/orders/[id]/+page.server.ts:325)"
+    hands_off_to: D
+    tier: production
+    evidence:
+      - "e2e/order-client-selection.spec.ts:52 and :115. CAUTION: :52 was RED at both viewports in the 2026-09-26 walk (locator.selectOption on the Venue SearchSelect). Develop's spec has since been updated for the searchable venue (spec :63-65), but no re-run is recorded. :115 (a cook types the customer and never receives the client list) was green."
+      - "src/lib/components/customers/ClientPicker.svelte:144 'Saved client'; :178 'Contact'; :194 'Venue'; :211 'Add venue'; :231 'This {record} will carry'; :248-252 'Confirming the order emails its confirmation to {email}.'"
+      - "src/lib/components/orders/new/NewOrderForm.svelte:521 'Customer and delivery'; :537 noneLabel 'None: type the customer below'"
+      - "src/lib/components/orders/OrderClientLink.svelte:89-91 'This order's client comes from its event.' 'Change it on the event'; :125 'Link client'; :149 'Link a saved client' / 'Change client'; :162 'Unlink client'"
+      - "src/lib/components/orders/ClientCopyDrift.svelte:84 'Change client to choose another.'; :112 'Update this order from {name}'; :127 'Keep this order as it is'"
+      - "CONTEXT.md:225-227 (Client Selection definition)"
+    plan_gate: "none; choosing a saved client is owner or manager; a cook types the customer by hand"
+    limits:
+      - "The copy is made once. Editing the client later never changes the order by itself; the order card only says the details differ and offers the update."
+      - "An order prepared from an event is locked to the event's client."
+      - "A typed customer name on an order is never auto-matched into a link."
+      - "Contact and venue are never defaulted, even when a client has only one."
+    glossary_terms: [Client Selection, Contact, Venue]
+    capture_worthy: "yes: the 'This order will carry' preview with Address and Access filled, or the drift notice with 'Update this order from …' / 'Keep this order as it is'"
+
+  - id: B-10
+    lane: B
+    workflow: "Save a new client, or pick a saved one, while taking an inquiry"
+    job_to_be_done: "Capture a phone inquiry without leaving the screen to set up the client first"
+    actors: [owner, manager]
+    shared_with: A
+    routes: ["/events/new", "/events/[id]"]
+    entry: "All events > New inquiry > Client combobox 'Search or add a client' > a saved client, or 'Add “{typed}” as new client'. On an event with no client: '+ Add or choose client' (client card) or '+ Client' (fact chip) > 'Link client'. Also the event's 'Edit details' sheet"
+    done_marker: "Event workspace client card shows the name with 'View client' linking to /customers/{id} (src/lib/components/events/ClientCard.svelte:15); link from the workspace toasts 'Client linked' (ClientCard.svelte:17, FactChips.svelte:33)"
+    hands_off_to: A
+    tier: production
+    evidence:
+      - "e2e/client-edits.spec.ts:141 (an event keeps its client copy after a directory edit at 1280/390, #554); green 2026-09-26"
+      - "e2e/new-inquiry.spec.ts (cited by regression cases new-inquiry-phone-capture and event-customer-snapshot)"
+      - "src/lib/components/events/ClientCombobox.svelte:156 'Add “{query}” as new client'"
+      - "src/routes/events/new/+page.server.ts:98-108 (clientMode new -> customerIntent 'create'); src/routes/events/[id]/+page.server.ts:363-388 linkClient; src/lib/server/events/edit-details.ts:69-79"
+      - "src/lib/server/events/service.ts:360-365 createCustomer inside the inquiry save, then snapshot"
+      - "src/lib/components/events/ClientCard.svelte:16 'No client linked yet. You’ll need one before sending a proposal.' '+ Add or choose client'; :20 'Link client'"
+      - "apps/regression-workbook/catalog/cases/event-customer-snapshot.json, new-inquiry-phone-capture.json"
+    plan_gate: "none; owner or manager"
+    limits:
+      - "Creating a client from the inquiry does NOT run the 'You already have …' duplicate question that /customers does (findPossibleDuplicate is called only from src/routes/customers/+page.server.ts:120). The combobox lists matching saved clients first, but a typed new name is saved as a new record."
+      - "The event keeps a frozen copy of the client; a later directory edit does not change it until someone re-selects the client."
+    glossary_terms: [Client, Client Selection, Inquiry]
+    capture_worthy: "no (lane A owns the inquiry frame)"
+
+internal_routes: []
+# All four lane-B pages sit on rows: /customers (B-01, B-05), /customers/[id] (B-02, B-03, B-04, B-07 read-only view),
+# /customers/duplicates (B-06, B-08), /customers/duplicates/merge (B-07).
+# Non-page endpoints touched, for completeness (not in the +page.svelte route tree):
+#   /events/new/clients (+server.ts): JSON search behind the inquiry client combobox (owner/manager, 20 results). Internal.
+#   /events/new/duplicates (+server.ts): nonblocking "same client, event within seven days" warning. Lane A.
+
+creation_paths:
+  # A client row is inserted in exactly one function: src/lib/server/customers/repository.ts:90-97 (createCustomer).
+  # It has exactly two callers: src/routes/customers/+page.server.ts:136 and src/lib/server/events/service.ts:361.
+  - path: "Manual, Clients > Add a client > 'Save client'"
+    tier: production
+    row: B-01
+  - path: "From an inquiry: /events/new, the event workspace client card / fact chip ('Link client'), and 'Edit details', all via events/service.ts customerIntent 'create'"
+    tier: production
+    row: B-10
+  - path: "Online ordering site / storefront requests (/o/[token])"
+    creates_client: false
+    evidence: "src/lib/server/ordering/intake.ts:149-180 stores typed customerName/customerPhone/customerDeliveryAddress on the order; no createCustomer call. A storefront custom request becomes an Inquiry (e2e/custom-request-inquiry.spec.ts) with typed facts, not a directory Client. Such orders can be linked later (B-08)."
+  - path: "Square (catalog or sales), QuickBooks"
+    creates_client: false
+    evidence: "No Square/QuickBooks code references the customers table; the only Square+customer hit in lib/server is db/schema.ts. Stripe 'customer.subscription.*' in docs/billing.md is CostCook's own subscription, not a caterer's client."
+  - path: "Order form (/orders/new) typed customer"
+    creates_client: false
+    evidence: "The typed customer lives on the order only (CONTEXT.md:226 'an unlinked Order belongs to no Client')."
+  - path: "Proposal builder header (assumed-today, ~/kitchen-brain-proposal-build working tree)"
+    creates_client: false
+    evidence: "src/lib/components/proposals/builder/ProposalHeaderRow.svelte:51-66 reuses ClientCombobox with placeholder 'Add client: search or type a new name' / '+ Add client', but onchange sets only the draft's recipientName/recipientEmail (routes/events/[id]/proposal/+page.svelte:325-329). It reads the directory; it neither creates nor links a Client. Lane A owns the row."
+  - path: "Import / sample data"
+    creates_client: false
+    evidence: "No customers reference under src/lib/server/sample-data, src/routes/import, src/lib/server/import."
+
+assumed_today_check:
+  kitchen-brain-proposal-build: "Touches lane B only cosmetically: ClientCombobox gains placeholder/labelHidden/triggerClass props (diff vs ed6ff5f01) and a new consumer in the proposal header (see creation_paths). No change to /customers routes or client server modules."
+  kb-client-payment: "No customer/client files changed (only docs/plans/client-payment-in-the-booking-loop-2026-09-27.md matched the filename filter). No lane-B effect."
+  kb-stage-diagnosis: "No customer/client files. No lane-B effect."
+
+off_page_branches:
+  - branch: design/client-to-order-guidance
+    commits_unmerged: 1
+    last_commit: 2026-09-24
+    what: "feat(orders): guide client to confirmed order handoff. Reworks /customers (+page.svelte ~71 lines changed) and /customers/[id], ClientPicker, the order CustomerCard, duplicates.ts, adds a client-order-handoff regression case and story. Not merged; off-page."
+  - branch: codex/541-archive-customers
+    commits_unmerged: 1
+    what: "Stale. Archive shipped on main already; a two-dot diff against origin/main would DELETE the merge review (8 files, +71/-801), i.e. the branch predates #544. Nothing to claim."
+
+prd_status:
+  prd: docs/prd/front-of-house/01-customers-inquiries.md
+  user_stories:
+    - n: 1
+      story: "Save an inquiry without a menu, date, or guest count"
+      status: built
+      where: "lane A (/events/new); regression case new-inquiry-phone-capture"
+    - n: 2
+      story: "Find an existing person or company and its contacts"
+      status: built
+      where: "B-01, B-03; /customers search; ClientPicker"
+    - n: 3
+      story: "Assign an inquiry owner and next-action date"
+      status: built
+      where: "lane A (InquiryForm owner/follow-up; src/lib/components/events/InquiryForm.svelte:269 'Invite a teammate in a new tab')"
+    - n: 4
+      story: "View a client's past and upcoming events"
+      status: partial
+      where: "B-04 ClientHistory. Built: past/upcoming/undated lines for events and orders. Missing: booked/proposal/payment state on event lines; no 'new event for this client' door from the profile."
+    - n: 5
+      story: "Copy a selected contact and venue into the event"
+      status: built
+      where: "B-09/B-10; InquiryForm 'Choose a saved client' + ClientPicker; e2e/client-edits.spec.ts:141"
+    - n: 6
+      story: "Review possible duplicates before linking or merging (shared names or email addresses)"
+      status: partial
+      where: "B-06. Built for exact phone and exact name. Email is not a duplicate key, and phone formatting is not normalized."
+    - n: 7
+      story: "Archive or merge a customer while retaining event history"
+      status: built
+      where: "B-05, B-07"
+    - n: 8
+      story: "Create a standalone order without a customer record"
+      status: built
+      where: "/orders/new 'None: type the customer below'; e2e/order-client-selection.spec.ts:115"
+  acceptance_criteria:
+    - item: "Save an inquiry with only a description, assign owner/follow-up, reload, find it without creating an order"
+      status: built
+      where: "lane A"
+    - item: "Create a second event from a customer and selected contact/venue; later directory edits leave the first event's facts unchanged"
+      status: partial
+      where: "Snapshot freeze is built and proven (e2e/client-edits.spec.ts:141). A second event is made from /events/new by picking the client; there is no one-step 'new event for this client' from the profile."
+    - item: "Possible matches without automatic merge; reviewed merge preserves aliases/references/snapshots; concurrent stale merges fail recoverably"
+      status: built
+      where: "B-06, B-07; merge.ts compare-and-set; 'Not merged' alert (merge/+page.svelte:71)"
+    - item: "Archive hides from default selection; existing events and history still resolve"
+      status: built
+      where: "B-05; e2e/customer-archive.spec.ts:4"
+    - item: "Reject cross-tenant links and unauthorized directory access"
+      status: built
+      where: "requireRole(CUSTOMER_DIRECTORY_ROLES) on every action; customerRecordScope; e2e/customer-contacts-venues.spec.ts:96, e2e/client-edits.spec.ts:103"
+    - item: "Keep standalone order creation; legacy contacts become reviewed match candidates, not generated duplicates"
+      status: built
+      where: "B-08"
+    - item: "Record immutable actor/time/source for identity transitions; analytics carry IDs/counts only"
+      status: built (not visible to the caterer)
+      where: "customer_record_changes has actor_user_id, created_at, source (src/lib/server/db/schema.ts:5715-5717); customer_archive_changes (:5545); merge analytics carry ids and counts only (merge/+page.server.ts:45-54). No screen shows this history to the owner."
+
+terms:
+  - term: "Client (on screen) vs customer"
+    meaning_in_app: "A person or company the kitchen cooks for, saved once in the client directory with contacts and venues. Screens and sidebar say 'Clients'; code/route say customer (CONTEXT.md:221-223). CONTEXT.md lists 'customer on screen' under Avoid."
+    must_not_be_confused_with: "The typed customer on an order or the person who submits a Public Order Request (CONTEXT.md:216 still says 'A customer's proposed catering event'). A storefront request never creates or links a Client. Also not CostCook's Stripe 'customer' (subscription)."
+    landing_drift: "The landing says 'customer' throughout (e.g. src/pages/features/menus-and-quotes.astro:8,13; src/lib/ordering.ts:63-75) and never mentions a client directory, contacts, venues, duplicates or history."
+  - term: Contact
+    meaning_in_app: "A named person at a Client (name, optional email/phone, 'Role or responsibility'). Picking one on an order or inquiry copies that person's details."
+    must_not_be_confused_with: "A team member (staff) or the Client itself."
+  - term: Venue
+    meaning_in_app: "A saved address plus access instructions belonging to a Client; where the team goes for delivery or service."
+    must_not_be_confused_with: "An operating unit, kitchen location or pickup location (CONTEXT.md:223 Avoid)."
+  - term: "Client Selection"
+    meaning_in_app: "An owner or manager explicitly choosing a saved Client (and optionally a contact and venue) for an Order or Event; copies facts once; later edits never reach the record by themselves (CONTEXT.md:225-227)."
+    must_not_be_confused_with: "Auto-linking by name or phone; a sync that keeps orders updated."
+  - term: Archived (client)
+    meaning_in_app: "Hidden from the default list and pickers, record and history kept, restorable. Clients are never deleted."
+    must_not_be_confused_with: "Deleted; merged."
+  - term: Merged / Alias
+    meaning_in_app: "After a reviewed merge the kept client keeps its facts; the other's name/phone/email become 'Also known as' aliases and its record becomes read-only, pointing at the kept one. No undo."
+    must_not_be_confused_with: "An automatic de-duplication; archive."
+  - term: "Possible duplicates"
+    meaning_in_app: "Clients sharing an exact phone or exact name, listed for review only."
+    must_not_be_confused_with: "Fuzzy or email-based matching (not built)."
+  - term: "Section-5 core terms (Invoice, Acceptance, Approval, Booked, Deposit/balance, payment processor)"
+    meaning_in_app: "Not resolved in lane B. The client profile shows none of them: no invoices, deposits, balances or booked state (ClientHistory.svelte:15-16)."

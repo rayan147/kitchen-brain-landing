@@ -1,8 +1,11 @@
 // story: docs/stories/features-navigation.story.md
 // Considered Strategy; not used because feature wording varies as static data, not runtime behavior.
-import { SAGE_STATUS } from './sage';
+import { SAGE_STATUS, sageDraftKinds, sageDraftKindsOr, sageReadToolCount } from './sage';
+import { spell, spellCapital } from './words';
 import { labelsAvailability } from './labels';
 import { orderingAvailability } from './ordering';
+import { allergenCount } from './dietary';
+import { depositMethods } from './events';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -100,7 +103,7 @@ export const SECTION_META: Readonly<
 		slug: 'team-and-connections',
 		blurb: 'Who can change what, how a new kitchen gets started, and the connections being built.',
 		wall: 'You need the crew ready for Saturday, without spending the week learning new software.',
-		lede: 'Set up your kitchen, invite your crew and check what each role can do. Staff can open cost screens. Previously opened order pages can be read without signal; reconnect to make changes. Connections marked Coming are not included today.'
+		lede: 'Set up your kitchen, invite your crew and check what each role can do. Staff can open cost screens, including recipe costs and Analytics. Previously opened order pages can be read without signal; reconnect to make changes. Connections marked Coming are not included today.'
 	}
 };
 
@@ -126,6 +129,37 @@ export type FeatureGroup = {
 };
 
 export const featureGroups: readonly FeatureGroup[] = [
+	{
+		/* RC-61, RC-63 to RC-67, 2026-09-27. FIRST in the file because the site
+		   went event-first that day: this is the front half of every job, and the
+		   rest of this list is what happens after Confirm order. It reads under
+		   'The day itself' because the five section names are the /compare row
+		   groups verbatim and a sixth section would split both pages.
+
+		   Production rows only (docs/research/2026-09-27-app-inventory.yaml A-01
+		   to A-16, B-01 to B-09, C-14). The one-page proposal builder's charge
+		   lines, choice groups and payment terms (A-05, A-17, RC-62) are behind
+		   the deploy gate and are not described here. The deposit is recorded by
+		   hand in production: the verbs for it are ask, record and track. */
+		id: 'events',
+		section: 'The day itself',
+		kicker: 'Events & proposals',
+		title: 'From the first call to Confirm order, on one event.',
+		items: [
+			{ lead: 'New inquiry.', detail: 'Take the call with + New inquiry, even before the date is decided, and set who follows up and when.' },
+			{ lead: 'The pipeline.', detail: 'Events sorts every job into Needs attention, Booked · coming up, In pipeline and Past & closed.' },
+			{ lead: 'Menu with live food cost.', detail: 'Build the event menu from your costed recipes, a saved menu or a past event, and see food cost as you go.' },
+			{ lead: 'Preview, then send.', detail: 'Check exactly what the client will see, choose how long the link stays open, and send the proposal.' },
+			{ lead: 'The client decides on their phone.', detail: 'They open the link with no login and press Accept proposal or Ask for changes.' },
+			{ lead: 'Remind, extend, withdraw.', detail: 'Send a reminder, extend the link, withdraw the offer, or update it when they ask for changes.' },
+			{ lead: 'The agreement.', detail: 'Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.' },
+			{ lead: 'Kitchen draft.', detail: 'Prepare the kitchen draft from their yes; it holds no day and draws no crew until you book the event.' },
+			{ lead: 'Deposit, tracked.', detail: `Ask for a deposit and record what arrives as ${depositMethods}, against what you asked for.` },
+			{ lead: 'Confirm order is the booking.', detail: 'Confirm order freezes quantities and prices, and the event reads This event is booked.' },
+			{ lead: 'Calendar and the day’s room.', detail: 'The calendar counts orders and vans against the limits you set for each day, and an order says whether its day has room.' },
+			{ lead: 'Clients.', detail: 'Each client keeps contacts, venues with access notes, and their events and orders, for owners and managers.' }
+		]
+	},
 	{
 		id: 'math',
 		section: 'Recipes and costing',
@@ -182,7 +216,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Check before deleting.', detail: 'Before deleting an ingredient, check the recipes that still use it.' },
 			{ lead: 'CSV import.', detail: 'Bulk ingredient import with a template whose example rows actually pass.' },
 			{ lead: 'USDA reference built in.', detail: 'Yields, densities, and unit weights offered as chips you tap to fill.' },
-			{ lead: 'Allergens.', detail: 'Fourteen-allergen tagging rolls up to every recipe, with chef overrides that require a written reason.' },
+			{ lead: 'Allergens.', detail: `Tagging for the ${allergenCount} major US allergens rolls up to every recipe, with chef overrides that require a written reason.` },
 			{ lead: 'Shelf facts.', detail: 'Storage areas and par levels live on the ingredient. An unset par is unset, not zero.' }
 		]
 	},
@@ -218,14 +252,15 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Self-pricing.', detail: 'Cost per guest against selling price, plus the price that would hit your target.' },
 			{ lead: 'Equipment templates.', detail: 'Each menu carries its equipment counts. Chafers times three stays times three regardless of guests.' },
 			{ lead: 'Used-by guards.', detail: 'A menu that orders still use will not delete out from under them.' },
-			{ lead: 'Overridable pricing.', detail: 'The menu’s per-guest price is the default an order can override.' }
+			{ lead: 'Overridable pricing.', detail: 'The menu’s per-guest price is the default an order can override.' },
+			{ lead: 'Into the proposal.', detail: 'Start an event from a saved menu and its dishes and food cost come with it into the proposal the client sees.' }
 		]
 	},
 	{
 		id: 'orders',
 		section: 'The day itself',
 		kicker: 'Orders, the event',
-		title: 'Quote it, freeze it, run it.',
+		title: 'Price it, confirm it, run it.',
 		items: [
 			{ lead: 'Costed before commitment.', detail: 'A new order is a menu, a date, guests, and a price, estimated live as you set it up.' },
 			{ lead: 'Three tabs, one plan.', detail: 'Shop, Prep, and Pack all read the same computed plan.' },
@@ -283,7 +318,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Waste, valued.', detail: 'Logged waste explains part of the difference using the cost saved with that waste record.' },
 			{ lead: 'Stock turnover, when counts support it.', detail: 'Stock turnover is shown only when a trusted count is available at each end of the period.' },
 			{ lead: 'Purchases needing attention.', detail: 'Find orders waiting for your action or already sent. Open a sent purchase order to record its delivery.' },
-			{ lead: 'Filter purchase history.', detail: 'Filter purchases by ingredient and date. Longer results continue on the next page.' }
+			{ lead: 'Filter purchase history.', detail: 'Filter purchases by ingredient and date. Longer results continue on the next page.' },
+			// RC-70, 2026-09-27. Analytics has no page of its own; it answers the
+			// same month question from the numbers side, so it lives here.
+			{ lead: 'Analytics.', detail: 'Overview says whether this week is on track, What to charge gives the price per guest that reaches your target, and Month review compares the month\u2019s plan with purchases.' }
 		]
 	},
 	{
@@ -331,10 +369,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'ordering',
 		section: 'The day itself',
 		kicker: 'Taking orders',
-		title: 'The enquiry, arriving as something you can quote from.',
+		title: 'Online orders: the client requests, you approve, their payment confirms.',
 		// Status is read from src/lib/ordering.ts, the one place it may change
-		// (RC-59). Hardcoding it here would let the menu chip and this badge
-		// disagree the day the storefront is deployed.
+		// (RC-59, 'yes' since 2026-09-27). Hardcoding it here would let the menu
+		// chip and this badge disagree.
 		status: orderingAvailability.isComing ? 'in-development' : 'available',
 		items: [
 			{ lead: orderingAvailability.featureLead, detail: orderingAvailability.featureDetail }
@@ -357,8 +395,8 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Partial is said out loud.', detail: 'A missing profile or a missing conversion reports the dish as partial rather than totalling an incomplete recipe.' },
 			/* RC-50, 2026-08-29. The print page on sandbox/demo,
 			   src/routes/catalog/recipes/[id]/nutrition-label, is a live read model
-			   with no flag in front of it. Browser print onto label stock; the
-			   printer integration is the labels group below and is still Coming. */
+			   with no flag in front of it. Browser print onto label stock; kitchen
+			   date labels are the labels group below, also printed by the browser. */
 			{ lead: 'Printed from the recipe.', detail: 'Print nutrition label makes a sheet with the kitchen name, the panel, the ingredient statement, the allergen line and the print time, for the browser to put on label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.' }
 		]
 	},
@@ -391,9 +429,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		section: 'Compliance and labels',
 		kicker: 'Labels & printing',
 		title: 'Kitchen date and allergen labels, from the prep list.',
-		/* Built behind the label_printing flag and not in the launch plan (RC-35,
-		   RC-51). The word comes from src/lib/labels.ts; while it is Coming the
-		   area page renders only items[0].detail, so that line is the summary. */
+		/* Available since 2026-09-27 (RC-35 approved, RC-51). The word comes from
+		   src/lib/labels.ts; while it was Coming the area page rendered only
+		   items[0].detail, so that line is still the summary. */
 		status: labelsAvailability.isComing ? 'in-development' : 'available',
 		items: [
 			{ lead: labelsAvailability.featureLead, detail: labelsAvailability.featureDetail },
@@ -416,7 +454,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Vendor manager.', detail: 'Contacts, per-vendor purchasing method, and insight into what you actually buy from each.' },
 			{ lead: 'Metric or imperial.', detail: 'Choose metric or US units for your kitchen.' },
 			{ lead: 'Invite by email.', detail: 'Send an email invitation. Invitations expire, and you can revoke them.' },
-			{ lead: 'Three team roles.', detail: 'Owner, Manager and Staff control specific actions. All teammates can open cost screens; custom roles are not available.' },
+			{ lead: 'Three team roles.', detail: 'Owner, Manager and Staff control specific actions. Staff can open recipe costs and Analytics, but not order money on Today or the calendar, or the Clients book; custom roles are not available.' },
 			{ lead: 'Separate kitchen accounts.', detail: 'Your kitchen account does not give access to another kitchen’s records.' },
 			{ lead: 'Unassigned records stay separate.', detail: 'Older records without an assigned kitchen are not added to your account automatically.' }
 		]
@@ -469,9 +507,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		status: SAGE_STATUS === 'yes' ? 'available' : 'in-development',
 		items: [
 			{ lead: 'Ask during setup.', detail: 'Setup keeps an Ask Sage entry, offers questions that fit the stage and records entered so far, and gives you a direct route back.' },
-			{ lead: 'Eleven checks, one proposal.', detail: 'Ask about the shift, recipes, stock, buying or setup. Sage can also prepare a shopping-list proposal for a manager or owner to approve.' },
+			{ lead: `${spellCapital(sageReadToolCount, { compound: true })} read-only tools, ${spell(sageDraftKinds.length)} drafts.`, detail: `Ask about the shift, orders, recipes, stock, buying or setup. Sage can also draft ${sageDraftKindsOr}, for a manager or owner to approve.` },
 			{ lead: 'Sources under the answer.', detail: 'Each answer shows the records and checks behind its numbers, and says when evidence is missing.' },
-			{ lead: 'A proposal is not a change.', detail: 'Answers read your records. A shopping-list draft waits for an Owner or Manager to approve it, with the records checked again before saving.' }
+			{ lead: 'A draft is not a change.', detail: 'Answers read your records. Nothing changes until an Owner or Manager approves the draft, and the records are checked again before saving.' }
 		]
 	},
 	{
@@ -596,8 +634,8 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				featureId: 'guards',
 				icon: 'nutrition'
 			},
-			// Added 2026-08-29 at the owner's request. Coming (RC-35), so the chip
-			// shows unless src/lib/labels.ts says otherwise.
+			// Added 2026-08-29 at the owner's request. Available since 2026-09-27
+			// (RC-35), so the chip is off while src/lib/labels.ts says yes.
 			{
 				label: 'Labels & printing',
 				description: 'Date and allergen stickers from the prep list, frozen for reprints.',
@@ -610,6 +648,14 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 	{
 		label: 'Run the event',
 		items: [
+			// Added 2026-09-27, FIRST in this column because the event starts at the
+			// inquiry (RC-61). Shipped group, so no chip.
+			{
+				label: 'Events & proposals',
+				description: 'Take the inquiry, send the proposal, book the yes with Confirm order.',
+				featureId: 'events',
+				icon: 'orders'
+			},
 			{
 				label: 'Orders, shop, prep & pack',
 				description: 'Turn one menu and guest count into the plan for the day.',
@@ -667,6 +713,7 @@ const featureGroupsById = new Map(featureGroups.map((group) => [group.id, group]
 // Considered Strategy; not used because the destinations
 // are static route data, not interchangeable navigation algorithms.
 const dedicatedFeatureRoutes = new Map<string, string>([
+	['events', '/features/events-and-proposals'],
 	['math', '/features/recipes-and-costing'],
 	['menus', '/features/menus-and-quotes'],
 	['ingredients', '/features/ingredients-and-supplier-prices'],

@@ -2,7 +2,6 @@
 import FeatureTrialTerms from "../FeatureTrialTerms.astro";
 import { featureGroups } from '../../lib/features';
 import { cta, demoCta } from '../../lib/site';
-import { comingPlans } from '../../lib/coming-plans';
 
 const inventoryGroup = featureGroups.find((group) => group.id === 'inventory');
 if (!inventoryGroup) throw new Error('Missing public feature group: inventory');
@@ -39,7 +38,7 @@ const faqItems = [
 	},
 	{
 		question: 'Does a par level automatically add food to the shopping list?',
-		answer: `Not today. A par level can mark an ingredient below par, at or above par, unevaluable, or without a par. ${comingPlans.parBuying.faq}`
+		answer: `Yes, when you build the kitchen shopping list. A par level can mark an ingredient below par, at or above par, unevaluable, or without a par. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy. The shopping list on one order is separate and covers that order.`
 	},
 	{
 		question: 'What happens when a count is corrected later?',

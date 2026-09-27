@@ -48,6 +48,11 @@ const faqItems = [
 			'A draft combines a menu, date, guest count, and price. CostCook computes the food cost per guest and food-cost percentage, then shows the price that would meet the configured target before you confirm.'
 	},
 	{
+		question: 'How does the client see the price?',
+		answer:
+			'As a proposal on their own page: the event\u2019s costed menu goes into it, and they accept it or ask for changes on their phone. The whole path is on the Events & proposals guide.'
+	},
+	{
 		question: 'Can an event use a different price from the menu default?',
 		answer:
 			'Yes. The menu carries the default per-guest price, and an individual order can override it without changing the reusable menu.'
@@ -71,6 +76,12 @@ const faqItems = [
 ---
 
 <!-- story: docs/stories/menus-and-quotes-redesign.story.md -->
+<!-- 2026-09-27 (gap report S5, W3). The quote an event's client sees is now a
+     proposal on their own page, and that path has its own guide. This page
+     keeps what it truly owns: the costed menu, the price per guest against the
+     food-cost target, and the draft order a job taken by phone starts as. The
+     name and URL stay, because the Features menu, the tour and five contracts
+     pin "Menus & quotes", and a hand-made draft order still carries a quote. -->
 <article class="menus-quotes">
 	<section class="hero" aria-labelledby="menus-quotes-heading">
 		<div class="container-page hero-grid">
@@ -142,7 +153,7 @@ const faqItems = [
 	<section class="handoff-problem" aria-labelledby="handoff-heading">
 		<div class="container-page problem-grid">
 			<div data-reveal>
-				<h2 id="handoff-heading">Three files. One customer waiting.</h2>
+				<h2 id="handoff-heading">Three files. One client waiting.</h2>
 				<p>
 					The dishes are in a menu document. The revised count is in an email. The number you
 					plan to send is in a spreadsheet. The copying only looks harmless while all three agree.
@@ -154,7 +165,7 @@ const faqItems = [
 				<div><span>Guest-count email</span><strong>What changed</strong></div>
 				<svg width="36" height="18" viewBox="0 0 36 18" aria-hidden="true"><path d="M1 9h28M24 3l6 6-6 6" /></svg>
 				<div><span>Quote sheet</span><strong>What you say</strong></div>
-				<figcaption>One event record should carry what the customer chose and what the kitchen has to run.</figcaption>
+				<figcaption>One event record should carry what the client chose and what the kitchen has to run.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -234,6 +245,10 @@ const faqItems = [
 					the job is still a draft, then freeze the plan, math, and money together.
 				</p>
 			</div>
+			<p class="proposal-bridge" data-proposal-bridge data-reveal>
+				When a client is waiting on a price, the same costed menu goes into a proposal they
+				accept on their phone; <a href="/features/events-and-proposals">see events and proposals</a>.
+			</p>
 
 			<figure class="quote-path" data-reveal>
 				<ol role="list">
@@ -345,13 +360,13 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">Ready for the customer. Ready for the kitchen.</h2><p>Bring one real menu, set the guest count, and follow the number into the plan the kitchen will run.</p></div>
+			<div><h2 id="closing-heading">Ready for the client. Ready for the kitchen.</h2><p>Bring one real menu, set the guest count, and follow the number into the plan the kitchen will run.</p></div>
 			<div class="closing-actions">
 				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a>
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
 			</div>
 		</div>
-		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/events-and-proposals">Events &amp; proposals</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
 	</section>
 </article>
 
@@ -419,6 +434,8 @@ const faqItems = [
 	.catering-quotes { background: var(--color-cream); }
 	.section-intro { display: grid; gap: 1.25rem; align-items: end; }
 	.section-intro h2 { max-width: 20ch; }
+	.proposal-bridge { max-width: 62ch; margin-top: 1.75rem; padding: 1rem 1.25rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
+	.proposal-bridge a { color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
 	.section-intro > p { max-width: 57ch; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.menu-workspace { display: grid; gap: 1.25rem; margin-top: clamp(3rem, 6vw, 5rem); }
 	.workspace-main, .price-check, .equipment-sheet { background: var(--color-paper); box-shadow: 0 10px 18px color-mix(in srgb, var(--color-ink) 9%, transparent); }

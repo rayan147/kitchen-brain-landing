@@ -21,12 +21,32 @@
  * remembers a kitchen; the absolute form of the honesty claim (the ledger
  * softens it to: answers from records, says when evidence is missing); a
  * per-record entry point from an order page (designed, not built); anything
- * beyond the twelve tools listed below. The claim check scans whole files for the
+ * beyond the tools and three draft kinds kitchen-brain ships (RC-49: 22 read
+ * tools, 3 draft kinds, no commit tool; the list below is a selection of them). The claim check scans whole files for the
  * first three, comments included, which is why none is spelled out here.
  */
 import type { Verdict } from './comparison';
 
 export const SAGE_STATUS = 'yes' as Verdict;
+
+/**
+ * The counts kitchen-brain ships (RC-49): read-only tools, and the kinds of
+ * draft Sage may prepare for approval. Every sentence that counts them spells
+ * these through words.ts, so a count cannot drift between /features, the FAQ,
+ * the homepage and /compare. The draft kinds are listed, not counted, so the
+ * count and the names are one fact.
+ */
+export const sageReadToolCount = 22;
+export const sageDraftKinds = [
+	'the kitchen shopping list',
+	'one order’s shopping list',
+	'a guest-count change on a draft order'
+] as const;
+
+/** "The kitchen shopping list, one order’s shopping list, and a guest-count change on a draft order". */
+export const sageDraftKindsAnd = new Intl.ListFormat('en', { type: 'conjunction' }).format(sageDraftKinds);
+/** The same three, as alternatives: "..., or a guest-count change on a draft order". */
+export const sageDraftKindsOr = new Intl.ListFormat('en', { type: 'disjunction' }).format(sageDraftKinds);
 
 export const sage = {
 	name: 'Sage',
@@ -43,7 +63,7 @@ export const sage = {
 		return:
 			'Progress saves after each setup stage, and Back to setup returns to the unfinished stage.'
 	},
-	/** Eleven read tools and one approval-bound proposal, in kitchen words. */
+	/** A selection of the read tools and the three drafts, in kitchen words. */
 	abilities: [
 		{ ask: 'What needs my attention for Saturday?', does: 'Reads the same attention list the Today screen shows, for one date or all of them.' },
 		{ ask: 'What else is on that date?', does: 'Lists the orders on a day: name, guests, status, drafts included.' },
@@ -56,20 +76,21 @@ export const sage = {
 		{ ask: 'Which prices went up?', does: 'Reads the purchase ledger for price moves and says how many purchases the move rests on. Managers and owners only.' },
 		{ ask: 'What came up short in receiving?', does: 'Lists the open receiving follow-ups, without the supplier’s contact details.' },
 		{ ask: 'What is left in setup?', does: 'Reads setup progress and points to the unfinished stage. Managers and owners only.' },
-		{ ask: 'Prepare the shopping list', does: 'Drafts one. You see what it creates and what it does not touch, then you approve or discard it. Managers and owners only.' }
+		{ ask: 'Prepare the shopping list', does: 'Drafts the kitchen’s list, or one order’s. You see what it creates and what it does not touch, then you approve or discard it. Managers and owners only.' },
+		{ ask: 'Change Saturday’s draft to 32 guests', does: 'Drafts the guest-count change on a draft order. The price per guest holds and the total follows once you approve. Managers and owners only.' }
 	],
-	/** The homepage introduces the breadth without repeating a twelve-line diligence list. */
+	/** The homepage introduces the breadth without repeating the full diligence list. */
 	homepageGroups: [
 		{ name: 'Run the shift', detail: 'Attention, orders, prep and receiving follow-ups for a date.' },
 		{ name: 'Check a recipe', detail: 'Search, cost, nutrition and reviewed allergen facts.' },
 		{ name: 'Check stock and buying', detail: 'Below-par ingredients and recent price moves.' },
 		{ name: 'Finish setup', detail: 'Progress and the unfinished stage, for managers and owners.' },
-		{ name: 'Prepare one change', detail: 'A shopping-list proposal, for a manager or owner.' }
+		{ name: 'Prepare one change', detail: 'A draft shopping list or guest-count change, for a manager or owner to approve.' }
 	],
 	/** Read off the code, not the prompt. Each is enforced in a test. */
 	guardrails: [
 		{ lead: 'Every number has a source.', detail: 'Links are built by the app, so an answer cannot cite a record it did not read.' },
-		{ lead: 'It never changes a record on its own.', detail: 'Nothing sends, buys, reprices or adjusts. The one proposal waits for a person.' },
+		{ lead: 'It never changes a record on its own.', detail: 'Nothing sends, buys, reprices or adjusts. A draft waits for a manager or owner to approve it.' },
 		{ lead: 'It cannot reach another kitchen.', detail: 'Sage can only use records in the kitchen account you are signed into.' },
 		{ lead: 'It reads what your role can read.', detail: 'Price moves are for managers and owners. An answer built on them is redacted for staff in a shared thread.' },
 		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.' },
