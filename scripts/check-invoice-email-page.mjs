@@ -42,6 +42,12 @@ if (!live && !/Coming It is built, and it is not receiving email for trial kitch
 	fail('the Coming status sentence is missing from the first screen');
 }
 
+// Settings shows a real address in production today, so while Coming the
+// setup cards must say not to hand it out.
+if (!live !== html.includes('data-invoice-email-setup-warning')) {
+	fail(live ? 'the Coming setup warning is still on the page' : 'the setup cards lost the "do not give it to suppliers" warning');
+}
+if (!live && !prose.includes('so do not give it to suppliers')) fail('the setup warning sentence changed');
 const guideLinked = html.includes('href="/blog/supplier-invoices-by-email"');
 if (live !== guideLinked) fail(live ? 'the setup guide link is missing' : 'the page links a setup guide that is not published');
 

@@ -86,6 +86,10 @@ export const invoiceEmailAvailability = {
 	pageSentence: invoiceEmailIsComing
 		? 'It is built, and it is not receiving email for trial kitchens yet, so keep uploading invoices until this line changes.'
 		: 'In the CostCook subscription you would start today.',
+	/** Heads the setup cards while Coming: Settings already shows an address. */
+	setupWarning: invoiceEmailIsComing
+		? 'Not yet: Settings shows an address, but it is not receiving email, so do not give it to suppliers. Keep uploading invoices as a photo or PDF until this page says Available now.'
+		: null,
 	featureLead: invoiceEmailIsComing ? 'Coming; not receiving email yet.' : 'A private address for invoices.',
 	featureDetail: invoiceEmailIsComing
 		? 'Each kitchen will get a private invoice address for suppliers to send to or for you to forward to from Gmail. Every email will wait in review. Until it is receiving email, upload invoices as a photo or PDF.'

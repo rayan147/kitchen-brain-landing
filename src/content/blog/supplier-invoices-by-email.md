@@ -48,7 +48,7 @@ Your business name
 
 Copy it and send it to each rep. Ask them to send to this address directly rather than to you. That is the path where invoices arrive with nobody touching them.
 
-If a rep can only send to one address, ask them to add yours as a second recipient. The inbox reads who the mail was delivered to, not who is named on the To line.
+If a rep has to keep sending to you, ask them to copy the invoice address on the same email. The inbox reads who the mail was delivered to, not who is named on the To line.
 
 ## Step 3: Forward the ones that come to your Gmail
 
@@ -61,7 +61,7 @@ Some suppliers will only ever email you. For those, the second card, **Forward f
 
 Step 2 is where people get stuck. Forwarding is not on until Gmail's code is entered, and the code shows up in CostCook, not in your Gmail. CostCook never follows the link in that email; it only shows you the code. Once you have typed it into Gmail, press **I entered it** to put the notice away.
 
-Build the filter on the sender, one supplier per line, rather than on words like "invoice" in the subject. A filter on the word will forward your own sent quotes and every newsletter that says "invoice".
+List your suppliers' addresses in the filter's From field rather than filtering on the word "invoice". A filter on the word will forward every newsletter that says "invoice".
 
 When you forward, the inbox knows the email came from someone in your kitchen and shows **Forwarded by** with your address.
 

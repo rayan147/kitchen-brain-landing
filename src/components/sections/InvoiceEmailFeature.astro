@@ -90,6 +90,7 @@ const limits = [
 		<div class="container-page">
 			<div class="section-head" data-reveal>
 				<h2 id="setup-heading">Three cards, one settings page.</h2>
+				{availability.setupWarning && <p class="setup-warning" data-invoice-email-setup-warning>{availability.setupWarning}</p>}
 				<p>Settings &gt; Invoice email puts them in the order you will need them: the suppliers first, then your Gmail, then the rare day the address gets junk.</p>
 			</div>
 			<ol role="list" class="setup-cards">
@@ -224,6 +225,7 @@ const limits = [
 	.ticket pre { margin: 0; padding: 1.25rem 1rem; font-family: var(--font-mono); font-size: var(--text-body-sm); line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--color-ink); }
 	.ticket-foot { padding: .75rem 1rem 1rem; border-top: 1px dashed var(--color-ticket-rule); font-size: var(--text-body-sm); color: var(--color-ink-soft); }
 
+	.section-head .setup-warning { padding: .75rem 1rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); color: var(--color-ink); font-weight: 600; }
 	.setup-cards { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
 	.setup-cards > li { padding: 1.25rem 1.5rem; border-top: 2px solid var(--color-hairline-strong); background: var(--color-paper); }
 	.setup-cards h3 { margin-top: .4rem; }
