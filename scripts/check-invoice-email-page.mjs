@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { importsOnItsOwn, inboxOutcomeLabels, invoiceEmailLive as live, setupGuideSlug, workingAddress } from './lib/invoice-email.mjs';
 
 /**
  * Built-page contract for /features/invoice-email (RC-73).
@@ -21,8 +22,6 @@ const dist = new URL('../dist/', import.meta.url).pathname;
 const html = readFileSync(join(dist, 'features/invoice-email/index.html'), 'utf8');
 const featureHub = readFileSync(join(dist, 'features/index.html'), 'utf8');
 const importHtml = readFileSync(join(dist, 'features/invoices-and-price-list-import/index.html'), 'utf8');
-const statusSource = readFileSync(new URL('../src/lib/invoice-email.ts', import.meta.url), 'utf8');
-const live = /INVOICE_EMAIL_STATUS = 'yes'/.test(statusSource);
 
 const failures = [];
 const fail = (message) => failures.push(message);
@@ -48,22 +47,23 @@ if (!live !== html.includes('data-invoice-email-setup-warning')) {
 	fail(live ? 'the Coming setup warning is still on the page' : 'the setup cards lost the "do not give it to suppliers" warning');
 }
 if (!live && !prose.includes('so do not give it to suppliers')) fail('the setup warning sentence changed');
-const guideLinked = html.includes('href="/blog/supplier-invoices-by-email"');
+const guideLinked = html.includes(`href="/blog/${setupGuideSlug}"`);
 if (live !== guideLinked) fail(live ? 'the setup guide link is missing' : 'the page links a setup guide that is not published');
 
 if (!prose.includes('Nothing counts until you check it, so the worst a stranger can do is add to your review list.')) {
 	fail('the snap line (the app’s own sentence) is gone');
 }
 if (!prose.includes('An emailed invoice opens in the same review as an upload.')) fail('the review boundary heading is gone');
-for (const label of ['Invoice', 'Credit memo', 'Statement', 'Duplicate', 'Held as spam', 'Nothing to read', 'Over today’s limit', 'Needs a look']) {
-	if (!html.includes(`data-inbox-outcome="${label.replace('’', '’')}"`)) fail(`outcome missing: ${label}`);
+// Every outcome the data lists, read from src/lib/invoice-email.ts.
+for (const label of inboxOutcomeLabels) {
+	if (!html.includes(`data-inbox-outcome="${label}"`)) fail(`outcome missing: ${label}`);
 }
 if ((html.match(/data-invoice-email-limit/g) ?? []).length !== 5) fail('expected five limits');
 for (const text of ['200 emails in a day', '100 pages a day', 'Gmail’s confirmation code']) {
 	if (!prose.includes(text)) fail(`limit missing: ${text}`);
 }
-if (/\bautomatic(ally)?\b|auto-?import|hands-?free|seamless/i.test(prose)) fail('the page says invoices import on their own');
-if (/invoices-[0-9a-z]{16}@/.test(html)) fail('the page prints a working invoice address');
+if (importsOnItsOwn.test(prose)) fail('the page says invoices import on their own');
+if (workingAddress.test(html)) fail('the page prints a working invoice address');
 
 // The hub lists the guide; the menu chip follows the word.
 if (!featureHub.includes('href="/features/invoice-email"')) fail('the /features hub does not link the invoice email guide');

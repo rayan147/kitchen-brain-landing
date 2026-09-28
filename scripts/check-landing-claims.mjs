@@ -2,6 +2,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { moneyClaims } from './lib/money-claims.mjs';
 import { homepageComponentOrder, homepageStopIds } from './lib/homepage-stops.mjs';
+import { importsOnItsOwn, invoiceEmailStatus, setupGuideSlug, workingAddress } from './lib/invoice-email.mjs';
 
 const root = new URL('..', import.meta.url).pathname;
 const read = (path) => readFile(join(root, path), 'utf8');
@@ -455,8 +456,7 @@ for (const [name, source] of [['src/lib/labels.ts', labelsSource], ['src/compone
 // the three conditions in src/lib/invoice-email.ts hold and RC-73 is updated
 // in the same commit. While it is Coming the setup guide is not published
 // (src/lib/blog.ts; scripts/check-blog.mjs checks the build).
-const invoiceEmailSource = surfaces[surfaceFiles.indexOf('src/lib/invoice-email.ts')];
-if (!/INVOICE_EMAIL_STATUS = 'coming'/.test(invoiceEmailSource)) {
+if (invoiceEmailStatus !== 'coming') {
 	failures.push('invoice email status: production receives no mail (RC-73); INVOICE_EMAIL_STATUS must read coming until the ledger row changes');
 }
 if (!/^\| RC-73 \|.*COMING/m.test(ledger)) {
@@ -464,14 +464,14 @@ if (!/^\| RC-73 \|.*COMING/m.test(ledger)) {
 }
 const blogGateSource = surfaces[surfaceFiles.indexOf('src/lib/blog.ts')];
 requireText(blogGateSource, 'invoiceEmailAvailability.isComing ? [invoiceEmailRoute]', 'the invoice email guide waits for the feature');
-for (const name of ['src/lib/invoice-email.ts', 'src/components/sections/InvoiceEmailFeature.astro', 'src/content/blog/supplier-invoices-by-email.md']) {
-	const source = name.startsWith('src/content/') ? await read(name) : surfaces[surfaceFiles.indexOf(name)];
+for (const name of ['src/lib/invoice-email.ts', 'src/components/sections/InvoiceEmailFeature.astro', `src/content/blog/${setupGuideSlug}.md`]) {
+	const source = surfaces[surfaceFiles.indexOf(name)];
 	// Code comments may name the banned words to ban them; user copy may not.
 	const copy = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
-	if (/\bautomatic(ally)?\b|auto-?import|hands-?free|set and forget|seamless/i.test(copy)) {
+	if (importsOnItsOwn.test(copy)) {
 		failures.push(`${name}: an emailed invoice waits in review (RC-73); no automatic, auto-import or hands-free wording`);
 	}
-	if (/invoices-[0-9a-z]{16}@/.test(copy)) {
+	if (workingAddress.test(copy)) {
 		failures.push(`${name}: never print a working invoice address; use the placeholder shape`);
 	}
 }

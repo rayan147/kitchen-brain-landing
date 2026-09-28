@@ -268,7 +268,7 @@ try {
 		scrollWidth: document.documentElement.scrollWidth,
 		innerWidth
 	}))()`);
-	assert(mobileStop.selected !== undefined && mobileStop.selected === mobileStop.select && mobileStop.visibleId === 'nutrition-allergens', 'mobile select did not stay synchronized');
+	assert(mobileStop.selected !== undefined && mobileStop.selected === mobileStop.select, 'mobile select did not stay synchronized');
 	assert(mobileStop.visibleId === 'nutrition-allergens', 'mobile select did not open nutrition and allergens');
 	assert(mobileStop.scrollWidth === mobileStop.innerWidth, 'mobile selection introduced page overflow');
 	const mobileEvidence = await evaluate(`(() => {

@@ -1,8 +1,9 @@
-import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
@@ -16,10 +17,7 @@ const articleSlugs = (await readdir(new URL('../src/content/blog', import.meta.u
 	.sort();
 // The invoice email setup guide publishes only with the feature (RC-73,
 // src/lib/blog.ts), so while it is Coming it has no route to walk.
-const invoiceEmailLive = /INVOICE_EMAIL_STATUS = 'yes'/.test(
-	await readFile(new URL('../src/lib/invoice-email.ts', import.meta.url), 'utf8')
-);
-if (!invoiceEmailLive) articleSlugs.splice(articleSlugs.indexOf('supplier-invoices-by-email'), 1);
+if (!invoiceEmailLive) articleSlugs.splice(articleSlugs.indexOf(setupGuideSlug), 1);
 const postCount = articleSlugs.length;
 
 const profile = await mkdtemp(join(tmpdir(), 'costcook-blog-'));
