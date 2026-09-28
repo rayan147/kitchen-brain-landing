@@ -1,0 +1,259 @@
+---
+/**
+ * /features/invoice-email
+ * story: docs/stories/features-invoice-email.story.md
+ * ledger: RC-73
+ *
+ * The front door of invoice review: a private address per kitchen, the
+ * Invoice inbox that says what became of each email, and the same review an
+ * upload goes through. Every sentence traces to kitchen-brain origin/main
+ * (inventory F-03, re-read 2026-09-28); the status word, the Gmail steps, the
+ * outcome words and the caps come from src/lib/invoice-email.ts.
+ *
+ * WHY NO CAPTURES. Production receives no mail yet, and a screenshot from the
+ * test environment would print a working address. The page shows the app's
+ * words as text in ticket frames with a placeholder address instead of
+ * mocking a screen.
+ *
+ * THE STATUS LINE under the subhead and the setup-guide link both read
+ * invoiceEmailAvailability. While it is Coming the guide is not built
+ * (src/lib/blog.ts), so the link is not drawn either.
+ *
+ * Considered Template Method (a shared FeatureGuide shell); not used because
+ * the feature family shares semantic roles, not an algorithm. Same refusal as
+ * EventsProposalsFeature.astro.
+ */
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
+import { cta, demoCta } from '../../lib/site';
+import { gmailSteps, inboxLimits, inboxOutcomes, invoiceEmailAvailability as availability } from '../../lib/invoice-email';
+
+// The address shape the app issues (kitchen-brain address.ts): never a real one.
+const sampleAddress = 'invoices-················@in.costcook.io';
+const repMessage = [
+	'Hi,',
+	'',
+	`Please send our invoices and credit memos to ${sampleAddress}. A PDF attached to the email is best.`,
+	'',
+	'Thank you,',
+	'Your business name'
+].join('\n');
+
+// The Invoice inbox filters, verbatim (outcomes.ts INBOX_FILTERS).
+const inboxFilters = ['All email', 'Invoices and credits', 'Not imported', 'Held or needs a look'] as const;
+
+// Where it stops. One sentence each, each one a line of kitchen-brain code.
+const limits = [
+	'It reads PDFs and phone photos attached to the email, or the email’s own text when nothing is attached; a spreadsheet or Word file is listed as not read.',
+	`Past ${inboxLimits.emailsPerDay} emails in a day the rest are not read, and scans are read up to ${inboxLimits.pagesReadPerDay} pages a day.`,
+	'Statements, order confirmations and promotions are listed with a reason and not imported, unless you change what the email is.',
+	'Gmail forwarding is not on until you enter Gmail’s confirmation code in Gmail.',
+	'Only an owner or a manager can open Settings > Invoice email.'
+] as const;
+---
+
+<!-- story: docs/stories/features-invoice-email.story.md -->
+<article id="features-inbox" class="inbox-page">
+	<section class="hero" aria-labelledby="inbox-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
+					<a href="/features">Every feature</a>
+					<span aria-hidden="true">/</span>
+					<span>Invoice email</span>
+				</nav>
+				<h1 id="inbox-heading" class="feature-display">
+					Your supplier already emails the invoice. Give them the address.
+				</h1>
+				<p class="hero-lede">
+					Each kitchen gets a private invoice address; what arrives waits in review, and
+					nothing reaches your costs until you confirm it.
+				</p>
+				<p class="status-line" data-invoice-email-status={availability.verdict}>
+					<span class="status-word">{availability.word}</span> {availability.pageSentence}
+				</p>
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+				</div>
+				<FeatureTrialTerms />
+			</div>
+
+			<figure class="ticket anim-enter" style="--enter-delay: 120ms" data-invoice-email-rep-message>
+				<figcaption>Message for your sales rep · the app writes it</figcaption>
+				<pre>{repMessage}</pre>
+				<p class="ticket-foot">Your address fills the dots: <code>invoices-</code> and sixteen letters and numbers.</p>
+			</figure>
+		</div>
+	</section>
+
+	<section id="setup" class="product-section" aria-labelledby="setup-heading">
+		<div class="container-page">
+			<div class="section-head" data-reveal>
+				<h2 id="setup-heading">Three cards, one settings page.</h2>
+				<p>Settings &gt; Invoice email puts them in the order you will need them: the suppliers first, then your Gmail, then the rare day the address gets junk.</p>
+			</div>
+			<ol role="list" class="setup-cards">
+				<li data-reveal>
+					<p class="ticket-label">01</p>
+					<h3>Ask your suppliers to send invoices here</h3>
+					<p>Copy Your invoice address and the Message for your sales rep, and send it to each rep, so invoices arrive with nobody touching them.</p>
+				</li>
+				<li data-reveal style="--reveal-delay: 60ms">
+					<p class="ticket-label">02</p>
+					<h3>Forward from Gmail</h3>
+					<ol class="gmail-steps">
+						{gmailSteps.map((step) => <li>{step}</li>)}
+					</ol>
+				</li>
+				<li data-reveal style="--reveal-delay: 120ms">
+					<p class="ticket-label">03</p>
+					<h3>Change the address</h3>
+					<p>Make a new address if junk starts; the old one keeps working for {inboxLimits.graceDays} days, or Stop the old address now.</p>
+				</li>
+			</ol>
+			<p class="handoff">Next: See what has arrived.</p>
+		</div>
+	</section>
+
+	<section id="inbox" class="product-section soft" aria-labelledby="inbox-list-heading">
+		<div class="container-page">
+			<div class="section-head" data-reveal>
+				<h2 id="inbox-list-heading">Did Tuesday’s invoice come in? One look.</h2>
+				<p>Purchases &gt; Invoice inbox lists every email sent to your address, and what became of it, in these words.</p>
+			</div>
+			<ul role="list" class="chip-row" aria-label="The four filters on the Invoice inbox">
+				{inboxFilters.map((filter) => <li>{filter}</li>)}
+			</ul>
+			<dl class="outcomes" data-reveal>
+				{inboxOutcomes.map((outcome) => (
+					<div data-inbox-outcome={outcome.label}>
+						<dt>{outcome.label}</dt>
+						<dd>{outcome.reason}</dd>
+					</div>
+				))}
+			</dl>
+			<p class="section-note" data-reveal>When the inbox got it wrong, Change what this email is reads it again as what you chose; Held as spam has Let it through.</p>
+			<p class="handoff">Next: Review.</p>
+		</div>
+	</section>
+
+	<section id="review" class="product-section" aria-labelledby="review-heading">
+		<div class="container-page split">
+			<div data-reveal>
+				<h2 id="review-heading">An emailed invoice opens in the same review as an upload.</h2>
+				<p>The inbox marks a New sender when the address is not one of your suppliers yet and warns when the sender could not be verified; the review says who sent it.</p>
+				<p>Check the lines, the pack sizes and the total against the original, then confirm; until then it changes no cost.</p>
+				<p class="snap" data-invoice-email-snap>Nothing counts until you check it, so the worst a stranger can do is add to your review list.</p>
+			</div>
+			<div class="review-links" data-reveal>
+				<p class="ticket-label">What review checks</p>
+				<p>The review is the invoice import guide’s: totals that must add up, duplicates blocked, and the original beside every line.</p>
+				<a href="/features/invoices-and-price-list-import">Invoices &amp; price-list import</a>
+			</div>
+		</div>
+	</section>
+
+	<section id="limits" class="product-section soft" aria-labelledby="limits-heading">
+		<div class="container-page">
+			<div class="section-head" data-reveal>
+				<h2 id="limits-heading">Where it stops.</h2>
+			</div>
+			<ul role="list" class="limit-list">
+				{limits.map((line) => <li data-invoice-email-limit data-reveal>{line}</li>)}
+			</ul>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid" data-reveal>
+			<div>
+				<h2 id="closing-heading">Start with the rep who sends the most.</h2>
+				{availability.isComing
+					? <p>Until invoice email is receiving mail, upload that rep’s next invoice as a photo or PDF during the trial; it goes through the same review.</p>
+					: <p>Send them the message on the first day of the trial, then check the Invoice inbox when their next invoice is due. <a href="/blog/supplier-invoices-by-email" data-invoice-email-guide>Read the setup guide</a>.</p>}
+			</div>
+			<div class="closing-actions">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+			</div>
+		</div>
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides">
+			<a href="/features/invoices-and-price-list-import">Invoices &amp; price-list import</a>
+			<a href="/features/purchases-and-month-cost">Purchases &amp; month cost</a>
+			<a href="/features">Every CostCook feature</a>
+		</nav>
+	</section>
+</article>
+
+<style>
+	.inbox-page { background: var(--color-cream); }
+	.hero-grid, .split, .closing-grid { display: grid; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+	.hero-grid > *, .split > *, .closing-grid > * { min-width: 0; }
+	.hero-grid { padding-block: clamp(3rem, 6vw, 5rem) var(--spacing-section-tight); }
+	.closing-grid { padding-block: var(--spacing-section-tight); }
+	.product-section { border-top: 1px solid var(--color-hairline); padding-block: var(--spacing-section); }
+	.product-section.soft { background: var(--color-paper); }
+	.feature-breadcrumb { margin-bottom: 1.6rem; }
+	.hero-lede { margin-top: 1.5rem; max-width: 56ch; font-size: var(--text-lede); line-height: var(--text-lede--line-height); color: var(--color-ink-soft); }
+	.status-line { margin-top: 1.25rem; max-width: 56ch; padding: .75rem 1rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); font-size: var(--text-body-sm); }
+	.status-word { font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-amber-deep); margin-right: .4rem; }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
+	/* Scoped per feature page across this family, the same four declarations
+	   as EventsProposalsFeature.astro (hoisting is its own pass). */
+	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
+	.btn-outline:hover { background: var(--color-green); color: var(--color-paper); }
+	@media (prefers-reduced-motion: reduce) {
+		.btn-outline { transition: none; }
+	}
+	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.12; text-wrap: balance; }
+	h3 { font-weight: 650; font-size: var(--text-h3); line-height: 1.25; text-wrap: balance; }
+	.section-head { max-width: 62ch; }
+	.section-head p, .split p { margin-top: 1.25rem; max-width: 60ch; color: var(--color-ink-soft); }
+	.section-note { margin-top: 2rem; max-width: 66ch; color: var(--color-ink-soft); }
+	.handoff { padding-top: 2rem; font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.ticket-label { font-family: var(--font-mono); font-size: var(--text-eyebrow); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-amber-deep); }
+
+	/* The rep message: the app's own text on ticket paper, tilted like every
+	   ticket on the site, and flat under reduced motion. */
+	.ticket { border-block: 1px solid var(--color-ticket-rule); background: var(--color-paper); box-shadow: var(--shadow-ticket); transform: rotate(-1.5deg); }
+	@media (prefers-reduced-motion: reduce) {
+		.ticket { transform: none; }
+	}
+	.ticket figcaption { padding: .75rem 1rem; border-bottom: 1px dashed var(--color-ticket-rule); color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+	.ticket pre { margin: 0; padding: 1.25rem 1rem; font-family: var(--font-mono); font-size: var(--text-body-sm); line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--color-ink); }
+	.ticket-foot { padding: .75rem 1rem 1rem; border-top: 1px dashed var(--color-ticket-rule); font-size: var(--text-body-sm); color: var(--color-ink-soft); }
+
+	.setup-cards { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
+	.setup-cards > li { padding: 1.25rem 1.5rem; border-top: 2px solid var(--color-hairline-strong); background: var(--color-paper); }
+	.setup-cards h3 { margin-top: .4rem; }
+	.setup-cards p:not(.ticket-label) { margin-top: .75rem; color: var(--color-ink-soft); }
+	.gmail-steps { margin-top: .75rem; padding-left: 1.2rem; list-style: decimal; color: var(--color-ink-soft); }
+	.gmail-steps li + li { margin-top: .4rem; }
+
+	.chip-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.75rem; }
+	.chip-row > li { padding: .5rem 1rem; border: 1px solid var(--color-hairline-strong); border-radius: 999px; font-weight: 600; }
+	.outcomes { display: grid; gap: 0 2rem; margin-top: 2rem; max-width: 76rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+	.outcomes > div { padding-block: .9rem; border-top: 1px dashed var(--color-ticket-rule); }
+	.outcomes dt { font-weight: 700; }
+	.outcomes dd { margin-top: .25rem; font-size: var(--text-body-sm); color: var(--color-ink-soft); }
+
+	.split .snap { margin-top: 2rem; padding: 1.1rem 1.25rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: 1.25; color: var(--color-ink); }
+	.review-links { padding: 1.25rem 1.5rem; border-block: 1px solid var(--color-ticket-rule); background: var(--color-paper); }
+	.review-links p:not(.ticket-label) { margin-top: .6rem; color: var(--color-ink-soft); }
+	.review-links a, .closing a:not([class]) { display: inline-flex; min-height: 44px; align-items: center; font-weight: 600; color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 4px; }
+
+	.limit-list { display: grid; gap: 1.25rem; margin-top: 2.5rem; max-width: 76ch; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+	.limit-list > li { padding-top: .9rem; border-top: 1px solid var(--color-hairline-strong); font-size: var(--text-body-sm); line-height: 1.55; color: var(--color-ink-soft); }
+
+	.closing { border-top: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.closing-grid p { margin-top: 1rem; max-width: 56ch; color: var(--color-ink-soft); }
+	.onward { display: flex; flex-wrap: wrap; gap: 1.5rem; padding-bottom: var(--spacing-section-tight); }
+
+	@media (min-width: 60rem) {
+		.hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+		.split { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: start; }
+		.closing-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+		.setup-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	}
+</style>
