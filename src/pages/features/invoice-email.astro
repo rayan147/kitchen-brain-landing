@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import InvoiceEmailFeature from '../../components/sections/InvoiceEmailFeature.astro';
+import { invoiceEmailAvailability } from '../../lib/invoice-email';
+
+// Considered Strategy; not used because this route is one deliberate editorial
+// composition selected at build time, not a runtime-swappable layout family.
+const directionContract = [
+	'THESIS: The invoice already arrives by email; give it an address that ends in review, never in your costs.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, the app’s rep message on a tilted ticket, outcome words on dashed rules, status chip read from src/lib/invoice-email.ts.',
+	'STORY: The owner sends the rep the message, forwards the rest from Gmail, reads what became of each email, and confirms in the same review as an upload (RC-73).',
+	'FIRST VIEWPORT: Headline, the one-line promise, the honest status line, actions, and the rep message ticket.',
+	'FORM: Utility composition matching the feature family; no captures while production receives no mail, and never a working address.',
+	'FINISH: Status pinned by the claim guard; the page guard checks the status line, the outcome words, the limits and the gated guide link.'
+].join(' ');
+---
+
+<Base
+	title="Supplier invoice email for caterers | CostCook"
+	description={invoiceEmailAvailability.seoDescription}
+	path="/features/invoice-email"
+	directionContract={directionContract}
+>
+	<InvoiceEmailFeature />
+</Base>

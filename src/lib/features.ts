@@ -6,6 +6,7 @@ import { labelsAvailability } from './labels';
 import { orderingAvailability } from './ordering';
 import { allergenCount } from './dietary';
 import { depositMethods } from './events';
+import { inboxLimits, invoiceEmailAvailability, invoiceEmailRoute } from './invoice-email';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -366,6 +367,24 @@ export const featureGroups: readonly FeatureGroup[] = [
 		]
 	},
 	{
+		/* RC-73. Built on kitchen-brain main, not receiving mail in production
+		   yet; the word comes from src/lib/invoice-email.ts. While Coming the
+		   area page renders only items[0].detail, so that line is the summary. */
+		id: 'inbox',
+		section: 'Getting prices in',
+		kicker: 'Invoice email',
+		title: 'Suppliers email the invoice. It waits in review.',
+		status: invoiceEmailAvailability.isComing ? 'in-development' : 'available',
+		items: [
+			{ lead: invoiceEmailAvailability.featureLead, detail: invoiceEmailAvailability.featureDetail },
+			{ lead: 'A message for your rep.', detail: 'Settings writes the email to send your sales rep, with your address in it.' },
+			{ lead: 'Gmail forwarding.', detail: 'For suppliers who only email you; Gmail’s confirmation code shows up in CostCook.' },
+			{ lead: 'What became of each email.', detail: 'The Invoice inbox says Invoice, Statement, Duplicate, Held as spam and more, with the reason.' },
+			{ lead: 'Nothing counts unchecked.', detail: 'An emailed invoice opens in the same review as an upload.' },
+			{ lead: 'A new address when junk starts.', detail: `The old one keeps working for ${spell(inboxLimits.graceDays)} days, or stop it now.` }
+		]
+	},
+	{
 		id: 'ordering',
 		section: 'The day itself',
 		kicker: 'Taking orders',
@@ -618,6 +637,16 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				featureId: 'import',
 				icon: 'import'
 			},
+			// Added 2026-09-28 (RC-73). It sits after import because it is import's
+			// front door. The chip and the destination both read the one word in
+			// src/lib/invoice-email.ts.
+			{
+				label: 'Invoice email',
+				description: 'Give suppliers an address; every invoice waits in review.',
+				featureId: 'inbox',
+				icon: 'import',
+				...(invoiceEmailAvailability.isComing ? { coming: true as const } : {})
+			},
 			// Added 2026-08-29 at the owner's request. Shipped group, so no chip.
 			{
 				label: 'Nutrition facts & allergens',
@@ -718,6 +747,7 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['menus', '/features/menus-and-quotes'],
 	['ingredients', '/features/ingredients-and-supplier-prices'],
 	['import', '/features/invoices-and-price-list-import'],
+	['inbox', invoiceEmailRoute],
 	['orders', '/features/order-shop-prep-pack'],
 	['purchasing', '/features/purchasing-and-receiving'],
 	['ledger', '/features/purchases-and-month-cost'],

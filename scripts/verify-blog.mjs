@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
@@ -14,6 +15,10 @@ const articleSlugs = (await readdir(new URL('../src/content/blog', import.meta.u
 	.filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
 	.map((entry) => entry.name.replace(/\.md$/, ''))
 	.sort();
+// The invoice email setup guide publishes only with the feature (RC-73,
+// src/lib/blog.ts), so while it is Coming it has no route to walk.
+if (!invoiceEmailLive) articleSlugs.splice(articleSlugs.indexOf(setupGuideSlug), 1);
+const postCount = articleSlugs.length;
 
 const profile = await mkdtemp(join(tmpdir(), 'costcook-blog-'));
 const port = 9354;
@@ -129,10 +134,10 @@ try {
 	assert(desktop.title === 'Practical answers for the numbers behind the food.', 'desktop index: page identity is missing');
 	assert(desktop.overflow === 0, `desktop index: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop index: smallest action is ${desktop.minTarget}px`);
-	assert(desktop.posts === 10, `desktop index: expected 10 article rows, received ${desktop.posts}`);
-	assert(desktop.menuLinks === 10, `desktop index: expected 10 Blog menu articles, received ${desktop.menuLinks}`);
-	assert(desktop.menuIcons === 10, `desktop index: expected 10 Blog menu icons, received ${desktop.menuIcons}`);
-	assert(desktop.menuDescriptions === 10, `desktop index: expected 10 Blog menu descriptions, received ${desktop.menuDescriptions}`);
+	assert(desktop.posts === postCount, `desktop index: expected ${postCount} article rows, received ${desktop.posts}`);
+	assert(desktop.menuLinks === postCount, `desktop index: expected ${postCount} Blog menu articles, received ${desktop.menuLinks}`);
+	assert(desktop.menuIcons === postCount, `desktop index: expected ${postCount} Blog menu icons, received ${desktop.menuIcons}`);
+	assert(desktop.menuDescriptions === postCount, `desktop index: expected ${postCount} Blog menu descriptions, received ${desktop.menuDescriptions}`);
 	assert(desktop.blogOverview === 'Read every guide', 'desktop index: Blog overview action is missing');
 	assert(desktop.activeBlog, 'desktop index: Blog is not active');
 	assert(desktop.contract, 'desktop index: direction contract did not survive the build');
@@ -205,7 +210,7 @@ try {
 		menuBlog: document.querySelector('[data-mobile-menu] a[href="/blog"]')?.textContent.trim()
 	}))()`);
 	assert(mobile.overflow === 0, `mobile index: horizontal overflow is ${mobile.overflow}px`);
-	assert(mobile.posts === 10, 'mobile index: article rows are missing');
+	assert(mobile.posts === postCount, 'mobile index: article rows are missing');
 	assert(mobile.featuredTop < 1600, `mobile index: featured guide begins too late at ${mobile.featuredTop}px`);
 	assert(mobile.menuBlog === 'Blog', 'mobile index: Blog is missing from Menu');
 	await capture('blog-mobile');
@@ -257,7 +262,7 @@ try {
 		};
 	})()`);
 	assert(noScript.title === 'Practical answers for the numbers behind the food.', 'no JavaScript: blog identity is missing');
-	assert(noScript.posts === 10, 'no JavaScript: article rows are missing');
+	assert(noScript.posts === postCount, 'no JavaScript: article rows are missing');
 	assert(noScript.blogLink === 'Blog', 'no JavaScript: Blog is missing from Menu');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

@@ -1,5 +1,6 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
 
 const dist = new URL('../dist', import.meta.url).pathname;
 const content = new URL('../src/content/blog', import.meta.url).pathname;
@@ -26,7 +27,6 @@ for (const [text, label] of [
 	['Buying &amp; suppliers', 'supplier topic']
 ]) requireText(indexHtml, text, label);
 requireText(indexHtml, 'data-blog-menu', 'Blog navigation disclosure');
-requireText(indexHtml, 'Ten worked guides. The assumptions stay beside the arithmetic.', 'Blog menu evidence boundary');
 requirePattern(indexHtml, /<h4[^>]*><a href="\/blog\/food-cost-per-guest"/, 'post title nested beneath its topic heading');
 
 const expectedPosts = [
@@ -39,8 +39,23 @@ const expectedPosts = [
 	'delivery-arrived-wrong',
 	'expected-vs-actual-food-cost',
 	'scale-catering-prep-list',
-	'review-supplier-invoice'
+	'review-supplier-invoice',
+	// RC-73: the setup guide publishes only with the feature (src/lib/blog.ts).
+	...(invoiceEmailLive ? [setupGuideSlug] : [])
 ];
+// The menu spells the published count (BlogMenuContents, spellCapital), so the
+// pin follows the list above instead of a typed word.
+const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen'];
+requireText(indexHtml, `${countWords[expectedPosts.length - 10]} worked guides. The assumptions stay beside the arithmetic.`, 'Blog menu evidence boundary');
+// While invoice email is Coming, its setup guide must not be built or linked.
+if (!invoiceEmailLive) {
+	if (existsSync(join(blogRoot, setupGuideSlug))) {
+		failures.push(`RC-73: /blog/${setupGuideSlug} was built while INVOICE_EMAIL_STATUS is coming`);
+	}
+	if (indexHtml.includes(`href="/blog/${setupGuideSlug}"`)) {
+		failures.push('RC-73: the blog links the invoice email setup guide while the feature is Coming');
+	}
+}
 const builtPosts = readdirSync(blogRoot, { withFileTypes: true })
 	.filter((entry) => entry.isDirectory())
 	.map((entry) => entry.name);
@@ -111,4 +126,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('Blog contract passed: index, four topic paths, ten articles, structured data, and product handoffs.');
+console.log(`Blog contract passed: index, four topic paths, ${expectedPosts.length} articles, structured data, and product handoffs.`);
