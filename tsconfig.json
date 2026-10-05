@@ -10,6 +10,7 @@
 		"scripts/demo-video/venv",
 		"scripts/demo-video/voices",
 		"scripts/demo-video/cut",
-		"scripts/demo-video/vo-silent"
+		"scripts/demo-video/vo-silent",
+		"video"
 	]
 }
