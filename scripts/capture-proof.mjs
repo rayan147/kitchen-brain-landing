@@ -96,9 +96,40 @@ async function shoot(page, name, locators, { pad = 12, fullPage = false } = {}) 
 async function context(width, height = 2600) {
 	const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 2, reducedMotion: 'reduce' });
 	const page = await ctx.newPage();
-	await page.goto(APP + '/demo', { waitUntil: 'load', timeout: 120_000 });
-	await page.waitForTimeout(800);
+	await signIn(page);
 	return { ctx, page };
+}
+
+/**
+ * Sign in as the seeded owner through the app's own login form. The one-tap
+ * /demo sign-in this used to hit was removed from sandbox/demo on 2026-09-10
+ * (71f6546d). demo/serve.sh sets MAGIC_LINK_TEST_CAPTURE=1, so the harness
+ * exposes the last link it mailed at /api/test/magic-link; loopback only, and
+ * never present on a real deploy.
+ */
+async function signIn(page) {
+	const email = process.env.DEMO_EMAIL ?? 'marisol@example.com';
+	const latest = async () => {
+		const r = await page.request.get(APP + '/api/test/magic-link?email=' + encodeURIComponent(email));
+		return r.ok() ? (await r.json()).url : null;
+	};
+	await page.goto(APP + '/login', { waitUntil: 'load', timeout: 120_000 });
+	await page.waitForSelector('html[data-app-hydrated]', { timeout: 30_000 }).catch(() => {});
+	const before = await latest();
+	await page.getByLabel('Email').fill(email);
+	await page.getByRole('button', { name: 'Send sign-in link' }).click();
+	await page.getByRole('heading', { name: 'Check your email' }).waitFor();
+	let link = null;
+	for (let i = 0; i < 40 && !link; i++) {
+		const found = await latest();
+		if (found && found !== before) link = found;
+		else await page.waitForTimeout(250);
+	}
+	if (!link) throw new Error('no magic link captured; is MAGIC_LINK_TEST_CAPTURE=1 set?');
+	const url = new URL(link);
+	// The link's host is whatever BETTER_AUTH_URL says; stay on APP.
+	await page.goto(APP + url.pathname + url.search, { waitUntil: 'load' });
+	await page.waitForTimeout(800);
 }
 
 /** The wedding order from the tour: found by name, or created through the same form the tour uses. */
@@ -137,9 +168,13 @@ async function orderUrl(page) {
 	if (wants('hero-pricing') || wants('outcome-quote')) {
 		await page.goto(order, { waitUntil: 'load' });
 		await page.locator('[data-ui-role="order-financial-summary"]').waitFor();
-		const results = page.locator('[data-ui-role="financial-results"]');
 		const status = page.locator('[data-ui-role="financial-status"]');
-		if (wants('hero-pricing')) await shoot(page, 'hero-pricing', [results, status], { pad: 16 });
+		// The target box and next step only, not the Live totals row. Since the
+		// 2026-09-04 rounding fix the app totals this wedding at $4,847.95, and
+		// the film's burned-in card reads $4,847.96; every other figure matches.
+		// Cropping the total out keeps each number a reader can compare across
+		// the page identical until the film is re-recorded (owner, 2026-09-10).
+		if (wants('hero-pricing')) await shoot(page, 'hero-pricing', [status], { pad: 16 });
 		if (wants('outcome-quote')) await shoot(page, 'outcome-quote', [status.locator('> div').first()], { pad: 12 });
 	}
 
