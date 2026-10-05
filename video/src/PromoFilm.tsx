@@ -16,7 +16,7 @@ export const PromoFilm: React.FC = () => {
     <>
       <Audio
         name="Music bed"
-        src={staticFile("audio/bed.mp3")}
+        src={staticFile("audio/music.mp3")}
         premountFor={fps}
         volume={(f) =>
           interpolate(f, [total - 30, total], [1, 0], {
