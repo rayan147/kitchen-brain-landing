@@ -6,7 +6,7 @@
 import { copyFile, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-import { FRAME_MAP, toFilmManifest } from "../src/shared-capture.ts";
+import { FRAME_MAP, toFilmManifest } from "../src/shared-capture";
 
 const root = resolve(import.meta.dirname, "..");
 const shared =

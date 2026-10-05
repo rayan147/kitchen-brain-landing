@@ -21,6 +21,7 @@
 		"@types/web": "0.0.166",
 		"eslint": "9.39.5",
 		"prettier": "3.8.1",
+		"tsx": "^4.23.15",
 		"typescript": "5.9.3",
 		"vitest": "^5.0.3"
 	},
@@ -33,6 +34,7 @@
 		"render:check": "node scripts/render-check.mjs",
 		"render": "remotion render PromoFilm out/promo.mp4",
 		"lint": "eslint src && tsc",
-		"frames": "node scripts/copy-frames.ts"
+		"frames": "tsx scripts/copy-frames.mts",
+		"vtt": "tsx scripts/write-vtt.mts"
 	}
 }
