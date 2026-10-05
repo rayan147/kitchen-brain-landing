@@ -1,0 +1,14 @@
+{
+  "frames": [
+    "inquiry-mobile.png",
+    "menu-service.png"
+  ],
+  "eventUrl": "http://localhost:4197/events/39410dc2-6d1a-4943-853e-bfcaf98ae558",
+  "guests": "150",
+  "appSha": "05dfa4165",
+  "capturedOn": "2026-10-05",
+  "proposalFoodCostPct": "28.3%",
+  "targetPct": "30%",
+  "pricePerGuest": "$95.00",
+  "revenue": "$14,250.00"
+}
