@@ -46,7 +46,7 @@
 | 5 Debate | $95 a guest feels right. Is it? The food-cost check answers before she quotes. |
 | 6 Break into Two | The proposal goes out. The film splits: her screen, Priya's phone. |
 | 7 B Story | Priya. The client opens it on her phone with no login and taps Accept proposal. |
-| 8 Fun and Games | Deposit asked, deposit recorded, Confirm order. Prices and quantities freeze. |
+| 8 Fun and Games | Deposit requested by email; Priya pays from the link on her phone; the balance reminder goes out on its own; Confirm order. Prices and quantities freeze. |
 | 9 Midpoint | Booked: the one moment that word is true (after Confirm order, RC-61). |
 | 10 Bad Guys Close In | Chapter card: "How much do I buy so I'm not short at 5 a.m.?" Whole packs, by supplier. |
 | 11 All Is Lost | Chapter card: "Do I have to type in every invoice?" Upload, confirm what it read, type what it could not. |
@@ -59,7 +59,7 @@
 | 0 | Cold open | 1–3 | a call she has to answer now → it is written down, rough is fine |
 | 1 | What do I charge a head? | 4–5 | a guess → a food cost she can see at that price |
 | 2 | The proposal (split screen) | 6–7 | "will she say yes?" → Priya taps Accept proposal on her phone |
-| 3 | Deposit and Confirm order | 8–9 | an accepted offer that holds nothing → a booked day, prices frozen |
+| 3 | Deposit, reminder and Confirm order | 8–9 | chasing a deposit by phone → paid from a link, reminder sent for her, a booked day, prices frozen |
 | 4 | How much do I buy? | 10 | short at 5 a.m. → whole packs, by supplier |
 | 5 | Invoices | 11 | an afternoon of typing → upload, confirm, type only the misses |
 | 6 | Close | 12 | "did I price it right?" → she knew before she quoted |
@@ -74,7 +74,7 @@
 0. Pressure of the call → it is captured.
 1. A round number → a food cost shown at that price.
 2. Waiting on a client → her answer on her phone.
-3. Loose yes → a booked day that will not restate.
+3. Chasing money → paid from a link; loose yes → a booked day that will not restate.
 4. Dread of the 5 a.m. short → a list in whole packs.
 5. A stack of paper → a review queue she confirms.
 6. Doubt about the price → the number, shown again, unchanged.
@@ -102,5 +102,6 @@ POV locked to second person ("you") for captions; Priya is named, never addresse
 ### Step 11 — Revise and Finish
 
 - Draft captions live in the spec's caption table; every figure is a token filled from the capture manifest, never typed.
-- Claims withheld (ledger): no signing frame (RC-64); card deposits and balance reminders (RC-65, Coming on production); closeout figures (RC-69); "booked" before Confirm order (RC-61); any no-typing promise (RC-58); invoice email as available (never-claim list).
+- Capture source: kitchen-brain develop after the offer-walk-fixes merge (owner ruling 2026-10-05); RC-65 is updated in the ledger in the same lane.
+- Claims withheld (ledger): no signing frame (RC-64); closeout figures (RC-69); "booked" before Confirm order (RC-61); any no-typing promise (RC-58); invoice email as available (never-claim list).
 - Re-run this step after the capture fills the tokens: cut every caption that a frame does not show at the moment it is on screen.

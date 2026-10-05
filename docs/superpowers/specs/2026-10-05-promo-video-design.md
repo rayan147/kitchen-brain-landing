@@ -17,7 +17,7 @@ A ~90 s promotional film for owner-caterers. It follows one real wedding through
 | Home | Landing repo, own `video/` package (React + Remotion kept out of the Astro build) |
 | Audio | Burned-in captions + a music bed, `loudnorm` to -23 LUFS / -2 dBTP |
 | World | The events world (Harbor & Hearth Catering, Priya Nair, Nair & Castellano wedding, 150 guests, Wedding Plated Dinner at $95.00 a guest, $3,500 deposit). One wedding, one set of numbers. |
-| Capture source | kitchen-brain **production `origin/main`**, exported clean, as `scripts/capture-events-proof.mjs` already does. Not develop (1,214 commits ahead, client-payment unshipped). |
+| Capture source | kitchen-brain **`develop`** (owner ruling 2026-10-05, overriding the earlier "production main" choice), exported clean with `git archive`, **after** the in-flight `fix/offer-walk-fixes-2026-10-05` lane (payment request by email, pay links, balance reminder) is merged into it. Record the exact develop commit in the capture notes. |
 | Ending | The quote-time food-cost figure, then the price/trial card. No closeout. |
 | v1 scope | 16:9 only. 9:16 cutdowns, homepage placement, and replacing `public/demo.mp4` are out of scope. |
 
@@ -28,7 +28,7 @@ A ~90 s promotional film for owner-caterers. It follows one real wedding through
 | RC-61 | "Booked" only after Confirm order; never for accepted or deposited | claims check: caption order rule |
 | RC-63 | Client side names only "Accept proposal" and "Ask for changes" | claims check |
 | RC-64 | No frame or quote of the e-signature page or its status track; e-signature may be named in a caption | capture FORBIDDEN list + claims check |
-| RC-65 | Deposit is asked for and recorded by hand; no card payment, no balance reminder | claims check banned phrases |
+| RC-65 | Superseded for this film by the develop ruling: the deposit is requested by email with a pay link, and the balance reminder is shown, exactly as develop renders them. This lane updates RC-65 in `docs/release-claim-ledger.md` (status, evidence commit, frames) in the same commit as the frames; the claims check pins the new wording to the ledger row. | ledger edit + claims check |
 | RC-69 | No closeout figures | no closeout frame in `film.ts` |
 | RC-58 / never-claim | No "no typing", "nothing re-keyed", "fully automatic"; invoice email not claimed | claims check banned phrases |
 | Price/trial | Read from `src/lib/site.ts` (`launch.displayPrice`, `trialDays`), never typed | import, not literal |
@@ -44,7 +44,7 @@ Figures in `{braces}` are tokens filled from the capture manifest (see Data flow
 | 0 | 0–6 s | — (title: "Know what the job makes before you cook it.") | `events-inquiry-mobile` (exists) | "A wedding. About {guests} guests. No date yet." | Phone slides in; client, guests fields lift in order |
 | 1 | 6–20 s | "What do I charge a head?" | **new** `events-pricing-desktop`: the kitchen draft's pricing panel at $95.00 × 150 | "{pricePerGuest} a guest. Food cost {foodCostPct}. You see it before you quote." | Push in on the panel; highlight ring on the food-cost figure |
 | 2 | 20–36 s | "Will she say yes without a meeting?" | Split screen. Left: **new** `events-proposal-sent-desktop`. Right: `events-offer-mobile` (re-shot) | "The proposal goes to her phone. No login." · "Accept proposal, or Ask for changes. Her call." | Left sends; right phone scrolls the offer; ring on "Accept proposal" |
-| 3 | 36–52 s | "How do I hold the date?" | `events-deposit-desktop` (asked), **new** `events-deposit-recorded-desktop`, `events-confirm-desktop` | "Ask for {deposit}. Record it when it comes in: check, cash, transfer or your own card processor." · "Her yes is not a booking. Confirm order is." · "Prices and quantities freeze." | Received $0.00 → {deposit}; dialog rises; ring on Confirm order |
+| 3 | 36–52 s | "How do I get the deposit without chasing anyone?" | Split screen. Left: **new** `events-payment-request-desktop` (Request payment on the event draft). Right: **new** `events-pay-mobile` (the client's pay page from the emailed link). Then **new** `events-deposit-paid-desktop`, **new** `events-balance-reminder` (the reminder as the client receives it), `events-confirm-desktop` | "Request {deposit} by email. She pays from the link." · "The balance reminder goes out on its own before it is due." · "Her yes is not a booking. Confirm order is." · "Prices and quantities freeze." | Request sent; phone pays; Received → {deposit}; reminder slides in; dialog rises; ring on Confirm order |
 | 4 | 52–64 s | "How much do I buy so I'm not short at 5 a.m.?" | **new** `events-shop-desktop` (shop list grouped by supplier, whole packs) | "Whole packs, by supplier, for {guests}." | Slow pan down the list; one row's "needed / buying" highlighted |
 | 5 | 64–74 s | "Do I have to type in every invoice?" | **new** `events-import-review-desktop` (upload review) | "Upload it. Confirm what it read. Type what it could not." | Matched rows tick in; one unmatched row held in amber |
 | 6 | 74–88 s | — | Scene 1 frame again, then end card | "{pricePerGuest} a guest. {foodCostPct} food cost. Known before the call ended." · End card: "CostCook" · "{displayPrice}, per kitchen" · "{trialDays}-day free trial" · "costcook.io" | Callback push-in; fade to end card (≤ 4 s) |
@@ -87,7 +87,7 @@ video/                         own package.json; excluded from the Astro build
 - **New event date.** The current `EVENT.date` (2026-10-10) and the offer's respond-by date expire this week. Pick a Saturday about two weeks after the shoot day; change `EVENT.date`, the page copy and the alts in `src/lib/proof.ts` that name the date, in the same commit (the script's header rule).
 - **New frames** (same clip rules: dsf 2, element-bounded, FORBIDDEN-checked): `events-pricing-desktop`, `events-proposal-sent-desktop`, `events-deposit-recorded-desktop`, `events-shop-desktop`, `events-import-review-desktop`.
 - Re-shooting changes the existing `events-*` frames the site already uses. Their alts and the events page copy are re-verified (`check-events-proposals-page.mjs`) in the same commit.
-- Source stays production `origin/main` (ed6ff5f01 unless main moves before the shoot).
+- Source is kitchen-brain `develop` after the offer-walk-fixes merge; the exact commit is recorded in the capture notes and the ledger row.
 
 ## Audio
 
@@ -108,4 +108,4 @@ One instrumental bed (licensed or generated; source recorded in `video/public/au
 
 ## Out of scope
 
-9:16 and per-chapter cutdowns; homepage placement and its running-time lockstep; replacing `public/demo.mp4`; card deposits, reminders and closeout scenes (each returns when its ledger row becomes claimable: `film.ts` keeps scene 3 swappable); voiceover; the homepage mockup's own claim conflicts (separate owner ruling).
+9:16 and per-chapter cutdowns; homepage placement and its running-time lockstep; replacing `public/demo.mp4`; a closeout scene (returns when RC-69 covers its figures); voiceover; the homepage mockup's own claim conflicts (separate owner ruling).
