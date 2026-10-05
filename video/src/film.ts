@@ -2,7 +2,8 @@ import type { Manifest } from "./manifest";
 
 // story: docs/stories/promo-video.story.md
 // The film follows develop's own event workflow (src/lib/events/derive.ts):
-// Inquiry, Menu & service, Proposal, Client decision, Agreement, Booked, then
+// Inquiry, Menu & service (where the job is priced), Proposal and Client
+// decision, what Book the event still needs, Agreement and deposit, then
 // kitchen planning and Confirm order. One table drives the scenes, their
 // timing and the WebVTT file, so the three cannot drift apart.
 // Considered Template Method for scenes; not used because every scene is the
@@ -11,11 +12,12 @@ import type { Manifest } from "./manifest";
 export const SCENE_ORDER = [
   "coldOpen",
   "menu",
-  "proposal",
   "decision",
-  "agreement",
   "book",
+  "agreement",
   "kitchen",
+  "receive",
+  "prep",
   "close",
 ] as const;
 export type SceneId = (typeof SCENE_ORDER)[number];
@@ -55,21 +57,9 @@ export const FILM: Record<SceneId, Scene> = {
       },
     ],
   },
+  // Develop prints the price, food cost and target on the event's step 2,
+  // Menu & service, so that is where the job is priced.
   menu: {
-    chapter: "What are we serving, and how?",
-    seconds: 10,
-    beats: [
-      {
-        from: 2,
-        to: 10,
-        layout: "screen",
-        frames: ["events-menu-desktop.png"],
-        caption:
-          "Pick the menu and the service. That is the scope of the proposal.",
-      },
-    ],
-  },
-  proposal: {
     chapter: "What do I charge a head?",
     seconds: 14,
     beats: [
@@ -77,9 +67,9 @@ export const FILM: Record<SceneId, Scene> = {
         from: 2,
         to: 14,
         layout: "screen",
-        frames: ["events-proposal-pricing-desktop.png"],
+        frames: ["events-menu-desktop.png"],
         caption:
-          "{pricePerGuest} a guest. Food cost {proposalFoodCostPct} against your {target} target. You see it before you send.",
+          "Pick the menu. {pricePerGuest} a guest is food cost {proposalFoodCostPct} against your {target} target. You see it before you send.",
       },
     ],
   },
@@ -101,6 +91,21 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-proposal-sent-desktop.png", "events-offer-mobile.png"],
         caption: "Accept proposal, or Ask for changes. Her call.",
         scroll: [0, 100],
+      },
+    ],
+  },
+  // Right after her yes, the event page lists what booking still needs.
+  book: {
+    chapter: null,
+    seconds: 10,
+    beats: [
+      {
+        from: 0,
+        to: 10,
+        layout: "screen",
+        frames: ["events-book-event-desktop.png"],
+        caption:
+          "Her yes is not a booking. The page lists what is still missing.",
       },
     ],
   },
@@ -126,20 +131,6 @@ export const FILM: Record<SceneId, Scene> = {
       },
     ],
   },
-  book: {
-    chapter: null,
-    seconds: 10,
-    beats: [
-      {
-        from: 0,
-        to: 10,
-        layout: "screen",
-        frames: ["events-book-event-desktop.png"],
-        caption:
-          "Her yes is not a booking. Signed, paid and a day with room is.",
-      },
-    ],
-  },
   kitchen: {
     chapter: "How much do I buy so I'm not short at 5 a.m.?",
     seconds: 14,
@@ -161,6 +152,36 @@ export const FILM: Record<SceneId, Scene> = {
       },
     ],
   },
+  // After the plan is confirmed: the delivery (/orders/<id>/receiving), then
+  // the prep list (/orders/<id>/prep).
+  receive: {
+    chapter: "Did it all come off the truck?",
+    seconds: 12,
+    beats: [
+      {
+        from: 2,
+        to: 12,
+        layout: "screen",
+        frames: ["events-receiving-desktop.png"],
+        caption:
+          "Tick off the delivery against the order. Anything short stays under Still to get.",
+      },
+    ],
+  },
+  prep: {
+    chapter: "What do we prep, and how much?",
+    seconds: 12,
+    beats: [
+      {
+        from: 2,
+        to: 12,
+        layout: "screen",
+        frames: ["events-prep-desktop.png"],
+        caption:
+          "The prep list for {guests}, in the order the kitchen works it.",
+      },
+    ],
+  },
   close: {
     chapter: null,
     seconds: 14,
@@ -169,7 +190,7 @@ export const FILM: Record<SceneId, Scene> = {
         from: 0,
         to: 10,
         layout: "screen",
-        frames: ["events-proposal-pricing-desktop.png"],
+        frames: ["events-menu-desktop.png"],
         caption:
           "{pricePerGuest} a guest. {proposalFoodCostPct} food cost. Known before she said yes.",
       },

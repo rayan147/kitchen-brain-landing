@@ -1,6 +1,7 @@
 import type React from "react";
 import { Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import { FONT_BODY, FONT_DISPLAY } from "../fonts";
+import { FONT_BODY } from "../fonts";
+import { Logo } from "./Logo";
 import { C, EASE_OUT, TYPE } from "../tokens";
 
 // Price and trial arrive as props from the manifest, which takes them from the
@@ -29,9 +30,7 @@ export const EndCard: React.FC<{
       }}
     >
       <div style={{ textAlign: "center", color: C.ink }}>
-        <div style={{ fontFamily: FONT_DISPLAY, fontSize: TYPE.title }}>
-          CostCook
-        </div>
+        <Logo size={TYPE.title} />
         <div
           style={{
             fontFamily: FONT_BODY,

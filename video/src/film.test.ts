@@ -50,30 +50,47 @@ describe("FILM follows develop's event workflow", () => {
     expect(SCENE_ORDER).toEqual([
       "coldOpen",
       "menu",
-      "proposal",
       "decision",
-      "agreement",
       "book",
+      "agreement",
       "kitchen",
+      "receive",
+      "prep",
       "close",
     ]);
   });
-  it("prices the job in the proposal, before the client decides", () => {
-    expect(SCENE_ORDER.indexOf("proposal")).toBeLessThan(
+  it("prices the job on Menu & service, before the client decides", () => {
+    // Develop prints price a guest, food cost and target on the event's step 2.
+    expect(SCENE_ORDER.indexOf("menu")).toBeLessThan(
       SCENE_ORDER.indexOf("decision"),
     );
-    // The proposal frame prints its own figure (28.3% on this build), which can
-    // differ from the order page's (28.4%); each caption quotes its own frame.
-    expect(captionsFor("proposal", manifest).join(" ")).toContain("28.3%");
+    expect(captionsFor("menu", manifest).join(" ")).toContain("28.3%");
     expect(captionsFor("close", manifest).join(" ")).toContain("28.3%");
   });
-  it("books at Book the event, never at Confirm order", () => {
+  it("shows what booking still needs right after her yes, never Confirm order as the booking", () => {
+    expect(SCENE_ORDER.indexOf("book")).toBe(
+      SCENE_ORDER.indexOf("decision") + 1,
+    );
     const all = SCENE_ORDER.flatMap((id) => captionsFor(id, manifest)).join(
       "\n",
     );
     expect(all).not.toMatch(/Confirm order is/);
-    const book = captionsFor("book", manifest).join(" ");
-    expect(book).toContain("Her yes is not a booking.");
+    expect(captionsFor("book", manifest).join(" ")).toContain(
+      "Her yes is not a booking.",
+    );
+  });
+});
+
+describe("after the kitchen plan, the delivery then the prep", () => {
+  // Develop: /orders/<id>/receiving, then /orders/<id>/prep.
+  it("receives before it preps, both after the shop list", () => {
+    const k = SCENE_ORDER.indexOf("kitchen");
+    expect(SCENE_ORDER.indexOf("receive")).toBe(k + 1);
+    expect(SCENE_ORDER.indexOf("prep")).toBe(k + 2);
+  });
+  it("shows the receiving and prep screens", () => {
+    expect(sceneFrames("receive")).toEqual(["events-receiving-desktop.png"]);
+    expect(sceneFrames("prep")).toEqual(["events-prep-desktop.png"]);
   });
 });
 

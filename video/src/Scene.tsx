@@ -8,6 +8,7 @@ import {
 import { Caption } from "./elements/Caption";
 import { ChapterCard } from "./elements/ChapterCard";
 import { EndCard } from "./elements/EndCard";
+import { Logo } from "./elements/Logo";
 import { Highlight } from "./elements/Highlight";
 import { PhoneFrame } from "./elements/PhoneFrame";
 import { Screen } from "./elements/Screen";
@@ -37,8 +38,11 @@ const Title: React.FC = () => {
         backgroundColor: C.cream,
         display: "grid",
         placeItems: "center",
+        alignContent: "center",
+        rowGap: 48,
       }}
     >
+      <Logo size={44} />
       <h1
         style={{
           margin: 0,

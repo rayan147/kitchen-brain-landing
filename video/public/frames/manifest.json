@@ -11,8 +11,11 @@
   "developCommit": "e002990784f6848dbeec063d68ce7144d2da77be",
   "capturedOn": "2026-10-05",
   "frames": [
+    "events-inquiry-mobile.png",
+    "events-menu-desktop.png",
     "events-proposal-sent-desktop.png",
     "events-offer-mobile.png",
+    "events-book-event-desktop.png",
     "events-shop-desktop.png",
     "events-confirm-desktop.png"
   ]

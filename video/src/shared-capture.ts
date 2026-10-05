@@ -10,7 +10,6 @@ import type { Manifest } from "./manifest";
 export const FRAME_MAP: Record<string, string> = {
   "inquiry-mobile.png": "events-inquiry-mobile.png",
   "menu-service.png": "events-menu-desktop.png",
-  "proposal-pricing.png": "events-proposal-pricing-desktop.png",
   "proposal-sent-desktop.png": "events-proposal-sent-desktop.png",
   "proposal-mobile.png": "events-offer-mobile.png",
   "agreement.png": "events-agreement-desktop.png",
@@ -19,6 +18,8 @@ export const FRAME_MAP: Record<string, string> = {
   "book-event.png": "events-book-event-desktop.png",
   "shop-list.png": "events-shop-desktop.png",
   "confirm-dialog.png": "events-confirm-desktop.png",
+  "receiving.png": "events-receiving-desktop.png",
+  "prep-list.png": "events-prep-desktop.png",
 };
 
 const FIGURES = [
