@@ -1,6 +1,7 @@
 /** Product tour content. story: docs/stories/product-tour.story.md */
 import { featureMenuHref, featureMenuSections } from './features';
 import { labelsAvailability } from './labels';
+import { inboxLimits, invoiceEmailAvailability } from './invoice-email';
 import { acceptanceBoundary, depositMethodsCapital, eventStep } from './events';
 
 export const tourSeedKey = 'product-tour-connected-event';
@@ -229,6 +230,46 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Difference', value: '$0.00', tone: 'good' }
 			],
 			footnote: 'Four of 19 invoice rows are shown. The total includes all 19. In CostCook, review and save the records before they change your prices.'
+		}
+	},
+	{
+		/* RC-73, added 2026-09-28 with the feature page. It follows the import
+		   stop because it is import's front door: the same Harbor Foods invoice
+		   arrives by email and waits in the review the stop above shows. The
+		   status reads the one word in src/lib/invoice-email.ts. */
+		id: 'invoice-email',
+		featureId: 'inbox',
+		label: 'Invoice email',
+		appArea: 'Purchases / Invoice inbox',
+		title: 'See what became of every email your suppliers send.',
+		intro: 'Suppliers send invoices to your kitchen’s private address. Each email is listed with what it became, and an invoice waits in review.',
+		callout: 'A statement is kept, not imported. It repeats invoices you already have.',
+		featureHref: featureMenuHref('inbox', invoiceEmailAvailability.isComing),
+		metrics: [
+			{ label: 'Availability', value: invoiceEmailAvailability.word, tone: invoiceEmailAvailability.isComing ? 'attention' : 'good' },
+			{ label: 'Emails shown', value: '4' },
+			{ label: 'Waiting in review', value: '2', tone: 'attention' },
+			{ label: 'Not imported', value: '2' }
+		],
+		columns: ['From', 'Received', 'What it became', 'Next'],
+		rows: [
+			['Harbor Foods', 'Tue 9:14 AM', 'Invoice', 'Review'],
+			['Valley Dairy', 'Tue 2:40 PM', 'Credit memo', 'Review'],
+			['Harbor Foods', 'Wed 8:02 AM', 'Statement', 'Kept'],
+			['Green Leaf Produce', 'Wed 11:30 AM', 'Order confirmation', 'Nothing to import']
+		],
+		aside: {
+			title: 'Invoice email',
+			status: invoiceEmailAvailability.word,
+			lines: [
+				{ label: 'Address', value: 'Private to your kitchen' },
+				{ label: 'Message for your rep', value: 'Written for you' },
+				{ label: 'Old address after a change', value: `${inboxLimits.graceDays} days` },
+				{ label: 'Counts before review', value: 'Nothing', tone: 'good' }
+			],
+			footnote: invoiceEmailAvailability.isComing
+				? 'Illustrative inbox. Invoice email is marked Coming: it is built and not receiving email for trial kitchens yet.'
+				: 'Illustrative inbox. Set the address up in Settings > Invoice email.'
 		}
 	},
 	{

@@ -14,6 +14,13 @@ export default defineConfig({
 	integrations: [sitemap()],
 	vite: {
 		plugins: [tailwindcss()],
+		// .gitworktrees/ holds every local worktree of this repo (about 10 GB
+		// on 2026-09-27). It is git-ignored and excluded from tsconfig, but
+		// Vite's watcher crawled it and `astro dev` timed out after 30s in the
+		// primary checkout. No pattern: one ignore entry.
+		server: {
+			watch: { ignored: ['**/.gitworktrees/**'] }
+		},
 		build: {
 			// Never inline the hoisted script bundle: the CSP in vercel.json
 			// allows script-src 'self' with no 'unsafe-inline'.

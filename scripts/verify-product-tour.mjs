@@ -254,7 +254,9 @@ try {
 	await navigate();
 	await evaluate(`(() => {
 		const select = document.querySelector('[data-tour-select]');
-		select.value = '4';
+		// Chosen by label, not position: the stop's index moves whenever a stop
+		// is added before it (invoice email, 2026-09-28).
+		select.value = [...select.options].find((option) => option.textContent.includes('Nutrition')).value;
 		select.dispatchEvent(new Event('change', { bubbles: true }));
 	})()`);
 	await waitForStop('nutrition-allergens');
@@ -266,7 +268,7 @@ try {
 		scrollWidth: document.documentElement.scrollWidth,
 		innerWidth
 	}))()`);
-	assert(mobileStop.selected === '4' && mobileStop.select === '4', 'mobile select did not stay synchronized');
+	assert(mobileStop.selected !== undefined && mobileStop.selected === mobileStop.select, 'mobile select did not stay synchronized');
 	assert(mobileStop.visibleId === 'nutrition-allergens', 'mobile select did not open nutrition and allergens');
 	assert(mobileStop.scrollWidth === mobileStop.innerWidth, 'mobile selection introduced page overflow');
 	const mobileEvidence = await evaluate(`(() => {

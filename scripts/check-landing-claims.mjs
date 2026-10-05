@@ -2,6 +2,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { moneyClaims } from './lib/money-claims.mjs';
 import { homepageComponentOrder, homepageStopIds } from './lib/homepage-stops.mjs';
+import { importsOnItsOwn, invoiceEmailStatus, setupGuideSlug, workingAddress } from './lib/invoice-email.mjs';
 
 const root = new URL('..', import.meta.url).pathname;
 const read = (path) => readFile(join(root, path), 'utf8');
@@ -154,6 +155,12 @@ const surfaceFiles = [
 	// money patterns above must read this page. APPENDED, like the two above.
 	'src/pages/features/events-and-proposals.astro',
 	'src/components/sections/EventsProposalsFeature.astro',
+	// 2026-09-28. Invoice email (RC-73): the status word and every sentence that
+	// reads it, and the page. APPENDED, like the rows above.
+	'src/lib/invoice-email.ts',
+	'src/pages/features/invoice-email.astro',
+	'src/components/sections/InvoiceEmailFeature.astro',
+	'src/lib/blog.ts',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -250,7 +257,9 @@ requireText(siteSource, 'docs/stories/resources-navigation.story.md', 'Resources
 requireText(siteSource, "href: '/blog'", 'blog reachable from shared navigation');
 requireText(navSource, 'data-blog-menu', 'blog navigation disclosure');
 requireText(navSource, '<BlogMenuContents {path} />', 'blog menu renderer');
-requireText(blogMenuContentsSource, "getCollection('blog')", 'blog menu article source');
+// The menu reads the published list (src/lib/blog.ts), which is the collection
+// minus guides whose feature is still Coming (RC-73).
+requireText(blogMenuContentsSource, 'getPublishedPosts()', 'blog menu article source');
 requireText(blogMenuContentsSource, 'post.data.description', 'blog menu article descriptions');
 requireText(navSource, 'data-mobile-menu', 'contained mobile navigation');
 requireText(navSource, 'demoCta.href', 'header demo action');
@@ -441,6 +450,30 @@ requireText(labelsSource, 'not an all-clear', 'labels copy carries the blank-all
 for (const [name, source] of [['src/lib/labels.ts', labelsSource], ['src/components/sections/LabelsPrintingFeature.astro', surfaces[surfaceFiles.indexOf('src/components/sections/LabelsPrintingFeature.astro')]]]) {
 	if (/Brother|DYMO|Dymo|Zebra|Avery/.test(source)) failures.push(`${name}: no printer or stock brand may be named`);
 	if (/direct(ly)? to (the |a |your )?(label )?printer|sends? (it |them |labels )?to (the |a |your )?printer/i.test(source)) failures.push(`${name}: may not say a label reaches a printer on its own`);
+}
+// Invoice email (RC-73). Built on kitchen-brain main; production receives no
+// mail (no MX for in.costcook.io, worker off). The word stays 'coming' until
+// the three conditions in src/lib/invoice-email.ts hold and RC-73 is updated
+// in the same commit. While it is Coming the setup guide is not published
+// (src/lib/blog.ts; scripts/check-blog.mjs checks the build).
+if (invoiceEmailStatus !== 'coming') {
+	failures.push('invoice email status: production receives no mail (RC-73); INVOICE_EMAIL_STATUS must read coming until the ledger row changes');
+}
+if (!/^\| RC-73 \|.*COMING/m.test(ledger)) {
+	failures.push('invoice email: RC-73 must say COMING while INVOICE_EMAIL_STATUS is coming');
+}
+const blogGateSource = surfaces[surfaceFiles.indexOf('src/lib/blog.ts')];
+requireText(blogGateSource, 'invoiceEmailAvailability.isComing ? [invoiceEmailRoute]', 'the invoice email guide waits for the feature');
+for (const name of ['src/lib/invoice-email.ts', 'src/components/sections/InvoiceEmailFeature.astro', `src/content/blog/${setupGuideSlug}.md`]) {
+	const source = surfaces[surfaceFiles.indexOf(name)];
+	// Code comments may name the banned words to ban them; user copy may not.
+	const copy = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+	if (importsOnItsOwn.test(copy)) {
+		failures.push(`${name}: an emailed invoice waits in review (RC-73); no automatic, auto-import or hands-free wording`);
+	}
+	if (workingAddress.test(copy)) {
+		failures.push(`${name}: never print a working invoice address; use the placeholder shape`);
+	}
 }
 const printerRow = comparisonSource.slice(comparisonSource.indexOf("label: 'Kitchen label printing'"));
 if (!printerRow.slice(0, 220).includes('costcook: labelsAvailability.verdict')) {
