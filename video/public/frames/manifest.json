@@ -2,10 +2,12 @@
   "guests": "150",
   "pricePerGuest": "$95.00",
   "foodCostPct": "00.0%",
-  "deposit": "$3,500.00",
-  "revenue": "$14,250.00",
+  "target": "00%",
+  "deposit": "$0,000.00",
+  "revenue": "$00,000.00",
   "displayPrice": "$49/month",
   "trialDays": "15",
   "developCommit": "PENDING-CAPTURE",
-  "capturedOn": "2026-10-05"
+  "capturedOn": "2026-10-05",
+  "frames": []
 }

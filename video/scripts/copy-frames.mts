@@ -1,14 +1,17 @@
-// Pulls the shared capture run (the homepage redesign's) into the film:
-// frames renamed by FRAME_MAP, manifest translated by toFilmManifest, price
-// and trial read from the landing's src/lib/site.ts. Run:
+// Pulls the shared capture run (the homepage redesign's, shot from the develop
+// app) into the film: frames renamed by FRAME_MAP, manifest translated by
+// toFilmManifest, price and trial read from the landing's src/lib/site.ts.
+// It first clears every PNG in public/frames, so a frame from an older run or
+// any other source cannot survive into the film. Run:
 //   npm run frames                      (default source below)
 //   SHARED_DIR=<dir> npm run frames     (any other run's output)
-import { copyFile, readFile, writeFile } from "node:fs/promises";
+import { copyFile, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { FRAME_MAP, toFilmManifest } from "../src/shared-capture";
 
 const root = resolve(import.meta.dirname, "..");
+const out = resolve(root, "public/frames");
 const shared =
   process.env.SHARED_DIR ??
   "/home/rayan147/kitchen-brain-landing/.gitworktrees/homepage-redesign/public/proof/home";
@@ -22,16 +25,12 @@ if (!displayPrice || !trialDays)
   throw new Error(
     "src/lib/site.ts no longer carries displayPrice/trialDays where this script reads them",
   );
+const sharedManifest = JSON.parse(
+  await readFile(resolve(shared, "manifest.json"), "utf8"),
+) as Record<string, unknown>;
 
-const manifest = toFilmManifest(
-  JSON.parse(await readFile(resolve(shared, "manifest.json"), "utf8")),
-  { displayPrice, trialDays },
-);
-await writeFile(
-  resolve(root, "public/frames/manifest.json"),
-  JSON.stringify(manifest, null, 2) + "\n",
-);
-
+for (const f of await readdir(out))
+  if (f.endsWith(".png")) await rm(resolve(out, f));
 const copied: string[] = [];
 const absent: string[] = [];
 for (const [from, to] of Object.entries(FRAME_MAP)) {
@@ -39,10 +38,20 @@ for (const [from, to] of Object.entries(FRAME_MAP)) {
     absent.push(from);
     continue;
   }
-  await copyFile(resolve(shared, from), resolve(root, "public/frames", to));
-  copied.push(`${from} -> ${to}`);
+  await copyFile(resolve(shared, from), resolve(out, to));
+  copied.push(to);
 }
-console.log(`manifest written (app ${manifest.developCommit})`);
-console.log(`copied ${copied.length}:\n  ${copied.join("\n  ")}`);
+const manifest = toFilmManifest(
+  sharedManifest,
+  { displayPrice, trialDays },
+  copied,
+);
+await writeFile(
+  resolve(out, "manifest.json"),
+  JSON.stringify(manifest, null, 2) + "\n",
+);
+console.log(
+  `manifest written (app ${manifest.developCommit}); ${copied.length} frames copied`,
+);
 if (absent.length)
   console.log(`not in the shared run yet: ${absent.join(", ")}`);

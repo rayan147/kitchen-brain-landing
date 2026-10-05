@@ -8,6 +8,10 @@
 - **Content file(s):** `video/src/film.ts` (every caption), `video/src/scenes/*.tsx` (where each caption lands)
 - **Spec:** `docs/superpowers/specs/2026-10-05-promo-video-design.md`
 
+## Revision 2026-10-05 (develop workflow)
+
+Beats now follow the app: 1 phone rings (Inquiry) · 3 menu and service set the scope · 4-5 Catalyst/Debate in the **proposal**, where the price and food cost are seen before sending · 6-7 Priya decides on her phone · 8 agreement signed, deposit paid from the link · 9 Midpoint: **Book the event** (signed, paid, a day with room) · 10 kitchen plan, whole packs, Confirm order freezes prices · 12 callback to the proposal price. Snap line: "Her yes is not a booking. Signed, paid and a day with room is." Invoice and reminder beats cut. Every frame is a real develop screenshot.
+
 ## The 11 steps
 
 | # | Step | What you build | Done |

@@ -3,6 +3,23 @@
 Date: 2026-10-05 · Branch: `feat/promo-video` (worktree `.gitworktrees/promo-video`, off landing `develop` 2a60571)
 Story: `docs/stories/promo-video.story.md`
 
+## Revision 2026-10-05: follow develop's real workflow (supersedes the Scenes table below)
+
+The first cut followed the homepage mockup and the main-era capture script, not the app. Develop's event workflow (`src/lib/events/derive.ts`, `features/events/event-journey.ts`, `domain/events/booking-requirements.ts` on `fix/offer-walk-fixes-2026-10-05`) is: Inquiry, Menu & service, Proposal (price and send), Client decision, Agreement (signature), **Book the event** (an accepted proposal, every signer, the deposit the agreement names, a day with room; the owner may book anyway with a reason), then kitchen planning, where the order is **confirmed when the kitchen plan is ready**. Owner rulings: rebuild on that order; cut the invoice chapter and the balance reminder; **every frame is a real screenshot of the develop app**, never mockup imagery or an older build's capture.
+
+| # | Scene | Chapter card | App frame(s) |
+|---|---|---|---|
+| 0 | Inquiry | (title card) | inquiry on the phone |
+| 1 | Menu & service | "What are we serving, and how?" | menu and service step |
+| 2 | Proposal | "What do I charge a head?" | proposal builder: price a guest, food cost against target |
+| 3 | Client decision | "Will she say yes without a meeting?" | proposal sent / client's offer page (split) |
+| 4 | Agreement + deposit | "How do I get it in writing, and the deposit?" | agreement sent for signature; deposit request / pay page (split) |
+| 5 | Book the event | (none) | Book the event checklist. Snap: "Her yes is not a booking. Signed, paid and a day with room is." |
+| 6 | Kitchen plan | "How much do I buy so I'm not short at 5 a.m.?" | shop list; Confirm order dialog |
+| 7 | Close | (none) | proposal price callback, end card |
+
+Captions, beats and timings live in `video/src/film.ts` (one table drives the renderer, the VTT and the render guard). Provenance: the manifest lists the frames the capture run shot from the app; `render:check` refuses any other file. The claims check now holds: no "book" before the booking scene, Confirm order never called the booking, the new snap line, no closeout frame.
+
 ## Goal
 
 A ~90 s promotional film for owner-caterers. It follows one real wedding through CostCook as shipped on production, seen from both sides: the caterer at her screen and the client on her phone. Each chapter opens on a question a chef actually asks and answers it with a real screen.

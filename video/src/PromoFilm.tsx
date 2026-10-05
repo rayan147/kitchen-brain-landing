@@ -1,19 +1,17 @@
+import { Audio } from "@remotion/media";
 import { TransitionSeries, linearTiming } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
-import { Audio } from "@remotion/media";
+import { Fragment } from "react";
 import { interpolate, staticFile, useVideoConfig } from "remotion";
-import { Buy } from "./scenes/Buy";
-import { Charge } from "./scenes/Charge";
-import { Close } from "./scenes/Close";
-import { ColdOpen } from "./scenes/ColdOpen";
-import { Deposit } from "./scenes/Deposit";
-import { Invoices } from "./scenes/Invoices";
-import { Proposal } from "./scenes/Proposal";
+import { FADE_FRAMES, FILM, SCENE_ORDER, filmFrames } from "./film";
+import { Scene } from "./Scene";
 
-// 2640 frames of scenes less six 15-frame fades = 2550 (85 s). Change a
-// duration here and the PromoFilm registration and the VTT offsets move too.
+// The scenes come from film.ts in the app's own workflow order. They are
+// generated from that one table on purpose: their timing is edited there, so
+// the film, the VTT and the render guard read the same numbers.
 export const PromoFilm: React.FC = () => {
   const { fps } = useVideoConfig();
+  const total = filmFrames();
   return (
     <>
       <Audio
@@ -21,86 +19,30 @@ export const PromoFilm: React.FC = () => {
         src={staticFile("audio/bed.mp3")}
         premountFor={fps}
         volume={(f) =>
-          interpolate(f, [2520, 2550], [1, 0], {
+          interpolate(f, [total - 30, total], [1, 0], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           })
         }
       />
       <TransitionSeries>
-        <TransitionSeries.Sequence
-          name="Cold open"
-          durationInFrames={180}
-          premountFor={fps}
-        >
-          <ColdOpen />
-        </TransitionSeries.Sequence>
-        <TransitionSeries.Transition
-          presentation={fade()}
-          timing={linearTiming({ durationInFrames: 15 })}
-        />
-        <TransitionSeries.Sequence
-          name="What do I charge a head"
-          durationInFrames={420}
-          premountFor={fps}
-        >
-          <Charge />
-        </TransitionSeries.Sequence>
-        <TransitionSeries.Transition
-          presentation={fade()}
-          timing={linearTiming({ durationInFrames: 15 })}
-        />
-        <TransitionSeries.Sequence
-          name="Proposal"
-          durationInFrames={480}
-          premountFor={fps}
-        >
-          <Proposal />
-        </TransitionSeries.Sequence>
-        <TransitionSeries.Transition
-          presentation={fade()}
-          timing={linearTiming({ durationInFrames: 15 })}
-        />
-        <TransitionSeries.Sequence
-          name="Deposit"
-          durationInFrames={480}
-          premountFor={fps}
-        >
-          <Deposit />
-        </TransitionSeries.Sequence>
-        <TransitionSeries.Transition
-          presentation={fade()}
-          timing={linearTiming({ durationInFrames: 15 })}
-        />
-        <TransitionSeries.Sequence
-          name="Buy"
-          durationInFrames={360}
-          premountFor={fps}
-        >
-          <Buy />
-        </TransitionSeries.Sequence>
-        <TransitionSeries.Transition
-          presentation={fade()}
-          timing={linearTiming({ durationInFrames: 15 })}
-        />
-        <TransitionSeries.Sequence
-          name="Invoices"
-          durationInFrames={300}
-          premountFor={fps}
-        >
-          <Invoices />
-        </TransitionSeries.Sequence>
-        <TransitionSeries.Transition
-          presentation={fade()}
-          timing={linearTiming({ durationInFrames: 15 })}
-        />
-        <TransitionSeries.Sequence
-          name="Close"
-          durationInFrames={420}
-          premountFor={fps}
-        >
-          <Close />
-        </TransitionSeries.Sequence>
+        {SCENE_ORDER.map((id, i) => (
+          <Fragment key={id}>
+            {i > 0 ? (
+              <TransitionSeries.Transition
+                presentation={fade()}
+                timing={linearTiming({ durationInFrames: FADE_FRAMES })}
+              />
+            ) : null}
+            <TransitionSeries.Sequence
+              name={id}
+              durationInFrames={FILM[id].seconds * fps}
+              premountFor={fps}
+            >
+              <Scene id={id} />
+            </TransitionSeries.Sequence>
+          </Fragment>
+        ))}
       </TransitionSeries>
     </>
   );

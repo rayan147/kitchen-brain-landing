@@ -1,17 +1,21 @@
 import { z } from "zod";
 
 // Every figure is the exact string the app printed, read by the capture run
-// from the element it photographed. Nothing here is typed by hand.
+// from the element it photographed. `frames` lists the files that run shot
+// from the app: the render guard refuses any frame not on it, so nothing
+// mocked, drawn or left over from an older build reaches the film.
 export const ManifestSchema = z.object({
   guests: z.string().min(1),
   pricePerGuest: z.string().min(1),
   foodCostPct: z.string().min(1),
+  target: z.string().min(1),
   deposit: z.string().min(1),
   revenue: z.string().min(1),
   displayPrice: z.string().min(1),
   trialDays: z.string().min(1),
   developCommit: z.string().min(7),
   capturedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  frames: z.array(z.string().regex(/\.png$/)),
 });
 
 export type Manifest = z.infer<typeof ManifestSchema>;

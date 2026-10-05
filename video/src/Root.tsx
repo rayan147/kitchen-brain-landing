@@ -3,13 +3,8 @@ import { Caption } from "./elements/Caption";
 import { ChapterCard } from "./elements/ChapterCard";
 import { EndCard } from "./elements/EndCard";
 import { PromoFilm } from "./PromoFilm";
-import { Buy } from "./scenes/Buy";
-import { Charge } from "./scenes/Charge";
-import { Close } from "./scenes/Close";
-import { ColdOpen } from "./scenes/ColdOpen";
-import { Deposit } from "./scenes/Deposit";
-import { Invoices } from "./scenes/Invoices";
-import { Proposal } from "./scenes/Proposal";
+import { Scene } from "./Scene";
+import { FILM, SCENE_ORDER, filmFrames } from "./film";
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -43,62 +38,18 @@ export const RemotionRoot: React.FC = () => (
       />
     </Folder>
     <Folder name="Scenes">
-      <Composition
-        id="ColdOpen"
-        component={ColdOpen}
-        width={1920}
-        height={1080}
-        fps={30}
-        durationInFrames={180}
-      />
-      <Composition
-        id="Charge"
-        component={Charge}
-        width={1920}
-        height={1080}
-        fps={30}
-        durationInFrames={420}
-      />
-      <Composition
-        id="Proposal"
-        component={Proposal}
-        width={1920}
-        height={1080}
-        fps={30}
-        durationInFrames={480}
-      />
-      <Composition
-        id="Deposit"
-        component={Deposit}
-        width={1920}
-        height={1080}
-        fps={30}
-        durationInFrames={480}
-      />
-      <Composition
-        id="Buy"
-        component={Buy}
-        width={1920}
-        height={1080}
-        fps={30}
-        durationInFrames={360}
-      />
-      <Composition
-        id="Invoices"
-        component={Invoices}
-        width={1920}
-        height={1080}
-        fps={30}
-        durationInFrames={300}
-      />
-      <Composition
-        id="Close"
-        component={Close}
-        width={1920}
-        height={1080}
-        fps={30}
-        durationInFrames={420}
-      />
+      {SCENE_ORDER.map((id) => (
+        <Composition
+          key={id}
+          id={id}
+          component={Scene}
+          width={1920}
+          height={1080}
+          fps={30}
+          durationInFrames={FILM[id].seconds * 30}
+          defaultProps={{ id }}
+        />
+      ))}
     </Folder>
     <Composition
       id="PromoFilm"
@@ -106,7 +57,7 @@ export const RemotionRoot: React.FC = () => (
       width={1920}
       height={1080}
       fps={30}
-      durationInFrames={2550}
+      durationInFrames={filmFrames()}
     />
   </>
 );

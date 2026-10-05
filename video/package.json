@@ -31,7 +31,7 @@
 		"test": "vitest run",
 		"typecheck": "tsc --noEmit",
 		"still": "remotion still",
-		"render:check": "node scripts/render-check.mjs",
+		"render:check": "tsx scripts/render-check.mts",
 		"render": "remotion render PromoFilm out/promo.mp4",
 		"lint": "eslint src && tsc",
 		"frames": "tsx scripts/copy-frames.mts",
