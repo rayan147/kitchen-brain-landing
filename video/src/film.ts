@@ -79,7 +79,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-proposal-pricing-desktop.png"],
         caption:
-          "{pricePerGuest} a guest. Food cost {foodCostPct} against your {target} target. You see it before you send.",
+          "{pricePerGuest} a guest. Food cost {proposalFoodCostPct} against your {target} target. You see it before you send.",
       },
     ],
   },
@@ -171,7 +171,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-proposal-pricing-desktop.png"],
         caption:
-          "{pricePerGuest} a guest. {foodCostPct} food cost. Known before she said yes.",
+          "{pricePerGuest} a guest. {proposalFoodCostPct} food cost. Known before she said yes.",
       },
       { from: 10, to: 14, layout: "end", frames: [] },
     ],

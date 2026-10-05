@@ -1,13 +1,19 @@
 {
   "guests": "150",
   "pricePerGuest": "$95.00",
-  "foodCostPct": "00.0%",
-  "target": "00%",
-  "deposit": "$0,000.00",
-  "revenue": "$00,000.00",
+  "foodCostPct": "28.4%",
+  "proposalFoodCostPct": "28.3%",
+  "target": "30%",
+  "deposit": "$3,500.00",
+  "revenue": "$14,250.00",
   "displayPrice": "$49/month",
   "trialDays": "15",
-  "developCommit": "PENDING-CAPTURE",
+  "developCommit": "e002990784f6848dbeec063d68ce7144d2da77be",
   "capturedOn": "2026-10-05",
-  "frames": []
+  "frames": [
+    "events-proposal-sent-desktop.png",
+    "events-offer-mobile.png",
+    "events-shop-desktop.png",
+    "events-confirm-desktop.png"
+  ]
 }

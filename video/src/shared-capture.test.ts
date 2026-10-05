@@ -7,8 +7,9 @@ const peer = {
   guests: "150",
   pricePerGuest: "$95.00",
   revenue: "$14,250.00",
-  foodCostPct: "28.3%",
-  target: "30%",
+  foodCostPct: "28.4%",
+  foodCostPctProposalBuilder: "28.3%",
+  targetPct: "30%",
   deposit: "$3,500.00",
   appSha: "e00299078",
   capturedOn: "2026-10-05",
@@ -21,7 +22,8 @@ describe("toFilmManifest", () => {
     expect(ManifestSchema.parse(m)).toEqual({
       guests: "150",
       pricePerGuest: "$95.00",
-      foodCostPct: "28.3%",
+      foodCostPct: "28.4%",
+      proposalFoodCostPct: "28.3%",
       target: "30%",
       deposit: "$3,500.00",
       revenue: "$14,250.00",
@@ -33,8 +35,8 @@ describe("toFilmManifest", () => {
     });
   });
   it("names the missing key when the shared manifest lacks a figure", () => {
-    const { target: _omitted, ...rest } = peer;
-    expect(() => toFilmManifest(rest, site, [])).toThrow("target");
+    const { targetPct: _omitted, ...rest } = peer;
+    expect(() => toFilmManifest(rest, site, [])).toThrow("targetPct");
   });
 });
 

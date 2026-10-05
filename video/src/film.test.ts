@@ -11,7 +11,8 @@ import { ManifestSchema, type Manifest } from "./manifest";
 const manifest: Manifest = {
   guests: "150",
   pricePerGuest: "$95.00",
-  foodCostPct: "28.3%",
+  foodCostPct: "28.4%",
+  proposalFoodCostPct: "28.3%",
   target: "30%",
   deposit: "$3,500.00",
   revenue: "$14,250.00",
@@ -25,7 +26,7 @@ const manifest: Manifest = {
 describe("resolveCaption", () => {
   it("inserts the on-screen string verbatim", () => {
     expect(resolveCaption("Food cost {foodCostPct}.", manifest)).toBe(
-      "Food cost 28.3%.",
+      "Food cost 28.4%.",
     );
   });
   it("throws on a token the manifest does not carry", () => {
@@ -61,7 +62,10 @@ describe("FILM follows develop's event workflow", () => {
     expect(SCENE_ORDER.indexOf("proposal")).toBeLessThan(
       SCENE_ORDER.indexOf("decision"),
     );
+    // The proposal frame prints its own figure (28.3% on this build), which can
+    // differ from the order page's (28.4%); each caption quotes its own frame.
     expect(captionsFor("proposal", manifest).join(" ")).toContain("28.3%");
+    expect(captionsFor("close", manifest).join(" ")).toContain("28.3%");
   });
   it("books at Book the event, never at Confirm order", () => {
     const all = SCENE_ORDER.flatMap((id) => captionsFor(id, manifest)).join(

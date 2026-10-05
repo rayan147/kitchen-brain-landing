@@ -7,7 +7,11 @@ import { z } from "zod";
 export const ManifestSchema = z.object({
   guests: z.string().min(1),
   pricePerGuest: z.string().min(1),
+  // The order page's figure, and the proposal builder's: the app can print
+  // them a tenth apart for the same wedding, and a caption quotes the one on
+  // its own frame.
   foodCostPct: z.string().min(1),
+  proposalFoodCostPct: z.string().min(1),
   target: z.string().min(1),
   deposit: z.string().min(1),
   revenue: z.string().min(1),

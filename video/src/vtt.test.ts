@@ -6,7 +6,8 @@ import { toVtt } from "./vtt";
 const manifest: Manifest = {
   guests: "150",
   pricePerGuest: "$95.00",
-  foodCostPct: "28.3%",
+  foodCostPct: "28.4%",
+  proposalFoodCostPct: "28.3%",
   target: "30%",
   deposit: "$3,500.00",
   revenue: "$14,250.00",
