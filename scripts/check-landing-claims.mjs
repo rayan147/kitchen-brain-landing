@@ -1187,6 +1187,38 @@ requireText(heroSource, 'What you do about the gap is your call', 'hero caption 
 	}
 }
 
+// 2026-10-05 PROMO VIDEO. The film's captions are public copy: same ledger,
+// same house rules. film.ts is read as text so this check needs no build.
+{
+	const film = await read('video/src/film.ts');
+	// Every quoted string in film.ts; imports and scene ids ride along harmlessly.
+	const captions = [...film.matchAll(/'([^'\n]+)'|"([^"\n]+)"/g)]
+		.map((m) => m[1] ?? m[2])
+		.filter((t) => !/\.png$/.test(t));
+	const text = captions.join('\n');
+	if (/[—–]/.test(text)) failures.push('promo video: a caption carries an em or en dash');
+	if (/!/.test(text)) failures.push('promo video: a caption carries an exclamation point');
+	for (const banned of [/no typing/i, /nothing re-?keyed/i, /fully automatic/i, /seamless/i, /in one click/i, /invoice email/i, /closeout/i, /signature/i]) {
+		if (banned.test(text)) failures.push(`promo video: banned phrase ${banned}`);
+	}
+	// RC-61: an accepted or paid event is never "booked"; Confirm order is.
+	const snap = 'Her yes is not a booking. Confirm order is.';
+	requireText(film, snap, 'promo video snap line');
+	const beforeSnap = film.slice(0, Math.max(0, film.indexOf(snap))).replace(/\/\/.*$/gm, '');
+	if (/\bbook(ed|ing)?\b/i.test(beforeSnap)) failures.push('promo video: "book/booked/booking" before Confirm order (RC-61)');
+	// RC-63: the client side names only the two captured buttons.
+	for (const button of text.matchAll(/\b(Accept proposal|Ask for changes|Decline|Sign|Approve)\b/g)) {
+		if (!['Accept proposal', 'Ask for changes'].includes(button[1])) failures.push(`promo video: client button "${button[1]}" is not one of the two captured (RC-63)`);
+	}
+	if (/\$\d|\d+(\.\d+)?%/.test(text)) failures.push('promo video: a figure is typed into a caption; use a {token} from the manifest');
+	const manifest = JSON.parse(await read('video/public/frames/manifest.json'));
+	if (manifest.developCommit !== 'PENDING-CAPTURE' && !siteSource.includes(`trialDays: ${manifest.trialDays}`)) {
+		failures.push(`promo video: manifest trialDays ${manifest.trialDays} disagrees with src/lib/site.ts`);
+	}
+	const frameNames = [...film.matchAll(/["']([a-z0-9-]+\.png)["']/g)].map((m) => m[1]).join(' ');
+	if (/closeout|sign/.test(frameNames)) failures.push('promo video: a closeout or signing frame is in the film (RC-69 / RC-64)');
+}
+
 if (failures.length > 0) {
 	console.error(`Landing claim check failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
