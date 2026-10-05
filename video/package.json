@@ -32,6 +32,7 @@
 		"still": "remotion still",
 		"render:check": "node scripts/render-check.mjs",
 		"render": "remotion render PromoFilm out/promo.mp4",
-		"lint": "eslint src && tsc"
+		"lint": "eslint src && tsc",
+		"frames": "node scripts/copy-frames.ts"
 	}
 }
