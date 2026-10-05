@@ -24,7 +24,7 @@ export const SplitScreen: React.FC<{
         position: "relative",
         borderRadius: 16,
         overflow: "hidden",
-        backgroundColor: C.paper,
+        backgroundColor: left ? C.paper : "transparent",
       }}
     >
       {left}

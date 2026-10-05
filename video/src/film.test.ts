@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   FILM,
   SCENE_ORDER,
+  TITLE,
   captionsFor,
   resolveCaption,
   sceneFrames,
@@ -56,6 +57,7 @@ describe("FILM follows develop's event workflow", () => {
       "kitchen",
       "receive",
       "prep",
+      "pack",
       "close",
     ]);
   });
@@ -65,7 +67,6 @@ describe("FILM follows develop's event workflow", () => {
       SCENE_ORDER.indexOf("decision"),
     );
     expect(captionsFor("menu", manifest).join(" ")).toContain("28.3%");
-    expect(captionsFor("close", manifest).join(" ")).toContain("28.3%");
   });
   it("shows what booking still needs right after her yes, never Confirm order as the booking", () => {
     expect(SCENE_ORDER.indexOf("book")).toBe(
@@ -91,6 +92,49 @@ describe("after the kitchen plan, the delivery then the prep", () => {
   it("shows the receiving and prep screens", () => {
     expect(sceneFrames("receive")).toEqual(["events-receiving-desktop.png"]);
     expect(sceneFrames("prep")).toEqual(["events-prep-desktop.png"]);
+  });
+});
+
+describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
+  it("shows the booking itself after the agreement and deposit", () => {
+    const beats = FILM.agreement.beats;
+    expect(beats[beats.length - 1].frames).toEqual([
+      "events-booked-desktop.png",
+    ]);
+    expect(beats[beats.length - 1].caption).toBe("Signed. Deposit in. Booked.");
+  });
+  it("says the deposit link is a card payment", () => {
+    expect(captionsFor("agreement", manifest).join(" ")).toMatch(
+      /pays by card from the link/,
+    );
+  });
+  it("never runs the same frames twice in a row without something new on them", () => {
+    for (const id of SCENE_ORDER) {
+      FILM[id].beats.forEach((b, i) => {
+        const prev = FILM[id].beats[i - 1];
+        if (prev && prev.frames.join() === b.frames.join())
+          expect(b.ring ?? b.focus).toBeTruthy();
+      });
+    }
+  });
+  it("ends on planned against actual, then the end card", () => {
+    expect(sceneFrames("close")).toEqual(["events-closeout-desktop.png"]);
+    expect(FILM.close.beats[FILM.close.beats.length - 1].layout).toBe("end");
+  });
+  it("gives every caption time to be read (at most 3.2 words a second once it shows)", () => {
+    for (const id of SCENE_ORDER) {
+      for (const b of FILM[id].beats) {
+        if (!b.caption) continue;
+        const words = resolveCaption(b.caption, manifest).split(/\s+/).length;
+        expect(
+          words / (b.to - b.from - 0.5),
+          `${id}: ${b.caption}`,
+        ).toBeLessThanOrEqual(3.2);
+      }
+    }
+  });
+  it("carries the title card's words in the table", () => {
+    expect(TITLE).toBe("Know what the job makes before you cook it.");
   });
 });
 

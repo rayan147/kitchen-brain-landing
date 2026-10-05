@@ -16,7 +16,7 @@ export const RemotionRoot: React.FC = () => (
         height={1080}
         fps={30}
         durationInFrames={60}
-        defaultProps={{ text: "Prices and quantities freeze." }}
+        defaultProps={{ text: "Prices and quantities lock.", duration: 60 }}
       />
       <Composition
         id="ChapterCard"

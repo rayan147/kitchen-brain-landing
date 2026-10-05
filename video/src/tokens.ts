@@ -15,11 +15,11 @@ export const C = {
 
 // 1080p sizes. Captions must stay readable when the film plays 390 px wide.
 export const TYPE = {
-  caption: 48,
+  caption: 56,
   chapter: 72,
   title: 96,
   endPrice: 64,
-  small: 36,
+  small: 48,
 } as const;
 
 // The house curve: fast out, long settle.

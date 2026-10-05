@@ -20,6 +20,10 @@ export const FRAME_MAP: Record<string, string> = {
   "confirm-dialog.png": "events-confirm-desktop.png",
   "receiving.png": "events-receiving-desktop.png",
   "prep-list.png": "events-prep-desktop.png",
+  "booked.png": "events-booked-desktop.png",
+  "purchase-order.png": "events-po-desktop.png",
+  "pack-list.png": "events-pack-desktop.png",
+  "closeout.png": "events-closeout-desktop.png",
 };
 
 const FIGURES = [

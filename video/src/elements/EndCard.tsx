@@ -18,7 +18,7 @@ export const EndCard: React.FC<{
       style={{
         position: "absolute",
         inset: 0,
-        backgroundColor: C.paper,
+        backgroundColor: C.cream,
         display: "grid",
         placeItems: "center",
         opacity: interpolate(frame, [0, 0.5 * fps], [0, 1], {
@@ -45,10 +45,20 @@ export const EndCard: React.FC<{
             fontFamily: FONT_BODY,
             fontSize: TYPE.small,
             marginTop: 16,
-            color: C.inkSoft,
+            color: C.ink,
           }}
         >
-          {trialDays}-day free trial · costcook.io
+          Try it free for {trialDays} days.
+        </div>
+        <div
+          style={{
+            fontFamily: FONT_BODY,
+            fontSize: TYPE.small,
+            marginTop: 8,
+            color: C.ink,
+          }}
+        >
+          costcook.io
         </div>
       </div>
     </div>

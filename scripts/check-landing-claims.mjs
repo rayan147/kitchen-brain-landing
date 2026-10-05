@@ -1220,8 +1220,8 @@ requireText(heroSource, 'What you do about the gap is your call', 'hero caption 
 	if (manifest.developCommit !== 'PENDING-CAPTURE' && !siteSource.includes(`trialDays: ${manifest.trialDays}`)) {
 		failures.push(`promo video: manifest trialDays ${manifest.trialDays} disagrees with src/lib/site.ts`);
 	}
-	const frameNames = [...film.matchAll(/["']([a-z0-9-]+\.png)["']/g)].map((m) => m[1]).join(' ');
-	if (/closeout/.test(frameNames)) failures.push('promo video: a closeout frame is in the film (RC-69)');
+	// The closeout scene is in by owner ruling 2026-10-05 (planned against actual,
+	// shown as captured; RC-69 is updated with its frame). Its caption names no figure.
 }
 
 if (failures.length > 0) {

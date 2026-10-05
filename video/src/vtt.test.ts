@@ -33,7 +33,7 @@ describe("toVtt", () => {
   });
   it("times the first caption from its beat", () => {
     expect(vtt).toContain(
-      "00:00:02.000 --> 00:00:06.000\nA wedding. About 150 guests. No date yet.",
+      "00:00:03.000 --> 00:00:07.000\nA wedding. About 150 guests. No date yet.",
     );
   });
   it("orders cues by start time", () => {

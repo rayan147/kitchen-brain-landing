@@ -18,15 +18,22 @@ export const SCENE_ORDER = [
   "kitchen",
   "receive",
   "prep",
+  "pack",
   "close",
 ] as const;
 export type SceneId = (typeof SCENE_ORDER)[number];
 
+export const TITLE = "Know what the job makes before you cook it.";
+
+// Percent of the frame box. `focus` pushes the camera toward (x, y) up to
+// `scale`; `ring` circles what the caption names.
 export type Ring = { x: number; y: number; width: number; height: number };
+export type Focus = { x: number; y: number; scale: number };
 
 // A beat is one stretch of screen time, in seconds from the scene's start.
-// "screen": one desktop frame. "phone": one phone frame. "split": desktop
-// left, phone right. "title" and "end" are the film's two cards.
+// "screen": one desktop frame. "phone": one phone frame, placed where the
+// split screen puts it. "split": desktop left, phone right. "title" and "end"
+// are the film's two cards.
 export type Beat = {
   from: number;
   to: number;
@@ -34,6 +41,7 @@ export type Beat = {
   frames: string[];
   caption?: string;
   ring?: Ring;
+  focus?: Focus;
   scroll?: [number, number];
 };
 
@@ -41,15 +49,17 @@ type Scene = { chapter: string | null; seconds: number; beats: Beat[] };
 
 export const CHAPTER_SECONDS = 2;
 
+// Rings and focus points are first placements, read off the review stills;
+// they are tuned against the final captures.
 export const FILM: Record<SceneId, Scene> = {
   coldOpen: {
     chapter: null,
-    seconds: 6,
+    seconds: 7,
     beats: [
-      { from: 0, to: 2, layout: "title", frames: [] },
+      { from: 0, to: 3, layout: "title", frames: [] },
       {
-        from: 2,
-        to: 6,
+        from: 3,
+        to: 7,
         layout: "phone",
         frames: ["events-inquiry-mobile.png"],
         caption: "A wedding. About {guests} guests. No date yet.",
@@ -61,120 +71,149 @@ export const FILM: Record<SceneId, Scene> = {
   // Menu & service, so that is where the job is priced.
   menu: {
     chapter: "What do I charge a head?",
-    seconds: 14,
+    seconds: 12,
     beats: [
       {
         from: 2,
-        to: 14,
+        to: 7,
         layout: "screen",
         frames: ["events-menu-desktop.png"],
-        caption:
-          "Pick the menu. {pricePerGuest} a guest is food cost {proposalFoodCostPct} against your {target} target. You see it before you send.",
+        caption: "{pricePerGuest} a guest. Food cost {proposalFoodCostPct}.",
+        focus: { x: 22, y: 50, scale: 1.1 },
+        ring: { x: 18, y: 49, width: 48, height: 14 },
+      },
+      {
+        from: 7,
+        to: 12,
+        layout: "screen",
+        frames: ["events-menu-desktop.png"],
+        caption: "Under your {target} target. You know it before you send.",
+        focus: { x: 22, y: 50, scale: 1.1 },
+        ring: { x: 70, y: 66, width: 29, height: 8 },
       },
     ],
   },
   decision: {
-    chapter: "Will she say yes without a meeting?",
-    seconds: 16,
+    chapter: "Can she say yes from her phone?",
+    seconds: 11,
     beats: [
       {
         from: 2,
-        to: 9,
+        to: 6.5,
         layout: "split",
         frames: ["events-proposal-sent-desktop.png", "events-offer-mobile.png"],
         caption: "The proposal goes to her phone. No login.",
+        focus: { x: 4, y: 55, scale: 1.25 },
       },
       {
-        from: 9,
-        to: 16,
+        from: 6.5,
+        to: 11,
         layout: "split",
         frames: ["events-proposal-sent-desktop.png", "events-offer-mobile.png"],
         caption: "Accept proposal, or Ask for changes. Her call.",
-        scroll: [0, 100],
+        focus: { x: 4, y: 55, scale: 1.25 },
+        ring: { x: 1, y: 91, width: 98, height: 8 },
       },
     ],
   },
   // Right after her yes, the event page lists what booking still needs.
   book: {
     chapter: null,
-    seconds: 10,
+    seconds: 6,
     beats: [
       {
         from: 0,
-        to: 10,
+        to: 6,
         layout: "screen",
         frames: ["events-book-event-desktop.png"],
         caption:
           "Her yes is not a booking. The page lists what is still missing.",
+        focus: { x: 50, y: 30, scale: 1.08 },
+        ring: { x: 0, y: 18, width: 87, height: 24 },
       },
     ],
   },
   agreement: {
-    chapter: "How do I get it in writing, and the deposit?",
+    chapter: "Signed, and deposit paid?",
     seconds: 16,
+    beats: [
+      {
+        from: 2,
+        to: 6.5,
+        layout: "screen",
+        frames: ["events-agreement-desktop.png"],
+        caption:
+          "The agreement comes from the offer she accepted. She signs online.",
+      },
+      {
+        from: 6.5,
+        to: 12,
+        layout: "split",
+        frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
+        caption:
+          "Ask for the {deposit} deposit. She pays by card from the link.",
+      },
+      {
+        from: 12,
+        to: 16,
+        layout: "screen",
+        frames: ["events-booked-desktop.png"],
+        caption: "Signed. Deposit in. Booked.",
+      },
+    ],
+  },
+  kitchen: {
+    chapter: "How much do I buy so I\u2019m not short at 5\u00a0a.m.?",
+    seconds: 16,
+    beats: [
+      {
+        from: 2,
+        to: 7.5,
+        layout: "screen",
+        frames: ["events-shop-desktop.png"],
+        caption: "Whole packs, by supplier, for {guests}.",
+        ring: { x: 58, y: 23, width: 14, height: 8 },
+      },
+      {
+        from: 7.5,
+        to: 11.5,
+        layout: "screen",
+        frames: ["events-confirm-desktop.png"],
+        caption: "Confirm when the plan is ready. Prices and quantities lock.",
+        ring: { x: 73, y: 60, width: 19, height: 17 },
+      },
+      {
+        from: 11.5,
+        to: 16,
+        layout: "screen",
+        frames: ["events-po-desktop.png"],
+        caption: "Each supplier gets its own purchase order.",
+      },
+    ],
+  },
+  // After the plan is confirmed: the delivery (/orders/<id>/receiving), the
+  // prep list (/orders/<id>/prep), then the van (/orders/<id>/pack).
+  receive: {
+    chapter: "Did it all come off the truck?",
+    seconds: 8,
     beats: [
       {
         from: 2,
         to: 8,
         layout: "screen",
-        frames: ["events-agreement-desktop.png"],
-        caption:
-          "The agreement comes from the offer she accepted. It goes out for her signature.",
-      },
-      {
-        from: 8,
-        to: 16,
-        layout: "split",
-        frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
-        caption:
-          "Request the {deposit} deposit by email. She pays from the link.",
-      },
-    ],
-  },
-  kitchen: {
-    chapter: "How much do I buy so I'm not short at 5 a.m.?",
-    seconds: 14,
-    beats: [
-      {
-        from: 2,
-        to: 9,
-        layout: "screen",
-        frames: ["events-shop-desktop.png"],
-        caption: "Whole packs, by supplier, for {guests}.",
-      },
-      {
-        from: 9,
-        to: 14,
-        layout: "screen",
-        frames: ["events-confirm-desktop.png"],
-        caption:
-          "Confirm the order when the plan is ready. Prices and quantities freeze.",
-      },
-    ],
-  },
-  // After the plan is confirmed: the delivery (/orders/<id>/receiving), then
-  // the prep list (/orders/<id>/prep).
-  receive: {
-    chapter: "Did it all come off the truck?",
-    seconds: 12,
-    beats: [
-      {
-        from: 2,
-        to: 12,
-        layout: "screen",
         frames: ["events-receiving-desktop.png"],
         caption:
-          "Tick off the delivery against the order. Anything short stays under Still to get.",
+          "Tick off the delivery. Anything short stays under Still to get.",
       },
     ],
   },
   prep: {
-    chapter: "What do we prep, and how much?",
-    seconds: 12,
+    chapter: "What does the crew start on at 5\u00a0a.m.?",
+    seconds: 8,
     beats: [
       {
         from: 2,
-        to: 12,
+        to: 8,
         layout: "screen",
         frames: ["events-prep-desktop.png"],
         caption:
@@ -182,19 +221,31 @@ export const FILM: Record<SceneId, Scene> = {
       },
     ],
   },
+  pack: {
+    chapter: "Is everything in the van?",
+    seconds: 7,
+    beats: [
+      {
+        from: 2,
+        to: 7,
+        layout: "screen",
+        frames: ["events-pack-desktop.png"],
+        caption: "Tick each dish and each piece of kit as it goes in.",
+      },
+    ],
+  },
   close: {
     chapter: null,
-    seconds: 14,
+    seconds: 11,
     beats: [
       {
         from: 0,
-        to: 10,
+        to: 6,
         layout: "screen",
-        frames: ["events-menu-desktop.png"],
-        caption:
-          "{pricePerGuest} a guest. {proposalFoodCostPct} food cost. Known before she said yes.",
+        frames: ["events-closeout-desktop.png"],
+        caption: "After the wedding: what you planned against what you paid.",
       },
-      { from: 10, to: 14, layout: "end", frames: [] },
+      { from: 6, to: 11, layout: "end", frames: [] },
     ],
   },
 };

@@ -11,7 +11,12 @@ import {
   useVideoConfig,
 } from "remotion";
 import { FONT_BODY } from "../fonts";
-import { C, EASE_OUT, TYPE } from "../tokens";
+import { C, TYPE } from "../tokens";
+
+// Camera moves run the length of the beat and ease in and out, so the frame
+// never lurches at the cut and then freezes. The fast-out curve is for
+// entrances only.
+const CAMERA = Easing.inOut(Easing.cubic);
 
 type Props = {
   src: string;
@@ -22,6 +27,8 @@ type Props = {
   // For "fill-top": scroll the page from one vertical position to another
   // (0 = top, 100 = bottom) over the sequence, the way a thumb would.
   scroll?: [number, number];
+  // Overlays (a ring) drawn inside the camera, so they move with the push-in.
+  children?: React.ReactNode;
   style?: React.CSSProperties;
 };
 
@@ -32,6 +39,7 @@ export const Screen: React.FC<Props> = ({
   focus,
   fit = "contain",
   scroll = [0, 0],
+  children,
   style,
 }) => {
   const frame = useCurrentFrame();
@@ -76,23 +84,10 @@ export const Screen: React.FC<Props> = ({
         ...style,
       }}
     >
-      <CanvasImage
-        src={staticFile(`frames/${src}`)}
-        premountFor={fps}
+      <div
         style={{
           position: "absolute",
           inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: fit === "fill-top" ? "cover" : "contain",
-          objectPosition:
-            fit === "fill-top"
-              ? `50% ${interpolate(frame, [0, durationInFrames], scroll, {
-                  extrapolateLeft: "clamp",
-                  extrapolateRight: "clamp",
-                  easing: Easing.bezier(...EASE_OUT),
-                })}%`
-              : "50% 50%",
           transformOrigin: focus ? `${focus.x}% ${focus.y}%` : "50% 50%",
           scale: interpolate(
             frame,
@@ -101,11 +96,37 @@ export const Screen: React.FC<Props> = ({
             {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
-              easing: Easing.bezier(...EASE_OUT),
+              easing: CAMERA,
             },
           ),
         }}
-      />
+      >
+        <CanvasImage
+          src={staticFile(`frames/${src}`)}
+          premountFor={fps}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: fit === "fill-top" ? "cover" : "contain",
+            objectPosition:
+              fit === "fill-top"
+                ? `50% ${interpolate(
+                    frame,
+                    [Math.round(0.5 * fps), durationInFrames],
+                    scroll,
+                    {
+                      extrapolateLeft: "clamp",
+                      extrapolateRight: "clamp",
+                      easing: CAMERA,
+                    },
+                  )}%`
+                : "50% 50%",
+          }}
+        />
+        {children}
+      </div>
     </div>
   );
 };
