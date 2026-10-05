@@ -48,7 +48,7 @@ export const EVENT = {
 	date: process.env.EVENT_DATE ?? TODAY,
 	start: '17:00',
 	end: '22:00',
-	deposit: '3500'
+	deposit: '3500',
 };
 
 // Text that must never be in a shipped frame.
@@ -62,15 +62,18 @@ const FORBIDDEN = [
 	/\bstub\b/i,
 	/This test site only emails/,
 	/Add a card in Billing/,
-	/\bLOGO\b/
+	/\bLOGO\b/,
 ];
 
 await mkdir(OUT, { recursive: true });
 const manifest = await readFile(MANIFEST, 'utf8').then(JSON.parse, () => ({ frames: [] }));
-const saveManifest = () =>
-	writeFile(MANIFEST, JSON.stringify({ ...manifest, appSha: DEVELOP_COMMIT, capturedOn: TODAY }, null, 2) + '\n');
+const saveManifest = () => writeFile(MANIFEST, JSON.stringify({ ...manifest, appSha: DEVELOP_COMMIT, capturedOn: TODAY }, null, 2) + '\n');
 
-const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', headless: true, args: ['--no-sandbox', '--font-render-hinting=none'] });
+const browser = await chromium.launch({
+	executablePath: '/usr/bin/google-chrome',
+	headless: true,
+	args: ['--no-sandbox', '--font-render-hinting=none'],
+});
 const owner = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, reducedMotion: 'reduce' });
 const page = await owner.newPage();
 
@@ -111,7 +114,12 @@ async function union(locators, pad = 24) {
 /** One frame: text-guarded, clipped, recorded in the manifest. */
 async function shoot(p, name, clip, { fullPage = true } = {}) {
 	await settle(p);
-	const box = { x: Math.max(0, Math.round(clip.x)), y: Math.max(0, Math.round(clip.y)), width: Math.round(clip.width), height: Math.round(clip.height) };
+	const box = {
+		x: Math.max(0, Math.round(clip.x)),
+		y: Math.max(0, Math.round(clip.y)),
+		width: Math.round(clip.width),
+		height: Math.round(clip.height),
+	};
 	const text = await p.evaluate(
 		({ box, fullPage }) => {
 			const sx = fullPage ? window.scrollX : 0;
@@ -126,13 +134,17 @@ async function shoot(p, name, clip, { fullPage = true } = {}) {
 				const range = document.createRange();
 				range.selectNodeContents(n);
 				for (const r of range.getClientRects()) {
-					const x = r.left + sx, y = r.top + sy;
-					if (r.width && x < box.x + box.width && x + r.width > box.x && y < box.y + box.height && y + r.height > box.y) { parts.push(t); break; }
+					const x = r.left + sx,
+						y = r.top + sy;
+					if (r.width && x < box.x + box.width && x + r.width > box.x && y < box.y + box.height && y + r.height > box.y) {
+						parts.push(t);
+						break;
+					}
 				}
 			}
 			return parts.join(' | ');
 		},
-		{ box, fullPage }
+		{ box, fullPage },
 	);
 	for (const bad of FORBIDDEN) if (bad.test(text)) throw new Error(`${name}: forbidden text ${bad} in frame: ${text.slice(0, 300)}`);
 	await p.screenshot({ path: `${OUT}/${name}.png`, clip: box, fullPage, animations: 'disabled', caret: 'hide' });
@@ -167,7 +179,12 @@ async function findEvent() {
 const STEPS = {
 	async inquiry() {
 		if (await findEvent()) throw new Error('the wedding already exists; re-seed to shoot the inquiry again');
-		const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, reducedMotion: 'reduce', storageState: await owner.storageState() });
+		const phone = await browser.newContext({
+			viewport: { width: 390, height: 844 },
+			deviceScaleFactor: 2,
+			reducedMotion: 'reduce',
+			storageState: await owner.storageState(),
+		});
 		const p = await phone.newPage();
 		await open(p, '/events/new');
 		// develop: the Client field is its own search box.
@@ -183,7 +200,9 @@ const STEPS = {
 		// The action bar is fixed to the bottom: size the screen so it sits right
 		// under "The event" card, the whole inquiry above the one button.
 		const bar = p.getByRole('button', { name: /^Save (inquiry )?and build menu$/ }).last();
-		const card = p.getByRole('heading', { name: 'The event' }).locator('xpath=ancestor::*[self::section or self::fieldset or self::div][.//button[contains(., "Add time, venue")]][1]');
+		const card = p
+			.getByRole('heading', { name: 'The event' })
+			.locator('xpath=ancestor::*[self::section or self::fieldset or self::div][.//button[contains(., "Add time, venue")]][1]');
 		const cardBottom = (await docBox(card)).b;
 		const barTop = await bar.evaluate((el) => {
 			let n = el;
@@ -193,10 +212,17 @@ const STEPS = {
 		await p.setViewportSize({ width: 390, height: Math.round(cardBottom + 12 + (844 - barTop)) });
 		await p.evaluate(() => window.scrollTo(0, 0));
 		const bannerBottom = await p.evaluate(() => {
-			const b = [...document.querySelectorAll('body *')].find((e) => /^Test site\./.test(e.textContent?.trim() ?? '') && e.children.length === 0);
+			const b = [...document.querySelectorAll('body *')].find(
+				(e) => /^Test site\./.test(e.textContent?.trim() ?? '') && e.children.length === 0,
+			);
 			return b ? b.getBoundingClientRect().bottom : 0;
 		});
-		await shoot(p, 'inquiry-mobile', { x: 0, y: bannerBottom, width: 390, height: p.viewportSize().height - bannerBottom }, { fullPage: false });
+		await shoot(
+			p,
+			'inquiry-mobile',
+			{ x: 0, y: bannerBottom, width: 390, height: p.viewportSize().height - bannerBottom },
+			{ fullPage: false },
+		);
 		await bar.click();
 		await p.waitForURL(/\/events\/[0-9a-f-]+\/menu$/, { timeout: 60_000 });
 		manifest.eventUrl = p.url().replace(/\/menu$/, '');
@@ -212,7 +238,7 @@ const STEPS = {
 		await open(page, `${eventUrl}/menu`);
 		// Re-runnable: the menu and the date are set once; later runs only re-shoot.
 		if (!(await page.getByText(`From “${EVENT.menu}”`).count())) {
-		await page.getByRole('searchbox', { name: /Search menus/ }).fill(EVENT.menu);
+			await page.getByRole('searchbox', { name: /Search menus/ }).fill(EVENT.menu);
 			await page.waitForTimeout(1200);
 			await page.getByRole('button', { name: 'Use menu' }).first().click();
 			await page.getByText('All changes saved').first().waitFor({ timeout: 60_000 });
@@ -239,7 +265,12 @@ const STEPS = {
 		await totals.first().waitFor();
 		const food = await page.evaluate(() => {
 			const t = document.querySelector('main').innerText;
-			return { pct: t.match(/Food cost %\s*([\d.]+%)/)?.[1], perGuest: t.match(/subtotal\s*·\s*\$([\d,]+\.\d{2}) per guest/)?.[1], revenue: t.match(/EVENT TOTALS\s*\$([\d,]+\.\d{2})/i)?.[1], target: t.match(/Target\s*(\d+%)/)?.[1] };
+			return {
+				pct: t.match(/Food cost %\s*([\d.]+%)/)?.[1],
+				perGuest: t.match(/subtotal\s*·\s*\$([\d,]+\.\d{2}) per guest/)?.[1],
+				revenue: t.match(/EVENT TOTALS\s*\$([\d,]+\.\d{2})/i)?.[1],
+				target: t.match(/Target\s*(\d+%)/)?.[1],
+			};
 		});
 		console.log('menu figures', food);
 		if (!food.pct || !food.target) throw new Error('could not read food cost % and target off the Menu & service screen');
@@ -250,7 +281,79 @@ const STEPS = {
 		manifest.revenue = `$${food.revenue}`;
 		const box = await union([title, page.getByText(/Continue to proposal/).first()], 24);
 		await shoot(page, 'menu-service', { x: box.x, y: box.y - 40, width: Math.max(box.width, 1392), height: box.height + 40 });
-	}
+	},
+
+	async proposal() {
+		const eventUrl = await findEvent();
+		if (!eventUrl) throw new Error('run the inquiry and menu steps first');
+		if (manifest.offerUrl) throw new Error('the proposal is already sent');
+		// Re-runnable: once sent, the step only re-shoots the decision page.
+		await open(page, `${eventUrl}/decision`);
+		const alreadySent = (await page.getByRole('heading', { level: 1, name: /^Waiting on / }).count()) > 0;
+		if (!alreadySent) {
+			await open(page, `${eventUrl}/proposal`);
+			await page.getByLabel('Client email').fill(EVENT.email);
+			// The deposit and balance the client accepts with the price.
+			await page.getByLabel('A deposit, then the balance').check({ force: true });
+			await page.getByLabel('A fixed amount').check({ force: true });
+			await page.getByLabel('Deposit dollars').fill(EVENT.deposit);
+			await page.getByLabel('In one payment').check({ force: true });
+			await page.getByLabel('Balance due (days before the event)').fill('0');
+			await page.waitForTimeout(1500);
+			await page.getByRole('button', { name: 'Preview & send' }).last().click();
+			await page.waitForURL(/\/proposal\/(send|preview)/, { timeout: 60_000 });
+			await page.waitForTimeout(2500);
+			const send = page.getByRole('button', { name: /^Send (offer|proposal) to/ });
+			if (!(await send.count())) {
+				const buttons = (await page.getByRole('button').allInnerTexts()).map((t) => t.trim()).filter(Boolean);
+				throw new Error(`no Send button on ${page.url()}; buttons: ${buttons.join(' | ')}`);
+			}
+			await send.first().click();
+			await page.waitForURL(/\/decision/, { timeout: 60_000 });
+			await page.waitForTimeout(3000);
+		}
+		await page.getByRole('list', { name: 'Offer tracking' }).getByText(/Sent/).first().waitFor({ timeout: 60_000 });
+		const card = page.locator('main section').filter({ has: page.getByRole('heading', { name: 'Current offer' }) });
+		const title = page.getByRole('heading', { level: 1, name: /^Waiting on / });
+		const box = await union([title, card], 24);
+		await shoot(page, 'proposal-sent-desktop', { x: box.x, y: box.y - 40, width: box.width, height: box.height + 40 });
+		await owner.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: APP });
+		await page.getByRole('button', { name: 'Copy offer link' }).click();
+		manifest.offerUrl = await page.evaluate(() => navigator.clipboard.readText());
+		if (!/^https?:\/\//.test(manifest.offerUrl)) throw new Error(`Copy offer link gave "${manifest.offerUrl}"`);
+		await saveManifest();
+		console.log('offer link saved');
+	},
+
+	async accept() {
+		if (!manifest.offerUrl) throw new Error('run the proposal step first');
+		const client = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, reducedMotion: 'reduce' });
+		const cp = await client.newPage();
+		await open(cp, manifest.offerUrl);
+		const accept = cp.getByRole('button', { name: 'Accept proposal' }).last();
+		await accept.waitFor({ timeout: 60_000 });
+		// One phone screen with the price, the event, the menu and the fixed
+		// Accept bar under the dish list.
+		const listBottom = (await docBox(cp.getByRole('heading', { name: /what we.ll serve/i }).locator('xpath=following::ul[1]'))).b;
+		const barTop = await accept.evaluate((el) => {
+			let n = el;
+			while (n.parentElement && !['fixed', 'sticky'].includes(getComputedStyle(n).position)) n = n.parentElement;
+			return n.getBoundingClientRect().top;
+		});
+		await cp.setViewportSize({ width: 390, height: Math.round(listBottom + 20 + (844 - barTop)) });
+		await cp.evaluate(() => window.scrollTo(0, 0));
+		// The offer page's header hard-codes a dashed "LOGO" box (o/[token]/+page.svelte,
+		// develop 05dfa4165) and never shows the kitchen's logo: start below it.
+		const headerBottom = await cp.locator('header').first().evaluate((h) => h.getBoundingClientRect().bottom);
+		await shoot(cp, 'proposal-mobile', { x: 0, y: headerBottom, width: 390, height: cp.viewportSize().height - headerBottom }, { fullPage: false });
+		await cp.setViewportSize({ width: 390, height: 844 });
+		await accept.click();
+		await cp.getByLabel('Your full name').fill(EVENT.client);
+		await cp.getByRole('button', { name: /^Accept for / }).click();
+		await cp.getByRole('heading', { name: /accepted/i }).waitFor({ timeout: 60_000 });
+		await client.close();
+		console.log('accepted');
+	},
 };
 
 const step = process.argv[2];

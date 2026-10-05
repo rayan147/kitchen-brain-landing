@@ -1,7 +1,9 @@
 {
   "frames": [
     "inquiry-mobile.png",
-    "menu-service.png"
+    "menu-service.png",
+    "proposal-sent-desktop.png",
+    "proposal-mobile.png"
   ],
   "eventUrl": "http://localhost:4197/events/39410dc2-6d1a-4943-853e-bfcaf98ae558",
   "guests": "150",
@@ -10,5 +12,6 @@
   "proposalFoodCostPct": "28.3%",
   "targetPct": "30%",
   "pricePerGuest": "$95.00",
-  "revenue": "$14,250.00"
+  "revenue": "$14,250.00",
+  "offerUrl": "http://localhost:4197/o/OTVjNmQzMTMtMzc0YS00YzAwLTk4MTktOWRjNjA4MjY1MWUz.0901a118-354b-40d6-a83e-dc51f558e60b.3pm8HHMcUi5ANLsFi8s-m9W106mdzniuA6pnmQF4wLA"
 }
