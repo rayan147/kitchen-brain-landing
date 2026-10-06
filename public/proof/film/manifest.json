@@ -3,7 +3,11 @@
     "inquiry-mobile.png",
     "menu-service.png",
     "proposal-sent-desktop.png",
-    "proposal-mobile.png"
+    "proposal-mobile.png",
+    "agreement-desktop.png",
+    "payment-request-desktop.png",
+    "pay-mobile.png",
+    "payments-paid-desktop.png"
   ],
   "eventUrl": "http://localhost:4197/events/39410dc2-6d1a-4943-853e-bfcaf98ae558",
   "guests": "150",
@@ -13,5 +17,39 @@
   "targetPct": "30%",
   "pricePerGuest": "$95.00",
   "revenue": "$14,250.00",
-  "offerUrl": "http://localhost:4197/o/OTVjNmQzMTMtMzc0YS00YzAwLTk4MTktOWRjNjA4MjY1MWUz.0901a118-354b-40d6-a83e-dc51f558e60b.3pm8HHMcUi5ANLsFi8s-m9W106mdzniuA6pnmQF4wLA"
+  "offerUrl": "http://localhost:4197/o/OTVjNmQzMTMtMzc0YS00YzAwLTk4MTktOWRjNjA4MjY1MWUz.0901a118-354b-40d6-a83e-dc51f558e60b.3pm8HHMcUi5ANLsFi8s-m9W106mdzniuA6pnmQF4wLA",
+  "frameSources": {
+    "agreement-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "05dfa4165",
+      "event": "959cac05-b348-43e6-b531-6afc376dc106",
+      "via": "browser extension zoom capture, 1511x785"
+    },
+    "payment-request-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "05dfa4165",
+      "event": "959cac05-b348-43e6-b531-6afc376dc106",
+      "via": "browser extension zoom capture, cropped 900x578"
+    },
+    "pay-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "ordering on test",
+      "event": "959cac05-b348-43e6-b531-6afc376dc106",
+      "via": "browser extension zoom capture, 659 CSS px window, cropped 798x738"
+    },
+    "payments-paid-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "05dfa4165",
+      "order": 52,
+      "via": "browser extension zoom capture, cropped 860x625"
+    }
+  },
+  "testEvent": {
+    "url": "https://test.app.costcook.io/events/959cac05-b348-43e6-b531-6afc376dc106",
+    "date": "2026-12-28"
+  },
+  "deposit": "$3,500.00",
+  "balanceDue": "$10,750.00",
+  "depositPaid": "$3,500.00",
+  "balanceReminderLine": "Reminder with a pay link goes out Mon, Dec 28."
 }
