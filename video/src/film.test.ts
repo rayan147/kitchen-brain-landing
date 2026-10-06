@@ -85,6 +85,15 @@ describe("FILM follows develop's event workflow", () => {
     );
     expect(all).not.toMatch(/Confirm order is/);
   });
+  // The pay page was captured in a 659 px window, not a phone: inside a
+  // phone frame it shrinks to half size and its copy cannot be read.
+  it("shows the pay page on its own, full frame, not inside a phone", () => {
+    const pay = FILM.agreement.beats.find((b) =>
+      b.frames.includes("events-pay-mobile.png"),
+    );
+    expect(pay?.layout).toBe("screen");
+    expect(pay?.frames).toEqual(["events-pay-mobile.png"]);
+  });
   it("says what the paid frame shows about the balance reminder", () => {
     const paid = FILM.agreement.beats.find((b) =>
       b.frames.includes("events-payments-paid-desktop.png"),

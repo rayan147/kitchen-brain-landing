@@ -120,7 +120,7 @@ export const FILM: Record<SceneId, Scene> = {
   // Book the event once everything it asks for is in (booking-requirements.ts).
   agreement: {
     chapter: "Signed, and deposit paid?",
-    seconds: 19,
+    seconds: 20,
     beats: [
       {
         from: 2,
@@ -131,28 +131,35 @@ export const FILM: Record<SceneId, Scene> = {
       },
       {
         from: 5.5,
-        to: 9.5,
-        layout: "split",
-        frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
-        caption: "Ask for {deposit}. She pays by card from the link.",
+        to: 8,
+        layout: "screen",
+        frames: ["events-payment-request-desktop.png"],
+        caption: "Ask for {deposit}.",
       },
       {
-        from: 9.5,
-        to: 12.5,
+        from: 8,
+        to: 11,
+        layout: "screen",
+        frames: ["events-pay-mobile.png"],
+        caption: "She pays by card from the link.",
+      },
+      {
+        from: 11,
+        to: 14,
         layout: "screen",
         frames: ["events-payments-paid-desktop.png"],
         caption: "Paid. The balance reminder sends itself.",
       },
       {
-        from: 12.5,
-        to: 16.5,
+        from: 14,
+        to: 18,
         layout: "screen",
         frames: ["events-book-event-desktop.png"],
         caption: "Her yes is not a booking. Signed and paid is.",
       },
       {
-        from: 16.5,
-        to: 19,
+        from: 18,
+        to: 20,
         layout: "screen",
         frames: ["events-booked-desktop.png"],
         caption: "Booked.",

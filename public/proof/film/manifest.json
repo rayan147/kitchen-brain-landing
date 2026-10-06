@@ -41,7 +41,7 @@
       "host": "sites-test.costcook.io",
       "app": "ordering on test",
       "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, 659 CSS px window, cropped 798x738"
+      "via": "browser extension zoom capture, 659 CSS px window, cropped to the pay card 798x356"
     },
     "payments-paid-desktop.png": {
       "host": "test.app.costcook.io",
