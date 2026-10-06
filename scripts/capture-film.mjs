@@ -449,6 +449,72 @@ const STEPS = {
 		console.log((await page.getByLabel('Before you confirm').innerText()).replace(/\s+/g, ' ').slice(0, 300));
 	},
 
+	// Buying: the dialog that fans the order out by supplier, then send. Locally
+	// the supplier emails land in this walk's own Mailpit, never a real inbox.
+	async buy() {
+		if (!manifest.orderHref) throw new Error('run the book step first');
+		await open(page, `${manifest.orderHref}?tab=shop`);
+		const send = page.getByRole('button', { name: /^Send \d+ emails?/ }).first();
+		if (!(await send.count())) return console.log('already sent to suppliers');
+		await send.click();
+		const dialog = page.getByRole('dialog').filter({ hasText: 'Send these supplier orders?' });
+		await dialog.waitFor({ timeout: 30_000 });
+		await page.waitForTimeout(700);
+		const b = await dialog.boundingBox();
+		await shoot(page, 'po-desktop', { x: b.x - 24, y: b.y - 24, width: b.width + 48, height: b.height + 48 }, { fullPage: false });
+		await dialog.getByRole('button', { name: /^Send \d+ emails?/ }).click();
+		await dialog.waitFor({ state: 'hidden', timeout: 60_000 });
+		console.log('sent to suppliers');
+	},
+
+	// The truck: Baldor's lines checked in, arugula one case short, so the
+	// frame shows a real "Still to get".
+	async receive() {
+		if (!manifest.orderHref) throw new Error('run the book step first');
+		await open(page, `${manifest.orderHref}/receiving`);
+		const baldor = page.locator('main section, main div').filter({ has: page.getByText('Baldor contact and purchasing details') }).filter({ has: page.getByRole('button', { name: 'All of Arugula is here' }) }).last();
+		const arugulaRow = baldor.locator('li, div').filter({ has: page.getByRole('button', { name: 'All of Arugula is here' }) }).last();
+		if (await arugulaRow.getByRole('button', { name: 'Fewer came' }).count()) {
+			await arugulaRow.getByRole('button', { name: 'Fewer came' }).click();
+			await page.getByLabel(/How many came/).first().fill('3');
+			await page.getByLabel(/Invoice total for this item/).first().fill('61.74');
+			await page.getByLabel(/Receiving note/).first().fill('One case short on the truck.');
+			await page.getByRole('button', { name: /^Save: fewer came/ }).first().click();
+			await page.waitForTimeout(2500);
+		}
+		const others = baldor.getByRole('button', { name: /^All of (?!Arugula).+ is here$/ });
+		for (let i = 0, n = await others.count(); i < n; i += 1) {
+			await others.first().click();
+			await page.waitForTimeout(1500);
+		}
+		await open(page, `${manifest.orderHref}/receiving`);
+		const title = page.getByRole('heading', { level: 1 });
+		const section = page.locator('main section, main div').filter({ has: page.getByText('Baldor contact and purchasing details') }).last();
+		const box = await union([title, section], 24);
+		await shoot(page, 'receiving-desktop', { x: box.x, y: box.y - 40, width: box.width, height: Math.min(box.height + 40, 1400) });
+	},
+
+	// The prep list and the pack list, as the crew opens them.
+	async lists() {
+		if (!manifest.orderHref) throw new Error('run the book step first');
+		for (const [path, name] of [['prep', 'prep-desktop'], ['pack', 'pack-desktop']]) {
+			await open(page, `${manifest.orderHref}/${path}`);
+			const title = page.getByRole('heading', { level: 1 });
+			await title.waitFor({ timeout: 60_000 });
+			const main = await docBox(page.locator('main'));
+			const top = await docBox(title);
+			if (path === 'pack') {
+				// The dishes card only: the pack page's "Load out" block stays out of
+				// shipped frames (capture brief).
+				const dishes = page.locator('main section, main div').filter({ has: page.getByRole('heading', { name: /^Dishes/ }) }).filter({ hasText: 'Lemon Posset' }).filter({ hasNot: page.getByRole('heading', { name: /^(Load out|Equipment)/ }) }).last();
+				const box = await union([title, dishes], 24);
+				await shoot(page, name, { x: box.x, y: box.y - 40, width: box.width, height: Math.min(box.height + 40, 1000) });
+				continue;
+			}
+			await shoot(page, name, { x: main.x + 8, y: top.y - 72, width: Math.min(main.r - main.x - 16, 1360), height: 820 });
+		}
+	},
+
 	async kitchen() {
 		if (!manifest.orderHref) throw new Error('run the book step first');
 		// The shop list on the draft: the first supplier groups, whole packs.

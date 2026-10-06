@@ -11,7 +11,11 @@
     "proposal-sent-desktop.png",
     "proposal-mobile.png",
     "shop-desktop.png",
-    "confirm-desktop.png"
+    "confirm-desktop.png",
+    "po-desktop.png",
+    "receiving-desktop.png",
+    "prep-desktop.png",
+    "pack-desktop.png"
   ],
   "guests": "150",
   "appSha": "05dfa4165",
