@@ -1,25 +1,25 @@
 {
   "frames": [
-    "inquiry-mobile.png",
-    "menu-service.png",
-    "proposal-sent-desktop.png",
-    "proposal-mobile.png",
     "agreement-desktop.png",
     "payment-request-desktop.png",
     "pay-mobile.png",
     "payments-paid-desktop.png",
     "book-event-desktop.png",
-    "booked-desktop.png"
+    "booked-desktop.png",
+    "inquiry-mobile.png",
+    "menu-service.png",
+    "proposal-sent-desktop.png",
+    "proposal-mobile.png",
+    "shop-desktop.png",
+    "confirm-desktop.png"
   ],
-  "eventUrl": "http://localhost:4197/events/39410dc2-6d1a-4943-853e-bfcaf98ae558",
   "guests": "150",
   "appSha": "05dfa4165",
-  "capturedOn": "2026-10-05",
+  "capturedOn": "2026-10-06",
   "proposalFoodCostPct": "28.3%",
   "targetPct": "30%",
   "pricePerGuest": "$95.00",
   "revenue": "$14,250.00",
-  "offerUrl": "http://localhost:4197/o/OTVjNmQzMTMtMzc0YS00YzAwLTk4MTktOWRjNjA4MjY1MWUz.0901a118-354b-40d6-a83e-dc51f558e60b.3pm8HHMcUi5ANLsFi8s-m9W106mdzniuA6pnmQF4wLA",
   "frameSources": {
     "agreement-desktop.png": {
       "host": "test.app.costcook.io",
@@ -66,5 +66,8 @@
   "balanceDue": "$10,750.00",
   "depositPaid": "$3,500.00",
   "balanceReminderLine": "Reminder with a pay link goes out Mon, Dec 28.",
-  "eventDate": "Mon, Dec 28, 2026"
+  "eventDate": "Mon, Dec 28, 2026",
+  "eventUrl": "http://localhost:4197/events/de6729ac-4e91-4c30-b6e9-ed1b85ff4313",
+  "offerUrl": "http://localhost:4197/o/ZGQ2YzQyYjAtZmQxNi00YmUxLTgwMWMtMWYxZGU4NzdiMjhk.3aa63902-41f5-464b-a9cf-88f6479aa556.sXRoT4nwMLLZj-VO1sYnjT3T0_OFvaPCCAQJeApDDtM",
+  "orderHref": "/orders/783"
 }

@@ -45,7 +45,13 @@ export const EVENT = {
 	name: 'Nair & Castellano wedding',
 	guests: '150',
 	menu: 'Wedding Plated Dinner',
-	date: process.env.EVENT_DATE ?? TODAY,
+	// The same date, time and venue as the test half of the walk (agreement,
+	// deposit, booking on test.app.costcook.io), so both halves show one wedding.
+	date: process.env.EVENT_DATE ?? '2026-12-28',
+	venue: 'Pineland Barn, 15 Farm Road, Gorham',
+	venueState: 'ME',
+	venueZip: '04038',
+	budget: '95 per guest',
 	start: '17:00',
 	end: '22:00',
 	deposit: '3500',
@@ -253,6 +259,10 @@ const STEPS = {
 			await dialog.getByLabel('Service start').fill(EVENT.start);
 			await dialog.getByLabel('Service end').fill(EVENT.end);
 			await dialog.getByText('Plated', { exact: true }).click();
+			await dialog.getByLabel('Venue or address').fill(EVENT.venue);
+			await dialog.getByLabel('Venue state').fill(EVENT.venueState).catch(() => {});
+			await dialog.getByLabel('Venue ZIP code').fill(EVENT.venueZip).catch(() => {});
+			await dialog.getByLabel(/^Budget they mentioned/).fill(EVENT.budget).catch(() => {});
 			await dialog.getByRole('button', { name: 'Save changes' }).click();
 			await dialog.waitFor({ state: 'hidden' });
 			const r = await page.request.post(`${eventUrl}?/setDate`, { headers: { origin: APP }, form: { serviceDate: EVENT.date } });
@@ -289,7 +299,8 @@ const STEPS = {
 		if (manifest.offerUrl) throw new Error('the proposal is already sent');
 		// Re-runnable: once sent, the step only re-shoots the decision page.
 		await open(page, `${eventUrl}/decision`);
-		const alreadySent = (await page.getByRole('heading', { level: 1, name: /^Waiting on / }).count()) > 0;
+		// The page says "Waiting on" before any offer exists; only a sent offer has tracking.
+		const alreadySent = (await page.getByRole('list', { name: 'Offer tracking' }).count()) > 0;
 		if (!alreadySent) {
 			await open(page, `${eventUrl}/proposal`);
 			await page.getByLabel('Client email').fill(EVENT.email);
@@ -353,6 +364,109 @@ const STEPS = {
 		await cp.getByRole('heading', { name: /accepted/i }).waitFor({ timeout: 60_000 });
 		await client.close();
 		console.log('accepted');
+	},
+
+	// The agreement, deposit and booking frames come from test.app.costcook.io,
+	// where DocuSeal and Stripe are configured. Locally the same wedding is
+	// booked with the app's own "Book anyway" and a recorded reason, so the
+	// kitchen half (shop, confirm, buy, receive, prep, pack) can follow.
+	async book() {
+		const eventUrl = await findEvent();
+		if (!eventUrl) throw new Error('run the earlier steps first');
+		await open(page, eventUrl);
+		const draft = page.getByRole('region', { name: 'Kitchen draft', exact: true });
+		const prepare = draft.getByRole('button', { name: 'Prepare the kitchen draft', exact: true });
+		if (await prepare.count()) {
+			await prepare.click();
+			await draft.getByText('It is tentative', { exact: false }).waitFor({ timeout: 60_000 });
+			await open(page, eventUrl);
+		}
+		const book = page.locator('#book-event');
+		if ((await book.getByRole('button', { name: /^Book (anyway|the event)$/ }).count()) > 0) {
+		await book.getByRole('textbox').first().fill('Agreement signed and deposit paid on test.app.costcook.io for the film.');
+		await book.getByRole('button', { name: /^Book (anyway|the event)$/ }).click();
+		await page.getByText('Event booked').first().waitFor({ timeout: 60_000 });
+		}
+		await open(page, eventUrl);
+		manifest.orderHref = await page.locator('main a[href^="/orders/"]').first().getAttribute('href');
+		if (!/^\/orders\/\d+$/.test(manifest.orderHref ?? '')) throw new Error(`no order link on the event page (${manifest.orderHref})`);
+		await saveManifest();
+		console.log('booked; order', manifest.orderHref);
+	},
+
+	// Confirm order waits on two real checks: allergens reviewed on every dish
+	// and guest restrictions declared. Each ingredient is answered for the US
+	// nine by what it is (dairy contains milk, flour contains wheat, ...), every
+	// answer is printed for the owner to check, and nothing is left "Not sure".
+	async allergens() {
+		if (!manifest.orderHref) throw new Error('run the book step first');
+		const CONTAINS = [
+			['Milk', /cream|butter|milk|cheese|parmesan|goat|feta|yogurt|yoghurt|mascarpone|ricotta|cr[eè]me|ghee/i],
+			['Wheat', /flour|bread|focaccia|pasta|panko|crouton|wheat|semolina/i],
+			['Egg', /\begg|mayonnaise|aioli/i],
+			['Fish', /anchov|fish|salmon|tuna|cod|worcestershire/i],
+			['Soy', /\bsoy|tamari|tofu|edamame|miso/i],
+			['Tree nuts', /almond|walnut|pistachio|hazelnut|pecan|cashew|pine nut/i],
+			['Sesame', /sesame|tahini/i],
+			['Crustacean shellfish', /shrimp|crab|lobster|prawn|crawfish/i],
+			['Peanuts', /peanut/i]
+		];
+		const answered = [];
+		for (let round = 0; round < 12; round += 1) {
+			await open(page, `${manifest.orderHref}?tab=shop`);
+			const review = page.getByLabel('Before you confirm').getByRole('link', { name: /^Review allergens/ });
+			if (!(await review.count())) break;
+			await open(page, await review.getAttribute('href'));
+			await page.getByRole('link', { name: /^Allergens/ }).or(page.getByRole('tab', { name: /^Allergens/ })).first().click();
+			await page.waitForTimeout(1500);
+			const todo = page.locator('button[aria-label$="allergens: Not reviewed"]');
+			while (await todo.count()) {
+				const label = await todo.first().getAttribute('aria-label');
+				const ingredient = label.replace(/, allergens: Not reviewed$/, '');
+				await todo.first().click();
+				await page.getByText('Answers update every recipe using this ingredient.').waitFor();
+				const answers = {};
+				for (const [allergen, pattern] of CONTAINS) {
+					const value = pattern.test(ingredient) ? 'Contains' : 'Free from';
+					await page.getByRole('combobox', { name: allergen, exact: true }).click();
+					await page.getByRole('option', { name: value, exact: true }).click();
+					if (value === 'Contains') answers[allergen] = value;
+				}
+				// A "Free from" answer must say what it rests on.
+				const evidence = page.getByLabel('Label or supplier evidence');
+				if (await evidence.count()) await evidence.fill('Kitchen review of the ingredient as bought.');
+				await page.getByRole('button', { name: 'Confirm answer' }).click();
+				await page.getByText('Answers update every recipe using this ingredient.').waitFor({ state: 'hidden', timeout: 30_000 });
+				answered.push(`${ingredient}: ${Object.keys(answers).length ? 'contains ' + Object.keys(answers).join(', ') : 'free of the nine'}`);
+				await page.waitForTimeout(500);
+			}
+		}
+		await open(page, `${manifest.orderHref}?tab=shop`);
+		const none = page.getByRole('button', { name: 'Mark guest restrictions: None declared' });
+		if (await none.count()) await none.click();
+		await page.waitForTimeout(1500);
+		console.log(answered.join('\n'));
+		console.log((await page.getByLabel('Before you confirm').innerText()).replace(/\s+/g, ' ').slice(0, 300));
+	},
+
+	async kitchen() {
+		if (!manifest.orderHref) throw new Error('run the book step first');
+		// The shop list on the draft: the first supplier groups, whole packs.
+		await open(page, `${manifest.orderHref}?tab=shop`);
+		const head = page.locator('.group-head').first();
+		await head.waitFor({ timeout: 60_000 });
+		const box = await union([page.getByRole('table', { name: 'Ingredients grouped by supplier' }).locator('[role="row"]').first(), page.locator('[role="rowgroup"]').nth(1)], 16);
+		await shoot(page, 'shop-desktop', box);
+		// Confirm order: the dialog, then confirm.
+		await page.getByRole('button', { name: /^Confirm( order)?$/ }).first().click();
+		const dialog = page.getByRole('alertdialog');
+		await dialog.waitFor({ timeout: 30_000 });
+		await page.waitForTimeout(700);
+		const b = await dialog.boundingBox();
+		await shoot(page, 'confirm-desktop', { x: b.x - 24, y: b.y - 24, width: b.width + 48, height: b.height + 48 }, { fullPage: false });
+		await dialog.getByRole('button', { name: /^Confirm( order)?$/ }).click();
+		await dialog.waitFor({ state: 'hidden', timeout: 30_000 });
+		console.log('confirmed');
 	},
 };
 
