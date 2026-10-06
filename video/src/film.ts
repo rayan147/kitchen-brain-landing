@@ -103,6 +103,7 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-proposal-sent-desktop.png", "events-offer-mobile.png"],
         caption: "The proposal goes to her phone. No login.",
         focus: { x: 4, y: 55, scale: 1.25 },
+        scroll: [0, 100],
       },
       {
         from: 6.5,
@@ -112,6 +113,7 @@ export const FILM: Record<SceneId, Scene> = {
         caption: "Accept proposal, or Ask for changes. Her call.",
         focus: { x: 4, y: 55, scale: 1.25 },
         ring: { x: 1, y: 91, width: 98, height: 8 },
+        scroll: [100, 100],
       },
     ],
   },

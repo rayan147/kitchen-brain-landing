@@ -60,6 +60,24 @@
       "app": "05dfa4165",
       "event": "959cac05-b348-43e6-b531-6afc376dc106",
       "via": "browser extension zoom capture, cropped above the follow-up card (owner email)"
+    },
+    "proposal-mobile.png": {
+      "host": "localhost (throwaway copy of the capture database)",
+      "app": "f4f83eb4e",
+      "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
+      "shows": "kitchen logo in the header; service time 5:00 PM to 10:00 PM Eastern Time"
+    },
+    "shop-desktop.png": {
+      "host": "localhost (throwaway copy of the capture database)",
+      "app": "f4f83eb4e",
+      "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
+      "shows": "overbuy note compares need to the whole buy"
+    },
+    "proposal-sent-desktop.png": {
+      "host": "localhost (throwaway copy of the capture database)",
+      "app": "f4f83eb4e",
+      "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
+      "shows": "the same send as proposal-mobile, so the split agrees on the time"
     }
   },
   "testEvent": {

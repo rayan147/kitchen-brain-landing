@@ -94,6 +94,13 @@ describe("FILM follows develop's event workflow", () => {
     expect(pay?.layout).toBe("screen");
     expect(pay?.frames).toEqual(["events-pay-mobile.png"]);
   });
+  // The offer frame is taller than the phone: the ring on the Accept bar only
+  // lands if that beat holds the page at its bottom, where the bar is.
+  it("holds the offer at its bottom while the ring circles the Accept bar", () => {
+    const ringed = FILM.decision.beats.find((b) => b.ring);
+    expect(ringed?.scroll).toEqual([100, 100]);
+    expect(FILM.decision.beats[0].scroll?.[1]).toBe(100);
+  });
   it("says what the paid frame shows about the balance reminder", () => {
     const paid = FILM.agreement.beats.find((b) =>
       b.frames.includes("events-payments-paid-desktop.png"),

@@ -29,7 +29,9 @@ if (!KB_APP_DIR) throw new Error('KB_APP_DIR=<the kitchen-brain export the app r
 if (!/^[0-9a-f]{7,40}$/.test(DEVELOP_COMMIT)) throw new Error('DEVELOP_COMMIT=<sha the app was exported from> is required');
 const { chromium } = await import(pathToFileURL(resolve(KB_APP_DIR, 'node_modules/playwright/index.mjs')).href);
 
-const OUT = resolve(import.meta.dirname, '../public/proof/film');
+// FILM_OUT sends a reshoot on a throwaway database to a scratch directory, so
+// its frames and manifest never overwrite the shipped walk until picked by hand.
+const OUT = process.env.FILM_OUT ? resolve(process.env.FILM_OUT) : resolve(import.meta.dirname, '../public/proof/film');
 const MANIFEST = resolve(OUT, 'manifest.json');
 const OWNER = 'marisol@example.com';
 const KITCHEN = 'Harbor & Hearth Catering';
@@ -353,10 +355,9 @@ const STEPS = {
 		});
 		await cp.setViewportSize({ width: 390, height: Math.round(listBottom + 20 + (844 - barTop)) });
 		await cp.evaluate(() => window.scrollTo(0, 0));
-		// The offer page's header hard-codes a dashed "LOGO" box (o/[token]/+page.svelte,
-		// develop 05dfa4165) and never shows the kitchen's logo: start below it.
-		const headerBottom = await cp.locator('header').first().evaluate((h) => h.getBoundingClientRect().bottom);
-		await shoot(cp, 'proposal-mobile', { x: 0, y: headerBottom, width: 390, height: cp.viewportSize().height - headerBottom }, { fullPage: false });
+		// The header carries the kitchen's own logo since develop f8ab8b79d (it was a
+		// dashed "LOGO" box before); the FORBIDDEN guard still refuses that box.
+		await shoot(cp, 'proposal-mobile', { x: 0, y: 0, width: 390, height: cp.viewportSize().height }, { fullPage: false });
 		await cp.setViewportSize({ width: 390, height: 844 });
 		await accept.click();
 		await cp.getByLabel('Your full name').fill(EVENT.client);
