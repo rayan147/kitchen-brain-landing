@@ -13,7 +13,6 @@ export const SCENE_ORDER = [
   "coldOpen",
   "menu",
   "decision",
-  "book",
   "agreement",
   "kitchen",
   "receive",
@@ -116,49 +115,47 @@ export const FILM: Record<SceneId, Scene> = {
       },
     ],
   },
-  // Right after her yes, the event page lists what booking still needs.
-  book: {
-    chapter: null,
-    seconds: 6,
-    beats: [
-      {
-        from: 0,
-        to: 6,
-        layout: "screen",
-        frames: ["events-book-event-desktop.png"],
-        caption:
-          "Her yes is not a booking. The page lists what is still missing.",
-        focus: { x: 50, y: 30, scale: 1.08 },
-        ring: { x: 0, y: 18, width: 87, height: 24 },
-      },
-    ],
-  },
+  // Shot on test.app.costcook.io, where DocuSeal and Stripe test mode are set
+  // up: the agreement out for signature, the card deposit asked and paid, then
+  // Book the event once everything it asks for is in (booking-requirements.ts).
   agreement: {
     chapter: "Signed, and deposit paid?",
-    seconds: 16,
+    seconds: 19,
     beats: [
       {
         from: 2,
-        to: 6.5,
+        to: 5.5,
         layout: "screen",
         frames: ["events-agreement-desktop.png"],
-        caption:
-          "The agreement comes from the offer she accepted. She signs online.",
+        caption: "Built from the offer she accepted. She signs online.",
       },
       {
-        from: 6.5,
-        to: 12,
+        from: 5.5,
+        to: 9.5,
         layout: "split",
         frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
-        caption:
-          "Ask for the {deposit} deposit. She pays by card from the link.",
+        caption: "Ask for {deposit}. She pays by card from the link.",
       },
       {
-        from: 12,
-        to: 16,
+        from: 9.5,
+        to: 12.5,
+        layout: "screen",
+        frames: ["events-payments-paid-desktop.png"],
+        caption: "Paid. The balance reminder sends itself.",
+      },
+      {
+        from: 12.5,
+        to: 16.5,
+        layout: "screen",
+        frames: ["events-book-event-desktop.png"],
+        caption: "Her yes is not a booking. Signed and paid is.",
+      },
+      {
+        from: 16.5,
+        to: 19,
         layout: "screen",
         frames: ["events-booked-desktop.png"],
-        caption: "Signed. Deposit in. Booked.",
+        caption: "Booked.",
       },
     ],
   },
@@ -234,6 +231,8 @@ export const FILM: Record<SceneId, Scene> = {
       },
     ],
   },
+  // Until the closeout can be shot (the day after the event), the film
+  // closes on the Menu & service frame the job was priced on.
   close: {
     chapter: null,
     seconds: 11,
@@ -242,8 +241,11 @@ export const FILM: Record<SceneId, Scene> = {
         from: 0,
         to: 6,
         layout: "screen",
-        frames: ["events-closeout-desktop.png"],
-        caption: "After the wedding: what you planned against what you paid.",
+        frames: ["events-menu-desktop.png"],
+        caption:
+          "{pricePerGuest} a guest. {proposalFoodCostPct} food cost. Known before she said yes.",
+        focus: { x: 22, y: 50, scale: 1.1 },
+        ring: { x: 18, y: 49, width: 48, height: 14 },
       },
       { from: 6, to: 11, layout: "end", frames: [] },
     ],

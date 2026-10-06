@@ -7,8 +7,7 @@ const peer = {
   guests: "150",
   pricePerGuest: "$95.00",
   revenue: "$14,250.00",
-  foodCostPct: "28.4%",
-  foodCostPctProposalBuilder: "28.3%",
+  proposalFoodCostPct: "28.3%",
   targetPct: "30%",
   deposit: "$3,500.00",
   appSha: "e00299078",
@@ -17,12 +16,15 @@ const peer = {
 const site = { displayPrice: "$49/month", trialDays: "15" };
 
 describe("toFilmManifest", () => {
+  // The film's own capture run (scripts/capture-film.mjs) writes the menu
+  // screen's food cost as proposalFoodCostPct; the order-page figure is
+  // optional and falls back to it.
   it("carries the shared run's figures verbatim, the site's price, and the frames copied", () => {
     const m = toFilmManifest(peer, site, ["events-offer-mobile.png"]);
     expect(ManifestSchema.parse(m)).toEqual({
       guests: "150",
       pricePerGuest: "$95.00",
-      foodCostPct: "28.4%",
+      foodCostPct: "28.3%",
       proposalFoodCostPct: "28.3%",
       target: "30%",
       deposit: "$3,500.00",

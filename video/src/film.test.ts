@@ -52,7 +52,6 @@ describe("FILM follows develop's event workflow", () => {
       "coldOpen",
       "menu",
       "decision",
-      "book",
       "agreement",
       "kitchen",
       "receive",
@@ -68,17 +67,29 @@ describe("FILM follows develop's event workflow", () => {
     );
     expect(captionsFor("menu", manifest).join(" ")).toContain("28.3%");
   });
-  it("shows what booking still needs right after her yes, never Confirm order as the booking", () => {
-    expect(SCENE_ORDER.indexOf("book")).toBe(
-      SCENE_ORDER.indexOf("decision") + 1,
+  it("books after signed and paid, at Book the event, never at Confirm order", () => {
+    // booking-requirements.ts: an accepted proposal, every signer, the deposit
+    // the agreement names, a day with room. Then Book the event; the order is
+    // confirmed later, when the kitchen plan is ready.
+    const frames = FILM.agreement.beats.map((b) => b.frames.join());
+    const book = frames.indexOf("events-book-event-desktop.png");
+    expect(book).toBeGreaterThan(
+      frames.indexOf("events-payments-paid-desktop.png"),
+    );
+    expect(frames[book + 1]).toBe("events-booked-desktop.png");
+    expect(FILM.agreement.beats[book].caption).toBe(
+      "Her yes is not a booking. Signed and paid is.",
     );
     const all = SCENE_ORDER.flatMap((id) => captionsFor(id, manifest)).join(
       "\n",
     );
     expect(all).not.toMatch(/Confirm order is/);
-    expect(captionsFor("book", manifest).join(" ")).toContain(
-      "Her yes is not a booking.",
+  });
+  it("says what the paid frame shows about the balance reminder", () => {
+    const paid = FILM.agreement.beats.find((b) =>
+      b.frames.includes("events-payments-paid-desktop.png"),
     );
+    expect(paid?.caption).toMatch(/reminder/i);
   });
 });
 
@@ -96,13 +107,6 @@ describe("after the kitchen plan, the delivery then the prep", () => {
 });
 
 describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
-  it("shows the booking itself after the agreement and deposit", () => {
-    const beats = FILM.agreement.beats;
-    expect(beats[beats.length - 1].frames).toEqual([
-      "events-booked-desktop.png",
-    ]);
-    expect(beats[beats.length - 1].caption).toBe("Signed. Deposit in. Booked.");
-  });
   it("says the deposit link is a card payment", () => {
     expect(captionsFor("agreement", manifest).join(" ")).toMatch(
       /pays by card from the link/,
@@ -117,8 +121,10 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
       });
     }
   });
-  it("ends on planned against actual, then the end card", () => {
-    expect(sceneFrames("close")).toEqual(["events-closeout-desktop.png"]);
+  it("ends on the price it was quoted at, then the end card, until the closeout is shot", () => {
+    // The closeout opens the day after the event (Dec 28); until then the
+    // film closes on the Menu & service frame it priced the job on.
+    expect(sceneFrames("close")).toEqual(["events-menu-desktop.png"]);
     expect(FILM.close.beats[FILM.close.beats.length - 1].layout).toBe("end");
   });
   it("gives every caption time to be read (at most 3.2 words a second once it shows)", () => {

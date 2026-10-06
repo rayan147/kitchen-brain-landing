@@ -1204,7 +1204,7 @@ requireText(heroSource, 'What you do about the gap is your call', 'hero caption 
 	// Develop books at "Book the event" (signed, paid, a day with room), and the
 	// order is confirmed later, when the kitchen plan is ready. Nothing before the
 	// booking scene may call the event booked, and Confirm order is never the booking.
-	const snap = 'Her yes is not a booking. The page lists what is still missing.';
+	const snap = 'Her yes is not a booking. Signed and paid is.';
 	requireText(film, snap, 'promo video snap line');
 	// Sentences only: scene ids, file names and imports carry no spaces.
 	const sentences = captions.filter((t) => /\s/.test(t));

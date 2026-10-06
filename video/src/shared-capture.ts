@@ -1,7 +1,8 @@
 import type { Manifest } from "./manifest";
 
-// The film reads the homepage redesign's capture run (one wedding, one set of
-// frames for both, shot from the develop app). This maps that run's frame ids
+// The film reads its own capture run (scripts/capture-film.mjs: one wedding,
+// local develop for the kitchen half, test.app.costcook.io for the agreement,
+// deposit and booking), which the homepage can reuse. This maps that run's frame ids
 // and manifest onto the film's names. A frame the run has not shot is absent,
 // and the render guard reports it.
 // Considered Adapter; not used because there is one source and one target and
@@ -12,25 +13,24 @@ export const FRAME_MAP: Record<string, string> = {
   "menu-service.png": "events-menu-desktop.png",
   "proposal-sent-desktop.png": "events-proposal-sent-desktop.png",
   "proposal-mobile.png": "events-offer-mobile.png",
-  "agreement.png": "events-agreement-desktop.png",
-  "payment-request.png": "events-payment-request-desktop.png",
+  "agreement-desktop.png": "events-agreement-desktop.png",
+  "payment-request-desktop.png": "events-payment-request-desktop.png",
   "pay-mobile.png": "events-pay-mobile.png",
-  "book-event.png": "events-book-event-desktop.png",
-  "shop-list.png": "events-shop-desktop.png",
-  "confirm-dialog.png": "events-confirm-desktop.png",
-  "receiving.png": "events-receiving-desktop.png",
-  "prep-list.png": "events-prep-desktop.png",
-  "booked.png": "events-booked-desktop.png",
-  "purchase-order.png": "events-po-desktop.png",
-  "pack-list.png": "events-pack-desktop.png",
-  "closeout.png": "events-closeout-desktop.png",
+  "payments-paid-desktop.png": "events-payments-paid-desktop.png",
+  "book-event-desktop.png": "events-book-event-desktop.png",
+  "booked-desktop.png": "events-booked-desktop.png",
+  "shop-desktop.png": "events-shop-desktop.png",
+  "confirm-desktop.png": "events-confirm-desktop.png",
+  "po-desktop.png": "events-po-desktop.png",
+  "receiving-desktop.png": "events-receiving-desktop.png",
+  "prep-desktop.png": "events-prep-desktop.png",
+  "pack-desktop.png": "events-pack-desktop.png",
 };
 
 const FIGURES = [
   "guests",
   "pricePerGuest",
-  "foodCostPct",
-  "foodCostPctProposalBuilder",
+  "proposalFoodCostPct",
   "targetPct",
   "deposit",
   "revenue",
@@ -52,8 +52,11 @@ export function toFilmManifest(
   return {
     guests: s.guests,
     pricePerGuest: s.pricePerGuest,
-    foodCostPct: s.foodCostPct,
-    proposalFoodCostPct: s.foodCostPctProposalBuilder,
+    foodCostPct:
+      typeof shared.foodCostPct === "string"
+        ? shared.foodCostPct
+        : s.proposalFoodCostPct,
+    proposalFoodCostPct: s.proposalFoodCostPct,
     target: s.targetPct,
     deposit: s.deposit,
     revenue: s.revenue,

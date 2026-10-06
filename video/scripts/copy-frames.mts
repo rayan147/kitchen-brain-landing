@@ -12,9 +12,7 @@ import { FRAME_MAP, toFilmManifest } from "../src/shared-capture";
 
 const root = resolve(import.meta.dirname, "..");
 const out = resolve(root, "public/frames");
-const shared =
-  process.env.SHARED_DIR ??
-  "/home/rayan147/kitchen-brain-landing/.gitworktrees/homepage-redesign/public/proof/home";
+const shared = process.env.SHARED_DIR ?? resolve(root, "../public/proof/film");
 
 const site = await readFile(resolve(root, "../src/lib/site.ts"), "utf8");
 const displayPrice = site.match(
