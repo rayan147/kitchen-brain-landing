@@ -17,6 +17,8 @@ const manifest: Manifest = {
   target: "30%",
   deposit: "$3,500.00",
   revenue: "$14,250.00",
+  plannedFoodCost: "$4,039.96",
+  actualFoodCost: "$4,093.50",
   displayPrice: "$49/month",
   trialDays: "15",
   developCommit: "e00299078",
@@ -137,11 +139,19 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
       });
     }
   });
-  it("ends on the price it was quoted at, then the end card, until the closeout is shot", () => {
-    // The closeout opens the day after the event (Dec 28); until then the
-    // film closes on the Menu & service frame it priced the job on.
-    expect(sceneFrames("close")).toEqual(["events-menu-desktop.png"]);
+  // The closeout opens the day after the event (Dec 28): the film prices the
+  // job before her yes, then checks it against what was paid.
+  it("ends on the price before her yes, then the closeout after the event, then the end card", () => {
+    expect(sceneFrames("close")).toEqual([
+      "events-menu-desktop.png",
+      "events-closeout-desktop.png",
+    ]);
     expect(FILM.close.beats[FILM.close.beats.length - 1].layout).toBe("end");
+  });
+  it("quotes the closeout's own planned and actual figures", () => {
+    expect(captionsFor("close", manifest).join(" ")).toContain(
+      "$4,093.50 against $4,039.96 planned",
+    );
   });
   it("gives every caption time to be read (at most 3.2 words a second once it shows)", () => {
     for (const id of SCENE_ORDER) {

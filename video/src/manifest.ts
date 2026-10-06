@@ -15,6 +15,10 @@ export const ManifestSchema = z.object({
   target: z.string().min(1),
   deposit: z.string().min(1),
   revenue: z.string().min(1),
+  // The food-cost closeout, the day after the event: what the plan said the
+  // food would cost and what was paid, both off the closeout's own card.
+  plannedFoodCost: z.string().min(1),
+  actualFoodCost: z.string().min(1),
   displayPrice: z.string().min(1),
   trialDays: z.string().min(1),
   developCommit: z.string().min(7),

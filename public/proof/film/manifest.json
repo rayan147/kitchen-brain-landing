@@ -15,7 +15,8 @@
     "po-desktop.png",
     "receiving-desktop.png",
     "prep-desktop.png",
-    "pack-desktop.png"
+    "pack-desktop.png",
+    "closeout-desktop.png"
   ],
   "guests": "150",
   "appSha": "05dfa4165",
@@ -78,6 +79,13 @@
       "app": "57a4c7f34",
       "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
       "shows": "the same send as proposal-mobile, so the split agrees on the time"
+    },
+    "closeout-desktop.png": {
+      "host": "localhost (copy of the capture database, the shipped walk, order /orders/783)",
+      "app": "57a4c7f34",
+      "clock": "server clock moved to 2026-12-29T20:00Z with scripts/shift-clock.mjs, the day after the Dec 28 event; no date in the data edited",
+      "via": "capture-film.mjs closeout step",
+      "shows": "planned vs actual food cost, still marked likely because no draw is recorded"
     }
   },
   "testEvent": {
@@ -91,5 +99,9 @@
   "eventDate": "Mon, Dec 28, 2026",
   "eventUrl": "http://localhost:4197/events/de6729ac-4e91-4c30-b6e9-ed1b85ff4313",
   "offerUrl": "http://localhost:4197/o/ZGQ2YzQyYjAtZmQxNi00YmUxLTgwMWMtMWYxZGU4NzdiMjhk.3aa63902-41f5-464b-a9cf-88f6479aa556.sXRoT4nwMLLZj-VO1sYnjT3T0_OFvaPCCAQJeApDDtM",
-  "orderHref": "/orders/783"
+  "orderHref": "/orders/783",
+  "closeoutPlanned": "$4,039.96",
+  "closeoutActual": "$4,093.50",
+  "closeoutOver": "$53.54",
+  "closeoutPct": "28.7%"
 }

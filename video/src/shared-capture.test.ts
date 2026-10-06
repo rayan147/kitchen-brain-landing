@@ -10,6 +10,8 @@ const peer = {
   proposalFoodCostPct: "28.3%",
   targetPct: "30%",
   deposit: "$3,500.00",
+  closeoutPlanned: "$4,039.96",
+  closeoutActual: "$4,093.50",
   appSha: "e00299078",
   capturedOn: "2026-10-05",
 };
@@ -29,6 +31,8 @@ describe("toFilmManifest", () => {
       target: "30%",
       deposit: "$3,500.00",
       revenue: "$14,250.00",
+      plannedFoodCost: "$4,039.96",
+      actualFoodCost: "$4,093.50",
       displayPrice: "$49/month",
       trialDays: "15",
       developCommit: "e00299078",

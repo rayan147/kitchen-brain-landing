@@ -535,6 +535,35 @@ const STEPS = {
 		await dialog.waitFor({ state: 'hidden', timeout: 30_000 });
 		console.log('confirmed');
 	},
+
+	// The food-cost closeout opens the day after the event, so the app runs with
+	// its server clock on that day (scripts/shift-clock.mjs). The card still says
+	// "likely" until the kitchen records what it used, and the frame keeps it.
+	async closeout() {
+		if (!manifest.orderHref) throw new Error('run the book step first');
+		await open(page, `${manifest.orderHref}/closeout`);
+		const title = page.getByRole('heading', { level: 1, name: 'Food-cost closeout' });
+		await title.waitFor({ timeout: 60_000 });
+		const card = page
+			.locator('main section, main div')
+			.filter({ has: page.getByRole('heading', { name: 'Planned vs actual food cost' }) })
+			.filter({ hasText: 'Over plan by' })
+			.filter({ hasNot: page.getByRole('heading', { name: 'Before you close' }) })
+			.last();
+		const text = (await card.innerText()).replace(/\s+/g, ' ');
+		const figure = (label) => {
+			const m = text.match(new RegExp(`${label}\\s*(\\$[\\d,]+\\.\\d{2}|[\\d.]+%)`));
+			if (!m) throw new Error(`closeout card has no "${label}" figure: ${text.slice(0, 300)}`);
+			return m[1];
+		};
+		manifest.closeoutPlanned = figure('Planned food cost');
+		manifest.closeoutActual = figure('Actual food cost, at what you paid');
+		manifest.closeoutOver = figure('Over plan by');
+		manifest.closeoutPct = figure('Food cost, share of the event price \\(likely\\)');
+		const box = await union([title, card], 24);
+		await shoot(page, 'closeout-desktop', { x: box.x, y: box.y - 40, width: box.width, height: box.height + 40 });
+		console.log('closeout', manifest.closeoutPlanned, manifest.closeoutActual, manifest.closeoutOver, manifest.closeoutPct);
+	},
 };
 
 const step = process.argv[2];

@@ -11,6 +11,8 @@ const manifest: Manifest = {
   target: "30%",
   deposit: "$3,500.00",
   revenue: "$14,250.00",
+  plannedFoodCost: "$4,039.96",
+  actualFoodCost: "$4,093.50",
   displayPrice: "$49/month",
   trialDays: "15",
   developCommit: "e00299078",

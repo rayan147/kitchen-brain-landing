@@ -54,7 +54,7 @@ Beats now follow the app: 1 phone rings (Inquiry) · 3 menu and service set the 
 | 9 Midpoint | Booked: the one moment that word is true (after Confirm order, RC-61). |
 | 10 Bad Guys Close In | Chapter card: "How much do I buy so I'm not short at 5 a.m.?" Whole packs, by supplier. |
 | 11 All Is Lost | Chapter card: "Do I have to type in every invoice?" Upload, confirm what it read, type what it could not. |
-| 12 Finale + Final Image | Back to the number she quoted on: $95 a guest, its food cost, known before the call ended. End card: price and trial from `src/lib/site.ts`. |
+| 12 Finale + Final Image | Back to the number she quoted on: $95 a guest, its food cost, known before the call ended. Then the day after: the closeout puts what was paid against what was planned. End card: price and trial from `src/lib/site.ts`. |
 
 ### Step 4 — From Beats to Scenes
 
@@ -107,5 +107,5 @@ POV locked to second person ("you") for captions; Priya is named, never addresse
 
 - Draft captions live in the spec's caption table; every figure is a token filled from the capture manifest, never typed.
 - Capture source: kitchen-brain develop after the offer-walk-fixes merge (owner ruling 2026-10-05); RC-65 is updated in the ledger in the same lane.
-- Claims withheld (ledger): no signing frame (RC-64); closeout figures (RC-69); "booked" before Confirm order (RC-61); any no-typing promise (RC-58); invoice email as available (never-claim list).
+- Claims withheld (ledger): no signing frame (RC-64); "booked" before Confirm order (RC-61); any no-typing promise (RC-58); invoice email as available (never-claim list).
 - Re-run this step after the capture fills the tokens: cut every caption that a frame does not show at the moment it is on screen.

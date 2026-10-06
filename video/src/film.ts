@@ -244,11 +244,11 @@ export const FILM: Record<SceneId, Scene> = {
   // closes on the Menu & service frame the job was priced on.
   close: {
     chapter: null,
-    seconds: 11,
+    seconds: 15,
     beats: [
       {
         from: 0,
-        to: 6,
+        to: 5,
         layout: "screen",
         frames: ["events-menu-desktop.png"],
         caption:
@@ -256,7 +256,18 @@ export const FILM: Record<SceneId, Scene> = {
         focus: { x: 22, y: 50, scale: 1.1 },
         ring: { x: 18, y: 49, width: 48, height: 14 },
       },
-      { from: 6, to: 11, layout: "end", frames: [] },
+      // The closeout opens the day after the event and says "likely" until the
+      // draw is recorded; the frame carries that word, so the caption need not.
+      {
+        from: 5,
+        to: 10,
+        layout: "screen",
+        frames: ["events-closeout-desktop.png"],
+        caption:
+          "The day after: {actualFoodCost} against {plannedFoodCost} planned.",
+        ring: { x: 2, y: 57, width: 44, height: 11 },
+      },
+      { from: 10, to: 15, layout: "end", frames: [] },
     ],
   },
 };

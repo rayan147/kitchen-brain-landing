@@ -25,6 +25,7 @@ export const FRAME_MAP: Record<string, string> = {
   "receiving-desktop.png": "events-receiving-desktop.png",
   "prep-desktop.png": "events-prep-desktop.png",
   "pack-desktop.png": "events-pack-desktop.png",
+  "closeout-desktop.png": "events-closeout-desktop.png",
 };
 
 const FIGURES = [
@@ -34,6 +35,8 @@ const FIGURES = [
   "targetPct",
   "deposit",
   "revenue",
+  "closeoutPlanned",
+  "closeoutActual",
   "appSha",
   "capturedOn",
 ] as const;
@@ -60,6 +63,8 @@ export function toFilmManifest(
     target: s.targetPct,
     deposit: s.deposit,
     revenue: s.revenue,
+    plannedFoodCost: s.closeoutPlanned,
+    actualFoodCost: s.closeoutActual,
     displayPrice: site.displayPrice,
     trialDays: site.trialDays,
     developCommit: s.appSha,
