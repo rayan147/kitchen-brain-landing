@@ -14,6 +14,10 @@ const peer = {
   closeoutActual: "$4,093.50",
   appSha: "e00299078",
   capturedOn: "2026-10-05",
+  frameSources: {
+    "proposal-mobile.png": { host: "localhost", app: "57a4c7f34", via: "x" },
+    "not-in-film.png": { host: "localhost", app: "x" },
+  },
 };
 const site = { displayPrice: "$49/month", trialDays: "15" };
 
@@ -38,6 +42,9 @@ describe("toFilmManifest", () => {
       developCommit: "e00299078",
       capturedOn: "2026-10-05",
       frames: ["events-offer-mobile.png"],
+      frameSources: {
+        "events-offer-mobile.png": { host: "localhost", app: "57a4c7f34" },
+      },
     });
   });
   it("names the missing key when the shared manifest lacks a figure", () => {

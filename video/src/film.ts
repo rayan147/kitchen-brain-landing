@@ -46,7 +46,9 @@ export type Beat = {
 
 type Scene = { chapter: string | null; seconds: number; beats: Beat[] };
 
-export const CHAPTER_SECONDS = 2;
+// Long enough for the longest question (12 words) at 4 words a second after
+// its half-second fade-in.
+export const CHAPTER_SECONDS = 3.5;
 
 // Rings and focus points are first placements, read off the review stills;
 // they are tuned against the final captures.
@@ -70,11 +72,11 @@ export const FILM: Record<SceneId, Scene> = {
   // Menu & service, so that is where the job is priced.
   menu: {
     chapter: "What do I charge a head?",
-    seconds: 12,
+    seconds: 13.5,
     beats: [
       {
-        from: 2,
-        to: 7,
+        from: 3.5,
+        to: 8.5,
         layout: "screen",
         frames: ["events-menu-desktop.png"],
         caption: "{pricePerGuest} a guest. Food cost {proposalFoodCostPct}.",
@@ -82,8 +84,8 @@ export const FILM: Record<SceneId, Scene> = {
         ring: { x: 18, y: 49, width: 48, height: 14 },
       },
       {
-        from: 7,
-        to: 12,
+        from: 8.5,
+        to: 13.5,
         layout: "screen",
         frames: ["events-menu-desktop.png"],
         caption: "Under your {target} target. You know it before you send.",
@@ -94,11 +96,11 @@ export const FILM: Record<SceneId, Scene> = {
   },
   decision: {
     chapter: "Can she say yes from her phone?",
-    seconds: 11,
+    seconds: 12.5,
     beats: [
       {
-        from: 2,
-        to: 6.5,
+        from: 3.5,
+        to: 8,
         layout: "split",
         frames: ["events-proposal-sent-desktop.png", "events-offer-mobile.png"],
         caption: "The proposal goes to her phone. No login.",
@@ -106,8 +108,8 @@ export const FILM: Record<SceneId, Scene> = {
         scroll: [0, 100],
       },
       {
-        from: 6.5,
-        to: 11,
+        from: 8,
+        to: 12.5,
         layout: "split",
         frames: ["events-proposal-sent-desktop.png", "events-offer-mobile.png"],
         caption: "Accept proposal, or Ask for changes. Her call.",
@@ -122,46 +124,46 @@ export const FILM: Record<SceneId, Scene> = {
   // Book the event once everything it asks for is in (booking-requirements.ts).
   agreement: {
     chapter: "Signed, and deposit paid?",
-    seconds: 20,
+    seconds: 21.5,
     beats: [
       {
-        from: 2,
-        to: 5.5,
+        from: 3.5,
+        to: 7,
         layout: "screen",
         frames: ["events-agreement-desktop.png"],
         caption: "Built from the offer she accepted. She signs online.",
       },
       {
-        from: 5.5,
-        to: 8,
+        from: 7,
+        to: 9.5,
         layout: "screen",
         frames: ["events-payment-request-desktop.png"],
         caption: "Ask for {deposit}.",
       },
       {
-        from: 8,
-        to: 11,
+        from: 9.5,
+        to: 12.5,
         layout: "screen",
         frames: ["events-pay-mobile.png"],
         caption: "She pays by card from the link.",
       },
       {
-        from: 11,
-        to: 14,
+        from: 12.5,
+        to: 15.5,
         layout: "screen",
         frames: ["events-payments-paid-desktop.png"],
         caption: "Paid. The balance reminder sends itself.",
       },
       {
-        from: 14,
-        to: 18,
+        from: 15.5,
+        to: 19.5,
         layout: "screen",
         frames: ["events-book-event-desktop.png"],
         caption: "Her yes is not a booking. Signed and paid is.",
       },
       {
-        from: 18,
-        to: 20,
+        from: 19.5,
+        to: 21.5,
         layout: "screen",
         frames: ["events-booked-desktop.png"],
         caption: "Booked.",
@@ -170,30 +172,30 @@ export const FILM: Record<SceneId, Scene> = {
   },
   kitchen: {
     chapter: "How much do I buy so I\u2019m not short at 5\u00a0a.m.?",
-    seconds: 16,
+    seconds: 17.5,
     beats: [
       {
-        from: 2,
-        to: 7.5,
+        from: 3.5,
+        to: 9,
         layout: "screen",
         frames: ["events-shop-desktop.png"],
         caption: "Whole packs, by supplier, for {guests}.",
         ring: { x: 58, y: 23, width: 14, height: 8 },
       },
       {
-        from: 7.5,
-        to: 11.5,
+        from: 9,
+        to: 13,
         layout: "screen",
         frames: ["events-confirm-desktop.png"],
         caption: "Confirm when the plan is ready. Prices and quantities lock.",
         ring: { x: 73, y: 60, width: 19, height: 17 },
       },
       {
-        from: 11.5,
-        to: 16,
+        from: 13,
+        to: 17.5,
         layout: "screen",
         frames: ["events-po-desktop.png"],
-        caption: "Each supplier gets its own purchase order.",
+        caption: "Each supplier gets only its own lines.",
       },
     ],
   },
@@ -201,11 +203,11 @@ export const FILM: Record<SceneId, Scene> = {
   // prep list (/orders/<id>/prep), then the van (/orders/<id>/pack).
   receive: {
     chapter: "Did it all come off the truck?",
-    seconds: 8,
+    seconds: 9.5,
     beats: [
       {
-        from: 2,
-        to: 8,
+        from: 3.5,
+        to: 9.5,
         layout: "screen",
         frames: ["events-receiving-desktop.png"],
         caption:
@@ -215,11 +217,11 @@ export const FILM: Record<SceneId, Scene> = {
   },
   prep: {
     chapter: "What does the crew start on at 5\u00a0a.m.?",
-    seconds: 8,
+    seconds: 9.5,
     beats: [
       {
-        from: 2,
-        to: 8,
+        from: 3.5,
+        to: 9.5,
         layout: "screen",
         frames: ["events-prep-desktop.png"],
         caption:
@@ -229,45 +231,35 @@ export const FILM: Record<SceneId, Scene> = {
   },
   pack: {
     chapter: "Is everything in the van?",
-    seconds: 7,
+    seconds: 8.5,
     beats: [
       {
-        from: 2,
-        to: 7,
+        from: 3.5,
+        to: 8.5,
         layout: "screen",
         frames: ["events-pack-desktop.png"],
-        caption: "Tick each dish and each piece of kit as it goes in.",
+        caption: "Tick each dish as it goes into the van.",
       },
     ],
   },
-  // Until the closeout can be shot (the day after the event), the film
-  // closes on the Menu & service frame the job was priced on.
+  // The closeout opens the day after the event and says "likely" until the
+  // kitchen records what it used, so the caption says it too. The menu frame
+  // is not replayed here: its Event totals round the planned food cost per
+  // guest ($4,039.50), a few cents off the closeout's own planned figure.
   close: {
     chapter: null,
-    seconds: 15,
+    seconds: 11,
     beats: [
       {
         from: 0,
-        to: 5,
-        layout: "screen",
-        frames: ["events-menu-desktop.png"],
-        caption:
-          "{pricePerGuest} a guest. {proposalFoodCostPct} food cost. Known before she said yes.",
-        focus: { x: 22, y: 50, scale: 1.1 },
-        ring: { x: 18, y: 49, width: 48, height: 14 },
-      },
-      // The closeout opens the day after the event and says "likely" until the
-      // draw is recorded; the frame carries that word, so the caption need not.
-      {
-        from: 5,
-        to: 10,
+        to: 6,
         layout: "screen",
         frames: ["events-closeout-desktop.png"],
         caption:
-          "The day after: {actualFoodCost} against {plannedFoodCost} planned.",
+          "Priced before her yes. Checked the day after: likely {actualFoodCost} against {plannedFoodCost} planned.",
         ring: { x: 2, y: 57, width: 44, height: 11 },
       },
-      { from: 10, to: 15, layout: "end", frames: [] },
+      { from: 6, to: 11, layout: "end", frames: [] },
     ],
   },
 };
@@ -284,6 +276,20 @@ export function captionsFor(scene: SceneId, manifest: Manifest): string[] {
   return FILM[scene].beats.flatMap((b) =>
     b.caption ? [resolveCaption(b.caption, manifest)] : [],
   );
+}
+
+/**
+ * The camera scale a beat starts from: where the previous beat left it when
+ * both show the same frames (each beat is its own Sequence, so otherwise the
+ * zoom snaps back to 1 at the cut), else 1.
+ */
+export function cameraStart(scene: SceneId, index: number): number {
+  const beats = FILM[scene].beats;
+  const prev = beats[index - 1];
+  if (!prev?.focus) return 1;
+  return prev.frames.join() === beats[index].frames.join()
+    ? prev.focus.scale
+    : 1;
 }
 
 export function sceneFrames(scene: SceneId): string[] {

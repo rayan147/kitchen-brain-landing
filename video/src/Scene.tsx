@@ -17,6 +17,7 @@ import {
   CHAPTER_SECONDS,
   FILM,
   TITLE,
+  cameraStart,
   resolveCaption,
   type Beat,
   type SceneId,
@@ -68,17 +69,19 @@ const Title: React.FC = () => {
 // A screen with what the beat asks of it: the camera's focus and the ring on
 // what the caption names. The ring rides inside the camera so it stays on its
 // number while the frame pushes in.
-const Shot: React.FC<{ beat: Beat; src: string; phone?: boolean }> = ({
-  beat,
-  src,
-  phone,
-}) => (
+const Shot: React.FC<{
+  beat: Beat;
+  src: string;
+  phone?: boolean;
+  startScale?: number;
+}> = ({ beat, src, phone, startScale }) => (
   <div style={{ position: "absolute", inset: 0 }}>
     <Screen
       src={src}
       fit={phone ? "fill-top" : "contain"}
       scroll={phone ? beat.scroll : undefined}
       focus={phone ? undefined : beat.focus}
+      startScale={phone ? 1 : startScale}
     >
       {beat.ring ? <Highlight {...beat.ring} /> : null}
     </Screen>
@@ -89,7 +92,8 @@ const BeatView: React.FC<{
   beat: Beat;
   manifest: Manifest;
   fadeIn: boolean;
-}> = ({ beat, manifest, fadeIn }) => {
+  startScale: number;
+}> = ({ beat, manifest, fadeIn, startScale }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const [first, second] = beat.frames;
@@ -117,7 +121,7 @@ const BeatView: React.FC<{
       />
     ) : beat.layout === "split" ? (
       <SplitScreen
-        left={<Screen src={first} focus={beat.focus} />}
+        left={<Screen src={first} focus={beat.focus} startScale={startScale} />}
         right={
           <PhoneFrame>
             <Shot beat={beat} src={second} phone />
@@ -125,7 +129,7 @@ const BeatView: React.FC<{
         }
       />
     ) : (
-      <Shot beat={beat} src={first} />
+      <Shot beat={beat} src={first} startScale={startScale} />
     );
   return (
     <>
@@ -197,6 +201,7 @@ export const Scene: React.FC<{ id: SceneId }> = ({ id }) => {
             beat={beat}
             manifest={manifest}
             fadeIn={Boolean(scene.chapter) && beat.from === CHAPTER_SECONDS}
+            startScale={cameraStart(id, i)}
           />
         </Sequence>
       ))}

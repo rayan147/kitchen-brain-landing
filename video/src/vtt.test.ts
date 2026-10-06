@@ -18,6 +18,7 @@ const manifest: Manifest = {
   developCommit: "e00299078",
   capturedOn: "2026-10-05",
   frames: [],
+  frameSources: {},
 };
 
 describe("toVtt", () => {

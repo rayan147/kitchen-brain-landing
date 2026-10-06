@@ -1221,7 +1221,12 @@ requireText(heroSource, 'What you do about the gap is your call', 'hero caption 
 		failures.push(`promo video: manifest trialDays ${manifest.trialDays} disagrees with src/lib/site.ts`);
 	}
 	// The closeout scene is in by owner ruling 2026-10-05 (planned against actual,
-	// shown as captured; RC-69 is updated with its frame). Its caption names no figure.
+	// shown as captured; RC-69 is updated with its frame). The card says "Likely,
+	// not final" until the kitchen records what it used, so a caption quoting its
+	// actual figure must say likely too.
+	for (const caption of captions.filter((t) => t.includes('{actualFoodCost}'))) {
+		if (!/\blikely\b/.test(caption)) failures.push(`promo video: the closeout's actual figure is quoted without "likely": ${caption}`);
+	}
 }
 
 if (failures.length > 0) {

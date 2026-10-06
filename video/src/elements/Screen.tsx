@@ -27,6 +27,9 @@ type Props = {
   // For "fill-top": scroll the page from one vertical position to another
   // (0 = top, 100 = bottom) over the sequence, the way a thumb would.
   scroll?: [number, number];
+  // The scale the camera starts from: where the previous beat left it when the
+  // frame repeats, so the cut does not snap the zoom back.
+  startScale?: number;
   // Overlays (a ring) drawn inside the camera, so they move with the push-in.
   children?: React.ReactNode;
   style?: React.CSSProperties;
@@ -39,6 +42,7 @@ export const Screen: React.FC<Props> = ({
   focus,
   fit = "contain",
   scroll = [0, 0],
+  startScale = 1,
   children,
   style,
 }) => {
@@ -92,7 +96,7 @@ export const Screen: React.FC<Props> = ({
           scale: interpolate(
             frame,
             [0, durationInFrames],
-            [1, focus?.scale ?? (fit === "fill-top" ? 1 : 1.04)],
+            [startScale, focus?.scale ?? (fit === "fill-top" ? 1 : 1.04)],
             {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",

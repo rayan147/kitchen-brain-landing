@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
+  CHAPTER_SECONDS,
   FILM,
   SCENE_ORDER,
   TITLE,
+  cameraStart,
   captionsFor,
   resolveCaption,
   sceneFrames,
@@ -24,6 +26,7 @@ const manifest: Manifest = {
   developCommit: "e00299078",
   capturedOn: "2026-10-05",
   frames: [],
+  frameSources: {},
 };
 
 describe("resolveCaption", () => {
@@ -139,19 +142,47 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
       });
     }
   });
-  // The closeout opens the day after the event (Dec 28): the film prices the
-  // job before her yes, then checks it against what was paid.
-  it("ends on the price before her yes, then the closeout after the event, then the end card", () => {
-    expect(sceneFrames("close")).toEqual([
-      "events-menu-desktop.png",
-      "events-closeout-desktop.png",
-    ]);
+  // The closeout opens the day after the event (Dec 28). The menu frame is not
+  // replayed beside it: its Event totals print the planned food cost rounded
+  // per guest ($4,039.50), a few cents off the closeout's own $4,039.96.
+  it("ends on the closeout the day after the event, then the end card", () => {
+    expect(sceneFrames("close")).toEqual(["events-closeout-desktop.png"]);
     expect(FILM.close.beats[FILM.close.beats.length - 1].layout).toBe("end");
   });
-  it("quotes the closeout's own planned and actual figures", () => {
+  it("quotes the closeout's own planned and actual figures, as likely", () => {
     expect(captionsFor("close", manifest).join(" ")).toContain(
-      "$4,093.50 against $4,039.96 planned",
+      "likely $4,093.50 against $4,039.96 planned",
     );
+  });
+  it("never quotes the closeout's actual figure without saying likely", () => {
+    for (const id of SCENE_ORDER)
+      for (const b of FILM[id].beats)
+        if (b.caption?.includes("{actualFoodCost}"))
+          expect(b.caption).toMatch(/\blikely\b/);
+  });
+  it("says only what the PO and pack frames show", () => {
+    expect(captionsFor("kitchen", manifest)).toContain(
+      "Each supplier gets only its own lines.",
+    );
+    expect(captionsFor("pack", manifest)).toEqual([
+      "Tick each dish as it goes into the van.",
+    ]);
+  });
+  // Each beat is its own Sequence, so a repeated frame would snap the camera
+  // back to scale 1 at the cut.
+  it("starts the camera where the last beat left it when the frames repeat", () => {
+    expect(cameraStart("menu", 0)).toBe(1);
+    expect(cameraStart("menu", 1)).toBe(1.1);
+    expect(cameraStart("decision", 1)).toBe(1.25);
+    expect(cameraStart("agreement", 1)).toBe(1);
+  });
+  it("holds each chapter card long enough to read (at most 4 words a second)", () => {
+    for (const id of SCENE_ORDER) {
+      const chapter = FILM[id].chapter;
+      if (!chapter) continue;
+      const words = chapter.split(/\s+/).length;
+      expect(words / (CHAPTER_SECONDS - 0.5), chapter).toBeLessThanOrEqual(4);
+    }
   });
   it("gives every caption time to be read (at most 3.2 words a second once it shows)", () => {
     for (const id of SCENE_ORDER) {

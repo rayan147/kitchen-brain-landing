@@ -28,64 +28,119 @@
   "frameSources": {
     "agreement-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "05dfa4165",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
       "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, 1511x785"
+      "via": "browser extension zoom capture, 1511x785",
+      "walk": "test"
     },
     "payment-request-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "05dfa4165",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
       "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, cropped 900x578"
+      "via": "browser extension zoom capture, cropped 900x578",
+      "walk": "test"
     },
     "pay-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "ordering on test",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
       "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, 659 CSS px window, cropped to the pay card 798x356"
+      "via": "browser extension zoom capture, 659 CSS px window, cropped to the pay card 798x356",
+      "walk": "test"
     },
     "payments-paid-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "05dfa4165",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
       "order": 52,
-      "via": "browser extension zoom capture, cropped 860x625"
+      "via": "browser extension zoom capture, cropped 860x625",
+      "walk": "test"
     },
     "book-event-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "05dfa4165",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
       "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, all requirements met, before pressing Book"
+      "via": "browser extension zoom capture, all requirements met, before pressing Book",
+      "walk": "test"
     },
     "booked-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "05dfa4165",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
       "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, cropped above the follow-up card (owner email)"
+      "via": "browser extension zoom capture, cropped above the follow-up card (owner email)",
+      "walk": "test"
     },
     "proposal-mobile.png": {
-      "host": "localhost (throwaway copy of the capture database)",
+      "host": "localhost",
       "app": "57a4c7f34",
       "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
-      "shows": "kitchen logo in the header; service time 5:00 PM to 10:00 PM Eastern Time"
+      "shows": "kitchen logo in the header; service time 5:00 PM to 10:00 PM Eastern Time",
+      "walk": "local-reshoot",
+      "note": "throwaway copy of the capture database, the same wedding walked again after the five fixes"
     },
     "shop-desktop.png": {
-      "host": "localhost (throwaway copy of the capture database)",
+      "host": "localhost",
       "app": "57a4c7f34",
       "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
-      "shows": "overbuy note compares need to the whole buy"
+      "shows": "overbuy note compares need to the whole buy",
+      "walk": "local-reshoot",
+      "note": "throwaway copy of the capture database, the same wedding walked again after the five fixes"
     },
     "proposal-sent-desktop.png": {
-      "host": "localhost (throwaway copy of the capture database)",
+      "host": "localhost",
       "app": "57a4c7f34",
       "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
-      "shows": "the same send as proposal-mobile, so the split agrees on the time"
+      "shows": "the same send as proposal-mobile, so the split agrees on the time",
+      "walk": "local-reshoot",
+      "note": "throwaway copy of the capture database, the same wedding walked again after the five fixes"
     },
     "closeout-desktop.png": {
-      "host": "localhost (copy of the capture database, the shipped walk, order /orders/783)",
+      "host": "localhost",
       "app": "57a4c7f34",
       "clock": "server clock moved to 2026-12-29T20:00Z with scripts/shift-clock.mjs, the day after the Dec 28 event; no date in the data edited",
       "via": "capture-film.mjs closeout step",
-      "shows": "planned vs actual food cost, still marked likely because no draw is recorded"
+      "shows": "planned vs actual food cost, still marked likely because no draw is recorded",
+      "walk": "local"
+    },
+    "inquiry-mobile.png": {
+      "host": "localhost",
+      "app": "05dfa4165",
+      "walk": "local",
+      "via": "capture-film.mjs, shipped walk"
+    },
+    "menu-service.png": {
+      "host": "localhost",
+      "app": "05dfa4165",
+      "walk": "local",
+      "via": "capture-film.mjs, shipped walk"
+    },
+    "confirm-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165",
+      "walk": "local",
+      "via": "capture-film.mjs, shipped walk"
+    },
+    "po-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165",
+      "walk": "local",
+      "via": "capture-film.mjs, shipped walk"
+    },
+    "receiving-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165",
+      "walk": "local",
+      "via": "capture-film.mjs, shipped walk"
+    },
+    "prep-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165",
+      "walk": "local",
+      "via": "capture-film.mjs, shipped walk"
+    },
+    "pack-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165",
+      "walk": "local",
+      "via": "capture-film.mjs, shipped walk"
     }
   },
   "testEvent": {
@@ -103,5 +158,20 @@
   "closeoutPlanned": "$4,039.96",
   "closeoutActual": "$4,093.50",
   "closeoutOver": "$53.54",
-  "closeoutPct": "28.7%"
+  "closeoutPct": "28.7%",
+  "walks": {
+    "test": {
+      "event": "https://test.app.costcook.io/events/959cac05-b348-43e6-b531-6afc376dc106",
+      "how": "signed through DocuSeal and deposit paid by card in Stripe test mode, then Book the event with every requirement met"
+    },
+    "local": {
+      "event": "http://localhost:4197/events/de6729ac-4e91-4c30-b6e9-ed1b85ff4313",
+      "order": "/orders/783",
+      "how": "the same wedding on a local copy of develop; booked with Book anyway and a typed reason (the agreement and deposit were done on test), then the kitchen half"
+    },
+    "local-reshoot": {
+      "how": "the same wedding walked again on a throwaway copy of the local database at 57a4c7f34, for the offer and shop frames the five fixes changed"
+    },
+    "note": "The film joins these walks of one wedding (Priya Nair, 150 guests, Dec 28 2026, $95 a guest). The kitchen frames after Booked come from the local walk, which was booked by override, not signed and paid."
+  }
 }

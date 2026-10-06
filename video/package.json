@@ -32,7 +32,7 @@
 		"typecheck": "tsc --noEmit",
 		"still": "remotion still",
 		"render:check": "tsx scripts/render-check.mts",
-		"render": "remotion render PromoFilm out/promo.mp4",
+		"render": "npm run render:check && remotion render PromoFilm out/promo.mp4",
 		"lint": "eslint src && tsc",
 		"frames": "tsx scripts/copy-frames.mts",
 		"vtt": "tsx scripts/write-vtt.mts"

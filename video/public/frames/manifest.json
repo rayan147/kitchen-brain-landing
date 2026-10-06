@@ -30,5 +30,75 @@
     "events-prep-desktop.png",
     "events-pack-desktop.png",
     "events-closeout-desktop.png"
-  ]
+  ],
+  "frameSources": {
+    "events-inquiry-mobile.png": {
+      "host": "localhost",
+      "app": "05dfa4165"
+    },
+    "events-menu-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165"
+    },
+    "events-proposal-sent-desktop.png": {
+      "host": "localhost",
+      "app": "57a4c7f34"
+    },
+    "events-offer-mobile.png": {
+      "host": "localhost",
+      "app": "57a4c7f34"
+    },
+    "events-agreement-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+    },
+    "events-payment-request-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+    },
+    "events-pay-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+    },
+    "events-payments-paid-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+    },
+    "events-book-event-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+    },
+    "events-booked-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+    },
+    "events-shop-desktop.png": {
+      "host": "localhost",
+      "app": "57a4c7f34"
+    },
+    "events-confirm-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165"
+    },
+    "events-po-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165"
+    },
+    "events-receiving-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165"
+    },
+    "events-prep-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165"
+    },
+    "events-pack-desktop.png": {
+      "host": "localhost",
+      "app": "05dfa4165"
+    },
+    "events-closeout-desktop.png": {
+      "host": "localhost",
+      "app": "57a4c7f34"
+    }
+  }
 }

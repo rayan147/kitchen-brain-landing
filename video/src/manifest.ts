@@ -24,6 +24,12 @@ export const ManifestSchema = z.object({
   developCommit: z.string().min(7),
   capturedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   frames: z.array(z.string().regex(/\.png$/)),
+  // Where each frame came from: frames in one film come from more than one
+  // app build and two hosts, so one commit cannot speak for all of them.
+  frameSources: z.record(
+    z.string(),
+    z.object({ host: z.string().min(1), app: z.string().min(1) }),
+  ),
 });
 
 export type Manifest = z.infer<typeof ManifestSchema>;

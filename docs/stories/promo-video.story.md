@@ -12,6 +12,10 @@
 
 Beats now follow the app: 1 phone rings (Inquiry) · 3 menu and service set the scope · 4-5 Catalyst/Debate in the **proposal**, where the price and food cost are seen before sending · 6-7 Priya decides on her phone · 8 agreement signed, deposit paid from the link · 9 Midpoint: **Book the event** (signed, paid, a day with room) · 10 kitchen plan, whole packs, Confirm order freezes prices · 12 callback to the proposal price. Snap line: "Her yes is not a booking. Signed, paid and a day with room is." Invoice and reminder beats cut. Every frame is a real develop screenshot.
 
+## Revision 2026-10-06 (as built, supersedes the revision above where they differ)
+
+The film as shipped: 1 phone rings (Inquiry) · menu and service price the job ($95 a guest, 28.3% food cost, under the 30% target) · Priya opens the offer on her phone and accepts · agreement out for e-signature, deposit asked for and paid by card from the link, the balance reminder goes out on its own (kept: the owner finished the reminder in this lane on 2026-10-05, reversing the cut) · **Book the event** · whole packs by supplier, Confirm order, each supplier gets only its own lines · the delivery, the prep list, the van · Final Image: the day after, the closeout puts what was paid against what was planned, as likely. Snap line, as shipped: "Her yes is not a booking. Signed and paid is." It drops "a day with room" from the planned line; a deliberate simplification, since the Book frame on screen lists every requirement. The invoice beat stays cut. The menu callback before the closeout was dropped: its totals print the planned food cost rounded per guest ($4,039.50), a few cents off the closeout's $4,039.96 (an app rounding defect, reported).
+
 ## The 11 steps
 
 | # | Step | What you build | Done |
@@ -54,7 +58,7 @@ Beats now follow the app: 1 phone rings (Inquiry) · 3 menu and service set the 
 | 9 Midpoint | Booked: the one moment that word is true (after Confirm order, RC-61). |
 | 10 Bad Guys Close In | Chapter card: "How much do I buy so I'm not short at 5 a.m.?" Whole packs, by supplier. |
 | 11 All Is Lost | Chapter card: "Do I have to type in every invoice?" Upload, confirm what it read, type what it could not. |
-| 12 Finale + Final Image | Back to the number she quoted on: $95 a guest, its food cost, known before the call ended. Then the day after: the closeout puts what was paid against what was planned. End card: price and trial from `src/lib/site.ts`. |
+| 12 Finale + Final Image | Priced before her yes, checked the day after: the closeout puts what was paid against what was planned, as likely until the kitchen records what it used. End card: price and trial from `src/lib/site.ts`. |
 
 ### Step 4 — From Beats to Scenes
 

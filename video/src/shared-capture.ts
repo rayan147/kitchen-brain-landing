@@ -70,5 +70,30 @@ export function toFilmManifest(
     developCommit: s.appSha,
     capturedOn: s.capturedOn,
     frames: copied,
+    frameSources: filmSources(shared.frameSources, copied),
   };
+}
+
+const SOURCE_KEY = Object.fromEntries(
+  Object.entries(FRAME_MAP).map(([from, to]) => [to, from]),
+);
+
+// Each copied frame's host and app, under its film name. A frame with no
+// recorded source is left out here and refused by the render guard.
+function filmSources(
+  sources: unknown,
+  copied: string[],
+): Manifest["frameSources"] {
+  const all = (sources ?? {}) as Record<
+    string,
+    { host?: unknown; app?: unknown }
+  >;
+  return Object.fromEntries(
+    copied.flatMap((film) => {
+      const s = all[SOURCE_KEY[film]];
+      return typeof s?.host === "string" && typeof s.app === "string"
+        ? [[film, { host: s.host, app: s.app }]]
+        : [];
+    }),
+  );
 }

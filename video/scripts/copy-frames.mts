@@ -31,8 +31,15 @@ for (const f of await readdir(out))
   if (f.endsWith(".png")) await rm(resolve(out, f));
 const copied: string[] = [];
 const absent: string[] = [];
+// Only frames the capture record lists: a file that merely sits in the folder
+// is not evidence it was shot from the app.
+const listed = new Set(
+  Array.isArray(sharedManifest.frames)
+    ? (sharedManifest.frames as string[])
+    : [],
+);
 for (const [from, to] of Object.entries(FRAME_MAP)) {
-  if (!existsSync(resolve(shared, from))) {
+  if (!listed.has(from) || !existsSync(resolve(shared, from))) {
     absent.push(from);
     continue;
   }
@@ -48,8 +55,6 @@ await writeFile(
   resolve(out, "manifest.json"),
   JSON.stringify(manifest, null, 2) + "\n",
 );
-console.log(
-  `manifest written (app ${manifest.developCommit}); ${copied.length} frames copied`,
-);
+console.log(`manifest written; ${copied.length} frames copied`);
 if (absent.length)
   console.log(`not in the shared run yet: ${absent.join(", ")}`);

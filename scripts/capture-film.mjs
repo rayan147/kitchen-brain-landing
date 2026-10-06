@@ -37,9 +37,9 @@ const OWNER = 'marisol@example.com';
 const KITCHEN = 'Harbor & Hearth Catering';
 const TODAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
 
-// The one event every frame shows. The date is the shoot day, so the closeout
-// (which opens the day after the event) can be captured the next morning with
-// no date edited by hand.
+// The one wedding every frame shows. The closeout opens the day after its
+// date, so that frame is shot with the capture app's clock moved to that day
+// (scripts/shift-clock.mjs); no date in the data is edited.
 export const EVENT = {
 	client: 'Priya Nair',
 	phone: '(207) 555-0187',
@@ -157,6 +157,11 @@ async function shoot(p, name, clip, { fullPage = true } = {}) {
 	for (const bad of FORBIDDEN) if (bad.test(text)) throw new Error(`${name}: forbidden text ${bad} in frame: ${text.slice(0, 300)}`);
 	await p.screenshot({ path: `${OUT}/${name}.png`, clip: box, fullPage, animations: 'disabled', caret: 'hide' });
 	manifest.frames = [...new Set([...(manifest.frames ?? []), `${name}.png`])];
+	// Per frame: a later step or a reshoot on another build must not restate it.
+	manifest.frameSources = {
+		...(manifest.frameSources ?? {}),
+		[`${name}.png`]: { host: new URL(APP).hostname, app: DEVELOP_COMMIT, via: `capture-film.mjs ${step}` },
+	};
 	await saveManifest();
 	console.log(`captured ${name} (${box.width}x${box.height} CSS px @2x)`);
 	return text;
@@ -178,7 +183,7 @@ async function signIn() {
 	await open(page, `${u.pathname}${u.search}`);
 }
 
-/** The wedding's event page URL, found through the Events list, or null. */
+/** The wedding's event page URL, as the inquiry step recorded it, or null. */
 async function findEvent() {
 	if (manifest.eventUrl) return manifest.eventUrl;
 	return null;

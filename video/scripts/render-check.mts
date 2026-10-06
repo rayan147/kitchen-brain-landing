@@ -4,7 +4,7 @@ import { readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { FILM, SCENE_ORDER, sceneFrames } from "../src/film";
 import { ManifestSchema } from "../src/manifest";
-import { frameProblems } from "../src/render-guard";
+import { frameProblems, sourceCounts } from "../src/render-guard";
 
 const out = resolve(import.meta.dirname, "../public/frames");
 const manifest = ManifestSchema.parse(
@@ -21,5 +21,5 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `render check passed: ${filmFrames.length} app frames from ${manifest.developCommit}, ${Object.keys(FILM).length} scenes`,
+  `render check passed: ${filmFrames.length} app frames, ${Object.keys(FILM).length} scenes\n  ${sourceCounts(filmFrames, manifest.frameSources).join("\n  ")}`,
 );

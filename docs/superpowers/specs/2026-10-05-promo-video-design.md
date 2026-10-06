@@ -7,6 +7,18 @@ Story: `docs/stories/promo-video.story.md`
 
 The first cut followed the homepage mockup and the main-era capture script, not the app. Develop's event workflow (`src/lib/events/derive.ts`, `features/events/event-journey.ts`, `domain/events/booking-requirements.ts` on `fix/offer-walk-fixes-2026-10-05`) is: Inquiry, Menu & service, Proposal (price and send), Client decision, Agreement (signature), **Book the event** (an accepted proposal, every signer, the deposit the agreement names, a day with room; the owner may book anyway with a reason), then kitchen planning, where the order is **confirmed when the kitchen plan is ready**. Owner rulings: rebuild on that order; cut the invoice chapter and the balance reminder; **every frame is a real screenshot of the develop app**, never mockup imagery or an older build's capture.
 
+## As built (2026-10-06): what later rulings changed
+
+Read this first; the sections below are the 2026-10-05 design and are kept as written.
+
+- **Balance reminder kept.** The owner finished the reminder in this lane (2026-10-05, "we are finishing the reminder on this worktree"), reversing the cut in the paragraph below. The film says it on the paid frame, which prints the reminder date.
+- **Agreement, deposit and booking shot on test.app.costcook.io**, not locally (owner, 2026-10-06: DocuSeal cannot run locally; use the test environment). The agreement frame is the event's Agreement step with its signer count and signing links; the DocuSeal signing page itself is never shown. RC-64 is amended for the film.
+- **Closeout added.** The film ends on the food-cost closeout of the Dec 28 wedding, captured with the capture app's server clock moved to Dec 29 (`scripts/shift-clock.mjs`); no date in the data was edited. Its caption quotes the card's planned and actual figures and says likely, as the card does. The "No closeout" ending and the RC-69 row below are superseded; the ledger's RC-69 records the claim.
+- **The film joins walks of one wedding**: test (signed and paid), a local copy of develop (booked with Book anyway, then the kitchen half), and a local reshoot of the offer and shop frames after five app fixes. `public/proof/film/manifest.json` records each frame's host, app build and walk.
+- **Snap line** as shipped: "Her yes is not a booking. Signed and paid is."
+- **Claims check, as implemented**: banned phrases, dashes and exclamation points, no "book" before the booking scene, Confirm order never the booking, the two client buttons, no typed figures (tokens only), and the closeout's actual figure always with "likely". The frame-path refusal for `sign` and `closeout` was dropped once both were ruled in.
+
+
 | # | Scene | Chapter card | App frame(s) |
 |---|---|---|---|
 | 0 | Inquiry | (title card) | inquiry on the phone |

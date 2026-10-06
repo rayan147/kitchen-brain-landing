@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { frameProblems } from "./render-guard";
+import { frameProblems, sourceCounts } from "./render-guard";
 
-const base = { developCommit: "e00299078", frames: ["a.png", "b.png"] };
+const src = { host: "localhost", app: "05dfa4165" };
+const base = {
+  developCommit: "e00299078",
+  frames: ["a.png", "b.png"],
+  frameSources: { "a.png": src, "b.png": src },
+};
 
 describe("frameProblems", () => {
   it("passes when every film frame is on disk and was shot by the run", () => {
@@ -13,7 +18,11 @@ describe("frameProblems", () => {
     expect(
       frameProblems(
         ["a.png", "c.png"],
-        { ...base, frames: ["a.png", "c.png"] },
+        {
+          ...base,
+          frames: ["a.png", "c.png"],
+          frameSources: { "a.png": src, "c.png": src },
+        },
         new Set(["a.png"]),
       ),
     ).toEqual(["missing frame c.png"]);
@@ -27,9 +36,33 @@ describe("frameProblems", () => {
     expect(
       frameProblems(
         [],
-        { developCommit: "PENDING-CAPTURE", frames: [] },
+        { developCommit: "PENDING-CAPTURE", frames: [], frameSources: {} },
         new Set(),
       ),
     ).toEqual(["manifest is the pre-capture placeholder"]);
+  });
+  it("refuses a frame with no recorded source (host and app)", () => {
+    expect(
+      frameProblems(
+        ["a.png", "b.png"],
+        { ...base, frameSources: { "a.png": src } },
+        new Set(["a.png", "b.png"]),
+      ),
+    ).toEqual(["b.png has no recorded source (host and app)"]);
+  });
+});
+
+describe("sourceCounts", () => {
+  it("counts the film's frames by the host and app they came from", () => {
+    expect(
+      sourceCounts(["a.png", "b.png", "c.png"], {
+        "a.png": src,
+        "b.png": src,
+        "c.png": { host: "test.app.costcook.io", app: "unrecorded" },
+      }),
+    ).toEqual([
+      "2 from localhost at 05dfa4165",
+      "1 from test.app.costcook.io at unrecorded",
+    ]);
   });
 });
