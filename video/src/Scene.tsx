@@ -171,8 +171,11 @@ export const Scene: React.FC<{ id: SceneId }> = ({ id }) => {
   const manifest = useManifest();
   if (!manifest) return null;
   const scene = FILM[id];
+  // Paper under every beat: a beat or the end card fades in from opacity 0 on
+  // the frame the layer before it unmounts, and without this that frame is
+  // black (one frame at every chapter card and before the end card).
   return (
-    <>
+    <div style={{ position: "absolute", inset: 0, backgroundColor: C.cream }}>
       {scene.chapter ? (
         <Sequence
           name="Chapter"
@@ -197,6 +200,6 @@ export const Scene: React.FC<{ id: SceneId }> = ({ id }) => {
           />
         </Sequence>
       ))}
-    </>
+    </div>
   );
 };
