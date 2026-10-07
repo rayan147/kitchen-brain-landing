@@ -11,7 +11,7 @@ import { tourStopCount } from './lib/tour-stops.mjs';
 const labelsStatusWord = /LABELS_STATUS = 'yes'/.test(
 	readFileSync(new URL('../src/lib/labels.ts', import.meta.url), 'utf8')
 )
-	? 'Available now'
+	? 'In the app today'
 	: 'Coming';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';

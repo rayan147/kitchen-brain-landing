@@ -386,7 +386,7 @@ export const tourStops: readonly TourStop[] = [
 		   dropdown: the event starts at the inquiry, and the order stop after it
 		   is what Confirm order hands the kitchen. Same illustrative world as the
 		   menu stop (Garden wedding supper, 180 guests at $28.00). The deposit
-		   is recorded by hand; the aside says so and names the Coming line. */
+		   is paid by card from an email link, or recorded by hand. */
 		id: 'events-proposals',
 		featureId: 'events',
 		label: 'Events & proposals',
@@ -411,14 +411,17 @@ export const tourStops: readonly TourStop[] = [
 		],
 		aside: {
 			title: 'Deposit',
-			status: 'Recorded by hand',
+			// Card payment for event deposits is live (owner ruling 2026-10-06,
+			// src/lib/event-payments.ts); this aside said Coming and contradicted
+			// /compare and /faq (chef audit 2026-10-07).
+			status: 'Card, by email link',
 			lines: [
 				{ label: 'Asked for', value: '$1,000.00' },
 				{ label: 'Received', value: '$0.00', tone: 'attention' },
-				{ label: 'Recorded as', value: depositMethodsCapital },
-				{ label: 'Card payment page', value: 'Coming' }
+				{ label: 'Paid by', value: 'Card, from the email link' },
+				{ label: 'Or record by hand', value: depositMethodsCapital }
 			],
-			footnote: 'Illustrative tour values. You record an event deposit by hand; a card payment page for events is Coming.'
+			footnote: 'Illustrative tour values. The client pays the deposit by card from an email link; you can still record a payment by hand.'
 		}
 	},
 	{

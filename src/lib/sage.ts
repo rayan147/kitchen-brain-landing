@@ -110,9 +110,11 @@ export const sage = {
 			alt: 'A Sage answer on a phone. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record.'
 		},
 		caption:
-			'A different kitchen from the wedding in the tour: cucumber rose from $24.00 to $33.00 across two linked purchases.'
+			'Cucumber rose from $24.00 to $33.00 across two linked purchases, and Sage shows both.'
 	}
 } as const;
 
 /** The status word every surface prints beside the name. */
-export const sageStatusWord = SAGE_STATUS === 'yes' ? 'Available now' : 'Coming';
+// "In the app today", not "Available now": the badge reads as a fact, not a sales
+// line (chef audit 2026-10-07). Same word on labels, invoice email, ordering.
+export const sageStatusWord = SAGE_STATUS === 'yes' ? 'In the app today' : 'Coming';

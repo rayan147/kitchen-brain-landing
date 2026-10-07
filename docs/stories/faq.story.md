@@ -160,3 +160,6 @@ Content: `src/lib/faq.ts` and its shared data/response states.
   card payment page for the deposit and the balance, a balance reminder) and
   what is true today (the deposit is recorded by hand, as a check, cash, a
   transfer or your own card processor). RC-65. The page now has 38 answers.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The forty-guests answer now covers a confirmed order: reopen it as a draft, change the count, confirm again, until a purchase order has gone out or receiving has started. The online-ordering answer drops "Card payment works for these online orders only", which contradicted event card payment.

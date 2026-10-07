@@ -308,3 +308,6 @@ Content: `src/components/sections/OnboardingPage.astro` and its shared data/resp
 - [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
 - [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
 - [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- Stage five caption: "the live quote beside it already shows its food cost: $1.62 a guest, the $1.59 portion plus your 2% miscellaneous cost" (it called the food cost "the quote").

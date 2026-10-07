@@ -25,7 +25,8 @@ import { depositMethods } from './events';
 
 export const eventPayments = {
 	id: 'event-payments',
-	title: 'Card payment for booked events',
+	// Not "booked events": the deposit is paid before Confirm order books it.
+	title: 'Card payment for event deposits and balances',
 	comparisonLabel: 'Card payment for event deposits and balances',
 	verdict: 'yes' as const,
 	homepage:

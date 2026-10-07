@@ -119,3 +119,6 @@ Wet hands, the walk-in door held with a foot, a phone propped on the lowboy. Ref
 ## Claim correction · 2026-09-27 (kitchen labels available)
 
 - [x] 11 Revision: The owner approved the RC-35 labels launch decision on 2026-09-27 and LABELS_STATUS is now yes. Kitchen date labels print from Prep and Pack through the browser; label stock is set once in Settings > Labels. The premise that the whole feature sat behind the label_printing flag was false (gap report F2). Every Coming sentence about kitchen labels is gone; the browser-only, never-guessed-date and blank-allergen boundaries stay. Beats and point of view unchanged; the labels page hero now states availability instead of a preview.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The badge reads "In the app today", not "Available now".

@@ -306,7 +306,7 @@ const featureSectionSource =
 	surfaces[surfaceFiles.indexOf('src/components/sections/FeatureSection.astro')];
 const integrationsSource =
 	surfaces[surfaceFiles.indexOf('src/components/sections/Integrations.astro')];
-requireText(comparePage, 'It does not mean their product cannot do it.', 'comparison legend');
+requireText(comparePage, 'It does not mean their product cannot do it; ask them before you decide.', 'comparison legend');
 requireText(comparisonSource, 'export const VERIFIED_ON', 'comparison verification date');
 requireText(comparisonSource, "VERIFIED_ON = 'August 30, 2026'", 'current comparison verification date');
 requireText(comparePage, 'VERIFIED_ON', 'comparison verification date on the page');

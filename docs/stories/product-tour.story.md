@@ -159,3 +159,6 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 ## Claim correction · 2026-09-27 (what Staff can open)
 
 - [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- Stop 9 (events) no longer calls event card payment Coming: the client pays the deposit by card from an email link, or it is recorded by hand (owner ruling 2026-10-06). "Start the guided tour" is a quiet link; the green button is only the trial.

@@ -135,3 +135,6 @@ instead. Pinned by `scripts/check-events-proposals-page.mjs`.)
 reviewer as if Confirm order were the signature. The line is now "Their yes
 books nothing. Confirm order does." (`acceptanceBoundary`, shared by this
 page, /compare and the homepage rail). The signature is the Agreement step.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The payments line is titled "Card payment for event deposits and balances", not "for booked events": the deposit is paid before Confirm order books it.

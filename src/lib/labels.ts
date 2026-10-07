@@ -36,7 +36,7 @@ import type { Verdict } from './comparison';
 
 export const LABELS_STATUS = 'yes' as Verdict;
 
-export const labelsStatusWord = LABELS_STATUS === 'yes' ? 'Available now' : 'Coming';
+export const labelsStatusWord = LABELS_STATUS === 'yes' ? 'In the app today' : 'Coming';
 const labelsAreComing = LABELS_STATUS !== 'yes';
 
 /** One status flip, with each public surface receiving copy for its own job. */
@@ -44,10 +44,10 @@ export const labelsAvailability = {
 	isComing: labelsAreComing,
 	verdict: LABELS_STATUS,
 	word: labelsStatusWord,
-	featureLead: labelsAreComing ? 'Coming; not included today.' : 'Available now.',
+	featureLead: labelsAreComing ? 'Coming; not included today.' : 'In the app today.',
 	pageSentence: labelsAreComing
 		? 'Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.'
-		: 'Available now in the CostCook subscription you would start today.',
+		: 'In the CostCook subscription you would start today.',
 	featureDetail: labelsAreComing
 		? 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. This is a preview of the planned workflow. Kitchen date labels are not included in the subscription today.'
 		: 'Tap Label on the prep list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints.',

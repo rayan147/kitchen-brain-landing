@@ -247,7 +247,11 @@ export const faq: readonly FaqGroup[] = [
 				question: 'The client added forty guests. What do I retype?',
 				answer: [
 					'The guest count.',
-					'Recipes scale from it, shared ingredients roll together, whole packs recalculate, and the Shop, Prep and Pack tabs stay on the same plan.'
+					'Recipes scale from it, shared ingredients roll together, whole packs recalculate, and the Shop, Prep and Pack tabs stay on the same plan.',
+					// After Confirm order (chef audit 2026-10-07: the answer only covered
+					// a draft). kitchen-brain: "Reopen as draft", refused once a purchase
+					// order has gone out or receiving has started.
+					'If you already pressed Confirm order, reopen it as a draft first, change the count, and confirm again. That works until a purchase order has gone out or receiving has started.'
 				],
 				claims: ['RC-03', 'RC-22', 'RC-24', 'RC-25']
 			},

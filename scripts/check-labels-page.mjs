@@ -41,12 +41,12 @@ if (coming) required.push('Kitchen date labels are coming. Preview how they will
 // keep any sentence that calls the feature Coming or excluded.
 // The Settings pin is the whole sentence naming where the stock is set: the
 // bare word 'Settings' was on every page through the shared header's menu.
-else required.push('Kitchen date labels, printed from Prep and Pack.', 'data-labels-status="yes"', 'Available now', 'Printing goes through your browser, onto the label stock you set once in Settings.');
+else required.push('Kitchen date labels, printed from Prep and Pack.', 'data-labels-status="yes"', 'In the app today', 'Printing goes through your browser, onto the label stock you set once in Settings.');
 
 const missing = required.filter((fragment) => !html.includes(fragment));
 if (missing.length > 0) throw new Error(`Labels page build is missing: ${missing.join(', ')}`);
 
-if (coming && /Available now/.test(html)) throw new Error('Labels page says Available now while src/lib/labels.ts says coming.');
+if (coming && /In the app today/.test(html)) throw new Error('Labels page says In the app today while src/lib/labels.ts says coming.');
 if (!coming && /cannot use in the trial|remain excluded|Not included in the CostCook subscription|labels are coming/i.test(html)) throw new Error('Labels page still calls labels Coming while src/lib/labels.ts says yes.');
 if (/sandbox(?:\/demo| build)/i.test(html)) throw new Error('Labels page exposes internal sandbox provenance.');
 const forbidden = [/direct(ly)? to (the |a |your )?(label )?printer/i, /sends? (it |them |labels )?to (the |a |your )?printer/i, /Brother|DYMO|Dymo|Zebra|Avery/];
