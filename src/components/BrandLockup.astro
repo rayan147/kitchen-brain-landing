@@ -13,7 +13,7 @@ type Props = {
 	/** Icon box size; wordmark scales with the parent's font-size. */
 	iconClass?: string;
 	/**
-	 * `header`: the site header's mark, 20px wordmark on phones and 24px from
+	 * `header`: the site header's mark, 18px under 360px, 20px on phones and 24px from
 	 * sm (icon 1.375em, so about 28px and 33px tall). Logo guidance puts a
 	 * header mark at 24-32px on phones and 28-40px on desktop; at 18px it
 	 * read smaller than the nav links' row (owner, 2026-10-07).
@@ -24,7 +24,7 @@ const { href, iconClass = 'size-[1.375em]', size = 'default' } = Astro.props;
 const Tag = href ? 'a' : 'p';
 ---
 
-<Tag {href} class:list={['flex items-center gap-1.5 font-display font-semibold whitespace-nowrap', size === 'header' ? 'text-xl sm:text-2xl' : 'text-lg', href && 'min-h-11']}>
+<Tag {href} class:list={['flex items-center gap-1.5 font-display font-semibold whitespace-nowrap', size === 'header' ? 'text-lg min-[360px]:text-xl sm:text-2xl' : 'text-lg', href && 'min-h-11']}>
 	<!-- width/height: intrinsic fallback (1.375em at text-lg ≈ 25px) so the
 	     icon can never paint at container width before the stylesheet
 	     applies (issue #54). The class overrides them once CSS is live. -->

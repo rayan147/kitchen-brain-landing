@@ -1,12 +1,24 @@
 ---
-import { demoCta, featuresMenu, nav, signIn, site } from '../lib/site';
+import { demoCta, featuresMenu, nav, resourcesMenu, signIn, site } from '../lib/site';
 
 // The header renders /features as a disclosure over its five areas. A footer
 // is a list rather than a menu, so it carries the plain hub link, in the slot
 // it held before the split.
-const footerLinks = nav.flatMap((item) =>
-	item.href === '/pricing' ? [item, { label: 'Every feature', href: featuresMenu.href }] : [item]
-);
+//
+// GROUPED, 2026-10-07 (owner, after a footer review): readers skim a footer,
+// so the links sit under headings instead of one run. The two resource
+// columns reuse the header's own Resources groups, so a page added there
+// lands here in the same group.
+// Considered Composite; not used because this is a flat list split by an
+// existing `group` field, one level deep.
+const productLinks = [
+	{ label: 'Every feature', href: featuresMenu.href },
+	...nav.filter((item) => item.header !== 'resources')
+];
+const resourceColumns = resourcesMenu.groups.map((group) => ({
+	heading: group,
+	links: resourcesMenu.items.filter((item) => item.group === group)
+}));
 import BrandLockup from './BrandLockup.astro';
 
 // Static site: computing the year at build time would freeze at the last
@@ -15,61 +27,43 @@ const year = 2026;
 ---
 
 <footer class="border-t border-hairline">
-	<div
-		class="container-page flex flex-col gap-6 py-10 sm:flex-row sm:items-baseline sm:justify-between"
-	>
-		<div>
-			<BrandLockup />
-			<a
-				href={`mailto:${site.email}`}
-				class="mt-1 flex min-h-11 items-center text-sm text-ink-soft underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:text-ink"
-			>
-				{site.email}
-			</a>
-			<a
-				href={site.phoneHref}
-				class="flex min-h-11 items-center text-sm text-ink-soft underline decoration-hairline underline-offset-4 transition-colors duration-150 hover:text-ink"
-			>
-				{site.phone}
-			</a>
+	<div class="container-page py-12">
+		<div class="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-[1.2fr_repeat(4,minmax(0,1fr))] lg:gap-x-8">
+			<div class="col-span-2 lg:col-span-1">
+				<BrandLockup />
+				<p class="mt-3 max-w-[22ch] text-sm text-ink-soft">Catering software, built by a chef.</p>
+			</div>
+			<nav aria-label="Footer" class="contents">
+				<div>
+					<h2 class="font-mono text-eyebrow font-semibold tracking-wide text-ink-soft">Product</h2>
+					<ul role="list" class="mt-2">
+						{productLinks.map((item) => (
+							<li><a href={item.href} class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink">{item.label}</a></li>
+						))}
+					</ul>
+				</div>
+				{resourceColumns.map((column) => (
+					<div>
+						<h2 class="font-mono text-eyebrow font-semibold tracking-wide text-ink-soft">{column.heading}</h2>
+						<ul role="list" class="mt-2">
+							{column.links.map((item) => (
+								<li><a href={item.href} class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink">{item.label}</a></li>
+							))}
+						</ul>
+					</div>
+				))}
+				<div>
+					<h2 class="font-mono text-eyebrow font-semibold tracking-wide text-ink-soft">Talk to us</h2>
+					<ul role="list" class="mt-2">
+						<li><a href={`mailto:${site.email}`} class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink underline decoration-hairline underline-offset-4">{site.email}</a></li>
+						<li><a href={site.phoneHref} class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink underline decoration-hairline underline-offset-4">{site.phone}</a></li>
+						<li><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink">Book a demo</a></li>
+						<li><a href={signIn.href} target={signIn.target} aria-label={signIn.ariaLabel} class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink">{signIn.label}</a></li>
+					</ul>
+				</div>
+			</nav>
 		</div>
-		<nav aria-label="Footer">
-			<ul role="list" class="flex flex-wrap gap-x-6 gap-y-2">
-				{
-					footerLinks.map((item) => (
-						<li>
-							<a
-								href={item.href}
-								class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
-							>
-								{item.label}
-							</a>
-						</li>
-					))
-				}
-				<li>
-					<a
-						href={signIn.href}
-						target={signIn.target}
-						aria-label={signIn.ariaLabel}
-						class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
-					>
-						{signIn.label}
-					</a>
-				</li>
-				<li>
-					<a
-						href={demoCta.href}
-						target={demoCta.target}
-						rel={demoCta.rel}
-						aria-label={demoCta.ariaLabel}
-						class="inline-flex min-h-11 items-center text-sm text-ink-soft transition-colors duration-150 hover:text-ink"
-					>
-						Book a demo
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<p class="text-sm text-ink-soft">© {year} {site.name}</p>
+		<p class="mt-10 border-t border-hairline pt-6 text-sm text-ink-soft">© {year} {site.name}</p>
 	</div>
 </footer>
+

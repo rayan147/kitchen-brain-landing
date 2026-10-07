@@ -145,7 +145,9 @@ try {
 		if (width === 320) await capture('narrow', false);
 	}
 
-	await viewport(390, 844, true);
+	// The Features panel is offered from 640px; below that it lives in Menu
+	// (one-row phone header, 2026-10-07).
+	await viewport(640, 844, true);
 	await navigate();
 	const menu = await evaluate(`(() => {
 		const details = document.querySelector('[data-features-menu]');

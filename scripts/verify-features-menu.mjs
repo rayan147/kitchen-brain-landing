@@ -1,10 +1,14 @@
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 import { tourStopCount } from './lib/tour-stops.mjs';
 import { resourceCount, mobileMenuLinkCount } from './lib/resource-nav.mjs';
+
+// The Blog menu lists every article, so the count is the content folder's,
+// not a number to bump by hand (it read 10 after an 11th article shipped).
+const blogArticleCount = (await readdir(new URL('../src/content/blog/', import.meta.url))).filter((name) => name.endsWith('.md')).length;
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const previewHost = new URL(baseUrl).hostname;
@@ -133,7 +137,7 @@ try {
 			flatTourVisible: Boolean(
 				document.querySelector('nav[aria-label="Main"] > ul > li > a[href="/tour/main"]')?.getClientRects().length
 			),
-			demoVisible: Boolean(document.querySelector('header a[href="/demo"]')?.getClientRects().length),
+			demoVisible: Boolean(document.querySelector('header .header-actions > a[href="/demo"]')?.getClientRects().length),
 			headerHeight: document.querySelector('header').getBoundingClientRect().height,
 			minTarget: Math.min(...links.map((link) => link.getBoundingClientRect().height)),
 			left: rect.left,
@@ -177,9 +181,9 @@ try {
 			});
 		});
 	}))()`);
-	assert(blog.articleLinks === 10, `desktop Blog: expected 10 article links, received ${blog.articleLinks}`);
-	assert(blog.icons === 10, `desktop Blog: expected 10 icons, received ${blog.icons}`);
-	assert(blog.descriptions === 10, `desktop Blog: expected 10 descriptions, received ${blog.descriptions}`);
+	assert(blog.articleLinks === blogArticleCount, `desktop Blog: expected ${blogArticleCount} article links, received ${blog.articleLinks}`);
+	assert(blog.icons === blogArticleCount, `desktop Blog: expected ${blogArticleCount} icons, received ${blog.icons}`);
+	assert(blog.descriptions === blogArticleCount, `desktop Blog: expected ${blogArticleCount} descriptions, received ${blog.descriptions}`);
 	assert(blog.hasOverview, 'desktop Blog: overview link is missing');
 	assert(blog.featuresClosed, 'desktop Blog: opening it did not close Features');
 	assert(blog.left >= 0 && blog.right <= blog.innerWidth, 'desktop Blog: panel leaves the viewport');
@@ -285,7 +289,30 @@ try {
 	assert(deepLink.top >= 0 && deepLink.top < 200, `deep link: target landed at ${deepLink.top}px`);
 	assert(deepLink.title?.length > 0, 'deep link: target section has no visible heading or disclosure label');
 
+	// ONE-ROW PHONE HEADER (2026-10-07): below 640px the bar is the mark, Menu
+	// and Free trial; Features and Book a demo live inside Menu. The Features
+	// panel's own phone behavior (bottom sheet, stacked groups, scroll region)
+	// is checked at 640, the smallest width that still offers it.
 	await viewport(390, 844, true);
+	await navigate(`${baseUrl}/`);
+	const oneRow = await evaluate(`(() => new Promise((resolve) => {
+		const header = document.querySelector('header.site-header');
+		const details = document.querySelector('[data-mobile-menu]');
+		details.querySelector('summary').click();
+		requestAnimationFrame(() => requestAnimationFrame(() => resolve({
+			headerHeight: header.getBoundingClientRect().height,
+			featureTriggerVisible: Boolean(document.querySelector('[data-features-menu]').getClientRects().length),
+			headerDemoVisible: Boolean(header.querySelector('.header-actions > a[href="/demo"]')?.getClientRects().length),
+			menuFeatures: Boolean(details.querySelector('a[href="/features"]')?.getClientRects().length),
+			menuDemo: Boolean(details.querySelector('a[href="/demo"]')?.getClientRects().length)
+		})));
+	}))()`);
+	assert(oneRow.headerHeight < 100, `390px: header is ${oneRow.headerHeight}px tall, not one row`);
+	assert(!oneRow.featureTriggerVisible && !oneRow.headerDemoVisible, '390px: Features or Book a demo still crowds the bar');
+	assert(oneRow.menuFeatures, '390px: Features is missing from Menu');
+	assert(oneRow.menuDemo, '390px: Book a demo is missing from Menu');
+
+	await viewport(640, 844, true);
 	await navigate(`${baseUrl}/`);
 	const mobile = await evaluate(`(() => {
 		const details = document.querySelector('[data-features-menu]');
@@ -297,7 +324,7 @@ try {
 			flatTourVisible: Boolean(
 				document.querySelector('nav[aria-label="Main"] > ul > li > a[href="/tour/main"]')?.getClientRects().length
 			),
-			demoVisible: Boolean(document.querySelector('header a[href="/demo"]')?.getClientRects().length),
+			demoVisible: Boolean(document.querySelector('header .header-actions > a[href="/demo"]')?.getClientRects().length),
 			footerTourVisible: Boolean(
 				document.querySelector('nav[aria-label="Footer"] a[href="/tour/main"]')?.getClientRects().length
 			),
@@ -364,7 +391,7 @@ try {
 	assert(reflow.featureLinkVisible, '320px at 200% text: Features is missing from Menu');
 
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
-	await viewport(390, 844, true);
+	await viewport(640, 844, true);
 	await navigate(`${baseUrl}/`);
 	const reducedMotion = await evaluate(`getComputedStyle(document.querySelector('[data-features-menu] summary svg')).transitionDuration`);
 	assert(reducedMotion === '0s', `reduced motion: chevron transition is ${reducedMotion}`);

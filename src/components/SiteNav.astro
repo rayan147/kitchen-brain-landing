@@ -245,6 +245,9 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 										<li><a href={item.href} aria-current={path === item.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{item.label}</a></li>
 									))}
 									<li><a href={signIn.href} target={signIn.target} aria-label={signIn.ariaLabel} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{signIn.label}</a></li>
+									<!-- Phones only: the header's demo link moves in here so the bar is
+									     one row (mark, Menu, Free trial). Same label and target. -->
+									<li class="sm:hidden"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="flex min-h-11 items-center px-3 text-sm font-semibold text-green-deep hover:bg-cream">Book a demo</a></li>
 								</ul>
 							</div>
 						</div>
@@ -267,7 +270,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 			rel={demoCta.rel}
 			aria-label={demoCta.ariaLabel}
 			aria-current={path === demoCta.href ? 'page' : undefined}
-			class="nav-demo inline-flex min-h-11 items-center whitespace-nowrap px-1 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 transition-colors duration-150 hover:decoration-green"
+			class="nav-demo hidden min-h-11 sm:inline-flex items-center whitespace-nowrap px-1 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 transition-colors duration-150 hover:decoration-green"
 		>
 			<!-- A LINK, NOT A SECOND BUTTON (2026-09-10). This was a bordered pill
 			     beside the primary, so the header read as three actions with two of
@@ -296,24 +299,17 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 		display: none;
 	}
 
-	@media (max-width: 359px) {
+	/* ONE ROW ON PHONES (2026-10-07, owner, after a navbar review): below sm
+	   the bar holds the mark, Menu and Free trial. Features and Book a demo
+	   live inside Menu there. It was two rows, about 130px of an 844px
+	   screen; one row gives back about 50px above the fold. */
+	@media (max-width: 639px) {
 		.feature-disclosure {
 			display: none;
 		}
 
 		.tiny-features-link {
 			display: block;
-		}
-	}
-
-	@media (max-width: 639px) {
-		.site-header {
-			display: grid;
-		}
-
-		.header-actions {
-			width: 100%;
-			justify-content: space-between;
 		}
 	}
 
