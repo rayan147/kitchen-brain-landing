@@ -69,12 +69,18 @@ import { heroFilm } from '../../lib/home';
 		if (!video) continue;
 		video.controls = false;
 		button.hidden = false;
-		button.addEventListener('click', () => {
+		// The whole frame starts the film, not just the button: a visitor taps
+		// the poster, and with the native controls off that tap did nothing
+		// (owner, 2026-10-07: "the video is not playable").
+		const start = () => {
+			if (video.controls) return;
 			button.hidden = true;
 			video.controls = true;
 			void video.play();
 			video.focus();
-		});
+		};
+		button.addEventListener('click', start);
+		video.addEventListener('click', start);
 	}
 </script>
 
@@ -97,6 +103,7 @@ import { heroFilm } from '../../lib/home';
 	.hero-media { margin: 0; width: 100%; min-width: 0; }
 	/* 16:9 before the poster loads, so nothing below shifts. Same frame as
 	   every other app capture: 8px radius, one lift shadow. */
+	.hero-film:not([controls]) { cursor: pointer; }
 	.hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 8px; box-shadow: var(--shadow-lift); background: var(--color-paper); }
 	.hero-film-wrap { position: relative; }
 	/* The media's own control, not a call to action: paper, not the trial's
