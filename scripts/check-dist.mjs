@@ -152,20 +152,57 @@ if (bandTones.length !== homepageStopIds.length + 1 || bandTones.some((tone, i) 
 	failed = true;
 }
 
-// The hero: one h1, the accent word, the still in the media slot loaded eagerly.
+// The hero: one h1, the accent word, the promo film in the media slot
+// (owner, 2026-10-07). It waits for a tap (no autoplay, preload none), keeps
+// its 16:9 box before the poster loads, offers WebM then MP4, every file
+// shipped, and carries the transcript beside it (principle 4).
 if ((homeHtml.match(/<h1\b/g) ?? []).length !== 1) {
 	console.error('check-dist: homepage must have exactly one h1');
 	failed = true;
 }
 const heroMedia = homeHtml.match(/<figure[^>]*data-hero-media[^>]*>([\s\S]*?)<\/figure>/)?.[1] ?? '';
-if (!/src="\/proof\/home\/hero-pricing\.png"[^>]*loading="eager"|loading="eager"[^>]*src="\/proof\/home\/hero-pricing\.png"/.test(heroMedia)) {
-	console.error('check-dist: the hero media slot must hold hero-pricing.png, loaded eagerly');
+const heroVideo = heroMedia.match(/<video\b[^>]*>/)?.[0] ?? '';
+const heroFilmRules = [
+	[/\scontrols\b/, 'controls'],
+	[/\splaysinline\b/, 'playsinline'],
+	[/\spreload="none"/, 'preload="none"'],
+	[/\sposter="\/film\/costcook-promo-poster\.jpg"/, 'the film poster'],
+	[/\swidth="1920"[^>]*\sheight="1080"|\sheight="1080"[^>]*\swidth="1920"/, 'width and height']
+];
+if (!heroVideo) {
+	console.error('check-dist: the hero media slot must hold the promo film');
+	failed = true;
+} else {
+	for (const [rule, name] of heroFilmRules) {
+		if (!rule.test(heroVideo)) {
+			console.error(`check-dist: the hero film needs ${name}`);
+			failed = true;
+		}
+	}
+	if (/\s(autoplay|muted|loop)\b/.test(heroVideo)) {
+		console.error('check-dist: the hero film must wait for a tap (no autoplay, muted or loop)');
+		failed = true;
+	}
+}
+const heroSources = [...heroMedia.matchAll(/<source\b[^>]*src="([^"]+)"[^>]*type="([^"]+)"/g)].map((m) => `${m[2]} ${m[1]}`);
+if (heroSources.join(',') !== 'video/webm /film/costcook-promo.webm,video/mp4 /film/costcook-promo.mp4') {
+	console.error(`check-dist: the hero film sources are [${heroSources.join(', ')}]; expected WebM then MP4`);
+	failed = true;
+}
+for (const file of ['film/costcook-promo.webm', 'film/costcook-promo.mp4', 'film/costcook-promo-poster.jpg']) {
+	if (!existsSync(join(dist, file))) {
+		console.error(`check-dist: ${file} did not ship`);
+		failed = true;
+	}
+}
+if (!/<details\b[^>]*hero-transcript[\s\S]*Signed and paid is\.[\s\S]*<\/details>/.test(heroMedia)) {
+	console.error('check-dist: the hero film needs its transcript beside it');
 	failed = true;
 }
 
 // Every homepage frame: real capture, measured box, lazy below the hero.
 const homeImgs = [...homeHtml.matchAll(/<img\b[^>]*src="\/proof\/home\/([a-z-]+)\.png"[^>]*>/g)];
-const expectedFrames = ['hero-pricing', 'inquiry-mobile', 'proposal-mobile', 'payment-schedule', 'confirm-dialog', 'shop-list', 'food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox', 'sage-answer'];
+const expectedFrames = ['inquiry-mobile', 'proposal-mobile', 'payment-schedule', 'confirm-dialog', 'shop-list', 'food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox', 'sage-answer'];
 const renderedFrames = homeImgs.map((m) => m[1]);
 if (renderedFrames.join(',') !== expectedFrames.join(',')) {
 	console.error(`check-dist: homepage frames render [${renderedFrames.join(', ')}]; expected [${expectedFrames.join(', ')}]`);
@@ -180,7 +217,7 @@ for (const [tag, name] of homeImgs) {
 		console.error(`check-dist: homepage frame ${name} needs alt text that says what it shows`);
 		failed = true;
 	}
-	if (name !== 'hero-pricing' && !/loading="lazy"/.test(tag)) {
+	if (!/loading="lazy"/.test(tag)) {
 		console.error(`check-dist: homepage frame ${name} must load lazily`);
 		failed = true;
 	}
@@ -276,6 +313,6 @@ console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s
 console.log(`check-dist: ${pages.length} built page(s) carry no CSP-blocked inline script or event handler`);
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
 console.log(`check-dist: /compare renders a spreadsheet column on ${compareRowCount} rows across 5 group tables`);
-console.log(`check-dist: homepage renders ${homepageStopIds.length + 1} alternating bands and ${expectedFrames.length} measured frames, hero eager, the rest lazy`);
+console.log(`check-dist: homepage renders ${homepageStopIds.length + 1} alternating bands and ${expectedFrames.length} measured frames loaded lazily; the hero film waits for a tap`);
 console.log('check-dist: homepage workflow rail renders five stages and four carry lines, nothing hidden');
 console.log(`check-dist: shared Sage icon is present across ${sageIconSurfaces.length} homepage and decision-route contexts`);

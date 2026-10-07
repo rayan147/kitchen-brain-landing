@@ -37,7 +37,6 @@
     "ordering-site": "Public ordering site (ACTIVE, local 4192) at desktop: Plan the meal. The kitchen confirms the details; 20 guest minimum, Up to 10,000; 72 hours notice; Pickup or Delivery; Menu/Choices/Event/Contact/Review; Coastal Dinner $93.00 per guest. Re-shot 2026-10-07 after the sample kitchen set a 20-guest minimum and 72 hours lead time (third chef review: 1 guest and 24 hours read as unconfigured; the largest-group field did not save, so Up to 10,000 remains). Phone variant re-shot the same way.",
     "import-review": "Import review of a sample Green Valley Produce invoice GVP-48217: 4 matched, 2 need review, 1 ready to create",
     "sage-answer": "local 4191 Sage panel, opened from the app sidebar (Sage, Ctrl J) on Events, new thread: 'What is still owed on the Nair & Castellano wedding on December 19, and when is it due?' -> a balance of $10,750.00; one cited record: balance due December 9, 2026, deposit of $3,500.00 already paid, link to the wedding; suggested next step 'View order details and money', 'You review it first.' A first ask called the kitchen draft a confirmed order, which it is not; that answer was not used (2026-10-07). Cropped the same day (design review) above the suggested-next-step card, whose green button read as the page primary: 808x676, ending under the cited record.",
-    "hero-pricing": "Menu Wedding Plated Dinner, Price per guest panel (local 4191, 2026-10-07 after the chef-review data fixes): Food cost $26.18, Sells for $95.00, 27.6% food cost, target 30%, 2.4 points to spare, food margin $68.82 a guest (re-shot after the short rib trim yield)",
     "allergens-labels": "Order #784 (Dec 19 wedding) Pack tab dishes card (local 4191): six dishes, allergen chips, Lemon Posset 150 portions; phone variant the same list",
     "prep-list": "Order #784 Prep tab on a phone (local 4191): Mirepoix Base make first, 6 batches, 18 kg; Carrot 5.4 kg, Celery 3.3 each, Yellow onion 7.2 kg, Canola oil 720 ml",
     "shop-list": "Order #784 Shop tab on a phone (local 4191, kitchen set to US customary units 2026-10-07): Highland Meats $2,155.59; Beef short rib, boneless, Need 152.7 lb, 10 x case 7 kg, $2,122.40; Beef bones, Need 27.6 lb, 1 x case 15 kg, $33.19; both Not counted. Replaces prep-list on the rail after the second chef review: the prep sheet keeps each recipe's own units (metric, celery by the head) and does not follow the US setting.",
@@ -77,7 +76,7 @@
         "invoice-inbox-phone"
       ],
       "capturedOn": "2026-10-06",
-      "note": "captured in the owner\u2019s signed-in Chrome, read-only, at about 2.3x; invoice-inbox-phone is one crop of invoice-inbox (x 0-760, full height): every line the alt names is in the left column, the dropped right column repeats In review / Review | 2026-10-07: payment-schedule and sage-answer moved to local-4191-2026-10-07 (the test wedding is Dec 28 and its agreement-locked balance date cannot move)."
+      "note": "captured in the owner’s signed-in Chrome, read-only, at about 2.3x; invoice-inbox-phone is one crop of invoice-inbox (x 0-760, full height): every line the alt names is in the left column, the dropped right column repeats In review / Review | 2026-10-07: payment-schedule and sage-answer moved to local-4191-2026-10-07 (the test wedding is Dec 28 and its agreement-locked balance date cannot move)."
     },
     "local-4191-phone": {
       "appSha": "e002990784f6848dbeec063d68ce7144d2da77be (ordering app on :4192)",
@@ -90,13 +89,12 @@
         "allergens-labels-phone",
         "ordering-site-phone"
       ],
-      "note": "Phone variants served below 48rem (src/components/home/HomeFrame.astro). Each is the app\u2019s own phone layout of the same screen as its desktop sibling, captured as one component (no column crops, no splices): Wedding Plated Dinner Dishes per guest (first four dishes); Greek Salad ingredient lines (bell pepper, cucumber, Roma tomato); import review of GVP-48217 Extracted products (Navel oranges row collapsed); order #783 Pack tab Dishes list (the floating progress bar hidden); the public ordering site top through Coastal Dinner. Figures match the desktop frames from peer-4197 (.72, .18, .93, .91; yields 82/90/91%, buy 66 g). The order header (Sat, Oct 10, Draft) and the billing banner are outside every capture."
+      "note": "Phone variants served below 48rem (src/components/home/HomeFrame.astro). Each is the app’s own phone layout of the same screen as its desktop sibling, captured as one component (no column crops, no splices): Wedding Plated Dinner Dishes per guest (first four dishes); Greek Salad ingredient lines (bell pepper, cucumber, Roma tomato); import review of GVP-48217 Extracted products (Navel oranges row collapsed); order #783 Pack tab Dishes list (the floating progress bar hidden); the public ordering site top through Coastal Dinner. Figures match the desktop frames from peer-4197 (.72, .18, .93, .91; yields 82/90/91%, buy 66 g). The order header (Sat, Oct 10, Draft) and the billing banner are outside every capture."
     },
     "local-4191-2026-10-07": {
       "appSha": "e002990784f6848dbeec063d68ce7144d2da77be + kitchen-brain f8ab8b79d (offer logo)",
       "capturedOn": "2026-10-07",
       "shots": [
-        "hero-pricing",
         "food-cost-breakdown",
         "food-cost-breakdown-phone",
         "allergens-labels",
@@ -117,5 +115,13 @@
     "Mirepoix Base v2: celery 8 each -> 600 g (2:1:1 with 1200 g onion and 900 g carrot); batch $14.55 -> $4.01",
     "Wedding Plated Dinner: Lemon Posset 2 -> 1 portion a guest",
     "Braised Short Rib allergens unchanged: the recipe is short rib, mirepoix and stock, no flour or wine, so No listed allergens is what the data says"
-  ]
+  ],
+  "hero-film": {
+    "files": [
+      "public/film/costcook-promo.webm",
+      "public/film/costcook-promo.mp4",
+      "public/film/costcook-promo-poster.jpg"
+    ],
+    "source": "promo-video branch video/out/costcook-promo.mp4 (rendered 2026-10-07 15:40, 1920x1080, 118 s, music only); frames captured on test.app.costcook.io, develop d3c7c9add, 2026-10-07 (Ellison & Park wedding, Sat Jun 12 2027, 150 guests, $95.00, offer $21,043.00, deposit $5,250.00). Re-encoded: H.264 CRF 23 + faststart, VP9 CRF 36 + Opus. Poster is the film's frame at 16 s ($95.00 a guest, food cost 24.8%). Replaces the hero-pricing still."
+  }
 }

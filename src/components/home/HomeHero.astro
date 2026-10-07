@@ -4,17 +4,18 @@
  * Rule 5: one accent word, in kitchen green, matching the primary button and
  * nothing else. Rule 6: the frame is flat, no tilt.
  *
- * The media slot holds the price-per-guest still today. The promo film (built
- * on the promo-video branch) replaces it here without moving anything else:
- * swap the <img> inside [data-hero-media] for the <video>, keep the still as
- * its poster.
+ * The media slot holds the promo film (owner, 2026-10-07). It waits for a
+ * tap: no autoplay, so nothing moves on its own and nothing past the poster
+ * downloads (preload="none"); the poster, a frame of the film, is what paints
+ * first. The film is music only and its words are burned in, so there is no
+ * caption track to double them; the transcript below the player carries the
+ * same words for anyone who cannot watch.
  *
  * Considered Strategy (still vs video media); not used because there is one
- * medium at a time and the swap is a one-line edit at release, not a runtime
- * choice.
+ * medium at a time, not a runtime choice.
  */
 import { cta, demoCta, launchPlan } from '../../lib/site';
-import { heroShot } from '../../lib/home';
+import { heroFilm } from '../../lib/home';
 ---
 <!-- story: docs/stories/homepage-redesign-2026-10.story.md -->
 <section class="home-band home-band--cream hero" aria-labelledby="hero-heading">
@@ -30,11 +31,52 @@ import { heroShot } from '../../lib/home';
 			<p class="home-small mt-3"><strong>{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} {launchPlan.unit}, {launchPlan.crew}. The card starts the subscription; you pay $0 until day {launchPlan.trialDays + 1}.</p>
 		</div>
 		<figure class="hero-media" data-hero-media>
-			<img src={heroShot.src} alt={heroShot.alt} width={heroShot.width} height={heroShot.height} loading="eager" fetchpriority="high" decoding="async" class="home-shot hero-shot" />
-			<figcaption class="home-small mt-3">Sample wedding, checked before the quote goes out. This is the food cost. Staff, rentals, delivery and a service fee can go on the proposal as their own lines; this sample prices the food only.</figcaption>
+			<div class="hero-film-wrap">
+			<video class="hero-film" controls playsinline preload="none" poster={heroFilm.poster} width={heroFilm.width} height={heroFilm.height} aria-label={heroFilm.label}>
+				<source src={heroFilm.webm} type="video/webm" />
+				<source src={heroFilm.mp4} type="video/mp4" />
+				<a href={heroFilm.mp4}>Download the film (MP4)</a>
+			</video>
+			<button type="button" class="hero-play" hidden data-hero-play>
+				<svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20"><path d="M6 3.5v13l11-6.5z" fill="currentColor" /></svg>
+				<span class="hero-play-text">Play the film, 1:58</span>
+			</button>
+			</div>
+			<figcaption class="home-small mt-3">One sample wedding, from the client's inquiry to the food cost the day after. 1 min 58 s, music only, every word on screen. Captured in CostCook on Oct 7, 2026.</figcaption>
+			<details class="hero-transcript home-small mt-2">
+				<summary>Read what the film shows</summary>
+				<p class="mt-2">{heroFilm.opening}</p>
+				{heroFilm.chapters.map((chapter) => (
+					<div class="mt-2">
+						{chapter.question && <p class="hero-transcript-q">{chapter.question}</p>}
+						{chapter.lines.map((line) => <p>{line}</p>)}
+					</div>
+				))}
+				<p class="mt-2">{heroFilm.end}</p>
+			</details>
 		</figure>
 	</div>
 </section>
+
+<script>
+	// The native control bar sits over the poster's burned-in caption, so with
+	// JS the film shows one centred play button and hands over to the native
+	// controls on the first tap. Without JS the native controls stay.
+	// Considered State; not used because there are two states and one
+	// transition, a flag on the element.
+	for (const button of document.querySelectorAll<HTMLButtonElement>('[data-hero-play]')) {
+		const video = button.parentElement?.querySelector('video');
+		if (!video) continue;
+		video.controls = false;
+		button.hidden = false;
+		button.addEventListener('click', () => {
+			button.hidden = true;
+			video.controls = true;
+			void video.play();
+			video.focus();
+		});
+	}
+</script>
 
 <style>
 	/* The header shares the hero's cream (owner 2026-10-07), so the band's
@@ -52,6 +94,36 @@ import { heroShot } from '../../lib/home';
 		text-wrap: balance;
 	}
 	.accent { color: var(--color-green-deep); }
-	.hero-media { margin: 0; justify-self: center; width: 100%; max-width: 24rem; }
-	@media (min-width: 64rem) { .hero-grid { grid-template-columns: 1.15fr 1fr; gap: 4rem; } }
+	.hero-media { margin: 0; width: 100%; min-width: 0; }
+	/* 16:9 before the poster loads, so nothing below shifts. Same frame as
+	   every other app capture: 8px radius, one lift shadow. */
+	.hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 8px; box-shadow: var(--shadow-lift); background: var(--color-paper); }
+	.hero-film-wrap { position: relative; }
+	/* The media's own control, not a call to action: paper, not the trial's
+	   green (F2). 44px+ target, focus ring follows the pill. */
+	.hero-play {
+		/* Bottom right: clear of the burned-in caption (bottom left) and of the
+		   poster's $95.00 / 24.8% figures. */
+		position: absolute; right: 0.75rem; bottom: 0.75rem;
+		display: inline-flex; align-items: center; gap: 0.6rem;
+		min-height: 3rem; padding: 0.75rem 1.25rem 0.75rem 1rem;
+		border-radius: 999px; background: var(--color-paper); color: var(--color-ink);
+		font-weight: 600; box-shadow: var(--shadow-lift); cursor: pointer;
+	}
+	.hero-play[hidden] { display: none; }
+	/* On a phone the label would sit on the caption: the icon stays, the
+	   words stay for screen readers. */
+	@media (max-width: 39.99rem) {
+		.hero-play { padding: 0; width: 3rem; justify-content: center; right: 0.5rem; bottom: 0.5rem; }
+		.hero-play svg { margin-left: 0.15rem; }
+		.hero-play-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+	}
+	.hero-play:hover { background: var(--color-cream); }
+	.hero-transcript summary { cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; width: fit-content; min-height: 2.75rem; display: flex; align-items: center; gap: 0.5rem; }
+	.hero-transcript summary::before { content: '▸'; text-decoration: none; }
+	.hero-transcript[open] summary::before { content: '▾'; }
+	.hero-transcript-q { font-weight: 600; }
+	/* The film needs width to stay legible, so the media column is the wider
+	   one on desktop (a 24rem still column left it 216px tall). */
+	@media (min-width: 64rem) { .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 3.5rem; } }
 </style>

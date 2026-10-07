@@ -231,3 +231,20 @@ No copy changed in this pass. The cream header is now the default on every
 route and runs into each page's first section; the green button is only ever
 the trial (nine feature guides had closed on the demo); every demo link is
 the quiet link; no route scrolls sideways at 200% text on 320 or 390.
+
+### Revision 2026-10-07 (7): the film in the hero
+- **Beat:** the Opening Image is now the whole story in 1 min 58 s, one
+  wedding from the client's ask to the food cost the day after. The H1 and the
+  film's title card say the same sentence, so the film opens on the page's
+  promise.
+- **No autoplay:** it waits for a tap and nothing past the poster loads. The
+  poster is the film's own $95.00 / 24.8% frame, not the old still, whose
+  27.6% would have argued with the film.
+- **Caption:** "One sample wedding, from the client's inquiry to the food cost
+  the day after." The "this sample prices the food only" line went with the
+  still: the film shows staff, rentals and the service fee on the offer.
+- **Transcript:** the film's on-screen words, in order, in a "Read what the
+  film shows" disclosure under the player (principle 4).
+- **Open:** the film follows the Ellison & Park wedding (Jun 12, 2027,
+  $5,250 deposit); the rail below follows Nair & Castellano (Dec 19, $3,500).
+  Owner to choose which wedding the page keeps.

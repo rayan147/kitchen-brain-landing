@@ -1086,7 +1086,13 @@ requireText(startHereSource, 'type any line it could not', 'close keeps the type
 // the food cost, and now says where staff, rentals, delivery and a fee go.
 // UPDATED 2026-10-07 (second chef review): the sample proposal is food only,
 // so the caption says the other lines can go on it, and that this one has none.
-requireText(heroSource, 'This is the food cost. Staff, rentals, delivery and a service fee can go on the proposal as their own lines; this sample prices the food only.', 'hero caption says the number is the food cost and where the rest goes (RC-74)');
+// UPDATED 2026-10-07 (owner: the promo film replaces the still): the film puts
+// staff, rentals and the service fee on the offer itself, so RC-74 is now
+// carried by the film's own words in the transcript, and the hero names the
+// film as a sample.
+requireText(heroSource, 'One sample wedding', 'hero names the film as a sample');
+requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], '8 staff for 7 hours, the rentals and the service fee.', 'hero film transcript says where staff, rentals and the fee go (RC-74)');
+requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], '$95.00 a guest. Food cost 24.8%.', 'hero film transcript carries the price-per-guest check');
 // 5. One wedding, one set of numbers. The tour, the menus guide and the blog
 //    keep the film's 180-guest wedding ($26.93 / 39.6% / $89.78); the retired
 //    Aug 29 figures may not come back anywhere. The homepage since 2026-10-06
@@ -1114,7 +1120,9 @@ requireText(heroSource, 'This is the food cost. Staff, rentals, delivery and a s
 	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039', '48 each', 'Dec 28', '2026-12-28', '40 lb', '$24.92', '26.2%', '$70.08', '$13.30', '138.9 lb']) {
 		if (homeData.includes(stale)) failures.push(`homepage wedding: stale figure ${stale} is back (now $26.18 / 27.6%)`);
 	}
-	for (const figure of ['$95.00', '$26.18', '27.6%', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {
+	// The $26.18 / 27.6% still left the hero for the film (2026-10-07); the
+	// rail's own frames keep the rest.
+	for (const figure of ['$95.00', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {
 		requireText(homeData, figure, 'homepage frames carry the Nair & Castellano figures');
 	}
 }
