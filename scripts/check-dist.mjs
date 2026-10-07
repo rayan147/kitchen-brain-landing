@@ -153,9 +153,9 @@ if (bandTones.length !== homepageStopIds.length + 1 || bandTones.some((tone, i) 
 }
 
 // The hero: one h1, the accent word, the promo film in the media slot
-// (owner, 2026-10-07). It waits for a tap (no autoplay, preload none), keeps
-// its 16:9 box before the poster loads, offers WebM then MP4, every file
-// shipped, and carries the transcript beside it (principle 4).
+// (owner, 2026-10-07). It waits for a tap (no autoplay, preload metadata), keeps
+// its 16:9 box before the poster loads, offers MP4 (H.264 plays everywhere,
+// and is the file the owner's Chrome played) then WebM, every file shipped, and carries the transcript beside it (principle 4).
 if ((homeHtml.match(/<h1\b/g) ?? []).length !== 1) {
 	console.error('check-dist: homepage must have exactly one h1');
 	failed = true;
@@ -165,7 +165,8 @@ const heroVideo = heroMedia.match(/<video\b[^>]*>/)?.[0] ?? '';
 const heroFilmRules = [
 	[/\scontrols\b/, 'controls'],
 	[/\splaysinline\b/, 'playsinline'],
-	[/\spreload="none"/, 'preload="none"'],
+	// "none" left Chrome's native player dead to clicks (2026-10-07).
+	[/\spreload="metadata"/, 'preload="metadata"'],
 	[/\sposter="\/film\/costcook-promo-poster\.jpg"/, 'the film poster'],
 	[/\swidth="1920"[^>]*\sheight="1080"|\sheight="1080"[^>]*\swidth="1920"/, 'width and height']
 ];
@@ -179,14 +180,18 @@ if (!heroVideo) {
 			failed = true;
 		}
 	}
+	if (/data-hero-play|hero-play/.test(heroMedia)) {
+		console.error('check-dist: the hero film uses the native player; a scripted play button left it dead to clicks (2026-10-07)');
+		failed = true;
+	}
 	if (/\s(autoplay|muted|loop)\b/.test(heroVideo)) {
 		console.error('check-dist: the hero film must wait for a tap (no autoplay, muted or loop)');
 		failed = true;
 	}
 }
 const heroSources = [...heroMedia.matchAll(/<source\b[^>]*src="([^"]+)"[^>]*type="([^"]+)"/g)].map((m) => `${m[2]} ${m[1]}`);
-if (heroSources.join(',') !== 'video/webm /film/costcook-promo.webm,video/mp4 /film/costcook-promo.mp4') {
-	console.error(`check-dist: the hero film sources are [${heroSources.join(', ')}]; expected WebM then MP4`);
+if (heroSources.join(',') !== 'video/mp4 /film/costcook-promo.mp4,video/webm /film/costcook-promo.webm') {
+	console.error(`check-dist: the hero film sources are [${heroSources.join(', ')}]; expected MP4 then WebM`);
 	failed = true;
 }
 for (const file of ['film/costcook-promo.webm', 'film/costcook-promo.mp4', 'film/costcook-promo-poster.jpg']) {

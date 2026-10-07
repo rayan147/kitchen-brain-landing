@@ -122,6 +122,6 @@
       "public/film/costcook-promo.mp4",
       "public/film/costcook-promo-poster.jpg"
     ],
-    "source": "promo-video branch video/out/costcook-promo.mp4 (rendered 2026-10-07 15:40, 1920x1080, 118 s, music only); frames captured on test.app.costcook.io, develop d3c7c9add, 2026-10-07 (Ellison & Park wedding, Sat Jun 12 2027, 150 guests, $95.00, offer $21,043.00, deposit $5,250.00). Re-encoded: H.264 CRF 23 + faststart, VP9 CRF 36 + Opus. Poster is the film's frame at 16 s ($95.00 a guest, food cost 24.8%). Replaces the hero-pricing still."
+    "source": "promo-video branch video/out/costcook-promo.mp4 (rendered 2026-10-07 15:40, 1920x1080, 118 s, music only); frames captured on test.app.costcook.io, develop d3c7c9add, 2026-10-07 (Ellison & Park wedding, Sat Jun 12 2027, 150 guests, $95.00, offer $21,043.00, deposit $5,250.00). Re-encoded: H.264 CRF 23 + faststart, VP9 CRF 36 + Opus. Poster is the film's chapter card at 14.2 s (\"What do I charge a head?\"), clear of the control bar; MP4 is served first. Replaces the hero-pricing still."
   }
 }

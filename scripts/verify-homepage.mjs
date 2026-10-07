@@ -242,17 +242,21 @@ try {
 	assert(zoom390.overflow === 0, `390px at 200% text: horizontal overflow is ${zoom390.overflow}px`);
 	assert(zoom390.escaped.length === 0, `390px at 200% text: escaped elements: ${zoom390.escaped.join(', ')}`);
 
-	// The hero film starts from a tap anywhere on the poster, not only from
-	// its corner button (owner, 2026-10-07: "the video is not playable").
+	// The hero film is the browser's own player: a click on it starts the
+	// film (owner, 2026-10-07: "the video is not playable" with a scripted
+	// play button).
 	await viewport(1440, 900, false);
 	await navigate();
-	const film = await evaluate(`(() => { const r = document.querySelector('[data-hero-media] video').getBoundingClientRect(); return { x: r.x + r.width * 0.3, y: r.y + r.height * 0.3, controls: document.querySelector('[data-hero-media] video').controls }; })()`);
-	assert(film.controls === false, 'hero film: with JS the native bar should wait behind the play button');
+	await evaluate(`scrollTo(0, 0)`);
+	const film = await evaluate(`(() => { const v = document.querySelector('[data-hero-media] video'); const r = v.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2, controls: v.controls, hit: document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2) === v, hitName: String(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)?.outerHTML).slice(0, 80) + ' at ' + Math.round(r.y) }; })()`);
+	assert(film.controls, 'hero film: the native controls are missing');
+	assert(film.hit, `hero film: something covers the player (${film.hitName})`);
 	for (const type of ['mousePressed', 'mouseReleased']) {
 		await send('Input.dispatchMouseEvent', { type, x: film.x, y: film.y, button: 'left', clickCount: 1 });
 	}
-	const started = await evaluate(`(() => { const v = document.querySelector('[data-hero-media] video'); return { controls: v.controls, button: document.querySelector('[data-hero-play]').hidden }; })()`);
-	assert(started.controls && started.button, 'hero film: a click on the poster did not start the film');
+	await new Promise((resolve) => setTimeout(resolve, 1500));
+	const started = await evaluate(`!document.querySelector('[data-hero-media] video').paused`);
+	assert(started, 'hero film: a click on the player did not start the film');
 
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 	await viewport(390, 844, true);
@@ -294,4 +298,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('Homepage browser verification passed: six viewports, phone-first fold, touch targets, contained mobile navigation, sticky action, 200% text at 320 and 390, reduced motion, a hero film that starts from the poster, and no JavaScript.');
+console.log('Homepage browser verification passed: six viewports, phone-first fold, touch targets, contained mobile navigation, sticky action, 200% text at 320 and 390, reduced motion, a hero film that plays from a click, and no JavaScript.');

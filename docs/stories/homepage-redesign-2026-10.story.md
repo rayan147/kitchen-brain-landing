@@ -248,3 +248,7 @@ the quiet link; no route scrolls sideways at 200% text on 320 or 390.
 - **Open:** the film follows the Ellison & Park wedding (Jun 12, 2027,
   $5,250 deposit); the rail below follows Nair & Castellano (Dec 19, $3,500).
   Owner to choose which wedding the page keeps.
+- **Playable (owner: "the video is not playable"):** the browser's own
+  player with preload="metadata"; with "none", Chrome's player ignored clicks.
+  The poster is now the "What do I charge a head?" chapter card, so the
+  control bar covers nothing, and it names neither wedding.
