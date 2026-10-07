@@ -181,9 +181,9 @@ export const FILM: Record<SceneId, Scene> = {
         to: 14.5,
         layout: "screen",
         frames: ["events-payments-paid-desktop.png"],
-        // The reminder goes out on the due date itself (an app question,
-        // reported), so the caption claims no lead time for it.
-        caption: "Paid. Balance due ten days before, with a reminder that day.",
+        // The reminder goes out three days before the due day (owner ruling
+        // 2026-10-07), as the paid frame prints.
+        caption: "Paid. Balance due ten days out, reminder three days ahead.",
         ring: { x: 60, y: 52.5, width: 37.5, height: 15 },
       },
       {
@@ -292,9 +292,9 @@ export const FILM: Record<SceneId, Scene> = {
     ],
   },
   // The closeout opens the day after the event and says "likely" until the
-  // kitchen records what it used. Its dollar gap sets a plan that counts 2%
-  // misc against purchases that do not (an app defect, reported), so the
-  // payoff is the likely share of the price, against the target set at the
+  // kitchen records what it used. The walk records it and closes the review,
+  // so the share is final; plan and actual are both ingredients only since
+  // develop d3c7c9add. The payoff is that share against the target set at the
   // start.
   close: {
     chapter: null,
@@ -306,12 +306,12 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-closeout-desktop.png"],
         caption:
-          "Priced at {proposalFoodCostPct} before her yes. The day after: likely still {likelyShare}, under your {target} target.",
+          "Priced at {proposalFoodCostPct} before her yes. The day after: {dayAfterShare}, under your {target} target.",
         // The card whole, no push: it is cropped to its own edges, and any push
         // cut its heading into fragments beside the caption, which sits on
         // top, off the card's figures.
         captionAt: "top",
-        ring: { x: 72.5, y: 60, width: 22, height: 36 },
+        ring: { x: 72.5, y: 74, width: 22, height: 22 },
       },
       { from: 7, to: 12, layout: "end", frames: [] },
     ],

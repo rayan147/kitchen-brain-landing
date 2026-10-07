@@ -14,7 +14,7 @@ const manifest: Manifest = {
   offerTotal: "$21,043.00",
   plannedFoodCost: "$3,750.87",
   actualFoodCost: "$3,675.88",
-  likelyShare: "25.8%",
+  dayAfterShare: "25.8%",
   mainPortions: "138",
   vegetarianPortions: "12",
   staffPeople: "8",

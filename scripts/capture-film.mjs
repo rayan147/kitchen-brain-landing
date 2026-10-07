@@ -827,15 +827,19 @@ const STEPS = {
 		// Over or under, as the card says it; the film quotes whichever it is.
 		manifest.closeoutDirection = /Under plan by/.test(text) ? 'under' : 'over';
 		manifest.closeoutOver = figure('(?:Over|Under) plan by');
-		manifest.closeoutPct = figure('Food cost, share of the event price \\(likely\\)');
+		// "(likely)" only while some amounts still come from the plan; once the
+		// kitchen's use is recorded and the review closed, the share is final.
+		manifest.closeoutPct = figure('Food cost, share of the event price(?: \\(likely\\))?');
+		manifest.closeoutFinal = !/\(likely\)/.test(text);
 		// Down to the four figures. The card's last line ("You planned to buy ...
 		// in full packs") prints a pack total that disagrees with the Shop tab on
 		// the same order (an app defect, reported), so the clip ends above it.
-		// The card only: the subtitle above prints the date as "2027-06-19" where
-		// every other screen says "Sat, Jun 19" (an app defect, reported).
-		const box = await union([card], 24);
+		// From the title, with its Closed badge, down to the four figures. (At
+		// 9a15fe297 the subtitle printed an ISO date, so the clip started at the
+		// card; develop d3c7c9add prints "Sat, Jun 12, 2027".)
+		const box = await union([title, card], 24);
 		const figures = await docBox(card.getByText('Food cost, share of the event price', { exact: false }).locator('xpath=..'));
-		await shoot(page, 'closeout-desktop', { x: box.x, y: box.y, width: box.width, height: figures.b + 14 - box.y });
+		await shoot(page, 'closeout-desktop', { x: box.x, y: box.y - 40, width: box.width, height: figures.b + 14 - (box.y - 40) });
 		console.log('closeout', manifest.closeoutPlanned, manifest.closeoutActual, manifest.closeoutOver, manifest.closeoutPct);
 	},
 };

@@ -30,6 +30,10 @@ Same wedding, same walk; no new walk. Fixed by re-shooting read-only pages and c
 - Prep shows the dishes' portions instead of the first two bases, whose celery reads "44.2 each" (an app defect); caption "Bases first, then every dish: 138 short rib, 12 stuffed peppers."
 - Receiving, booked and closeout are cropped below their date lines: the event's date on receiving read as trucks on the wedding morning, Booked printed "17:00–22:00", the closeout "2027-06-19" (both reported).
 
+## Revision 2026-10-07, fourth walk (app fixed, then walked again)
+
+The defects the third review left on screen were fixed in the app (develop d3c7c9add) and the wedding walked again as Ellison & Park, Sat Jun 12 2027. The offer now reads "8 staff for 7 hours at $38.00 an hour"; the balance reminder goes out three days before the due day ("reminder three days ahead"); receiving reads "1 still to get"; prep counts whole items. Owner, on the ending: "likely" read as unsure. The kitchen's use is recorded and the review closed, so the Final Image states the share plainly: "Priced at 24.8% before her yes. The day after: 24.9%, under your 30% target."
+
 ## The 11 steps
 
 | # | Step | What you build | Done |

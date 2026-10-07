@@ -72,7 +72,7 @@ export function toFilmManifest(
     offerTotal: s.offerTotal,
     plannedFoodCost: s.closeoutPlanned,
     actualFoodCost: s.closeoutActual,
-    likelyShare: s.closeoutPct,
+    dayAfterShare: s.closeoutPct,
     mainPortions: s.mainPortions,
     vegetarianPortions: s.vegetarianPortions,
     staffPeople: s.staffPeople,

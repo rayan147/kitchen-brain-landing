@@ -21,8 +21,9 @@ export const ManifestSchema = z.object({
   // food would cost and what was paid, both off the closeout's own card.
   plannedFoodCost: z.string().min(1),
   actualFoodCost: z.string().min(1),
-  // The closeout's "Food cost, share of the event price (likely)".
-  likelyShare: z.string().min(1),
+  // The closeout's "Food cost, share of the event price", once the kitchen's
+  // use is recorded and the review closed, so it carries no "(likely)".
+  dayAfterShare: z.string().min(1),
   // Counts the captions name, off the pack list (plates per dish) and the
   // offer's staff line as entered (people and hours make its "56 × $38.00").
   mainPortions: z.string().regex(/^\d+$/),

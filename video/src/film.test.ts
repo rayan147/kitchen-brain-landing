@@ -25,7 +25,7 @@ const manifest: Manifest = {
   offerTotal: "$21,043.00",
   plannedFoodCost: "$3,750.87",
   actualFoodCost: "$3,675.88",
-  likelyShare: "25.8%",
+  dayAfterShare: "25.8%",
   mainPortions: "138",
   vegetarianPortions: "12",
   staffPeople: "8",
@@ -168,9 +168,11 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
   });
   // The card's dollar gap sets a plan that counts 2% misc against purchases
   // that do not (reported as an app defect), so the payoff is the share.
-  it("ends on the closeout's likely share of the price, against the target", () => {
+  // Superseded 2026-10-07 (owner): the closeout is now closed with the
+  // kitchen's use recorded, so the share is final, not "likely".
+  it("ends on the closeout's share of the price, against the target", () => {
     const close = captionsFor("close", manifest).join(" ");
-    expect(close).toContain("likely still 25.8%");
+    expect(close).toContain("The day after: 25.8%");
     expect(close).toContain("30%");
     expect(close).not.toContain("$3,675.88");
   });
@@ -331,10 +333,11 @@ describe("third review fixes (2026-10-07)", () => {
   it("says the agreement is signed, as its frame now shows", () => {
     expect(captionsFor("agreement", manifest)[0]).toMatch(/Signed online/);
   });
-  // Caterer: the reminder goes out on the due date, so no lead time is claimed.
-  it("claims no lead time for the balance reminder", () => {
-    expect(captionsFor("agreement", manifest).join(" ")).not.toMatch(
-      /reminder goes out .* before/,
+  // Owner ruling 2026-10-07: the reminder now goes out three days before the
+  // due day, and the paid frame says so; the caption names that lead.
+  it("names the reminder's three days of notice", () => {
+    expect(captionsFor("agreement", manifest).join(" ")).toMatch(
+      /reminder three days ahead/,
     );
   });
   // Caterer: the split behind 0.92 portions, on the frame that prints it.
@@ -372,5 +375,16 @@ describe("fourth pass (2026-10-07)", () => {
       (b) => b.frames[0] === "events-confirm-desktop.png",
     );
     expect(cameraStart("kitchen", i)).toBeLessThan(1);
+  });
+});
+
+describe("final closeout (2026-10-07)", () => {
+  // Owner: "likely" read as unsure. The walk records what the kitchen used
+  // and closes the review, so the card's share is final and the caption
+  // states it without a hedge.
+  it("states the day-after share without a hedge", () => {
+    const close = captionsFor("close", manifest).join(" ");
+    expect(close).not.toMatch(/likely/i);
+    expect(close).toContain("The day after: 25.8%");
   });
 });
