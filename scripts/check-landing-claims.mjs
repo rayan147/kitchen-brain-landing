@@ -1187,6 +1187,48 @@ requireText(heroSource, 'What you do about the gap is your call', 'hero caption 
 	}
 }
 
+// 2026-10-05 PROMO VIDEO. The film's captions are public copy: same ledger,
+// same house rules. film.ts is read as text so this check needs no build.
+{
+	const film = await read('video/src/film.ts');
+	// Every quoted string in film.ts; imports and scene ids ride along harmlessly.
+	const captions = [...film.matchAll(/'([^'\n]+)'|"([^"\n]+)"/g)]
+		.map((m) => m[1] ?? m[2])
+		.filter((t) => !/\.png$/.test(t));
+	const text = captions.join('\n');
+	if (/[—–]/.test(text)) failures.push('promo video: a caption carries an em or en dash');
+	if (/!/.test(text)) failures.push('promo video: a caption carries an exclamation point');
+	for (const banned of [/no typing/i, /nothing re-?keyed/i, /fully automatic/i, /seamless/i, /in one click/i, /invoice email/i, /closeout/i]) {
+		if (banned.test(text)) failures.push(`promo video: banned phrase ${banned}`);
+	}
+	// Develop books at "Book the event" (signed, paid, a day with room), and the
+	// order is confirmed later, when the kitchen plan is ready. Nothing before the
+	// booking scene may call the event booked, and Confirm order is never the booking.
+	const snap = 'A yes is not a booking. Signed and paid is.';
+	requireText(film, snap, 'promo video snap line');
+	// Sentences only: scene ids, file names and imports carry no spaces.
+	const sentences = captions.filter((t) => /\s/.test(t));
+	const beforeSnap = sentences.slice(0, Math.max(0, sentences.indexOf(snap))).join('\n');
+	if (/\bbook(ed|ing)?\b/i.test(beforeSnap)) failures.push('promo video: "book/booked/booking" before the booking scene');
+	if (/Confirm order is/.test(text)) failures.push('promo video: Confirm order is not the booking on develop; Book the event is');
+	// RC-63: the client side names only the two captured buttons.
+	for (const button of text.matchAll(/\b(Accept proposal|Ask for changes|Decline|Sign|Approve)\b/g)) {
+		if (!['Accept proposal', 'Ask for changes'].includes(button[1])) failures.push(`promo video: client button "${button[1]}" is not one of the two captured (RC-63)`);
+	}
+	if (/\$\d|\d+(\.\d+)?%/.test(text)) failures.push('promo video: a figure is typed into a caption; use a {token} from the manifest');
+	const manifest = JSON.parse(await read('video/public/frames/manifest.json'));
+	if (manifest.developCommit !== 'PENDING-CAPTURE' && !siteSource.includes(`trialDays: ${manifest.trialDays}`)) {
+		failures.push(`promo video: manifest trialDays ${manifest.trialDays} disagrees with src/lib/site.ts`);
+	}
+	// The closeout scene is in by owner ruling 2026-10-05 (planned against actual,
+	// shown as captured; RC-69 is updated with its frame). The card says "Likely,
+	// not final" until the kitchen records what it used, so a caption quoting its
+	// actual figure must say likely too.
+	for (const caption of captions.filter((t) => t.includes('{actualFoodCost}'))) {
+		if (!/\blikely\b/.test(caption)) failures.push(`promo video: the closeout's actual figure is quoted without "likely": ${caption}`);
+	}
+}
+
 if (failures.length > 0) {
 	console.error(`Landing claim check failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
