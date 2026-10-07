@@ -76,21 +76,21 @@ export const SECTION_META: Readonly<
 		slug: 'recipes-and-costing',
 		blurb: 'What a plate costs, from the case price up, with the arithmetic shown.',
 		wall: 'Somebody wants a number today, and the last time you costed this menu the case price was different.',
-		lede: 'A price arrives on a case. It has to travel through a yield, a sub-recipe, a portion size and a guest count before it becomes a number you can put in front of a customer. This is that path, and every step of it stays visible.'
+		lede: 'A price comes in on a case. Before it is a number you can put in front of a customer, it goes through a yield, a sub-recipe, a portion size and a guest count. Here is that path, with every step of it in view.'
 	},
 	'Getting prices in': {
 		// story: docs/stories/features-getting-prices-in-caterer.story.md
 		slug: 'getting-prices-in',
-		blurb: 'Upload invoices, price lists and spreadsheets. Review the details before saving.',
+		blurb: 'Upload invoices, price lists and spreadsheets, and look them over before anything saves.',
 		wall: 'The new price list arrived as a photograph of a printout. Keying it in is an evening you do not have. Not keying it in means quoting off last month.',
-		lede: 'Upload supplier paperwork, compare the suggested items and prices with the original, and correct anything unclear. Confirm the changes before they reach your ingredient costs.'
+		lede: 'Upload the supplier’s paperwork, hold what it suggests up against the original, and fix anything that looks off. Nothing reaches your ingredient costs until you confirm it.'
 	},
 	'The day itself': {
 		// story: docs/stories/features-the-day-itself-caterer.story.md
 		slug: 'the-day-itself',
 		blurb: 'The event, the shopping, the prep, the pack, and what actually came through the back door.',
 		wall: 'It is five in the morning, your hands are wet, and the sheet taped to the hotel pan has to be right. There is no second trip to the store.',
-		lede: 'Confirm the menu and guest count to create shopping, prep and pack lists. Check deliveries against the supplier orders you sent, and keep shortages visible for follow-up.'
+		lede: 'Confirm the menu and the head count and you get your shopping, prep and pack lists. When the truck comes, check it against the orders you sent. Anything short stays in view until you follow it up.'
 	},
 	'Compliance and labels': {
 		// story: docs/stories/features-compliance-and-labels-caterer.story.md
@@ -104,7 +104,7 @@ export const SECTION_META: Readonly<
 		slug: 'team-and-connections',
 		blurb: 'Who can change what, how a new kitchen gets started, and the connections being built.',
 		wall: 'You need the crew ready for Saturday, without spending the week learning new software.',
-		lede: 'Set up your kitchen, invite your crew and check what each role can do. Staff can open cost screens, including recipe costs and Analytics. Previously opened order pages can be read without signal; reconnect to make changes. Connections marked Coming are not included today.'
+		lede: 'Set up the kitchen, invite your crew, and see what each role can do. Staff can open cost screens, including recipe costs and Analytics. An order page you already opened still reads with no signal, but you need to reconnect to change anything. Connections marked Coming are not included today.'
 	}
 };
 

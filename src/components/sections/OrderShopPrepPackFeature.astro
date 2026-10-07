@@ -143,7 +143,7 @@ const faqItems = [
 
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
-			<div><h2 id="capabilities-heading">Everything in Orders, shop, prep & pack.</h2><p>Open the full shipped list when you want the detail.</p><p class="count"><strong>{ordersGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<div><h2 id="capabilities-heading">What is in Orders, shop, prep & pack.</h2><p>Open the full shipped list when you want the detail.</p><p class="count"><strong>{ordersGroup.items.length}</strong><span>shipped capabilities</span></p></div>
 			<details id="features-orders"><summary><span>See all {ordersGroup.items.length} shipped capabilities</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{ordersGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
 		</div>
 	</section>

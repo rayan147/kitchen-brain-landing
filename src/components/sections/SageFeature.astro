@@ -63,7 +63,7 @@ const videoChapters = [
 					<div><strong>Sage</strong><p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p></div>
 				</div>
 				<h1 id="sage-feature-heading" class="feature-display">Ask Sage about your kitchen.</h1>
-				<p class="hero-lede">Ask about your recipes, stock and costs, even during setup. Check the answer’s source records. An Owner or Manager can approve a shopping-list draft.</p>
+				<p class="hero-lede">Ask about your recipes, your stock and what things cost, even before setup is done. You can check the records behind every answer. If it drafts a shopping list, an Owner or Manager approves it.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href="#watch-sage" class="btn-quiet">Watch 20 seconds</a>
@@ -96,9 +96,9 @@ const videoChapters = [
 	</section>
 
 	<nav class="feature-chapters container-page" aria-label="On this page">
-		<a href="#watch-sage"><strong>Watch Sage work</strong><span>Follow setup, source, and approval in 20 seconds.</span></a>
-		<a href="#sage-jobs"><strong>Questions Sage can answer</strong><span>See the exact questions Sage can answer.</span></a>
-		<a href="#sage-guardrails"><strong>Sources and approval</strong><span>See what Sage reads, prepares, and leaves to you.</span></a>
+		<a href="#watch-sage"><strong>Watch Sage work</strong><span>Setup, the source and the sign-off, in 20 seconds.</span></a>
+		<a href="#sage-jobs"><strong>Questions Sage can answer</strong><span>The exact questions it can answer.</span></a>
+		<a href="#sage-guardrails"><strong>Sources and approval</strong><span>What it reads, what it drafts, and what stays your call.</span></a>
 	</nav>
 
 	<section id="watch-sage" class="video-section" aria-labelledby="video-heading">
@@ -106,8 +106,8 @@ const videoChapters = [
 			<div class="video-copy" data-reveal>
 				<h2 id="video-heading">Watch Sage at work.</h2>
 				<p>
-					A 20-second path from an unfinished setup stage to a checkable answer and a
-					human decision. These are captured CostCook states, not a concept animation.
+					Twenty seconds: a setup stage left half done, an answer you can check, and a person
+					making the call. Every screen is captured from CostCook, not drawn for the video.
 				</p>
 				<ol class="chapter-list">
 					{videoChapters.map((chapter) => (
@@ -149,8 +149,8 @@ const videoChapters = [
 			<div class="setup-copy" data-reveal>
 				<h2 id="setup-heading">Ask before the kitchen is fully set up.</h2>
 				<p>
-					Sage does not pretend a half-built catalog is finished. It starts from what you
-					have entered, tells you what is still missing, and keeps the route back to setup visible.
+					Sage does not pretend a half-built catalog is finished. It works from what you have
+					entered so far, tells you what is still missing, and keeps the way back to setup in view.
 				</p>
 				<dl>
 					<div><dt>Leave without losing your place</dt><dd>{sage.onboarding.entry}</dd></div>
@@ -165,7 +165,7 @@ const videoChapters = [
 		<div class="container-page questions-grid">
 			<div class="questions-intro" data-reveal>
 				<h2 id="questions-heading">Questions you can ask. A shopping list you can approve.</h2>
-				<p>Ask about the tasks below. Sage uses the relevant kitchen records and shows what it found.</p>
+				<p>Ask about any of these. Sage pulls the records that matter and shows you what it found.</p>
 			</div>
 			<ol class="question-list">
 				{sage.abilities.map((ability, index) => (
@@ -182,7 +182,7 @@ const videoChapters = [
 		<div class="container-page proof-grid">
 			<div class="proof-copy" data-reveal>
 				<h2 id="proof-heading">The number arrives with its record.</h2>
-				<p>In this sample kitchen, the question is simple: which ingredient prices went up recently?</p>
+				<p>In this sample kitchen, the question is plain: which ingredient prices went up lately?</p>
 				<dl class="answer-facts">
 					<div><dt>Price move</dt><dd>$24.00 → $33.00</dd></div>
 					<div><dt>Calculated change</dt><dd>37.5%</dd></div>
@@ -212,8 +212,8 @@ const videoChapters = [
 	<section id="sage-guardrails" class="guardrails" aria-labelledby="guardrails-heading">
 		<div class="container-page">
 			<div class="guardrails-heading" data-reveal>
-				<h2 id="guardrails-heading">Useful because the boundaries are visible.</h2>
-				<p>An answer stays separate from an action. A prepared draft stays separate from approval.</p>
+				<h2 id="guardrails-heading">You can see exactly where it stops.</h2>
+				<p>Answering a question changes nothing. A draft stays a draft until a manager or owner approves it.</p>
 			</div>
 			<div class="approval-path" data-reveal aria-label={`${spellCapital(sageReadToolCount, { compound: true })} tools read records, ${spell(sageDraftKinds.length)} kinds of draft can be prepared, and a person approves`}>
 				<div><span>22 tools</span><strong>Read records</strong></div>
@@ -234,7 +234,7 @@ const videoChapters = [
 		<div class="container-page faq-grid">
 			<div class="faq-intro" data-reveal>
 				<h2 id="faq-heading">Frequently asked questions</h2>
-				<p>The availability, setup and control questions worth settling before you ask the first one.</p>
+				<p>What owners want to know before they ask it anything.</p>
 			</div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
@@ -251,7 +251,7 @@ const videoChapters = [
 		<div class="container-page closing-grid" data-reveal>
 			<div>
 				<h2 id="closing-heading">Ask the next question. Keep the final say.</h2>
-				<p>Check the record underneath the answer, then return to the kitchen work that needs you.</p>
+				<p>Check the record behind the answer, then get back to the kitchen.</p>
 			</div>
 			<div class="closing-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>

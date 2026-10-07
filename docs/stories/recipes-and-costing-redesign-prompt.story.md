@@ -140,3 +140,21 @@
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - Edible is "what survives the trim": cooking loss never reaches cost on a prepped-weight line.
 - "Trim yield" and "At a $9.00 selling price".
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it, not AI. Copy only; the H1
+(pinned in verify-feature-parity), the FAQ, the capability list, the
+illustrative figures and every screenshot caption and alt text are unchanged.
+- **Slogan headings out:** "Three places. One answer due today." is "Right
+  now one dish lives in three places."; "The kitchen version is a decision,
+  not the last tab left open." is "You pick the version the kitchen cooks
+  from."; "Ready for the line. Ready to price." is "Start with the dish you
+  sell most." (both pins in check-recipes-costing-page.mjs moved with them,
+  pure wording).
+- **Consultant words out:** "reconciles" (now "adds up to"), "publish
+  deliberately", "check readiness", "maintained component", "open to
+  inspection", "cost contribution" in running text.
+- **Meaning held:** scaling never changes the saved recipe; the crew's
+  kitchen view is read-only; earlier published versions stay readable;
+  archive and restore never erase published history; a missing price is
+  named, never zero.

@@ -148,3 +148,25 @@
   "Every number links to the record it came from." and "In the app today"
   (it said "Eleven checks read" and "Available now", neither on any frame).
   Chapter 0:15 says the same instead of a shopping-list draft no frame shows.
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only on the page's own
+lines; src/lib/sage.ts (abilities, rules, onboarding lines, proof caption),
+the video chapters, FAQ, alt text and captions are unchanged.
+- **Hero lede:** "Check the answer’s source records. An Owner or Manager can
+  approve a shopping-list draft." is "You can check the records behind every
+  answer. If it drafts a shopping list, an Owner or Manager approves it."
+- **Video intro:** "A 20-second path from an unfinished setup stage to a
+  checkable answer and a human decision. These are captured CostCook states,
+  not a concept animation." is "Twenty seconds: a setup stage left half done,
+  an answer you can check, and a person making the call. Every screen is
+  captured from CostCook, not drawn for the video."
+- **Guardrails:** "Useful because the boundaries are visible." is "You can see
+  exactly where it stops."; "An answer stays separate from an action. A
+  prepared draft stays separate from approval." is "Answering a question
+  changes nothing. A draft stays a draft until a manager or owner approves
+  it."
+- **Kept (pinned, RC-49):** the H1, "Ask before the kitchen is fully set up.",
+  "Questions you can ask. A shopping list you can approve.", the snap line,
+  the closing heading, "In the app today", read-only over your records,
+  drafts only, approval by a manager or owner.

@@ -201,3 +201,21 @@ rest of it is worth believing.
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - "booking" became "request" twice ("That is how the request arrives", "Put Saturday’s request on the order."): a request is not booked until Confirm order.
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. This page was already in
+the voice (the H1 is the request as it arrives, "The catalog knew. Nothing
+ever asked it."), so the pass only breaks up two long chains. Copy only.
+- **Coverage:** "Check what has not yet been reviewed ... No news does not
+  mean good news here." is "Look at what nobody has reviewed yet ... Silence
+  here is not an all-clear." The pinned cap "is never counted as clear"
+  stays word for word.
+- **The recipe book:** one four-clause sentence (characteristics, catalog
+  filter, held-back count, allergen matrix) is now four sentences, same
+  facts.
+- **Meta description:** "the limits stated" is "the limits said plainly";
+  same claims.
+- **Kept on purpose:** the boundary sentence from dietary.ts, "A guard is a
+  reason to look at an ingredient, not a promise about a guest.", the three
+  outcomes, the five diets, the limits list, the illustrative-example
+  caption, FAQ answers.

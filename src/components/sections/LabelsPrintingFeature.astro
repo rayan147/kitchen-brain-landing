@@ -84,7 +84,7 @@ const faqItems = [
 						{coming ? 'Kitchen date labels are coming. Preview how they will work.' : 'Kitchen date labels, printed from Prep and Pack.'}
 					</h1>
 					<p class="mt-5 max-w-[58ch] text-lede text-ink">
-						Choose the storage condition, use-by date and number of containers before printing. The label record keeps the wording for later reprints.{coming ? ' This preview shows a feature you cannot use in the trial today.' : ' Printing goes through your browser, onto the label stock you set once in Settings.'}
+						Pick how it is stored, the use-by date and how many containers, then print. The wording is saved, so a reprint says the same thing.{coming ? ' This preview shows a feature you cannot use in the trial today.' : ' Printing goes through your browser, onto the label stock you set once in Settings.'}
 					</p>
 					{
 						coming && (
@@ -209,15 +209,15 @@ const faqItems = [
 					<p class="eyebrow">The record</p>
 					<h2 id="record-heading" class="mt-4 text-h2 font-semibold">A soaked sticker costs a tap.</h2>
 					<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
-						Printing records what the sticker said. The document is frozen without a stock size
-						or a printer in it, so the same words go on a sheet today and a roll next month, and
-						a reprint six weeks on is the label that went on the container, not a recomposition
-						from a recipe that has moved.
+						Printing saves what the sticker said. The saved label has no stock size or printer
+						baked in, so the same words go on a sheet today and a roll next month. A reprint six
+						weeks on is the label that went on the container, not a fresh one built from a recipe
+						that has changed since.
 					</p>
 					<p class="mt-5 max-w-[60ch] text-ink-soft">
-						Where a printed date came from is kept with the record, a recipe’s standing rule or a
-						number typed at the bench, so an inspector or a caterer can tell the two apart later.
-						It does not print.
+						The record also keeps where the date came from: the recipe’s standing rule, or a
+						number somebody typed at the bench. An inspector, or you, can tell which one later.
+						That part does not print.
 					</p>
 				</div>
 			</div>
@@ -230,8 +230,8 @@ const faqItems = [
 				<p class="eyebrow">What it prints on</p>
 				<h2 id="stock-heading" class="mt-4 text-h2 font-semibold">Chosen once in Settings, so nobody is asked at 5 a.m.</h2>
 				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
-					Sheet, continuous roll and die-cut roll print the same label content. Only the
-					geometry changes, and it is measured in millimeters, not tied to a brand.
+					Sheet, continuous roll or die-cut roll, the label says the same thing. Only the size
+					and shape change, measured in millimeters and not tied to any brand.
 				</p>
 				<ul role="list" class="mt-8 border-t border-ticket-rule">
 					{
@@ -302,7 +302,7 @@ const faqItems = [
 			<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
 				{coming
 					? 'Recipe costing, event planning, prep, purchasing, inventory and nutrition are available today. Start the trial for that work; labels remain excluded until the word above changes.'
-					: 'Kitchen labels come with recipe costing, event planning, prep, purchasing, inventory and nutrition in the one plan. Start the trial and print the first label from your own prep list.'}
+					: 'Labels are in the same plan as the rest of it. Start the trial and print your first label off your own prep list.'}
 			</p>
 			<div class="mt-8 flex flex-wrap items-center gap-4">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
