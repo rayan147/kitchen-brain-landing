@@ -21,8 +21,8 @@ const required = [
 	'Walk back into prep with one record.',
 	'Book 15 minutes',
 	'days free, then',
-	'$45.00',
-	'$47.00',
+	'$42.10',
+	'$46.80',
 	'PO sent',
 	'purchasing-sent-received-truth',
 	'docs/stories/purchasing-and-receiving.story.md'

@@ -169,3 +169,12 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 - The orders and inventory stops buy with the trim: 98.9 lb needed, 80 lb on hand, 18.9 lb (one 40 lb case) to buy; the delivery is 5 lb short.
 - Nutrition is a 6 oz cooked portion: 498 kcal, 44.6 g protein. The restriction stop checks the menu's own dishes.
 - Menu food cost, price and quote are unchanged: $1,491.38, $28.00, $5,040, 29.6% (four of seven dishes shown).
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- One global food-cost target: 30%, as the app's captures judge it. Room to target 0.4 pts (was a 31% target on this menu only).
+- Lemons need 110, not 90: 12 usable at 82% is 14.6 bought a batch, × 7.5 batches.
+- "Trim yield", the app's field name; "At a $9.00 selling price" replaces "the plate's share".
+- The competing chicken offer is Coastal Meats, so Northline stays the guides' supplier.
+- The bride is the tree-nut allergy (as on the guards guide); the gluten-free conflict is two guests.
+- The month scene reviews July, the month that has closed by Aug 28, with the app's "Should have cost" / "Did cost" labels.

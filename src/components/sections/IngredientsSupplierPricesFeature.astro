@@ -13,12 +13,14 @@ if (!ingredientGroup) throw new Error('Missing public feature group: ingredients
 const packFacts = [
 	{ label: 'Pack', left: '20 lb case', right: '25 lb case' },
 	{ label: 'Case price', left: '$46.80', right: '$61.50' },
-	{ label: 'Usable yield', left: '91%', right: '95%' },
+	{ label: 'Trim yield', left: '91%', right: '95%' },
 	{ label: 'Usable cost', left: '$2.57 / lb', right: '$2.59 / lb' }
 ] as const;
 
 const affectedRecipes = [
-	{ name: 'Herb roast chicken', use: '4 lb', change: '+$1.03' },
+	// Not the tour's herb roast chicken (Harbor, 40 lb case): this is the
+	// guides' kitchen, buying thighs from Northline (chef review 2026-10-07).
+	{ name: 'Chicken pot pie', use: '4 lb', change: '+$1.03' },
 	{ name: 'Grain bowl', use: '1.5 lb', change: '+$0.39' },
 	{ name: 'Canapé tray', use: '1 lb', change: '+$0.26' }
 ] as const;
@@ -34,7 +36,7 @@ const faqItems = [
 	{
 		question: 'How does CostCook compare different pack sizes?',
 		answer:
-			'Each offer keeps its pack quantity, purchase unit, price, and usable yield. CostCook converts those facts to the same usable-unit cost so a case and a bag can be compared on equal terms.'
+			'Each offer keeps its pack quantity, purchase unit, price, and trim yield. CostCook converts those facts to the same usable-unit cost so a case and a bag can be compared on equal terms.'
 	},
 	{
 		question: 'Where did the current price come from?',
@@ -70,7 +72,7 @@ const faqItems = [
 					<span>Ingredients and supplier prices</span>
 				</nav>
 				<h1 id="ingredients-prices-heading" class="feature-display">Compare supplier prices by what you can use.</h1>
-				<p class="hero-lede">Enter the case price, pack size and usable yield for one ingredient. Compare suppliers per usable pound, kilo or item, and see which recipes a price change affects.</p>
+				<p class="hero-lede">Enter the case price, pack size and trim yield for one ingredient. Compare suppliers per usable pound, kilo or item, and see which recipes a price change affects.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -151,7 +153,7 @@ const faqItems = [
 			<div class="section-intro" data-reveal>
 				<h2 id="ingredient-records-heading">One ingredient record, wherever the food is used.</h2>
 				<p>
-					Start from scratch, a USDA reference, or a purchase. Keep the buying unit, usable yield,
+					Start from scratch, a USDA reference, or a purchase. Keep the buying unit, trim yield,
 					conversions, suppliers, allergens, storage area, and par level together.
 				</p>
 			</div>
@@ -162,7 +164,7 @@ const faqItems = [
 					<div class="workspace-title"><h3>Chicken thigh</h3><p>Protein · purchased by weight</p></div>
 					<dl class="fact-grid">
 						<div><dt>Purchase unit</dt><dd>20 lb case</dd></div>
-						<div><dt>Usable yield</dt><dd>91%</dd></div>
+						<div><dt>Trim yield</dt><dd>91%</dd></div>
 						<div><dt>Purchased cost</dt><dd>$2.34 / lb</dd></div>
 						<div><dt>Usable cost</dt><dd>$2.57 / lb</dd></div>
 					</dl>
@@ -209,9 +211,9 @@ const faqItems = [
 				<div class="history" data-reveal>
 					<h3>The source stays with the number.</h3>
 					<ol role="list">
-						<li><time>Aug 28</time><span><strong>$46.80</strong> Northline invoice</span></li>
+						<li><time>Aug 28</time><span><strong>$46.80</strong> Northline delivery, PO-1048</span></li>
 						<li><time>Aug 14</time><span><strong>$42.10</strong> Northline purchase</span></li>
-						<li><time>Jul 31</time><span><strong>$61.50</strong> Market price list</span></li>
+						<li><time>Jul 31</time><span><strong>$61.50</strong> Market Supply list, 25 lb case</span></li>
 					</ol>
 				</div>
 				<div class="impact" data-reveal>
@@ -232,7 +234,7 @@ const faqItems = [
 			<div data-reveal>
 				<h2 id="evidence-heading">The supplier price keeps walking.</h2>
 				<p>
-					Once the ingredient is inside a recipe, purchased amount, usable yield, quantity to buy,
+					Once the ingredient is inside a recipe, purchased amount, trim yield, quantity to buy,
 					prep state, and cost contribution remain on the same line.
 				</p>
 				<ul role="list">

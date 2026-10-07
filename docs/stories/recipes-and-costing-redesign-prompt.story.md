@@ -135,3 +135,8 @@
 
 ### Revision 2026-10-07: chef audit, numbers and US units
 - Illustrative frames rewritten in US units (lb, qt, gal, Aug 28) with arithmetic that reconciles on the page: see the commit "fix(features): receiving, order, ingredients and recipes add up".
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- Edible is "what survives the trim": cooking loss never reaches cost on a prepped-weight line.
+- "Trim yield" and "At a $9.00 selling price".

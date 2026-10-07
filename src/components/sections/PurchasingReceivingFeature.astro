@@ -7,7 +7,7 @@ const purchasingGroup = featureGroups.find((group) => group.id === 'purchasing')
 if (!purchasingGroup) throw new Error('Missing public feature group: purchasing');
 
 const deliveryLines = [
-	{ item: 'Chicken thigh · 20 lb case', ordered: '10', received: '9', orderedPrice: '$45.00', receivedPrice: '$47.00', state: 'Short 1', tone: 'short' },
+	{ item: 'Chicken thigh · 20 lb case', ordered: '10', received: '9', orderedPrice: '$42.10', receivedPrice: '$46.80', state: 'Short 1', tone: 'short' },
 	{ item: 'Baby spinach · 4 lb case', ordered: '4', received: '4', orderedPrice: '$18.00', receivedPrice: '$18.00', state: 'Received', tone: 'received' },
 	{ item: 'Olive oil · 1 gal tin', ordered: '2', received: '2', orderedPrice: '$72.00', receivedPrice: '$75.00', state: 'Substituted', tone: 'review' }
 ] as const;
@@ -128,7 +128,7 @@ const faqItems = [
 	<section class="posting-proof" aria-labelledby="posting-heading">
 		<div class="container-page posting-grid">
 			<div><h2 id="posting-heading">The actual delivery becomes the buying fact.</h2><p>Save the reviewed delivery once. Its quantities and prices update purchases and ingredient prices together. Unresolved shortages stay on the follow-up list.</p></div>
-			<div class="posting-record"><span>After posting · illustrative</span><div><small>Purchases recorded</small><strong>3 lines · $645.00</strong></div><div><small>Current pack price</small><strong>$47.00 / case</strong></div><div><small>Rebuy list</small><strong>1 case open</strong></div></div>
+			<div class="posting-record"><span>After posting · illustrative</span><div><small>Purchases recorded</small><strong>3 lines · $643.20</strong></div><div><small>Current pack price</small><strong>$46.80 / case</strong></div><div><small>Rebuy list</small><strong>1 case open</strong></div></div>
 		</div>
 	</section>
 

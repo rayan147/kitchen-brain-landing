@@ -139,3 +139,7 @@ All eleven steps remain complete. The send scene now follows the shipped lifecyc
 
 ### Revision 2026-10-07: chef audit, numbers and US units
 - Illustrative frames rewritten in US units (lb, qt, gal, Aug 28) with arithmetic that reconciles on the page: see the commit "fix(features): receiving, order, ingredients and recipes add up".
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- One Northline chicken price on every guide: ordered at $42.10 (the Aug 14 price), received at $46.80. PO-1048 is $643.20 (9 × $46.80 + 4 × $18 + 2 × $75).

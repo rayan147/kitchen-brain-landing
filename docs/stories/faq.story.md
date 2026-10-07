@@ -163,3 +163,7 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - The forty-guests answer now covers a confirmed order: reopen it as a draft, change the count, confirm again, until a purchase order has gone out or receiving has started. The online-ordering answer drops "Card payment works for these online orders only", which contradicted event card payment.
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- Guest-change answer: reopen works until you create a purchase order or start receiving, and it refreshes quantities and prices (the app's rule).

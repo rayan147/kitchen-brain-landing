@@ -133,3 +133,8 @@
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - One em-dash pair became commas ("explain, or limit, other parts").
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- The app's labels: "Should have cost (recipe estimate)", "Did cost (what you paid)", "Unaccounted gap" for what is left after logged waste.
+- PO-1048 $643.20; chicken $42.10 → $46.80, +11.2%. The tour's month is July, so the two closes are different months.

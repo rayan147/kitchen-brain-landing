@@ -8,10 +8,13 @@ if (!inventoryGroup) throw new Error('Missing public feature group: inventory');
 
 const movements = [
 	// US units (chef audit 2026-10-07). 52 + 20 − 17 = 55 lb; one 20 lb Northline
-	// case at $46.80 is $2.34 a lb, the ingredients guide's price.
-	{ date: 'Aug 28 · 7:10 AM', label: 'Physical count', amount: '52 lb', kind: 'baseline' },
-	{ date: 'Aug 28 · 11:40 AM', label: 'Northline receiving', amount: '+20 lb', kind: 'in' },
-	{ date: 'Aug 29 · 5:20 AM', label: 'Packed for two orders', amount: '−17 lb', kind: 'out' }
+	// case at $46.80 is $2.34 a lb, the ingredients guide's price. The count is
+	// Aug 31, after PO-1048 moved the price on Aug 28, so $2.34 is the cost
+	// frozen at count; the +20 lb is the case PO-1048 came up short (chef
+	// review 2026-10-07).
+	{ date: 'Aug 31 · 7:10 AM', label: 'Physical count', amount: '52 lb', kind: 'baseline' },
+	{ date: 'Aug 31 · 11:40 AM', label: 'Northline rebuy received', amount: '+20 lb', kind: 'in' },
+	{ date: 'Sep 1 · 5:20 AM', label: 'Packed for two orders', amount: '−17 lb', kind: 'out' }
 ] as const;
 
 const trustStates = [
@@ -82,7 +85,7 @@ const faqItems = [
 					<div><small>Packed</small><strong>17</strong><span>lb</span></div><b aria-hidden="true">=</b>
 					<div class="result"><small>On hand</small><strong>55</strong><span>lb</span></div>
 				</div>
-				<div class="ticket-foot"><span>Baseline: Aug 28 · 7:10 AM</span><span>3 dated movements</span></div>
+				<div class="ticket-foot"><span>Baseline: Aug 31 · 7:10 AM</span><span>3 dated movements</span></div>
 				<figcaption>Illustrative values. The state and every movement stay attached to the result.</figcaption>
 			</figure>
 		</div>
@@ -111,7 +114,7 @@ const faqItems = [
 
 			<figure class="movement-workspace">
 				<div class="movement-main">
-					<div class="panel-bar"><span>Chicken thigh · movement history</span><span>As of Aug 29</span></div>
+					<div class="panel-bar"><span>Chicken thigh · movement history</span><span>As of Sep 1</span></div>
 					<ol role="list">
 						{movements.map((movement) => (
 							<li class={movement.kind}><time>{movement.date}</time><span><strong>{movement.label}</strong><small>{movement.kind === 'baseline' ? 'Starting physical count' : 'Change since count'}</small></span><b>{movement.amount}</b></li>
@@ -121,7 +124,7 @@ const faqItems = [
 				</div>
 				<div class="movement-side">
 					<div><span>Count status</span><strong>Fresh</strong><small>Based on a recent physical count</small></div>
-					<div><span>Shelf value</span><strong>$128.70</strong><small>Illustrative value as of Aug 29</small></div>
+					<div><span>Shelf value</span><strong>$128.70</strong><small>Illustrative value as of Sep 1</small></div>
 					<div><span>Unit cost at count</span><strong>$2.34 / lb</strong><small>Frozen at count time</small></div>
 				</div>
 				<figcaption>Illustrative movement history built only from shipped inventory behavior.</figcaption>

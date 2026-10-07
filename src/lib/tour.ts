@@ -107,7 +107,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Recipes & food costing',
 		appArea: 'Recipes / Herb roast chicken',
 		title: 'Keep the working recipe and its cost on one record.',
-		intro: 'Open the dish the kitchen will cook and follow its price from purchased weight through usable yield to one portion.',
+		intro: 'Open the dish the kitchen will cook and follow its price from purchased weight through trim yield to one portion.',
 		callout: 'The same 12 lb of chicken has to survive the recipe, the purchase order, and the back door.',
 		featureHref: featureMenuHref('math'),
 		metrics: [
@@ -116,7 +116,7 @@ export const tourStops: readonly TourStop[] = [
 			{ label: 'Food cost', value: '30.0%', tone: 'good' },
 			{ label: 'Batch yield', value: '24 portions' }
 		],
-		columns: ['Ingredient', 'Used', 'Usable yield', 'Cost'],
+		columns: ['Ingredient', 'Used', 'Trim yield', 'Cost'],
 		rows: [
 			['Chicken thigh', `${tourRecipeCostingProof.chickenUsedLb} lb`, `${tourRecipeCostingProof.chickenUsableYield * 100}%`, formatCurrency(tourRecipeCostingProof.chickenLineCost)],
 			['Herb marinade', '2.4 lb', '100%', '$8.40'],
@@ -134,7 +134,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Plate share', value: formatCurrency(tourRecipeCostingProof.chickenPlateShare) },
 				{ label: 'Missing prices', value: 'None', tone: 'good' }
 			],
-			footnote: '$64.69 ÷ 24 portions = $2.70. At a sample price of $9.00 for the plate’s share, food cost is 30.0%. Food only; labor and overhead are extra. This tour table is a preview.'
+			footnote: '$64.69 ÷ 24 portions = $2.70. At a $9.00 selling price, food cost is 30.0%. Food only; labor and overhead are extra. This tour table is a preview.'
 		}
 	},
 	{
@@ -165,10 +165,10 @@ export const tourStops: readonly TourStop[] = [
 			lines: [
 				{ label: 'Menu food cost', value: '$1,491.38' },
 				{ label: 'Revenue after food cost', value: '$3,548.62', tone: 'good' },
-				{ label: 'Target food cost', value: '31.0%' },
-				{ label: 'Room to target', value: '1.4 pts', tone: 'good' }
+				{ label: 'Target food cost', value: '30.0%' },
+				{ label: 'Room to target', value: '0.4 pts', tone: 'good' }
 			],
-			footnote: 'Four of the menu’s seven dishes are shown; the food cost covers all seven. $1,491.38 food cost ÷ $5,040 revenue = 29.6%. The 31% target leaves 1.4 percentage points. Revenue after food cost still needs to cover labor, overhead and profit. Confirming preserves this quote.'
+			footnote: 'Four of the menu’s seven dishes are shown; the food cost covers all seven. $1,491.38 food cost ÷ $5,040 revenue = 29.6%. The kitchen’s 30% target leaves 0.4 percentage points. Revenue after food cost still needs to cover labor, overhead and profit. Confirming preserves this quote.'
 		}
 	},
 	{
@@ -189,7 +189,7 @@ export const tourStops: readonly TourStop[] = [
 		columns: ['Supplier offer', 'Pack', 'Effective', 'Usable cost'],
 		rows: [
 			['Harbor Foods', `40 lb · ${formatCurrency(tourRecipeCostingProof.chickenPackPrice)}`, 'Aug 27', `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerLb)} / lb`],
-			['Northline Produce', '40 lb · $143.20', 'Aug 25', '$3.93 / lb'],
+			['Coastal Meats', '40 lb · $143.20', 'Aug 25', '$3.93 / lb'],
 			['Metro Wholesale', '20 lb · $73.80', 'Aug 20', '$4.05 / lb']
 		],
 		aside: {
@@ -338,9 +338,10 @@ export const tourStops: readonly TourStop[] = [
 		rows: [
 			// The menu's own dishes (chef audit 2026-10-07: these were dishes the
 			// garden wedding does not serve).
-			['Rosemary focaccia', 'bride, Gluten-free', 'Conflict', 'Bread flour (contains wheat)'],
+			['Rosemary focaccia', 'Gluten-free · 2 guests', 'Conflict', 'Bread flour (contains wheat)'],
 			['Herb roast chicken', 'Halal', 'Check', 'Meat depends on the source'],
-			['Charred market vegetables', 'Tree nuts', 'Clear', 'Every ingredient reviewed'],
+			// The bride is the tree-nut allergy, as on the guards guide.
+			['Charred market vegetables', 'bride, Tree nuts', 'Clear', 'Every ingredient reviewed'],
 			['Citrus salad', 'Vegan', 'Check', '2 ingredients not reviewed']
 		],
 		aside: {
@@ -520,7 +521,8 @@ export const tourStops: readonly TourStop[] = [
 		columns: ['Ingredient', 'On hand', 'Next need', 'Count trust'],
 		rows: [
 			['Chicken thigh, boneless', '80 lb', '98.9 lb', 'Fresh · 6:12 AM'],
-			['Lemon', '164 each', '90 each', 'Fresh · 6:18 AM'],
+			// 12 usable lemons a batch at 82% is 14.6 bought; × 7.5 batches ≈ 110.
+			['Lemon', '164 each', '110 each', 'Fresh · 6:18 AM'],
 			['Mixed herbs', '7 lb', '9 lb', 'Stale · Aug 22'],
 			['Rosemary focaccia', '—', '360 pieces', 'Never counted']
 		],
@@ -540,21 +542,21 @@ export const tourStops: readonly TourStop[] = [
 		id: 'purchases-month-cost',
 		featureId: 'ledger',
 		label: 'Purchases & month cost',
-		appArea: 'Purchases / August cost review',
+		appArea: 'Purchases / July cost review',
 		title: 'Name the month’s gap without guessing what caused it.',
-		intro: 'Compare recipe-calculated food use for August with recorded purchases. Deduct recorded waste to see the amount still unexplained.',
+		intro: 'Compare what July’s food should have cost with what it did cost. Deduct recorded waste to see the amount still unexplained.',
 		callout: 'The gap is evidence to review, not a waste number to blame on the crew.',
 		featureHref: featureMenuHref('ledger'),
 		metrics: [
-			{ label: 'Planned food use', value: '$8,420.00' },
-			{ label: 'Actual spend', value: '$8,891.40' },
+			{ label: 'Should have cost', value: '$8,420.00' },
+			{ label: 'Did cost', value: '$8,891.40' },
 			{ label: 'Difference to explain', value: '$471.40', tone: 'attention' },
 			{ label: 'Inventory trust', value: 'Counted', tone: 'good' }
 		],
 		columns: ['Cost evidence', 'Amount', 'Source', 'Review'],
 		rows: [
-			['Attributed purchases', '$8,891.40', 'Purchase ledger', 'Complete'],
-			['Theoretical usage', '$8,420.00', 'Confirmed orders', 'Complete'],
+			['Did cost (what you paid)', '$8,891.40', 'Purchase ledger', 'Complete'],
+			['Should have cost (recipe estimate)', '$8,420.00', 'Confirmed orders', 'Complete'],
 			['Logged waste', '$186.50', '7 signed entries', 'Explained'],
 			['Still unaccounted', '$284.90', 'Month verdict', 'Review']
 		],
@@ -567,7 +569,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Mixed herbs', value: '+6.4%', tone: 'attention' },
 				{ label: 'Corrections', value: '2 signed' }
 			],
-			footnote: '$8,891.40 spent − $8,420 planned = $471.40. Subtract $186.50 recorded waste: $284.90 still needs checking. Price changes compare current and previous prices; three of the month’s ingredients are shown.'
+			footnote: '$8,891.40 did cost − $8,420 should have cost = $471.40. Subtract $186.50 recorded waste: $284.90 still needs checking. Price changes compare current and previous prices; three of the month’s ingredients are shown.'
 		}
 	},
 	{

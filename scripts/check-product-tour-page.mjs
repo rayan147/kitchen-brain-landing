@@ -27,7 +27,7 @@ const required = [
 	'data-tour-select',
 	'data-tour-prev',
 	'data-tour-next',
-	'data-label="Usable yield"',
+	'data-label="Trim yield"',
 	'data-label="Cost"',
 	'Follow one event from quote to pack list.',
 	'Garden wedding supper',

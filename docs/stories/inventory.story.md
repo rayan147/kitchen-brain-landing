@@ -140,3 +140,7 @@
 
 ### Revision 2026-10-07: US units
 - Illustrative quantities in lb, oz and inches (metric kept in brackets where the app or the stock is metric); dates read "Aug 28".
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- The count moves to Aug 31, after PO-1048 moved the price, so $2.34 frozen at count is true; the +20 lb is the case PO-1048 came up short.

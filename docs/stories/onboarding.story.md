@@ -314,3 +314,7 @@ Content: `src/components/sections/OnboardingPage.astro` and its shared data/resp
 
 ### Revision 2026-10-07: US units
 - Illustrative quantities in lb, oz and inches (metric kept in brackets where the app or the stock is metric); dates read "Aug 28".
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- Ounces lead: 6.3 oz (180 g).

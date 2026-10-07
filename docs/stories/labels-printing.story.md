@@ -125,3 +125,7 @@ Wet hands, the walk-in door held with a foot, a phone propped on the lowboy. Ref
 
 ### Revision 2026-10-07: US units
 - Illustrative quantities in lb, oz and inches (metric kept in brackets where the app or the stock is metric); dates read "Aug 28".
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- Custom stock width reads "about ¾ to 8½ in (20 to 220 mm)"; millimeters spelled the US way.

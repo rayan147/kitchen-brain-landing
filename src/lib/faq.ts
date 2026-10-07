@@ -251,7 +251,7 @@ export const faq: readonly FaqGroup[] = [
 					// After Confirm order (chef audit 2026-10-07: the answer only covered
 					// a draft). kitchen-brain: "Reopen as draft", refused once a purchase
 					// order has gone out or receiving has started.
-					'If you already pressed Confirm order, reopen it as a draft first, change the count, and confirm again. That works until a purchase order has gone out or receiving has started.'
+					'If you already pressed Confirm order, reopen it as a draft first, change the count, and confirm again. That works until you create a purchase order for it or start receiving. Reopening refreshes quantities and prices from the menu as it is today.'
 				],
 				claims: ['RC-03', 'RC-22', 'RC-24', 'RC-25']
 			},
