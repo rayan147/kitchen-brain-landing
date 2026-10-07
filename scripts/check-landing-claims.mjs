@@ -1069,7 +1069,7 @@ for (const [pattern, label] of [
 	if (pattern.test(publicCopy)) failures.push(`public copy contains ${label}`);
 }
 requireText(heroSource, '{launchPlan.unit}, {launchPlan.crew}', 'hero price line names the unit and the crew');
-requireText(siteSource, "crew: 'unlimited crew during launch'", 'billing unit answers the per-user question');
+requireText(siteSource, "crew: 'unlimited crew'", 'billing unit answers the per-user question');
 // 3. The cost of trying it, said before the close's button. A spreadsheet
 //    person knows "one real order" means every dish and price on it; silence
 //    there reads as evasion. Pinned by hook, not by sentence, so the words can
@@ -1079,7 +1079,9 @@ requireText(startHereSource, 'about fifteen minutes', 'close states the owner-co
 requireText(startHereSource, 'type any line it could not', 'close keeps the typed-line boundary (RC-58)');
 // 4. The panel is a check, not an instruction, and the number is food only.
 //    Both used to live only in pixels and alt text.
-requireText(heroSource, 'packaging, rentals, staff and anything you cook over the guarantee', 'hero caption says the number is food only');
+// UPDATED 2026-10-07 (chef review, RC-74): the caption still names the panel as
+// the food cost, and now says where staff, rentals, delivery and a fee go.
+requireText(heroSource, 'This is the food cost; staff, rentals, delivery and a service fee go on the same proposal as their own lines.', 'hero caption says the number is the food cost and where the rest goes (RC-74)');
 // 5. One wedding, one set of numbers. The tour, the menus guide and the blog
 //    keep the film's 180-guest wedding ($26.93 / 39.6% / $89.78); the retired
 //    Aug 29 figures may not come back anywhere. The homepage since 2026-10-06

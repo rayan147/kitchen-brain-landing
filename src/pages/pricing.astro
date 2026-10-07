@@ -24,7 +24,7 @@ const included = [
 	'Analytics',
 	...(labelsAvailability.isComing ? [] : ['Kitchen labels']),
 	...(orderingAvailability.isComing ? [] : ['Online ordering']),
-	'Unlimited teammates during launch'
+	'Unlimited teammates'
 ];
 
 // The in-development cards are read from features.ts, not typed here. They
@@ -38,14 +38,14 @@ const included = [
 
 <Base
 	title="CostCook pricing for catering kitchens"
-	description="One CostCook launch plan per kitchen, with unlimited teammates during launch."
+	description="One CostCook launch plan per kitchen, with unlimited teammates."
 	path="/pricing"
 >
 	<section class="container-page py-section" aria-labelledby="pricing-title">
 		<div class="max-w-3xl">
 			<p class="eyebrow">Per kitchen, not per seat</p>
 			<h1 id="pricing-title" class="mt-4 text-display font-semibold">One kitchen. One launch plan.</h1>
-			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">The subscription is per kitchen, not per teammate, and the crew is unlimited during launch. The verified owner manages billing and can invite the team.</p>
+			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">The subscription is per kitchen, not per teammate, and the crew is unlimited. The verified owner manages billing and can invite the team.</p>
 		</div>
 
 		<div id="launch-terms" class="mt-10 grid gap-8 border-y border-ticket-rule py-8 lg:grid-cols-[7fr_5fr]">

@@ -131,3 +131,14 @@ Priya's yes comes in, then the deposit.
 - **One wedding date:** the chef caught the proposal frame (respond by Oct 12
   for an Oct 10 wedding) disagreeing with the payment and Sage frames (Dec 28).
   The proposal is re-shot on a Dec 28 wedding (see the manifest).
+
+### Revision 2026-10-07 (2): the chef's copy notes, owner rulings
+- **The card says why:** "The card starts the subscription, and you pay $0
+  until day 16" replaces "Card up front", the funnel line the chef ran from.
+- **Unlimited crew:** "during launch" dropped by owner ruling (RC-34).
+- **One number:** the costs row's pain line quotes the wedding's $95 a head,
+  not a stray $38.
+- **Not food only:** the hero caption and the proposal step say staff,
+  rentals, delivery and a service fee go on the same proposal (RC-74).
+- **Sage as a record lookup, not "AI":** "Ask what the wedding still owes. It
+  shows you the record." The hand-off reads "Ask about a job".

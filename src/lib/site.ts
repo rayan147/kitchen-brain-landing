@@ -117,15 +117,16 @@ export const contactCta = {
  * hardest. scripts/check-landing-claims.mjs now fails on the old phrasing.
  * A reader with one kitchen and a sous asks whether the sous is another $49.
  * `crew` answers that on the same line (FAQ "Do I pay per user?", pricing
- * page: teammates unlimited during launch).
+ * page: teammates unlimited). "During launch" was dropped by owner ruling
+ * 2026-10-07: unlimited crew is the standing offer (RC-34).
  */
 export const launchPlan = {
 	displayPrice: import.meta.env.PUBLIC_LAUNCH_PRICE_DISPLAY?.trim() || '$49/month',
 	trialDays: 15,
 	unit: 'per kitchen',
-	crew: 'unlimited crew during launch',
-	crewTerms: 'Teammates are unlimited during launch. Post-launch teammate limits have not been announced.',
-	billingNote: 'per kitchen, unlimited crew during launch, after a 15-day free trial.'
+	crew: 'unlimited crew',
+	crewTerms: 'Teammates are unlimited.',
+	billingNote: 'per kitchen, unlimited crew, after a 15-day free trial.'
 } as const;
 
 const productTourHref = '/tour/main';

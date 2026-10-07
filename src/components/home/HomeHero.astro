@@ -27,11 +27,11 @@ import { heroShot } from '../../lib/home';
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary" data-hero-cta>{cta.label}</a>
 				<a href={demoCta.href} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
-			<p class="home-small mt-3"><strong>{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} {launchPlan.unit}, {launchPlan.crew}. Card up front, charged $0 today.</p>
+			<p class="home-small mt-3"><strong>{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} {launchPlan.unit}, {launchPlan.crew}. The card starts the subscription; you pay $0 until day {launchPlan.trialDays + 1}.</p>
 		</div>
 		<figure class="hero-media" data-hero-media>
 			<img src={heroShot.src} alt={heroShot.alt} width={heroShot.width} height={heroShot.height} loading="eager" fetchpriority="high" decoding="async" class="home-shot hero-shot" />
-			<figcaption class="home-small mt-3">Sample wedding, checked before the quote goes out. Food only: packaging, rentals, staff and anything you cook over the guarantee sit outside it.</figcaption>
+			<figcaption class="home-small mt-3">Sample wedding, checked before the quote goes out. This is the food cost; staff, rentals, delivery and a service fee go on the same proposal as their own lines.</figcaption>
 		</figure>
 	</div>
 </section>

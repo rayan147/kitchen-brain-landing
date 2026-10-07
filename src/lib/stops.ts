@@ -4,7 +4,7 @@ export const stops = [
   { id: 'event-walk', label: 'One event, start to booked' },
   { id: 'kitchen', label: 'Costs, buys and labels' },
   { id: 'front', label: 'Orders and invoices' },
-  { id: 'sage', label: 'Ask your kitchen' },
+  { id: 'sage', label: 'Ask about a job' },
   { id: 'start', label: 'Start here' }
 ] as const;
 export type StopId = (typeof stops)[number]['id'];

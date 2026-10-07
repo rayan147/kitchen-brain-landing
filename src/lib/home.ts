@@ -92,7 +92,7 @@ export const eventStages = [
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Proposal',
 		heading: 'She says yes on her phone.',
-		body: 'The client opens the proposal with no login, sees the total for her event, and taps Accept proposal or Ask for changes.',
+		body: 'The client opens the proposal with no login, sees every line you put on it (the food, and any staff, rentals or service fee), and taps Accept proposal or Ask for changes.',
 		shot: shot(
 			'proposal-mobile',
 			'Client proposal on a phone from Harbor & Hearth Catering: Nair & Castellano wedding on December 28, 2026, $14,250.00 for 150 guests at $95.00 per guest, with Ask for changes and Accept proposal.',
@@ -152,7 +152,7 @@ export const kitchenRows = [
 		id: 'costs',
 		guide: { href: '/features/menus-and-quotes', label: 'How menus and quotes are priced' },
 		eyebrow: 'Costs itself',
-		pain: 'You quote $38 a head and find out if you made money when the month closes.',
+		pain: 'You quote $95 a head and find out if you made money when the month closes.',
 		heading: 'Food cost, worked out before you quote.',
 		body: 'Each dish shows its cost per guest and its share of the plate. A missing price is named, never counted as zero.',
 		shot: withPhone(

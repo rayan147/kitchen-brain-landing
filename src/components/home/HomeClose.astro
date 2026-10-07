@@ -34,11 +34,11 @@ import { cta, demoCta, launchPlan, site } from '../../lib/site';
 			<dl class="plan-terms">
 				<div><dt>Today</dt><dd>$0 charged</dd></div>
 				<div><dt>Free trial</dt><dd>{launchPlan.trialDays} days</dd></div>
-				<div><dt>Crew</dt><dd>Unlimited during launch</dd></div>
+				<div><dt>Crew</dt><dd>Unlimited</dd></div>
 				<div><dt>Cancel</dt><dd>Settings, no call</dd></div>
 			</dl>
 			<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary plan-cta">{cta.label}</a>
-			<p class="home-small mt-3">Card up front, charged $0 today. Cancel before day {launchPlan.trialDays + 1} from Settings, Billing.</p>
+			<p class="home-small mt-3">The card starts the subscription, and you pay $0 until day {launchPlan.trialDays + 1}. Cancel before then from Settings, Billing and nothing is charged.</p>
 			<p class="home-small mt-2">Questions first? <a href="/faq" class="home-guide">Read the FAQ</a></p>
 		</div>
 		<div class="close-more flex flex-wrap gap-x-5 gap-y-3">
