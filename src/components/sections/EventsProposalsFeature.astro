@@ -82,7 +82,7 @@ const payments = eventPayments;
 				<h1 id="events-heading" class="feature-display">
 					<!-- No exact date: the inquiry beside it has "date not decided yet"
 					     ticked; the date is settled later (chef audit 2026-10-07). -->
-					&ldquo;A wedding in October, about 150. Can you send something?&rdquo;
+					&ldquo;A wedding in December, about 150. Can you send something?&rdquo;
 				</h1>
 				<p class="hero-lede">
 					Put it in as an inquiry, and the same record carries the menu, the proposal, their
@@ -165,12 +165,10 @@ const payments = eventPayments;
 			<figure class="proof panel" data-reveal>
 				<figcaption>Ask for a deposit · sample event</figcaption>
 				<div>
-					<!-- The PNG is the panel at full page width, and everything in it sits
-					     in its left 300 CSS px. Shown at its own size and cropped to that
-					     strip, rather than shrunk until the numbers are unreadable. -->
-					<span class="crop">
-						<img src={proof.deposit.src} alt={proof.deposit.alt} width={proof.deposit.width} height={proof.deposit.height} loading="lazy" decoding="async" style={`width: ${proof.deposit.width / 2}px`} />
-					</span>
+					<!-- The panel now carries the deposit and the balance with their
+					     amounts at the right edge, so it is shown whole, not cropped to
+					     its left 300 px (re-shot 2026-10-07 from app 7a7e407d9). -->
+					<img src={proof.deposit.src} alt={proof.deposit.alt} width={proof.deposit.width} height={proof.deposit.height} loading="lazy" decoding="async" style={`width: ${proof.deposit.width / 2}px`} />
 				</div>
 			</figure>
 		</div>
@@ -180,9 +178,16 @@ const payments = eventPayments;
 	<section id="booked" class="product-section" aria-labelledby="booked-heading">
 		<div class="container-page">
 			<div class="section-head" data-reveal>
-				<h2 id="booked-heading">Confirm order is the booking.</h2>
-				<p>Prepare the kitchen draft from their yes; it holds no day and draws no crew until you book the event.</p>
+				<h2 id="booked-heading">Book it when the agreement is signed and the deposit is in.</h2>
+				<p>Prepare the kitchen draft from their yes; it holds no day and draws no crew until you confirm the order. Book the event names what is still missing, and booking without it asks for a reason that stays on the event.</p>
 			</div>
+			<figure class="proof panel book-proof" data-reveal>
+				<figcaption>Book the event · sample event</figcaption>
+				<div>
+					<img src={proof.book.src} alt={proof.book.alt} width={proof.book.width} height={proof.book.height} loading="lazy" decoding="async" style={`width: ${proof.book.width / 2}px`} />
+				</div>
+				<a class="full-size" href={proof.book.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
+			</figure>
 			<div class="booked-pair">
 				<figure class="proof panel" data-reveal>
 					<figcaption>Kitchen draft · sample event</figcaption>
@@ -197,7 +202,7 @@ const payments = eventPayments;
 					</div>
 				</figure>
 			</div>
-			<p class="section-note" data-reveal>Confirm order freezes quantities and prices, the event reads &ldquo;This event is booked.&rdquo; and shop, prep and pack take it from there.</p>
+			<p class="section-note" data-reveal>Confirm order locks quantities and prices, and the shopping, prep and pack lists become checklists.</p>
 			<p class="section-note" data-reveal>The calendar counts each day’s orders and vans against the limits you set, and an order tells you whether its day has room.</p>
 			<figure class="proof wide" data-reveal>
 				<figcaption>The calendar, week view · sample event</figcaption>
@@ -303,8 +308,8 @@ const payments = eventPayments;
 	@media (min-width: 48rem) {
 		.proof.panel .scroll img { min-width: 0; max-width: 100%; }
 	}
-	.crop { display: block; width: min(100%, 300px); overflow: hidden; }
-	.crop img { max-width: none; }
+	.book-proof { margin-top: 2.5rem; }
+	.book-proof img { max-width: min(100%, 45rem); }
 	.full-size { display: inline-flex; min-height: 44px; align-items: center; padding-inline: 1rem; font-size: var(--text-body-sm); font-weight: 600; color: var(--color-green-deep); text-decoration: underline; }
 	.booked-pair { display: grid; gap: 1.5rem; margin-top: 2.5rem; align-items: start; }
 	.booked-pair > * { min-width: 0; }

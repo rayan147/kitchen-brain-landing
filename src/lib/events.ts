@@ -70,4 +70,7 @@ export const agreementLine = 'Send the agreement for e-signature from your own t
  * Reworded 2026-10-07 (third chef review): "is not a signature or a booking.
  * Confirm order is." read as if Confirm order were the signature.
  */
-export const acceptanceBoundary = 'Their yes books nothing. Confirm order does.';
+// Reworded 2026-10-07 for app 7a7e407d9 (local develop, the owner's chosen
+// source): booking is its own step, Book the event, which waits on the signed
+// agreement and the deposit; Confirm order only locks the kitchen's numbers.
+export const acceptanceBoundary = 'Their yes books nothing. The signed agreement and the deposit do.';

@@ -142,3 +142,9 @@ page, /compare and the homepage rail). The signature is the Agreement step.
 ### Revision 2026-10-07: the opening quote
 - "A wedding in October, about 150. Can you send something?" The old line named October 10 while the inquiry capture beside it has "date not decided yet" ticked; the date is settled later, as the calendar shows.
 - Known app bug, not page copy: the calendar card reads "Nair & #783" (the app shortens the event name to its first word plus the order number). Flagged for kitchen-brain.
+
+## Revision 2026-10-07 (re-shot from the owner's chosen app: local develop 7a7e407d9)
+- One wedding, one date: every capture is the Nair & Castellano wedding on Sat Dec 19, $95, 150 guests, $3,500 deposit, balance due Wed Dec 9, the homepage's event. H1: "A wedding in December, about 150."
+- Booking is its own step in this app: Book the event waits on the signed agreement and the deposit (Book anyway asks for a reason). Confirm order only locks quantities and prices. The booked section, its new Book the event frame and the shared boundary line ("Their yes books nothing. The signed agreement and the deposit do.") say so.
+- The deposit frame is shown whole: it now lists the deposit and the balance with their due dates.
+- The calendar card still reads "Nair & #783" (app truncation; noted before).

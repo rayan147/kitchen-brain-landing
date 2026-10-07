@@ -51,7 +51,7 @@ for (const [pattern, label] of moneyClaims) {
 }
 
 // The acceptance boundary.
-if (!html.includes('Their yes books nothing. Confirm order does.')) {
+if (!html.includes('Their yes books nothing. The signed agreement and the deposit do.')) {
 	fail('the "their yes books nothing" boundary is gone');
 }
 

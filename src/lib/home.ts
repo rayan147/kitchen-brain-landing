@@ -102,8 +102,8 @@ export const eventStages = [
 	},
 	{
 		id: 'deposit',
-		// Not "booked": the next step says Confirm order is the booking
-		// (chef review 2026-10-07 caught the two disagreeing).
+		// Not "booked": booking waits on the signed agreement as well as the
+		// deposit (Book the event, app 7a7e407d9).
 		carries: 'The Nair & Castellano wedding, deposit paid',
 		focus: [
 			{ x: 2.2, y: 13.5, w: 23.2, h: 17.6 },

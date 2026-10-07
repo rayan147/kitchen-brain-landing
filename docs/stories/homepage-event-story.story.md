@@ -155,3 +155,6 @@ not as the page's snap.)
   reminder with a pay link goes out on the day the balance is due, read off
   kitchen-brain `balance-reminders.ts`). The Coming line is gone.
 - Customer invoices stay unbuilt and unclaimed.
+
+## Revision 2026-10-07 (boundary line)
+- The shared line under the client's yes now reads "Their yes books nothing. The signed agreement and the deposit do." In the owner's chosen app (local develop 7a7e407d9) Book the event is its own step; Confirm order no longer books. The homepage's own steps still need a pass against that app.
