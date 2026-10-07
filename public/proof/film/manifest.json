@@ -32,8 +32,8 @@
     },
     "menu-service.png": {
       "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs menu"
+      "app": "fe0ac720d",
+      "via": "capture-film.mjs menu (re-shot read-only after develop fe0ac720d made the menu total the exact food cost, $3,536.15, the figure the closeout plans)"
     },
     "proposal-sent-desktop.png": {
       "host": "test.app.costcook.io",
