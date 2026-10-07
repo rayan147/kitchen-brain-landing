@@ -42,28 +42,28 @@ const proofAssets = {
 	summary: {
 		desktop: '/proof/nutrition/nutrition-summary-wide.png',
 		mobile: '/proof/nutrition/nutrition-summary-mobile.png',
-		desktopWidth: 2272,
-		desktopHeight: 292,
-		mobileWidth: 716,
-		mobileHeight: 604
+		desktopWidth: 2304,
+		desktopHeight: 472,
+		mobileWidth: 748,
+		mobileHeight: 1132
 	},
 	panel: {
 		src: '/proof/nutrition/nutrition-facts-panel.png',
 		width: 800,
-		height: 1340
+		height: 1338
 	},
 	allergens: {
 		desktop: '/proof/nutrition/allergen-review-wide.png',
 		mobile: '/proof/nutrition/allergen-review-mobile.png',
-		desktopWidth: 1424,
-		desktopHeight: 786,
-		mobileWidth: 716,
-		mobileHeight: 866
+		desktopWidth: 2320,
+		desktopHeight: 1492,
+		mobileWidth: 780,
+		mobileHeight: 1082
 	},
 	label: {
 		src: '/proof/nutrition/label-panel.png',
-		width: 688,
-		height: 1340
+		width: 1344,
+		height: 1944
 	}
 } as const;
 
@@ -123,7 +123,7 @@ const faqItems = [
 	{
 		question: 'Can I print a nutrition label today?',
 		answer:
-			'Yes. Print nutrition label opens a browser-printable sheet from the recipe, ready for label stock. A direct label-printer integration is still in development and carries no release date.'
+			'Yes, once the dish is complete. Preview label shows the panel any time. Print label switches on when every ingredient source is confirmed and no label line is blank, and your browser puts the sheet on label stock. Until then the recipe calls it a draft estimate and will not print it. A direct label-printer integration is still in development and carries no release date.'
 	}
 ] as const;
 ---
@@ -139,7 +139,7 @@ const faqItems = [
 					<span>Nutrition facts &amp; allergens</span>
 				</nav>
 				<h1 id="nutrition-feature-heading">Check nutrition and allergens from your recipe.</h1>
-				<p class="hero-lede">Match your ingredients to nutrient sources and review their allergen information. See per-portion nutrition, missing information and a printable estimate. Your kitchen still needs to review the food and its suitability for each guest.</p>
+				<p class="hero-lede">Match your ingredients to nutrient sources and review their allergen information. See per-portion nutrition, what is still missing, and a label that prints once nothing is. Your kitchen still needs to review the food and its suitability for each guest.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -155,7 +155,7 @@ const faqItems = [
 						<source media="(max-width: 47.999rem)" srcset={proofAssets.summary.mobile} width={proofAssets.summary.mobileWidth} height={proofAssets.summary.mobileHeight} />
 						<img
 							src={proofAssets.summary.desktop}
-							alt="CostCook Nutrition summary for Chicken Burrito Bowl showing a complete per-portion result: 339 calories, 22 grams protein, 48.1 grams carbohydrate, and 7 grams fat."
+							alt="CostCook Nutrition summary for Wild Mushroom Polenta, one 240 g portion, marked Draft estimate. Not ready to print, with 7 label lines blank because no source reports them: 530 calories, 19 g fat, 18 g protein, 77 g carbs, each a draft from unconfirmed sources, and 8 of 15 label lines filled."
 							width={proofAssets.summary.desktopWidth}
 							height={proofAssets.summary.desktopHeight}
 							decoding="async"
@@ -164,7 +164,7 @@ const faqItems = [
 					</picture>
 				</div>
 				<figcaption>
-					Chicken Burrito Bowl, one 297 g portion. The source capture is cropped to the answer and retained at 2× pixel density for legible text.
+					Wild Mushroom Polenta from the sample wedding menu, one 240 g portion. A draft, and the screen says so before it shows a number.
 					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full recipe capture</a>
 				</figcaption>
 			</figure>
@@ -176,12 +176,12 @@ const faqItems = [
 			<div class="split-copy" data-reveal>
 				<h2 id="split-heading">Sunday night should not start two new spreadsheets.</h2>
 				<p>
-					A customer asks how much protein is in the bowl and whether it contains milk.
+					A customer asks how much protein is in the polenta and whether it contains milk.
 					When those answers live apart from the recipe, one ingredient change makes both old.
 				</p>
 			</div>
 			<div class="broken-path" data-reveal aria-label="One recipe copied separately into a nutrition sheet and an allergen note">
-				<div class="path-source"><span>Recipe changed</span><strong>Chicken Burrito Bowl</strong></div>
+				<div class="path-source"><span>Recipe changed</span><strong>Wild Mushroom Polenta</strong></div>
 				<div class="path-branches" aria-hidden="true"><i></i><i></i></div>
 				<div class="path-output"><span>Nutrition sheet</span><strong>Old quantities</strong></div>
 				<div class="path-output warning"><span>Allergen note</span><strong>Review unknown</strong></div>
@@ -216,7 +216,7 @@ const faqItems = [
 				<div class="panel-window">
 					<img
 						src={proofAssets.panel.src}
-						alt="Complete Chicken Burrito Bowl Nutrition Facts panel showing all fifteen values, from 339 calories through 680 milligrams potassium."
+						alt="Wild Mushroom Polenta Nutrition Facts panel for one 240 g portion: 530 calories, total fat 19 g, sodium 300 mg, total carbohydrate 77 g, dietary fiber 5 g, protein 18 g, calcium 300 mg, iron 0.6 mg; saturated fat, trans fat, cholesterol, total and added sugars, vitamin D and potassium show a dash because no source reports them."
 						width={proofAssets.panel.width}
 						height={proofAssets.panel.height}
 						loading="lazy"
@@ -225,9 +225,10 @@ const faqItems = [
 					/>
 				</div>
 				<figcaption>
-					<!-- Says what the capture is (chef audit 2026-10-07: a packaged
-					     product's record is not a dish built from your ingredients). -->
-					This dish is matched to one USDA branded record, a packaged product, so every row is filled, zeros included. A dish built from your own ingredients adds up each ingredient’s source, and an ingredient without one leaves its rows blank.
+					<!-- Says what the capture is: a dish built from four ingredients,
+					     with the lines no source reports left as a dash (develop
+					     7a7e407d9, 2026-10-07). -->
+					Four ingredients, each with its own source, added up. Seven lines no source reports show a dash, not a zero, and the dish stays a draft until they are filled.
 					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full Nutrition Facts panel</a>
 				</figcaption>
 			</figure>
@@ -248,7 +249,7 @@ const faqItems = [
 					<source media="(max-width: 47.999rem)" srcset={proofAssets.allergens.mobile} width={proofAssets.allergens.mobileWidth} height={proofAssets.allergens.mobileHeight} />
 					<img
 						src={proofAssets.allergens.desktop}
-						alt="Chicken Burrito Bowl ingredient evidence showing confirmed Contains: Milk, Soy and USDA FoodData Central 2704502 as the nutrition source."
+						alt="Allergens and dietary for Wild Mushroom Polenta: allergens reviewed on all 4 ingredients, Parmesan and unsalted butter marked Contains: milk, polenta and cremini mushroom reviewed; vegetarian, vegan, halal and kosher not reviewed yet on any ingredient, so each needs a check; gluten-free yes on all four."
 						width={proofAssets.allergens.desktopWidth}
 						height={proofAssets.allergens.desktopHeight}
 						loading="lazy"
@@ -258,7 +259,7 @@ const faqItems = [
 				</picture>
 			</div>
 			<figcaption>
-				The confirmed allergen line and its named nutrition source stay together at reading size.
+				Milk is on the Parmesan and the butter, so it is on the dish. Vegetarian stays a question until someone answers it.
 				<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open allergen evidence in full capture</a>
 			</figcaption>
 		</figure>
@@ -282,8 +283,9 @@ const faqItems = [
 			<div class="print-copy" data-reveal>
 				<h2 id="print-heading">The sheet carries the answer and its limits.</h2>
 				<p>
-					Print nutrition label opens a browser-printable sheet from the live recipe. Put it on
-					label stock today; keep the direct label-printer integration marked for later.
+					Preview label shows the panel as it stands. Print label switches on once every source is
+					confirmed and no line is blank, then your browser puts the sheet on label stock. The direct
+					label-printer integration is marked for later.
 				</p>
 				<ul role="list">
 					{printedContents.map((item) => <li>{item}</li>)}
@@ -294,7 +296,7 @@ const faqItems = [
 				<div class="label-window">
 					<img
 						src={proofAssets.label.src}
-						alt="Printable Chicken Burrito Bowl Nutrition Facts panel with all fifteen nutrient values filled, including explicit zero values."
+						alt="Preview label for Wild Mushroom Polenta, marked Draft estimate. Not ready to print: Harbor and Hearth Catering, the dish name, the Nutrition Facts panel with a dash on seven lines, the ingredients Polenta, Mushroom, cremini, Parmesan, block, Butter, unsalted, and Print label switched off."
 						width={proofAssets.label.width}
 						height={proofAssets.label.height}
 						loading="lazy"

@@ -135,3 +135,26 @@
 
 ### Revision 2026-10-07: the showcase caption
 - The caption says the burrito bowl is matched to one USDA branded record (a packaged product), and that a dish built from your own ingredients adds up each ingredient's source, blanks where one is missing. A multi-ingredient capture is still owed.
+
+## Revision 2026-10-07: re-shot on local develop, the honest draft
+
+- **Source:** kitchen-brain 7a7e407d9 (owner: "local develop latest"), the
+  wedding's sample kitchen, `scripts/capture-nutrition-proof.mjs`.
+- **Dish:** Wild Mushroom Polenta, one of the six on the Nair & Castellano
+  Wedding Plated Dinner (owner: every re-shoot follows that wedding). The
+  Chicken Burrito Bowl / Maple & Main frames are retired.
+- **What changed in the app, and so in the story:** develop calls a dish with
+  an unconfirmed source or a blank label line a "Draft estimate. Not ready to
+  print." Preview label shows the panel with a dash per blank line and Print
+  label off; the print route refuses until the gate clears. None of the demo
+  world's 90 recipes cleared it, so the Midpoint beat is no longer "a complete
+  panel" but "the screen says draft before it shows a number": 530 calories,
+  19 g fat, 18 g protein, 77 g carbs, 8 of 15 lines filled, 7 blank.
+- **Print claim:** "Yes, once the dish is complete." Same on the FAQ, the
+  comparison note, the features hub and the labels lede. The printed sheet's
+  contents list stays, read from develop's `NutritionLabelSheet.svelte`
+  (kitchen name, calculated estimate, panel, ingredients in recipe order,
+  Contains / May contain, sources, print time, the not-a-compliance-claim line).
+- **Allergens:** Parmesan and unsalted butter carry Contains: milk; dietary
+  columns stay Not reviewed. The phone frame is those two cards.
+- Snap line unchanged: "A blank row beats a made-up zero."

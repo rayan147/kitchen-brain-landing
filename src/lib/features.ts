@@ -415,8 +415,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 			/* RC-50, 2026-08-29. The print page on sandbox/demo,
 			   src/routes/catalog/recipes/[id]/nutrition-label, is a live read model
 			   with no flag in front of it. Browser print onto label stock; kitchen
-			   date labels are the labels group below, also printed by the browser. */
-			{ lead: 'Printed from the recipe.', detail: 'Print nutrition label makes a sheet with the kitchen name, the panel, the ingredient statement, the allergen line and the print time, for the browser to put on label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.' }
+			   date labels are the labels group below, also printed by the browser.
+			   Develop 7a7e407d9 (2026-10-07) prints only once every source is
+			   confirmed and no line is blank; the detail says so. */
+			{ lead: 'Printed from the recipe.', detail: 'Once every source is confirmed and no line is blank, Print label makes a sheet with the kitchen name, the panel, the ingredient statement, the allergen line and the print time, for the browser to put on label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.' }
 		]
 	},
 	{

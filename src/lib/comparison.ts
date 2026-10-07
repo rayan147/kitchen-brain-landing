@@ -436,11 +436,10 @@ export const comparison: RowGroup[] = [
 			{
 				label: 'Printed USDA nutrition labels',
 				sheet: 'build',
-				/* Moved from coming to yes on 2026-08-29 (RC-50): the print page is on
-				   sandbox/demo with no flag. Browser print; kitchen date labels are the
-				   "Kitchen label printing" row below, a yes since 2026-09-27 (RC-35). */
+				/* Yes since 2026-08-29 (RC-50); develop gates it on confirmed sources and
+				   no blank lines (the note says so). Kitchen date labels: the row below. */
 				costcook: 'yes',
-				note: 'Printed from the recipe through the browser onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
+				note: 'Printed from the recipe through the browser onto label stock, once every source is confirmed and no line is blank. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
 				parsley: 'Chef Plus, $189',
 				meez: 'Enterprise, custom'
 			},

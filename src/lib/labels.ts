@@ -55,8 +55,8 @@ export const labelsAvailability = {
 		? 'Calculate nutrition per portion and print an estimate. Review allergens and guest restrictions. Kitchen date labels are Coming.'
 		: 'Nutrition panels and kitchen date labels, calculated or settled from the recipe and ready for the browser to print.',
 	sectionLede: labelsAreComing
-		? 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen stickers are a separate feature marked Coming and are not included today. Nutrition sheets are calculated estimates, not a retail-label compliance claim.'
-		: 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock. Kitchen date and allergen labels ask you to settle the storage and use-by facts before the browser prints them.',
+		? 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock once every source is confirmed and no line is blank. Kitchen date and allergen stickers are a separate feature marked Coming and are not included today. Nutrition sheets are calculated estimates, not a retail-label compliance claim.'
+		: 'Nutrition facts are computed per recipe out of the ingredients you already entered, and print from the recipe as a sheet for label stock once every source is confirmed and no line is blank. Kitchen date and allergen labels ask you to settle the storage and use-by facts before the browser prints them.',
 	nutritionFaqCrosslink: labelsAreComing
 		? 'Kitchen date labels are a separate feature marked Coming and are not included today; see the next answer.'
 		: 'Kitchen date labels are a separate feature; see the next answer.',
