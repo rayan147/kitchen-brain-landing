@@ -138,3 +138,7 @@ page, /compare and the homepage rail). The signature is the Agreement step.
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - The payments line is titled "Card payment for event deposits and balances", not "for booked events": the deposit is paid before Confirm order books it.
+
+### Revision 2026-10-07: the opening quote
+- "A wedding in October, about 150. Can you send something?" The old line named October 10 while the inquiry capture beside it has "date not decided yet" ticked; the date is settled later, as the calendar shows.
+- Known app bug, not page copy: the calendar card reads "Nair & #783" (the app shortens the event name to its first word plus the order number). Flagged for kitchen-brain.

@@ -132,3 +132,6 @@
 ## Claim correction · 2026-09-27 (allergen count)
 
 - [x] 11 Revision: "Fourteen allergens" was false; the app tags the fixed US nine (milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soy, sesame; kitchen-brain drizzle/0034_dizzy_klaw.sql). The count word is now computed from `allergenNames` in `src/lib/dietary.ts`. Beats, scenes, point of view and snap line unchanged; only the number moved. Gap report S3.
+
+### Revision 2026-10-07: the showcase caption
+- The caption says the burrito bowl is matched to one USDA branded record (a packaged product), and that a dish built from your own ingredients adds up each ingredient's source, blanks where one is missing. A multi-ingredient capture is still owed.
