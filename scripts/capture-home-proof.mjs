@@ -420,20 +420,39 @@ try {
 			await shoot(p, name, ctx === desk ? { x: list.x - 16, y: head.y - 16, width: list.r - list.x + 32, height: bottom - head.y + 24 } : { x: 0, y: head.y - 24, width: 390, height: bottom - head.y + 40 });
 		}
 
-		// The public ordering site (the ordering app), no sign-in.
+		// Online ordering, as a client meets it on the kitchen's own website: the
+		// ordering widget (ordering.js, pasted verbatim from Settings >
+		// Integrations > Ordering site > Put on your website) mounted in a plain
+		// sample page for the sample kitchen (HOST, default http://127.0.0.1:4370,
+		// scratchpad hostsite/index.html), whose origin was approved on that same
+		// settings page. The frame runs from the site's own header to the end of
+		// the first menu. The page around the widget is sample, the widget is the
+		// app's.
+		const HOST = process.env.HOST ?? 'http://127.0.0.1:4370/';
 		for (const [name, opts] of [['ordering-site', DESKTOP], ['ordering-site-phone', PHONE]]) {
 			if (!want(name)) continue;
-			const ctx = await browser.newContext(opts);
+			const ctx = await browser.newContext({ ...opts, viewport: { width: opts.viewport.width, height: 2600 } });
 			const p = await ctx.newPage();
-			await p.goto(`${ORDERING}/order-demo-kitchen`);
-			await p.waitForLoadState('load');
+			await p.goto(HOST);
+			const frameEl = p.locator('#order-here iframe');
+			await frameEl.waitFor();
+			const frame = p.frameLocator('#order-here iframe');
+			await frame.getByText('$93.00 per guest', { exact: true }).waitFor({ timeout: 30000 });
 			await p.waitForTimeout(2500);
-			const price = await docBox(p.getByText('$93.00 per guest', { exact: true }));
-			if (opts === DESKTOP) {
-				const row = await docBox(p.getByText('Coastal Dinner', { exact: true }));
-				await shoot(p, name, { x: 112, y: 6, width: 1216, height: Math.max(row.b, price.b) + 26 - 6 });
+			const f = await docBox(frameEl);
+			const card = await frame.getByText('Coastal Dinner', { exact: true }).first().locator('xpath=ancestor::*[.//*[normalize-space()="Lemon Posset"]][1]').boundingBox();
+			if (opts === PHONE) {
+				const bottom = f.y + (card.y - (await frameEl.boundingBox()).y) + card.height + 24;
+				await shoot(p, name, { x: 0, y: 0, width: opts.viewport.width, height: bottom });
 			} else {
-				await shoot(p, name, { x: 0, y: 0, width: 390, height: Math.min(price.b + 30, 1400) });
+				// Desktop: the homepage card shows a 3:2 crop from the top left, so the
+				// frame is the page's 1200px column cut at the Coastal Dinner row, the
+				// figure the row's sentence carries.
+				const row = await frame.getByText('$93.00 per guest', { exact: true }).boundingBox();
+				const top = (await frameEl.boundingBox()).y;
+				const main = await docBox(p.locator('main'));
+				const bottom = f.y + (row.y - top) + row.height + 28;
+				await shoot(p, name, { x: main.x, y: 0, width: main.r - main.x, height: bottom });
 			}
 			await ctx.close();
 		}
