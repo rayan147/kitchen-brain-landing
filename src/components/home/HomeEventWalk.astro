@@ -1,19 +1,21 @@
 ---
 /**
- * The event walk (rule 4): Inquiry → Proposal → Deposit → Confirm order →
- * Shop / Prep in one band, one stage per tab.
+ * The event walk as the workflow rail
+ * (docs/superpowers/specs/2026-10-06-workflow-rail.md). It replaced the stage
+ * tabs (rule 4) and the "How it fits together" tickets on 2026-10-06, by owner
+ * decision: tabs showed one stage at a time and hid the very connection the
+ * band exists to show.
  *
- * NOTHING HIDDEN WITHOUT JAVASCRIPT. The server renders every panel, stacked,
- * each with its own heading, and the tab row carries `hidden`. The script
- * below shows the tab row and hides the inactive panels only once it runs, so
- * a visitor with scripts off reads all five stages in order.
+ * Every stage renders in order with or without JavaScript. Between two stages
+ * a carry line names what passes forward; amber rings sit over the real frame
+ * where that stage's figure is (src/lib/home.ts, measured from the PNG). The
+ * rail and rings are decoration (aria-hidden); the figures are in the alt text
+ * and the carry lines.
  *
- * Keyboard: the WAI-ARIA tabs pattern with automatic activation. Left and
- * Right move between tabs and wrap, Home and End jump to the ends, and only
- * the selected tab is in the tab order.
+ * The one script marks stages as reached while scrolling (colour only);
+ * without it, or with reduced motion, every node is filled.
  *
- * Considered State; not used because the only state is which one of five
- * panels is showing, a single index, and every stage behaves the same.
+ * Considered Composite; not used because the rail is one flat ordered list.
  */
 import HomeBand from './HomeBand.astro';
 import SectionHandoff from '../SectionHandoff.astro';
@@ -21,136 +23,137 @@ import { eventStages } from '../../lib/home';
 ---
 <HomeBand
 	id="event-walk"
-	tone="cream"
-	eyebrow="Gets you booked and paid"
+	tone="amber"
+	eyebrow="One event, start to booked"
 	heading="From the first call to a booked, paid event."
-	lede="You chase the deposit by text and forget the balance until the week of the event. Here is one wedding, start to booked."
+	lede="You chase the deposit by text and forget the balance until the week of the event. Follow one wedding instead: each step picks up what the last one settled."
 >
-	<div class="walk" data-event-walk>
-		<div role="tablist" aria-label="Stages of one event" class="walk-tabs" hidden data-walk-tabs>
-			{eventStages.map((stage, index) => (
-				<button
-					type="button"
-					role="tab"
-					id={`walk-tab-${stage.id}`}
-					aria-controls={`walk-panel-${stage.id}`}
-					aria-selected={index === 0 ? 'true' : 'false'}
-					tabindex={index === 0 ? 0 : -1}
-					class="walk-tab"
-					data-walk-tab
-				>
-					<span class="walk-step" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-					{stage.tab}
-				</button>
-			))}
-		</div>
-
+	<ol role="list" class="rail" data-event-walk>
 		{eventStages.map((stage, index) => (
-			<section
-				id={`walk-panel-${stage.id}`}
-				class="walk-panel"
-				aria-labelledby={`walk-heading-${stage.id}`}
-				data-walk-panel
-				data-event-stage={stage.id}
-			>
-				<div class="walk-copy">
+			<li class="stage" data-event-stage={stage.id} data-rail-stage>
+				<span class="node" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+				<div class="stage-copy">
 					<p class="home-eyebrow">{String(index + 1).padStart(2, '0')} · {stage.tab}</p>
-					<h3 id={`walk-heading-${stage.id}`} class="home-h2">{stage.heading}</h3>
+					<h3 class="home-h2">{stage.heading}</h3>
 					<p class="home-body mt-4" data-booking-payments={stage.id === 'deposit' ? 'event-payments' : undefined}>{stage.body}</p>
 					<a href={stage.guide.href} class="home-guide">{stage.guide.label}</a>
 				</div>
-				<figure class="walk-figure">
-					<img
-						src={stage.shot.src}
-						alt={stage.shot.alt}
-						width={stage.shot.width}
-						height={stage.shot.height}
-						loading="lazy"
-						decoding="async"
-						class:list={['home-shot', { 'home-shot--phone': stage.shot.phone }]}
-					/>
+				<figure class:list={['stage-figure', { 'stage-figure--phone': stage.shot.phone }]}>
+					<div class="frame">
+						<img
+							src={stage.shot.src}
+							alt={stage.shot.alt}
+							width={stage.shot.width}
+							height={stage.shot.height}
+							loading="lazy"
+							decoding="async"
+							class="home-shot"
+						/>
+						{'focus' in stage && stage.focus.map((box) => (
+							<span
+								class="ring"
+								aria-hidden="true"
+								style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}
+							></span>
+						))}
+					</div>
 				</figure>
-			</section>
+				{'carries' in stage && (
+					<p class="carry" data-carry>
+						<span class="sr-only">Carries forward to the next step: </span>
+						<span aria-hidden="true">Carries forward · </span>{stage.carries}
+					</p>
+				)}
+			</li>
 		))}
-	</div>
-	<p class="home-small mt-8">Rather watch it? <a href="/tour/main" class="home-guide">Take the product tour</a></p>
+	</ol>
+	<p class="home-small mt-10">Rather watch it? <a href="/tour/main" class="home-guide">Take the product tour</a></p>
 	<SectionHandoff from="event-walk" class="home-handoff" />
 </HomeBand>
 
 <script>
-	for (const walk of document.querySelectorAll<HTMLElement>('[data-event-walk]')) {
-		const tablist = walk.querySelector<HTMLElement>('[data-walk-tabs]');
-		const tabs = [...walk.querySelectorAll<HTMLButtonElement>('[data-walk-tab]')];
-		const panels = [...walk.querySelectorAll<HTMLElement>('[data-walk-panel]')];
-		if (!tablist || tabs.length !== panels.length) continue;
-
-		const select = (index: number, focus: boolean) => {
-			tabs.forEach((tab, i) => {
-				const on = i === index;
-				tab.setAttribute('aria-selected', String(on));
-				tab.tabIndex = on ? 0 : -1;
-				panels[i].hidden = !on;
-			});
-			if (focus) tabs[index].focus();
-		};
-
-		// Upgrade: panels become tabpanels and only the first shows.
-		panels.forEach((panel, i) => {
-			panel.setAttribute('role', 'tabpanel');
-			panel.setAttribute('aria-labelledby', tabs[i].id);
-			panel.tabIndex = 0;
-		});
-		tablist.hidden = false;
-		walk.classList.add('is-tabbed');
-		select(0, false);
-
-		tabs.forEach((tab, i) => {
-			tab.addEventListener('click', () => select(i, false));
-			tab.addEventListener('keydown', (event) => {
-				const last = tabs.length - 1;
-				const next =
-					event.key === 'ArrowRight' ? (i === last ? 0 : i + 1)
-					: event.key === 'ArrowLeft' ? (i === 0 ? last : i - 1)
-					: event.key === 'Home' ? 0
-					: event.key === 'End' ? last
-					: null;
-				if (next === null) return;
-				event.preventDefault();
-				select(next, true);
-			});
-		});
+	// Fill each node once its stage has been reached. Reduced motion, or no
+	// IntersectionObserver: leave the CSS default (every node filled).
+	const rail = document.querySelector<HTMLElement>('[data-event-walk]');
+	if (rail && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		rail.classList.add('is-tracking');
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-reached');
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ rootMargin: '0px 0px -40% 0px' }
+		);
+		rail.querySelectorAll('[data-rail-stage]').forEach((stage) => observer.observe(stage));
 	}
 </script>
 
 <style>
-	.walk { margin-top: 2.5rem; }
-	/* The tabs wrap rather than scroll, so every stage stays on screen at
-	   any width and at 200% text. */
-	.walk-tabs { display: flex; flex-wrap: wrap; gap: .5rem; }
-	.walk-tab {
-		display: inline-flex;
-		align-items: center;
-		gap: .5rem;
-		min-height: 2.75rem;
-		padding: .5rem 1rem;
-		border: 1px solid var(--color-hairline-strong);
+	/* The rail: one line down the left edge, a node per stage. */
+	.rail { position: relative; margin-top: 3rem; padding-left: 3.25rem; }
+	.rail::before {
+		content: '';
+		position: absolute;
+		left: 1.125rem;
+		top: .5rem;
+		bottom: .5rem;
+		border-left: 2px solid var(--color-hairline-strong);
+	}
+	.stage { position: relative; display: grid; gap: 1.5rem; }
+	.stage + .stage { margin-top: var(--spacing-section-tight); }
+	.node {
+		position: absolute;
+		left: -3.25rem;
+		top: 0;
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border: 2px solid var(--color-green-deep);
 		border-radius: 999px;
-		background: var(--color-paper);
-		color: var(--color-ink);
+		background: var(--color-green-deep);
+		color: var(--color-paper);
 		font-size: var(--text-eyebrow);
 		font-weight: 700;
-		cursor: pointer;
+		font-variant-numeric: tabular-nums;
+		transition: background-color .3s ease, color .3s ease;
 	}
-	.walk-tab[aria-selected='true'] { background: var(--color-green-deep); border-color: var(--color-green-deep); color: var(--color-paper); }
-	.walk-tab:focus-visible { outline: 2px solid var(--color-green-deep); outline-offset: 3px; }
-	.walk-step { font-variant-numeric: tabular-nums; opacity: .75; }
-	.walk-panel { display: grid; gap: 2rem; align-items: center; padding-block: 2rem; }
-	/* Stacked (no script): each stage is separated by space, not a rule. */
-	.walk-panel + .walk-panel { margin-top: 1rem; }
-	.is-tabbed .walk-panel { margin-top: 0; }
-	.walk-panel:focus-visible { outline: 2px solid var(--color-green-deep); outline-offset: 6px; border-radius: 8px; }
-	.walk-figure { margin: 0; }
+	.is-tracking .stage:not(.is-reached) .node { background: var(--color-paper); color: var(--color-green-deep); }
+	.stage-figure { margin: 0; }
+	.frame { position: relative; }
+	.stage-figure--phone .frame { max-width: 20rem; margin-inline: auto; }
+	.ring {
+		position: absolute;
+		border: 2px solid var(--color-amber);
+		border-radius: 8px;
+		box-shadow: 0 0 0 4px rgb(185 118 42 / .18);
+		pointer-events: none;
+	}
+	/* The carry line sits on the rail, between this stage and the next. */
+	.carry {
+		position: relative;
+		color: var(--color-amber-deep);
+		font-size: var(--text-eyebrow);
+		font-weight: 700;
+		letter-spacing: .04em;
+	}
+	.carry::before {
+		content: '';
+		position: absolute;
+		left: calc(-3.25rem + 1.125rem - 5px);
+		top: .35em;
+		width: 12px;
+		height: 12px;
+		border-radius: 999px;
+		background: var(--color-amber);
+	}
 	@media (min-width: 64rem) {
-		.walk-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 4rem; }
+		.stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); column-gap: 4rem; align-items: start; }
+		.carry { grid-column: 1 / -1; }
 	}
+	@media (prefers-reduced-motion: reduce) { .node { transition: none; } }
 </style>

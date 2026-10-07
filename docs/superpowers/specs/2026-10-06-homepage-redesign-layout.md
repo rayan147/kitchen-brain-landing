@@ -46,3 +46,11 @@ Gate cleared (the video session's app came back up and Confirm order was done). 
 | Close | `HomeClose` | cream | founder portrait, price card | rule 3 exception |
 
 Words and frames: `src/lib/home.ts`. Shared band, sizes and frame: `src/components/home/HomeBand.astro`. Contract: `scripts/check-dist.mjs` (homepage block) and `scripts/check-landing-claims.mjs`.
+
+## Revision (2026-10-06, owner): rule 4 replaced by the workflow rail
+
+The stage tabs and the "How it fits together" tickets are gone. The event walk
+is now the workflow rail (`docs/superpowers/specs/2026-10-06-workflow-rail.md`):
+every stage visible, a carry line between stages, amber rings over the carried
+figures. Bands re-alternate: hero cream, event walk amber, kitchen cream, front
+of house amber, Sage cream, close amber.

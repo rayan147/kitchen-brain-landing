@@ -1,6 +1,6 @@
 # New pattern: Workflow rail (2026-10-06)
 
-Status: proposed, not built. Replaces rule 4 (stage tabs) and the separate
+Status: built 2026-10-06 (owner chose the recommendation: rail replaces the tabs and the tickets; rings measured from the PNGs). Replaces rule 4 (stage tabs) and the separate
 "How it fits together" ticket strip if the owner approves.
 
 ## Problem

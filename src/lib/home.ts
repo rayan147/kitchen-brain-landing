@@ -24,6 +24,13 @@ export type Shot = {
 	phone?: boolean;
 };
 
+/**
+ * Where a carried figure sits in its frame, in percent of the PNG, measured
+ * from the pixels. The rail draws an amber ring there over the real image; the
+ * PNG itself is never edited.
+ */
+export type Focus = { x: number; y: number; w: number; h: number };
+
 const shot = (name: string, alt: string, px: [number, number], phone = false): Shot => ({
 	src: `/proof/home/${name}.png`,
 	alt,
@@ -38,35 +45,38 @@ export const heroShot = shot(
 	[732, 814]
 );
 
-/** The flow strip: two ways in, one costed order, the kitchen, closeout. */
-export const flowLanes = [
-	{ title: 'Online order', steps: ['Orders on your site', 'You approve', 'Pays by card link'] },
-	{ title: 'Custom event', steps: ['Inquiry', 'Proposal on their phone', 'E-signature', 'Card deposit'] },
-	{ title: 'One costed order', steps: ['Booked, paid, menu and guest count locked'] },
-	{ title: 'Buy · cook · pack', steps: ['Shop', 'Purchase orders', 'Prep', 'Pack'] },
-	{ title: 'Closeout', steps: ['Should have cost against did cost'] }
-] as const;
-
 /**
- * The event walk (rule 4): one tab per stage, in the app's order. Without
- * JavaScript every panel renders, stacked, so nothing is hidden.
+ * The event walk, drawn as the workflow rail
+ * (docs/superpowers/specs/2026-10-06-workflow-rail.md): every stage in the
+ * app's order, and between two stages what carries forward. A carry line
+ * only names what both neighbouring frames show (a name, a count, an amount
+ * that adds up); the rings mark each stage's own figure. The
+ * frames come from two copies of the app (manifest), so dates are never
+ * carried.
  */
 export const eventStages = [
 	{
 		id: 'inquiry',
+		carries: 'Priya Nair · 150 guests',
+		focus: [
+			{ x: 3.5, y: 3, w: 93, h: 7.5 },
+			{ x: 3.5, y: 81.8, w: 93, h: 7.8 }
+		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Inquiry',
 		heading: 'The call goes in rough.',
 		body: 'Only a client or event name is required. A date not decided yet and a guest count that is an estimate are fine.',
 		shot: shot(
 			'inquiry-mobile',
-			'New inquiry on a phone: client Priya Nair by phone call, Nair & Castellano wedding, date not decided yet, 150 guests marked as an estimate.',
-			[780, 2274],
+			'New inquiry on a phone: client Priya Nair, reached by phone call, Nair & Castellano wedding, date not decided yet, 150 guests marked as an estimate.',
+			[780, 1560],
 			true
 		)
 	},
 	{
 		id: 'proposal',
+		carries: '$14,250.00 accepted, asked as $3,500.00 now and $10,750.00 later',
+		focus: [{ x: 4, y: 26.6, w: 92, h: 17.3 }] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Proposal',
 		heading: 'She says yes on her phone.',
@@ -80,6 +90,11 @@ export const eventStages = [
 	},
 	{
 		id: 'deposit',
+		carries: 'The booked Nair & Castellano wedding',
+		focus: [
+			{ x: 4.3, y: 14.5, w: 23, h: 17 },
+			{ x: 75, y: 63.8, w: 20.5, h: 9.2 }
+		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Deposit',
 		heading: 'Paid by card from a link.',
@@ -92,6 +107,8 @@ export const eventStages = [
 	},
 	{
 		id: 'confirm',
+		carries: 'The same menu, quantities and prices locked',
+		focus: [{ x: 8.6, y: 32.7, w: 79, h: 20.8 }] as Focus[],
 		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
 		tab: 'Confirm order',
 		heading: acceptanceBoundary,
@@ -111,7 +128,7 @@ export const eventStages = [
 		shot: shot(
 			'prep-list',
 			'Prep list on a phone: Mirepoix Base, make first, 6 batches for 18 kg; carrot 5.4 kg, celery 48 each, yellow onion 7.2 kg; 0 of 34 done.',
-			[780, 1688],
+			[780, 1560],
 			true
 		)
 	}

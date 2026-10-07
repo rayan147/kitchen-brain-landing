@@ -153,7 +153,6 @@ const surfaceFiles = [
 	'src/lib/home.ts',
 	'src/components/home/HomeBand.astro',
 	'src/components/home/HomeHero.astro',
-	'src/components/home/HomeFlow.astro',
 	'src/components/home/HomeEventWalk.astro',
 	'src/components/home/HomeKitchen.astro',
 	'src/components/home/HomeFrontOfHouse.astro',
@@ -199,7 +198,7 @@ const requireText = (source, value, label) => {
 
 // The canvas rebuild of 2026-10-06: the hero and six bands
 // (scripts/lib/homepage-stops.mjs owns their order).
-for (const component of ['HomeHero', 'HomeFlow', 'HomeEventWalk', 'HomeKitchen', 'HomeFrontOfHouse', 'HomeSage', 'HomeClose']) {
+for (const component of ['HomeHero', 'HomeEventWalk', 'HomeKitchen', 'HomeFrontOfHouse', 'HomeSage', 'HomeClose']) {
 	requireText(index, `<${component} />`, 'landing composition');
 }
 

@@ -21,7 +21,6 @@
 // 2026-10-06: the canvas rebuild (docs/stories/homepage-redesign-2026-10.story.md),
 // seven bands alternating cream and soft amber after the hero.
 export const homepageStops = [
-	{ id: 'fits', component: 'HomeFlow' },
 	{ id: 'event-walk', component: 'HomeEventWalk' },
 	{ id: 'kitchen', component: 'HomeKitchen' },
 	{ id: 'front', component: 'HomeFrontOfHouse' },

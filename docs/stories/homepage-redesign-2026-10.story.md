@@ -110,3 +110,11 @@ Priya's yes comes in, then the deposit.
 - **Canvas brackets** "[$ from orders] / [$ from purchases]" are cut: no
   captured record backs a figure.
 - **Final Image (CTA):** `cta.label`, with the trial terms from `launchPlan`.
+
+### Revision 2026-10-06: the workflow rail
+- The connection is now shown, not told: the event walk is one rail, and a
+  carry line between stages names what passes on (Priya Nair · 150 guests;
+  $14,250.00 accepted, asked as $3,500.00 now and $10,750.00 later; the booked
+  wedding; the same menu, quantities and prices locked). Step 10's hand-offs
+  live on the page itself.
+- "How it fits together" (beat 3) is folded into the rail's lede.

@@ -186,24 +186,24 @@ for (const [tag, name] of homeImgs) {
 	}
 }
 
-// Rule 4: the event walk. Five stages in the app's order, every panel in the
-// HTML, and the tab row hidden until the script runs, so nothing is hidden
-// without JavaScript.
+// The event walk as the workflow rail (docs/superpowers/specs/2026-10-06-workflow-rail.md):
+// five stages in the app's order, all in the HTML with nothing hidden, a carry
+// line between each pair, and the amber rings over the frames.
 const walkStages = [...homeHtml.matchAll(/data-event-stage="([a-z]+)"/g)].map((m) => m[1]);
 if (walkStages.join(',') !== 'inquiry,proposal,deposit,confirm,prep') {
 	console.error(`check-dist: the event walk renders stages [${walkStages.join(', ')}]; expected inquiry, proposal, deposit, confirm, prep`);
 	failed = true;
 }
-if (!/<div[^>]*role="tablist"[^>]*\shidden\b/.test(homeHtml)) {
-	console.error('check-dist: the event walk tab row must ship hidden, for the script to reveal');
+if ((homeHtml.match(/data-carry\b/g) ?? []).length !== 4) {
+	console.error('check-dist: the workflow rail needs a carry line between each of its five stages (four)');
 	failed = true;
 }
-if (/data-walk-panel[^>]*\shidden\b|\shidden\b[^>]*data-walk-panel/.test(homeHtml)) {
-	console.error('check-dist: an event walk panel ships hidden; every stage must read without JavaScript');
+if (/data-rail-stage[^>]*\shidden\b|role="tablist"/.test(homeHtml)) {
+	console.error('check-dist: the workflow rail shows every stage; no hidden stage and no tabs');
 	failed = true;
 }
-if ((homeHtml.match(/role="tab"/g) ?? []).length !== 5) {
-	console.error('check-dist: the event walk must have five tabs');
+if (!/class="ring"[^>]*aria-hidden="true"/.test(homeHtml)) {
+	console.error('check-dist: the workflow rail lost its decorative focus rings');
 	failed = true;
 }
 
@@ -256,5 +256,5 @@ console.log(`check-dist: ${pages.length} built page(s) carry no CSP-blocked inli
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
 console.log(`check-dist: /compare renders a spreadsheet column on ${compareRowCount} rows across 5 group tables`);
 console.log(`check-dist: homepage renders ${homepageStopIds.length + 1} alternating bands and ${expectedFrames.length} measured frames, hero eager, the rest lazy`);
-console.log('check-dist: homepage event walk renders five stages, every panel readable without JavaScript');
+console.log('check-dist: homepage workflow rail renders five stages and four carry lines, nothing hidden');
 console.log(`check-dist: shared Sage icon is present across ${sageIconSurfaces.length} homepage and decision-route contexts`);
