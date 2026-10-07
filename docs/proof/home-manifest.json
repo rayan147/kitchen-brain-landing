@@ -42,7 +42,7 @@
     "balance-reminder": "The real reminder email from the app (balance-reminders sweep run with today=2026-10-07, the due day), rendered: the $10,750.00 balance is due Wednesday, October 7, Pay $10,750.00",
     "ordering-site": "Public ordering site (ACTIVE) at desktop: Plan the meal. The kitchen confirms the details; Pickup or Delivery; Menu/Choices/Event/Contact/Review; Coastal Dinner $93.00 per guest",
     "import-review": "Import review of a sample Green Valley Produce invoice GVP-48217: 4 matched, 2 need review, 1 ready to create",
-    "sage-answer": "Sage (Google provider) answering What is short for Saturday? with its source record",
+    "sage-answer": "test.app.costcook.io Sage: 'What is still owed on the Nair & Castellano wedding, and when is it due?' -> still owes $10,750.00; Balance due 2026-12-28 with record link; suggested next step Open the wedding, 'You review it first.' (captured 2026-10-06; matches payment-schedule)",
     "hero-pricing": "Menu Wedding Plated Dinner, Price per guest panel (peer app :4197, develop 57a4c7f34): Food cost $26.93, Sells for $95.00, 28.4% food cost, target 30%, within target with 1.6 points to spare, food margin $68.07 a guest",
     "allergens-labels": "Order #783 Pack tab (peer app :4197, develop 57a4c7f34): six dishes with allergen chips (Contains: Milk; Focaccia and Whipped Goat Cheese Contains: Milk, Wheat; Braised Short Rib No listed allergens), portions and a Label button each",
     "prep-list": "Order #783 Prep tab on a phone 390x844 (peer app :4197, develop 57a4c7f34): Mirepoix Base make first, 6 batches, 18 kg for Braised Short Rib; Carrot 5.4 kg, Celery 48 each, Yellow onion 7.2 kg, Canola oil 720 ml; sticky 0 of 34 \u00b7 Next: Carrot",
@@ -71,16 +71,16 @@
         "proposal-mobile",
         "balance-reminder",
         "import-review",
-        "ordering-site",
-        "sage-answer"
+        "ordering-site"
       ],
       "capturedOn": "2026-10-05"
     },
     "test-app": {
       "host": "test.app.costcook.io",
       "shots": [
+        "invoice-inbox",
         "payment-schedule",
-        "invoice-inbox"
+        "sage-answer"
       ],
       "capturedOn": "2026-10-06",
       "note": "captured in the owner\u2019s signed-in Chrome, read-only, at about 2.3x"

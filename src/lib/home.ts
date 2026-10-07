@@ -213,6 +213,6 @@ export const sageGuide = { href: '/features/sage', label: 'How Sage works' } as 
 
 export const sageShot = shot(
 	'sage-answer',
-	'Sage answering What is short for Saturday? with a link to the record it used.',
-	[1644, 940]
+	'Sage asked what is still owed on the Nair & Castellano wedding: $10,750.00, the balance due on 2026-12-28, with a link to the wedding it read and a suggested next step you review first.',
+	[1194, 533]
 );
