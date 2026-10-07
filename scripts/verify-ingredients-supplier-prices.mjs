@@ -137,7 +137,7 @@ try {
 			menuHref: [...document.querySelectorAll('[data-features-menu] a')].find((link) => link.textContent.includes('Ingredients & supplier prices'))?.getAttribute('href')
 		};
 	})()`);
-	assert(desktop.title === 'Know which supplier price is inside the recipe.', 'desktop: page identity is missing');
+	assert(desktop.title === 'Compare supplier prices by what you can use.', 'desktop: page identity is missing');
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest primary/navigation target is ${desktop.minTarget}px`);
 	assert(desktop.chapters, 'desktop: a required story chapter is missing');
@@ -176,7 +176,7 @@ try {
 		heading: document.querySelector('h1')?.textContent.trim(),
 		capabilityCount: document.querySelectorAll('#features-ingredients li').length
 	}))()`);
-	assert(noScript.heading === 'Know which supplier price is inside the recipe.', 'no JavaScript: hero did not render');
+	assert(noScript.heading === 'Compare supplier prices by what you can use.', 'no JavaScript: hero did not render');
 	assert(noScript.capabilityCount > 0, 'no JavaScript: capability list did not render');
 
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);

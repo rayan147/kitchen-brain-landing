@@ -363,11 +363,18 @@ const faqItems = [
 		.trust-board li em { grid-column: 1 / -1; }
 	}
 
+	/* Two rows on a phone: "Counted + Received" over "− Packed = On hand". The
+	   minus used to take a row of its own and pushed the result below an 844px
+	   screen (verify-inventory). The operator column leads the second row. */
 	@media (max-width: 430px) {
-		.equation { grid-template-columns: 1fr auto 1fr; }
-		.equation > div:nth-of-type(3) { grid-column: 1; }
-		.equation > b:nth-of-type(3) { grid-column: 2; }
-		.equation > div:last-child { grid-column: 3; }
+		.equation { grid-template-columns: auto 1fr auto 1fr; margin-top: .5rem; }
+		.equation > div:nth-of-type(1) { grid-column: 2; }
+		.equation > b:nth-of-type(1) { grid-column: 3; }
+		.equation > div:nth-of-type(2) { grid-column: 4; }
+		.equation > b:nth-of-type(2) { grid-column: 1; }
+		.equation > div:nth-of-type(3) { grid-column: 2; }
+		.equation > b:nth-of-type(3) { grid-column: 3; }
+		.equation > div:last-child { grid-column: 4; }
 	}
 
 	@media (prefers-reduced-motion: reduce) {
