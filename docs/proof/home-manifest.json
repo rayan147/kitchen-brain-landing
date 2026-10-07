@@ -45,7 +45,7 @@
     "sage-answer": "test.app.costcook.io Sage: 'What is still owed on the Nair & Castellano wedding, and when is it due?' -> still owes $10,750.00; Balance due 2026-12-28 with record link; suggested next step Open the wedding, 'You review it first.' (captured 2026-10-06; matches payment-schedule)",
     "hero-pricing": "Menu Wedding Plated Dinner, Price per guest panel (peer app :4197, develop 57a4c7f34): Food cost $26.93, Sells for $95.00, 28.4% food cost, target 30%, within target with 1.6 points to spare, food margin $68.07 a guest",
     "allergens-labels": "Order #783 Pack tab (peer app :4197, develop 57a4c7f34): six dishes with allergen chips (Contains: Milk; Focaccia and Whipped Goat Cheese Contains: Milk, Wheat; Braised Short Rib No listed allergens), portions and a Label button each",
-    "prep-list": "Order #783 Prep tab on a phone 390x844 (peer app :4197, develop 57a4c7f34): Mirepoix Base make first, 6 batches, 18 kg for Braised Short Rib; Carrot 5.4 kg, Celery 48 each, Yellow onion 7.2 kg, Canola oil 720 ml; sticky 0 of 34 \u00b7 Next: Carrot",
+    "prep-list": "Order #783 Prep tab on a phone 390x844 (peer app :4197, develop 57a4c7f34): Mirepoix Base make first, 6 batches, 18 kg for Braised Short Rib; Carrot 5.4 kg, Celery 48 each, Yellow onion 7.2 kg, Canola oil 720 ml; sticky 0 of 34 · Next: Carrot",
     "food-cost-breakdown": "Same menu, Dishes per guest table (peer app :4197): Braised Short Rib 2 x $6.86 = $13.72, Lemon Posset $3.18, Wild Mushroom Polenta $2.93, Creamed Spinach $2.91",
     "yield-lines": "Greek Salad recipe lines (peer app :4197): Bell pepper 82%, Cucumber 90%, Roma tomato 60 g at 91% buy 66 g, Red onion 88%, Feta 100%",
     "invoice-inbox": "test.app.costcook.io Purchases > Invoice inbox: credit memo CM-3104 (forwarded) waiting in review; invoices HF-3102 and HF-3103 (new sender, unverified) waiting in review. Sender shown is the founder's public contact address."
@@ -73,7 +73,8 @@
         "import-review",
         "ordering-site"
       ],
-      "capturedOn": "2026-10-05"
+      "capturedOn": "2026-10-05",
+      "note": "proposal-mobile header (rows 0-129 at 2x) re-shot 2026-10-07 after uploading a sample Harbor & Hearth logo (docs/proof/harbor-hearth-sample-logo.svg) in Settings > Business profile, with kitchen-brain f8ab8b79d (show the kitchen logo on the client offer, on develop and test) applied to the local copy. The offer was already accepted, so only the identical header strip was replaced; the body is the 2026-10-05 capture."
     },
     "test-app": {
       "host": "test.app.costcook.io",
@@ -83,7 +84,7 @@
         "sage-answer"
       ],
       "capturedOn": "2026-10-06",
-      "note": "captured in the owner\u2019s signed-in Chrome, read-only, at about 2.3x"
+      "note": "captured in the owner’s signed-in Chrome, read-only, at about 2.3x"
     }
   }
 }
