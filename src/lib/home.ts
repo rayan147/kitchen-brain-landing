@@ -104,8 +104,8 @@ export const eventStages = [
 		id: 'deposit',
 		carries: 'The booked Nair & Castellano wedding',
 		focus: [
-			{ x: 4.3, y: 14.5, w: 23, h: 17 },
-			{ x: 75, y: 63.8, w: 20.5, h: 9.2 }
+			{ x: 2.2, y: 13.5, w: 23.2, h: 17.6 },
+			{ x: 77, y: 63.7, w: 21.2, h: 10.1 }
 		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Deposit',
@@ -113,8 +113,8 @@ export const eventStages = [
 		body: eventPayments.homepage,
 		shot: shot(
 			'payment-schedule',
-			'Deposit and payments on the booked event: $3,500.00 asked for and received, deposit paid by card from an email link; balance $10,750.00 owed, due Mon, Dec 28, with Request payment.',
-			[916, 459]
+			'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
+			[1378, 716]
 		)
 	},
 	{
@@ -260,6 +260,6 @@ export const sageGuide = { href: '/features/sage', label: 'How Sage works' } as 
 
 export const sageShot = shot(
 	'sage-answer',
-	'Sage asked what is still owed on the Nair & Castellano wedding: $10,750.00, the balance due on 2026-12-28, with a link to the wedding it read and a suggested next step you review first.',
-	[1194, 533]
+	'Sage asked what is still owed on the Nair & Castellano wedding on December 19: a balance of $10,750.00, citing one record (balance due December 9, 2026; the $3,500.00 deposit already paid) with a link to the wedding, and a suggested next step you review first.',
+	[808, 1032]
 );

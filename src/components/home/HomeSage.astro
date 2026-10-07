@@ -29,6 +29,9 @@ import { sageDraftKindsOr, sageStatusWord } from '../../lib/sage';
 
 <style>
 	.sage-grid { display: grid; gap: 2.5rem; align-items: center; }
-	.sage-figure { margin: 0; }
+	/* The frame is Sage's side panel, opened from the app sidebar (2026-10-07),
+	   so it is portrait at panel width. Capped so it reads at the panel's own
+	   size instead of stretching to the column. */
+	.sage-figure { margin: 0; width: 100%; max-width: 26rem; justify-self: center; }
 	@media (min-width: 64rem) { .sage-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 4rem; } }
 </style>

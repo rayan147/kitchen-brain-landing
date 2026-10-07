@@ -36,7 +36,7 @@ with the figure that is visible in both frames.
  ● 02 Proposal          [proposal-mobile]
  │  carries: $14,250.00 accepted
  ● 03 Deposit           [payment-schedule]
- │  carries: $3,500.00 paid · $10,750.00 due Dec 28
+ │  carries: $3,500.00 paid · $10,750.00 due Dec 9
  ● 04 Confirm order     [confirm-dialog]
  │  carries: the same menu, quantities locked
  ● 05 Shop / Prep       [prep-list]
@@ -104,8 +104,8 @@ with the figure that is visible in both frames.
 
 - Fixed 2026-10-06: `.home-shot` and the close's `.plan` used a hard-coded
   shadow; both read `--shadow-lift` now.
-- The inquiry frame (local run, date not decided) and the payments and Sage
-  frames (test, Dec 28) are one wedding from two copies of the app; the carry
+- Fixed 2026-10-07: the payments and Sage frames were test (Dec 28) against a
+  local inquiry; all now come from the local Dec 19 wedding. The carry
   lines must only name figures they share (150 guests, $14,250.00, $3,500.00,
   $10,750.00), never the date.
 

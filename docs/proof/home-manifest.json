@@ -32,11 +32,11 @@
     "inquiry-mobile": "New inquiry form on a phone, filled, never saved (Priya Nair, Nair & Castellano wedding, date not decided, 150 guests)",
     "payment-request": "Event page kitchen draft after Ask for a deposit and send the link: Deposit $3,500.00 owed, card by email link, Sent Oct 5, Send again; Balance $10,750.00 owed, due Wed Oct 7, Request payment",
     "pay-mobile": "Client pay page on a phone (ordering app): Harbor & Hearth Catering has your date / Pay what you agreed / Pay $3,500.00",
-    "payment-schedule": "test.app.costcook.io event Nair & Castellano wedding (booked, Dec 28), Deposit and payments: Asked for $3,500.00, Received $3,500.00, Deposit Paid by card from email link, Balance $10,750.00 owed due Mon Dec 28, Request payment",
+    "payment-schedule": "local 4191 event d240353e (Nair & Castellano wedding, Sat Dec 19, 2026), Deposit block: Asked for $3,500.00, Received $3,500.00, Paid in full; Deposit Paid, card by email link; Balance $10,750.00 owed, card by email link, due Wed Dec 9, Not requested yet, Request payment. Deposit paid with Stripe test card 4242 in test mode; the missed checkout.session.completed was resent to the local listener (2026-10-07).",
     "balance-reminder": "The real reminder email from the app (balance-reminders sweep run with today=2026-10-07, the due day), rendered: the $10,750.00 balance is due Wednesday, October 7, Pay $10,750.00",
     "ordering-site": "Public ordering site (ACTIVE) at desktop: Plan the meal. The kitchen confirms the details; Pickup or Delivery; Menu/Choices/Event/Contact/Review; Coastal Dinner $93.00 per guest",
     "import-review": "Import review of a sample Green Valley Produce invoice GVP-48217: 4 matched, 2 need review, 1 ready to create",
-    "sage-answer": "test.app.costcook.io Sage: 'What is still owed on the Nair & Castellano wedding, and when is it due?' -> still owes $10,750.00; Balance due 2026-12-28 with record link; suggested next step Open the wedding, 'You review it first.' (captured 2026-10-06; matches payment-schedule)",
+    "sage-answer": "local 4191 Sage panel, opened from the app sidebar (Sage, Ctrl J) on Events, new thread: 'What is still owed on the Nair & Castellano wedding on December 19, and when is it due?' -> a balance of $10,750.00; one cited record: balance due December 9, 2026, deposit of $3,500.00 already paid, link to the wedding; suggested next step 'View order details and money', 'You review it first.' A first ask called the kitchen draft a confirmed order, which it is not; that answer was not used (2026-10-07).",
     "hero-pricing": "Menu Wedding Plated Dinner, Price per guest panel (local 4191, 2026-10-07 after the chef-review data fixes): Food cost $24.92, Sells for $95.00, 26.2% food cost, target 30%, 3.8 points to spare, food margin $70.08 a guest",
     "allergens-labels": "Order #784 (Dec 19 wedding) Pack tab dishes card (local 4191): six dishes, allergen chips, Lemon Posset 150 portions; phone variant the same list",
     "prep-list": "Order #784 Prep tab on a phone (local 4191): Mirepoix Base make first, 6 batches, 18 kg; Carrot 5.4 kg, Celery 3.3 each, Yellow onion 7.2 kg, Canola oil 720 ml",
@@ -72,12 +72,10 @@
       "host": "test.app.costcook.io",
       "shots": [
         "invoice-inbox",
-        "payment-schedule",
-        "sage-answer",
         "invoice-inbox-phone"
       ],
       "capturedOn": "2026-10-06",
-      "note": "captured in the owner\u2019s signed-in Chrome, read-only, at about 2.3x; invoice-inbox-phone is one crop of invoice-inbox (x 0-760, full height): every line the alt names is in the left column, the dropped right column repeats In review / Review"
+      "note": "captured in the owner\u2019s signed-in Chrome, read-only, at about 2.3x; invoice-inbox-phone is one crop of invoice-inbox (x 0-760, full height): every line the alt names is in the left column, the dropped right column repeats In review / Review | 2026-10-07: payment-schedule and sage-answer moved to local-4191-2026-10-07 (the test wedding is Dec 28 and its agreement-locked balance date cannot move)."
     },
     "local-4191-phone": {
       "appSha": "e002990784f6848dbeec063d68ce7144d2da77be (ordering app on :4192)",
@@ -102,7 +100,9 @@
         "allergens-labels",
         "allergens-labels-phone",
         "prep-list",
-        "proposal-mobile"
+        "proposal-mobile",
+        "payment-schedule",
+        "sage-answer"
       ]
     }
   },

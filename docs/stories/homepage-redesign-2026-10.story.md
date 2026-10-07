@@ -130,7 +130,10 @@ Priya's yes comes in, then the deposit.
   lost their 02 to 05, which read as a second sequence.
 - **One wedding date:** the chef caught the proposal frame (respond by Oct 12
   for an Oct 10 wedding) disagreeing with the payment and Sage frames (Dec 28).
-  The proposal is re-shot on a Dec 28 wedding (see the manifest).
+  The proposal is re-shot on a Dec 28 wedding (see the manifest). Superseded
+  the same day: the whole walk now runs on the local Dec 19 wedding (balance
+  due Wed, Dec 9), and the deposit and Sage frames were re-shot there, Sage
+  opened from the app sidebar.
 
 ### Revision 2026-10-07 (2): the chef's copy notes, owner rulings
 - **The card says why:** "The card starts the subscription, and you pay $0
