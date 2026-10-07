@@ -84,6 +84,11 @@
 @layer base {
 	html {
 		scroll-behavior: smooth;
+		/* The canvas the browser shows past the page (overscroll bounce, the
+		   moment between pages): cream behind the cream header, off-white
+		   behind the footer. Left to the body's off-white it flashed gray above
+		   the cream bar (owner, 2026-10-07). The body still paints off-white. */
+		background: linear-gradient(var(--color-cream) 50%, var(--color-offwhite) 50%) fixed;
 	}
 	@media (prefers-reduced-motion: reduce) {
 		html {

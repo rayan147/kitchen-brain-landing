@@ -61,7 +61,9 @@ const ogImage = new URL('/og.png', site.url).href;
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
 		<link rel="preload" href={instrumentLatin} as="font" type="font/woff2" crossorigin />
-		<meta name="theme-color" content="#F4F6F4" />
+		<!-- Cream, the header every route opens on: browsers tint their bar with
+		     it, and gray-green flashed against the cream page (owner, 2026-10-07). -->
+		<meta name="theme-color" content="#FAF5EA" />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content={site.name} />
