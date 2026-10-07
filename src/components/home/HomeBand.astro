@@ -66,6 +66,16 @@ const headingId = `${id}-heading`;
 		font-weight: 600;
 		text-wrap: balance;
 	}
+	/* Step and row headings: the h2's face one size down (review 2026-10-07),
+	   so the scan path sees where a band starts. */
+	.home-h3 {
+		margin-top: .75rem;
+		font-family: var(--font-display);
+		font-size: var(--text-h3-step);
+		line-height: var(--text-h3-step--line-height);
+		font-weight: 600;
+		text-wrap: balance;
+	}
 	.home-body {
 		color: var(--color-ink-soft);
 		font-size: var(--text-body-lg);

@@ -5,6 +5,9 @@
  * a screenshot. The founder line is the site's verified wording
  * (BuiltForKitchens); every figure on the card is read from launchPlan.
  *
+ * The heading points at the trial, not the demo, and the quiet links follow
+ * the plan card in the document (review 2026-10-07).
+ *
  * Considered Composite; not used because it is two fixed columns.
  */
 import HomeBand from './HomeBand.astro';
@@ -12,7 +15,7 @@ import { cta, demoCta, launchPlan, site } from '../../lib/site';
 ---
 <HomeBand id="start" tone="amber" labelledBy="start-heading">
 	<div class="close-grid" data-home-close>
-		<div>
+		<div class="close-copy">
 			<figure class="founder" data-founder-trust>
 				<img src="/founder.jpg" alt={`${site.founderName}, chef and founder of CostCook`} width="384" height="384" loading="lazy" decoding="async" class="founder-photo" />
 				<figcaption>
@@ -20,13 +23,9 @@ import { cta, demoCta, launchPlan, site } from '../../lib/site';
 					<p class="home-small mt-2">{site.founderName}, chef and founder</p>
 				</figcaption>
 			</figure>
-			<h2 id="start-heading" class="home-h2 mt-10">Bring one real invoice. See it in 15 minutes.</h2>
+			<h2 id="start-heading" class="home-h2 mt-10">Cost your first dish before your next quote.</h2>
 			<p class="home-body mt-4">For caterers and restaurants that cater. One kitchen per plan.</p>
 			<p class="home-body mt-4" data-real-order-setup>Your first dish takes about fifteen minutes: upload its invoices or price sheets, confirm what CostCook read, and type any line it could not.</p>
-			<div class="mt-6 flex flex-wrap gap-x-5 gap-y-3">
-				<a href={demoCta.href} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
-				<a href="/features" class="btn-quiet">See everything it does, area by area</a>
-			</div>
 		</div>
 		<div class="plan" data-real-order-trial>
 			<p class="home-eyebrow">Launch plan</p>
@@ -41,6 +40,10 @@ import { cta, demoCta, launchPlan, site } from '../../lib/site';
 			<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary plan-cta">{cta.label}</a>
 			<p class="home-small mt-3">Card up front, charged $0 today. Cancel before day {launchPlan.trialDays + 1} from Settings, Billing.</p>
 			<p class="home-small mt-2">Questions first? <a href="/faq" class="home-guide">Read the FAQ</a></p>
+		</div>
+		<div class="close-more flex flex-wrap gap-x-5 gap-y-3">
+			<a href={demoCta.href} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+			<a href="/features" class="btn-quiet">See everything it does, area by area</a>
 		</div>
 	</div>
 </HomeBand>
@@ -57,5 +60,19 @@ import { cta, demoCta, launchPlan, site } from '../../lib/site';
 	.plan-terms dt { color: var(--color-ink-soft); }
 	.plan-terms dd { font-weight: 600; }
 	.plan-cta { width: 100%; justify-content: center; }
-	@media (min-width: 64rem) { .close-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 5rem; } }
+	/* Reading order (review 2026-10-07): copy, then the plan and its primary,
+	   then the quiet links, so on a phone the trial comes before the demo. On
+	   desktop the links sit back under the copy, beside the plan. */
+	@media (min-width: 64rem) {
+		.close-grid {
+			grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+			grid-template-areas: 'copy plan' 'more plan';
+			grid-template-rows: auto 1fr;
+			column-gap: 5rem;
+			row-gap: 1.5rem;
+		}
+		.close-copy { grid-area: copy; }
+		.plan { grid-area: plan; }
+		.close-more { grid-area: more; align-self: start; }
+	}
 </style>

@@ -1,15 +1,14 @@
 ---
 /**
- * Phone-only bar carrying the primary action between the demo and the close.
+ * Phone-only bar carrying the primary action between the hero and the close.
  *
- * MEASURED 2026-08-29 at 390x844: the demo section's CTA ended near 4,500px
- * and the next one appeared at ~11,500px of a ~12,700px page, so a reader who
- * had just watched the proof scrolled seven thousand pixels with nothing to
- * act on. This bar appears once #event-walk (the first proof band since the
- * 2026-10-06 rebuild; it was #demo) has scrolled off the top and hides
- * again once #start is in view, which is the only stretch where the page has
- * no primary of its own. It never shows on the first screen, never over the
- * close, and never above md, where the page is short enough to see the ask.
+ * MEASURED 2026-10-07 at 390x844 (design review): keyed to the bottom of
+ * #event-walk, the bar first showed at y=5,921, so the reader went through all
+ * five rail steps, about 4,650px, with nothing to tap. It now appears once the
+ * hero's own primary ([data-hero-cta]) has scrolled off the top, and hides
+ * again once #start is in view, so exactly one primary is in reach from the
+ * hero to the close. It never shows while the hero's button is on screen,
+ * never over the close, and never above md.
  *
  * ONE ACTION, SAME WORDS. It renders cta.label from site.ts like every other
  * primary, so the page still opens, middles and closes on one action and the
@@ -51,9 +50,9 @@ import { cta, launchPlan } from '../lib/site';
 
 <script>
 	const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
-	const demo = document.getElementById('event-walk');
+	const heroCta = document.querySelector<HTMLElement>('[data-hero-cta]');
 	const start = document.getElementById('start');
-	if (bar && demo && start) {
+	if (bar && heroCta && start) {
 		// A scroll listener, not an IntersectionObserver. The observer only fires
 		// on threshold crossings, so an anchor jump from above the demo to below
 		// it (the hand-off links, the tour link, a deep link) skips the crossing
@@ -61,9 +60,9 @@ import { cta, launchPlan } from '../lib/site';
 		let queued = false;
 		const update = () => {
 			queued = false;
-			const pastDemo = demo.getBoundingClientRect().bottom < 0;
+			const pastHeroCta = heroCta.getBoundingClientRect().bottom < 0;
 			const reachedClose = start.getBoundingClientRect().top < window.innerHeight;
-			bar.hidden = !(pastDemo && !reachedClose);
+			bar.hidden = !(pastHeroCta && !reachedClose);
 		};
 		const schedule = () => {
 			if (!queued) {

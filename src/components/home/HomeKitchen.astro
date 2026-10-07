@@ -8,6 +8,9 @@
  * Canvas row 06 (should have cost against did cost, with "[$ from orders]" and
  * "[$ from purchases]") is not here: no captured record backs those figures.
  *
+ * The rows carry no numbers: only the rail's steps are numbered, so a number
+ * on this page always means a step of the one wedding (review 2026-10-07).
+ *
  * Considered Composite; not used because the rows are one flat list.
  */
 import HomeBand from './HomeBand.astro';
@@ -22,12 +25,12 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 	lede="The same recipes that price the proposal cost the plate, size the order and write the allergen sheet."
 >
 	<ol role="list" class="rows">
-		{kitchenRows.map((row, index) => (
+		{kitchenRows.map((row) => (
 			<li class="row" data-kitchen-row={row.id} data-reveal>
 				<div class="row-copy">
-					<p class="home-eyebrow">{String(index + 2).padStart(2, '0')} · {row.eyebrow}</p>
+					<p class="home-eyebrow">{row.eyebrow}</p>
 					<p class="home-body pain">{row.pain}</p>
-					<h3 class="home-h2">{row.heading}</h3>
+					<h3 class="home-h3">{row.heading}</h3>
 					<p class="home-body mt-4">{row.body}</p>
 					<a href={row.guide.href} class="home-guide">{row.guide.label}</a>
 				</div>

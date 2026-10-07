@@ -21,7 +21,7 @@ import { frontOfHouse } from '../../lib/home';
 		{frontOfHouse.map((card) => (
 			<article class="card" data-front={card.id} data-reveal>
 				<img src={card.shot.src} alt={card.shot.alt} width={card.shot.width} height={card.shot.height} loading="lazy" decoding="async" class="home-shot card-shot" />
-				<h3 class="home-h2">{card.heading}</h3>
+				<h3 class="home-h3">{card.heading}</h3>
 				<p class="home-body mt-3">{card.body}</p>
 				{'guide' in card && <a href={card.guide.href} class="home-guide">{card.guide.label}</a>}
 			</article>

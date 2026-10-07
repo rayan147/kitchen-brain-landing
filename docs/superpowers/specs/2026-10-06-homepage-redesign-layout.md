@@ -13,7 +13,9 @@ back up and Confirm order is done, and the 12 screenshots are retaken.
    paper color and the soft amber. The dashed ticket rule appears only on the
    ticket device.
 2. **About four type sizes.** Fraunces display and Instrument Sans body, with
-   one section padding value used for every section.
+   one section padding value used for every section. Revised 2026-10-07 (design
+   review): five sizes. Step and row h3s use `--text-h3-step`, one stop under
+   the band h2, because 16 headings at one size hid where each band starts.
 3. **One section shape.** Amber eyebrow, Fraunces heading, one sentence, one
    screenshot.
 4. **Stage tabs for the event walk.** Inquiry → Proposal → Deposit →

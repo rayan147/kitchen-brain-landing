@@ -52,6 +52,12 @@
 	--text-display--letter-spacing: -0.01em;
 	--text-h2: clamp(1.75rem, 1.35rem + 1.8vw, 2.625rem);
 	--text-h2--line-height: 1.12;
+	/* Homepage step and row headings (rail stages, kitchen rows, front-of-house
+	   cards): one stop under --text-h2 so a band's h2 still outranks the h3s
+	   inside it. --text-h3 (24px max) read as body-adjacent next to 18px copy
+	   in the 2026-10-07 design review; this sits between the two. */
+	--text-h3-step: clamp(1.375rem, 1.2rem + 0.8vw, 2rem);
+	--text-h3-step--line-height: 1.18;
 	--text-h3: clamp(1.25rem, 1.13rem + 0.55vw, 1.5rem);
 	--text-h3--line-height: 1.25;
 	--text-lede: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);

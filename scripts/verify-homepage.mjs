@@ -174,16 +174,18 @@ try {
 
 	await navigate();
 	const sticky = await evaluate(`(() => new Promise((resolve) => {
-		const demo = document.querySelector('#event-walk');
+		// Partway into the rail (its second stage), not after it: the bar must
+		// carry the primary through the event walk, where the page has none.
+		const stage = document.querySelectorAll('#event-walk [data-rail-stage]')[1];
 		document.documentElement.style.scrollBehavior = 'auto';
-		scrollTo(0, demo.offsetTop + demo.offsetHeight + 10);
+		scrollTo(0, stage.getBoundingClientRect().top + scrollY);
 		requestAnimationFrame(() => requestAnimationFrame(() => {
 			const bar = document.querySelector('[data-sticky-cta]');
 			const action = bar.querySelector('a');
 			resolve({ hidden: bar.hidden, actionHeight: action.getBoundingClientRect().height });
 		}));
 	}))()`);
-	assert(!sticky.hidden, 'mobile sticky action does not appear after the event walk');
+	assert(!sticky.hidden, 'mobile sticky action does not appear inside the event walk');
 	assert(sticky.actionHeight >= 44, `mobile sticky action is ${sticky.actionHeight}px tall`);
 
 	await viewport(320, 844, true);

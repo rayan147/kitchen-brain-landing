@@ -34,7 +34,7 @@ import { eventStages } from '../../lib/home';
 				<span class="node" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
 				<div class="stage-copy">
 					<p class="home-eyebrow">{String(index + 1).padStart(2, '0')} · {stage.tab}</p>
-					<h3 class="home-h2">{stage.heading}</h3>
+					<h3 class="home-h3">{stage.heading}</h3>
 					<p class="home-body mt-4" data-booking-payments={stage.id === 'deposit' ? 'event-payments' : undefined}>{stage.body}</p>
 					<a href={stage.guide.href} class="home-guide">{stage.guide.label}</a>
 				</div>
