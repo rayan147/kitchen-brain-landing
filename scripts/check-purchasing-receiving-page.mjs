@@ -19,7 +19,7 @@ const required = [
 	'recorded as queued before CostCook attempts the email',
 	'same record keeps the failure and remains safe to retry',
 	'Walk back into prep with one record.',
-	'Book a 15-min demo',
+	'Book 15 minutes',
 	'days free, then',
 	'$45.00',
 	'$47.00',

@@ -94,9 +94,13 @@ export const signIn = {
 	target: '_self'
 } as const;
 
+// "Book 15 minutes", the label CLAUDE.md names (third chef review
+// 2026-10-07: "Book a 15-min demo" read like the sales funnel a burned
+// caterer runs from). The accessible name starts with the visible words, so
+// speech input can say what it sees (WCAG 2.5.3).
 export const demoCta = {
-	label: 'Book a 15-min demo',
-	ariaLabel: 'Book a demo: prepare a 15-minute CostCook session',
+	label: 'Book 15 minutes',
+	ariaLabel: 'Book 15 minutes: prepare a CostCook session with Rayan',
 	href: '/demo',
 	target: '_self',
 	rel: undefined
@@ -187,7 +191,9 @@ const resourceNav = [
 		label: 'Contact',
 		href: contactCta.href,
 		header: 'resources',
-		group: 'Make the decision',
+		// Its own group, the footer's and the Menu's "Talk to us" (design review
+		// 2026-10-07: it sat under "Make the decision" in this dropdown only).
+		group: 'Talk to us',
 		icon: 'contact',
 		description: 'Email or call Rayan when your question needs a person.'
 	}
@@ -206,7 +212,7 @@ export const nav: readonly { label: string; href: string; header: 'direct' | 'bl
 export const resourcesMenu = {
 	label: 'Resources',
 	ariaLabel: 'CostCook resources',
-	groups: ['See it work', 'Make the decision'] as const,
+	groups: ['See it work', 'Make the decision', 'Talk to us'] as const,
 	items: resourceNav
 } as const;
 
@@ -238,15 +244,14 @@ export type SiteLink = {
  * The site map in four groups, read by the phone Menu and the footer, so the
  * two lists of every destination cannot disagree (design review 2026-10-07:
  * the Menu was one flat run of eleven links while the footer had grouped the
- * same links). The two resource groups are the header's own Resources groups,
- * except Contact, which joins the email and phone under "Talk to us" where a
- * reader looking for a person looks. Sign in and the demo link are actions,
+ * same links). The resource groups are the header's own Resources groups;
+ * "Talk to us" adds the phone and email to Contact, where a reader looking for
+ * a person looks. Sign in and the demo link are actions,
  * not destinations: each renderer places them itself.
  *
  * Considered Composite; not used because the map is one fixed level of
  * headings over links, and both renderers loop it the same way.
  */
-const contactItem = resourceNav.find((item) => item.href === contactCta.href);
 export const siteMap: readonly { heading: string; links: readonly SiteLink[] }[] = [
 	{
 		heading: 'Product',
@@ -257,16 +262,16 @@ export const siteMap: readonly { heading: string; links: readonly SiteLink[] }[]
 	},
 	...resourcesMenu.groups.map((group) => ({
 		heading: group,
-		links: resourceNav.filter((item) => item.group === group && item !== contactItem)
-	})),
-	{
-		heading: 'Talk to us',
 		links: [
-			...(contactItem ? [{ label: contactItem.label, href: contactItem.href }] : []),
-			{ label: site.phone, href: site.phoneHref },
-			{ label: site.email, href: `mailto:${site.email}` }
+			...resourceNav.filter((item) => item.group === group),
+			...(group === 'Talk to us'
+				? [
+						{ label: site.phone, href: site.phoneHref },
+						{ label: site.email, href: `mailto:${site.email}` }
+					]
+				: [])
 		]
-	}
+	}))
 ];
 
 /**

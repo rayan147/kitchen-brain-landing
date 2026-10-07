@@ -112,8 +112,8 @@ export const eventStages = [
 		// The same two figures on the phone capture (design review 2026-10-07:
 		// the wide frame drew 6px labels at 390px). Measured from its pixels.
 		smallFocus: [
-			{ x: 1.1, y: 9.6, w: 97.9, h: 31 },
-			{ x: 59.8, y: 69.3, w: 39.1, h: 9.1 }
+			{ x: 2.4, y: 9.6, w: 95.2, h: 31 },
+			{ x: 59.8, y: 69.3, w: 37.8, h: 9.1 }
 		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Deposit',
@@ -137,7 +137,9 @@ export const eventStages = [
 		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
 		tab: 'Confirm order',
 		heading: acceptanceBoundary,
-		body: 'Confirming locks quantities and prices for the event. Shopping, prep and pack lists become checklists.',
+		// When, as advice, not a rule the app enforces (third chef review: "am I
+		// locked on a guess?").
+		body: 'Confirm once the final count is in. Confirming locks quantities and prices for the event, and the shopping, prep and pack lists become checklists.',
 		shot: shot(
 			'confirm-dialog',
 			'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
@@ -193,10 +195,12 @@ export const kitchenRows = [
 		shot: withPhone(
 			shot(
 				'yield-lines',
-				'Recipe lines with yield and the amount to buy: Roma tomato 60 g used at 91% yield, buy 66 g; bell pepper 82%; cucumber 90%.',
+				'A recipe line with its yield and the amount to buy: Roma tomato, 60 g used at 91% yield, buy 66 g.',
 				[1540, 890]
 			),
-			[716, 1600]
+			// Cropped to the tomato line: the cucumber's 0.3 each rounded to the
+			// same 0.3 to buy, so the yield did nothing on screen (third chef review).
+			[716, 512]
 		)
 	},
 	{
@@ -237,11 +241,13 @@ export const frontOfHouse = [
 	{
 		id: 'ordering',
 		heading: 'Online ordering',
-		body: 'Clients pick one of your set menus (here the Coastal Dinner, a separate menu from the wedding), a date and pickup or delivery on your own ordering page. You approve, and their card payment confirms it.',
+		// "Confirm" is the event walk's word for booking, so this row says
+		// "approve" and "pay" (third chef review 2026-10-07).
+		body: 'Clients pick a set menu, like a $93 Coastal Dinner, a date and pickup or delivery on your own ordering page. You approve the request, and they pay by card.',
 		shot: withPhone(
 			shot(
 				'ordering-site',
-				'Your online ordering site: plan the meal, pickup or delivery, Coastal Dinner at $93.00 a guest.',
+				'Your online ordering site: a 20 guest minimum, 72 hours notice, pickup or delivery, and the Coastal Dinner at $93.00 a guest.',
 				[2432, 1630]
 			),
 			[780, 1810]

@@ -129,7 +129,7 @@ try {
 		const details = document.querySelector('[data-features-menu]');
 		details.open = true;
 		const panel = details.querySelector('summary + div');
-		const sections = [...panel.querySelectorAll(':scope > div:first-child > section')];
+		const sections = [...panel.querySelectorAll(':scope > div:first-of-type > section')];
 		const links = [...panel.querySelectorAll('a')];
 		const rect = panel.getBoundingClientRect();
 		return {
@@ -197,7 +197,7 @@ try {
 			requestAnimationFrame(() => {
 				const panel = details.querySelector('summary + div');
 				const rect = panel.getBoundingClientRect();
-				const sections = [...panel.querySelectorAll(':scope > div:first-child > section')];
+				const sections = [...panel.querySelectorAll(':scope > div:first-of-type > section')];
 				resolve({
 					linkCount: details.querySelectorAll('a').length,
 					icons: details.querySelectorAll('a svg').length,
@@ -232,7 +232,7 @@ try {
 			const details = document.querySelector('[data-features-menu]');
 			details.open = true;
 			const panel = details.querySelector('summary + div');
-			const sections = [...panel.querySelectorAll(':scope > div:first-child > section')];
+			const sections = [...panel.querySelectorAll(':scope > div:first-of-type > section')];
 			const rect = panel.getBoundingClientRect();
 			return {
 				left: rect.left,
@@ -318,7 +318,7 @@ try {
 		const details = document.querySelector('[data-features-menu]');
 		details.open = true;
 		const panel = details.querySelector('summary + div');
-		const sections = [...panel.querySelectorAll(':scope > div:first-child > section')];
+		const sections = [...panel.querySelectorAll(':scope > div:first-of-type > section')];
 		const rect = panel.getBoundingClientRect();
 		return {
 			flatTourVisible: Boolean(

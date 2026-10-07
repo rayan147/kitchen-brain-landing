@@ -50,8 +50,8 @@ try {
     // any further section has to pay for itself by cutting elsewhere.
     if (width === 390) assert(geometry.pageHeight < 18500, 'default mobile read must stay below the 18,500px budget');
     await page.screenshot({ path: `${evidence}/after-${width}.png` });
-    const booking = page.getByRole('banner').getByRole('link', { name: 'Book a demo: prepare a 15-minute CostCook session', exact: true });
-    assert.equal((await booking.innerText()).trim(), 'Book a 15-min demo');
+    const booking = page.getByRole('banner').getByRole('link', { name: 'Book 15 minutes: prepare a CostCook session with Rayan', exact: true });
+    assert.equal((await booking.innerText()).trim(), 'Book 15 minutes');
     assert.equal(await booking.getAttribute('href'), '/demo');
     const guide = page.locator('[data-demo-guide-disclosure]');
     assert.equal(await guide.evaluate(element => element.open), false, 'written tour is optional at every width');

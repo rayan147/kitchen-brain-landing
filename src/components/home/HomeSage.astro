@@ -15,7 +15,9 @@ import { sageDraftKindsOr, sageStatusWord } from '../../lib/sage';
 	<div class="sage-grid" data-home-sage>
 		<div>
 			<SageIcon size={44} context="homepage" />
-			<p class="home-eyebrow mt-4">Sage, the kitchen assistant · {sageStatusWord}</p>
+			<!-- The status prints only while Sage is Coming: "Available now" over a
+			     shipped feature read as marketing (third chef review 2026-10-07). -->
+			<p class="home-eyebrow mt-4">Sage, the kitchen assistant{sageStatusWord === 'Coming' && <> · {sageStatusWord}</>}</p>
 			<h2 id="sage-heading" class="home-h2">Ask what the wedding still owes. It shows you the record.</h2>
 			<p class="home-body mt-4">It reads only your kitchen’s records and shows where each number came from. It can draft {sageDraftKindsOr}, and nothing changes until a manager or owner approves it.</p>
 			<a href={sageGuide.href} class="home-guide">{sageGuide.label}</a>

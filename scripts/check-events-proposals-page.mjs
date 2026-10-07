@@ -51,8 +51,8 @@ for (const [pattern, label] of moneyClaims) {
 }
 
 // The acceptance boundary.
-if (!html.includes('Their yes is not a signature or a booking. Confirm order is.')) {
-	fail('the "not a signature or a booking" boundary is gone');
+if (!html.includes('Their yes books nothing. Confirm order does.')) {
+	fail('the "their yes books nothing" boundary is gone');
 }
 
 // The six steps, in the app's order, and no seventh.

@@ -17,7 +17,7 @@ const required = [
 	'id="faq-heading"',
 	'Do Shop, Prep, and Pack use the same order?',
 	'Close the van on the same plan you priced, shopped, and cooked.',
-	'Book a 15-min demo',
+	'Book 15 minutes',
 	'days free, then',
 	'order-shop-prep-pack-handoff',
 	'docs/stories/order-shop-prep-pack.story.md'

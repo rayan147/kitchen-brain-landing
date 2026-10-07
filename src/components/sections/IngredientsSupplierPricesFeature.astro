@@ -78,7 +78,7 @@ const faqItems = [
 						aria-label={demoCta.ariaLabel}
 						class="btn-outline"
 					>
-						Book a 15-min demo
+						{demoCta.label}
 					</a>
 				</div>
 				<FeatureTrialTerms />
@@ -278,7 +278,7 @@ const faqItems = [
 		<div class="container-page closing-grid" data-reveal>
 			<div><h2 id="closing-heading">A price you can trace. A quote you can defend.</h2><p>Bring one supplier sheet and one real ingredient. Follow the case price into the recipe with the working shown.</p></div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a>
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
 			</div>
 		</div>

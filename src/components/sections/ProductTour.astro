@@ -21,7 +21,7 @@ import SageIcon from '../SageIcon.astro';
 				</p>
 				<div class="tour-hero-actions">
 					<a href="#guided-tour" class="btn-primary">Start the guided tour</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
 				</div>
 			</div>
 			<div class="tour-ticket anim-enter" style="--enter-delay: 120ms" aria-label="Illustrative tour dataset summary">
@@ -179,7 +179,7 @@ import SageIcon from '../SageIcon.astro';
             <div class="closing-decision">
                 <div class="tour-close-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
 			</div>
                 <FeatureTrialTerms />
             </div>

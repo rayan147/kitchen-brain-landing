@@ -38,7 +38,7 @@ const required = [
 	'What is nutrition facts software?',
 	'Can I print a nutrition label today?',
 	'Print the answer. Keep the evidence.',
-	'Book a 15-min demo',
+	'Book 15 minutes',
 	'days free, then',
 	'Open full recipe capture',
 	'Open full Nutrition Facts panel',

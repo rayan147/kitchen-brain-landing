@@ -129,3 +129,9 @@ instead. Pinned by `scripts/check-events-proposals-page.mjs`.)
   the balance of a booked event, and a reminder email before the balance is
   due." (it said "events you book by hand"; booking is Confirm order, only the
   deposit is recorded by hand). The demo link renders `demoCta.label`.
+
+### Revision 2026-10-07: the snap line, reworded
+"Their yes is not a signature or a booking. Confirm order is." read to a chef
+reviewer as if Confirm order were the signature. The line is now "Their yes
+books nothing. Confirm order does." (`acceptanceBoundary`, shared by this
+page, /compare and the homepage rail). The signature is the Agreement step.

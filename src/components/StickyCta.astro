@@ -32,7 +32,9 @@ import { cta, launchPlan } from '../lib/site';
 	class="fixed inset-x-0 bottom-0 z-30 border-t border-ticket-rule bg-cream/95 px-[clamp(1rem,4vw,1.5rem)] py-2.5 shadow-ticket backdrop-blur-sm md:hidden"
 	style="padding-bottom: max(0.625rem, env(safe-area-inset-bottom))"
 >
-	<div class="mx-auto flex max-w-lg items-center justify-between gap-3">
+	<!-- Wraps at 200% text: the button used to keep its one line and run off the
+	     right edge (design review 2026-10-07). -->
+	<div class="mx-auto flex max-w-lg flex-wrap items-center justify-between gap-x-3 gap-y-2">
 		<p class="text-sm leading-snug text-ink-soft">
 			<strong class="font-semibold text-ink">{launchPlan.trialDays} days free.</strong> Charged $0 today.
 		</p>
@@ -41,7 +43,7 @@ import { cta, launchPlan } from '../lib/site';
 			target={cta.target}
 			rel={cta.rel}
 			aria-label={cta.ariaLabel}
-			class="btn-primary min-h-11 shrink-0 justify-center px-4 py-2.5 text-sm whitespace-nowrap"
+			class="btn-primary min-h-11 max-w-full justify-center px-4 py-2.5 text-center text-sm"
 		>
 			{cta.label}
 		</a>

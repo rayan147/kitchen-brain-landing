@@ -200,3 +200,23 @@ Priya's yes comes in, then the deposit.
   grams remain.
 - **Deposit legible on a phone:** the deposit block has its own phone capture
   below 48rem, with rings measured on it.
+
+### Revision 2026-10-07 (5): third designer and chef review
+- **"Book 15 minutes"** everywhere (demoCta.label, the label CLAUDE.md names);
+  "Book a 15-min demo" read like a funnel. Its accessible name starts with
+  the same words.
+- **The boundary, plainer:** "Their yes books nothing. Confirm order does."
+  Step 04 adds when: "Confirm once the final count is in."
+- **The walk ends where its last frame does:** "From the first call to the
+  shopping list."
+- **The agreement line says what happens:** the accepted proposal goes with it
+  as Schedule A (the app's default).
+- **No "Available now"** over Sage; the status prints only while it is Coming.
+- **Ordering row:** "Clients pick a set menu, like a $93 Coastal Dinner, ...
+  You approve the request, and they pay by card." "Confirm" now means one
+  thing on the page. The sample storefront asks for 20 guests and 72 hours.
+- **Yield on a phone:** cropped to the tomato line, where the yield visibly
+  moves the amount to buy.
+- **Navigation:** the bar stays tappable over the backdrop, the page does not
+  scroll under an open panel, Features opens like Menu below lg, Contact has
+  its own "Talk to us" group in Resources, and Menu lists its actions first.
