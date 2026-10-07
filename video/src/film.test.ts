@@ -295,10 +295,11 @@ describe("second review fixes (2026-10-07)", () => {
     expect(cameraOrigin("menu", 1)).toEqual({ x: 22, y: 50 });
   });
   // Caterer: staff, rentals and the fee are claimed only now that the offer
-  // frame runs down to its total and shows them as lines.
-  it("names staff and rentals, which the offer frame now shows", () => {
+  // frame runs down to its total and shows them as lines. Third round: the
+  // staff line prints "56 × $38.00", so the caption says what 56 is.
+  it("names staff by people and hours, and the rentals", () => {
     expect(captionsFor("decision", manifest).join(" ")).toMatch(
-      /staff and rentals/,
+      /Eight staff, seven hours, the rentals/,
     );
   });
   // Caterer: her note asks for something for the vegetarians; the pack beat
@@ -318,5 +319,30 @@ describe("closeout caption placement", () => {
   // Motion S3: at the bottom the caption covered the ringed share.
   it("puts the closeout caption on top, off the card's figures", () => {
     expect(FILM.close.beats[0].captionAt).toBe("top");
+  });
+});
+
+describe("third review fixes (2026-10-07)", () => {
+  // Caterer: the agreement frame is re-shot signed, so the caption is past.
+  it("says the agreement is signed, as its frame now shows", () => {
+    expect(captionsFor("agreement", manifest)[0]).toMatch(/Signed online/);
+  });
+  // Caterer: the reminder goes out on the due date, so no lead time is claimed.
+  it("claims no lead time for the balance reminder", () => {
+    expect(captionsFor("agreement", manifest).join(" ")).not.toMatch(
+      /reminder goes out .* before/,
+    );
+  });
+  // Caterer: the split behind 0.92 portions, on the frame that prints it.
+  it("names the 138 / 12 split on the prep list", () => {
+    expect(captionsFor("prep", manifest)[0]).toMatch(
+      /138 short rib, 12 stuffed peppers/,
+    );
+  });
+  // Caterer: the vegetarian main is called out on her own offer.
+  it("points out the vegetarian main on the offer", () => {
+    expect(captionsFor("decision", manifest).join(" ")).toMatch(
+      /12 vegetarians/,
+    );
   });
 });

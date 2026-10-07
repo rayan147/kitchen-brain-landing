@@ -25,7 +25,15 @@ export const ChapterCard: React.FC<{
     >
       <div
         style={{
+          // The rule rides the question's fade: shown alone over the outgoing
+          // screen it read as a stray orange bar.
           borderLeft: `8px solid ${C.amber}`,
+          borderLeftColor: `color-mix(in srgb, ${C.amber} ${Math.round(
+            interpolate(frame, fade, [0, 100], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
+          )}%, transparent)`,
           paddingLeft: 48,
           maxWidth: 1400,
         }}

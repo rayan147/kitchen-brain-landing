@@ -1,4 +1,5 @@
 import type React from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { FONT_BODY } from "../fonts";
 import { C, EASE_OUT, TYPE } from "../tokens";
@@ -14,13 +15,49 @@ export const Caption: React.FC<{
 }> = ({ text, duration, maxWidth = 1400, style }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const box = useRef<HTMLDivElement>(null);
+  const words = useRef<HTMLSpanElement>(null);
+  const [lineWidth, setLineWidth] = useState<number | null>(null);
+  // Balanced wrapping shortens the lines but a box keeps its max width, so a
+  // two-line caption sat in a box with a wide empty right side. The box is
+  // sized to its widest laid-out line instead, measured once the font is in
+  // and divided by the preview's own scale (Studio shows the canvas scaled).
+  // Considered a text-measuring library; not used because the browser has
+  // already laid the lines out, and reading them back needs no new dependency.
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (!box.current || !words.current) return;
+      const scale =
+        box.current.getBoundingClientRect().width / box.current.offsetWidth ||
+        1;
+      const range = document.createRange();
+      range.selectNodeContents(words.current);
+      const widest = Math.max(
+        ...[...range.getClientRects()].map((r) => r.width),
+      );
+      // Under border-box the width also carries the padding and the rule.
+      const cs = getComputedStyle(box.current);
+      const chrome =
+        cs.boxSizing === "border-box"
+          ? box.current.offsetWidth -
+            box.current.clientWidth +
+            parseFloat(cs.paddingLeft) +
+            parseFloat(cs.paddingRight)
+          : 0;
+      setLineWidth(Math.ceil(widest / scale) + 2 + chrome);
+    };
+    measure();
+    void document.fonts.ready.then(measure);
+  }, [text]);
   return (
     <div
+      ref={box}
       style={{
         position: "absolute",
         left: 120,
         bottom: 72,
         maxWidth,
+        width: lineWidth ?? undefined,
         padding: "24px 36px",
         backgroundColor: C.paper,
         color: C.ink,
@@ -52,7 +89,7 @@ export const Caption: React.FC<{
         ...style,
       }}
     >
-      {text}
+      <span ref={words}>{text}</span>
     </div>
   );
 };

@@ -22,7 +22,8 @@ type Props = {
   src: string;
   focus?: { x: number; y: number; scale: number };
   // "fill-top" fits the capture to the box's width from the top edge: a tall
-  // phone capture scrolls inside the phone, a short one sits at its top.
+  // phone capture scrolls inside the phone, a short one sits at its top, the
+  // way a short page loads (centred, it left blank phone above and below).
   fit?: "contain" | "fill-top";
   // For "fill-top": scroll the page from one vertical position to another
   // (0 = top, 100 = bottom) over the sequence, the way a thumb would.
@@ -168,7 +169,7 @@ function origin(
 
 // The picture's box inside the screen, in container units: "contain" centres
 // the whole capture; "fill-top" fits its width, slides a tall one by
-// `scrolled` percent (0 = top, 100 = bottom) and centres a short one.
+// `scrolled` percent (0 = top, 100 = bottom) and keeps a short one at the top.
 function pictureBox(
   size: { w: number; h: number },
   fit: "contain" | "fill-top",
@@ -182,8 +183,8 @@ function pictureBox(
       left: 0,
       width: "100cqw",
       height: h,
-      // A tall capture slides by `scrolled`; a short one sits in the middle.
-      top: `calc(min(0px, (100cqh - ${h}) * ${scrolled / 100}) + max(0px, (100cqh - ${h}) / 2))`,
+      // A tall capture slides by `scrolled`; a short one stays at the top.
+      top: `calc(min(0px, (100cqh - ${h}) * ${scrolled / 100}))`,
     };
   }
   const w = `min(100cqw, calc(100cqh * ${a}))`;

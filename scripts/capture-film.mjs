@@ -475,9 +475,9 @@ const STEPS = {
 		console.log('accepted');
 	},
 
-	// The agreement from the accepted offer, sent for e-signature. The frame is
-	// the Agreement step waiting on her signature; the DocuSeal signing page is
-	// never shot (RC-64).
+	// The agreement from the accepted offer, sent for e-signature. Re-run once
+	// both have signed, the frame is the signed contract ("2 of 2 signed"); the
+	// DocuSeal signing page is never shot (RC-64).
 	async agreement() {
 		const eventUrl = await findEvent();
 		if (!eventUrl) throw new Error('run the earlier steps first');
@@ -512,7 +512,8 @@ const STEPS = {
 		}
 		await open(page, `${eventUrl}/agreement`);
 		const title = page.getByRole('heading', { level: 1, name: 'Agreement' });
-		const card = page.locator('main section, main div').filter({ hasText: 'Current contract' }).filter({ has: page.getByRole('link', { name: 'Manage signatures' }).or(page.getByRole('button', { name: 'Manage signatures' })) }).last();
+		const action = /^(Manage signatures|View signed contract)$/;
+		const card = page.locator('main section, main div').filter({ hasText: 'Current contract' }).filter({ has: page.getByRole('link', { name: action }).or(page.getByRole('button', { name: action })) }).last();
 		const box = await union([title, card, page.getByRole('heading', { name: 'Revisions' })], 24);
 		await shoot(page, 'agreement-desktop', { x: box.x, y: box.y - 40, width: box.width, height: box.height + 40 });
 	},
@@ -602,12 +603,14 @@ const STEPS = {
 			throw new Error(`booking still needs something: ${(await book.innerText()).replace(/\s+/g, ' ').slice(0, 300)}`);
 		}
 		await open(page, eventUrl);
-		const title = page.getByRole('heading', { level: 1 });
 		const next = page.locator('main section, main div').filter({ hasText: /^NEXT STEP/i }).filter({ hasText: 'Event booked' }).last();
-		const box = await union([title, next], 24);
-		// As wide as the workspace, so the chips and the step rail are whole.
+		// From the step rail down: the chips above print the time on a 24-hour
+		// clock ("17:00–22:00") where the offer said "5:00 PM" (an app defect,
+		// reported), and the rail and the card say Booked on their own.
+		const rail = page.getByText('You are here').first().locator('xpath=ancestor::*[.//*[contains(text(),"Inquiry")]][1]');
+		const box = await union([rail, next], 24);
 		const wide = await docBox(page.locator('.event-workspace').first());
-		await shoot(page, 'booked-desktop', { x: wide.x - 24, y: box.y - 16, width: wide.r - wide.x + 48, height: box.height + 16 });
+		await shoot(page, 'booked-desktop', { x: wide.x - 24, y: box.y, width: wide.r - wide.x + 48, height: box.height });
 		manifest.orderHref = await page.locator('main a[href^="/orders/"]').first().getAttribute('href');
 		manifest.eventDate = (await page.locator('main').first().innerText()).match(/(Mon|Tue|Wed|Thu|Fri|Sat|Sun), [A-Z][a-z]{2} \d{1,2}, \d{4}/)?.[0];
 		await saveManifest();
@@ -710,10 +713,12 @@ const STEPS = {
 			await page.waitForTimeout(1200);
 		}
 		await open(page, `${manifest.orderHref}/receiving`);
-		const title = page.getByRole('heading', { level: 1 });
+		// From "Your orders to vendors" down: the header above prints the event's
+		// date, which reads as the trucks arriving on the wedding day.
+		const vendors = page.getByText('Your orders to vendors').first().locator('xpath=..');
 		const section = page.locator('main section, main div').filter({ has: page.getByText('Baldor contact and purchasing details') }).last();
-		const box = await union([title, section], 24);
-		await shoot(page, 'receiving-desktop', { x: box.x, y: box.y - 40, width: box.width, height: Math.min(box.height + 40, 1400) });
+		const box = await union([vendors, section], 24);
+		await shoot(page, 'receiving-desktop', { x: box.x, y: box.y, width: box.width, height: Math.min(box.height, 1270) });
 		// Finishing check-in posts what came and what it cost as purchases: the
 		// closeout's "at what you paid" reads from them.
 		const finish = page.getByRole('button', { name: 'Finish check-in' });
@@ -734,8 +739,6 @@ const STEPS = {
 			await open(page, `${manifest.orderHref}/${path}`);
 			const title = page.getByRole('heading', { level: 1 });
 			await title.waitFor({ timeout: 60_000 });
-			const main = await docBox(page.locator('main'));
-			const top = await docBox(title);
 			if (path === 'pack') {
 				// The dishes card only: the pack page's "Load out" block stays out of
 				// shipped frames (capture brief).
@@ -745,19 +748,38 @@ const STEPS = {
 				await shoot(page, name, { x: box.x, y: from, width: box.width, height: Math.min(box.y + box.height - from, 1000) });
 				continue;
 			}
-			const from = Math.max(top.y - 72, (await bannerBottom(page)) + 8);
-			await shoot(page, name, { x: main.x + 8, y: from, width: Math.min(main.r - main.x - 16, 1360), height: 820 });
+			// The steps, from the last make-first base to the vegetarian main: the
+			// portions per dish (138 short rib, 12 peppers). The header's date is
+			// the event's, which reads as delivering and braising on the day, and
+			// the first two bases count celery in fractional "each" (an app
+			// defect, reported), so both stay out.
+			const rows = page.locator('main').getByText(/^\d+ · .+· \d+ portions/);
+			const firstRow = rows.first();
+			const lastRow = rows.last();
+			await firstRow.waitFor({ timeout: 60_000 });
+			const base = page.locator('main section, main div, main article, main li').filter({ has: page.getByText('Make first', { exact: false }) }).filter({ hasText: 'Whipped Goat Cheese Spread' }).filter({ hasNotText: 'Mirepoix Base' }).last();
+			const box = await union([base, lastRow.locator('xpath=..')], 24);
+			if (box.y < (await bannerBottom(page))) throw new Error('prep clip runs under the test banner');
+			await shoot(page, name, box);
 		}
 	},
 
-	async kitchen() {
+	// The shop list: the first supplier groups, whole packs. Read-only, so it
+	// re-shoots after Confirm (quantities are frozen, the account's display
+	// units still apply).
+	async shop() {
 		if (!manifest.orderHref) throw new Error('run the book step first');
-		// The shop list on the draft: the first supplier groups, whole packs.
 		await open(page, `${manifest.orderHref}?tab=shop`);
 		const head = page.locator('.group-head').first();
 		await head.waitFor({ timeout: 60_000 });
 		const box = await union([page.getByRole('table', { name: 'Ingredients grouped by supplier' }).locator('[role="row"]').first(), page.locator('[role="rowgroup"]').nth(1)], 16);
 		await shoot(page, 'shop-desktop', box);
+	},
+
+	async kitchen() {
+		if (!manifest.orderHref) throw new Error('run the book step first');
+		await STEPS.shop();
+		await open(page, `${manifest.orderHref}?tab=shop`);
 		// Confirm order: the dialog, then confirm.
 		await page.getByRole('button', { name: /^Confirm( order)?$/ }).first().click();
 		const dialog = page.getByRole('alertdialog');
@@ -799,9 +821,11 @@ const STEPS = {
 		// Down to the four figures. The card's last line ("You planned to buy ...
 		// in full packs") prints a pack total that disagrees with the Shop tab on
 		// the same order (an app defect, reported), so the clip ends above it.
-		const box = await union([title, card], 24);
+		// The card only: the subtitle above prints the date as "2027-06-19" where
+		// every other screen says "Sat, Jun 19" (an app defect, reported).
+		const box = await union([card], 24);
 		const figures = await docBox(card.getByText('Food cost, share of the event price', { exact: false }).locator('xpath=..'));
-		await shoot(page, 'closeout-desktop', { x: box.x, y: box.y - 40, width: box.width, height: figures.b + 14 - (box.y - 40) });
+		await shoot(page, 'closeout-desktop', { x: box.x, y: box.y, width: box.width, height: figures.b + 14 - box.y });
 		console.log('closeout', manifest.closeoutPlanned, manifest.closeoutActual, manifest.closeoutOver, manifest.closeoutPct);
 	},
 };

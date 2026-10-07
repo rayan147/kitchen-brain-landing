@@ -93,7 +93,7 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-menu-desktop.png"],
         caption: "{pricePerGuest} a guest. Food cost {proposalFoodCostPct}.",
         focus: { x: 22, y: 50, scale: 1.1 },
-        ring: { x: 17, y: 50, width: 39, height: 19 },
+        ring: { x: 16.5, y: 49, width: 43, height: 21.5 },
       },
       {
         from: 8.5,
@@ -106,26 +106,46 @@ export const FILM: Record<SceneId, Scene> = {
       },
     ],
   },
+  // The offer as she sees it, scrolled once to its foot; the rings then walk
+  // what she asked for (the vegetarian main), what the total buys (the staff
+  // line prints 56 at 38 dollars with no unit, so the caption says what 56 is), and her answer.
   decision: {
     chapter: "Can she say yes from her phone?",
-    seconds: 12.5,
+    seconds: 18,
     beats: [
       {
         from: 3.5,
-        to: 8,
+        to: 6.5,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
-        caption:
-          "The offer reaches her phone: {offerTotal}, staff and rentals in.",
+        caption: "Her offer, on her phone: {offerTotal}.",
         scroll: [0, 100],
       },
       {
-        from: 8,
-        to: 12.5,
+        from: 6.5,
+        to: 10.5,
+        layout: "phone",
+        frames: ["events-offer-mobile.png"],
+        caption: "Stuffed peppers on the menu for her 12 vegetarians.",
+        ring: { x: 9, y: 61.9, width: 57, height: 1.9 },
+        scroll: [100, 100],
+      },
+      {
+        from: 10.5,
+        to: 14.5,
+        layout: "phone",
+        frames: ["events-offer-mobile.png"],
+        caption: "Eight staff, seven hours, the rentals and the service fee.",
+        ring: { x: 8, y: 67.3, width: 84, height: 3.9 },
+        scroll: [100, 100],
+      },
+      {
+        from: 14.5,
+        to: 18,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
         caption: "Accept, or ask for changes. Her call.",
-        ring: { x: 1, y: 96.8, width: 98, height: 3 },
+        ring: { x: 1, y: 95.3, width: 98, height: 4.4 },
         scroll: [100, 100],
       },
     ],
@@ -138,27 +158,28 @@ export const FILM: Record<SceneId, Scene> = {
     beats: [
       {
         from: 3.5,
-        to: 7,
+        to: 6.5,
         layout: "screen",
         frames: ["events-agreement-desktop.png"],
-        caption: "Built from the offer she accepted. She signs online.",
-        ring: { x: 52, y: 45, width: 19, height: 6.5 },
+        caption: "Signed online, by her and by you.",
+        ring: { x: 3, y: 58, width: 68, height: 9 },
       },
       {
-        from: 7,
-        to: 11,
+        from: 6.5,
+        to: 10.5,
         layout: "split",
         frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
         caption: "Ask for {deposit}. She pays by card from the link.",
-        focus: { x: 0, y: 50, scale: 2.2 },
       },
       {
-        from: 11,
+        from: 10.5,
         to: 14.5,
         layout: "screen",
         frames: ["events-payments-paid-desktop.png"],
-        caption: "Paid. The balance reminder goes out ten days before.",
-        ring: { x: 9, y: 44, width: 50, height: 10.5 },
+        // The reminder goes out on the due date itself (an app question,
+        // reported), so the caption claims no lead time for it.
+        caption: "Paid. Balance due ten days before, with a reminder that day.",
+        ring: { x: 60, y: 35, width: 37.5, height: 9.5 },
       },
       {
         from: 14.5,
@@ -188,8 +209,11 @@ export const FILM: Record<SceneId, Scene> = {
         to: 9,
         layout: "screen",
         frames: ["events-shop-desktop.png"],
-        caption: "Whole packs, by supplier, for {guests}.",
-        ring: { x: 62, y: 23, width: 18, height: 8 },
+        // "Uses 127.8 lb of 138.9 lb": the case you open is not all food cost,
+        // which the closeout's "at what you paid" figure leans on.
+        caption:
+          "Whole packs, by supplier, for {guests}. What's left stays on the shelf.",
+        ring: { x: 3, y: 20.5, width: 94, height: 14 },
       },
       {
         from: 9,
@@ -224,7 +248,7 @@ export const FILM: Record<SceneId, Scene> = {
         // Pushes in from below the bottom left corner, so Still to get rises
         // clear of the caption.
         focus: { x: 0, y: 130, scale: 1.6 },
-        ring: { x: 1.5, y: 68, width: 60, height: 14 },
+        ring: { x: 1.5, y: 61, width: 60, height: 17.5 },
       },
     ],
   },
@@ -238,22 +262,22 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-prep-desktop.png"],
         caption:
-          "The prep list for {guests}, in the order the kitchen works it.",
-        ring: { x: 6, y: 30.5, width: 23, height: 7 },
+          "Bases first, then every dish: 138 short rib, 12 stuffed peppers.",
+        ring: { x: 2.5, y: 45, width: 95, height: 6.5 },
       },
     ],
   },
   pack: {
     chapter: "Is everything in the van?",
-    seconds: 8.5,
+    seconds: 9.5,
     beats: [
       {
         from: 3.5,
-        to: 8.5,
+        to: 9.5,
         layout: "screen",
         frames: ["events-pack-desktop.png"],
         caption:
-          "Every dish into the van, the vegetarian plates too. Allergens on each label.",
+          "Every dish into the van, the 12 vegetarian plates too. Allergens on each label.",
         // The last row is the answer to her "something for the vegetarians";
         // the caption sits on top, off it.
         ring: { x: 3, y: 87, width: 94, height: 10 },
@@ -277,11 +301,11 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-closeout-desktop.png"],
         caption:
           "Priced at {proposalFoodCostPct} before her yes. The day after: likely still {likelyShare}, under your {target} target.",
-        // From the bottom right corner, so the ringed share rises to the middle
-        // and leads; the caption sits on top, off the card's figures.
-        focus: { x: 100, y: 85, scale: 1.6 },
+        // The card whole, no push: it is cropped to its own edges, and any push
+        // cut its heading into fragments beside the caption, which sits on
+        // top, off the card's figures.
         captionAt: "top",
-        ring: { x: 72, y: 72, width: 25, height: 26 },
+        ring: { x: 72.5, y: 60, width: 22, height: 36 },
       },
       { from: 7, to: 12, layout: "end", frames: [] },
     ],

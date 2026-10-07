@@ -20,6 +20,16 @@ The film as shipped: 1 phone rings (Inquiry) · menu and service price the job (
 
 After a caterer's and a motion designer's review, the wedding was walked again, once, on test.app.costcook.io at develop 24664bd69 (owner rulings 2026-10-06: re-walk, keep the real distributor names, one walk on test). Beat 1 changes: the client asks on the kitchen's ordering site ("She asks on your site. A Saturday in June, 150 guests, plated."), and it lands as an inquiry with nothing retyped. The couple is new (Maya Lindqvist, Lindqvist & Shaw wedding, Sat Jun 19 2027, walked at develop 9a15fe297 after the revision-number fix), so no "No date yet". Her note asks for "something for the vegetarians", and the menu answers it: 138 short rib and 12 stuffed peppers, named on the pack beat. The offer carries staff, rentals and an 18% service fee, so the price she sees ($21,043.00) reads like a wedding's; the deposit is a quarter of it and the balance falls due ten days out, never on the day. Short rib is one 420 g plate per guest, so the pack list reads 150, not 300. The buying chapter drops "5 a.m."; Confirm ties to the final count; the pack beat names the allergen labels. Final Image: the closeout's likely share of the price, under the 30% target set at the menu, rather than its dollar gap, which sets a plan that counts 2% misc against purchases that do not (reported to the owner as an app defect). Snap line unchanged: "Her yes is not a booking. Signed and paid is."
 
+## Revision 2026-10-07, third review (caterer)
+
+Same wedding, same walk; no new walk. Fixed by re-shooting read-only pages and cropping walk shots, never by moving data:
+- The agreement is re-shot signed ("Signed by both"); caption "Signed online, by her and by you."
+- The offer gets four beats: her total, the stuffed peppers ringed for her 12 vegetarians, "Eight staff, seven hours, the rentals and the service fee" (the line prints "56 × $38.00"), then Accept.
+- The balance ring moves to the amount and its due date; the caption claims no lead time for the reminder, which goes out on the due date (an app question, reported).
+- Shop and prep are re-shot with the account in US customary units (a Maine kitchen buys by the pound); the shop caption adds "What's left stays on the shelf", the reason the closeout's cost is less than what was bought.
+- Prep shows the dishes' portions instead of the first two bases, whose celery reads "44.2 each" (an app defect); caption "Bases first, then every dish: 138 short rib, 12 stuffed peppers."
+- Receiving, booked and closeout are cropped below their date lines: the event's date on receiving read as trucks on the wedding morning, Booked printed "17:00–22:00", the closeout "2027-06-19" (both reported).
+
 ## The 11 steps
 
 | # | Step | What you build | Done |

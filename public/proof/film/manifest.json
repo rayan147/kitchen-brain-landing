@@ -48,12 +48,13 @@
     "agreement-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "9a15fe297",
-      "via": "capture-film.mjs agreement"
+      "via": "capture-film.mjs agreement (re-shot after both signed)",
+      "shotOn": "2026-10-07, after the walk"
     },
     "payment-request-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "9a15fe297",
-      "via": "capture-film.mjs deposit"
+      "via": "capture-film.mjs deposit (clipped to 1080x400 px from x 0, y 40 after capture: tight to the figures, the client email line out)"
     },
     "pay-mobile.png": {
       "host": "sites-test.costcook.io",
@@ -68,12 +69,13 @@
     "booked-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "9a15fe297",
-      "via": "capture-film.mjs book"
+      "via": "capture-film.mjs book (top 450 px cropped after capture, to drop a date line)"
     },
     "shop-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "9a15fe297",
-      "via": "capture-film.mjs kitchen"
+      "via": "capture-film.mjs shop (re-shot after Confirm, account units set to US customary)",
+      "shotOn": "2026-10-07, after the walk"
     },
     "confirm-desktop.png": {
       "host": "test.app.costcook.io",
@@ -93,12 +95,13 @@
     "receiving-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "9a15fe297",
-      "via": "capture-film.mjs receive"
+      "via": "capture-film.mjs receive (top 440 px cropped after capture, to drop a date line)"
     },
     "prep-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "9a15fe297",
-      "via": "capture-film.mjs lists"
+      "via": "capture-film.mjs lists (re-shot, account units set to US customary)",
+      "shotOn": "2026-10-07, after the walk"
     },
     "pack-desktop.png": {
       "host": "test.app.costcook.io",
@@ -108,7 +111,7 @@
     "closeout-desktop.png": {
       "host": "localhost",
       "app": "9a15fe297",
-      "via": "capture-film.mjs closeout"
+      "via": "capture-film.mjs closeout (top 440 px cropped after capture, to drop a date line)"
     }
   },
   "guests": "150",
@@ -135,8 +138,8 @@
       "how": "one walk at develop 9a15fe297: a quote request on the ordering site, menu and proposal (138 short rib and 12 vegetarian mains, staff, rentals and a service fee), the client accepts on her phone, the agreement signed in DocuSeal and the deposit paid by card in Stripe test mode, Book the event with every requirement met, then shop, confirm, purchase orders, receiving, prep and pack"
     },
     "closeout": {
-      "how": "a read-only copy of test\u2019s database, run locally on the same build with its server clock moved to Jun 20 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event"
+      "how": "a read-only copy of test’s database, run locally on the same build with its server clock moved to Jun 20 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event"
     },
-    "note": "Every frame is from that one wedding. The signatures and the card payment were done by hand by the owner; the client\u2019s email was switched to an inbox the owner reads before the offer went out, because test only emails approved addresses and DocuSeal mails the signer a one-time code. confirm-desktop.png (shot at 4x) is clipped 24 CSS px inside the dialog after capture, to drop the dimmed page."
+    "note": "Every frame is from that one wedding. The signatures and the card payment were done by hand by the owner; the client’s email was switched to an inbox the owner reads before the offer went out, because test only emails approved addresses and DocuSeal mails the signer a one-time code. confirm-desktop.png (shot at 4x) is clipped 24 CSS px inside the dialog after capture, to drop the dimmed page. After the third review, agreement, shop and prep were re-shot from the same wedding (read-only page visits; the test account's display units switched to US customary for shop and prep, then back), and receiving, booked and closeout were cropped from their walk shots to drop the event-date, 24-hour time and ISO date lines."
   }
 }
