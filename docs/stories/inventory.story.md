@@ -137,3 +137,6 @@
 ## Claim correction · 2026-09-27 (buying to par shipped)
 
 - [x] 11 Revision: Buying to par left the Coming list by shipping. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier (kitchen-brain e2e/buy-to-par.spec.ts). The Coming band now carries two plans, the /compare row is Yes, and the inventory answers say so. Beats and snap line unchanged. Gap report F1; RC-43.
+
+### Revision 2026-10-07: US units
+- Illustrative quantities in lb, oz and inches (metric kept in brackets where the app or the stock is metric); dates read "Aug 28".

@@ -311,3 +311,6 @@ Content: `src/components/sections/OnboardingPage.astro` and its shared data/resp
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - Stage five caption: "the live quote beside it already shows its food cost: $1.62 a guest, the $1.59 portion plus your 2% miscellaneous cost" (it called the food cost "the quote").
+
+### Revision 2026-10-07: US units
+- Illustrative quantities in lb, oz and inches (metric kept in brackets where the app or the stock is metric); dates read "Aug 28".

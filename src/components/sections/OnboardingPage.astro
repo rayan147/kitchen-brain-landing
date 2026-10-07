@@ -147,13 +147,13 @@ const parts = [
 const arithmetic = [
 	{ left: '$32.00 ÷ 4,535.92 g', right: '$0.0070548 / g', note: 'as purchased' },
 	{ left: '÷ 0.80 trim yield', right: '$0.0088185 / g', note: 'usable' },
-	{ left: '× 180 g on the plate', right: '$1.59', note: 'ingredient lines' },
+	{ left: '× 180 g (6.3 oz) on the plate', right: '$1.59', note: 'ingredient lines' },
 	{ left: '+ 2% misc (the default)', right: '$0.03', note: 'its own line' }
 ] as const;
 
 const guards = [
 	'Leave a pack price blank and the ingredient does not go on. The screen says what it needs and puts your cursor in the field.',
-	'Ask for 100 ml of something sold by weight and it stops, and it names the fix: pick a weight unit, or give the ingredient a density.',
+	'Ask for 2 cups of something sold by weight and it stops, and it names the fix: pick a weight unit, or give the ingredient a density.',
 	'Press “Start over” by mistake and your ingredients, recipes, menus and orders stay. Only the guide’s progress resets.',
 	'Lose the wifi mid-save and nothing is written and nothing is claimed. What you typed is still on screen, and the same button retries.'
 ] as const;
@@ -368,10 +368,10 @@ const afterScenes = [
 				<p class="eyebrow">The number</p>
 				<h2 id="fd-number-heading">Example: one ingredient costed from its case price.</h2>
 				<p>
-					180 g of chicken thigh, bought at $32.00 for a 10 lb case, 80% of it surviving the trim.
+					180 g (6.3 oz) of chicken thigh, bought at $32.00 for a 10 lb case, 80% of it surviving the trim.
 				</p>
 				<p class="fd-snap">
-					A $32 case of thighs, 80% usable after trim, 180 g on the plate, plus 2% misc: $1.62. Check it
+					A $32 case of thighs, 80% usable after trim, 6.3 oz (180 g) on the plate, plus 2% misc: $1.62. Check it
 					on paper. We would rather you did.
 				</p>
 			</div>

@@ -211,7 +211,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Mid-recipe creation.', detail: 'Add a missing ingredient from inside the recipe builder without losing what you typed.' },
 			{ lead: 'Suppliers anywhere.', detail: 'Add a supplier from any screen that needs one. Same form, same result.' },
 			{ lead: 'Purchased vs usable.', detail: 'Each ingredient shows both costs side by side, with its purchase history underneath.' },
-			{ lead: 'Compare suppliers.', detail: 'Compare supplier offers per usable kilo, pound or item, cheapest first. Choose which price to use.' },
+			{ lead: 'Compare suppliers.', detail: 'Compare supplier offers per usable pound, kilo or item, cheapest first. Choose which price to use.' },
 			{ lead: 'Price source.', detail: 'Every current price says where it came from, from which supplier, effective when.' },
 			{ lead: 'Affected recipes and menus.', detail: 'Before a price changes, see every recipe and menu it touches.' },
 			{ lead: 'Check before deleting.', detail: 'Before deleting an ingredient, check the recipes that still use it.' },

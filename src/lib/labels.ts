@@ -115,11 +115,11 @@ export const labels = {
 	],
 	/** The media the sticker is sized for. Millimetres, so the preview is the printed size. */
 	stock: [
-		{ name: '30-up sheet', size: '66 × 25.4 mm, 30 to a letter sheet', detail: 'An office printer and a sheet of stickers.' },
-		{ name: '58 mm continuous roll', size: '58 mm wide, cut to length', detail: 'Receipt-width thermal stock, one at a time at the bench.' },
-		{ name: '62 mm continuous roll', size: '62 mm wide, cut to length', detail: 'A wider desktop thermal roll for long dish names.' },
-		{ name: '2 × 1 in die-cut roll', size: '50.8 × 25.4 mm', detail: 'Pre-cut labels sized for most shipping-label printers.' },
-		{ name: 'Describe your own', size: 'Any width from 20 to 220 mm', detail: 'Measure the label you buy. Nothing is tied to a brand.' }
+		{ name: '30-up sheet', size: '2⅝ × 1 in (66 × 25.4 mm), 30 to a letter sheet', detail: 'An office printer and a sheet of stickers.' },
+		{ name: '58 mm continuous roll', size: '2.3 in (58 mm) wide, cut to length', detail: 'Receipt-width thermal stock, one at a time at the bench.' },
+		{ name: '62 mm continuous roll', size: '2.4 in (62 mm) wide, cut to length', detail: 'A wider desktop thermal roll for long dish names.' },
+		{ name: '2 × 1 in die-cut roll', size: '2 × 1 in (50.8 × 25.4 mm)', detail: 'Pre-cut labels sized for most shipping-label printers.' },
+		{ name: 'Describe your own', size: 'Any width from ¾ to 8⅔ in (20 to 220 mm)', detail: 'Measure the label you buy. Nothing is tied to a brand.' }
 	],
 	/** Boundaries, each from the app's own code or screen. */
 	notClaimed: [
