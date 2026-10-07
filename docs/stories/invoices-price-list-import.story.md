@@ -139,3 +139,20 @@
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - Dropped "Trust is earned at the edge cases." from the exceptions band; the sentence after it carries the point.
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only.
+- **Slogans and consultant words out:** "Upload, review and save." is "Nothing
+  lands in your catalog until you check it."; "Reconcile before posting." is
+  "Add it up before you save."; "Map the sheet you received." is "Tell it
+  which column is which."; "Refuse the quiet pack change." is "No sneaky pack
+  changes."; "workspace", "purchase ledger", "structurally changed",
+  "ambiguity" are gone.
+- **The price-list section heading** is "Take the prices you want off the
+  list.", so the pinned snap line ("A price list is an offer. An invoice is
+  what happened.") is no longer said twice in a row.
+- **Kept:** the H1, the snap line, the closing heading, the FAQ (all pinned),
+  every illustrative figcaption, the capability list, and the boundaries:
+  nothing reaches the catalog before review, a pack change stops the row,
+  an older invoice does not overwrite a newer price, confirmed supplier names
+  "can be remembered" (not "learns").

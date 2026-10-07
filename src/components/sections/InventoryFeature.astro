@@ -18,9 +18,9 @@ const movements = [
 ] as const;
 
 const trustStates = [
-	{ ingredient: 'Chicken thigh', quantity: '55 lb', state: 'Fresh', note: 'Trusted count; available to reduce buying.', tone: 'fresh' },
-	{ ingredient: 'Baby spinach', quantity: '18 lb', state: 'Stale', note: 'Shown for context; count again before using it.', tone: 'stale' },
-	{ ingredient: 'Olive oil', quantity: '—', state: 'Never counted', note: 'No estimate invented; buying stays unchanged.', tone: 'missing' }
+	{ ingredient: 'Chicken thigh', quantity: '55 lb', state: 'Fresh', note: 'Recent count. It can cut the buy.', tone: 'fresh' },
+	{ ingredient: 'Baby spinach', quantity: '18 lb', state: 'Stale', note: 'Shown so you know. Count again before you rely on it.', tone: 'stale' },
+	{ ingredient: 'Olive oil', quantity: '—', state: 'Never counted', note: 'Nothing guessed. The buy stays as it was.', tone: 'missing' }
 ] as const;
 
 // Considered Strategy; not used because the FAQ and evidence rows vary as
@@ -59,6 +59,7 @@ const faqItems = [
 ---
 
 <!-- story: docs/stories/inventory.story.md -->
+<!-- story: docs/stories/inventory.story.md -->
 <article class="inventory-page">
 	<section class="hero" aria-labelledby="inventory-heading">
 		<div class="container-page hero-grid">
@@ -67,7 +68,7 @@ const faqItems = [
 					<a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Inventory</span>
 				</nav>
 				<h1 id="inventory-heading" class="feature-display">Check your stock before you buy more.</h1>
-				<p class="hero-lede">Count an ingredient first. Recorded deliveries, waste and packed orders update the quantity. Old or missing counts do not reduce what the shopping list buys.</p>
+				<p class="hero-lede">Count it first. After that, deliveries you record, waste you log and orders you pack move the number. An old count, or no count at all, does not take anything off the shopping list.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -93,12 +94,12 @@ const faqItems = [
 
 	<section class="problem" aria-labelledby="problem-heading">
 		<div class="container-page problem-grid">
-			<div><h2 id="problem-heading">The empty shelf was hidden inside an exact number.</h2><p>The old count still said one case. Prep opened the walk-in and found none. A number without its count date can be precise, tidy, and wrong at the same time.</p></div>
+			<div><h2 id="problem-heading">The screen said one case. The shelf was empty.</h2><p>Nobody had counted in twelve days. Prep opened the walk-in and found nothing. A number with no count date can look exact and still be wrong.</p></div>
 			<figure class="stale-scene">
 				<div><span>On screen</span><strong>1 case</strong><small>Last counted 12 days ago</small></div>
 				<svg width="56" height="22" viewBox="0 0 56 22" aria-hidden="true"><path d="M1 11h47M41 4l7 7-7 7" /></svg>
 				<div><span>On the shelf</span><strong>Empty</strong><small>Prep starts at 5:30 AM</small></div>
-				<figcaption>A stale count is not a low count. It is a question that still needs an answer.</figcaption>
+				<figcaption>A stale count does not mean you are low. It means somebody needs to go look.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -110,7 +111,7 @@ const faqItems = [
 
 	<section id="count-and-trust" class="product-section count-chapter" aria-labelledby="count-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="count-heading">Start with a count. Track deliveries, use and waste.</h2><p>After a physical count, recorded purchases add stock. Logged waste and completed packing subtract it. The dated history explains the current quantity.</p></div>
+			<div class="section-intro"><h2 id="count-heading">Count it once. Then deliveries, packing and waste move the number.</h2><p>After a physical count, recorded purchases add to it. Logged waste and finished packing take away. The dated history shows how you got to today’s number.</p></div>
 
 			<figure class="movement-workspace">
 				<div class="movement-main">
@@ -131,8 +132,8 @@ const faqItems = [
 			</figure>
 
 			<div class="feature-scenes">
-				<article><h3>Keep each physical count in the history.</h3><p>Each count is saved with a date. Deliveries, use and waste after that date explain the new stock quantity.</p></article>
-				<article><h3>Freshness stays visible.</h3><p>Fresh, stale, and never counted are states beside the quantity, not footnotes discovered after planning.</p></article>
+				<article><h3>Every count is kept.</h3><p>Each count is saved with its date. What came in, got used or got thrown out after that date is how you get today’s quantity.</p></article>
+				<article><h3>You can see how old the count is.</h3><p>Fresh, Stale or Never counted sits right next to the quantity, where you see it before you plan.</p></article>
 				<article><h3>History keeps its old price.</h3><p>The pack cost freezes at count time, so a later correction does not rewrite what the shelf was worth then.</p></article>
 			</div>
 		</div>
@@ -140,7 +141,7 @@ const faqItems = [
 
 	<section id="plan-the-gap" class="product-section gap-chapter" aria-labelledby="gap-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="gap-heading">Use recent counts to work out what to buy.</h2><p>Start with what the next orders need. A trusted count may reduce estimated buying; a stale or unsupported number may not. Chef overrides remain a separate decision.</p></div>
+			<div class="section-intro"><h2 id="gap-heading">Use recent counts to work out what to buy.</h2><p>Start with what the next orders need. A recent count can take some off the buy. A stale count, or a number with nothing behind it, cannot. Overriding the list is still your call, made separately.</p></div>
 
 			<figure class="gap-sheet">
 				<div class="gap-head"><span>Chicken thigh · next jobs</span><span>Illustrative gap</span></div>
@@ -156,7 +157,7 @@ const faqItems = [
 			</figure>
 
 			<div class="trust-board">
-				<div class="trust-head"><h3>Every shelf state gets a different answer.</h3><p>The quantity may be visible without being trusted enough to change the buy.</p></div>
+				<div class="trust-head"><h3>Each count status gets its own answer.</h3><p>You can see a quantity and still not trust it enough to change the buy.</p></div>
 				<ul role="list">
 					{trustStates.map((item) => (
 						<li><span><strong>{item.ingredient}</strong><small>{item.note}</small></span><b>{item.quantity}</b><em class:list={['state', item.tone]}>{item.state}</em></li>
@@ -168,9 +169,9 @@ const faqItems = [
 
 	<section class="trust-proof" aria-labelledby="trust-proof-heading">
 		<div class="container-page trust-proof-grid">
-			<div><h2 id="trust-proof-heading">No count, no invented shelf.</h2><p>When the math cannot support an estimate, the state says what is missing and the buy remains unchanged. The recovery is direct: count the ingredient.</p></div>
+			<div><h2 id="trust-proof-heading">Never counted means nothing gets guessed.</h2><p>When there is not enough to go on, the status says what is missing and the buy stays as it was. The fix is simple: go count it.</p></div>
 			<div class="recovery-list">
-				<div><span class="state fresh">Fresh</span><strong>Use to reduce buying</strong><small>The recent count and subsequent stock changes support this quantity.</small></div>
+				<div><span class="state fresh">Fresh</span><strong>Use to reduce buying</strong><small>A recent count, plus the changes since, backs this number up.</small></div>
 				<div><span class="state stale">Stale</span><strong>Count again</strong><small>Keep the old quantity visible, but do not subtract it.</small></div>
 				<div><span class="state missing">Never counted</span><strong>Record the first count</strong><small>Nothing is estimated before the first physical count.</small></div>
 			</div>
@@ -179,21 +180,21 @@ const faqItems = [
 
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
-			<div><h2 id="capabilities-heading">The complete Inventory list.</h2><p>Open the details to check what is available today.</p><p class="count"><strong>{inventoryGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<div><h2 id="capabilities-heading">What is in Inventory.</h2><p>Open the details to check what is available today.</p><p class="count"><strong>{inventoryGroup.items.length}</strong><span>shipped capabilities</span></p></div>
 			<details id="features-inventory"><summary><span>Inventory</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{inventoryGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
 		</div>
 	</section>
 
 	<section class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
-			<div><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions behind letting a shelf quantity change what you buy.</p></div>
+			<div><h2 id="faq-heading">Frequently asked questions</h2><p>What people ask before they let a shelf count change what they buy.</p></div>
 			<div class="faq-list">{faqItems.map((item) => <details><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>)}</div>
 		</div>
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid">
-			<div><h2 id="closing-heading">A shelf number ready to use.</h2><p>Bring one real shopping list and count one shelf. See how the count and later changes affect what you need to buy.</p></div>
+			<div><h2 id="closing-heading">Count one shelf before your next shop.</h2><p>Bring one real shopping list and count one shelf. Watch the count, and every change after it, move what you need to buy.</p></div>
 			<div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div>
 		</div>
 		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>

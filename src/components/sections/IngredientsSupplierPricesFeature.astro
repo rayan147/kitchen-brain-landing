@@ -72,7 +72,7 @@ const faqItems = [
 					<span>Ingredients and supplier prices</span>
 				</nav>
 				<h1 id="ingredients-prices-heading" class="feature-display">Compare supplier prices by what you can use.</h1>
-				<p class="hero-lede">Enter the case price, pack size and trim yield for one ingredient. Compare suppliers per usable pound, kilo or item, and see which recipes a price change affects.</p>
+				<p class="hero-lede">Put in the case price, the pack size and the trim yield for one ingredient. Compare suppliers by what you can actually use, per pound, kilo or each, and see which recipes a price change hits.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -122,8 +122,8 @@ const faqItems = [
 			<div data-reveal>
 				<h2 id="problem-heading">The old price still looks right.</h2>
 				<p>
-					The invoice changed. The pack changed. The spreadsheet did not. By the time the food-cost
-					percentage looks wrong, the number may already be in front of a customer.
+					The invoice went up and the case size changed, but your spreadsheet still has the old
+					number. By the time the food cost looks wrong, you may have already quoted it to a client.
 				</p>
 			</div>
 			<figure class="price-drift" data-reveal>
@@ -138,12 +138,12 @@ const faqItems = [
 	<nav class="story-nav container-page" aria-label="On this page">
 		<a href="#ingredient-records">
 			<span>Ingredient records</span>
-			<small>Keep purchase, yield, storage, and allergen facts on the food.</small>
+			<small>What you buy, the yield, where it is stored and its allergens, all on the ingredient.</small>
 			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
 		</a>
 		<a href="#supplier-prices">
 			<span>Supplier prices</span>
-			<small>Compare unlike packs by the usable unit and keep the source.</small>
+			<small>Compare different case sizes by what you can use, and keep where each price came from.</small>
 			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
 		</a>
 	</nav>
@@ -151,10 +151,10 @@ const faqItems = [
 	<section id="ingredient-records" class="product-section ingredient-chapter" aria-labelledby="ingredient-records-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="ingredient-records-heading">One ingredient record, wherever the food is used.</h2>
+				<h2 id="ingredient-records-heading">Set up the ingredient once. Every recipe uses it.</h2>
 				<p>
-					Start from scratch, a USDA reference, or a purchase. Keep the buying unit, trim yield,
-					conversions, suppliers, allergens, storage area, and par level together.
+					Start from scratch, from a USDA reference or from a purchase. The buying unit, trim
+					yield, conversions, suppliers, allergens, storage area and par level all live on it.
 				</p>
 			</div>
 
@@ -179,9 +179,9 @@ const faqItems = [
 			</figure>
 
 			<div class="feature-scenes">
-				<article><h3>Enter it where you meet it.</h3><p>Create an ingredient from the catalog, from a purchase, or inside the recipe you are already building.</p></article>
-				<article><h3>Keep purchased and usable separate.</h3><p>See both costs side by side. Trim and cooking loss remain facts, not an invisible adjustment.</p></article>
-				<article><h3>Find what still needs attention.</h3><p>The ingredient list shows which items can be costed and which still need a price or unit conversion.</p></article>
+				<article><h3>Add it where you run into it.</h3><p>Create an ingredient from the catalog, from a purchase, or inside the recipe you are already building.</p></article>
+				<article><h3>Keep purchased and usable separate.</h3><p>Both costs sit side by side. Trim and cooking loss show as numbers you can see, never buried in the price.</p></article>
+				<article><h3>See what still needs a price.</h3><p>The ingredient list shows which items can be costed and which still need a price or unit conversion.</p></article>
 			</div>
 		</div>
 	</section>
@@ -189,10 +189,10 @@ const faqItems = [
 	<section id="supplier-prices" class="product-section supplier-chapter" aria-labelledby="supplier-prices-heading">
 		<div class="container-page">
 			<div class="section-intro supplier-intro" data-reveal>
-				<h2 id="supplier-prices-heading">Compare the food, not the shape of the case.</h2>
+				<h2 id="supplier-prices-heading">A cheaper case can cost you more.</h2>
 				<p>
-					A lower case price can still cost more after pack size and yield. Convert each offer to
-					the same usable unit, keep its source and date, then choose the price you want to use.
+					Pack size and yield change the math. Each offer comes down to the same usable unit and
+					keeps its source and date. Then you pick the price you want to use.
 				</p>
 			</div>
 
@@ -217,7 +217,7 @@ const faqItems = [
 					</ol>
 				</div>
 				<div class="impact" data-reveal>
-					<h3>See what the change touches first.</h3>
+					<h3>See which recipes it hits first.</h3>
 					<ul role="list">
 						{affectedRecipes.map((recipe) => (
 							<li><span><strong>{recipe.name}</strong><small>{recipe.use} in recipe</small></span><b>{recipe.change}</b></li>
@@ -232,15 +232,15 @@ const faqItems = [
 	<section class="evidence" aria-labelledby="evidence-heading">
 		<div class="container-page evidence-grid">
 			<div data-reveal>
-				<h2 id="evidence-heading">The supplier price keeps walking.</h2>
+				<h2 id="evidence-heading">The price follows the ingredient into the recipe.</h2>
 				<p>
-					Once the ingredient is inside a recipe, purchased amount, trim yield, quantity to buy,
-					prep state, and cost contribution remain on the same line.
+					Inside a recipe the ingredient keeps its own line: what you bought, the trim yield, how
+					much to buy, the prep state and what it adds to the cost.
 				</p>
 				<ul role="list">
 					<li>Missing prices are named instead of reading as zero.</li>
-					<li>Every ingredient line reconciles to the recipe total.</li>
-					<li>The arithmetic opens when a number needs checking.</li>
+					<li>Every ingredient line adds up to the recipe total.</li>
+					<li>Open the math whenever a number needs checking.</li>
 				</ul>
 			</div>
 			<figure class="screenshot-frame" data-reveal>
@@ -256,7 +256,7 @@ const faqItems = [
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
 			<div data-reveal>
-				<h2 id="capabilities-heading">The complete Ingredients list.</h2>
+				<h2 id="capabilities-heading">What is in Ingredients.</h2>
 				<p>Open the details to check what is available today.</p>
 				<p class="count"><strong>{ingredientGroup.items.length}</strong><span>shipped capabilities</span></p>
 			</div>
@@ -271,7 +271,7 @@ const faqItems = [
 
 	<section class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
-			<div data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions behind comparing a supplier price you can trust.</p></div>
+			<div data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>What people ask before they trust a supplier price.</p></div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
 					<details data-reveal><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>
@@ -282,7 +282,7 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">A price you can trace. A quote you can defend.</h2><p>Bring one supplier sheet and one real ingredient. Follow the case price into the recipe with the working shown.</p></div>
+			<div><h2 id="closing-heading">Know where every price came from before you quote.</h2><p>Bring one supplier sheet and one real ingredient. Follow the case price into the recipe, with the math showing.</p></div>
 			<div class="closing-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>

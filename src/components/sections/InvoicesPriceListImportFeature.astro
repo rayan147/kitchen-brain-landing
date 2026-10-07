@@ -85,7 +85,7 @@ const faqItems = [
 					<span>Invoices and price-list import</span>
 				</nav>
 				<h1 id="imports-heading" class="feature-display">Upload paperwork. Check prices before saving.</h1>
-				<p class="hero-lede">Upload an invoice or price list as a photo, PDF or spreadsheet. Check the items, pack sizes and prices against the original before you save any changes.</p>
+				<p class="hero-lede">Upload a photo of the invoice, the PDF, or the supplier’s spreadsheet. Check the items, pack sizes and prices against the original before you save a thing.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -142,11 +142,11 @@ const faqItems = [
 
 	<section class="common-rule" aria-labelledby="common-rule-heading">
 		<div class="container-page common-grid">
-			<div data-reveal><h2 id="common-rule-heading">Upload, review and save.</h2><p>A photograph, PDF, spreadsheet, Word document, or pasted text can enter the same workspace. Each stays outside your real catalog until review is complete.</p></div>
+			<div data-reveal><h2 id="common-rule-heading">Nothing lands in your catalog until you check it.</h2><p>A photo, a PDF, a spreadsheet, a Word file or pasted text all go to the same review. None of it touches your real catalog until you finish.</p></div>
 			<ol class="queue-path" data-reveal>
 				<li><span>1</span><strong>Bring in the source</strong><small>Keep the original attached.</small></li>
 				<li><span>2</span><strong>Read and match</strong><small>Check names, units and prices.</small></li>
-				<li class="gate"><span>3</span><strong>You confirm</strong><small>Resolve what is uncertain.</small></li>
+				<li class="gate"><span>3</span><strong>You confirm</strong><small>Settle anything it was unsure of.</small></li>
 				<li><span>4</span><strong>Save the reviewed details</strong><small>Save only the details you confirmed.</small></li>
 			</ol>
 		</div>
@@ -155,8 +155,8 @@ const faqItems = [
 	<section id="invoice-import" class="product-section invoice-import" aria-labelledby="invoice-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="invoice-heading">Invoice import that stops for a proper check.</h2>
-				<p>An invoice says what you bought, when you bought it, and what the supplier charged. Review those facts together before they join the purchase ledger.</p>
+				<h2 id="invoice-heading">An invoice waits for a proper check.</h2>
+				<p>An invoice says what came off the truck, when, and what the supplier charged for it. Look at all of it together before it goes into your purchases.</p>
 			</div>
 
 			<figure class="invoice-review" data-reveal>
@@ -179,9 +179,9 @@ const faqItems = [
 			</figure>
 
 			<div class="feature-scenes">
-				<article data-reveal><h3>Keep the source in view.</h3><p>The photo or PDF sits beside the rows awaiting review, so a doubtful unit can be checked against the paper instead of memory.</p></article>
-				<article data-reveal><h3>Reconcile before posting.</h3><p>Compare the invoice total with the sum of its lines. Check duplicate warnings before saving a purchase.</p></article>
-				<article data-reveal><h3>Post once.</h3><p>Saving the same import twice returns its existing receipt. Ingredient prices follow the purchase date, so an older invoice does not replace a newer price.</p></article>
+				<article data-reveal><h3>Keep the source in view.</h3><p>The photo or PDF sits beside the rows awaiting review, so when a unit looks off, you check the paper, not your memory.</p></article>
+				<article data-reveal><h3>Add it up before you save.</h3><p>The invoice total sits next to the sum of its lines. If it looks like a duplicate, you see the warning before you save.</p></article>
+				<article data-reveal><h3>Saved once is saved.</h3><p>Save the same import twice and you get back the receipt you already have. Ingredient prices follow the purchase date, so an older invoice does not overwrite a newer price.</p></article>
 			</div>
 	</div>
 	</section>
@@ -189,8 +189,8 @@ const faqItems = [
 	<section id="price-list-import" class="product-section price-list-import" aria-labelledby="price-list-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="price-list-heading">A supplier price list is an offer, not a purchase.</h2>
-				<p>Read the sheet row by row. Apply the offers you want, skip the ones you do not, and stop when a pack-size change needs a closer look.</p>
+				<h2 id="price-list-heading">Take the prices you want off the list.</h2>
+				<p>Go down it a row at a time. Apply what you want and skip what you don’t. If a pack size changed, it stops you for a closer look.</p>
 			</div>
 
 			<figure class="offer-review" data-reveal>
@@ -205,19 +205,19 @@ const faqItems = [
 
 			<p class="snap" data-reveal>A price list is an offer. An invoice is what happened. CostCook keeps the difference.</p>
 			<div class="feature-scenes">
-				<article data-reveal><h3>Map the sheet you received.</h3><p>For a spreadsheet with unfamiliar columns, check which column holds each detail before importing. Any ignored columns are shown.</p></article>
-				<article data-reveal><h3>Match names without hiding doubt.</h3><p>Check uncertain ingredient matches. Confirmed supplier names can be remembered for the next review.</p></article>
-				<article data-reveal><h3>Refuse the quiet pack change.</h3><p>A different pack size cannot slide through as if only the price changed. That row stops for a decision.</p></article>
+				<article data-reveal><h3>Tell it which column is which.</h3><p>When a supplier’s spreadsheet has odd columns, you say which one holds what before importing. It shows you any columns it skipped.</p></article>
+				<article data-reveal><h3>When a match is a guess, it says so.</h3><p>You check the ingredient matches it is unsure of. Once you confirm a supplier’s name for something, it can remember it for next time.</p></article>
+				<article data-reveal><h3>No sneaky pack changes.</h3><p>A new pack size does not slide through as if only the price moved. That row stops until you decide.</p></article>
 			</div>
 		</div>
 	</section>
 
 	<section class="exceptions" aria-labelledby="exceptions-heading">
 		<div class="container-page exceptions-grid">
-			<div data-reveal><h2 id="exceptions-heading">The awkward rows stay awkward on screen.</h2><p>Nothing unreadable, unmatched, duplicated, or structurally changed needs to be guessed into place.</p></div>
+			<div data-reveal><h2 id="exceptions-heading">The awkward rows stay awkward on screen.</h2><p>A row it could not read, could not match, has seen before or whose pack changed: nobody has to guess it into place.</p></div>
 			<ul class="exception-list" role="list" data-reveal>
 				<li><strong>Unreadable</strong><span>The source text is quoted back beside the row awaiting review.</span><em>Correct or leave waiting</em></li>
-				<li><strong>Unmatched</strong><span>Candidate matches and their ambiguity remain visible.</span><em>Choose or add</em></li>
+				<li><strong>Unmatched</strong><span>You see the possible matches, and how unsure it is.</span><em>Choose or add</em></li>
 				<li><strong>Duplicate</strong><span>The existing invoice and receipt help you avoid saving the purchase twice.</span><em>Open the existing record</em></li>
 				<li><strong>Pack changed</strong><span>The new pack is not treated as a simple price update.</span><em>Review the unit</em></li>
 			</ul>
@@ -226,7 +226,7 @@ const faqItems = [
 
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page">
-			<div class="capability-heading" data-reveal><div><h2 id="capabilities-heading">The import details, kept close.</h2><p>Selected shipped capabilities for invoices and supplier price lists.</p></div><p class="count"><strong>{capabilityCount}</strong><span>capabilities</span></p></div>
+			<div class="capability-heading" data-reveal><div><h2 id="capabilities-heading">The details, when you want them.</h2><p>A pick of what ships today for invoices and supplier price lists.</p></div><p class="count"><strong>{capabilityCount}</strong><span>capabilities</span></p></div>
 			<div class="disclosures">
 				{capabilityGroups.map((group) => (
 					<details data-reveal data-import-disclosure><summary><span><strong>{group.label}</strong><small>{group.title}</small></span><span class="summary-count">{group.items.length}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul>{group.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
@@ -237,14 +237,14 @@ const faqItems = [
 
 	<section class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
-			<div class="faq-intro" data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions to settle before supplier paperwork changes a working cost.</p></div>
+			<div class="faq-intro" data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>What people ask before a supplier’s paperwork touches their costs.</p></div>
 			<div class="faq-list">{faqItems.map((item) => <details data-reveal data-import-disclosure><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>)}</div>
 		</div>
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">Review your next supplier invoice.</h2><p>Bring in the next supplier document with every line still under your eye.</p></div>
+			<div><h2 id="closing-heading">Review your next supplier invoice.</h2><p>Bring in the next invoice off the truck. Every line waits for you.</p></div>
 			<div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div>
 		</div>
 		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/getting-prices-in">Purchases &amp; getting prices in</a><a href="/features/invoice-email">Invoice email</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>

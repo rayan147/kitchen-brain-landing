@@ -144,3 +144,18 @@
 
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - The count moves to Aug 31, after PO-1048 moved the price, so $2.34 frozen at count is true; the +20 lb is the case PO-1048 came up short.
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it, not AI. Copy only; the H1,
+the FAQ, the capability list, the illustrative shelf record and the worked
+example caption (68 lb, 55 lb, 13 lb, one 20 lb case) are unchanged.
+- **Slogan headings out:** "The empty shelf was hidden inside an exact
+  number." is "The screen said one case. The shelf was empty."; "No count, no
+  invented shelf." is "Never counted means nothing gets guessed."; "A shelf
+  number ready to use." is "Count one shelf before your next shop." (pin in
+  check-inventory-page.mjs moved, pure wording).
+- **Boundary kept, said plainly:** only a recent count takes anything off the
+  buy; a stale count or a number with nothing behind it does not; nothing is
+  estimated before the first count; overriding the list stays a separate
+  call; the count's unit cost freezes at count time.
+- **Story pointer added** to InventoryFeature.astro.
