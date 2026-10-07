@@ -23,6 +23,12 @@ export const ManifestSchema = z.object({
   actualFoodCost: z.string().min(1),
   // The closeout's "Food cost, share of the event price (likely)".
   likelyShare: z.string().min(1),
+  // Counts the captions name, off the pack list (plates per dish) and the
+  // offer's staff line as entered (people and hours make its "56 × $38.00").
+  mainPortions: z.string().regex(/^\d+$/),
+  vegetarianPortions: z.string().regex(/^\d+$/),
+  staffPeople: z.string().regex(/^\d+$/),
+  staffHours: z.string().regex(/^\d+$/),
   displayPrice: z.string().min(1),
   trialDays: z.string().min(1),
   developCommit: z.string().min(7),

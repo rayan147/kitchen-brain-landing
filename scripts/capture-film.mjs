@@ -389,6 +389,10 @@ const STEPS = {
 			// Staff, rentals and a service fee go on top of the food, so the offer
 			// reads like a wedding's, not a drop-off's.
 			await chargeLine(page, '+ Staff', 'Service staff', { People: EVENT.staff.people, 'Hours each': EVENT.staff.hours, 'Unit price ($)': EVENT.staff.rate });
+			// The offer prints people × hours as one count ("56 × $38.00"); the
+			// film says what that count is, from what was entered here.
+			manifest.staffPeople = EVENT.staff.people;
+			manifest.staffHours = EVENT.staff.hours;
 			await chargeLine(page, '+ Rentals', 'Plates, glassware and linens', { Quantity: EVENT.rentals.qty, 'Unit price ($)': EVENT.rentals.price });
 			await chargeLine(page, '+ Service fee', 'Service fee', {}, async (sheet) => {
 				await sheet.getByLabel('Service fee basis').click();
@@ -743,6 +747,12 @@ const STEPS = {
 				// The dishes card only: the pack page's "Load out" block stays out of
 				// shipped frames (capture brief).
 				const dishes = page.locator('main section, main div').filter({ has: page.getByRole('heading', { name: /^Dishes/ }) }).filter({ hasText: 'Lemon Posset' }).filter({ hasNot: page.getByRole('heading', { name: /^(Load out|Equipment)/ }) }).last();
+				// Plates per dish, as the pack list counts them, for the captions.
+				const packText = (await dishes.innerText()).replace(/\s+/g, ' ');
+				manifest.mainPortions = packText.match(/Braised Short Rib\b\D*?(\d+)\b/)?.[1];
+				manifest.vegetarianPortions = packText.match(/Stuffed Pepper, Rice and Feta\b\D*?(\d+)\b/)?.[1];
+				if (!manifest.mainPortions || !manifest.vegetarianPortions) throw new Error(`pack list counts not found: ${packText.slice(0, 300)}`);
+				await saveManifest();
 				const box = await union([title, dishes], 24);
 				const from = Math.max(box.y - 40, (await bannerBottom(page)) + 8);
 				await shoot(page, name, { x: box.x, y: from, width: box.width, height: Math.min(box.y + box.height - from, 1000) });

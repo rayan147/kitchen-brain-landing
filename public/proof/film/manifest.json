@@ -85,7 +85,7 @@
     "payments-paid-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "9a15fe297",
-      "via": "capture-film.mjs paid"
+      "via": "capture-film.mjs paid (clipped below \"Copy pay link\" after capture, so no row sits half-cut beside the caption)"
     },
     "po-desktop.png": {
       "host": "test.app.costcook.io",
@@ -141,5 +141,9 @@
       "how": "a read-only copy of test’s database, run locally on the same build with its server clock moved to Jun 20 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event"
     },
     "note": "Every frame is from that one wedding. The signatures and the card payment were done by hand by the owner; the client’s email was switched to an inbox the owner reads before the offer went out, because test only emails approved addresses and DocuSeal mails the signer a one-time code. confirm-desktop.png (shot at 4x) is clipped 24 CSS px inside the dialog after capture, to drop the dimmed page. After the third review, agreement, shop and prep were re-shot from the same wedding (read-only page visits; the test account's display units switched to US customary for shop and prep, then back), payment-request was clipped tight to its figures (the client email line out), and receiving, booked and closeout were cropped from their walk shots to drop the event-date, 24-hour time and ISO date lines."
-  }
+  },
+  "mainPortions": "138",
+  "vegetarianPortions": "12",
+  "staffPeople": "8",
+  "staffHours": "7"
 }

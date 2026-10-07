@@ -26,6 +26,10 @@ const manifest: Manifest = {
   plannedFoodCost: "$3,750.87",
   actualFoodCost: "$3,675.88",
   likelyShare: "25.8%",
+  mainPortions: "138",
+  vegetarianPortions: "12",
+  staffPeople: "8",
+  staffHours: "7",
   displayPrice: "$49/month",
   trialDays: "15",
   developCommit: "e00299078",
@@ -299,7 +303,7 @@ describe("second review fixes (2026-10-07)", () => {
   // staff line prints "56 × $38.00", so the caption says what 56 is.
   it("names staff by people and hours, and the rentals", () => {
     expect(captionsFor("decision", manifest).join(" ")).toMatch(
-      /Eight staff, seven hours, the rentals/,
+      /8 staff for 7 hours, the rentals/,
     );
   });
   // Caterer: her note asks for something for the vegetarians; the pack beat
@@ -344,5 +348,29 @@ describe("third review fixes (2026-10-07)", () => {
     expect(captionsFor("decision", manifest).join(" ")).toMatch(
       /12 vegetarians/,
     );
+  });
+});
+
+describe("fourth pass (2026-10-07)", () => {
+  // Advisor/caterer: counts typed into a caption go stale silently when the
+  // wedding is walked again with other numbers; every count is a token.
+  it("types no count into a caption; every number comes from the manifest", () => {
+    for (const id of SCENE_ORDER) {
+      for (const b of FILM[id].beats) {
+        if (!b.caption) continue;
+        expect(
+          b.caption.replace(/\{\w+\}/g, ""),
+          `${id}: ${b.caption}`,
+        ).not.toMatch(/\d/);
+      }
+    }
+  });
+  // Motion: the cut into the Confirm dialog jumped about 4x in scale; the
+  // dialog now eases in from a little smaller.
+  it("eases into the Confirm dialog from below full size", () => {
+    const i = FILM.kitchen.beats.findIndex(
+      (b) => b.frames[0] === "events-confirm-desktop.png",
+    );
+    expect(cameraStart("kitchen", i)).toBeLessThan(1);
   });
 });

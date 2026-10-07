@@ -44,6 +44,9 @@ export type Beat = {
   scroll?: [number, number];
   // Where the caption sits: at the bottom unless what it names is there.
   captionAt?: "top";
+  // The scale the camera starts from on a cut to a much closer frame, so the
+  // cut does not jump (the Confirm dialog after the shop table).
+  fromScale?: number;
 };
 
 type Scene = { chapter: string | null; seconds: number; beats: Beat[] };
@@ -126,7 +129,8 @@ export const FILM: Record<SceneId, Scene> = {
         to: 10.5,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
-        caption: "Stuffed peppers on the menu for her 12 vegetarians.",
+        caption:
+          "Stuffed peppers on the menu for her {vegetarianPortions} vegetarians.",
         ring: { x: 9, y: 61.9, width: 57, height: 1.9 },
         scroll: [100, 100],
       },
@@ -135,7 +139,8 @@ export const FILM: Record<SceneId, Scene> = {
         to: 14.5,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
-        caption: "Eight staff, seven hours, the rentals and the service fee.",
+        caption:
+          "{staffPeople} staff for {staffHours} hours, the rentals and the service fee.",
         ring: { x: 8, y: 67.3, width: 84, height: 3.9 },
         scroll: [100, 100],
       },
@@ -179,7 +184,7 @@ export const FILM: Record<SceneId, Scene> = {
         // The reminder goes out on the due date itself (an app question,
         // reported), so the caption claims no lead time for it.
         caption: "Paid. Balance due ten days before, with a reminder that day.",
-        ring: { x: 60, y: 35, width: 37.5, height: 9.5 },
+        ring: { x: 60, y: 52.5, width: 37.5, height: 15 },
       },
       {
         from: 14.5,
@@ -221,6 +226,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-confirm-desktop.png"],
         caption: "Final count in. Confirm, and prices and quantities lock.",
+        fromScale: 0.94,
         ring: { x: 74, y: 62, width: 21, height: 27 },
       },
       {
@@ -262,7 +268,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-prep-desktop.png"],
         caption:
-          "Bases first, then every dish: 138 short rib, 12 stuffed peppers.",
+          "Bases first, then every dish: {mainPortions} short rib, {vegetarianPortions} stuffed peppers.",
         ring: { x: 2.5, y: 45, width: 95, height: 6.5 },
       },
     ],
@@ -277,7 +283,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-pack-desktop.png"],
         caption:
-          "Every dish into the van, the 12 vegetarian plates too. Allergens on each label.",
+          "Every dish into the van, the {vegetarianPortions} vegetarian plates too. Allergens on each label.",
         // The last row is the answer to her "something for the vegetarians";
         // the caption sits on top, off it.
         ring: { x: 3, y: 87, width: 94, height: 10 },
@@ -334,10 +340,11 @@ export function captionsFor(scene: SceneId, manifest: Manifest): string[] {
 export function cameraStart(scene: SceneId, index: number): number {
   const beats = FILM[scene].beats;
   const prev = beats[index - 1];
-  if (!prev?.focus) return 1;
+  const own = beats[index].fromScale ?? 1;
+  if (!prev?.focus) return own;
   return prev.frames.join() === beats[index].frames.join()
     ? prev.focus.scale
-    : 1;
+    : own;
 }
 
 /**
