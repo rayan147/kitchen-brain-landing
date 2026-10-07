@@ -18,7 +18,11 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 
 <!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <!-- story: docs/stories/features-navigation.story.md -->
-<header class="site-header container-page relative flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
+<!-- The header spans the page, not the 72rem content column: the mark sits
+     at the left gutter, where readers look for it first (owner, 2026-10-07).
+     Capped at 96rem so on a very wide screen the mark and the trial button
+     do not drift apart. Same gutter as container-page. -->
+<header class="site-header relative mx-auto w-full max-w-[96rem] px-[clamp(1.25rem,3vw,2.5rem)] flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
 	<!-- One sprite keeps every destination icon on the same 20px grid and
 	     stroke weight. Visible titles and descriptions carry their meaning. -->
 	<svg width="0" height="0" class="absolute overflow-hidden" aria-hidden="true">
@@ -128,7 +132,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 		</defs>
 	</svg>
 
-	<BrandLockup href="/" />
+	<BrandLockup href="/" size="header" />
 	<div class="header-actions flex flex-wrap items-center justify-end gap-2 sm:gap-3 lg:gap-4">
 		<nav aria-label="Main">
 			<ul role="list" class="flex items-center gap-3 lg:gap-5">
