@@ -188,3 +188,12 @@ Priya's yes comes in, then the deposit.
 - **Navigation:** the phone Menu reads the footer's four groups, adds the phone
   number and email, and opens under the header with a backdrop and a Close
   button. Every demo link reads "Book a 15-min demo" (demoCta.label).
+- **Pounds, from the app:** the kitchen is set to US customary units, and the
+  rail's last frame is now the Shop tab on a phone: 138.9 lb of boneless short
+  rib for 150 guests (two 210 g portions each), bought as 9 cases of 7 kg. The
+  prep sheet was not re-shot: it prints each recipe in the units it was
+  written in, so it stays metric with celery by the head (an app gap, not a
+  page claim). The polenta's "about 240 g a portion" and the yield frame's
+  grams remain.
+- **Deposit legible on a phone:** the deposit block has its own phone capture
+  below 48rem, with rings measured on it.

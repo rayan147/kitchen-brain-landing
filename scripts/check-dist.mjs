@@ -165,7 +165,7 @@ if (!/src="\/proof\/home\/hero-pricing\.png"[^>]*loading="eager"|loading="eager"
 
 // Every homepage frame: real capture, measured box, lazy below the hero.
 const homeImgs = [...homeHtml.matchAll(/<img\b[^>]*src="\/proof\/home\/([a-z-]+)\.png"[^>]*>/g)];
-const expectedFrames = ['hero-pricing', 'inquiry-mobile', 'proposal-mobile', 'payment-schedule', 'confirm-dialog', 'prep-list', 'food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox', 'sage-answer'];
+const expectedFrames = ['hero-pricing', 'inquiry-mobile', 'proposal-mobile', 'payment-schedule', 'confirm-dialog', 'shop-list', 'food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox', 'sage-answer'];
 const renderedFrames = homeImgs.map((m) => m[1]);
 if (renderedFrames.join(',') !== expectedFrames.join(',')) {
 	console.error(`check-dist: homepage frames render [${renderedFrames.join(', ')}]; expected [${expectedFrames.join(', ')}]`);
@@ -189,7 +189,8 @@ for (const [tag, name] of homeImgs) {
 // Phone captures (design review 2026-10-07): the wide tables are served in the
 // app's own phone layout below 48rem. Each <source> carries its box so the
 // swap does not shift the page, and points at a file that shipped.
-const expectedPhone = ['food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox'];
+// The deposit frame joined them after the second design review (6px labels at 390).
+const expectedPhone = ['payment-schedule', 'food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox'];
 const phoneSources = [...homeHtml.matchAll(/<source\b[^>]*srcset="\/proof\/home\/([a-z-]+)-phone\.png"[^>]*>/g)];
 if (phoneSources.map((m) => m[1]).join(',') !== expectedPhone.join(',')) {
 	console.error(`check-dist: homepage phone captures are [${phoneSources.map((m) => m[1]).join(', ')}]; expected [${expectedPhone.join(', ')}]`);

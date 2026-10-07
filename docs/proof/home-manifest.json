@@ -40,6 +40,8 @@
     "hero-pricing": "Menu Wedding Plated Dinner, Price per guest panel (local 4191, 2026-10-07 after the chef-review data fixes): Food cost $24.92, Sells for $95.00, 26.2% food cost, target 30%, 3.8 points to spare, food margin $70.08 a guest",
     "allergens-labels": "Order #784 (Dec 19 wedding) Pack tab dishes card (local 4191): six dishes, allergen chips, Lemon Posset 150 portions; phone variant the same list",
     "prep-list": "Order #784 Prep tab on a phone (local 4191): Mirepoix Base make first, 6 batches, 18 kg; Carrot 5.4 kg, Celery 3.3 each, Yellow onion 7.2 kg, Canola oil 720 ml",
+    "shop-list": "Order #784 Shop tab on a phone (local 4191, kitchen set to US customary units 2026-10-07): Highland Meats $1,943.35; Beef short rib, boneless, Need 138.9 lb, 9 x case 7 kg, $1,910.16; Beef bones, Need 27.6 lb, 1 x case 15 kg, $33.19; both Not counted. Replaces prep-list on the rail after the second chef review: the prep sheet keeps each recipe's own units (metric, celery by the head) and does not follow the US setting.",
+    "payment-schedule-phone": "The same Deposit block on the same event in the app's phone layout (390 wide, 2x), served below 48rem; rings measured on this capture.",
     "food-cost-breakdown": "Same menu, Dishes per guest table, first four rows (local 4191): Braised Short Rib 2 x $6.65 = $13.30, Wild Mushroom Polenta $2.93, Creamed Spinach 0.5 x $5.82 = $2.91, Focaccia $2.56; phone variant shows the same four",
     "yield-lines": "Greek Salad recipe lines (peer app :4197): Bell pepper 82%, Cucumber 90%, Roma tomato 60 g at 91% buy 66 g, Red onion 88%, Feta 100%",
     "invoice-inbox": "test.app.costcook.io Purchases > Invoice inbox: credit memo CM-3104 (forwarded) waiting in review; invoices HF-3102 and HF-3103 (new sender, unverified) waiting in review. Sender shown is the founder's public contact address.",
@@ -99,9 +101,10 @@
         "food-cost-breakdown-phone",
         "allergens-labels",
         "allergens-labels-phone",
-        "prep-list",
+        "shop-list",
         "proposal-mobile",
         "payment-schedule",
+        "payment-schedule-phone",
         "sage-answer"
       ]
     }

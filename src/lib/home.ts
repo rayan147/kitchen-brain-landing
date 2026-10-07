@@ -109,16 +109,25 @@ export const eventStages = [
 			{ x: 2.2, y: 13.5, w: 23.2, h: 17.6 },
 			{ x: 77, y: 63.7, w: 21.2, h: 10.1 }
 		] as Focus[],
+		// The same two figures on the phone capture (design review 2026-10-07:
+		// the wide frame drew 6px labels at 390px). Measured from its pixels.
+		smallFocus: [
+			{ x: 1.1, y: 9.6, w: 97.9, h: 31 },
+			{ x: 59.8, y: 69.3, w: 39.1, h: 9.1 }
+		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Deposit',
 		heading: 'Signed, then paid by card from a link.',
 		// The signature lives here, not in the client's yes (RC-64: claimable,
 		// not capturable, so it is a sentence without a frame).
 		body: `${agreementLine} ${eventPayments.homepage}`,
-		shot: shot(
-			'payment-schedule',
-			'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
-			[1378, 716]
+		shot: withPhone(
+			shot(
+				'payment-schedule',
+				'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
+				[1378, 716]
+			),
+			[748, 794]
 		)
 	},
 	{
@@ -141,10 +150,14 @@ export const eventStages = [
 		tab: 'Shop / Prep',
 		heading: 'The lists come from the same menu.',
 		body: 'Buy in whole packs by supplier, then prep in order: sub-recipes first, scaled to the guest count, checked off on the phone.',
+		// The shopping list, not the prep sheet (second chef review 2026-10-07):
+		// the kitchen is set to US units and the Shop tab buys in them, while
+		// the prep sheet prints each recipe in the units it was written in
+		// (metric here, and celery counted by the head).
 		shot: shot(
-			'prep-list',
-			'Prep list on a phone: 1, Mirepoix Base, make first, 6 batches, makes 18 kg for Braised Short Rib: carrot 5.4 kg, celery 3.3 each, yellow onion 7.2 kg, canola oil 720 ml; then 2, House Beef Stock, 5 batches for the 36 L the short rib needs.',
-			[780, 1560],
+			'shop-list',
+			'Shopping list on a phone, Highland Meats, $1,943.35: beef short rib, boneless, need 138.9 lb, buy 9 cases of 7 kg, $1,910.16; beef bones, need 27.6 lb, 1 case of 15 kg, $33.19; neither counted on the shelf yet.',
+			[780, 788],
 			true
 		)
 	}

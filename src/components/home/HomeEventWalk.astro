@@ -19,6 +19,7 @@
  */
 import HomeBand from './HomeBand.astro';
 import SectionHandoff from '../SectionHandoff.astro';
+import HomeFrame from './HomeFrame.astro';
 import { eventStages } from '../../lib/home';
 ---
 <HomeBand
@@ -40,18 +41,17 @@ import { eventStages } from '../../lib/home';
 				</div>
 				<figure class:list={['stage-figure', { 'stage-figure--phone': stage.shot.phone }]}>
 					<div class="frame">
-						<img
-							src={stage.shot.src}
-							alt={stage.shot.alt}
-							width={stage.shot.width}
-							height={stage.shot.height}
-							loading="lazy"
-							decoding="async"
-							class="home-shot"
-						/>
+						<HomeFrame shot={stage.shot} />
 						{'focus' in stage && stage.focus.map((box) => (
 							<span
-								class="ring"
+								class:list={['ring', { 'ring--wide': 'smallFocus' in stage }]}
+								aria-hidden="true"
+								style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}
+							></span>
+						))}
+						{'smallFocus' in stage && stage.smallFocus.map((box) => (
+							<span
+								class="ring ring--small"
 								aria-hidden="true"
 								style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}
 							></span>
@@ -129,6 +129,7 @@ import { eventStages } from '../../lib/home';
 	.is-tracking .stage:not(.is-reached) .node { background: var(--color-paper); color: var(--color-green-deep); }
 	.stage-figure { margin: 0; }
 	.frame { position: relative; }
+	.frame :global(picture) { display: block; }
 	.stage-figure--phone .frame { max-width: 20rem; margin-inline: auto; }
 	.ring {
 		position: absolute;
@@ -136,6 +137,13 @@ import { eventStages } from '../../lib/home';
 		border-radius: 8px;
 		box-shadow: 0 0 0 4px rgb(185 118 42 / .18);
 		pointer-events: none;
+	}
+	/* A stage with a phone capture (HomeFrame swaps it in below 48rem, the same
+	   query) rings each capture with its own measured boxes. */
+	.ring--small { display: none; }
+	@media (max-width: 47.99rem) {
+		.ring--wide { display: none; }
+		.ring--small { display: block; }
 	}
 	/* The carry line sits on the rail, between this stage and the next. */
 	.carry {
