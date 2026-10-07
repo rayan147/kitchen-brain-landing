@@ -29,7 +29,7 @@ export const eventPayments = {
 	comparisonLabel: 'Card payment for event deposits and balances',
 	verdict: 'yes' as const,
 	homepage:
-		'The client pays the deposit and the balance by card from an email link, and a reminder with a pay link goes out on the day the balance is due.',
+		'The client pays the deposit and the balance by card from an email link. Send the balance request whenever you choose, and if it is still owed on the due day, a reminder with a pay link goes out.',
 	comparisonNote: `The deposit and the balance are paid by card from an email link; a reminder goes out on the day the balance is due. You can still record a payment by hand, as ${depositMethods}.`,
 	faq: `Yes. The client pays the deposit and the balance by card from a link in an email, and CostCook shows what was asked for against what came in. On the day the balance is due, the client gets a reminder email with a pay link. You can still record a payment by hand, as ${depositMethods}.`
 } as const;

@@ -31,12 +31,16 @@ import { heroShot } from '../../lib/home';
 		</div>
 		<figure class="hero-media" data-hero-media>
 			<img src={heroShot.src} alt={heroShot.alt} width={heroShot.width} height={heroShot.height} loading="eager" fetchpriority="high" decoding="async" class="home-shot hero-shot" />
-			<figcaption class="home-small mt-3">Sample wedding, checked before the quote goes out. This is the food cost; staff, rentals, delivery and a service fee go on the same proposal as their own lines.</figcaption>
+			<figcaption class="home-small mt-3">Sample wedding, checked before the quote goes out. This is the food cost. Staff, rentals, delivery and a service fee can go on the proposal as their own lines; this sample prices the food only.</figcaption>
 		</figure>
 	</div>
 </section>
 
 <style>
+	/* The header shares the hero's cream (owner 2026-10-07), so the band's
+	   full top padding read as a 160px gap under it at 1440 (design review).
+	   The hero opens on the tight step instead. */
+	.hero { padding-top: var(--spacing-section-tight); }
 	.hero-grid { display: grid; gap: 3rem; align-items: center; }
 	.hero-h1 {
 		margin-top: 1rem;

@@ -54,5 +54,11 @@ export const depositMethods = 'a check, cash, a transfer or your own card proces
 /** The same list opening a label or a sentence. */
 export const depositMethodsCapital = depositMethods.replace(/^./, (c) => c.toUpperCase());
 
+/**
+ * Where the signature happens (A-10, A-11, RC-64): claimable, not capturable,
+ * so no surface shows the signing page.
+ */
+export const agreementLine = 'The agreement goes out for e-signature from your own template, with the accepted proposal attached.';
+
 /** The acceptance boundary (A-07, D-04): the client's yes books nothing. */
 export const acceptanceBoundary = 'Their yes is not a signature or a booking. Confirm order is.';

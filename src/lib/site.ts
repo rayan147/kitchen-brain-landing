@@ -217,10 +217,57 @@ export const blogMenu = {
 	ariaLabel: 'Blog guides, broken down by kitchen question'
 } as const;
 
+// No aria-label: the button's name is its visible word, so a speech-input
+// user who says "click Menu" reaches it (WCAG 2.5.3, design review
+// 2026-10-07). It used to be named "Site navigation".
 export const mobileMenu = {
-	label: 'Menu',
-	ariaLabel: 'Site navigation'
+	label: 'Menu'
 } as const;
+
+export type SiteLink = {
+	label: string;
+	href: string;
+	target?: string;
+	rel?: string;
+	ariaLabel?: string;
+	/** Phone Menu only: the bar already shows this destination from sm up. */
+	phoneOnly?: boolean;
+};
+
+/**
+ * The site map in four groups, read by the phone Menu and the footer, so the
+ * two lists of every destination cannot disagree (design review 2026-10-07:
+ * the Menu was one flat run of eleven links while the footer had grouped the
+ * same links). The two resource groups are the header's own Resources groups,
+ * except Contact, which joins the email and phone under "Talk to us" where a
+ * reader looking for a person looks. Sign in and the demo link are actions,
+ * not destinations: each renderer places them itself.
+ *
+ * Considered Composite; not used because the map is one fixed level of
+ * headings over links, and both renderers loop it the same way.
+ */
+const contactItem = resourceNav.find((item) => item.href === contactCta.href);
+export const siteMap: readonly { heading: string; links: readonly SiteLink[] }[] = [
+	{
+		heading: 'Product',
+		links: [
+			{ label: 'Every feature', href: '/features', phoneOnly: true },
+			...nav.filter((item) => item.header !== 'resources')
+		]
+	},
+	...resourcesMenu.groups.map((group) => ({
+		heading: group,
+		links: resourceNav.filter((item) => item.group === group && item !== contactItem)
+	})),
+	{
+		heading: 'Talk to us',
+		links: [
+			...(contactItem ? [{ label: contactItem.label, href: contactItem.href }] : []),
+			{ label: site.phone, href: site.phoneHref },
+			{ label: site.email, href: `mailto:${site.email}` }
+		]
+	}
+];
 
 /**
  * Header disclosure copy. The curated destinations live beside the feature

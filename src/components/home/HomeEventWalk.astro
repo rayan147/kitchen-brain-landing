@@ -24,8 +24,8 @@ import { eventStages } from '../../lib/home';
 <HomeBand
 	id="event-walk"
 	tone="amber"
-	eyebrow="One event, start to booked"
-	heading="From the first call to a booked, paid event."
+	eyebrow="One event, first call to prep list"
+	heading="From the first call to the prep list."
 	lede="You chase the deposit by text and forget the balance until the week of the event. Follow one wedding instead: each step picks up what the last one settled."
 >
 	<ol role="list" class="rail" data-event-walk>
@@ -103,8 +103,12 @@ import { eventStages } from '../../lib/home';
 		bottom: .5rem;
 		border-left: 2px solid var(--color-hairline-strong);
 	}
-	.stage { position: relative; display: grid; gap: 1.5rem; }
+	/* minmax(0, 1fr): the implicit auto track grew past 320px at 200% text. */
+	.stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
 	.stage + .stage { margin-top: var(--spacing-section-tight); }
+	/* At 320px and 200% text the rail leaves the copy about 136px: words break
+	   rather than push the page sideways. */
+	.stage-copy, .carry { overflow-wrap: anywhere; }
 	.node {
 		position: absolute;
 		left: -3.25rem;

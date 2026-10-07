@@ -165,3 +165,26 @@ Priya's yes comes in, then the deposit.
   built by a chef.", repeats the hero eyebrow (the founder line, verified on
   /who-its-for) so the footer says what the company is. No policy links yet:
   the site has no privacy or terms page (owner to supply).
+
+### Revision 2026-10-07 (4): second designer and chef review
+- **"Booked" means one thing:** the rail's eyebrow and heading end at the prep
+  list ("One event, first call to prep list" / "From the first call to the
+  prep list."), and step 03 carries "The Nair & Castellano wedding, deposit
+  paid". Only step 04 (Confirm order) books the job.
+- **Where the signature is:** step 03 is "Signed, then paid by card from a
+  link." and opens with the agreement line (RC-64, a sentence with no frame).
+- **The balance, before the due day:** "Send the balance request whenever you
+  choose, and if it is still owed on the due day, a reminder with a pay link
+  goes out." (the Request payment button is in the frame).
+- **No number the frames do not show:** the yield row's pain line drops "40 lb
+  of short rib" (2 oz a plate against 300 portions) for "The recipe says what
+  goes on the plate. You buy exactly that and you are short at 5 a.m."
+- **Food only, said so:** the hero caption keeps the other lines as a "can"
+  and says this sample prices the food only.
+- **A second menu, named:** the ordering row says the Coastal Dinner is a
+  separate menu from the wedding, so $93 does not read as a mismatch.
+- **Sage, the record only:** the frame ends under the cited record; the
+  suggested-step card and its green button are cropped off.
+- **Navigation:** the phone Menu reads the footer's four groups, adds the phone
+  number and email, and opens under the header with a backdrop and a Close
+  button. Every demo link reads "Book a 15-min demo" (demoCta.label).

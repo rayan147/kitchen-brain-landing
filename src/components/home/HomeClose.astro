@@ -49,14 +49,22 @@ import { cta, demoCta, launchPlan, site } from '../../lib/site';
 </HomeBand>
 
 <style>
-	.close-grid { display: grid; gap: 3rem; align-items: start; }
-	.founder { display: flex; gap: 1.25rem; align-items: center; margin: 0; }
+	/* minmax(0, 1fr), not the implicit auto track: at 200% text on a phone the
+	   auto track grew to the copy's min-content and the page scrolled sideways
+	   (design review 2026-10-07, WCAG 1.4.10). */
+	.close-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; align-items: start; }
+	/* Wraps at 200% text, where the 5rem photo and the italic line no longer fit side by side. */
+	.founder { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; margin: 0; }
+	.founder figcaption { flex: 1 1 12rem; min-width: 0; }
 	.founder-photo { width: 5rem; height: 5rem; border-radius: 999px; object-fit: cover; flex: none; }
 	.founder-line { color: var(--color-ink); font-family: var(--font-display); font-style: italic; }
-	.plan { padding: 2rem; background: var(--color-paper); border-radius: 8px; box-shadow: var(--shadow-lift); }
-	.plan-price { margin-top: .5rem; font-family: var(--font-display); font-size: var(--text-display); line-height: 1; font-weight: 600; }
+	/* Narrower padding and breakable words on a small phone at 200% text,
+	   where 2rem a side left the card 112px of text. */
+	.plan { padding: clamp(1rem, 6vw, 2rem); overflow-wrap: anywhere; background: var(--color-paper); border-radius: 8px; box-shadow: var(--shadow-lift); }
+	/* overflow-wrap: the price is display-size, and at 200% text "$49/month" was wider than the card. */
+	.plan-price { overflow-wrap: anywhere; margin-top: .5rem; font-family: var(--font-display); font-size: var(--text-display); line-height: 1; font-weight: 600; }
 	.plan-terms { margin-block: 1.5rem; }
-	.plan-terms div { display: flex; justify-content: space-between; gap: 1rem; padding-block: .6rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-body-lg); }
+	.plan-terms div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; padding-block: .6rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-body-lg); }
 	.plan-terms dt { color: var(--color-ink-soft); }
 	.plan-terms dd { font-weight: 600; }
 	.plan-cta { width: 100%; justify-content: center; }

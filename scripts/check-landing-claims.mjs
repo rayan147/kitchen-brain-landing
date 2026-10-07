@@ -239,7 +239,10 @@ requireText(blogMenuContentsSource, 'getPublishedPosts()', 'blog menu article so
 requireText(blogMenuContentsSource, 'post.data.description', 'blog menu article descriptions');
 requireText(navSource, 'data-mobile-menu', 'contained mobile navigation');
 requireText(navSource, 'demoCta.href', 'header demo action');
-requireText(navSource, 'Book a demo', 'header demo label');
+// The header renders the demo link's one label (design review 2026-10-07:
+// "Book a demo" was typed in three places while every other surface read
+// demoCta.label).
+requireText(navSource, '{demoCta.label}', 'header demo label');
 requireText(siteSource, "href: '/contact'", 'contact page nav link');
 requireText(siteSource, "href: '/who-its-for'", 'who-it-is-for navigation link');
 // The homepage link used to promise "every shipped feature" and point at a
@@ -1081,7 +1084,9 @@ requireText(startHereSource, 'type any line it could not', 'close keeps the type
 //    Both used to live only in pixels and alt text.
 // UPDATED 2026-10-07 (chef review, RC-74): the caption still names the panel as
 // the food cost, and now says where staff, rentals, delivery and a fee go.
-requireText(heroSource, 'This is the food cost; staff, rentals, delivery and a service fee go on the same proposal as their own lines.', 'hero caption says the number is the food cost and where the rest goes (RC-74)');
+// UPDATED 2026-10-07 (second chef review): the sample proposal is food only,
+// so the caption says the other lines can go on it, and that this one has none.
+requireText(heroSource, 'This is the food cost. Staff, rentals, delivery and a service fee can go on the proposal as their own lines; this sample prices the food only.', 'hero caption says the number is the food cost and where the rest goes (RC-74)');
 // 5. One wedding, one set of numbers. The tour, the menus guide and the blog
 //    keep the film's 180-guest wedding ($26.93 / 39.6% / $89.78); the retired
 //    Aug 29 figures may not come back anywhere. The homepage since 2026-10-06
@@ -1104,7 +1109,7 @@ requireText(heroSource, 'This is the food cost; staff, rentals, delivery and a s
 	// homepage wedding from $26.93 / 28.4% to $24.92 / 26.2%. The old pair may not
 	// come back in the homepage data, nor the old prep line (celery 48 each) or
 	// the Dec 28 dates the deposit and Sage frames carried before their re-shoot.
-	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039', '48 each', 'Dec 28', '2026-12-28']) {
+	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039', '48 each', 'Dec 28', '2026-12-28', '40 lb']) {
 		if (homeData.includes(stale)) failures.push(`homepage wedding: stale figure ${stale} is back (now $24.92 / 26.2%)`);
 	}
 	for (const figure of ['$95.00', '$24.92', '26.2%', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {

@@ -13,7 +13,7 @@
  */
 
 import { eventPayments } from './event-payments';
-import { acceptanceBoundary } from './events';
+import { acceptanceBoundary, agreementLine } from './events';
 
 export type Shot = {
 	src: string;
@@ -102,15 +102,19 @@ export const eventStages = [
 	},
 	{
 		id: 'deposit',
-		carries: 'The booked Nair & Castellano wedding',
+		// Not "booked": the next step says Confirm order is the booking
+		// (chef review 2026-10-07 caught the two disagreeing).
+		carries: 'The Nair & Castellano wedding, deposit paid',
 		focus: [
 			{ x: 2.2, y: 13.5, w: 23.2, h: 17.6 },
 			{ x: 77, y: 63.7, w: 21.2, h: 10.1 }
 		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Deposit',
-		heading: 'Paid by card from a link.',
-		body: eventPayments.homepage,
+		heading: 'Signed, then paid by card from a link.',
+		// The signature lives here, not in the client's yes (RC-64: claimable,
+		// not capturable, so it is a sentence without a frame).
+		body: `${agreementLine} ${eventPayments.homepage}`,
 		shot: shot(
 			'payment-schedule',
 			'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
@@ -168,7 +172,9 @@ export const kitchenRows = [
 		id: 'yield',
 		guide: { href: '/features/recipes-and-costing', label: 'How recipes are costed' },
 		eyebrow: 'Orders the right amount',
-		pain: 'The sheet says 40 lb of short rib. You buy 40 lb and you are short at 5 a.m.',
+		// No figure: the old weight was on no frame and, read against the
+		// wedding's 300 portions, came to 2 oz a plate (chef review 2026-10-07).
+		pain: 'The recipe says what goes on the plate. You buy exactly that and you are short at 5 a.m.',
 		heading: 'Buy for what survives the knife.',
 		body: 'Each line carries its trim yield, so the amount to buy covers what you lose to the knife.',
 		shot: withPhone(
@@ -218,7 +224,7 @@ export const frontOfHouse = [
 	{
 		id: 'ordering',
 		heading: 'Online ordering',
-		body: 'Clients pick a menu, a date and pickup or delivery on your own ordering page. You approve, and their card payment confirms it.',
+		body: 'Clients pick one of your set menus (here the Coastal Dinner, a separate menu from the wedding), a date and pickup or delivery on your own ordering page. You approve, and their card payment confirms it.',
 		shot: withPhone(
 			shot(
 				'ordering-site',
@@ -260,6 +266,8 @@ export const sageGuide = { href: '/features/sage', label: 'How Sage works' } as 
 
 export const sageShot = shot(
 	'sage-answer',
-	'Sage asked what is still owed on the Nair & Castellano wedding on December 19: a balance of $10,750.00, citing one record (balance due December 9, 2026; the $3,500.00 deposit already paid) with a link to the wedding, and a suggested next step you review first.',
-	[808, 1032]
+	'Sage asked what is still owed on the Nair & Castellano wedding on December 19: a balance of $10,750.00, citing one record (balance due December 9, 2026; the $3,500.00 deposit already paid) with a link to the wedding.',
+	// Cropped above the suggested-next-step card: its green button read as the
+	// page's primary (design review 2026-10-07).
+	[808, 676]
 );
