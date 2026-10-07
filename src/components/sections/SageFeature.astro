@@ -144,7 +144,7 @@ const videoChapters = [
 					loading="lazy"
 					decoding="async"
 				/>
-				<figcaption>Captured setup state. Ask Sage is present in the setup header.</figcaption>
+				<figcaption>Captured setup state. Ask Sage is present in the setup header. <a class="full-size" href="/proof/sage-onboarding.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 			</figure>
 			<div class="setup-copy" data-reveal>
 				<h2 id="setup-heading">Ask before the kitchen is fully set up.</h2>
@@ -280,7 +280,7 @@ const videoChapters = [
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
 	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.hero-evidence { position: relative; min-width: 0; padding: 0 0 clamp(5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem); }
-	.answer-sheet { position: relative; border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: 0 18px 36px color-mix(in srgb, var(--color-ink) 14%, transparent); }
+	.answer-sheet { position: relative; border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.answer-sheet > p { padding: 0.8rem 1rem; border-bottom: 1px solid var(--rule); color: var(--color-amber-deep); font-size: var(--text-label-sm); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 	.answer-sheet img { display: block; width: 100%; height: auto; }
 	.setup-slip { position: absolute; bottom: 1.1rem; left: 0; width: min(56%, 17rem); padding: 1.2rem; border-top: 3px solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 13px 25px color-mix(in srgb, var(--color-ink) 15%, transparent); transform: rotate(-1.5deg); }
@@ -311,7 +311,7 @@ const videoChapters = [
 	.setup-section, .proof-section, .faq { background: var(--color-offwhite); }
 	.setup-grid, .proof-grid, .faq-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--spacing-section); }
 	.setup-capture { min-width: 0; }
-	.setup-capture img { display: block; width: 100%; height: auto; border-top: 4px solid var(--color-green); box-shadow: 0 15px 28px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.setup-capture img { display: block; width: 100%; height: auto; border-top: 4px solid var(--color-green); border-radius: .5rem; box-shadow: var(--shadow-lift); }
 	.setup-capture figcaption, .proof-capture figcaption { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
 	.setup-copy > p, .questions-intro > p, .proof-copy > p:not(.snap), .guardrails-heading > p, .faq-intro > p, .closing p { max-width: 45ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: var(--text-body-lg); line-height: 1.65; }
 	.setup-copy dl { margin-top: 2rem; border-top: 1px solid var(--rule); }
@@ -336,7 +336,9 @@ const videoChapters = [
 	.snap { margin-top: 2rem; padding-top: 1.4rem; border-top: 3px solid var(--color-amber-deep); font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.15; }
 	.proof-capture { min-width: 0; }
 	.proof-capture > p { padding: 0.8rem 1rem; border-top: 4px solid var(--color-green); background: var(--color-paper); color: var(--color-green-deep); font-size: var(--text-label-sm); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
-	.proof-capture img { display: block; width: 100%; height: auto; box-shadow: 0 15px 28px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	/* Shown at a quarter of its pixels on a phone: let it open full-size. */
+	.full-size { display: inline-flex; min-height: 44px; align-items: center; font-size: var(--text-body-sm); font-weight: 600; color: var(--color-green-deep); text-decoration: underline; }
+	.proof-capture img { display: block; width: 100%; height: auto; border-radius: .5rem; box-shadow: var(--shadow-lift); }
 
 	.guardrails { background: var(--color-cream); }
 	.guardrails > .container-page { padding-block: var(--spacing-section); }

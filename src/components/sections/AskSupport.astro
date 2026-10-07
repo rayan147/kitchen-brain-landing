@@ -34,8 +34,10 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 
 <div class="ask-support" data-ask-support>
 	<p class="ask-actions">
-		<button type="button" class="btn-primary" data-support-open hidden>Ask a question</button>
-		<a href="#ask-form" class="btn-primary" data-support-inline-link>Ask a question</a>
+		<!-- Quiet, not green: the green button is only ever the trial (design
+		     review 2026-10-07); the form's own Send button keeps the green. -->
+		<button type="button" class="btn-quiet" data-support-open hidden>Ask a question</button>
+		<a href="#ask-form" class="btn-quiet" data-support-inline-link>Ask a question</a>
 		<a href={site.phoneHref} class="btn-quiet">Call {site.phone}</a>
 	</p>
 

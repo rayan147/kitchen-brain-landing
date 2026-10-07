@@ -191,7 +191,8 @@ const decisionFacts = [
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 1rem 1.5rem;
+		/* 1.5rem rows: btn-quiet's tap area reaches .75rem past its text. */
+		gap: 1.5rem;
 		margin-top: 2rem;
 	}
 
@@ -507,10 +508,9 @@ const decisionFacts = [
 			flex-direction: column;
 		}
 
+		/* The trial fills the width; quiet links stay left under the copy. */
 		.hero-actions .btn-primary,
-		.hero-actions .btn-quiet,
-		.close-actions .btn-primary,
-		.close-actions .btn-quiet {
+		.close-actions .btn-primary {
 			justify-content: center;
 			width: 100%;
 		}

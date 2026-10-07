@@ -340,7 +340,7 @@ const afterScenes = [
 						{stage.shots.map((shot) => (
 							<figure class="fd-shot fd-scene-shot">
 								<img src={shot.src} width={shot.width} height={shot.height} style={`max-width:${shot.width / 2}px`} loading="lazy" decoding="async" alt={shot.alt} />
-								<figcaption>{shot.caption}</figcaption>
+								<figcaption>{shot.caption} <a class="fd-full" href={shot.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 							</figure>
 						))}
 					</li>
@@ -466,7 +466,7 @@ const afterScenes = [
 							</div>
 							<figure class="fd-shot fd-scene-shot">
 								<img src={scene.shot.src} width={scene.shot.width} height={scene.shot.height} style={`max-width:${scene.shot.width / 2}px`} loading="lazy" decoding="async" alt={scene.shot.alt} />
-								<figcaption>{scene.shot.caption}</figcaption>
+								<figcaption>{scene.shot.caption} <a class="fd-full" href={scene.shot.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 							</figure>
 						</li>
 					))}
@@ -803,8 +803,26 @@ const afterScenes = [
 		max-width: 1152px;
 		height: auto;
 		border: 1px solid var(--color-ticket-rule);
-		border-radius: 0.25rem;
-		box-shadow: var(--shadow-ticket);
+		/* A capture is an app frame, not a ticket: homepage frame (8px, lift). */
+		border-radius: 0.5rem;
+		box-shadow: var(--shadow-lift);
+	}
+
+	/* A 2880px capture shown at 350px leaves its text at 2 to 3 CSS px on a
+	   phone (design review 2026-10-07): the same escape hatch as /events. */
+	.fd-full {
+		display: inline-flex;
+		min-height: 44px;
+		align-items: center;
+		font-family: var(--font-body);
+		font-size: var(--text-body-sm);
+		font-weight: 600;
+		color: var(--color-green-deep);
+		text-decoration: underline;
+	}
+
+	@media (min-width: 64rem) {
+		.fd-full { display: none; }
 	}
 
 	.fd-shot figcaption {

@@ -389,7 +389,8 @@ const faqItems = [
 	.hero-terms { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
 	.hero-proof { min-width: 0; }
 	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
-	.hero-shot { overflow: hidden; border: 1px solid var(--rule); border-top: 0; background: var(--color-paper); box-shadow: 0 20px 38px color-mix(in srgb, var(--color-ink) 14%, transparent); }
+	/* App frames match the homepage: 8px corners, --shadow-lift (design review 2026-10-07). */
+	.hero-shot { overflow: hidden; border: 1px solid var(--rule); border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.hero-shot picture, .hero-shot img, .panel-window img, .allergen-window picture, .allergen-window img, .label-window img { display: block; width: 100%; height: auto; }
 	.hero-proof figcaption, .panel-proof figcaption, .allergen-proof figcaption, .label-proof figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.55rem 1.25rem; margin-top: 1rem; color: var(--color-ink-soft); font-size: 0.82rem; line-height: 1.55; }
 	.hero-proof figcaption a, .panel-proof figcaption a, .allergen-proof figcaption a, .label-proof figcaption a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 700; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
@@ -423,12 +424,12 @@ const faqItems = [
 	.source-facts dt { color: var(--color-ink-soft); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 	.source-facts dd { margin-top: 0.35rem; font-weight: 680; line-height: 1.4; }
 	.panel-proof { min-width: 0; }
-	.panel-window { overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 11%, transparent); }
+	.panel-window { overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); border-radius: .5rem; box-shadow: var(--shadow-lift); }
 
 	.allergens { background: var(--color-softgreen); }
 	.allergen-heading { display: grid; gap: 2.5rem; padding-top: var(--spacing-section); }
 	.allergen-proof { margin-top: clamp(4rem, 8vw, 7rem); }
-	.allergen-window { max-width: 48rem; margin-inline: auto; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.allergen-window { max-width: 48rem; margin-inline: auto; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); border-radius: .5rem; box-shadow: var(--shadow-lift); }
 	.allergen-proof figcaption { max-width: 48rem; margin-inline: auto; }
 	.evidence-chain { display: grid; gap: 0; margin-top: clamp(4rem, 8vw, 7rem); border-block: 1px solid var(--rule); }
 	.evidence-chain li { position: relative; padding: clamp(1.75rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
@@ -447,7 +448,7 @@ const faqItems = [
 	.print-copy li { padding-block: 0.75rem; border-bottom: 1px solid var(--rule); line-height: 1.45; }
 	.snap { margin-top: 2.5rem; color: var(--color-green-deep); font-family: var(--font-display); font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 600; line-height: 1.15; }
 	.label-proof { width: min(100%, 36rem); justify-self: center; }
-	.label-window { overflow: hidden; border-top: 0.3rem solid var(--color-ink); background: white; box-shadow: 0 18px 34px color-mix(in srgb, var(--color-ink) 12%, transparent); }
+	.label-window { overflow: hidden; border-top: 0.3rem solid var(--color-ink); background: white; border-radius: .5rem; box-shadow: var(--shadow-lift); }
 
 	.capabilities { background: var(--color-cream); }
 	.capabilities-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--spacing-section); }
@@ -507,7 +508,6 @@ const faqItems = [
 	@media (max-width: 47.999rem) {
 		.hero-grid { padding-block: 2.5rem 3.5rem; }
 		.hero-actions .btn-primary { width: 100%; }
-		.hero-shot { box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 10%, transparent); }
 		.broken-path { grid-template-columns: 1fr; }
 		.path-source { grid-row: auto; }
 		.path-branches { grid-row: auto; min-height: 2rem; }

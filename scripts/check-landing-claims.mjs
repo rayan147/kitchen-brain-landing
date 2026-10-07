@@ -1126,7 +1126,7 @@ requireText(heroSource, 'This is the food cost. Staff, rentals, delivery and a s
 // whose only action is a fallback email or the contact form are exempt.
 {
 	const { readdir } = await import('node:fs/promises');
-	const exempt = new Set(['src/components/sections/AskSupport.astro', 'src/pages/contact/not-sent.astro', 'src/pages/demo/not-sent.astro']);
+	const exempt = new Set(['src/pages/contact/not-sent.astro', 'src/pages/demo/not-sent.astro']);
 	const dirs = ['src/components/sections', 'src/components', 'src/pages', 'src/pages/blog', 'src/pages/features', 'src/pages/contact', 'src/pages/demo', 'src/pages/tour'];
 	for (const dir of dirs) {
 		for (const name of await readdir(dir).catch(() => [])) {
@@ -1134,7 +1134,7 @@ requireText(heroSource, 'This is the food cost. Staff, rentals, delivery and a s
 			const file = `${dir}/${name}`;
 			if (exempt.has(file)) continue;
 			const text = await readFile(file, 'utf8');
-			for (const match of text.matchAll(/<a\b[^>]*class="btn-primary[^"]*"[^>]*>[\s\S]{0,240}?<\/a>/g)) {
+			for (const match of text.matchAll(/<a\b[^>]*class(?::list)?=[{"][^>]*\bbtn-primary\b[^>]*>[\s\S]{0,240}?<\/a>/g)) {
 				if (!match[0].includes('cta.label')) failures.push(`${file}: a btn-primary link that is not the trial (${match[0].replace(/\s+/g, ' ').slice(0, 90)})`);
 			}
 		}
