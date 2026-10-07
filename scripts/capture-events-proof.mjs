@@ -540,6 +540,8 @@ try {
 	}
 
 	// ------------------------------------------------ 8. closeout, desktop
+	// SKIP_CLOSEOUT=1 keeps the order on its date for later walks (labels).
+	if (!process.env.SKIP_CLOSEOUT) {
 	// Closeout opens the day after the event. Move the event to yesterday (in
 	// the app's own zone) in the scratch data: the only write not done through
 	// the UI, and recorded in the notes.
@@ -564,9 +566,11 @@ try {
 		await shoot(page, 'events-closeout-desktop', { x: box.x - 24, y: box.y - 24, width: box.width + 48, height: box.height + 48 });
 	}
 
+	}
+
 	console.log(`\n${shots.length} frames written to public/proof/`);
 	for (const s of shots) console.log(`  ${s.name}.png  ${s.px}`);
-	console.log(`event ${eventId}, order ${orderId}, closeout date ${yesterday}`);
+	console.log(`event ${eventId}, order ${orderId}`);
 } finally {
 	await browser.close();
 	db.close();

@@ -129,3 +129,4 @@ Wet hands, the walk-in door held with a foot, a phone propped on the lowboy. Ref
 
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - Custom stock width reads "about ¾ to 8½ in (20 to 220 mm)"; millimeters spelled the US way.
+- Re-shot 2026-10-07 from app 7a7e407d9 (owner's chosen source): the homepage's wedding (Nair & Castellano, Dec 19), Braised Short Rib, 300 portions across ten containers, Harbor & Hearth Catering. Label opens from the pack list, a recipe or an ingredient in this build, so the copy no longer says prep list. The made date is the capture day (Oct 7), weeks before the event.
