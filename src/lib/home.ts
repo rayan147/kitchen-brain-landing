@@ -53,7 +53,7 @@ const withPhone = (base: Shot, px: [number, number]): Shot => ({
 
 export const heroShot = shot(
 	'hero-pricing',
-	'Price per guest on the menu: sells for $95.00, food cost $24.92, 26.2% against a 30% target, within target with 3.8 points to spare, food margin $70.08 a guest.',
+	'Price per guest on the menu: sells for $95.00, food cost $26.18, 27.6% against a 30% target, within target with 2.4 points to spare, food margin $68.82 a guest.',
 	[732, 842]
 );
 
@@ -155,10 +155,13 @@ export const eventStages = [
 		// The shopping list, not the prep sheet (second chef review 2026-10-07):
 		// the kitchen is set to US units and the Shop tab buys in them, while
 		// the prep sheet prints each recipe in the units it was written in
-		// (metric here, and celery counted by the head).
+		// (metric here, and celery counted by the head). The short rib carries a
+		// 91% trim yield (third chef review: the need was the plate weight to the
+		// gram, the shortage the yield row warns about), so 300 portions of
+		// 210 g need 152.7 lb and the cases round up with some to spare.
 		shot: shot(
 			'shop-list',
-			'Shopping list on a phone, Highland Meats, $1,943.35: beef short rib, boneless, need 138.9 lb, buy 9 cases of 7 kg, $1,910.16; beef bones, need 27.6 lb, 1 case of 15 kg, $33.19; neither counted on the shelf yet.',
+			'Shopping list on a phone, Highland Meats, $2,155.59: beef short rib, boneless, need 152.7 lb, buy 10 cases of 7 kg, $2,122.40; beef bones, need 27.6 lb, 1 case of 15 kg, $33.19; neither counted on the shelf yet.',
 			[780, 788],
 			true
 		)
@@ -177,7 +180,7 @@ export const kitchenRows = [
 		shot: withPhone(
 			shot(
 				'food-cost-breakdown',
-				'Dishes per guest with each one’s share of cost: Braised Short Rib, two portions, $13.30; Wild Mushroom Polenta, about 240 g a portion, $2.93; Creamed Spinach, half a portion, $2.91; Focaccia and Whipped Goat Cheese $2.56.',
+				'Dishes per guest with each one’s share of cost: Braised Short Rib, two portions, $14.56; Wild Mushroom Polenta, about 240 g a portion, $2.93; Creamed Spinach, half a portion, $2.91; Focaccia and Whipped Goat Cheese $2.56.',
 				[1880, 810]
 			),
 			[716, 1324]

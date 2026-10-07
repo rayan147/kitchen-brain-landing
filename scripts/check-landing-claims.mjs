@@ -1109,10 +1109,12 @@ requireText(heroSource, 'This is the food cost. Staff, rentals, delivery and a s
 	// homepage wedding from $26.93 / 28.4% to $24.92 / 26.2%. The old pair may not
 	// come back in the homepage data, nor the old prep line (celery 48 each) or
 	// the Dec 28 dates the deposit and Sage frames carried before their re-shoot.
-	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039', '48 each', 'Dec 28', '2026-12-28', '40 lb']) {
-		if (homeData.includes(stale)) failures.push(`homepage wedding: stale figure ${stale} is back (now $24.92 / 26.2%)`);
+	// Then a 91% trim yield on the short rib (third chef review) moved it again,
+	// to $26.18 / 27.6%.
+	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039', '48 each', 'Dec 28', '2026-12-28', '40 lb', '$24.92', '26.2%', '$70.08', '$13.30', '138.9 lb']) {
+		if (homeData.includes(stale)) failures.push(`homepage wedding: stale figure ${stale} is back (now $26.18 / 27.6%)`);
 	}
-	for (const figure of ['$95.00', '$24.92', '26.2%', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {
+	for (const figure of ['$95.00', '$26.18', '27.6%', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {
 		requireText(homeData, figure, 'homepage frames carry the Nair & Castellano figures');
 	}
 }

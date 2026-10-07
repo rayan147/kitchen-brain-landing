@@ -220,3 +220,8 @@ Priya's yes comes in, then the deposit.
 - **Navigation:** the bar stays tappable over the backdrop, the page does not
   scroll under an open panel, Features opens like Menu below lg, Contact has
   its own "Talk to us" group in Resources, and Menu lists its actions first.
+- **The shop list has a cushion:** the short rib line carries a 91% trim
+  yield, so the wedding needs 152.7 lb and buys 10 cases of 7 kg (154.3 lb).
+  Every cost frame was re-shot: $26.18 a guest, 27.6% at $95.00, $68.82
+  margin. The case is still the supplier's 7 kg (a pound case did not save in
+  the app's pack form).
