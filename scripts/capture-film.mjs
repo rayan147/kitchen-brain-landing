@@ -76,6 +76,28 @@ export const EVENT = {
 	serviceFeePct: '18',
 };
 
+// The second film's job (docs/plans/2026-10-07-dropoff-film-plan.md): an office
+// lunch ordered on the kitchen's ordering site, approved, then paid from a link.
+export const DROPOFF = {
+	name: process.env.DROPOFF_NAME ?? 'Bayside Dental team lunch',
+	menu: 'Office Lunch',
+	dishes: ['Roast Chicken Plate', 'Stuffed Pepper, Rice and Feta', 'Garden Salad', 'Brownie Square'],
+	guests: '40',
+	// The date picker names its days in full.
+	day: process.env.DROPOFF_DAY ?? 'Thursday, October 15, 2026',
+	time: '12:00',
+	street: '75 Market Street',
+	city: 'Portland',
+	state: 'ME',
+	zip: '04101',
+	client: 'Jordan Reyes',
+	company: 'Bayside Dental',
+	email: process.env.DROPOFF_EMAIL ?? 'jordan.reyes@example.com',
+	// Typed the way people type it (develop 3dffc3bc4 stopped this killing the estimate).
+	phone: '(207) 555-0186',
+	note: 'Two of the forty are vegetarian.',
+};
+
 // Text that must never be in a shipped frame.
 const FORBIDDEN = [
 	/Load out/i,
@@ -245,6 +267,118 @@ async function chargeLine(p, chip, name, fields, extra) {
 }
 
 const STEPS = {
+	// The lunch as it arrives in the app: approved (automatically, when the day
+	// is clear and the menu has a price) and waiting on the client's payment.
+	// Then the pay page on the client's phone, from the order's own pay link; the card is
+	// typed by hand, never by this script.
+	async arrived() {
+		await open(page, '/orders');
+		const link = page.locator('main a[href^="/orders/"]').filter({ hasText: DROPOFF.name }).first();
+		await link.waitFor({ timeout: 60_000 });
+		manifest.orderHref = (await link.getAttribute('href')).replace(/[?#].*$/, '');
+		await saveManifest();
+		await open(page, manifest.orderHref);
+		const title = page.getByRole('heading', { level: 1 });
+		const approval = page.getByText(/^Approved/).first();
+		await approval.waitFor({ timeout: 60_000 });
+		const card = page.locator('main section, main div').filter({ has: approval }).filter({ hasText: 'The client pays by card' }).last();
+		const box = await union([title, card], 24);
+		await shoot(page, 'dropoff-arrived-desktop', { x: box.x, y: Math.max(box.y - 24, (await bannerBottom(page)) + 8), width: box.width, height: box.height + 24 });
+		await open(page, `${manifest.orderHref}?tab=money`);
+		await owner.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: APP });
+		await page.getByRole('button', { name: 'Copy pay link' }).first().click();
+		await page.waitForTimeout(1500);
+		manifest.payUrl = await page.evaluate(() => navigator.clipboard.readText());
+		if (!/^https:\/\//.test(manifest.payUrl)) throw new Error(`Copy pay link gave "${manifest.payUrl}"`);
+		await saveManifest();
+		const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: DPR, reducedMotion: 'reduce' });
+		const p = await phone.newPage();
+		await open(p, manifest.payUrl);
+		await p.waitForTimeout(3000);
+		const pay = await union([p.getByText(/has your date|Pay what you agreed|order/i).first(), p.getByRole('button', { name: /^Pay \$/ }).first()], 40);
+		await shoot(p, 'dropoff-pay-mobile', { x: 0, y: Math.max(pay.y, await bannerBottom(p)), width: 390, height: pay.height });
+		await phone.close();
+		console.log('pay link saved; the client payment is made by hand from it');
+	},
+
+	// After the payment: the order, confirmed by it.
+	async paidOrder() {
+		if (!manifest.orderHref) throw new Error('run the arrived step first');
+		await open(page, manifest.orderHref);
+		const title = page.getByRole('heading', { level: 1 });
+		const text = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
+		if (!/Confirmed/.test(text)) throw new Error(`the order is not confirmed yet: ${text.slice(0, 300)}`);
+		const strip = page.getByText(/Confirmed/).first().locator('xpath=ancestor::*[self::section or self::div][1]');
+		const box = await union([title, strip], 24);
+		await shoot(page, 'dropoff-paid-desktop', { x: box.x, y: Math.max(box.y - 24, (await bannerBottom(page)) + 8), width: Math.max(box.width, 1100), height: box.height + 24 });
+		await open(page, `${manifest.orderHref}?tab=money`);
+		console.log((await page.locator('main').innerText()).replace(/\n{2,}/g, '\n').slice(0, 1500));
+	},
+
+	// The office lunch on the ordering site, on a phone, up to the review; DRY
+	// stops there, otherwise it sends the request. Frames: the dishes with the
+	// running estimate, and the review.
+	async order() {
+		if (!SITE) throw new Error('SITE=<the storefront url> is required');
+		const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: DPR, reducedMotion: 'reduce' });
+		const p = await phone.newPage();
+		await open(p, SITE);
+		await p.getByRole('radio', { name: new RegExp(`^${DROPOFF.menu}`) }).check({ force: true });
+		await p.getByLabel(/How many guests/).fill(DROPOFF.guests);
+		await p.getByRole('button', { name: 'Choose dishes' }).click();
+		for (const dish of DROPOFF.dishes) await p.getByRole('checkbox', { name: new RegExp(`^${dish}`) }).check({ force: true });
+		await p.waitForTimeout(800);
+		{
+			const head = p.getByRole('heading', { name: /Choose dishes and options/ });
+			const estimate = p.getByText(/^About \$[\d,]+\.\d{2}$/).first();
+			const top = (await docBox(head)).y - 24;
+			await shoot(p, 'dropoff-dishes-mobile', { x: 0, y: top, width: 390, height: (await docBox(estimate)).b + 48 - top }, { fullPage: true });
+		}
+		await p.getByRole('button', { name: 'Set event details' }).click();
+		await p.getByRole('radio', { name: /^Delivery/ }).check({ force: true });
+		await p.getByLabel('Event name Optional').fill(DROPOFF.name);
+		await p.getByRole('button', { name: DROPOFF.day }).click();
+		await p.getByLabel('What time do guests eat?').fill(DROPOFF.time);
+		await p.getByLabel('Street address').fill(DROPOFF.street);
+		await p.getByLabel('City').fill(DROPOFF.city);
+		await p.getByLabel('State or region').fill(DROPOFF.state);
+		await p.getByLabel('Postal code').fill(DROPOFF.zip);
+		await p.getByRole('button', { name: 'Add contact details' }).click();
+		await p.getByLabel('Your name').fill(DROPOFF.client);
+		await p.getByLabel('Company or organization Optional').fill(DROPOFF.company);
+		await p.getByLabel('Email address').fill(DROPOFF.email);
+		await p.getByLabel('Phone number').fill(DROPOFF.phone);
+		await p.getByRole('checkbox', { name: 'Vegetarian', exact: true }).check({ force: true });
+		await p.getByLabel('Dietary notes Optional').fill(DROPOFF.note);
+		await p.getByRole('button', { name: 'Review estimate' }).click();
+		await p.getByRole('heading', { level: 2 }).filter({ hasText: /review|estimate/i }).first().waitFor({ timeout: 60_000 }).catch(() => {});
+		await p.waitForTimeout(2500);
+		const text = (await p.locator('main').innerText()).replace(/\n{2,}/g, '\n');
+		if (/could not calculate/i.test(text)) throw new Error('the storefront refused the estimate');
+		console.log(text.slice(0, 2500));
+		console.log('BUTTONS', (await p.getByRole('button').allInnerTexts()).join(' | '));
+		{
+			// From the review heading down to the estimated total: what was ordered,
+			// when, where, and the price before anyone calls.
+			const head = p.getByRole('heading', { name: /Review the estimate and request/ });
+			const total = p.getByText('Estimated total', { exact: true }).first().locator('xpath=..');
+			const top = (await docBox(head)).y - 24;
+			await shoot(p, 'dropoff-review-mobile', { x: 0, y: top, width: 390, height: (await docBox(total)).b + 24 - top });
+		}
+		if (process.env.DRY) return phone.close();
+		await p.getByRole('button', { name: 'Send request to kitchen' }).click();
+		// The activity line starts as "Sending..." and only later reads "Waiting for
+		// the kitchen receipt", so wait on the button, not the line.
+		await p.getByRole('button', { name: /Sending request/ }).waitFor({ state: 'hidden', timeout: 120_000 });
+		await p.waitForTimeout(3000);
+		const sent = (await p.locator('main').innerText()).replace(/\n{2,}/g, '\n');
+		console.log('SENT', sent.slice(0, 1500));
+		manifest.dropoffRef = sent.match(/\b(order_[A-Za-z0-9_-]+|[A-Z]{2,}-\d+)\b/)?.[0] ?? null;
+		await saveManifest();
+		await shoot(p, 'dropoff-sent-mobile', { x: 0, y: await bannerBottom(p), width: 390, height: 844 - (await bannerBottom(p)) }, { fullPage: false });
+		await phone.close();
+	},
+
 	// The client asks for a price on the kitchen's ordering site, on her phone.
 	// The request lands in the app as an inquiry ("Came in via Storefront").
 	async request() {
@@ -736,6 +870,28 @@ const STEPS = {
 		}
 	},
 
+	// Every line on every truck checked in whole, then Finish check-in, which
+	// posts the purchases the closeout's "at what you paid" reads. No frame: the
+	// drop-off film has no receiving beat.
+	async receiveAll() {
+		if (!manifest.orderHref) throw new Error('run the arrived step first');
+		await open(page, `${manifest.orderHref}/receiving`);
+		const whole = page.getByRole('button', { name: /^All of .+ is here$/ });
+		for (let n = 0; n < 80 && (await whole.count()) > 0; n += 1) {
+			await whole.first().click();
+			await page.waitForTimeout(1200);
+		}
+		const finish = page.getByRole('button', { name: 'Finish check-in' });
+		if (await finish.count()) {
+			await finish.first().click();
+			const review = page.getByRole('dialog');
+			await review.waitFor({ timeout: 30_000 });
+			await review.getByRole('button', { name: 'Finish check-in' }).click();
+			await review.waitFor({ state: 'hidden', timeout: 60_000 });
+		}
+		console.log((await page.locator('main').innerText()).replace(/\s+/g, ' ').match(/\d+ of \d+ items? checked[^.]*/)?.[0]);
+	},
+
 	// The prep list and the pack list, as the crew opens them.
 	async lists() {
 		if (!manifest.orderHref) throw new Error('run the book step first');
@@ -746,16 +902,25 @@ const STEPS = {
 			if (path === 'pack') {
 				// The dishes card only: the pack page's "Load out" block stays out of
 				// shipped frames (capture brief).
-				const dishes = page.locator('main section, main div').filter({ has: page.getByRole('heading', { name: /^Dishes/ }) }).filter({ hasText: 'Lemon Posset' }).filter({ hasNot: page.getByRole('heading', { name: /^(Load out|Equipment)/ }) }).last();
+				const dishes = page.locator('main section, main div').filter({ has: page.getByRole('heading', { name: /^Dishes/ }) }).filter({ hasText: process.env.FILM === 'dropoff' ? DROPOFF.dishes[0] : 'Lemon Posset' }).filter({ hasNot: page.getByRole('heading', { name: /^(Load out|Equipment)/ }) }).last();
 				// Plates per dish, as the pack list counts them, for the captions.
 				const packText = (await dishes.innerText()).replace(/\s+/g, ' ');
-				manifest.mainPortions = packText.match(/Braised Short Rib\b\D*?(\d+)\b/)?.[1];
+				const main = process.env.FILM === 'dropoff' ? DROPOFF.dishes[0] : 'Braised Short Rib';
+				manifest.mainPortions = packText.match(new RegExp(`${main}\\b\\D*?(\\d+)\\b`))?.[1];
 				manifest.vegetarianPortions = packText.match(/Stuffed Pepper, Rice and Feta\b\D*?(\d+)\b/)?.[1];
 				if (!manifest.mainPortions || !manifest.vegetarianPortions) throw new Error(`pack list counts not found: ${packText.slice(0, 300)}`);
 				await saveManifest();
 				const box = await union([title, dishes], 24);
 				const from = Math.max(box.y - 40, (await bannerBottom(page)) + 8);
 				await shoot(page, name, { x: box.x, y: from, width: box.width, height: Math.min(box.y + box.height - from, 1000) });
+				continue;
+			}
+			if (process.env.FILM === 'dropoff') {
+				// The lunch: the prep order itself, every step and its count, for 40.
+				const order = page.locator('main section, main div, main aside').filter({ has: page.getByText(/^PREP ORDER$/i) }).filter({ hasText: /\d+ of \d+ done/ }).last();
+				const box = await union([order], 24);
+				if (box.y < (await bannerBottom(page))) throw new Error('prep clip runs under the test banner');
+				await shoot(page, name, box);
 				continue;
 			}
 			// The steps, from the last make-first base to the vegetarian main: the

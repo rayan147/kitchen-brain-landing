@@ -140,7 +140,7 @@
       "how": "one walk at develop d3c7c9add: a quote request on the ordering site, menu and proposal (138 short rib and 12 vegetarian mains, 8 staff for 7 hours, rentals and an 18% service fee), the client accepts on her phone, the agreement signed in DocuSeal and the deposit paid by card in Stripe test mode, Book the event with every requirement met, then shop and prep in US customary units (the account was switched for the shot and back), confirm, purchase orders, receiving with the arugula one case short, prep and pack"
     },
     "closeout": {
-      "how": "a read-only copy of test’s database, run locally on the same build with its server clock moved to Jun 13 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event; there the kitchen’s use of every ingredient was recorded as planned and the food-cost review closed, so the card reads Closed and its share is final"
+      "how": "a read-only copy of test’s database, run locally on the same build with its server clock moved to Jun 13 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event; there the kitchen’s use of every ingredient was recorded at the shop list’s Need (rounded up to what a cook pulls, hence the $6.48 over plan) and the food-cost review closed, so the card reads Closed and its share is final"
     },
     "note": "Every frame is from that one wedding. The signatures and the card payment were done by hand by the owner; the client’s email was switched to an inbox the owner reads before the offer went out, because test only emails approved addresses and DocuSeal mails the signer a one-time code. Three frames are clipped after capture (payment request, paid, confirm), as their frameSources say."
   }
