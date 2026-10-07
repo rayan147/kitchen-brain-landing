@@ -1,7 +1,7 @@
 // Considered Composite; not used because this is a fixed ordered list, not a tree.
 // Homepage order is shared with the next-section links. Story: homepage-caterer-fixes.
 export const stops = [
-  { id: 'event-walk', label: 'One event, start to booked' },
+  { id: 'event-walk', label: 'Follow one wedding' },
   { id: 'kitchen', label: 'Costs, buys and labels' },
   { id: 'front', label: 'Orders and invoices' },
   { id: 'sage', label: 'Ask about a job' },

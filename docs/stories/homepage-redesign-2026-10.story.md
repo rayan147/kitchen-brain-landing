@@ -252,3 +252,47 @@ the quiet link; no route scrolls sideways at 200% text on 320 or 390.
   player with preload="metadata"; with "none", Chrome's player ignored clicks.
   The poster is now the "What do I charge a head?" chapter card, so the
   control bar covers nothing, and it names neither wedding.
+
+### Revision 2026-10-07 (8): chef voice pass
+Owner: "humanize the writing of the landing page so it does not sound like ai
+but an actual chef made this website". Copy only; no markup, frame, figure,
+alt text, film transcript or link changed.
+- **Voice (Step 5):** the product's voice was drifting into a spec sheet.
+  The chain sentences are broken up and the lines sound like an owner talking
+  a cook through it: "All it needs is a name ... Put it in anyway.", "Wait for
+  the final count, then Confirm."
+- **Hero sub:** the four-clause run (take, send, get booked and paid, cook)
+  is now three short sentences: you price it, the client says yes and pays,
+  then the same order tells you what to buy, prep and pack.
+- **Rail:** the eyebrow no longer repeats the heading; it names the job, "One
+  wedding, 150 guests". "She says yes on her phone." is now "Yes or changes,
+  from their phone." (the film dropped the pronoun in 771a36f; the hero
+  already says the client says yes on their phone, so the step names the two
+  buttons instead). "Paid by card from a link."
+  is "The deposit comes in by card." Sub-recipes are "bases", the film's word.
+  The next-section label reads "Follow one wedding" (the rail ends at the
+  shopping list, not at booked).
+- **Kitchen:** slogan heading "Know the number before the month closes it."
+  is now "The numbers come off your own recipes."; the triplet lede is two
+  plain sentences. Eyebrows say the thing, not a verb pitch ("Food cost",
+  "Trim and yield", "Invoices and price sheets", "Allergens and labels").
+- **Snap line (Step 8):** the yield row now shows the arithmetic off its own
+  frame: "60 g of Roma tomato in the recipe at 91% yield means you buy 66 g."
+- **Front of house, Sage, close:** the opaque "quick path" lede is said in
+  order (clients order off your page, your rules sort the requests, invoices
+  wait for your OK). Sage's heading drops its second half; the body keeps
+  every boundary (your records only, links the record, drafts only, nothing
+  changes until a manager or owner approves). "It reads only your kitchen's
+  records" stays word for word: it is a scope boundary, and "answers from
+  your records and nothing else" promised more (review of this pass). The
+  labels row keeps the word allergen: "An allergen in a base shows up on
+  every dish that uses it."
+- **Kept on purpose:** the H1 (pinned, and the film's title card), the
+  acceptance boundary, "restaurants that cater", "One sample wedding", the
+  close's fifteen-minute line and "type any line it could not", the founder
+  line, the billing disclosures, "See everything it does, area by area".
+- **Shared lines reworded, meaning held:** `agreementLine` (still worded as
+  what the app does, not as this wedding's history) and
+  `eventPayments.homepage` (card, email link, deposit and balance, whenever
+  you choose, reminder with a pay link three days before if still owed). Both
+  render only on the homepage.

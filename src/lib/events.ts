@@ -63,7 +63,7 @@ export const depositMethodsCapital = depositMethods.replace(/^./, (c) => c.toUpp
 // was signed.
 // The proposal rides along as Schedule A unless you untick it (kitchen-brain
 // agreement-facts.ts: includeProposal defaults to true).
-export const agreementLine = 'Send the agreement for e-signature from your own template, with the accepted proposal attached as Schedule A.';
+export const agreementLine = 'You send the agreement for e-signature from your own template, and the accepted proposal goes with it as Schedule A.';
 
 /**
  * The acceptance boundary (A-07, D-04): the client's yes books nothing.

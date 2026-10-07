@@ -151,7 +151,7 @@ export const eventStages = [
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Inquiry',
 		heading: 'The call goes in rough.',
-		body: 'Only a client or event name is required. A date not decided yet and a guest count that is an estimate are fine.',
+		body: 'All it needs is a name, the client’s or the event’s. No date yet, and a head count that is still a guess? Put it in anyway.',
 		shot: shot(
 			'inquiry-mobile',
 			'New inquiry on a phone: client Priya Nair, a new client, phone (207) 555-0187, reached by phone call, Nair & Castellano wedding, date not decided yet, 150 guests marked as an estimate.',
@@ -165,8 +165,8 @@ export const eventStages = [
 		focus: [{ x: 3.1, y: 26.2, w: 93.8, h: 17.5 }] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Proposal',
-		heading: 'She says yes on her phone.',
-		body: 'The client opens the proposal with no login, sees every line you put on it (the food, and any staff, rentals or service fee), and taps Accept proposal or Ask for changes.',
+		heading: 'Yes or changes, from their phone.',
+		body: 'No login. They open it and see every line you put on it: the food, plus any staff, rentals or service fee. Then they tap Accept proposal or Ask for changes.',
 		shot: shot(
 			'proposal-mobile',
 			'Client proposal on a phone from Harbor & Hearth Catering: Nair & Castellano wedding on December 19, 2026, $14,250.00 for 150 guests at $95.00 per guest, with Ask for changes and Accept proposal.',
@@ -191,7 +191,7 @@ export const eventStages = [
 		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Deposit',
-		heading: 'Paid by card from a link.',
+		heading: 'The deposit comes in by card.',
 		// The signature lives here, not in the client's yes (RC-64: claimable,
 		// not capturable, so it is a sentence without a frame).
 		body: `${agreementLine} ${eventPayments.homepage}`,
@@ -213,7 +213,7 @@ export const eventStages = [
 		heading: acceptanceBoundary,
 		// When, as advice, not a rule the app enforces (third chef review: "am I
 		// locked on a guess?").
-		body: 'Confirm once the final count is in. Confirming locks quantities and prices for the event, and the shopping, prep and pack lists become checklists.',
+		body: 'Wait for the final count, then Confirm. That locks the quantities and prices, and your shopping, prep and pack lists turn into checklists.',
 		shot: shot(
 			'confirm-dialog',
 			'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
@@ -224,8 +224,8 @@ export const eventStages = [
 		id: 'prep',
 		guide: { href: '/features/order-shop-prep-pack', label: 'How orders, shop, prep and pack work' },
 		tab: 'Shop / Prep',
-		heading: 'The lists come from the same menu.',
-		body: 'Buy in whole packs by supplier, then prep in order: sub-recipes first, scaled to the guest count, checked off on the phone.',
+		heading: 'Then you shop and prep off the same menu.',
+		body: 'You buy by supplier, in whole packs. Prep runs in order, bases before the dishes that use them, scaled to the head count, and you check it off on your phone.',
 		// The shopping list, not the prep sheet (second chef review 2026-10-07):
 		// the kitchen is set to US units and the Shop tab buys in them, while
 		// the prep sheet prints each recipe in the units it was written in
@@ -247,10 +247,10 @@ export const kitchenRows = [
 	{
 		id: 'costs',
 		guide: { href: '/features/menus-and-quotes', label: 'How menus and quotes are priced' },
-		eyebrow: 'Costs itself',
+		eyebrow: 'Food cost',
 		pain: 'You quote $95 a head and find out if you made money when the month closes.',
-		heading: 'Food cost, worked out before you quote.',
-		body: 'Each dish shows its cost per guest and its share of the plate. A missing price is named, never counted as zero.',
+		heading: 'See the food cost before you quote.',
+		body: 'Every dish shows what it costs per guest and its share of the total. If a price is missing, it tells you which one. It never slips in as zero.',
 		shot: withPhone(
 			shot(
 				'food-cost-breakdown',
@@ -263,12 +263,12 @@ export const kitchenRows = [
 	{
 		id: 'yield',
 		guide: { href: '/features/recipes-and-costing', label: 'How recipes are costed' },
-		eyebrow: 'Orders the right amount',
+		eyebrow: 'Trim and yield',
 		// No figure: the old weight was on no frame and, read against the
 		// wedding's 300 portions, came to 2 oz a plate (chef review 2026-10-07).
 		pain: 'The recipe says what goes on the plate. You buy exactly that and you are short at 5 a.m.',
 		heading: 'Buy for what survives the knife.',
-		body: 'Each line carries its trim yield, so the amount to buy covers what you lose to the knife.',
+		body: 'Each recipe line carries its trim yield. 60 g of Roma tomato in the recipe at 91% yield means you buy 66 g.',
 		shot: withPhone(
 			shot(
 				'yield-lines',
@@ -283,10 +283,10 @@ export const kitchenRows = [
 	{
 		id: 'paperwork',
 		guide: { href: '/features/invoices-and-price-list-import', label: 'How invoice and price-list import works' },
-		eyebrow: 'Reads your paperwork',
-		pain: 'You are not typing 400 ingredients into another system.',
+		eyebrow: 'Invoices and price sheets',
+		pain: 'You’re not typing 400 ingredients into one more system.',
 		heading: 'Upload the invoice. Confirm what it read.',
-		body: 'Invoices, price sheets, spreadsheets and Word files. Lines that match wait for your OK, the rest are flagged for review, and it learns your names.',
+		body: 'It takes invoices and price sheets, even a spreadsheet or a Word file. Lines it matched wait for your OK. The rest get flagged for you to look at. And it learns your names for things.',
 		shot: withPhone(
 			shot(
 				'import-review',
@@ -299,10 +299,10 @@ export const kitchenRows = [
 	{
 		id: 'labels',
 		guide: { href: '/features/nutrition-facts-and-allergens', label: 'How allergens and nutrition work' },
-		eyebrow: 'Writes the labels',
+		eyebrow: 'Allergens and labels',
 		pain: 'A bride asked for an allergen sheet. You wrote it by hand.',
-		heading: 'Allergens from the recipe, on every dish.',
-		body: 'Allergens roll up through sub-recipes to each dish on the pack list, and labels print from your browser.',
+		heading: 'The allergens come off the recipe.',
+		body: 'An allergen in a base shows up on every dish that uses it, right on the pack list. Labels print from your browser.',
 		shot: withPhone(
 			shot(
 				'allergens-labels',
@@ -320,7 +320,7 @@ export const frontOfHouse = [
 		heading: 'Online ordering',
 		// "Confirm" is the event walk's word for booking, so this row says
 		// "approve" and "pay" (third chef review 2026-10-07).
-		body: 'Clients pick a set menu, like a $93 Coastal Dinner, a date and pickup or delivery on your own ordering page. You approve the request, and they pay by card.',
+		body: 'On your own ordering page, a client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request. They pay by card.',
 		shot: withPhone(
 			shot(
 				'ordering-site',
@@ -334,7 +334,7 @@ export const frontOfHouse = [
 		id: 'invoice-email',
 		guide: { href: '/features/invoice-email', label: 'How invoice email works' },
 		heading: 'Invoices by email',
-		body: 'Suppliers send invoices to your kitchen’s private address. Each email shows what became of it, and nothing counts until you confirm it.',
+		body: 'Suppliers email invoices to your kitchen’s own private address. You can see what happened to each one, and none of it counts until you confirm it.',
 		shot: withPhone(
 			shot(
 				'invoice-inbox',
