@@ -130,3 +130,21 @@
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - The badge reads "In the app today", not "Available now" (a fact, not a sales line). The video caption drops "A different kitchen from the wedding in the tour", which read like a note left in.
+
+## Revision 2026-10-07: re-shot on local develop, the wedding's short rib
+
+- **Source:** kitchen-brain 7a7e407d9, the Nair & Castellano sample kitchen
+  (`scripts/capture-sage-proof.mjs`; Sage needs the keyed world).
+- **Answer:** "Why does the Braised Short Rib cost what it costs?" answered
+  $7.28 a portion: short rib $7.00 (96%), House Beef Stock $0.20 (3%),
+  Mirepoix Base $0.08 (1%), each linked to the recipe. Checked against the
+  records before use; the same $7.28 the homepage's food-cost frame shows.
+  Retires the Harbor Table / cucumber price-move answer.
+- **Workspace still:** develop's /sage is now Conversations; a new one opens on
+  "Ask your first question" with starting questions from the records (the
+  sample world's next orders, so they name a baby shower, not the wedding).
+- **Video:** rebuilt by `scripts/sage-video/assemble.mjs` from those stills;
+  the setup still stays (onboarding unchanged, owner). End card now says
+  "Every number links to the record it came from." and "In the app today"
+  (it said "Eleven checks read" and "Available now", neither on any frame).
+  Chapter 0:15 says the same instead of a shopping-list draft no frame shows.

@@ -35,8 +35,8 @@ const cardResult = spawnSync(
 		'-size', '1920x1080', `xc:#${green.slice(2)}`,
 		'-font', bold, '-fill', 'white', '-pointsize', '94', '-annotate', '+150+360', 'Ask your kitchen.',
 		'-annotate', '+150+485', 'Check the answer.',
-		'-font', font, '-pointsize', '38', '-annotate', '+155+650', 'Eleven checks read. One proposal waits for you.',
-		'-pointsize', '32', '-annotate', '+155+790', 'Available now in CostCook',
+		'-font', font, '-pointsize', '38', '-annotate', '+155+650', 'Every number links to the record it came from.',
+		'-pointsize', '32', '-annotate', '+155+790', 'In the app today',
 		finalCard.pathname
 	],
 	{ encoding: 'utf8' }
