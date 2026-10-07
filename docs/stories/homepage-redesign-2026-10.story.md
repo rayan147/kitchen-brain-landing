@@ -118,3 +118,16 @@ Priya's yes comes in, then the deposit.
   wedding; the same menu, quantities and prices locked). Step 10's hand-offs
   live on the page itself.
 - "How it fits together" (beat 3) is folded into the rail's lede.
+
+### Revision 2026-10-07: designer and chef review
+- **Final Image, re-aimed:** the close's heading was "Bring one real invoice.
+  See it in 15 minutes.", which sold the demo at the moment the reader should
+  meet the trial. It is now "Cost your first dish before your next quote.": it
+  echoes the hero's theme (know the number before you cook) and hands off to the
+  setup line (about fifteen minutes, RC-10) and the plan card's primary. The
+  quiet links follow the card, so a phone reads the trial first.
+- **One numbering:** only the rail's five steps are numbered. The kitchen rows
+  lost their 02 to 05, which read as a second sequence.
+- **One wedding date:** the chef caught the proposal frame (respond by Oct 12
+  for an Oct 10 wedding) disagreeing with the payment and Sage frames (Dec 28).
+  The proposal is re-shot on a Dec 28 wedding (see the manifest).

@@ -83,7 +83,7 @@ export const eventStages = [
 		body: 'The client opens the proposal with no login, sees the total for her event, and taps Accept proposal or Ask for changes.',
 		shot: shot(
 			'proposal-mobile',
-			'Client proposal on a phone: Nair & Castellano wedding, $14,250.00 for 150 guests at $95.00 per guest, with Ask for changes and Accept proposal.',
+			'Client proposal on a phone from Harbor & Hearth Catering: Nair & Castellano wedding on December 28, 2026, $14,250.00 for 150 guests at $95.00 per guest, with Ask for changes and Accept proposal.',
 			[780, 1560],
 			true
 		)
