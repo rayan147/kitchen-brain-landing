@@ -13,7 +13,7 @@ import { demoCta, signIn } from '../lib/site';
 	path="/contact"
 >
 	<section class="container-page py-section" aria-labelledby="contact-title">
-		<div class="grid items-start gap-12 lg:grid-cols-[7fr_5fr] lg:gap-16">
+		<div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-[7fr_5fr] lg:gap-16">
 			<div class="max-w-3xl">
 				<h1 id="contact-title" class="text-display font-semibold">Questions before you start?</h1>
 				<p class="mt-6 max-w-[60ch] text-lede text-ink-soft">
@@ -60,7 +60,7 @@ import { demoCta, signIn } from '../lib/site';
 					target={demoCta.target}
 					rel={demoCta.rel}
 					aria-label={demoCta.ariaLabel}
-					class="btn-primary lg:justify-self-start"
+					class="btn-quiet lg:justify-self-start"
 				>
 					{demoCta.label}
 				</a>

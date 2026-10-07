@@ -63,8 +63,8 @@ const faqItems = [
 				<p class="hero-lede">Invite your crew by email to the same kitchen account. Compare what Owners, Managers and Staff can do, from daily prep to recipe publishing and billing.</p>
 				<p class="hero-constraint"><strong>Before you invite:</strong> Staff can open cost screens, including recipe costs and Analytics, and custom roles are not available.</p>
 				<div class="hero-actions">
-					<a href="#role-boundaries" class="btn-primary">Compare team roles</a>
-					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-outline">{cta.label}</a>
+					<a href="#role-boundaries" class="btn-quiet">Compare team roles</a>
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 				<p class="hero-constraint">{launchPlan.crewTerms}</p>
@@ -171,9 +171,7 @@ const faqItems = [
 	.hero-lede { max-width: 44ch; margin-top: 1.75rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
 	.hero-constraint { max-width: 48ch; margin-top: 1.25rem; padding-left: 1rem; border-left: 1px solid var(--color-amber); color: var(--color-ink-soft); font-size: var(--text-body); line-height: 1.55; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; text-align: center; }
-	.btn-outline { display: inline-flex; padding-inline: 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; }
-	.btn-outline:hover { background: var(--color-softgreen); }
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; text-align: center; }
 	.role-stack { position: relative; min-height: 35rem; }
 	.role-pass { position: absolute; width: min(82%, 25rem); padding: 1.4rem; border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.pass-1 { top: 0; right: 0; z-index: 3; }
@@ -224,7 +222,7 @@ const faqItems = [
 	.closing { background: var(--color-cream); }
 	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
 	@media (min-width: 800px) { .hero-grid, .shared-grid, .limit-grid, .faq-grid, .closing-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .role-ledger > section { grid-template-columns: 5fr 6fr; } }
-	@media (max-width: 799px) { .role-stack { min-height: auto; display: grid; gap: 1rem; } .role-pass { position: relative; inset: auto; width: 100%; transform: none; } .role-stack figcaption { position: static; margin-top: .5rem; } }
-	@media (max-width: 520px) { h1, h2, h3 { overflow-wrap: anywhere; } .hero-actions, .closing-actions { display: grid; } .hero-actions a, .closing-actions a { width: 100%; max-width: 100%; padding-inline: 1rem; white-space: normal; overflow-wrap: anywhere; } .access-facts { grid-template-columns: 1fr; } .role-facts div { grid-template-columns: 1fr; } .limit-ticket dl div { display: block; } .limit-ticket dd { margin-top: .25rem; } }
+	@media (max-width: 799px) { .role-stack { min-height: auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; } .role-pass { overflow-wrap: anywhere; } .role-pass { position: relative; inset: auto; width: 100%; transform: none; } .role-stack figcaption { position: static; margin-top: .5rem; } }
+	@media (max-width: 520px) { h1, h2, h3 { overflow-wrap: anywhere; } .hero-actions, .closing-actions { display: grid; } .hero-actions .btn-primary, .closing-actions .btn-primary { width: 100%; max-width: 100%; padding-inline: 1rem; white-space: normal; overflow-wrap: anywhere; } .access-facts { grid-template-columns: 1fr; } .role-facts div { grid-template-columns: 1fr; } .limit-ticket dl div { display: block; } .limit-ticket dd { margin-top: .25rem; } }
 	@media (prefers-reduced-motion: reduce) { .faq-list summary svg { transition: none; } }
 </style>

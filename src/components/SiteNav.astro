@@ -316,9 +316,12 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 			href={cta.href}
 			target={cta.target}
 			rel={cta.rel}
-			aria-label={cta.ariaLabel}
 			class="btn-primary min-h-11 whitespace-nowrap px-4 py-3 text-sm sm:px-5"
 		>
+			<!-- No aria-label: the visible words are the name. Below xl the button
+			     reads "Free trial", and a name that does not start with what a
+			     speech-input user sees fails label-in-name (design audit
+			     2026-10-07). -->
 			<!-- The short form keeps "free trial": "Start" alone was the one place
 			     the button said nothing about what starting costs. -->
 			<span class="xl:hidden">Free trial</span>

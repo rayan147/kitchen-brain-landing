@@ -102,7 +102,7 @@ const faqItems = [
 						target={demoCta.target}
 						rel={demoCta.rel}
 						aria-label={demoCta.ariaLabel}
-						class="btn-outline"
+						class="btn-quiet"
 					>
 						{demoCta.label}
 					</a>
@@ -362,8 +362,8 @@ const faqItems = [
 		<div class="container-page closing-grid" data-reveal>
 			<div><h2 id="closing-heading">Ready for the client. Ready for the kitchen.</h2><p>Bring one real menu, set the guest count, and follow the number into the plan the kitchen will run.</p></div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a>
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
 		</div>
 		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/events-and-proposals">Events &amp; proposals</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
@@ -378,9 +378,7 @@ const faqItems = [
 	.hero h1 { max-width: 13ch; }
 	.hero-lede { max-width: 37ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
-	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
-	.btn-outline:hover { background: var(--color-green); color: white; }
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.commitment-flow > figcaption { margin-bottom: 0.8rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.record-pair { display: grid; gap: 1rem; align-items: center; }
 	.menu-ledger, .quote-timeline { min-width: 0; padding: clamp(1.1rem, 2.5vw, 1.7rem); background: var(--color-paper); box-shadow: 0 10px 18px color-mix(in srgb, var(--color-ink) 10%, transparent); }
@@ -571,6 +569,6 @@ const faqItems = [
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.btn-outline, .product-nav a, .disclosures summary svg, .faq-list summary svg { transition: none; }
+		.product-nav a, .disclosures summary svg, .faq-list summary svg { transition: none; }
 	}
 </style>

@@ -91,7 +91,7 @@ const faqItems = [
 						target={demoCta.target}
 						rel={demoCta.rel}
 						aria-label={demoCta.ariaLabel}
-						class="btn-outline"
+						class="btn-quiet"
 					>
 						{demoCta.label}
 					</a>
@@ -467,17 +467,17 @@ const faqItems = [
 				<p>Bring one real menu and follow it from recipe to quote, with the working shown.</p>
 			</div>
 			<div class="closing-actions">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
+					{cta.label}
+				</a>
 				<a
 					href={demoCta.href}
 					target={demoCta.target}
 					rel={demoCta.rel}
 					aria-label={demoCta.ariaLabel}
-					class="btn-primary"
+					class="btn-quiet"
 				>
 					{demoCta.label}
-				</a>
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">
-					{cta.label}
 				</a>
 			</div>
 		</div>
@@ -525,22 +525,6 @@ const faqItems = [
 		flex-wrap: wrap;
 		gap: 0.85rem;
 		margin-top: 2rem;
-	}
-
-	.btn-outline {
-		display: inline-flex;
-		min-height: 44px;
-		align-items: center;
-		padding: 0.9rem 1.6rem;
-		border: 1px solid var(--color-green);
-		border-radius: 999px;
-		color: var(--color-green-deep);
-		font-weight: 600;
-		transition: background-color 150ms ease-out;
-	}
-
-	.btn-outline:hover {
-		background: var(--color-softgreen);
 	}
 
 	.record-flow {
@@ -1606,7 +1590,6 @@ const faqItems = [
 
 	@media (prefers-reduced-motion: reduce) {
 		.product-nav a,
-		.btn-outline,
 		.disclosures svg,
 		.faq-list summary svg {
 			transition: none;

@@ -54,7 +54,7 @@ const faqItems = [
 				<p class="hero-lede">Review a purchase order for each supplier. When it arrives, record the quantities and prices you received, then save the delivery. Shortages stay visible for follow-up.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 
@@ -148,7 +148,7 @@ const faqItems = [
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">
-		<div class="container-page closing-grid"><div><h2 id="closing-heading">Walk back into prep with one record.</h2><p>Bring one real supplier order. Follow it from the message you send to the quantity, price, and shortfall you receive.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
+		<div class="container-page closing-grid"><div><h2 id="closing-heading">Walk back into prep with one record.</h2><p>Bring one real supplier order. Follow it from the message you send to the quantity, price, and shortfall you receive.</p></div><div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div></div>
 		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>
@@ -164,8 +164,6 @@ const faqItems = [
 	.hero-lede { max-width: 56ch; margin-top: 1.35rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
 	.hero-terms { margin-top: .8rem; font-size: var(--text-eyebrow); line-height: 1.5; color: var(--color-ink-soft); }
-	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
-	.btn-outline:hover { background: var(--color-softgreen); }
 	.figure-note { margin-bottom: .7rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.handoff-ticket { min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.ticket-top, .panel-bar, .receiving-head, .line-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }

@@ -92,7 +92,7 @@ const faqItems = [
 				</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 			</div>
@@ -295,18 +295,8 @@ const faqItems = [
 	.hero-lede { margin-top: 1.5rem; max-width: 56ch; font-size: var(--text-lede); line-height: var(--text-lede--line-height); color: var(--color-ink-soft); }
 	.hero-constraint { margin-top: 1.5rem; max-width: 56ch; padding-top: 1rem; border-top: 1px solid var(--color-hairline-strong); color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
-	/* .btn-outline is scoped per feature page across this family rather than
-	   living in global.css beside btn-primary and btn-quiet, so this is the sixth
-	   copy of four declarations. Copied rather than promoted on purpose: hoisting
-	   it touches five other guides and belongs in its own pass, not in the middle
-	   of a new page. Matches NutritionFactsAllergensFeature.astro exactly. */
-	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
-	.btn-outline:hover { background: var(--color-green); color: white; }
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
 
-	@media (prefers-reduced-motion: reduce) {
-		.btn-outline { transition: none; }
-	}
 	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.12; text-wrap: balance; }
 	.section-head { max-width: 62ch; }
 	.section-head p, .wall-grid p, .coverage-grid p { margin-top: 1.25rem; color: var(--color-ink-soft); }
@@ -355,8 +345,8 @@ const faqItems = [
 	.coverage-snap { margin-top: 2rem; font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; color: var(--color-ink); }
 	.coverage-ticket { padding: clamp(1.25rem, 3vw, 2rem); border-top: 4px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.coverage-ticket dl { margin-top: 1.25rem; border-top: 1px solid var(--color-ticket-rule); }
-	.coverage-ticket dl div { display: flex; justify-content: space-between; gap: 2rem; padding-block: .9rem; border-bottom: 1px solid var(--color-ticket-rule); }
-	.coverage-ticket dt { color: var(--color-ink-soft); }
+	.coverage-ticket dl div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 2rem; padding-block: .9rem; border-bottom: 1px solid var(--color-ticket-rule); }
+	.coverage-ticket dt { min-width: 0; color: var(--color-ink-soft); }
 	.coverage-ticket dd { font-weight: 750; font-variant-numeric: tabular-nums; }
 	.coverage-ticket > p:last-child { margin-top: 1.25rem; font-size: var(--text-caption); color: var(--color-ink-soft); }
 

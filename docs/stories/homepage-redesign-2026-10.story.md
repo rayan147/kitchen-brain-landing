@@ -225,3 +225,9 @@ Priya's yes comes in, then the deposit.
   Every cost frame was re-shot: $26.18 a guest, 27.6% at $95.00, $68.82
   margin. The case is still the supplier's 7 kg (a pound case did not save in
   the app's pack form).
+
+### Revision 2026-10-07 (6): the same rules on every route (layout only)
+No copy changed in this pass. The cream header is now the default on every
+route and runs into each page's first section; the green button is only ever
+the trial (nine feature guides had closed on the demo); every demo link is
+the quiet link; no route scrolls sideways at 200% text on 320 or 390.

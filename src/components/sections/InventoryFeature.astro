@@ -65,7 +65,7 @@ const faqItems = [
 				<p class="hero-lede">Count an ingredient first. Recorded deliveries, waste and packed orders update the quantity. Old or missing counts do not reduce what the shopping list buys.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 			</div>
@@ -189,7 +189,7 @@ const faqItems = [
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid">
 			<div><h2 id="closing-heading">A shelf number ready to use.</h2><p>Bring one real shopping list and count one shelf. See how the count and later changes affect what you need to buy.</p></div>
-			<div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div>
+			<div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div>
 		</div>
 		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
@@ -202,8 +202,6 @@ const faqItems = [
 	.hero h1 { max-width: 12ch; margin-top: 1.5rem; }
 	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
-	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
-	.btn-outline:hover { background: var(--color-softgreen); }
 	.figure-note { margin-bottom: .7rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.shelf-ticket { position: relative; min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.ticket-head, .panel-bar, .gap-head { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--text-micro); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }

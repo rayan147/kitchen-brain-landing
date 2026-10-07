@@ -988,6 +988,11 @@ const afterScenes = [
 	   desk, stacked on a phone; the ticket keeps its paper tilt. */
 	.fd-before-layout {
 		display: grid;
+		/* minmax(0, 1fr): the implicit auto track grew past 320px at 200% text. */
+		grid-template-columns: minmax(0, 1fr);
+		/* The ticket's tilt swings a corner 7px past a 320px screen at 200% text;
+		   clip sideways only, so the tilt (the ticket motif) stays. */
+		overflow-x: clip;
 		gap: 1.75rem;
 		margin-block: 1.75rem;
 	}

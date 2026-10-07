@@ -23,8 +23,9 @@ type Props = {
 	/**
 	 * Paint the header band in the first section's tone so the two read as one
 	 * surface (owner, 2026-10-07: the homepage hero is cream and the off-white
-	 * header above it showed as a stripe). Omit it and the header sits on the
-	 * body's off-white, as every other page's first section does.
+	 * header above it showed as a stripe). Cream is the default on every route
+	 * (owner, 2026-10-07: "make the navbar sub route the same color as the home
+	 * navbar"), so the bar is one colour across the site.
 	 * Considered Strategy; not used because it is one optional color token.
 	 */
 	headerTone?: 'cream';
@@ -35,7 +36,7 @@ const {
 	description = site.description,
 	path = '/',
 	directionContract,
-	headerTone
+	headerTone = 'cream'
 } = Astro.props;
 // Slash form so canonical/og:url agree byte-for-byte with the sitemap.
 const canonical = new URL(path, site.url).href;
@@ -134,3 +135,17 @@ const ogImage = new URL('/og.png', site.url).href;
 		</script>
 	</body>
 </html>
+
+<style is:global>
+	/* The cream header runs straight into the page's first section, so the bar
+	   and the opening read as one surface on every route, as on the homepage
+	   (owner, 2026-10-07). Sections that already paint cream are unchanged;
+	   the ones that sat on the body's off-white take the cream too. */
+	[data-header-tone='cream'] + #main > :first-child:not(script) {
+		background-color: var(--color-cream);
+		/* Full bleed even when the first section is the 72rem container
+		   (/compare, /contact, /pricing): the cream runs to both edges. */
+		box-shadow: 0 0 0 100vmax var(--color-cream);
+		clip-path: inset(0 -100vmax);
+	}
+</style>

@@ -88,7 +88,7 @@ const payments = eventPayments;
 				</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 			</div>
@@ -261,17 +261,7 @@ const payments = eventPayments;
 	.feature-breadcrumb { margin-bottom: 1.6rem; }
 	.hero-lede { margin-top: 1.5rem; max-width: 56ch; font-size: var(--text-lede); line-height: var(--text-lede--line-height); color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
-	/* .btn-outline is scoped per feature page across this family; this is the
-	   seventh copy of four declarations, matching DietaryGuardsFeature.astro.
-	   Considered hoisting it into global.css; not done because it touches every
-	   guide and belongs in its own pass. The hover text is --color-paper, the
-	   theme's white (green on it is ~5:1, AA), not an ad-hoc color. */
-	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
-	.btn-outline:hover { background: var(--color-green); color: var(--color-paper); }
-	@media (prefers-reduced-motion: reduce) {
-		.btn-outline { transition: none; }
-	}
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
 	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.12; text-wrap: balance; }
 	.section-head { max-width: 62ch; }
 	.section-head p, .split p { margin-top: 1.25rem; max-width: 60ch; color: var(--color-ink-soft); }

@@ -76,7 +76,7 @@ const faqItems = [
 						target={demoCta.target}
 						rel={demoCta.rel}
 						aria-label={demoCta.ariaLabel}
-						class="btn-outline"
+						class="btn-quiet"
 					>
 						{demoCta.label}
 					</a>
@@ -278,8 +278,8 @@ const faqItems = [
 		<div class="container-page closing-grid" data-reveal>
 			<div><h2 id="closing-heading">A price you can trace. A quote you can defend.</h2><p>Bring one supplier sheet and one real ingredient. Follow the case price into the recipe with the working shown.</p></div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a>
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
 		</div>
 		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>
@@ -293,8 +293,6 @@ const faqItems = [
 	.hero h1 { max-width: 12ch; margin-top: 1.5rem; }
 	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
-	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
-	.btn-outline:hover { background: var(--color-softgreen); }
 	.figure-note { margin-bottom: .7rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.ingredient-record, .offer { min-width: 0; padding: clamp(1.1rem, 2.5vw, 1.6rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.ingredient-record { border-top: 3px solid var(--color-green); }

@@ -48,7 +48,7 @@ const limits = [
 					If you cost changing menus and buy for a date and guest count, start here. CostCook connects recipes, shopping, prep and packing for one kitchen.
 				</p>
 				<div class="hero-actions">
-					<a href="#fit-test" class="btn-primary">Check your kitchen’s needs</a>
+					<a href="#fit-test" class="btn-quiet">Check your kitchen’s needs</a>
 					<a href="#limits-heading" class="btn-quiet">See what is not supported</a>
 				</div>
 			</div>
@@ -144,7 +144,7 @@ const limits = [
             <div class="closing-decision">
                 <div class="close-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
                 <FeatureTrialTerms />
             </div>
@@ -209,8 +209,6 @@ const limits = [
 	.audience-close { background: var(--color-softgreen); padding: clamp(4rem, 7vw, 6.5rem) 0; }
 	.close-layout { display: grid; gap: 2rem; align-items: center; }
 	.close-actions { margin-top: 0; }
-	.btn-outline { display: inline-flex; min-height: 3.5rem; align-items: center; justify-content: center; border: 1px solid var(--color-green); border-radius: 999px; padding: .85rem 1.5rem; color: var(--color-green-deep); font-weight: 650; transition: border-color 150ms ease, background-color 150ms ease; }
-	.btn-outline:hover { border-color: var(--color-green-deep); background: var(--color-paper); }
 	@keyframes ticket-settle { from { filter: blur(4px); transform: translateY(1.2rem) rotate(2.5deg); box-shadow: none; } }
 	@media (min-width: 48rem) {
 		.hero-layout { grid-template-columns: minmax(0, 1.08fr) minmax(22rem, .92fr); }

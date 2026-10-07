@@ -211,7 +211,8 @@ export const nav: readonly { label: string; href: string; header: 'direct' | 'bl
 
 export const resourcesMenu = {
 	label: 'Resources',
-	ariaLabel: 'CostCook resources',
+	// Starts with the visible word, so speech input can say what it sees.
+	ariaLabel: 'Resources: tour, fit, setup, comparisons and contact',
 	groups: ['See it work', 'Make the decision', 'Talk to us'] as const,
 	items: resourceNav
 } as const;

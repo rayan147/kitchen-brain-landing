@@ -142,7 +142,7 @@ const faqItems = [
 				<p class="hero-lede">Match your ingredients to nutrient sources and review their allergen information. See per-portion nutrition, missing information and a printable estimate. Your kitchen still needs to review the food and its suitability for each guest.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 
@@ -355,8 +355,8 @@ const faqItems = [
 				<p>Bring one real recipe, match the ingredients you know, and leave every missing fact visible until you know it too.</p>
 			</div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a>
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
 		</div>
 		<nav class="container-page onward" aria-label="Related feature guides">
@@ -383,10 +383,8 @@ const faqItems = [
 	.hero h1::after { display: block; width: min(6.5ch, 100%); height: 0.28rem; margin-top: 1.2rem; background: var(--color-ink); content: ''; }
 	.hero-lede { max-width: 48ch; margin-top: 1.35rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.hero-terms { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
-	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
-	.btn-outline:hover { background: var(--color-green); color: white; }
 	.hero-proof { min-width: 0; }
 	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 	.hero-shot { overflow: hidden; border: 1px solid var(--rule); border-top: 0; background: var(--color-paper); box-shadow: 0 20px 38px color-mix(in srgb, var(--color-ink) 14%, transparent); }
@@ -506,7 +504,7 @@ const faqItems = [
 
 	@media (max-width: 47.999rem) {
 		.hero-grid { padding-block: 2.5rem 3.5rem; }
-		.hero-actions a { width: 100%; }
+		.hero-actions .btn-primary { width: 100%; }
 		.hero-shot { box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 10%, transparent); }
 		.broken-path { grid-template-columns: 1fr; }
 		.path-source { grid-row: auto; }
@@ -518,6 +516,6 @@ const faqItems = [
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.btn-outline, .capability-list summary b, .faq-list summary svg { transition: none; }
+		.capability-list summary b, .faq-list summary svg { transition: none; }
 	}
 </style>
