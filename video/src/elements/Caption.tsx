@@ -29,6 +29,8 @@ export const Caption: React.FC<{
         fontFamily: FONT_BODY,
         fontSize: TYPE.caption,
         lineHeight: 1.3,
+        // No one-word last line ("Her / call.").
+        textWrap: "balance",
         fontWeight: 600,
         boxShadow:
           "0 1px 2px rgb(31 36 33 / 0.06), 0 10px 28px rgb(31 36 33 / 0.08)",

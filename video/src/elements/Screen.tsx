@@ -30,6 +30,9 @@ type Props = {
   // The scale the camera starts from: where the previous beat left it when the
   // frame repeats, so the cut does not snap the zoom back.
   startScale?: number;
+  // And the origin it starts from, for the same reason: carrying the scale
+  // while the origin snaps shifts the whole page sideways at the cut.
+  originStart?: { x: number; y: number } | null;
   // Overlays (a ring) drawn inside the camera and inside the picture's own
   // box, so their percentages are of the capture, not of the frame around it.
   children?: React.ReactNode;
@@ -44,6 +47,7 @@ export const Screen: React.FC<Props> = ({
   fit = "contain",
   scroll = [0, 0],
   startScale = 1,
+  originStart = null,
   children,
   style,
 }) => {
@@ -111,7 +115,7 @@ export const Screen: React.FC<Props> = ({
           position: "absolute",
           inset: 0,
           containerType: "size",
-          transformOrigin: focus ? `${focus.x}% ${focus.y}%` : "50% 50%",
+          transformOrigin: origin(frame, durationInFrames, focus, originStart),
           scale: interpolate(
             frame,
             [0, durationInFrames],
@@ -144,9 +148,27 @@ export const Screen: React.FC<Props> = ({
   );
 };
 
+// The camera's origin: the focus point, travelling there from where the last
+// beat left it when the frame repeats.
+function origin(
+  frame: number,
+  duration: number,
+  focus: Props["focus"],
+  from: { x: number; y: number } | null,
+): string {
+  if (!focus) return "50% 50%";
+  if (!from) return `${focus.x}% ${focus.y}%`;
+  const t = interpolate(frame, [0, duration], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: CAMERA,
+  });
+  return `${from.x + (focus.x - from.x) * t}% ${from.y + (focus.y - from.y) * t}%`;
+}
+
 // The picture's box inside the screen, in container units: "contain" centres
-// the whole capture; "fill-top" fits its width and slides a tall one by
-// `scrolled` percent (0 = top, 100 = bottom).
+// the whole capture; "fill-top" fits its width, slides a tall one by
+// `scrolled` percent (0 = top, 100 = bottom) and centres a short one.
 function pictureBox(
   size: { w: number; h: number },
   fit: "contain" | "fill-top",
@@ -160,7 +182,8 @@ function pictureBox(
       left: 0,
       width: "100cqw",
       height: h,
-      top: `min(0px, calc((100cqh - ${h}) * ${scrolled / 100}))`,
+      // A tall capture slides by `scrolled`; a short one sits in the middle.
+      top: `calc(min(0px, (100cqh - ${h}) * ${scrolled / 100}) + max(0px, (100cqh - ${h}) / 2))`,
     };
   }
   const w = `min(100cqw, calc(100cqh * ${a}))`;

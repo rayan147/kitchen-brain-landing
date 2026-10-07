@@ -5,6 +5,7 @@ import {
   SCENE_ORDER,
   TITLE,
   FADE_FRAMES,
+  cameraOrigin,
   cameraStart,
   questionFadeFrames,
   captionsFor,
@@ -16,8 +17,8 @@ import { ManifestSchema, type Manifest } from "./manifest";
 const manifest: Manifest = {
   guests: "150",
   pricePerGuest: "$95.00",
-  foodCostPct: "28.4%",
-  proposalFoodCostPct: "28.3%",
+  foodCostPct: "26.3%",
+  proposalFoodCostPct: "25.8%",
   target: "30%",
   deposit: "$5,250.00",
   revenue: "$14,250.00",
@@ -36,7 +37,7 @@ const manifest: Manifest = {
 describe("resolveCaption", () => {
   it("inserts the on-screen string verbatim", () => {
     expect(resolveCaption("Food cost {foodCostPct}.", manifest)).toBe(
-      "Food cost 28.4%.",
+      "Food cost 26.3%.",
     );
   });
   it("throws on a token the manifest does not carry", () => {
@@ -74,7 +75,7 @@ describe("FILM follows develop's event workflow", () => {
     expect(SCENE_ORDER.indexOf("menu")).toBeLessThan(
       SCENE_ORDER.indexOf("decision"),
     );
-    expect(captionsFor("menu", manifest).join(" ")).toContain("28.3%");
+    expect(captionsFor("menu", manifest).join(" ")).toContain("25.8%");
   });
   it("books after signed and paid, at Book the event, never at Confirm order", () => {
     // booking-requirements.ts: an accepted proposal, every signer, the deposit
@@ -165,7 +166,7 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
   // that do not (reported as an app defect), so the payoff is the share.
   it("ends on the closeout's likely share of the price, against the target", () => {
     const close = captionsFor("close", manifest).join(" ");
-    expect(close).toContain("likely 25.8%");
+    expect(close).toContain("likely still 25.8%");
     expect(close).toContain("30%");
     expect(close).not.toContain("$3,675.88");
   });
@@ -283,5 +284,33 @@ describe("chapter cards between scenes", () => {
     const [start, end] = questionFadeFrames(30);
     expect(start).toBe(FADE_FRAMES);
     expect(end).toBe(FADE_FRAMES + 15);
+  });
+});
+
+describe("second review fixes (2026-10-07)", () => {
+  // Motion S1: the scale carried over but the origin snapped, so the page
+  // jumped sideways at the cut between the two menu beats.
+  it("starts the camera's origin where the last beat left it when the frames repeat", () => {
+    expect(cameraOrigin("menu", 0)).toBeNull();
+    expect(cameraOrigin("menu", 1)).toEqual({ x: 22, y: 50 });
+  });
+  // Caterer: the phone frame shows the total and the food line only.
+  it("claims only what the offer frame shows", () => {
+    expect(captionsFor("decision", manifest).join(" ")).not.toMatch(
+      /staff and rentals/,
+    );
+  });
+  // Caterer: the day-after share matching the quote is the point, said so.
+  it("ties the day-after share back to the price she was quoted", () => {
+    expect(captionsFor("close", manifest).join(" ")).toContain(
+      "Priced at 25.8% before her yes",
+    );
+  });
+});
+
+describe("closeout caption placement", () => {
+  // Motion S3: at the bottom the caption covered the ringed share.
+  it("puts the closeout caption on top, off the card's figures", () => {
+    expect(FILM.close.beats[0].captionAt).toBe("top");
   });
 });

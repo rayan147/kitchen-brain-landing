@@ -42,6 +42,8 @@ export type Beat = {
   ring?: Ring;
   focus?: Focus;
   scroll?: [number, number];
+  // Where the caption sits: at the bottom unless what it names is there.
+  captionAt?: "top";
 };
 
 type Scene = { chapter: string | null; seconds: number; beats: Beat[] };
@@ -113,8 +115,7 @@ export const FILM: Record<SceneId, Scene> = {
         to: 8,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
-        caption:
-          "The offer reaches her phone: {offerTotal}, staff and rentals in.",
+        caption: "The offer reaches her phone: {offerTotal} for the day.",
         scroll: [0, 100],
       },
       {
@@ -148,7 +149,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "split",
         frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
         caption: "Ask for {deposit}. She pays by card from the link.",
-        focus: { x: 0, y: 55, scale: 1.5 },
+        focus: { x: 0, y: 50, scale: 2.2 },
       },
       {
         from: 11,
@@ -164,6 +165,8 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-book-event-desktop.png"],
         caption: "Her yes is not a booking. Signed and paid is.",
+        // Pulled back a touch, so the strip and its ring clear the frame edge.
+        focus: { x: 50, y: 50, scale: 0.95 },
         ring: { x: 1.5, y: 63, width: 22, height: 28 },
       },
       {
@@ -220,7 +223,7 @@ export const FILM: Record<SceneId, Scene> = {
         // Pushes in from below the bottom left corner, so Still to get rises
         // clear of the caption.
         focus: { x: 0, y: 130, scale: 1.6 },
-        ring: { x: 1.5, y: 68, width: 97, height: 14 },
+        ring: { x: 1.5, y: 68, width: 60, height: 14 },
       },
     ],
   },
@@ -249,7 +252,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-pack-desktop.png"],
         caption: "Tick each dish into the van. Allergens print on the label.",
-        ring: { x: 11.5, y: 45, width: 22, height: 6 },
+        ring: { x: 12, y: 46.5, width: 21, height: 4.5 },
       },
     ],
   },
@@ -268,10 +271,11 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-closeout-desktop.png"],
         caption:
-          "Priced before her yes. The day after: likely {likelyShare} of the price, under your {target} target.",
-        // From below the bottom right corner, so the share rises clear of the
-        // caption.
-        focus: { x: 100, y: 140, scale: 1.4 },
+          "Priced at {proposalFoodCostPct} before her yes. The day after: likely still {likelyShare}, under your {target} target.",
+        // From the bottom right corner, so the ringed share rises to the middle
+        // and leads; the caption sits on top, off the card's figures.
+        focus: { x: 100, y: 85, scale: 1.6 },
+        captionAt: "top",
         ring: { x: 72, y: 72, width: 25, height: 26 },
       },
       { from: 7, to: 12, layout: "end", frames: [] },
@@ -305,6 +309,22 @@ export function cameraStart(scene: SceneId, index: number): number {
   return prev.frames.join() === beats[index].frames.join()
     ? prev.focus.scale
     : 1;
+}
+
+/**
+ * Where the camera's origin starts: the previous beat's focus point when both
+ * show the same frames, so carrying the scale over does not also snap the
+ * origin (which shifts the page sideways at the cut), else null.
+ */
+export function cameraOrigin(
+  scene: SceneId,
+  index: number,
+): { x: number; y: number } | null {
+  const beats = FILM[scene].beats;
+  const prev = beats[index - 1];
+  if (!prev?.focus || prev.frames.join() !== beats[index].frames.join())
+    return null;
+  return { x: prev.focus.x, y: prev.focus.y };
 }
 
 export function sceneFrames(scene: SceneId): string[] {

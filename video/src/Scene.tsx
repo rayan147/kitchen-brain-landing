@@ -15,8 +15,11 @@ import { Screen } from "./elements/Screen";
 import { SplitScreen } from "./elements/SplitScreen";
 import {
   CHAPTER_SECONDS,
+  FADE_FRAMES,
   FILM,
+  SCENE_ORDER,
   TITLE,
+  cameraOrigin,
   cameraStart,
   resolveCaption,
   type Beat,
@@ -74,7 +77,8 @@ const Shot: React.FC<{
   src: string;
   phone?: boolean;
   startScale?: number;
-}> = ({ beat, src, phone, startScale }) => (
+  originStart?: { x: number; y: number } | null;
+}> = ({ beat, src, phone, startScale, originStart }) => (
   <div style={{ position: "absolute", inset: 0 }}>
     <Screen
       src={src}
@@ -82,6 +86,7 @@ const Shot: React.FC<{
       scroll={phone ? beat.scroll : undefined}
       focus={phone ? undefined : beat.focus}
       startScale={phone ? 1 : startScale}
+      originStart={phone ? null : originStart}
     >
       {beat.ring ? <Highlight {...beat.ring} /> : null}
     </Screen>
@@ -91,9 +96,11 @@ const Shot: React.FC<{
 const BeatView: React.FC<{
   beat: Beat;
   manifest: Manifest;
-  fadeIn: boolean;
+  // The frame the UI starts fading up from, or null to cut in.
+  fadeIn: number | null;
   startScale: number;
-}> = ({ beat, manifest, fadeIn, startScale }) => {
+  originStart: { x: number; y: number } | null;
+}> = ({ beat, manifest, fadeIn, startScale, originStart }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const [first, second] = beat.frames;
@@ -121,7 +128,14 @@ const BeatView: React.FC<{
       />
     ) : beat.layout === "split" ? (
       <SplitScreen
-        left={<Screen src={first} focus={beat.focus} startScale={startScale} />}
+        left={
+          <Screen
+            src={first}
+            focus={beat.focus}
+            startScale={startScale}
+            originStart={originStart}
+          />
+        }
         right={
           <PhoneFrame>
             <Shot beat={beat} src={second} phone />
@@ -129,7 +143,12 @@ const BeatView: React.FC<{
         }
       />
     ) : (
-      <Shot beat={beat} src={first} startScale={startScale} />
+      <Shot
+        beat={beat}
+        src={first}
+        startScale={startScale}
+        originStart={originStart}
+      />
     );
   return (
     <>
@@ -138,13 +157,15 @@ const BeatView: React.FC<{
           position: "absolute",
           inset: 0,
           // After a chapter card or the title the UI fades up instead of
-          // cutting in.
-          opacity: fadeIn
-            ? interpolate(frame, [0, 10], [0, 1], {
-                extrapolateLeft: "clamp",
-                extrapolateRight: "clamp",
-              })
-            : 1,
+          // cutting in; a scene that opens on UI waits out the scene fade
+          // first, so two dense screens never lie over each other.
+          opacity:
+            fadeIn !== null
+              ? interpolate(frame, [fadeIn, fadeIn + 10], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                })
+              : 1,
         }}
       >
         {body}
@@ -161,6 +182,9 @@ const BeatView: React.FC<{
             duration={length - captionFrom}
             maxWidth={
               beat.layout === "split" || beat.layout === "phone" ? 1000 : 1400
+            }
+            style={
+              beat.captionAt === "top" ? { top: 72, bottom: "auto" } : undefined
             }
           />
         </Sequence>
@@ -204,8 +228,13 @@ export const Scene: React.FC<{ id: SceneId }> = ({ id }) => {
             fadeIn={
               (Boolean(scene.chapter) && beat.from === CHAPTER_SECONDS) ||
               scene.beats[i - 1]?.layout === "title"
+                ? 0
+                : !scene.chapter && i === 0 && id !== SCENE_ORDER[0]
+                  ? FADE_FRAMES
+                  : null
             }
             startScale={cameraStart(id, i)}
+            originStart={cameraOrigin(id, i)}
           />
         </Sequence>
       ))}
