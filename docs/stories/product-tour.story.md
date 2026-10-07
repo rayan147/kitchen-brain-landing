@@ -162,3 +162,10 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - Stop 9 (events) no longer calls event card payment Coming: the client pays the deposit by card from an email link, or it is recorded by hand (owner ruling 2026-10-06). "Start the guided tour" is a quiet link; the green button is only the trial.
+
+### Revision 2026-10-07: US units and a chicken that adds up (chef audit)
+- 8 oz trimmed raw thigh a portion (about 6 oz cooked), 12 lb for 24, in 40 lb cases at $139.60 ($3.49/lb, $3.84/lb usable at 91%). Recipe $64.69, $2.70 a portion.
+- Lemons at the invoice price ($0.27 each; 12 at 82% = $3.97). Event need 90 lemons, not 96.
+- The orders and inventory stops buy with the trim: 98.9 lb needed, 80 lb on hand, 18.9 lb (one 40 lb case) to buy; the delivery is 5 lb short.
+- Nutrition is a 6 oz cooked portion: 498 kcal, 44.6 g protein. The restriction stop checks the menu's own dishes.
+- Menu food cost, price and quote are unchanged: $1,491.38, $28.00, $5,040, 29.6% (four of seven dishes shown).

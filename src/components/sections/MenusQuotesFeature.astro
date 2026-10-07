@@ -119,8 +119,8 @@ const faqItems = [
 						<div class="ledger-head"><span>Dish</span><span>Per guest</span></div>
 						<ul role="list" class="dish-lines">
 							<li><span>Herb roast chicken</span><strong>1 portion</strong></li>
-							<li><span>Lemon herb potatoes</span><strong>180 g</strong></li>
-							<li><span>Seasonal green salad</span><strong>120 g</strong></li>
+							<li><span>Lemon herb potatoes</span><strong>6 oz</strong></li>
+							<li><span>Seasonal green salad</span><strong>4 oz</strong></li>
 							<li><span>Lemon tart</span><strong>1 slice</strong></li>
 						</ul>
 						<dl class="ledger-summary">
@@ -197,26 +197,29 @@ const faqItems = [
 				<div class="workspace-main">
 					<div class="workspace-bar"><span>Menu workspace</span><span>Illustrative</span></div>
 					<div class="workspace-title">
-						<div><small>Menu</small><strong>Summer wedding dinner</strong></div>
-						<div><small>Default</small><strong>$68 / guest</strong></div>
+						<div><small>Menu</small><strong>Garden wedding supper</strong></div>
+						<div><small>Default</small><strong>$28 / guest</strong></div>
 					</div>
 					<div class="menu-table" role="table" aria-label="Illustrative menu workspace">
 						<div class="menu-row menu-row-head" role="row">
 							<span role="columnheader">Dish</span><span role="columnheader">Per guest</span><span role="columnheader">Cost</span>
 						</div>
-						<div class="menu-row" role="row"><span role="cell">Herb roast chicken</span><strong role="cell">1 portion</strong><span role="cell">$6.84</span></div>
-						<div class="menu-row active" role="row"><span role="cell">Lemon herb potatoes</span><strong role="cell">180 g</strong><span role="cell">$2.31</span></div>
-						<div class="menu-row" role="row"><span role="cell">Seasonal green salad</span><strong role="cell">120 g</strong><span role="cell">$1.28</span></div>
-						<div class="menu-row" role="row"><span role="cell">Lemon tart</span><strong role="cell">1 slice</strong><span role="cell">$1.57</span></div>
+						<!-- The product tour's menu (src/lib/tour.ts), not the film's: this
+						     block used the film's menu name with a different cost, so one
+						     menu showed two answers (chef audit 2026-10-07). -->
+						<div class="menu-row" role="row"><span role="cell">Herb roast chicken</span><strong role="cell">1 portion</strong><span role="cell">$2.70</span></div>
+						<div class="menu-row active" role="row"><span role="cell">Charred market vegetables</span><strong role="cell">6 oz</strong><span role="cell">$0.72</span></div>
+						<div class="menu-row" role="row"><span role="cell">Rosemary focaccia</span><strong role="cell">2 pieces</strong><span role="cell">$0.43</span></div>
+						<div class="menu-row" role="row"><span role="cell">Citrus salad</span><strong role="cell">4 oz</strong><span role="cell">$0.30</span></div>
 					</div>
 				</div>
 				<div class="workspace-side">
 					<div class="price-check">
 						<span>Menu pricing</span>
 						<dl>
-							<div><dt>Food cost / guest</dt><dd>$12.00</dd></div>
-							<div><dt>Selling price / guest</dt><dd>$68.00</dd></div>
-							<div><dt>Price / guest for 30% food cost</dt><dd>$40.00</dd></div>
+							<div><dt>Food cost / guest</dt><dd>$8.29</dd></div>
+							<div><dt>Selling price / guest</dt><dd>$28.00</dd></div>
+							<div><dt>Price / guest for 30% food cost</dt><dd>$27.63</dd></div>
 						</dl>
 					</div>
 					<div class="equipment-sheet">
@@ -225,7 +228,7 @@ const faqItems = [
 						<small>Counts stay fixed when guest count changes.</small>
 					</div>
 				</div>
-				<figcaption>Separate example: $6.84 + $2.31 + $1.28 + $1.57 = $12.00 food per guest. At a 30% food-cost target, $12.00 ÷ 0.30 = $40.00 per guest. Equipment counts are fixed; they do not scale with guests.</figcaption>
+				<figcaption>The product tour’s garden wedding, a different menu from the one above. Four of its seven dishes are shown; all seven cost $8.29 a guest, 29.6% of $28.00. At a 30% target, $8.29 ÷ 0.30 = $27.63 a guest. Equipment counts are fixed; they do not scale with guests.</figcaption>
 			</figure>
 
 			<div class="feature-scenes" data-reveal>
@@ -263,7 +266,7 @@ const faqItems = [
 				<div class="proof-copy" data-reveal>
 					<h3>Cost before commitment.</h3>
 					<p>
-						For this 180-guest tour event, $68 per guest puts food cost at 39.6%. The same panel
+						For the 180-guest summer wedding in these screens, $68 per guest puts food cost at 39.6%. The same panel
 						names $89.78 as the price that would meet the 30% target.
 					</p>
 					<ul role="list">

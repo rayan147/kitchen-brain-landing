@@ -43,27 +43,31 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 const formatCurrency = (value: number) => currencyFormatter.format(value);
 const roundMoney = (value: number) => Math.round((value + Number.EPSILON) * 100) / 100;
 
+// US units and a real plate (chef audit 2026-10-07): 8 oz of trimmed raw thigh
+// a portion (about 6 oz cooked), so 12 lb for 24 portions, bought in 40 lb
+// cases. The 91% trim yield is applied to everything bought downstream (the
+// orders and inventory stops), not only to the cost.
 const recipeCostingInputs = {
-	chickenUsedKg: 7.8,
+	chickenUsedLb: 12,
 	chickenUsableYield: 0.91,
-	chickenPackKg: 10,
-	chickenPackPrice: 127.66,
-	otherIngredientCosts: [24.86, 9.84, 20.04],
+	chickenPackLb: 40,
+	chickenPackPrice: 139.6,
+	otherIngredientCosts: [8.4, 3.97, 6.3],
 	portions: 24
 } as const;
 
-const chickenPurchasedCostPerKg = roundMoney(recipeCostingInputs.chickenPackPrice / recipeCostingInputs.chickenPackKg);
-const chickenUsableCostPerKg = roundMoney(chickenPurchasedCostPerKg / recipeCostingInputs.chickenUsableYield);
+const chickenPurchasedCostPerLb = roundMoney(recipeCostingInputs.chickenPackPrice / recipeCostingInputs.chickenPackLb);
+const chickenUsableCostPerLb = roundMoney(chickenPurchasedCostPerLb / recipeCostingInputs.chickenUsableYield);
 const chickenLineCost = roundMoney(
-	(recipeCostingInputs.chickenUsedKg / recipeCostingInputs.chickenUsableYield) *
-	(recipeCostingInputs.chickenPackPrice / recipeCostingInputs.chickenPackKg)
+	(recipeCostingInputs.chickenUsedLb / recipeCostingInputs.chickenUsableYield) *
+	(recipeCostingInputs.chickenPackPrice / recipeCostingInputs.chickenPackLb)
 );
 const recipeCost = roundMoney(chickenLineCost + recipeCostingInputs.otherIngredientCosts.reduce((total, cost) => total + cost, 0));
 
 export const tourRecipeCostingProof = Object.freeze({
 	...recipeCostingInputs,
-	chickenPurchasedCostPerKg,
-	chickenUsableCostPerKg,
+	chickenPurchasedCostPerLb,
+	chickenUsableCostPerLb,
 	chickenLineCost,
 	chickenPlateShare: roundMoney(chickenLineCost / recipeCostingInputs.portions),
 	recipeCost,
@@ -76,15 +80,15 @@ export const tourRecipeCostingProof = Object.freeze({
 // set of related arithmetic invariants, not handlers that selectively consume
 // different request types.
 const expectedRecipeProof = {
-	chickenPackPrice: 127.66,
-	chickenPurchasedCostPerKg: 12.77,
-	chickenUsableCostPerKg: 14.03,
-	chickenLineCost: 109.42,
-	chickenPlateShare: 4.56,
-	recipeCost: 164.16,
-	perPortionCost: 6.84,
-	invoiceTotal: 958.62,
-	purchaseOrderTotal: 750.38
+	chickenPackPrice: 139.6,
+	chickenPurchasedCostPerLb: 3.49,
+	chickenUsableCostPerLb: 3.84,
+	chickenLineCost: 46.02,
+	chickenPlateShare: 1.92,
+	recipeCost: 64.69,
+	perPortionCost: 2.7,
+	invoiceTotal: 970.56,
+	purchaseOrderTotal: 762.32
 } as const;
 const recipeProofHasDrifted = Object.entries(expectedRecipeProof).some(
 	([key, expectedValue]) => tourRecipeCostingProof[key as keyof typeof expectedRecipeProof] !== expectedValue
@@ -104,31 +108,33 @@ export const tourStops: readonly TourStop[] = [
 		appArea: 'Recipes / Herb roast chicken',
 		title: 'Keep the working recipe and its cost on one record.',
 		intro: 'Open the dish the kitchen will cook and follow its price from purchased weight through usable yield to one portion.',
-		callout: 'The same 7.8 kg of chicken has to survive the recipe, the purchase order, and the back door.',
+		callout: 'The same 12 lb of chicken has to survive the recipe, the purchase order, and the back door.',
 		featureHref: featureMenuHref('math'),
 		metrics: [
 			{ label: 'Recipe cost', value: formatCurrency(tourRecipeCostingProof.recipeCost) },
 			{ label: 'Per portion', value: formatCurrency(tourRecipeCostingProof.perPortionCost) },
-			{ label: 'Food cost', value: '30.4%', tone: 'good' },
+			{ label: 'Food cost', value: '30.0%', tone: 'good' },
 			{ label: 'Batch yield', value: '24 portions' }
 		],
 		columns: ['Ingredient', 'Used', 'Usable yield', 'Cost'],
 		rows: [
-			['Chicken thigh', `${tourRecipeCostingProof.chickenUsedKg} kg`, `${tourRecipeCostingProof.chickenUsableYield * 100}%`, formatCurrency(tourRecipeCostingProof.chickenLineCost)],
-			['Herb marinade', '1.1 kg', '100%', '$24.86'],
-			['Lemon', '12 each', '82%', '$9.84'],
-			['Pan jus', '1.4 L', '100%', '$20.04']
+			['Chicken thigh', `${tourRecipeCostingProof.chickenUsedLb} lb`, `${tourRecipeCostingProof.chickenUsableYield * 100}%`, formatCurrency(tourRecipeCostingProof.chickenLineCost)],
+			['Herb marinade', '2.4 lb', '100%', '$8.40'],
+			// $38.00 for a 140-count case (the invoice stop) is $0.27 a lemon;
+			// 12 at 82% usable is $3.97.
+			['Lemon', '12 each', '82%', '$3.97'],
+			['Pan jus', '1.5 qt', '100%', '$6.30']
 		],
 		aside: {
 			title: 'Cost path',
 			status: 'Complete',
 			lines: [
-				{ label: 'Case', value: `${formatCurrency(tourRecipeCostingProof.chickenPackPrice)} / ${tourRecipeCostingProof.chickenPackKg} kg` },
-				{ label: 'Usable cost', value: `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerKg)} / kg` },
+				{ label: 'Case', value: `${formatCurrency(tourRecipeCostingProof.chickenPackPrice)} / ${tourRecipeCostingProof.chickenPackLb} lb` },
+				{ label: 'Usable cost', value: `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerLb)} / lb` },
 				{ label: 'Plate share', value: formatCurrency(tourRecipeCostingProof.chickenPlateShare) },
 				{ label: 'Missing prices', value: 'None', tone: 'good' }
 			],
-			footnote: '$164.16 ÷ 24 portions = $6.84. At a sample selling price of $22.50 per portion, food cost is 30.4%. Food only; labor and overhead are extra. This tour table is a preview.'
+			footnote: '$64.69 ÷ 24 portions = $2.70. At a sample price of $9.00 for the plate’s share, food cost is 30.0%. Food only; labor and overhead are extra. This tour table is a preview.'
 		}
 	},
 	{
@@ -148,10 +154,10 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Menu dish', 'Per guest', 'Event cost', 'Food cost'],
 		rows: [
-			['Herb roast chicken', '1 portion', '$1,231.20', '24.4%'],
-			['Charred market vegetables', '180 g', '$128.88', '2.6%'],
+			['Herb roast chicken', '1 portion', '$485.17', '9.6%'],
+			['Charred market vegetables', '6 oz', '$128.88', '2.6%'],
 			['Rosemary focaccia', '2 pieces', '$76.50', '1.5%'],
-			['Citrus salad', '120 g', '$54.80', '1.1%']
+			['Citrus salad', '4 oz', '$54.80', '1.1%']
 		],
 		aside: {
 			title: 'Quote check',
@@ -162,7 +168,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Target food cost', value: '31.0%' },
 				{ label: 'Room to target', value: '1.4 pts', tone: 'good' }
 			],
-			footnote: '$1,491.38 food cost ÷ $5,040 revenue = 29.6%. The 31% target leaves 1.4 percentage points. Revenue after food cost still needs to cover labor, overhead and profit. Confirming preserves this quote.'
+			footnote: 'Four of the menu’s seven dishes are shown; the food cost covers all seven. $1,491.38 food cost ÷ $5,040 revenue = 29.6%. The 31% target leaves 1.4 percentage points. Revenue after food cost still needs to cover labor, overhead and profit. Confirming preserves this quote.'
 		}
 	},
 	{
@@ -172,19 +178,19 @@ export const tourStops: readonly TourStop[] = [
 		appArea: 'Ingredients / Chicken thigh, boneless',
 		title: 'Keep the buying facts attached to the ingredient.',
 		intro: 'Compare the current pack, usable yield, supplier offers, and every recipe that will move when the price changes.',
-		callout: 'A cheaper case is not cheaper if the usable kilo costs more.',
+		callout: 'A cheaper case is not cheaper if the usable pound costs more.',
 		featureHref: featureMenuHref('ingredients'),
 		metrics: [
-			{ label: '10 kg pack', value: formatCurrency(tourRecipeCostingProof.chickenPackPrice) },
-			{ label: 'Purchased cost', value: `${formatCurrency(tourRecipeCostingProof.chickenPurchasedCostPerKg)} / kg` },
-			{ label: 'Usable cost', value: `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerKg)} / kg` },
+			{ label: '40 lb case', value: formatCurrency(tourRecipeCostingProof.chickenPackPrice) },
+			{ label: 'Purchased cost', value: `${formatCurrency(tourRecipeCostingProof.chickenPurchasedCostPerLb)} / lb` },
+			{ label: 'Usable cost', value: `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerLb)} / lb` },
 			{ label: 'Recipes affected', value: '6', tone: 'attention' }
 		],
 		columns: ['Supplier offer', 'Pack', 'Effective', 'Usable cost'],
 		rows: [
-			['Harbor Foods', `10 kg · ${formatCurrency(tourRecipeCostingProof.chickenPackPrice)}`, 'Aug 27', `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerKg)} / kg`],
-			['Northline Produce', '10 kg · $131.20', 'Aug 25', '$14.42 / kg'],
-			['Metro Wholesale', '5 kg · $67.10', 'Aug 20', '$14.75 / kg']
+			['Harbor Foods', `40 lb · ${formatCurrency(tourRecipeCostingProof.chickenPackPrice)}`, 'Aug 27', `${formatCurrency(tourRecipeCostingProof.chickenUsableCostPerLb)} / lb`],
+			['Northline Produce', '40 lb · $143.20', 'Aug 25', '$3.93 / lb'],
+			['Metro Wholesale', '20 lb · $73.80', 'Aug 20', '$4.05 / lb']
 		],
 		aside: {
 			title: 'Ingredient facts',
@@ -215,10 +221,10 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Source line', 'Matched ingredient', 'Pack price', 'Status'],
 		rows: [
-			['CHK THIGH BNLS 10KG', 'Chicken thigh, boneless', formatCurrency(tourRecipeCostingProof.chickenPackPrice), 'Exact'],
+			['CHK THIGH BNLS 40LB', 'Chicken thigh, boneless', formatCurrency(tourRecipeCostingProof.chickenPackPrice), 'Exact'],
 			['LEMON 140CT', 'Lemon', '$38.00', 'Exact'],
 			['MIXED HERB CS', 'Choose ingredient', '$27.80', 'Review'],
-			['OIL EVOO 4X3L', 'Olive oil, extra virgin', '$92.16', 'Exact']
+			['OIL EVOO 4X1GAL', 'Olive oil, extra virgin', '$92.16', 'Exact']
 		],
 		aside: {
 			title: 'Original document',
@@ -282,16 +288,17 @@ export const tourStops: readonly TourStop[] = [
 		callout: 'A blank nutrient stays blank. It never becomes a made-up zero.',
 		featureHref: featureMenuHref('nutrition'),
 		metrics: [
-			{ label: 'Calories', value: '418 kcal' },
-			{ label: 'Protein', value: '34.6 g' },
-			{ label: 'Carbohydrate', value: '18.2 g' },
-			{ label: 'Total fat', value: '22.8 g' }
+			// One portion: about 6 oz of cooked thigh plus marinade and jus.
+			{ label: 'Calories', value: '498 kcal' },
+			{ label: 'Protein', value: '44.6 g' },
+			{ label: 'Carbohydrate', value: '5.2 g' },
+			{ label: 'Total fat', value: '32.1 g' }
 		],
 		columns: ['Ingredient profile', 'Recipe amount', 'Profile source', 'Status'],
 		rows: [
-			['Chicken thigh, cooked', '265 g', 'USDA reference', 'Linked'],
-			['Herb marinade', '46 g', 'Recipe calculation', 'Complete'],
-			['Pan jus', '58 ml', 'Recipe calculation', 'Complete'],
+			['Chicken thigh, cooked', '6 oz', 'USDA reference', 'Linked'],
+			['Herb marinade', '1.6 oz', 'Recipe calculation', 'Complete'],
+			['Pan jus', '2 fl oz', 'Recipe calculation', 'Complete'],
 			['Lemon', '0.5 each', 'USDA reference', 'Linked']
 		],
 		aside: {
@@ -299,7 +306,7 @@ export const tourStops: readonly TourStop[] = [
 			status: '15 of 15 present',
 			lines: [
 				{ label: 'Sodium', value: '612 mg' },
-				{ label: 'Dietary fiber', value: '2.1 g' },
+				{ label: 'Dietary fiber', value: '0.4 g' },
 				{ label: 'Added sugars', value: '0 g' },
 				{ label: 'Contains', value: 'Milk, soy', tone: 'attention' }
 			],
@@ -329,10 +336,12 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Dish', 'Restriction', 'Answer', 'Reason'],
 		rows: [
-			['Herb pesto', 'bride, Tree nuts', 'Conflict', 'Walnuts (contains)'],
-			['Braised short rib', 'Halal', 'Check', 'Meat depends on the source'],
-			['Roasted carrots', 'Gluten-free', 'Clear', 'Every ingredient reviewed'],
-			['Garden salad', 'Vegan', 'Check', '2 ingredients not reviewed']
+			// The menu's own dishes (chef audit 2026-10-07: these were dishes the
+			// garden wedding does not serve).
+			['Rosemary focaccia', 'bride, Gluten-free', 'Conflict', 'Bread flour (contains wheat)'],
+			['Herb roast chicken', 'Halal', 'Check', 'Meat depends on the source'],
+			['Charred market vegetables', 'Tree nuts', 'Clear', 'Every ingredient reviewed'],
+			['Citrus salad', 'Vegan', 'Check', '2 ingredients not reviewed']
 		],
 		aside: {
 			title: 'Checked at confirm',
@@ -441,8 +450,9 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Plan item', 'Need', 'Ready', 'Working status'],
 		rows: [
-			['Chicken thigh, boneless', '58.5 kg', '48.5 kg', '10 kg to grab'],
-			['Herb marinade', '8.3 kg', '8.3 kg', 'Ready'],
+			// 7.5 batches of 12 lb trimmed is 90 lb; at 91% that is 98.9 lb bought.
+			['Chicken thigh, boneless', '98.9 lb', '80 lb', '18.9 lb to grab'],
+			['Herb marinade', '18 lb', '18 lb', 'Ready'],
 			['Rosemary focaccia', '360 pieces', '240 pieces', '1 batch in prep'],
 			['Hot boxes', '6 each', '6 each', 'Packed']
 		],
@@ -465,7 +475,7 @@ export const tourStops: readonly TourStop[] = [
 		appArea: 'Purchasing / PO-1047 / Receive',
 		title: 'Compare what you sent with what came through the back door.',
 		intro: 'Open the purchase order, record the delivered quantity, and keep the short line visible until someone handles it.',
-		callout: 'The invoice says delivered. The back door says two kilos short.',
+		callout: 'The invoice says delivered. The back door says five pounds short.',
 		featureHref: featureMenuHref('purchasing'),
 		metrics: [
 			{ label: 'Purchase order', value: 'PO-1047' },
@@ -475,10 +485,10 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Delivery line', 'Ordered', 'Received', 'Verdict'],
 		rows: [
-			['Chicken thigh, boneless', '10.0 kg', '8.0 kg', 'Short 2.0 kg'],
-			['Lemon', '2 cases', '2 cases', 'Received'],
+			['Chicken thigh, boneless', '40 lb', '35 lb', 'Short 5 lb'],
+			['Mixed herbs', '2 cases', '2 cases', 'Received'],
 			['Extra virgin olive oil', '1 case', '1 case', 'Received'],
-			['Mixed herbs', '1 case', '1 case', 'Received']
+			['Bread flour', '1 bag', '1 bag', 'Received']
 		],
 		aside: {
 			title: 'Save the delivery',
@@ -509,21 +519,21 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Ingredient', 'On hand', 'Next need', 'Count trust'],
 		rows: [
-			['Chicken thigh, boneless', '48.5 kg', '58.5 kg', 'Fresh · 6:12 AM'],
-			['Lemon', '164 each', '96 each', 'Fresh · 6:18 AM'],
-			['Mixed herbs', '3.2 kg', '4.1 kg', 'Stale · Aug 22'],
+			['Chicken thigh, boneless', '80 lb', '98.9 lb', 'Fresh · 6:12 AM'],
+			['Lemon', '164 each', '90 each', 'Fresh · 6:18 AM'],
+			['Mixed herbs', '7 lb', '9 lb', 'Stale · Aug 22'],
 			['Rosemary focaccia', '—', '360 pieces', 'Never counted']
 		],
 		aside: {
 			title: 'Shopping gap',
 			status: '7 lines to buy',
 			lines: [
-				{ label: 'Chicken thigh', value: '10.0 kg', tone: 'attention' },
-				{ label: 'Mixed herbs', value: '4.1 kg · count first', tone: 'attention' },
+				{ label: 'Chicken thigh', value: '18.9 lb', tone: 'attention' },
+				{ label: 'Mixed herbs', value: '9 lb · count first', tone: 'attention' },
 				{ label: 'Trusted surplus', value: '5 lines', tone: 'good' },
 				{ label: 'Refused estimates', value: '3' }
 			],
-			footnote: 'The summary covers all stock records; four are shown. Missing or stale counts do not reduce buying. For chicken, 58.5 kg needed − 48.5 kg on hand = 10 kg to buy.'
+			footnote: 'The summary covers all stock records; four are shown. Missing or stale counts do not reduce buying. For chicken, 98.9 lb needed − 80 lb on hand = 18.9 lb to buy: one 40 lb case.'
 		}
 	},
 	{
@@ -550,11 +560,11 @@ export const tourStops: readonly TourStop[] = [
 		],
 		aside: {
 			title: 'Price movement',
-			status: '5 moved over 5%',
+			status: '5 moved more than 5%',
 			lines: [
 				{ label: 'Chicken thigh', value: '+7.2%', tone: 'attention' },
 				{ label: 'Olive oil', value: '+5.8%', tone: 'attention' },
-				{ label: 'Lemon', value: '−3.1%', tone: 'good' },
+				{ label: 'Mixed herbs', value: '+6.4%', tone: 'attention' },
 				{ label: 'Corrections', value: '2 signed' }
 			],
 			footnote: '$8,891.40 spent − $8,420 planned = $471.40. Subtract $186.50 recorded waste: $284.90 still needs checking. Price changes compare current and previous prices; three of the month’s ingredients are shown.'
@@ -612,7 +622,7 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Sage found', 'Evidence', 'Impact', 'Next action'],
 		rows: [
-			['Chicken delivery is 2 kg short', 'PO-1047 receiving', 'Saturday order', 'Open follow-up'],
+			['Chicken delivery is 5 lb short', 'PO-1047 receiving', 'Saturday order', 'Open follow-up'],
 			['Mixed-herb count is stale', 'Walk-in 1 count', 'Shopping gap', 'Count stock'],
 			['Quote remains below target', 'Garden wedding menu', '29.6% food cost', 'No action'],
 			['Allergen notes are present', '4 recipe profiles', 'Pack list', 'Review at pack-out']

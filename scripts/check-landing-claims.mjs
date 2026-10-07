@@ -776,7 +776,7 @@ requireText(faqSource, 'actions that write data need a connection', 'offline wri
 const tourSource = surfaces[surfaceFiles.indexOf('src/lib/tour.ts')];
 const productTourSource = surfaces[surfaceFiles.indexOf('src/components/sections/ProductTour.astro')];
 requireText(tourSource, "label: 'Revenue after food cost'", 'tour food-cost remainder label');
-requireText(tourSource, "value: '4.1 kg · count first'", 'tour stale-count buying boundary');
+requireText(tourSource, "value: '9 lb · count first'", 'tour stale-count buying boundary');
 requireText(tourSource, "label: 'Difference to explain'", 'tour month difference label');
 requireText(tourSource, 'Garden wedding supper', 'tour illustrative event identity');
 requireText(productTourSource, '<strong>Garden wedding supper</strong>', 'tour visible event identity');
