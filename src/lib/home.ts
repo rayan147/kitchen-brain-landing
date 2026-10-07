@@ -117,7 +117,7 @@ export const eventStages = [
 		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Deposit',
-		heading: 'Signed, then paid by card from a link.',
+		heading: 'Paid by card from a link.',
 		// The signature lives here, not in the client's yes (RC-64: claimable,
 		// not capturable, so it is a sentence without a frame).
 		body: `${agreementLine} ${eventPayments.homepage}`,

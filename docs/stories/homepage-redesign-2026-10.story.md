@@ -171,8 +171,11 @@ Priya's yes comes in, then the deposit.
   list ("One event, first call to prep list" / "From the first call to the
   prep list."), and step 03 carries "The Nair & Castellano wedding, deposit
   paid". Only step 04 (Confirm order) books the job.
-- **Where the signature is:** step 03 is "Signed, then paid by card from a
-  link." and opens with the agreement line (RC-64, a sentence with no frame).
+- **Where the signature is:** step 03 opens with the agreement line, "Send
+  the agreement for e-signature from your own template; it can carry the
+  accepted proposal." (RC-64, a sentence with no frame). Worded as what the
+  app does: the sample wedding's agreement is not prepared, so the heading
+  stays "Paid by card from a link." and nothing says it was signed.
 - **The balance, before the due day:** "Send the balance request whenever you
   choose, and if it is still owed on the due day, a reminder with a pay link
   goes out." (the Request payment button is in the frame).

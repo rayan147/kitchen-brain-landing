@@ -58,7 +58,10 @@ export const depositMethodsCapital = depositMethods.replace(/^./, (c) => c.toUpp
  * Where the signature happens (A-10, A-11, RC-64): claimable, not capturable,
  * so no surface shows the signing page.
  */
-export const agreementLine = 'The agreement goes out for e-signature from your own template, with the accepted proposal attached.';
+// Worded as what the app does, not as this wedding's history: the sample
+// event's agreement is not prepared yet, so nothing on the page may say it
+// was signed.
+export const agreementLine = 'Send the agreement for e-signature from your own template; it can carry the accepted proposal.';
 
 /** The acceptance boundary (A-07, D-04): the client's yes books nothing. */
 export const acceptanceBoundary = 'Their yes is not a signature or a booking. Confirm order is.';
