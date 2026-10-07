@@ -27,7 +27,7 @@ const required = [
 	'data-tour-select',
 	'data-tour-prev',
 	'data-tour-next',
-	'data-label="Usable yield"',
+	'data-label="Trim yield"',
 	'data-label="Cost"',
 	'Follow one event from quote to pack list.',
 	'Garden wedding supper',
@@ -37,13 +37,13 @@ const required = [
 	// The count is read from src/lib/tour.ts (scripts/lib/tour-stops.mjs), which
 	// holds the floor that catches a stop silently disappearing.
 	`Stop 1 of ${tourStopCount}`,
-	'$127.66 / 10 kg',
-	'$14.03 / kg',
-	'$109.42',
-	'$164.16',
-	'$6.84',
+	'$139.60 / 40 lb',
+	'$3.84 / lb',
+	'$46.02',
+	'$64.69',
+	'$2.70',
 	'Revenue after food cost',
-	'4.1 kg · count first',
+	'9 lb · count first',
 	'Difference to explain',
 	'/features/recipes-and-costing',
 	'/features/labels-and-printing',
@@ -56,7 +56,7 @@ if (missing.length > 0) throw new Error(`Product tour build is missing: ${missin
 if (html.includes('Why this stop matters')) {
 	throw new Error('Product tour coach panels must not use a kicker above the callout heading.');
 }
-if (html.includes('$61.50 / 10 kg') || html.includes('$6.76 / kg')) {
+if (html.includes('$61.50 / 10 kg') || html.includes('$6.76 / kg') || html.includes('$127.66 / 10 kg') || html.includes('58.5 kg')) {
 	throw new Error('Product tour still contains the unreconciled chicken costing proof.');
 }
 for (const forbidden of ['Gross margin', 'Unaccounted gap', 'Alvarez–Whitman wedding']) {

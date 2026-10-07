@@ -136,3 +136,10 @@ All eleven steps remain complete. The send scene now follows the shipped lifecyc
 - [x] 9 Setting: Phone beside the prep bench, a short gap between services, crew waiting for the next list.
 - [x] 10 Connection: You throughout; inputs lead to results, results to limits, limits to the trial decision. Shared terms keep the next action consistent.
 - [x] 11 Revision: Build and claim checks passed; every feature route inspected at desktop and mobile, with native disclosures and no JavaScript. Five-width regression checks and 320px/200% text passed. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+### Revision 2026-10-07: chef audit, numbers and US units
+- Illustrative frames rewritten in US units (lb, qt, gal, Aug 28) with arithmetic that reconciles on the page: see the commit "fix(features): receiving, order, ingredients and recipes add up".
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- One Northline chicken price on every guide: ordered at $42.10 (the Aug 14 price), received at $46.80. PO-1048 is $643.20 (9 × $46.80 + 4 × $18 + 2 × $75).

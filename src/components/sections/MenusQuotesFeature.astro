@@ -29,11 +29,11 @@ const capabilityGroups = [
 const capabilityCount = capabilityGroups.reduce((total, group) => total + group.items.length, 0);
 
 const quoteSteps = [
-	{ label: 'Menu', note: 'Choose what each guest receives.' },
+	{ label: 'Menu', note: 'What goes on each plate.' },
 	{ label: 'Date', note: 'Put the job on the calendar.' },
-	{ label: 'Guests', note: 'Set the count the kitchen must serve.' },
-	{ label: 'Price', note: 'Test the number against food cost.' },
-	{ label: 'Confirm', note: 'Freeze plan, math, and money.' }
+	{ label: 'Guests', note: 'The count the kitchen cooks for.' },
+	{ label: 'Price', note: 'Hold it up against food cost.' },
+	{ label: 'Confirm', note: 'Lock the plan and the money.' }
 ] as const;
 
 const faqItems = [
@@ -92,7 +92,7 @@ const faqItems = [
 					<span>Menus and quotes</span>
 				</nav>
 				<h1 id="menus-quotes-heading" class="feature-display">Build your menu. Check the price per guest.</h1>
-				<p class="hero-lede">Choose your dishes and portions, then add the event date, guest count and selling price. Check the food cost before confirming the quote and the kitchen plan together.</p>
+				<p class="hero-lede">Pick the dishes and how much of each goes on a plate. Add the date, the head count and your price. Look at the food cost before you confirm, because confirming locks the quote and the kitchen plan together.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -102,9 +102,9 @@ const faqItems = [
 						target={demoCta.target}
 						rel={demoCta.rel}
 						aria-label={demoCta.ariaLabel}
-						class="btn-outline"
+						class="btn-quiet"
 					>
-						Book a 15-min demo
+						{demoCta.label}
 					</a>
 				</div>
 				<FeatureTrialTerms />
@@ -119,8 +119,8 @@ const faqItems = [
 						<div class="ledger-head"><span>Dish</span><span>Per guest</span></div>
 						<ul role="list" class="dish-lines">
 							<li><span>Herb roast chicken</span><strong>1 portion</strong></li>
-							<li><span>Lemon herb potatoes</span><strong>180 g</strong></li>
-							<li><span>Seasonal green salad</span><strong>120 g</strong></li>
+							<li><span>Lemon herb potatoes</span><strong>6 oz</strong></li>
+							<li><span>Seasonal green salad</span><strong>4 oz</strong></li>
 							<li><span>Lemon tart</span><strong>1 slice</strong></li>
 						</ul>
 						<dl class="ledger-summary">
@@ -145,7 +145,7 @@ const faqItems = [
 						</div>
 					</div>
 				</div>
-				<p class="evidence-note">Sample quote from the product tour. The dishes shown are examples, not its cost breakdown. Food cost excludes labor, rentals, tax and profit.</p>
+				<p class="evidence-note">The film’s sample event. The dishes shown are examples, not its cost breakdown. Food cost excludes labor, rentals, tax and profit.</p>
 			</figure>
 		</div>
 	</section>
@@ -153,10 +153,10 @@ const faqItems = [
 	<section class="handoff-problem" aria-labelledby="handoff-heading">
 		<div class="container-page problem-grid">
 			<div data-reveal>
-				<h2 id="handoff-heading">Three files. One client waiting.</h2>
+				<h2 id="handoff-heading">Right now the job lives in three places.</h2>
 				<p>
 					The dishes are in a menu document. The revised count is in an email. The number you
-					plan to send is in a spreadsheet. The copying only looks harmless while all three agree.
+					plan to send is in a spreadsheet. Copying between them works fine, right up until one of them changes.
 				</p>
 			</div>
 			<figure class="handoff" data-reveal>
@@ -186,10 +186,10 @@ const faqItems = [
 	<section id="menu-management" class="product-section menu-management" aria-labelledby="menu-management-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="menu-management-heading">Make the menu runnable before you make it presentable.</h2>
+				<h2 id="menu-management-heading">Get the menu right for the kitchen first.</h2>
 				<p>
-					Keep dishes, portions per guest, the default price, and the equipment the menu always
-					needs in one workspace.
+					Dishes, portions per guest, the default price and the equipment the menu always
+					needs, all kept together on the menu.
 				</p>
 			</div>
 
@@ -197,26 +197,29 @@ const faqItems = [
 				<div class="workspace-main">
 					<div class="workspace-bar"><span>Menu workspace</span><span>Illustrative</span></div>
 					<div class="workspace-title">
-						<div><small>Menu</small><strong>Summer wedding dinner</strong></div>
-						<div><small>Default</small><strong>$68 / guest</strong></div>
+						<div><small>Menu</small><strong>Garden wedding supper</strong></div>
+						<div><small>Default</small><strong>$28 / guest</strong></div>
 					</div>
 					<div class="menu-table" role="table" aria-label="Illustrative menu workspace">
 						<div class="menu-row menu-row-head" role="row">
 							<span role="columnheader">Dish</span><span role="columnheader">Per guest</span><span role="columnheader">Cost</span>
 						</div>
-						<div class="menu-row" role="row"><span role="cell">Herb roast chicken</span><strong role="cell">1 portion</strong><span role="cell">$6.84</span></div>
-						<div class="menu-row active" role="row"><span role="cell">Lemon herb potatoes</span><strong role="cell">180 g</strong><span role="cell">$2.31</span></div>
-						<div class="menu-row" role="row"><span role="cell">Seasonal green salad</span><strong role="cell">120 g</strong><span role="cell">$1.28</span></div>
-						<div class="menu-row" role="row"><span role="cell">Lemon tart</span><strong role="cell">1 slice</strong><span role="cell">$1.57</span></div>
+						<!-- The product tour's menu (src/lib/tour.ts), not the film's: this
+						     block used the film's menu name with a different cost, so one
+						     menu showed two answers (chef audit 2026-10-07). -->
+						<div class="menu-row" role="row"><span role="cell">Herb roast chicken</span><strong role="cell">1 portion</strong><span role="cell">$2.70</span></div>
+						<div class="menu-row active" role="row"><span role="cell">Charred market vegetables</span><strong role="cell">6 oz</strong><span role="cell">$0.72</span></div>
+						<div class="menu-row" role="row"><span role="cell">Rosemary focaccia</span><strong role="cell">2 pieces</strong><span role="cell">$0.43</span></div>
+						<div class="menu-row" role="row"><span role="cell">Citrus salad</span><strong role="cell">4 oz</strong><span role="cell">$0.30</span></div>
 					</div>
 				</div>
 				<div class="workspace-side">
 					<div class="price-check">
 						<span>Menu pricing</span>
 						<dl>
-							<div><dt>Food cost / guest</dt><dd>$12.00</dd></div>
-							<div><dt>Selling price / guest</dt><dd>$68.00</dd></div>
-							<div><dt>Price / guest for 30% food cost</dt><dd>$40.00</dd></div>
+							<div><dt>Food cost / guest</dt><dd>$8.29</dd></div>
+							<div><dt>Selling price / guest</dt><dd>$28.00</dd></div>
+							<div><dt>Price / guest for 30% food cost</dt><dd>$27.62</dd></div>
 						</dl>
 					</div>
 					<div class="equipment-sheet">
@@ -225,13 +228,13 @@ const faqItems = [
 						<small>Counts stay fixed when guest count changes.</small>
 					</div>
 				</div>
-				<figcaption>Separate example: $6.84 + $2.31 + $1.28 + $1.57 = $12.00 food per guest. At a 30% food-cost target, $12.00 ÷ 0.30 = $40.00 per guest. Equipment counts are fixed; they do not scale with guests.</figcaption>
+				<figcaption>The product tour’s garden wedding, a different menu from the one above. Four of its seven dishes are shown; all seven cost $8.29 a guest, 29.6% of $28.00. At the kitchen’s 30% target, $1,491.38 ÷ 180 ÷ 0.30 = $27.62 a guest. Equipment counts are fixed; they do not scale with guests.</figcaption>
 			</figure>
 
 			<div class="feature-scenes" data-reveal>
-				<article><h3>Build what each guest receives.</h3><p>Dishes and portions per guest stay together, so the menu already carries the quantities an event will need.</p></article>
-				<article><h3>Price the menu from its food.</h3><p>Read cost per guest against the selling price, including the price that would meet your configured target.</p></article>
-				<article><h3>Keep the reusable plan safe.</h3><p>Attach fixed equipment counts, override details on one event, and check where a menu is used before deleting it.</p></article>
+				<article><h3>Build the plate.</h3><p>Dishes and portions per guest live together, so the menu already knows how much an event needs.</p></article>
+				<article><h3>Price it off the food.</h3><p>See cost per guest next to your selling price, and the price that would hit the target you set.</p></article>
+				<article><h3>Reuse it without breaking it.</h3><p>Set fixed equipment counts, change details on one event only, and see where a menu is used before you delete it.</p></article>
 			</div>
 		</div>
 	</section>
@@ -239,10 +242,10 @@ const faqItems = [
 	<section id="catering-quotes" class="product-section catering-quotes" aria-labelledby="catering-quotes-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="catering-quotes-heading">Know what the quote is carrying before you confirm it.</h2>
+				<h2 id="catering-quotes-heading">Know what the quote costs you before you confirm it.</h2>
 				<p>
-					A new event starts with a menu, date, guest count, and price. See the food cost while
-					the job is still a draft, then freeze the plan, math, and money together.
+					A new event starts with a menu, a date, a head count and a price. You see the food cost
+					while it is still a draft. When you confirm, the plan and the money lock together.
 				</p>
 			</div>
 			<p class="proposal-bridge" data-proposal-bridge data-reveal>
@@ -256,14 +259,14 @@ const faqItems = [
 						<li><span>{index + 1}</span><strong>{step.label}</strong><p>{step.note}</p></li>
 					))}
 				</ol>
-				<figcaption>Review happens before confirmation, while the number can still be changed deliberately.</figcaption>
+				<figcaption>You review before you confirm, while the number can still change.</figcaption>
 			</figure>
 
 			<div class="pricing-proof">
 				<div class="proof-copy" data-reveal>
-					<h3>Cost before commitment.</h3>
+					<h3>$68 a head, at 39.6% food cost.</h3>
 					<p>
-						For this 180-guest tour event, $68 per guest puts food cost at 39.6%. The same panel
+						For the 180-guest summer wedding in these screens, $68 per guest puts food cost at 39.6%. The same panel
 						names $89.78 as the price that would meet the 30% target.
 					</p>
 					<ul role="list">
@@ -277,14 +280,14 @@ const faqItems = [
 						<source media="(max-width: 639px)" srcset="/proof/hero-pricing-mobile.png" />
 						<img
 							src="/proof/hero-pricing.png"
-							width="750"
-							height="274"
+							width="2208"
+							height="554"
 							loading="lazy"
 							decoding="async"
-							alt="CostCook pricing panel showing $12,240 revenue, $4,847.96 theoretical food cost, $26.93 food cost per guest, 39.6% food cost, and guidance to charge at least $89.78 per guest to meet a 30% target."
+							alt="CostCook order price panel for 180 guests at $68.00 a guest, $27.00 below the menu’s $95.00. Food cost 39.6% against a 30% target: sales $12,240.00, food $4,847.95 ($26.93 a guest), food margin $7,392.05. Get to 30%: charge $89.78 a guest, $16,160.40 total, or use the menu price, $95.00, 28.4%, within target."
 						/>
 					</picture>
-					<figcaption>Real CostCook product-tour frame at 0:29.</figcaption>
+					<figcaption>Captured from CostCook, sample event.</figcaption>
 				</figure>
 			</div>
 
@@ -300,10 +303,10 @@ const faqItems = [
 					/>
 				</figure>
 				<div>
-					<h3>Compare without rewriting.</h3>
+					<h3>The agreed number stays put.</h3>
 					<p>
-						The confirmed quote stays frozen while today's cost remains visible beside it. The
-						original number does not disappear just because a supplier price moved later.
+						The confirmed quote stays frozen, with today's cost right beside it. When a supplier
+						price moves later, you still see what you agreed to.
 					</p>
 				</div>
 			</div>
@@ -313,10 +316,10 @@ const faqItems = [
 	<section class="connected-proof" aria-labelledby="connected-heading">
 		<div class="container-page connected-grid">
 			<div data-reveal>
-				<h2 id="connected-heading">The quote should know what the kitchen has to pack.</h2>
+				<h2 id="connected-heading">The job you priced is the job you cook.</h2>
 				<p>
-					Confirmation is not the end of the record. The same frozen event becomes the source
-					for Shop, Prep, and Pack, so the kitchen runs the job that was priced.
+					Confirming does not close the book on it. The same locked event feeds Shop, Prep and
+					Pack.
 				</p>
 			</div>
 			<figure class="commitment-map" data-reveal>
@@ -325,7 +328,7 @@ const faqItems = [
 				</ol>
 				<div class="branch-rule" aria-hidden="true"></div>
 				<ul role="list"><li>Shop</li><li>Prep</li><li>Pack</li></ul>
-				<figcaption>One confirmed event feeds three working views without rebuilding the menu or guest count.</figcaption>
+				<figcaption>One confirmed event feeds all three. Nobody rebuilds the menu or the head count.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -333,7 +336,7 @@ const faqItems = [
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page">
 			<div class="capability-heading" data-reveal>
-				<div><h2 id="capabilities-heading">The complete Menus & Quotes list.</h2><p>Only the shipped capabilities directly involved in building, pricing, and confirming the job.</p></div>
+				<div><h2 id="capabilities-heading">Everything in Menus & Quotes.</h2><p>Only what ships today for building, pricing and confirming a job.</p></div>
 				<p class="count"><strong>{capabilityCount}</strong><span>relevant capabilities</span></p>
 			</div>
 			<div class="disclosures">
@@ -349,7 +352,7 @@ const faqItems = [
 
 	<section class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
-			<div class="faq-intro" data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions to settle before the number leaves your kitchen.</p></div>
+			<div class="faq-intro" data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>What people ask before a number goes out the door.</p></div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
 					<details data-reveal><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>
@@ -360,10 +363,10 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">Ready for the client. Ready for the kitchen.</h2><p>Bring one real menu, set the guest count, and follow the number into the plan the kitchen will run.</p></div>
+			<div><h2 id="closing-heading">Ready for the client. Ready for the kitchen.</h2><p>Bring one real menu, set the head count, and follow the number all the way to the kitchen’s plan.</p></div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a>
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
 		</div>
 		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/events-and-proposals">Events &amp; proposals</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
@@ -378,12 +381,10 @@ const faqItems = [
 	.hero h1 { max-width: 13ch; }
 	.hero-lede { max-width: 37ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
-	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
-	.btn-outline:hover { background: var(--color-green); color: white; }
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.commitment-flow > figcaption { margin-bottom: 0.8rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.record-pair { display: grid; gap: 1rem; align-items: center; }
-	.menu-ledger, .quote-timeline { min-width: 0; padding: clamp(1.1rem, 2.5vw, 1.7rem); background: var(--color-paper); box-shadow: 0 10px 18px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.menu-ledger, .quote-timeline { min-width: 0; padding: clamp(1.1rem, 2.5vw, 1.7rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.menu-ledger { border-top: 3px solid var(--color-green); }
 	.quote-timeline { border-top: 3px solid var(--color-amber-deep); }
 	.record-head { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
@@ -438,7 +439,7 @@ const faqItems = [
 	.proposal-bridge a { color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
 	.section-intro > p { max-width: 57ch; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.menu-workspace { display: grid; gap: 1.25rem; margin-top: clamp(3rem, 6vw, 5rem); }
-	.workspace-main, .price-check, .equipment-sheet { background: var(--color-paper); box-shadow: 0 10px 18px color-mix(in srgb, var(--color-ink) 9%, transparent); }
+	.workspace-main, .price-check, .equipment-sheet { border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.workspace-main { min-width: 0; padding: clamp(1rem, 3vw, 1.75rem); }
 	.workspace-bar { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--color-hairline); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
 	.workspace-title { display: grid; grid-template-columns: 1fr auto; gap: 2rem; padding-block: 1.5rem; }
@@ -476,7 +477,7 @@ const faqItems = [
 	.proof-copy ul { margin-top: 1.4rem; }
 	.proof-copy li { padding-block: 0.6rem; border-top: 1px solid var(--color-ticket-rule); color: var(--color-ink-soft); font-size: var(--text-caption); }
 	.screenshot-frame img, .confirmed-proof img { display: block; width: 100%; height: auto; }
-	.screenshot-frame img { box-shadow: 0 12px 22px color-mix(in srgb, var(--color-ink) 11%, transparent); }
+	.screenshot-frame img { border-radius: .5rem; box-shadow: var(--shadow-lift); }
 	.screenshot-frame figcaption { margin-top: 0.7rem; }
 	.confirmed-proof { display: grid; gap: 2.5rem; align-items: center; margin-top: clamp(3.5rem, 7vw, 6rem); padding-top: clamp(3rem, 5vw, 4rem); border-top: 1px solid var(--color-ticket-rule); }
 	.confirmed-proof figure { overflow: hidden; }
@@ -571,6 +572,6 @@ const faqItems = [
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.btn-outline, .product-nav a, .disclosures summary svg, .faq-list summary svg { transition: none; }
+		.product-nav a, .disclosures summary svg, .faq-list summary svg { transition: none; }
 	}
 </style>

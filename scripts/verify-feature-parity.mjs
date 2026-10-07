@@ -11,7 +11,7 @@ const routes = [
 	{ slug: 'recipes', path: '/features/recipes-and-costing', h1: 'Cost a recipe before you quote.', selector: '.lifecycle-path li', count: 5 },
 	{ slug: 'team', path: '/features/team-and-access', h1: 'Give your crew their own sign-in.', selector: '[data-team-disclosure]', count: 4 },
 	// 2026-09-27 (RC-61): the six steps of the app's event step bar.
-	{ slug: 'events', path: '/features/events-and-proposals', h1: '\u201cOctober 10, about 150, a wedding. Can you send something?\u201d', selector: '[data-event-step]', count: 6 }
+	{ slug: 'events', path: '/features/events-and-proposals', h1: '\u201cA wedding in December, about 150. Can you send something?\u201d', selector: '[data-event-step]', count: 6 }
 ];
 const viewports = [[1440, 900], [1280, 800], [1024, 768], [768, 1024], [390, 844]];
 

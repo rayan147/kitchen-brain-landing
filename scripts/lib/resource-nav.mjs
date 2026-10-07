@@ -30,5 +30,10 @@ if (resourceCount < MIN_RESOURCES) {
 	throw new Error(`resource-nav: src/lib/site.ts lists ${resourceCount} Resources destinations, below the floor of ${MIN_RESOURCES}`);
 }
 
-/** The phone Menu shows every resource plus Pricing, Blog and Sign in. */
-export const mobileMenuLinkCount = resourceCount + 3;
+/**
+ * The phone Menu (at 640, where the bar still holds Features and the demo
+ * link) shows every resource plus Pricing, Blog, the phone number, the email
+ * and Sign in. The phone and email joined it with the grouped Menu
+ * (design review 2026-10-07).
+ */
+export const mobileMenuLinkCount = resourceCount + 5;

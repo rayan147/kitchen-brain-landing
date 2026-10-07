@@ -7,14 +7,19 @@ const inventoryGroup = featureGroups.find((group) => group.id === 'inventory');
 if (!inventoryGroup) throw new Error('Missing public feature group: inventory');
 
 const movements = [
-	{ date: '28 Aug · 7:10 AM', label: 'Physical count', amount: '24.0 kg', kind: 'baseline' },
-	{ date: '28 Aug · 11:40 AM', label: 'Northline receiving', amount: '+10.0 kg', kind: 'in' },
-	{ date: '29 Aug · 5:20 AM', label: 'Packed for two orders', amount: '−7.8 kg', kind: 'out' }
+	// US units (chef audit 2026-10-07). 52 + 20 − 17 = 55 lb; one 20 lb Northline
+	// case at $46.80 is $2.34 a lb, the ingredients guide's price. The count is
+	// Aug 31, after PO-1048 moved the price on Aug 28, so $2.34 is the cost
+	// frozen at count; the +20 lb is the case PO-1048 came up short (chef
+	// review 2026-10-07).
+	{ date: 'Aug 31 · 7:10 AM', label: 'Physical count', amount: '52 lb', kind: 'baseline' },
+	{ date: 'Aug 31 · 11:40 AM', label: 'Northline rebuy received', amount: '+20 lb', kind: 'in' },
+	{ date: 'Sep 1 · 5:20 AM', label: 'Packed for two orders', amount: '−17 lb', kind: 'out' }
 ] as const;
 
 const trustStates = [
-	{ ingredient: 'Chicken thigh', quantity: '26.2 kg', state: 'Fresh', note: 'Trusted count; available to reduce buying.', tone: 'fresh' },
-	{ ingredient: 'Baby spinach', quantity: '8.4 kg', state: 'Stale', note: 'Shown for context; count again before using it.', tone: 'stale' },
+	{ ingredient: 'Chicken thigh', quantity: '55 lb', state: 'Fresh', note: 'Trusted count; available to reduce buying.', tone: 'fresh' },
+	{ ingredient: 'Baby spinach', quantity: '18 lb', state: 'Stale', note: 'Shown for context; count again before using it.', tone: 'stale' },
 	{ ingredient: 'Olive oil', quantity: '—', state: 'Never counted', note: 'No estimate invented; buying stays unchanged.', tone: 'missing' }
 ] as const;
 
@@ -65,7 +70,7 @@ const faqItems = [
 				<p class="hero-lede">Count an ingredient first. Recorded deliveries, waste and packed orders update the quantity. Old or missing counts do not reduce what the shopping list buys.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 			</div>
@@ -73,14 +78,14 @@ const faqItems = [
 			<figure class="shelf-ticket inventory-enter">
 				<p class="figure-note">Illustrative shelf record</p>
 				<div class="ticket-head"><span>Walk-in · Protein</span><span class="state fresh">Fresh</span></div>
-				<div class="ticket-title"><div><strong class="record-title">Chicken thigh</strong><p>Computed from the last trusted count</p></div><strong>26.2 kg</strong></div>
-				<div class="equation" aria-label="24 kilograms counted, plus 10 kilograms received, minus 7.8 kilograms packed, equals 26.2 kilograms on hand">
-					<div><small>Counted</small><strong>24.0</strong><span>kg</span></div><b aria-hidden="true">+</b>
-					<div><small>Received</small><strong>10.0</strong><span>kg</span></div><b aria-hidden="true">−</b>
-					<div><small>Packed</small><strong>7.8</strong><span>kg</span></div><b aria-hidden="true">=</b>
-					<div class="result"><small>On hand</small><strong>26.2</strong><span>kg</span></div>
+				<div class="ticket-title"><div><strong class="record-title">Chicken thigh</strong><p>Computed from the last trusted count</p></div><strong>55 lb</strong></div>
+				<div class="equation" aria-label="52 pounds counted, plus 20 pounds received, minus 17 pounds packed, equals 55 pounds on hand">
+					<div><small>Counted</small><strong>52</strong><span>lb</span></div><b aria-hidden="true">+</b>
+					<div><small>Received</small><strong>20</strong><span>lb</span></div><b aria-hidden="true">−</b>
+					<div><small>Packed</small><strong>17</strong><span>lb</span></div><b aria-hidden="true">=</b>
+					<div class="result"><small>On hand</small><strong>55</strong><span>lb</span></div>
 				</div>
-				<div class="ticket-foot"><span>Baseline: 28 Aug · 7:10 AM</span><span>3 dated movements</span></div>
+				<div class="ticket-foot"><span>Baseline: Aug 31 · 7:10 AM</span><span>3 dated movements</span></div>
 				<figcaption>Illustrative values. The state and every movement stay attached to the result.</figcaption>
 			</figure>
 		</div>
@@ -109,18 +114,18 @@ const faqItems = [
 
 			<figure class="movement-workspace">
 				<div class="movement-main">
-					<div class="panel-bar"><span>Chicken thigh · movement history</span><span>As of 29 Aug</span></div>
+					<div class="panel-bar"><span>Chicken thigh · movement history</span><span>As of Sep 1</span></div>
 					<ol role="list">
 						{movements.map((movement) => (
 							<li class={movement.kind}><time>{movement.date}</time><span><strong>{movement.label}</strong><small>{movement.kind === 'baseline' ? 'Starting physical count' : 'Change since count'}</small></span><b>{movement.amount}</b></li>
 						))}
 					</ol>
-					<div class="movement-total"><span>Computed on hand</span><strong>26.2 kg</strong></div>
+					<div class="movement-total"><span>Computed on hand</span><strong>55 lb</strong></div>
 				</div>
 				<div class="movement-side">
 					<div><span>Count status</span><strong>Fresh</strong><small>Based on a recent physical count</small></div>
-					<div><span>Shelf value</span><strong>$122.62</strong><small>Illustrative value as of 29 Aug</small></div>
-					<div><span>Unit cost at count</span><strong>$4.68 / kg</strong><small>Frozen at count time</small></div>
+					<div><span>Shelf value</span><strong>$128.70</strong><small>Illustrative value as of Sep 1</small></div>
+					<div><span>Unit cost at count</span><strong>$2.34 / lb</strong><small>Frozen at count time</small></div>
 				</div>
 				<figcaption>Illustrative movement history built only from shipped inventory behavior.</figcaption>
 			</figure>
@@ -140,14 +145,14 @@ const faqItems = [
 			<figure class="gap-sheet">
 				<div class="gap-head"><span>Chicken thigh · next jobs</span><span>Illustrative gap</span></div>
 				<div class="gap-equation">
-					<div><small>Orders need</small><strong>31.5 kg</strong><span>Two confirmed jobs</span></div>
+					<div><small>Orders need</small><strong>68 lb</strong><span>Two confirmed jobs</span></div>
 					<b aria-hidden="true">−</b>
-					<div><small>Trusted shelf</small><strong>26.2 kg</strong><span>Fresh count state</span></div>
+					<div><small>Trusted shelf</small><strong>55 lb</strong><span>Fresh count state</span></div>
 					<b aria-hidden="true">=</b>
-					<div class="gap-result"><small>Left to cover</small><strong>5.3 kg</strong><span>Before whole-pack rounding</span></div>
+					<div class="gap-result"><small>Left to cover</small><strong>13 lb</strong><span>Before whole-pack rounding</span></div>
 				</div>
-				<div class="buy-line"><span><strong>Shopping list</strong><small>Northline Foods · 10 kg case</small></span><b>1 case</b></div>
-				<figcaption>Example: 31.5 kg needed − 26.2 kg on hand = 5.3 kg to buy. Sold in 10 kg cases, so buy one case.</figcaption>
+				<div class="buy-line"><span><strong>Shopping list</strong><small>Northline Foods · 20 lb case</small></span><b>1 case</b></div>
+				<figcaption>Example: 68 lb needed − 55 lb on hand = 13 lb to buy. Sold in 20 lb cases, so buy one case and keep 7 lb.</figcaption>
 			</figure>
 
 			<div class="trust-board">
@@ -189,7 +194,7 @@ const faqItems = [
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid">
 			<div><h2 id="closing-heading">A shelf number ready to use.</h2><p>Bring one real shopping list and count one shelf. See how the count and later changes affect what you need to buy.</p></div>
-			<div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div>
+			<div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div>
 		</div>
 		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
@@ -202,8 +207,6 @@ const faqItems = [
 	.hero h1 { max-width: 12ch; margin-top: 1.5rem; }
 	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
-	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
-	.btn-outline:hover { background: var(--color-softgreen); }
 	.figure-note { margin-bottom: .7rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.shelf-ticket { position: relative; min-width: 0; padding: clamp(1.2rem, 3vw, 1.8rem); border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.ticket-head, .panel-bar, .gap-head { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--text-micro); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--color-ink-soft); }

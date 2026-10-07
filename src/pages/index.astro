@@ -1,35 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
-import Hero from '../components/sections/Hero.astro';
-import EventBooking from '../components/sections/EventBooking.astro';
-import TheProblem from '../components/sections/TheProblem.astro';
-import WhoThisIsFor from '../components/sections/WhoThisIsFor.astro';
-import SeeItRun from '../components/sections/SeeItRun.astro';
-import CustomerOutcomes from '../components/sections/CustomerOutcomes.astro';
-import TheYield from '../components/sections/TheYield.astro';
-import WhatElse from '../components/sections/WhatElse.astro';
-import TheOtherTools from '../components/sections/TheOtherTools.astro';
-import BuiltForKitchens from '../components/sections/BuiltForKitchens.astro';
-import StartHere from '../components/sections/StartHere.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import HomeEventWalk from '../components/home/HomeEventWalk.astro';
+import HomeKitchen from '../components/home/HomeKitchen.astro';
+import HomeFrontOfHouse from '../components/home/HomeFrontOfHouse.astro';
+import HomeSage from '../components/home/HomeSage.astro';
+import HomeClose from '../components/home/HomeClose.astro';
 import StickyCta from '../components/StickyCta.astro';
 ---
-<!-- story: docs/stories/homepage-event-story.story.md -->
-<!-- story: docs/stories/homepage-caterer-fixes.story.md -->
-<!-- Considered Composite; not used because this fixed editorial sequence has no
-     recursive behavior. One event carries the proof; supporting depth is optional.
-     This implements the 2026-09-11 caterer review and supersedes the earlier
-     keep-every-section-expanded budget. No application routes change. -->
-<Base>
-  <Hero />
-  <EventBooking />
-  <CustomerOutcomes />
-  <SeeItRun />
-  <TheProblem />
-  <TheYield />
-  <BuiltForKitchens />
-  <WhoThisIsFor />
-  <WhatElse />
-  <TheOtherTools />
-  <StartHere />
+<!-- story: docs/stories/homepage-redesign-2026-10.story.md -->
+<!-- Layout rules: docs/superpowers/specs/2026-10-06-homepage-redesign-layout.md.
+     Built from the owner's canvas (Home-A-story), six bands alternating cream
+     and soft amber. Considered Composite; not used because this is a fixed
+     editorial sequence with no recursive behavior. No application routes
+     change. -->
+<Base headerTone="cream">
+  <HomeHero />
+  <HomeEventWalk />
+  <HomeKitchen />
+  <HomeFrontOfHouse />
+  <HomeSage />
+  <HomeClose />
   <StickyCta />
 </Base>

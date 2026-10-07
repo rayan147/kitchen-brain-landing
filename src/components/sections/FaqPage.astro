@@ -49,7 +49,7 @@ const decisionFacts = [
 					Check the trial, cancellation, setup and product limits. Choose a topic below or read all {faqCount} answers.
 				</p>
 				<div class="hero-actions">
-					<a class="btn-primary" href="#money">Read the trial and billing answers</a>
+					<a class="btn-quiet" href="#money">Read the trial and billing answers</a>
 					<a class="btn-quiet hero-contact" href={contactCta.href}>{contactCta.label}</a>
 				</div>
 			</div>
@@ -155,13 +155,12 @@ const decisionFacts = [
   .ticket-heading { flex-wrap: wrap; }
   .decision-ticket dl a > div { min-width: 0; }
 
-	.faq-page {
-		border-top: 1px solid var(--color-hairline);
-	}
-
+	/* Cream, like the header above it, so the bar and the hero are one
+	   surface (owner, 2026-10-07). The ticket moves to paper to stay a ticket
+	   on it, and its torn edge is cut in the hero's cream. */
 	.faq-hero {
 		padding-block: clamp(3.5rem, 7vw, 7rem);
-		background: var(--color-offwhite);
+		background: var(--color-cream);
 	}
 
 	.faq-hero-grid {
@@ -192,7 +191,8 @@ const decisionFacts = [
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 1rem 1.5rem;
+		/* 1.5rem rows: btn-quiet's tap area reaches .75rem past its text. */
+		gap: 1.5rem;
 		margin-top: 2rem;
 	}
 
@@ -202,7 +202,7 @@ const decisionFacts = [
 
 	.decision-ticket {
 		position: relative;
-		background: var(--color-cream);
+		background: var(--color-paper);
 		box-shadow: var(--shadow-ticket);
 	}
 
@@ -212,7 +212,7 @@ const decisionFacts = [
 		inset-inline: 0;
 		height: 8px;
 		content: '';
-		background: linear-gradient(135deg, var(--color-offwhite) 4px, transparent 0) 0 0 / 8px 8px repeat-x;
+		background: linear-gradient(135deg, var(--color-cream) 4px, transparent 0) 0 0 / 8px 8px repeat-x;
 	}
 
 	.decision-ticket::before {
@@ -508,10 +508,9 @@ const decisionFacts = [
 			flex-direction: column;
 		}
 
+		/* The trial fills the width; quiet links stay left under the copy. */
 		.hero-actions .btn-primary,
-		.hero-actions .btn-quiet,
-		.close-actions .btn-primary,
-		.close-actions .btn-quiet {
+		.close-actions .btn-primary {
 			justify-content: center;
 			width: 100%;
 		}

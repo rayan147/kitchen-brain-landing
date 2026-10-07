@@ -95,7 +95,7 @@ const faqItems = [
 					}
 					<div class="mt-8 flex flex-wrap items-center gap-4">
 						{coming
-							? <a href="/features" class="btn-primary">See what ships today</a>
+							? <a href="/features" class="btn-quiet">See what ships today</a>
 							: <a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>}
 						<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 					</div>
@@ -173,7 +173,7 @@ const faqItems = [
 					/>
 				</div>
 				<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
-					Sized in millimetres in the dialog, so the preview is the printed size. No allergen
+					Sized in millimeters in the dialog, so the preview is the printed size. No allergen
 					data on this recipe, so the sticker prints no allergen line, and the preview says a
 					blank label is not an all-clear.
 					<a href={labels.proof.sticker.src} class="btn-quiet mt-2 w-fit" data-full-proof-link>Open full sticker preview</a>
@@ -231,7 +231,7 @@ const faqItems = [
 				<h2 id="stock-heading" class="mt-4 text-h2 font-semibold">Chosen once in Settings, so nobody is asked at 5 a.m.</h2>
 				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
 					Sheet, continuous roll and die-cut roll print the same label content. Only the
-					geometry changes, and it is measured in millimetres, not tied to a brand.
+					geometry changes, and it is measured in millimeters, not tied to a brand.
 				</p>
 				<ul role="list" class="mt-8 border-t border-ticket-rule">
 					{

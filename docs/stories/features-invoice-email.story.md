@@ -119,3 +119,6 @@
   `src/lib/invoice-email.ts`; while it is `coming`, every surface says Coming
   and the setup guide is not published.
 - **Final Image:** unchanged `cta.label`.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The badge reads "In the app today", not "Available now".

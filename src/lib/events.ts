@@ -54,5 +54,23 @@ export const depositMethods = 'a check, cash, a transfer or your own card proces
 /** The same list opening a label or a sentence. */
 export const depositMethodsCapital = depositMethods.replace(/^./, (c) => c.toUpperCase());
 
-/** The acceptance boundary (A-07, D-04): the client's yes books nothing. */
-export const acceptanceBoundary = 'Their yes is not a signature or a booking. Confirm order is.';
+/**
+ * Where the signature happens (A-10, A-11, RC-64): claimable, not capturable,
+ * so no surface shows the signing page.
+ */
+// Worded as what the app does, not as this wedding's history: the sample
+// event's agreement is not prepared yet, so nothing on the page may say it
+// was signed.
+// The proposal rides along as Schedule A unless you untick it (kitchen-brain
+// agreement-facts.ts: includeProposal defaults to true).
+export const agreementLine = 'You send the agreement for e-signature from your own template, and the accepted proposal goes with it as Schedule A.';
+
+/**
+ * The acceptance boundary (A-07, D-04): the client's yes books nothing.
+ * Reworded 2026-10-07 (third chef review): "is not a signature or a booking.
+ * Confirm order is." read as if Confirm order were the signature.
+ */
+// Reworded 2026-10-07 for app 7a7e407d9 (local develop, the owner's chosen
+// source): booking is its own step, Book the event, which waits on the signed
+// agreement and the deposit; Confirm order only locks the kitchen's numbers.
+export const acceptanceBoundary = 'Their yes books nothing. The signed agreement and the deposit do.';

@@ -1,14 +1,14 @@
 ---
 /**
- * Phone-only bar carrying the primary action between the demo and the close.
+ * Phone-only bar carrying the primary action between the hero and the close.
  *
- * MEASURED 2026-08-29 at 390x844: the demo section's CTA ended near 4,500px
- * and the next one appeared at ~11,500px of a ~12,700px page, so a reader who
- * had just watched the proof scrolled seven thousand pixels with nothing to
- * act on. This bar appears once #demo has scrolled off the top and hides
- * again once #start is in view, which is the only stretch where the page has
- * no primary of its own. It never shows on the first screen, never over the
- * close, and never above md, where the page is short enough to see the ask.
+ * MEASURED 2026-10-07 at 390x844 (design review): keyed to the bottom of
+ * #event-walk, the bar first showed at y=5,921, so the reader went through all
+ * five rail steps, about 4,650px, with nothing to tap. It now appears once the
+ * hero's own primary ([data-hero-cta]) has scrolled off the top, and hides
+ * again once #start is in view, so exactly one primary is in reach from the
+ * hero to the close. It never shows while the hero's button is on screen,
+ * never over the close, and never above md.
  *
  * ONE ACTION, SAME WORDS. It renders cta.label from site.ts like every other
  * primary, so the page still opens, middles and closes on one action and the
@@ -32,7 +32,9 @@ import { cta, launchPlan } from '../lib/site';
 	class="fixed inset-x-0 bottom-0 z-30 border-t border-ticket-rule bg-cream/95 px-[clamp(1rem,4vw,1.5rem)] py-2.5 shadow-ticket backdrop-blur-sm md:hidden"
 	style="padding-bottom: max(0.625rem, env(safe-area-inset-bottom))"
 >
-	<div class="mx-auto flex max-w-lg items-center justify-between gap-3">
+	<!-- Wraps at 200% text: the button used to keep its one line and run off the
+	     right edge (design review 2026-10-07). -->
+	<div class="mx-auto flex max-w-lg flex-wrap items-center justify-between gap-x-3 gap-y-2">
 		<p class="text-sm leading-snug text-ink-soft">
 			<strong class="font-semibold text-ink">{launchPlan.trialDays} days free.</strong> Charged $0 today.
 		</p>
@@ -41,7 +43,7 @@ import { cta, launchPlan } from '../lib/site';
 			target={cta.target}
 			rel={cta.rel}
 			aria-label={cta.ariaLabel}
-			class="btn-primary min-h-11 shrink-0 justify-center px-4 py-2.5 text-sm whitespace-nowrap"
+			class="btn-primary min-h-11 max-w-full justify-center px-4 py-2.5 text-center text-sm"
 		>
 			{cta.label}
 		</a>
@@ -50,9 +52,9 @@ import { cta, launchPlan } from '../lib/site';
 
 <script>
 	const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
-	const demo = document.getElementById('demo');
+	const heroCta = document.querySelector<HTMLElement>('[data-hero-cta]');
 	const start = document.getElementById('start');
-	if (bar && demo && start) {
+	if (bar && heroCta && start) {
 		// A scroll listener, not an IntersectionObserver. The observer only fires
 		// on threshold crossings, so an anchor jump from above the demo to below
 		// it (the hand-off links, the tour link, a deep link) skips the crossing
@@ -60,9 +62,9 @@ import { cta, launchPlan } from '../lib/site';
 		let queued = false;
 		const update = () => {
 			queued = false;
-			const pastDemo = demo.getBoundingClientRect().bottom < 0;
+			const pastHeroCta = heroCta.getBoundingClientRect().bottom < 0;
 			const reachedClose = start.getBoundingClientRect().top < window.innerHeight;
-			bar.hidden = !(pastDemo && !reachedClose);
+			bar.hidden = !(pastHeroCta && !reachedClose);
 		};
 		const schedule = () => {
 			if (!queued) {

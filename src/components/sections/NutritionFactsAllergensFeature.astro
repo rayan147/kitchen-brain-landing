@@ -42,28 +42,28 @@ const proofAssets = {
 	summary: {
 		desktop: '/proof/nutrition/nutrition-summary-wide.png',
 		mobile: '/proof/nutrition/nutrition-summary-mobile.png',
-		desktopWidth: 2272,
-		desktopHeight: 292,
-		mobileWidth: 716,
-		mobileHeight: 604
+		desktopWidth: 2304,
+		desktopHeight: 472,
+		mobileWidth: 748,
+		mobileHeight: 1132
 	},
 	panel: {
 		src: '/proof/nutrition/nutrition-facts-panel.png',
 		width: 800,
-		height: 1340
+		height: 1338
 	},
 	allergens: {
 		desktop: '/proof/nutrition/allergen-review-wide.png',
 		mobile: '/proof/nutrition/allergen-review-mobile.png',
-		desktopWidth: 1424,
-		desktopHeight: 786,
-		mobileWidth: 716,
-		mobileHeight: 866
+		desktopWidth: 2320,
+		desktopHeight: 1492,
+		mobileWidth: 780,
+		mobileHeight: 1082
 	},
 	label: {
 		src: '/proof/nutrition/label-panel.png',
-		width: 688,
-		height: 1340
+		width: 1344,
+		height: 1944
 	}
 } as const;
 
@@ -123,7 +123,7 @@ const faqItems = [
 	{
 		question: 'Can I print a nutrition label today?',
 		answer:
-			'Yes. Print nutrition label opens a browser-printable sheet from the recipe, ready for label stock. A direct label-printer integration is still in development and carries no release date.'
+			'Yes, once the dish is complete. Preview label shows the panel any time. Print label switches on when every ingredient source is confirmed and no label line is blank, and your browser puts the sheet on label stock. Until then the recipe calls it a draft estimate and will not print it. A direct label-printer integration is still in development and carries no release date.'
 	}
 ] as const;
 ---
@@ -139,10 +139,10 @@ const faqItems = [
 					<span>Nutrition facts &amp; allergens</span>
 				</nav>
 				<h1 id="nutrition-feature-heading">Check nutrition and allergens from your recipe.</h1>
-				<p class="hero-lede">Match your ingredients to nutrient sources and review their allergen information. See per-portion nutrition, missing information and a printable estimate. Your kitchen still needs to review the food and its suitability for each guest.</p>
+				<p class="hero-lede">Match your ingredients to nutrient sources and review their allergen information. See per-portion nutrition, what is still missing, and a label that prints once nothing is. Your kitchen still needs to review the food and its suitability for each guest.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 
@@ -155,7 +155,7 @@ const faqItems = [
 						<source media="(max-width: 47.999rem)" srcset={proofAssets.summary.mobile} width={proofAssets.summary.mobileWidth} height={proofAssets.summary.mobileHeight} />
 						<img
 							src={proofAssets.summary.desktop}
-							alt="CostCook Nutrition summary for Chicken Burrito Bowl showing a complete per-portion result: 339 calories, 22 grams protein, 48.1 grams carbohydrate, and 7 grams fat."
+							alt="CostCook Nutrition summary for Wild Mushroom Polenta, one 240 g portion, marked Draft estimate. Not ready to print, with 7 label lines blank because no source reports them: 530 calories, 19 g fat, 18 g protein, 77 g carbs, each a draft from unconfirmed sources, and 8 of 15 label lines filled."
 							width={proofAssets.summary.desktopWidth}
 							height={proofAssets.summary.desktopHeight}
 							decoding="async"
@@ -164,7 +164,7 @@ const faqItems = [
 					</picture>
 				</div>
 				<figcaption>
-					Chicken Burrito Bowl, one 297 g portion. The source capture is cropped to the answer and retained at 2× pixel density for legible text.
+					Wild Mushroom Polenta from the sample wedding menu, one 240 g portion. A draft, and the screen says so before it shows a number.
 					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full recipe capture</a>
 				</figcaption>
 			</figure>
@@ -176,12 +176,12 @@ const faqItems = [
 			<div class="split-copy" data-reveal>
 				<h2 id="split-heading">Sunday night should not start two new spreadsheets.</h2>
 				<p>
-					A customer asks how much protein is in the bowl and whether it contains milk.
+					A customer asks how much protein is in the polenta and whether it contains milk.
 					When those answers live apart from the recipe, one ingredient change makes both old.
 				</p>
 			</div>
 			<div class="broken-path" data-reveal aria-label="One recipe copied separately into a nutrition sheet and an allergen note">
-				<div class="path-source"><span>Recipe changed</span><strong>Chicken Burrito Bowl</strong></div>
+				<div class="path-source"><span>Recipe changed</span><strong>Wild Mushroom Polenta</strong></div>
 				<div class="path-branches" aria-hidden="true"><i></i><i></i></div>
 				<div class="path-output"><span>Nutrition sheet</span><strong>Old quantities</strong></div>
 				<div class="path-output warning"><span>Allergen note</span><strong>Review unknown</strong></div>
@@ -216,7 +216,7 @@ const faqItems = [
 				<div class="panel-window">
 					<img
 						src={proofAssets.panel.src}
-						alt="Complete Chicken Burrito Bowl Nutrition Facts panel showing all fifteen values, from 339 calories through 680 milligrams potassium."
+						alt="Wild Mushroom Polenta Nutrition Facts panel for one 240 g portion: 530 calories, total fat 19 g, sodium 300 mg, total carbohydrate 77 g, dietary fiber 5 g, protein 18 g, calcium 300 mg, iron 0.6 mg; saturated fat, trans fat, cholesterol, total and added sugars, vitamin D and potassium show a dash because no source reports them."
 						width={proofAssets.panel.width}
 						height={proofAssets.panel.height}
 						loading="lazy"
@@ -225,7 +225,10 @@ const faqItems = [
 					/>
 				</div>
 				<figcaption>
-					This actual dish fills every row from one verified USDA branded record, including explicit zero values rather than assumed ones.
+					<!-- Says what the capture is: a dish built from four ingredients,
+					     with the lines no source reports left as a dash (develop
+					     7a7e407d9, 2026-10-07). -->
+					Four ingredients, each with its own source, added up. Seven lines no source reports show a dash, not a zero, and the dish stays a draft until they are filled.
 					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full Nutrition Facts panel</a>
 				</figcaption>
 			</figure>
@@ -246,7 +249,7 @@ const faqItems = [
 					<source media="(max-width: 47.999rem)" srcset={proofAssets.allergens.mobile} width={proofAssets.allergens.mobileWidth} height={proofAssets.allergens.mobileHeight} />
 					<img
 						src={proofAssets.allergens.desktop}
-						alt="Chicken Burrito Bowl ingredient evidence showing confirmed Contains: Milk, Soy and USDA FoodData Central 2704502 as the nutrition source."
+						alt="Allergens and dietary for Wild Mushroom Polenta: allergens reviewed on all 4 ingredients, Parmesan and unsalted butter marked Contains: milk, polenta and cremini mushroom reviewed; vegetarian, vegan, halal and kosher not reviewed yet on any ingredient, so each needs a check; gluten-free yes on all four."
 						width={proofAssets.allergens.desktopWidth}
 						height={proofAssets.allergens.desktopHeight}
 						loading="lazy"
@@ -256,7 +259,7 @@ const faqItems = [
 				</picture>
 			</div>
 			<figcaption>
-				The confirmed allergen line and its named nutrition source stay together at reading size.
+				Milk is on the Parmesan and the butter, so it is on the dish. Vegetarian stays a question until someone answers it.
 				<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open allergen evidence in full capture</a>
 			</figcaption>
 		</figure>
@@ -280,8 +283,9 @@ const faqItems = [
 			<div class="print-copy" data-reveal>
 				<h2 id="print-heading">The sheet carries the answer and its limits.</h2>
 				<p>
-					Print nutrition label opens a browser-printable sheet from the live recipe. Put it on
-					label stock today; keep the direct label-printer integration marked for later.
+					Preview label shows the panel as it stands. Print label switches on once every source is
+					confirmed and no line is blank, then your browser puts the sheet on label stock. The direct
+					label-printer integration is marked for later.
 				</p>
 				<ul role="list">
 					{printedContents.map((item) => <li>{item}</li>)}
@@ -292,7 +296,7 @@ const faqItems = [
 				<div class="label-window">
 					<img
 						src={proofAssets.label.src}
-						alt="Printable Chicken Burrito Bowl Nutrition Facts panel with all fifteen nutrient values filled, including explicit zero values."
+						alt="Preview label for Wild Mushroom Polenta, marked Draft estimate. Not ready to print: Harbor and Hearth Catering, the dish name, the Nutrition Facts panel with a dash on seven lines, the ingredients Polenta, Mushroom, cremini, Parmesan, block, Butter, unsalted, and Print label switched off."
 						width={proofAssets.label.width}
 						height={proofAssets.label.height}
 						loading="lazy"
@@ -355,8 +359,8 @@ const faqItems = [
 				<p>Bring one real recipe, match the ingredients you know, and leave every missing fact visible until you know it too.</p>
 			</div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">{demoCta.label}</a>
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
 		</div>
 		<nav class="container-page onward" aria-label="Related feature guides">
@@ -383,13 +387,12 @@ const faqItems = [
 	.hero h1::after { display: block; width: min(6.5ch, 100%); height: 0.28rem; margin-top: 1.2rem; background: var(--color-ink); content: ''; }
 	.hero-lede { max-width: 48ch; margin-top: 1.35rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.hero-terms { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
-	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
-	.btn-outline:hover { background: var(--color-green); color: white; }
 	.hero-proof { min-width: 0; }
 	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
-	.hero-shot { overflow: hidden; border: 1px solid var(--rule); border-top: 0; background: var(--color-paper); box-shadow: 0 20px 38px color-mix(in srgb, var(--color-ink) 14%, transparent); }
+	/* App frames match the homepage: 8px corners, --shadow-lift (design review 2026-10-07). */
+	.hero-shot { overflow: hidden; border: 1px solid var(--rule); border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.hero-shot picture, .hero-shot img, .panel-window img, .allergen-window picture, .allergen-window img, .label-window img { display: block; width: 100%; height: auto; }
 	.hero-proof figcaption, .panel-proof figcaption, .allergen-proof figcaption, .label-proof figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.55rem 1.25rem; margin-top: 1rem; color: var(--color-ink-soft); font-size: 0.82rem; line-height: 1.55; }
 	.hero-proof figcaption a, .panel-proof figcaption a, .allergen-proof figcaption a, .label-proof figcaption a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 700; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
@@ -423,12 +426,12 @@ const faqItems = [
 	.source-facts dt { color: var(--color-ink-soft); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 	.source-facts dd { margin-top: 0.35rem; font-weight: 680; line-height: 1.4; }
 	.panel-proof { min-width: 0; }
-	.panel-window { overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 11%, transparent); }
+	.panel-window { overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); border-radius: .5rem; box-shadow: var(--shadow-lift); }
 
 	.allergens { background: var(--color-softgreen); }
 	.allergen-heading { display: grid; gap: 2.5rem; padding-top: var(--spacing-section); }
 	.allergen-proof { margin-top: clamp(4rem, 8vw, 7rem); }
-	.allergen-window { max-width: 48rem; margin-inline: auto; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); box-shadow: 0 16px 30px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+	.allergen-window { max-width: 48rem; margin-inline: auto; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); border-radius: .5rem; box-shadow: var(--shadow-lift); }
 	.allergen-proof figcaption { max-width: 48rem; margin-inline: auto; }
 	.evidence-chain { display: grid; gap: 0; margin-top: clamp(4rem, 8vw, 7rem); border-block: 1px solid var(--rule); }
 	.evidence-chain li { position: relative; padding: clamp(1.75rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
@@ -447,7 +450,7 @@ const faqItems = [
 	.print-copy li { padding-block: 0.75rem; border-bottom: 1px solid var(--rule); line-height: 1.45; }
 	.snap { margin-top: 2.5rem; color: var(--color-green-deep); font-family: var(--font-display); font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 600; line-height: 1.15; }
 	.label-proof { width: min(100%, 36rem); justify-self: center; }
-	.label-window { overflow: hidden; border-top: 0.3rem solid var(--color-ink); background: white; box-shadow: 0 18px 34px color-mix(in srgb, var(--color-ink) 12%, transparent); }
+	.label-window { overflow: hidden; border-top: 0.3rem solid var(--color-ink); background: white; border-radius: .5rem; box-shadow: var(--shadow-lift); }
 
 	.capabilities { background: var(--color-cream); }
 	.capabilities-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--spacing-section); }
@@ -506,8 +509,7 @@ const faqItems = [
 
 	@media (max-width: 47.999rem) {
 		.hero-grid { padding-block: 2.5rem 3.5rem; }
-		.hero-actions a { width: 100%; }
-		.hero-shot { box-shadow: 0 12px 24px color-mix(in srgb, var(--color-ink) 10%, transparent); }
+		.hero-actions .btn-primary { width: 100%; }
 		.broken-path { grid-template-columns: 1fr; }
 		.path-source { grid-row: auto; }
 		.path-branches { grid-row: auto; min-height: 2rem; }
@@ -518,6 +520,6 @@ const faqItems = [
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.btn-outline, .capability-list summary b, .faq-list summary svg { transition: none; }
+		.capability-list summary b, .faq-list summary svg { transition: none; }
 	}
 </style>

@@ -1,0 +1,116 @@
+{
+  "world": "Harbor & Hearth Catering (renamed demo seed, sample values)",
+  "client": "Priya Nair",
+  "event": "Nair & Castellano wedding",
+  "eventDate": "Sat, Dec 19, 2026 (event d240353e, order #784); balance due Wed, Dec 9",
+  "menu": "Wedding Plated Dinner",
+  "orderId": 784,
+  "guests": "150",
+  "pricePerGuest": "$95.00",
+  "revenue": "$14,250.00",
+  "foodCostPct": "27.6%",
+  "targetPct": "30%",
+  "foodCost": "$3,927.00 (150 x $26.18)",
+  "foodCostPerGuest": "$26.18",
+  "foodMargin": "$68.82 a guest",
+  "deposit": "$3,500.00",
+  "balance": "$10,750.00",
+  "balanceDue": "$10,750.00",
+  "appSha": "7a7e407d9 (kitchen-brain local develop, owner 2026-10-07: \"local develop latest\")",
+  "appBranch": "develop (local)",
+  "capturedOn": "2026-10-07",
+  "notes": [
+    "Re-shot 2026-10-07 from kitchen-brain 7a7e407d9 by scripts/capture-home-proof.mjs (three phases, see its header). Every homepage frame but invoice-inbox comes from that code.",
+    "Within target, so the order page shows no charge-at-least line.",
+    "Allergen answers for the 22 wedding ingredients were entered through the UI with the evidence note 'Sample kitchen data'.",
+    "Stripe: test-mode connected account; deposit paid with Stripe test card 4242 through the client link on 2026-10-07 (first walked on e00299078; that world was copied with VACUUM INTO and migrated 0195-0197 to 7a7e407d9, served on :4193 by a script the owner ran, keys never read).",
+    "balance-reminder: develop sweeps three days ahead (BALANCE_REMINDER_LEAD_DAYS = 3), so the app's own queueBalanceReminders ran with today=2026-12-06 and sent through local Mailpit; the email was rendered as sent.",
+    "prep-list was retired: no section renders it since shop-list replaced it on the rail."
+  ],
+  "target": "30%",
+  "frames": {
+    "menu-service": "Event step 2 Menu & service: $95.00 a guest, food cost 28.3%, target 30%, Suggested $90.00 at 30%, event totals $14,250.00 / $4,039.50",
+    "book-event": "Event page #book-event before booking: agreement not prepared, $3,500.00 deposit not asked",
+    "inquiry-mobile": "New inquiry form on a phone (develop 7a7e407d9), filled, captured before the save: Priya Nair as a new client, (207) 555-0187, phone call, Nair & Castellano wedding, date not decided yet, 150 guests marked as an estimate",
+    "payment-request": "Event page kitchen draft after Ask for a deposit and send the link: Deposit $3,500.00 owed, card by email link, Sent Oct 5, Send again; Balance $10,750.00 owed, due Wed Oct 7, Request payment",
+    "pay-mobile": "Client pay page on a phone (ordering app): Harbor & Hearth Catering has your date / Pay what you agreed / Pay $3,500.00",
+    "payment-schedule": "Event d240353e Deposit and payments block (develop 7a7e407d9 on :4193): Asked for $3,500.00, Received $3,500.00, Paid in full; Deposit Paid, Card, by email link; Balance $10,750.00 owed, Card, by email link, Due Wed, Dec 9, Not requested yet, Request payment",
+    "balance-reminder": "The reminder email as sent by develop’s sweep (today=2026-12-06): subject \"Nair & Castellano wedding: the $10,750.00 balance is due Wednesday, December 9\"; event Saturday, December 19, 150 guests; the $3,500.00 deposit is paid; Pay $10,750.00",
+    "ordering-site": "Public ordering site (ordering app on :4194, develop): Plan the meal. The kitchen confirms the details; 20 guest minimum, Up to 10,000; 72 hours notice; Pickup or Delivery; Menu/Choices/Event/Contact/Review; Coastal Dinner $93.00 per guest; phone variant top through Coastal Dinner",
+    "import-review": "Import review of the sample Green Valley Produce invoice GVP-48217 (develop render of the same extraction): 7 products, 2 need review listed first, 4 matched, 1 ready to create; phone variant with every row collapsed",
+    "sage-answer": "Sage panel from the sidebar on Events (develop, Google provider), new thread: \"What is still owed on the Nair & Castellano wedding on December 19, and when is it due?\" -> $10,750.00, due December 9, 2026; two cited records (deposit $3,500.00 paid by card link; balance due December 9), the order total $14,250.00 and no customer invoice issued yet. Cropped above the suggested-next-step card.",
+    "allergens-labels": "Order #784 Pack tab Dishes card: six dishes with allergen chips (Focaccia also May contain: Egg, Sesame, Soy), Braised Short Rib 300 portions, Lemon Posset 150; phone variant the same list, fixed bars hidden",
+    "shop-list": "Order #784 Shop tab on a phone (US customary units): Highland Meats $2,155.59; Beef short rib, boneless, Need 152.7 lb, 10 x case 7 kg, $2,122.40; Beef bones, Need 27.6 lb, 1 x case 15 kg, $33.19; both Not counted",
+    "payment-schedule-phone": "The same block in the app’s phone layout (390 wide, 2x); rings measured on this capture",
+    "food-cost-breakdown": "Wedding Plated Dinner, Dishes per guest, first four dishes: Braised Short Rib 2 x $7.28 = $14.56, Wild Mushroom Polenta about 240 g a portion $2.93, Creamed Spinach 0.5 x $5.82 = $2.91, Focaccia and Whipped Goat Cheese $2.56; phone variant the same four",
+    "yield-lines": "Greek Salad recipe lines (develop :4188): Bell pepper 82%, Cucumber 90%, Roma tomato 60 g at 91% buy 66 g, Red onion 88%, Feta 100% Same as used; phone variant is the Roma tomato card",
+    "invoice-inbox": "test.app.costcook.io Purchases > Invoice inbox: credit memo CM-3104 (forwarded) waiting in review; invoices HF-3102 and HF-3103 (new sender, unverified) waiting in review. Sender shown is the founder's public contact address.",
+    "phone-variants": "food-cost, yield, import, allergens, ordering-site and payment-schedule each have a -phone.png from the app’s own phone layout (390 wide, 2x); alt text names only what both captures show.",
+    "proposal-mobile": "Client offer on a phone (develop 7a7e407d9, fresh world), sent and captured before acceptance: respond by Wed Oct 14, $14,250.00, 150 guests at $95.00, Dec 19, service 5:00 PM to 10:00 PM Eastern Time; no sample logo in that world",
+    "confirm-dialog": "Order #784 Confirm order dialog, opened and cancelled (Keep editing): confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists"
+  },
+  "depositPaid": "$3,500.00",
+  "sources": {
+    "local-develop-keyed": {
+      "appSha": "7a7e407d9",
+      "port": 4193,
+      "orderingPort": 4194,
+      "capturedOn": "2026-10-07",
+      "shots": [
+        "payment-schedule",
+        "payment-schedule-phone",
+        "confirm-dialog",
+        "shop-list",
+        "food-cost-breakdown",
+        "food-cost-breakdown-phone",
+        "allergens-labels",
+        "allergens-labels-phone",
+        "import-review",
+        "import-review-phone",
+        "ordering-site",
+        "ordering-site-phone",
+        "sage-answer",
+        "balance-reminder"
+      ],
+      "note": "The Dec 19 wedding world (order #784, draft, deposit paid by test card), served by develop code with Stripe test keys, the Google reader and Sage. Nothing written: the Confirm dialog was opened and cancelled. Sage was asked until the answer described the records correctly (one answer said the deposit left \"a total order value of $14,250.00\"; not used)."
+    },
+    "local-develop-4188": {
+      "appSha": "7a7e407d9",
+      "port": 4188,
+      "capturedOn": "2026-10-07",
+      "shots": [
+        "yield-lines",
+        "yield-lines-phone",
+        "inquiry-mobile",
+        "proposal-mobile"
+      ],
+      "note": "yield-lines from the events world (Greek Salad unchanged: Roma tomato 60 g at 91%, buy 66 g); inquiry and offer from a fresh demo world walked to a sent offer, captured before acceptance, on a 390 x 780 phone screen (inquiry: the form from Client to the estimate tick, the fixed bar hidden)."
+    },
+    "test-app": {
+      "host": "test.app.costcook.io",
+      "shots": [
+        "invoice-inbox",
+        "invoice-inbox-phone"
+      ],
+      "capturedOn": "2026-10-06",
+      "note": "captured in the owner’s signed-in Chrome, read-only, at about 2.3x; invoice-inbox-phone is one crop of invoice-inbox. Not re-shot 2026-10-07: local develop receives no supplier email."
+    }
+  },
+  "sampleDataChanges2026-10-07": [
+    "Beef short rib, boneless: 91% trim yield on its Braised Short Rib line (recipe version 2) (the ingredient default stays 100%). The case stays 7 kg: the pack form did not save a pound case. Third chef review.",
+    "Ordering site: smallest group 20 guests, lead time 72 hours.",
+    "Display units: US customary.",
+    "Celery: unit weight 1100 g per each (a bunch from a 24-count case) on the ingredient",
+    "Mirepoix Base v2: celery 8 each -> 600 g (2:1:1 with 1200 g onion and 900 g carrot); batch $14.55 -> $4.01",
+    "Wedding Plated Dinner: Lemon Posset 2 -> 1 portion a guest",
+    "Braised Short Rib allergens unchanged: the recipe is short rib, mirepoix and stock, no flour or wine, so No listed allergens is what the data says"
+  ],
+  "hero-film": {
+    "files": [
+      "public/film/costcook-promo.webm",
+      "public/film/costcook-promo.mp4",
+      "public/film/costcook-promo-poster.jpg"
+    ],
+    "source": "promo-video branch video/out/costcook-promo.mp4 (rendered 2026-10-07 15:40, 1920x1080, 118 s, music only); frames captured on test.app.costcook.io, develop d3c7c9add, 2026-10-07 (Ellison & Park wedding, Sat Jun 12 2027, 150 guests, $95.00, offer $21,043.00, deposit $5,250.00). Re-encoded: H.264 CRF 23 + faststart, VP9 CRF 36 + Opus. Poster is the film's chapter card at 14.2 s (\"What do I charge a head?\"), clear of the control bar; MP4 is served first. Replaces the hero-pricing still."
+  }
+}

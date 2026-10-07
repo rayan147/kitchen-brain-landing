@@ -22,35 +22,24 @@ const blogSurfaceFiles = (await readdir(join(root, 'src/content/blog'), { withFi
 
 const surfaceFiles = [
 	'src/lib/site.ts',
-	'src/components/sections/Hero.astro',
 	// The hero's loop diagram carries public copy, so it goes through the
 	// forbidden-claims scan like every other surface. Its whole risk is
 	// overclaiming automation.
 	'src/components/LoopBand.astro',
-	'src/components/sections/TheProblem.astro',
 	// A homepage stop (order: scripts/lib/homepage-stops.mjs). MUST NOT go first
 	// or second in this array: siteSource and heroSource are read by position
 	// below. Everything else resolves by indexOf and is safe to reorder.
-	'src/components/sections/WhoThisIsFor.astro',
 	// The event's front half, inquiry to booked (2026-09-27). Its risk is
 	// overclaiming money: a deposit is recorded, never taken, on this path.
-	'src/components/sections/EventBooking.astro',
 	// The event facts EventBooking, the events guide, the tour, /compare and
 	// /features read (src/lib/events.ts), and the capture alt text both event
 	// surfaces render (src/lib/proof.ts). Moved out of the components on
 	// 2026-09-27, so they are scanned where they now live.
 	'src/lib/events.ts',
 	'src/lib/proof.ts',
-	'src/components/sections/CustomerOutcomes.astro',
-	'src/components/sections/WhatElse.astro',
 	// Beats nine and ten. Its whole risk is saying what another product cannot
 	// do, and its comments argue that at length, so both go through the scan.
-	'src/components/sections/TheOtherTools.astro',
-	'src/components/sections/SeeItRun.astro',
-	'src/components/sections/TheYield.astro',
 	// #more's four blocks since 2026-09-09; they were four sections.
-	'src/components/more/IntakeBlock.astro',
-	'src/components/sections/BuiltForKitchens.astro',
 	// /features split into a hub over five area pages on 2026-08-23.
 	// EveryFeature.astro (one page, 145 items) became these two.
 	'src/components/sections/FeatureIndex.astro',
@@ -108,7 +97,6 @@ const surfaceFiles = [
 	// same forbidden-claim scan as the feature pages they link into.
 	'src/components/SiteNav.astro',
 	'src/components/BlogMenuContents.astro',
-	'src/components/sections/StartHere.astro',
 	// Added 2026-08-23. It carries the price and the in-development boundary
 	// (RC-34, RC-35, RC-45, RC-46), which is claim copy by any reading, and it
 	// had never been scanned. Adding it pushed StartHere off the end of this
@@ -137,11 +125,8 @@ const surfaceFiles = [
 	'src/lib/sage.ts',
 	'src/lib/labels.ts',
 	'src/components/sections/LabelsPrintingFeature.astro',
-	'src/components/more/SageBlock.astro',
-	'src/components/more/AccessBlock.astro',
 	// 2026-08-29. Nutrition: the data file and the section, both claim copy.
 	'src/lib/nutrition.ts',
-	'src/components/more/NutritionBlock.astro',
 	// 2026-08-31. The demo route qualifies one working session, describes the
 	// static email handoff honestly, and owns the direct calendar boundary.
 	'src/pages/demo.astro',
@@ -161,6 +146,18 @@ const surfaceFiles = [
 	'src/pages/features/invoice-email.astro',
 	'src/components/sections/InvoiceEmailFeature.astro',
 	'src/lib/blog.ts',
+	// 2026-10-06. Card payment for booked events shipped; its wording. APPENDED.
+	'src/lib/event-payments.ts',
+	// 2026-10-06. The rebuilt homepage: every band and the data its copy reads.
+	// APPENDED, so they go through the forbidden-claims scan like the rest.
+	'src/lib/home.ts',
+	'src/components/home/HomeBand.astro',
+	'src/components/home/HomeHero.astro',
+	'src/components/home/HomeEventWalk.astro',
+	'src/components/home/HomeKitchen.astro',
+	'src/components/home/HomeFrontOfHouse.astro',
+	'src/components/home/HomeSage.astro',
+	'src/components/home/HomeClose.astro',
 ];
 
 const [index, featuresPage, featureAreaPage, contactPage, ledger, ...surfaces] = await Promise.all([
@@ -186,11 +183,9 @@ const supportLibSource = await read('src/lib/support.ts');
 const blogMenuContentsSource = await read('src/components/BlogMenuContents.astro');
 const publicCopy = [...surfaces, comparePage].join('\n');
 const siteSource = surfaces[0];
-const heroSource = surfaces[1];
-const startHereSource = surfaces[surfaceFiles.indexOf('src/components/sections/StartHere.astro')];
-const whoSource = surfaces[surfaceFiles.indexOf('src/components/sections/WhoThisIsFor.astro')];
-const trustSource = surfaces[surfaceFiles.indexOf('src/components/sections/BuiltForKitchens.astro')];
-const alternativesSource = surfaces[surfaceFiles.indexOf('src/components/sections/TheOtherTools.astro')];
+// Since 2026-10-06 the homepage is the canvas rebuild (src/components/home).
+const heroSource = surfaces[surfaceFiles.indexOf('src/components/home/HomeHero.astro')];
+const startHereSource = surfaces[surfaceFiles.indexOf('src/components/home/HomeClose.astro')];
 
 // Considered Facade; not used because these surfaces are static claim data,
 // not a complex subsystem callers need to operate. One explicit evidence list
@@ -201,39 +196,20 @@ const requireText = (source, value, label) => {
 	if (!source.includes(value)) failures.push(`${label}: missing ${JSON.stringify(value)}`);
 };
 
-for (const component of [
-	'TheProblem',
-	'WhoThisIsFor',
-	'SeeItRun',
-	'CustomerOutcomes',
-	'TheYield',
-	// One band since 2026-09-09; it was NutritionFacts, PaperIn, Sage and
-	// TeamAccess, which are now its four blocks in src/components/more.
-	'WhatElse',
-	'BuiltForKitchens',
-	'StartHere',
-]) {
+// The canvas rebuild of 2026-10-06: the hero and six bands
+// (scripts/lib/homepage-stops.mjs owns their order).
+for (const component of ['HomeHero', 'HomeEventWalk', 'HomeKitchen', 'HomeFrontOfHouse', 'HomeSage', 'HomeClose']) {
 	requireText(index, `<${component} />`, 'landing composition');
 }
 
 // RC-44 / RC-47: restaurant ownership is not a proxy for product fit. One
 // kitchen can run regular service and event-driven work; only the requirements
 // CostCook cannot support belong in the limits ticket.
-requireText(
-	whoSource,
-	'catering-only kitchen or a restaurant too',
-	'restaurant event-work fit',
-);
-requireText(alternativesSource, 'A restaurant can run both.', 'restaurant dual-workflow fit');
 // The fold must name the same audience the Who section does. Until 2026-08-30
 // it named caterers and meal-prep kitchens only, contradicting RC-44 on the
 // same page. Scope stays event work, so the words are "restaurants that cater".
 requireText(heroSource, 'restaurants that cater', 'hero audience includes restaurants (RC-01, RC-44)');
-requireText(
-	trustSource,
-	'catering, meal-prep, and restaurant kitchens that plan work from menus and guest counts',
-	'trust section audience includes restaurants (RC-01, RC-44)',
-);
+requireText(startHereSource, 'restaurants that cater', 'close audience includes restaurants (RC-01, RC-44)');
 if (/one restaurant on a fixed daily menu|shape is wrong for you|tool built for it will fit you better/i.test(publicCopy)) {
 	failures.push('restaurant positioning: a restaurant owner is still framed as the wrong fit');
 }
@@ -263,7 +239,10 @@ requireText(blogMenuContentsSource, 'getPublishedPosts()', 'blog menu article so
 requireText(blogMenuContentsSource, 'post.data.description', 'blog menu article descriptions');
 requireText(navSource, 'data-mobile-menu', 'contained mobile navigation');
 requireText(navSource, 'demoCta.href', 'header demo action');
-requireText(navSource, 'Book a demo', 'header demo label');
+// The header renders the demo link's one label (design review 2026-10-07:
+// "Book a demo" was typed in three places while every other surface read
+// demoCta.label).
+requireText(navSource, '{demoCta.label}', 'header demo label');
 requireText(siteSource, "href: '/contact'", 'contact page nav link');
 requireText(siteSource, "href: '/who-its-for'", 'who-it-is-for navigation link');
 // The homepage link used to promise "every shipped feature" and point at a
@@ -327,7 +306,7 @@ const featureSectionSource =
 	surfaces[surfaceFiles.indexOf('src/components/sections/FeatureSection.astro')];
 const integrationsSource =
 	surfaces[surfaceFiles.indexOf('src/components/sections/Integrations.astro')];
-requireText(comparePage, 'It does not mean their product cannot do it.', 'comparison legend');
+requireText(comparePage, 'It does not mean their product cannot do it; ask them before you decide.', 'comparison legend');
 requireText(comparisonSource, 'export const VERIFIED_ON', 'comparison verification date');
 requireText(comparisonSource, "VERIFIED_ON = 'August 30, 2026'", 'current comparison verification date');
 requireText(comparePage, 'VERIFIED_ON', 'comparison verification date on the page');
@@ -354,14 +333,14 @@ if (costcookNoRows < 3) {
 // 2026-09-27 (later the same day): the owner ruled that card payment for booked
 // events and a balance reminder are being built (inventory A-18), so they
 // joined as a plan. That is the only other way onto this list.
-const comingPlanKeys = ['spanish', 'eventPayments'];
+// Card payment for booked events left on 2026-10-06 by shipping (owner ruling;
+// src/lib/event-payments.ts owns its words now).
+const comingPlanKeys = ['spanish'];
 for (const key of comingPlanKeys) {
 	requireText(comingPlansSource, `${key}: {`, `Coming plan ${key}`);
 }
 for (const phrase of [
-	"title: 'Spanish'",
-	"title: 'Card payment for booked events'",
-	'a reminder email before the balance is due'
+	"title: 'Spanish'"
 ]) {
 	requireText(comingPlansSource, phrase, 'owner-confirmed Coming plans');
 }
@@ -375,6 +354,9 @@ for (const key of comingPlanKeys) {
 	requireText(comingPlansSource, `id: '${id}'`, `Coming plan ${key} id`);
 }
 requireText(comparisonSource, "note: 'Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy.'", 'buying to par is a shipped yes row (RC-43)');
+if (/eventPayments/.test(comingPlansSource)) {
+	failures.push('card payment for booked events shipped (2026-10-06); it may not return to the Coming plans');
+}
 if (/parBuying/.test(comingPlansSource)) {
 	failures.push('buying to par shipped (RC-43); it may not return to the Coming plans');
 }
@@ -412,8 +394,6 @@ for (const word of ['safe', 'certified', 'guaranteed', 'allergen-free']) {
 		failures.push(`dietary: the shipped wording uses "${word}", which this capability may never claim`);
 	}
 }
-requireText(alternativesSource, 'data-coming-plans', 'homepage Coming plan group');
-requireText(alternativesSource, 'Coming soon', 'homepage Coming status');
 // A prior version contradicted its own No rows in the close and turned a
 // pricing-page omission into a claim about competitors' products. Keep both
 // failure phrases out instead of trusting future copy edits to remember RC-40.
@@ -451,16 +431,18 @@ for (const [name, source] of [['src/lib/labels.ts', labelsSource], ['src/compone
 	if (/Brother|DYMO|Dymo|Zebra|Avery/.test(source)) failures.push(`${name}: no printer or stock brand may be named`);
 	if (/direct(ly)? to (the |a |your )?(label )?printer|sends? (it |them |labels )?to (the |a |your )?printer/i.test(source)) failures.push(`${name}: may not say a label reaches a printer on its own`);
 }
-// Invoice email (RC-73). Built on kitchen-brain main; production receives no
-// mail (no MX for in.costcook.io, worker off). The word stays 'coming' until
-// the three conditions in src/lib/invoice-email.ts hold and RC-73 is updated
-// in the same commit. While it is Coming the setup guide is not published
-// (src/lib/blog.ts; scripts/check-blog.mjs checks the build).
-if (invoiceEmailStatus !== 'coming') {
-	failures.push('invoice email status: production receives no mail (RC-73); INVOICE_EMAIL_STATUS must read coming until the ledger row changes');
+// Invoice email (RC-73). Owner ruling 2026-10-06: available now (production MX
+// answers with SES inbound). The status word and the ledger row move together:
+// 'yes' needs RC-73 marked APPLIED, 'coming' needs it marked COMING.
+if (!['coming', 'yes'].includes(invoiceEmailStatus)) {
+	failures.push(`invoice email status must be coming or yes, not ${invoiceEmailStatus}`);
 }
-if (!/^\| RC-73 \|.*COMING/m.test(ledger)) {
+const rc73 = ledger.match(/^\| RC-73 \|.*$/m)?.[0] ?? '';
+if (invoiceEmailStatus === 'coming' && !/STATUS: COMING/.test(rc73)) {
 	failures.push('invoice email: RC-73 must say COMING while INVOICE_EMAIL_STATUS is coming');
+}
+if (invoiceEmailStatus === 'yes' && !/STATUS: APPLIED/.test(rc73)) {
+	failures.push('invoice email: RC-73 must say APPLIED while INVOICE_EMAIL_STATUS is yes');
 }
 const blogGateSource = surfaces[surfaceFiles.indexOf('src/lib/blog.ts')];
 requireText(blogGateSource, 'invoiceEmailAvailability.isComing ? [invoiceEmailRoute]', 'the invoice email guide waits for the feature');
@@ -722,7 +704,7 @@ for (let claim = 1; claim <= ledgerTop; claim += 1) {
 // same ids, or an arrow points at the wrong neighbour. The sticky bar is a
 // third primary and must render cta.label like the other two.
 const stopsSource = await read('src/lib/stops.ts');
-const stopIds = [...stopsSource.matchAll(/\{ id: '([a-z]+)'/g)].map((m) => m[1]);
+const stopIds = [...stopsSource.matchAll(/\{ id: '([a-z-]+)'/g)].map((m) => m[1]);
 const expectedStopIds = homepageStopIds;
 if (stopIds.join(',') !== expectedStopIds.join(',')) {
 	failures.push(
@@ -736,7 +718,7 @@ if (!/class="btn-primary[^"]*"[\s\S]{0,80}\{cta\.label\}/.test(stickySource)) {
 	failures.push('sticky bar primary CTA no longer renders cta.label');
 }
 for (const id of expectedStopIds.slice(0, -1)) {
-	if (!publicCopy.includes(`<SectionHandoff from="${id}" />`)) {
+	if (!publicCopy.includes(`<SectionHandoff from="${id}"`)) {
 		failures.push(`hand-offs: section #${id} has no <SectionHandoff from="${id}" /> at its foot`);
 	}
 }
@@ -773,14 +755,14 @@ const spanishAnswer = faqSource.slice(faqSource.indexOf("id: 'spanish'"));
 if (!spanishAnswer.slice(0, 400).includes('comingPlans.spanish.faq')) {
 	failures.push('faq: #spanish must read the shared Coming plan');
 }
-// RC-65. Card payment for an event is Coming; the answer reads the shared plan,
-// and the plan's answer must open with "Not yet." like the other not-shipped rows.
+// RC-65. Card payment for an event shipped (2026-10-06); the answer reads the
+// shared wording in src/lib/event-payments.ts and opens with "Yes."
 const eventPaymentsAnswer = faqSource.slice(faqSource.indexOf("id: 'event-payments'"));
-if (faqSource.indexOf("id: 'event-payments'") === -1 || !eventPaymentsAnswer.slice(0, 400).includes('comingPlans.eventPayments.faq')) {
-	failures.push('faq: #event-payments must exist and read the shared Coming plan (RC-65)');
+if (faqSource.indexOf("id: 'event-payments'") === -1 || !eventPaymentsAnswer.slice(0, 400).includes('eventPayments.faq')) {
+	failures.push('faq: #event-payments must exist and read src/lib/event-payments.ts (RC-65)');
 }
-if (!/\bfaq: `Not yet\. Card payment for booked events is Coming soon/.test(comingPlansSource)) {
-	failures.push('faq: the event card payment answer must open with "Not yet." (RC-65: recorded by hand today)');
+if (!/\bfaq: `Yes\. The client pays the deposit and the balance by card/.test(surfaces[surfaceFiles.indexOf('src/lib/event-payments.ts')])) {
+	failures.push('faq: the event card payment answer must open with "Yes." and name the card link (RC-65)');
 }
 requireText(siteSource, "href: '/faq'", 'faq reachable from nav and footer');
 requireText(startHereSource, 'href="/faq"', 'close links to the faq');
@@ -794,7 +776,7 @@ requireText(faqSource, 'actions that write data need a connection', 'offline wri
 const tourSource = surfaces[surfaceFiles.indexOf('src/lib/tour.ts')];
 const productTourSource = surfaces[surfaceFiles.indexOf('src/components/sections/ProductTour.astro')];
 requireText(tourSource, "label: 'Revenue after food cost'", 'tour food-cost remainder label');
-requireText(tourSource, "value: '4.1 kg · count first'", 'tour stale-count buying boundary');
+requireText(tourSource, "value: '9 lb · count first'", 'tour stale-count buying boundary');
 requireText(tourSource, "label: 'Difference to explain'", 'tour month difference label');
 requireText(tourSource, 'Garden wedding supper', 'tour illustrative event identity');
 requireText(productTourSource, '<strong>Garden wedding supper</strong>', 'tour visible event identity');
@@ -833,7 +815,7 @@ if (/class="btn-primary[^"]*"[\s\S]{0,200}demoCta\.label/.test(startHereSource))
 // homepage section, the compare row and the feature group may not carry their
 // own word, and the section must print the word rather than imply it.
 const sageSource = surfaces[surfaceFiles.indexOf('src/lib/sage.ts')];
-const sageSection = surfaces[surfaceFiles.indexOf('src/components/more/SageBlock.astro')];
+const sageSection = surfaces[surfaceFiles.indexOf('src/components/home/HomeSage.astro')];
 requireText(sageSource, 'export const SAGE_STATUS', 'sage status lives in sage.ts');
 // RC-49's counts, one place. Every sentence that counts Sage's tools or drafts
 // spells these, so the number is pinned here and a hand-typed copy is refused.
@@ -1010,68 +992,8 @@ for (const label of ['Lot tracking and FSMA 204', 'Fine-grained screen permissio
 	}
 }
 
-// RC-56: the spreadsheet pain, named. The heading always carried it; the four
-// tickets, which is where the eye lands, did not. These pins hold the two
-// halves together. TheProblem states the pain and CustomerOutcomes answers it,
-// one for one and in order, and the homepage section order rests on a
-// measurement that is void if that pairing breaks (src/pages/index.astro).
-const problemSource = surfaces[surfaceFiles.indexOf('src/components/sections/TheProblem.astro')];
-const outcomesSource = surfaces[surfaceFiles.indexOf('src/components/sections/CustomerOutcomes.astro')];
-
-requireText(problemSource, 'The spreadsheet works until the job changes.', 'homepage diagnosis heading (RC-56)');
-requireText(problemSource, 'Most kitchens cost on a spreadsheet', 'homepage spreadsheet lede (RC-56)');
-requireText(problemSource, 'docs/stories/homepage-spreadsheet-pain.story.md', 'spreadsheet-pain story pointer');
-requireText(outcomesSource, 'docs/stories/homepage-spreadsheet-pain.story.md', 'spreadsheet-pain story pointer');
-
-// RC-56 / RC-20: the fifth element. It states the two failures that are silent
-// rather than slow, and its own fix, because RC-20 is a shipped safety rule and
-// this block borrows no CustomerOutcomes card. It is pinned so it cannot drift
-// past what RC-20 covers, which is a price or a conversion that is ABSENT.
-requireText(problemSource, 'Those four are the slow ones', 'the wrong-not-slow turn (RC-56)');
-requireText(
-	problemSource,
-	'A missing price or a missing conversion holds the costing',
-	'the missing-fact safety rule the fifth element rests on (RC-20)',
-);
-// A present-but-wrong number is caught by nothing, in either tool. This block
-// is the one place on the page tempted to promise otherwise.
-for (const [pattern, label] of [
-	[/\b(catch|catches|spot|spots|flag|flags)[^.]{0,40}\b(typo|wrong (price|number)|mistyped|fat.finger)/i,
-		'catching a wrong-but-present number (RC-20 covers only a missing one)'],
-	[/\bevery (error|mistake)\b/i, 'an all-errors promise (RC-20 covers missing facts only)'],
-]) {
-	if (pattern.test(problemSource)) failures.push(`homepage diagnosis states ${label}`);
-}
-
-// The four pains and the four befores, in order. Pinning the ORDER, not just
-// the presence, is the point: a reordered answer list silently unpairs the two
-// sections and nothing else in the build can see it.
-const problemMoments = [
-	'You quote from an old price',
-	'You rebuild the same order four times',
-	'You retype the list to buy it',
-	'You learn the margin after service',
-];
-const outcomeBefores = [
-	'A price the copy never got',
-	'One number, four tabs',
-	'Rows retyped into emails',
-	'An invoice in a folder, not the sheet',
-];
-const renderedMoments = [...problemSource.matchAll(/title: '([^']+)'/g)].map((m) => m[1]);
-if (renderedMoments.join('|') !== problemMoments.join('|')) {
-	failures.push(
-		`homepage pains (RC-56): TheProblem reads [${renderedMoments.join(', ')}] but the answers ` +
-			`in CustomerOutcomes are written against [${problemMoments.join(', ')}]`,
-	);
-}
-const renderedBefores = [...outcomesSource.matchAll(/from: '([^']+)'/g)].map((m) => m[1]);
-if (renderedBefores.join('|') !== outcomeBefores.join('|')) {
-	failures.push(
-		`homepage answers (RC-56): CustomerOutcomes befores read [${renderedBefores.join(', ')}], ` +
-			`which no longer mirror the four pains one for one and in order`,
-	);
-}
+// RC-56's diagnosis and answers (TheProblem, CustomerOutcomes) left the homepage
+// with the 2026-10-06 rebuild; their pins went with them.
 
 // Ordering: available since 2026-09-27 (RC-59). Until then it was built and
 // deployed nowhere; the owner stated on 2026-09-27 that
@@ -1150,7 +1072,7 @@ for (const [pattern, label] of [
 	if (pattern.test(publicCopy)) failures.push(`public copy contains ${label}`);
 }
 requireText(heroSource, '{launchPlan.unit}, {launchPlan.crew}', 'hero price line names the unit and the crew');
-requireText(siteSource, "crew: 'unlimited crew during launch'", 'billing unit answers the per-user question');
+requireText(siteSource, "crew: 'unlimited crew'", 'billing unit answers the per-user question');
 // 3. The cost of trying it, said before the close's button. A spreadsheet
 //    person knows "one real order" means every dish and price on it; silence
 //    there reads as evasion. Pinned by hook, not by sentence, so the words can
@@ -1160,20 +1082,27 @@ requireText(startHereSource, 'about fifteen minutes', 'close states the owner-co
 requireText(startHereSource, 'type any line it could not', 'close keeps the typed-line boundary (RC-58)');
 // 4. The panel is a check, not an instruction, and the number is food only.
 //    Both used to live only in pixels and alt text.
-requireText(heroSource, 'packaging, rentals, staff and anything you cook over the guarantee', 'hero caption says the number is food only');
-requireText(heroSource, 'What you do about the gap is your call', 'hero caption frames the panel as a check');
-// 5. One wedding, one set of numbers. The hero, the outcome crop and the two
-//    worked blog posts showed $26.98 / 39.7% / $89.94 from an Aug 29 capture
-//    while the film showed $26.93 / 39.6% / $89.78. For a product whose whole
-//    promise is that the numbers agree, that was the finding most likely to
-//    cost trust. The film is canonical because it is the expensive thing to
-//    redo. Its $4,847.96 total is one cent off today's app ($4,847.95 since a
-//    2026-09-04 rounding fix), so the hero crop leaves the total out.
+// UPDATED 2026-10-07 (chef review, RC-74): the caption still names the panel as
+// the food cost, and now says where staff, rentals, delivery and a fee go.
+// UPDATED 2026-10-07 (second chef review): the sample proposal is food only,
+// so the caption says the other lines can go on it, and that this one has none.
+// UPDATED 2026-10-07 (owner: the promo film replaces the still): the film puts
+// staff, rentals and the service fee on the offer itself, so RC-74 is now
+// carried by the film's own words in the transcript, and the hero names the
+// film as a sample.
+requireText(heroSource, 'One sample wedding', 'hero names the film as a sample');
+requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], '8 staff for 7 hours, the rentals and the service fee.', 'hero film transcript says where staff, rentals and the fee go (RC-74)');
+requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], '$95.00 a guest. Food cost 24.8%.', 'hero film transcript carries the price-per-guest check');
+// 5. One wedding, one set of numbers. The tour, the menus guide and the blog
+//    keep the film's 180-guest wedding ($26.93 / 39.6% / $89.78); the retired
+//    Aug 29 figures may not come back anywhere. The homepage since 2026-10-06
+//    shows the Nair & Castellano wedding at $95.00 a guest, and its figures
+//    come from its frames (docs/proof/home-manifest.json).
 {
+	const homeData = surfaces[surfaceFiles.indexOf('src/lib/home.ts')];
 	const wedding = [
 		heroSource,
-		surfaces[surfaceFiles.indexOf('src/components/sections/SeeItRun.astro')],
-		surfaces[surfaceFiles.indexOf('src/components/sections/CustomerOutcomes.astro')],
+		homeData,
 		surfaces[surfaceFiles.indexOf('src/components/sections/MenusQuotesFeature.astro')],
 		await read('src/pages/blog/index.astro'),
 		await read('src/content/blog/food-cost-per-guest.md'),
@@ -1182,8 +1111,41 @@ requireText(heroSource, 'What you do about the gap is your call', 'hero caption 
 	for (const retired of ['$26.98', '$89.94', '39.7%', '39.7 percent', '$4,856.55', '9.7 percentage']) {
 		if (wedding.includes(retired)) failures.push(`wedding figures: retired ${retired} is back (canonical: $26.93 / 39.6% / $89.78)`);
 	}
-	for (const canonical of ['$26.93', '$89.78', '39.6%']) {
-		requireText(heroSource, canonical, 'hero carries the film\'s wedding figures');
+	// 2026-10-07 (chef review): one posset a guest and celery by weight moved the
+	// homepage wedding from $26.93 / 28.4% to $24.92 / 26.2%. The old pair may not
+	// come back in the homepage data, nor the old prep line (celery 48 each) or
+	// the Dec 28 dates the deposit and Sage frames carried before their re-shoot.
+	// Then a 91% trim yield on the short rib (third chef review) moved it again,
+	// to $26.18 / 27.6%.
+	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039', '48 each', 'Dec 28', '2026-12-28', '40 lb', '$24.92', '26.2%', '$70.08', '$13.30', '138.9 lb']) {
+		if (homeData.includes(stale)) failures.push(`homepage wedding: stale figure ${stale} is back (now $26.18 / 27.6%)`);
+	}
+	// The $26.18 / 27.6% still left the hero for the film (2026-10-07); the
+	// rail's own frames keep the rest.
+	for (const figure of ['$95.00', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {
+		requireText(homeData, figure, 'homepage frames carry the Nair & Castellano figures');
+	}
+}
+
+// F2 (design audit 2026-10-07): the green button is only ever the trial,
+// on every page, not just the homepage. Nine feature guides had closed on
+// the demo as btn-primary while the trial sat as a quiet link. A btn-primary
+// LINK must render {cta.label}; form buttons (<button>) and the two pages
+// whose only action is a fallback email or the contact form are exempt.
+{
+	const { readdir } = await import('node:fs/promises');
+	const exempt = new Set(['src/pages/contact/not-sent.astro', 'src/pages/demo/not-sent.astro']);
+	const dirs = ['src/components/sections', 'src/components', 'src/pages', 'src/pages/blog', 'src/pages/features', 'src/pages/contact', 'src/pages/demo', 'src/pages/tour'];
+	for (const dir of dirs) {
+		for (const name of await readdir(dir).catch(() => [])) {
+			if (!name.endsWith('.astro')) continue;
+			const file = `${dir}/${name}`;
+			if (exempt.has(file)) continue;
+			const text = await readFile(file, 'utf8');
+			for (const match of text.matchAll(/<a\b[^>]*class(?::list)?=[{"][^>]*\bbtn-primary\b[^>]*>[\s\S]{0,240}?<\/a>/g)) {
+				if (!match[0].includes('cta.label')) failures.push(`${file}: a btn-primary link that is not the trial (${match[0].replace(/\s+/g, ' ').slice(0, 90)})`);
+			}
+		}
 	}
 }
 

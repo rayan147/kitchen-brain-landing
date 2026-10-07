@@ -198,3 +198,6 @@ rest of it is worth believing.
 ## Claim correction · 2026-09-27 (allergen count)
 
 - [x] 11 Revision: "Fourteen allergens" was false; the app tags the fixed US nine (milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soy, sesame; kitchen-brain drizzle/0034_dizzy_klaw.sql). The count word is now computed from `allergenNames` in `src/lib/dietary.ts`. Beats, scenes, point of view and snap line unchanged; only the number moved. Gap report S3.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- "booking" became "request" twice ("That is how the request arrives", "Put Saturday’s request on the order."): a request is not booked until Confirm order.

@@ -1,0 +1,43 @@
+---
+/**
+ * Front of house (canvas S5). The canvas drew this band dark; the site is light
+ * only (CLAUDE.md, anti-reference: dark pages), so it takes its turn in the
+ * cream and soft-amber alternation (rule 1).
+ *
+ * Considered Composite; not used because it is two fixed cards.
+ */
+import HomeBand from './HomeBand.astro';
+import SectionHandoff from '../SectionHandoff.astro';
+import HomeFrame from './HomeFrame.astro';
+import { frontOfHouse } from '../../lib/home';
+---
+<HomeBand
+	id="front"
+	tone="amber"
+	eyebrow="Front of house"
+	heading="Orders and invoices come to you."
+	lede="Clients order off your own page. Your booking rules decide which requests take the quick path and which land with you as an inquiry. Supplier invoices come in by email and sit there until you OK them."
+>
+	<div class="cards">
+		{frontOfHouse.map((card) => (
+			<article class="card" data-front={card.id} data-reveal>
+				<HomeFrame shot={card.shot} class="card-shot" />
+				<h3 class="home-h3">{card.heading}</h3>
+				<p class="home-body mt-3">{card.body}</p>
+				{'guide' in card && <a href={card.guide.href} class="home-guide">{card.guide.label}</a>}
+			</article>
+		))}
+	</div>
+	<SectionHandoff from="front" class="home-handoff" />
+</HomeBand>
+
+<style>
+	.cards { display: grid; gap: 3rem; margin-top: 3rem; }
+	/* :global: the img renders inside HomeFrame. The 3:2 crop is for the wide
+	   desktop captures; a phone gets the app's phone capture whole. */
+	.card :global(.card-shot) { margin-bottom: 1.5rem; }
+	@media (min-width: 48rem) {
+		.card :global(.card-shot) { aspect-ratio: 3 / 2; object-fit: cover; object-position: top left; }
+	}
+	@media (min-width: 64rem) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

@@ -67,7 +67,7 @@ try {
   // Header destinations are present through the desktop and mobile disclosures.
   for(const [width,height] of [widths[0], widths[4]]) {
     await page.setViewportSize({width,height});await page.goto(base+'/');
-    const trigger = width===390 ? page.getByLabel('Site navigation',{exact:true}) : page.getByLabel('CostCook resources',{exact:true});
+    const trigger = width===390 ? page.locator('header summary',{hasText:/^Menu$/}) : page.getByLabel('Resources: tour, fit, setup, comparisons and contact',{exact:true});
     await trigger.focus();await page.keyboard.press('Enter');
     for(const route of routes.slice(0,6)) check(await page.locator(`header a[href="${route}"]:visible`).count()>0,`${width} menu includes ${route}`);
     await page.screenshot({path:`${output}/menu-${width}.png`});

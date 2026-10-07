@@ -145,7 +145,9 @@ try {
 		if (width === 320) await capture('narrow', false);
 	}
 
-	await viewport(390, 844, true);
+	// The Features panel is offered from 640px; below that it lives in Menu
+	// (one-row phone header, 2026-10-07).
+	await viewport(640, 844, true);
 	await navigate();
 	const menu = await evaluate(`(() => {
 		const details = document.querySelector('[data-features-menu]');
@@ -174,16 +176,18 @@ try {
 
 	await navigate();
 	const sticky = await evaluate(`(() => new Promise((resolve) => {
-		const demo = document.querySelector('#demo');
+		// Partway into the rail (its second stage), not after it: the bar must
+		// carry the primary through the event walk, where the page has none.
+		const stage = document.querySelectorAll('#event-walk [data-rail-stage]')[1];
 		document.documentElement.style.scrollBehavior = 'auto';
-		scrollTo(0, demo.offsetTop + demo.offsetHeight + 10);
+		scrollTo(0, stage.getBoundingClientRect().top + scrollY);
 		requestAnimationFrame(() => requestAnimationFrame(() => {
 			const bar = document.querySelector('[data-sticky-cta]');
 			const action = bar.querySelector('a');
 			resolve({ hidden: bar.hidden, actionHeight: action.getBoundingClientRect().height });
 		}));
 	}))()`);
-	assert(!sticky.hidden, 'mobile sticky action does not appear after the product tour');
+	assert(!sticky.hidden, 'mobile sticky action does not appear inside the event walk');
 	assert(sticky.actionHeight >= 44, `mobile sticky action is ${sticky.actionHeight}px tall`);
 
 	await viewport(320, 844, true);
@@ -238,6 +242,22 @@ try {
 	assert(zoom390.overflow === 0, `390px at 200% text: horizontal overflow is ${zoom390.overflow}px`);
 	assert(zoom390.escaped.length === 0, `390px at 200% text: escaped elements: ${zoom390.escaped.join(', ')}`);
 
+	// The hero film is the browser's own player: a click on it starts the
+	// film (owner, 2026-10-07: "the video is not playable" with a scripted
+	// play button).
+	await viewport(1440, 900, false);
+	await navigate();
+	await evaluate(`scrollTo(0, 0)`);
+	const film = await evaluate(`(() => { const v = document.querySelector('[data-hero-media] video'); const r = v.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2, controls: v.controls, hit: document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2) === v, hitName: String(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)?.outerHTML).slice(0, 80) + ' at ' + Math.round(r.y) }; })()`);
+	assert(film.controls, 'hero film: the native controls are missing');
+	assert(film.hit, `hero film: something covers the player (${film.hitName})`);
+	for (const type of ['mousePressed', 'mouseReleased']) {
+		await send('Input.dispatchMouseEvent', { type, x: film.x, y: film.y, button: 'left', clickCount: 1 });
+	}
+	await new Promise((resolve) => setTimeout(resolve, 1500));
+	const started = await evaluate(`!document.querySelector('[data-hero-media] video').paused`);
+	assert(started, 'hero film: a click on the player did not start the film');
+
 	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 	await viewport(390, 844, true);
 	await navigate();
@@ -251,8 +271,9 @@ try {
 		primary: Boolean(document.querySelector('main .btn-primary')),
 		sections: [...document.querySelectorAll('main > section')].map(section => section.id).filter(Boolean)
 	}))()`);
-	assert(noScript.heading?.startsWith('The event you sold is the event you cook.'), 'no JavaScript: homepage identity is missing');
+	assert(noScript.heading?.startsWith('Know what the job makes before you cook it.'), 'no JavaScript: homepage identity is missing');
 	assert(noScript.primary, 'no JavaScript: primary action is missing');
+	assert(await evaluate(`document.querySelector('[data-hero-media] video').controls`), 'no JavaScript: the hero film must keep its native controls');
 	// Assert visitor destinations rather than an obsolete minimum section count.
 	// The one explicit stop order, shared with check-landing-claims and check-dist.
 	assert(noScript.sections.join(',') === homepageStopIds.join(','), `no JavaScript: homepage sections read [${noScript.sections.join(', ')}]; expected [${homepageStopIds.join(', ')}]`);
@@ -277,4 +298,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('Homepage browser verification passed: six viewports, phone-first fold, touch targets, contained mobile navigation, sticky action, 200% text at 320 and 390, reduced motion, and no JavaScript.');
+console.log('Homepage browser verification passed: six viewports, phone-first fold, touch targets, contained mobile navigation, sticky action, 200% text at 320 and 390, reduced motion, a hero film that plays from a click, and no JavaScript.');
