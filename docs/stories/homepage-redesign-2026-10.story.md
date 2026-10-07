@@ -154,3 +154,14 @@ Priya's yes comes in, then the deposit.
   wine, and the page does not add an ingredient to make a chip appear.
 - The wedding moves to Saturday, December 19, with the balance and the final
   guest count due Wednesday, December 9 (the app's own wording on the offer).
+
+### Revision 2026-10-07 (3): header and footer, after a navbar and footer review
+- **The mark where readers look:** the header spans the page, so the mark sits
+  at the left gutter, and it is larger (24px wordmark from sm). On phones the
+  bar is one row: the mark, Menu, Free trial; Features and Book a demo sit in
+  Menu. No copy changed.
+- **A footer you can scan:** links grouped under Product, See it work, Make the
+  decision and Talk to us. One new line under the mark, "Catering software,
+  built by a chef.", repeats the hero eyebrow (the founder line, verified on
+  /who-its-for) so the footer says what the company is. No policy links yet:
+  the site has no privacy or terms page (owner to supply).
