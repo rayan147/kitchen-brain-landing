@@ -7,9 +7,12 @@ const ordersGroup = featureGroups.find((group) => group.id === 'orders');
 if (!ordersGroup) throw new Error('Missing public feature group: orders');
 
 const shopLines = [
-	{ item: 'Chicken thigh · 10 kg case', working: '34.6 kg need − 8.2 kg on hand', result: '3 cases' },
-	{ item: 'Baby spinach · 2 kg case', working: '5.1 kg need − 1.4 kg on hand', result: '2 cases' },
-	{ item: 'Olive oil · 5 L tin', working: '6.8 L need − 2.1 L on hand', result: '1 tin' }
+	// 80 guests, US units, and every line rounds up with something to spare
+	// (chef audit 2026-10-07: 6.8 L of oil and 15 oz of raw chicken a head).
+	// Chicken: 8 oz trimmed a guest is 40 lb; at 91% usable, 44 lb bought.
+	{ item: 'Chicken thigh · 20 lb case', working: '44 lb need − 8 lb on hand = 36 lb', result: '2 cases, 4 lb spare' },
+	{ item: 'Baby spinach · 4 lb case', working: '10 lb need − 3 lb on hand = 7 lb', result: '2 cases, 1 lb spare' },
+	{ item: 'Olive oil · 1 gal tin', working: '1.5 qt need − 0.5 qt on hand = 1 qt', result: '1 tin, 3 qt spare' }
 ] as const;
 
 const packLines = [
@@ -101,7 +104,7 @@ const faqItems = [
 	<section class="source" aria-labelledby="source-heading">
 		<div class="container-page source-grid">
 			<div><p class="eyebrow">The source</p><h2 id="source-heading">Hold the event steady for the crew running it.</h2><p>Confirming an order freezes the menu, date, guest count, plan, math, and money together. That preserves the commitment while later prices can move.</p></div>
-			<div class="source-record"><span>Confirmed event · illustrative</span><div><small>Menu</small><strong>Harvest Table</strong></div><div><small>Guests</small><strong>80</strong></div><div><small>Service</small><strong>30 Aug · 6:00 PM</strong></div></div>
+			<div class="source-record"><span>Confirmed event · illustrative</span><div><small>Menu</small><strong>Harvest Table</strong></div><div><small>Guests</small><strong>80</strong></div><div><small>Service</small><strong>Aug 30 · 6:00 PM</strong></div></div>
 		</div>
 	</section>
 

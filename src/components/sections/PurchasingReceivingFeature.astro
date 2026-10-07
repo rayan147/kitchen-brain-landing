@@ -7,9 +7,9 @@ const purchasingGroup = featureGroups.find((group) => group.id === 'purchasing')
 if (!purchasingGroup) throw new Error('Missing public feature group: purchasing');
 
 const deliveryLines = [
-	{ item: 'Chicken thigh · 10 kg case', ordered: '10', received: '9', orderedPrice: '$45.00', receivedPrice: '$47.00', state: 'Short 1', tone: 'short' },
-	{ item: 'Baby spinach · 2 kg case', ordered: '4', received: '4', orderedPrice: '$18.00', receivedPrice: '$18.00', state: 'Received', tone: 'received' },
-	{ item: 'Olive oil · 5 L tin', ordered: '2', received: '2', orderedPrice: '$72.00', receivedPrice: '$75.00', state: 'Substituted', tone: 'review' }
+	{ item: 'Chicken thigh · 20 lb case', ordered: '10', received: '9', orderedPrice: '$45.00', receivedPrice: '$47.00', state: 'Short 1', tone: 'short' },
+	{ item: 'Baby spinach · 4 lb case', ordered: '4', received: '4', orderedPrice: '$18.00', receivedPrice: '$18.00', state: 'Received', tone: 'received' },
+	{ item: 'Olive oil · 1 gal tin', ordered: '2', received: '2', orderedPrice: '$72.00', receivedPrice: '$75.00', state: 'Substituted', tone: 'review' }
 ] as const;
 
 const recoveryStates = [
@@ -70,7 +70,7 @@ const faqItems = [
 					<svg width="34" height="16" viewBox="0 0 34 16" aria-hidden="true"><path d="M1 8h29M24 2l6 6-6 6" /></svg>
 					<div class="result"><small>Follow up</small><strong>1</strong><span>case</span></div>
 				</div>
-				<div class="ticket-line"><span>Chicken thigh · 10 kg case</span><b class="status short">Received · short 1</b></div>
+				<div class="ticket-line"><span>Chicken thigh · 20 lb case</span><b class="status short">Received · short 1</b></div>
 				<figcaption>Illustrative values. The sent quantity, received quantity, and open shortfall stay together.</figcaption>
 			</figure>
 		</div>
@@ -80,9 +80,9 @@ const faqItems = [
 		<div class="container-page problem-grid">
 			<div><h2 id="problem-heading">Ten cases ordered. Nine at the back door is not ten in the walk-in.</h2><p>A tidy purchase order describes the promise. Receiving records the delivery as it is: short, over, substituted, missing, or unexpected.</p></div>
 			<div class="door-scene" role="img" aria-label="An illustrative supplier order and receiving slip disagree by one case">
-				<div><small>Supplier order</small><strong>10 cases</strong><span>Sent 27 Aug · 3:42 PM</span></div>
+				<div><small>Supplier order</small><strong>10 cases</strong><span>Sent Aug 27 · 3:42 PM</span></div>
 				<div class="door-mark" aria-hidden="true">≠</div>
-				<div><small>Delivery slip</small><strong>9 cases</strong><span>Received 28 Aug · 6:18 AM</span></div>
+				<div><small>Delivery slip</small><strong>9 cases</strong><span>Received Aug 28 · 6:18 AM</span></div>
 			</div>
 		</div>
 	</section>
@@ -98,10 +98,13 @@ const faqItems = [
 			<figure class="po-sheet">
 				<div class="po-main">
 					<div class="panel-bar"><span>Purchase order PO-1048</span><span>Review before sending</span></div>
-					<div class="supplier"><div><small>Supplier</small><strong>Northline Foods</strong></div><div><small>Delivery</small><strong>28 Aug · before 7 AM</strong></div></div>
+					<div class="supplier"><div><small>Supplier</small><strong>Northline Foods</strong></div><div><small>Delivery</small><strong>Aug 28 · before 7 AM</strong></div></div>
 					<div class="email-copy"><small>Email body</small><p>Please deliver the lines below to CostCook Catering. PO-1048 must appear on the delivery slip.</p></div>
-					<div class="po-row"><span>Chicken thigh · 10 kg case</span><b>10 cases</b></div>
-					<div class="po-row"><span>Baby spinach · 2 kg case</span><b>4 cases</b></div>
+					<div class="po-row"><span>Chicken thigh · 20 lb case</span><b>10 cases</b></div>
+					<div class="po-row"><span>Baby spinach · 4 lb case</span><b>4 cases</b></div>
+					<!-- The oil is on the order (chef audit 2026-10-07: receiving showed it
+					     substituted when the PO never asked for it). -->
+					<div class="po-row"><span>Olive oil · 1 gal tin</span><b>2 tins</b></div>
 				</div>
 				<div class="po-actions"><span>Available handoffs</span><ul role="list"><li>Email supplier</li><li>Print PO</li><li>Handled by me</li></ul></div>
 				<figcaption>Illustrative purchase order. The record starts queued before email is attempted; a failed send stays on the record and remains retryable.</figcaption>
@@ -125,7 +128,7 @@ const faqItems = [
 	<section class="posting-proof" aria-labelledby="posting-heading">
 		<div class="container-page posting-grid">
 			<div><h2 id="posting-heading">The actual delivery becomes the buying fact.</h2><p>Save the reviewed delivery once. Its quantities and prices update purchases and ingredient prices together. Unresolved shortages stay on the follow-up list.</p></div>
-			<div class="posting-record"><span>After posting · illustrative</span><div><small>Purchase recorded</small><strong>9 cases · $423.00</strong></div><div><small>Current pack price</small><strong>$47.00 / case</strong></div><div><small>Rebuy list</small><strong>1 case open</strong></div></div>
+			<div class="posting-record"><span>After posting · illustrative</span><div><small>Purchases recorded</small><strong>3 lines · $645.00</strong></div><div><small>Current pack price</small><strong>$47.00 / case</strong></div><div><small>Rebuy list</small><strong>1 case open</strong></div></div>
 		</div>
 	</section>
 

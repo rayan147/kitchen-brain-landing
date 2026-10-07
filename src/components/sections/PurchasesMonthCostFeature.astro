@@ -8,15 +8,17 @@ if (!ledgerGroup) throw new Error('Missing public feature group: ledger');
 
 const purchaseSources = [
 	{ source: 'Invoice import', record: 'Northline Foods · INV-8831', amount: '$2,184.30' },
-	{ source: 'Receiving', record: 'PO-1048 · received delivery', amount: '$423.00' },
+	// The whole delivery: 9 × $47 chicken, 4 × $18 spinach, 2 × $75 oil.
+	{ source: 'Receiving', record: 'PO-1048 · received delivery', amount: '$645.00' },
 	{ source: 'Order log', record: 'Harbor wedding · market run', amount: '$186.40' },
 	{ source: 'Quick log', record: 'Produce top-up · cash receipt', amount: '$74.20' }
 ] as const;
 
 const historyRows = [
-	{ label: 'Chicken thigh · 10 kg case', before: '$43.00', after: '$47.00', change: '+9.3%' },
-	{ label: 'Baby spinach · 2 kg case', before: '$18.60', after: '$17.90', change: '−3.8%' },
-	{ label: 'Olive oil · 5 L tin', before: '$51.20', after: '$51.20', change: 'No change' }
+	// The same packs and prices as PO-1048 on the receiving guide.
+	{ label: 'Chicken thigh · 20 lb case', before: '$43.00', after: '$47.00', change: '+9.3%' },
+	{ label: 'Baby spinach · 4 lb case', before: '$18.60', after: '$18.00', change: '−3.2%' },
+	{ label: 'Olive oil · 1 gal tin', before: '$72.00', after: '$75.00', change: '+4.2%' }
 ] as const;
 
 const recoveryStates = [
@@ -68,7 +70,7 @@ const faqItems = [
 
 			<figure class="month-sheet ledger-enter">
 				<p class="figure-note">Illustrative August close</p>
-				<div class="sheet-top"><span>Food-cost review · 1–31 Aug</span><span class="status review">Review</span></div>
+				<div class="sheet-top"><span>Food-cost review · Aug 1–31</span><span class="status review">Review</span></div>
 				<div class="month-working" aria-label="Theoretical use 18,420 dollars, actual spend 19,135 dollars, difference 715 dollars">
 					<div><small>Theoretical use</small><strong>$18,420</strong></div>
 					<span aria-hidden="true">→</span>
@@ -128,7 +130,7 @@ const faqItems = [
 		<div class="container-page history-grid">
 			<div><h2 id="history-heading">Let dates and corrections keep the past intact.</h2><p>Ingredient prices follow the purchase date. Choose a date range to see price increases and decreases. Correct a wrong amount by adding an adjustment and a reason; keep the original record.</p></div>
 			<figure class="history-sheet">
-				<div class="history-top"><span>Price movement · illustrative</span><span>1–31 Aug</span></div>
+				<div class="history-top"><span>Price movement · illustrative</span><span>Aug 1–31</span></div>
 				{historyRows.map((row) => <div class="history-line"><strong>{row.label}</strong><span>{row.before} → {row.after}</span><b>{row.change}</b></div>)}
 				<div class="adjustment"><span class="status adjusted">Adjusted</span><strong>Produce receipt +$12.40</strong><small>Reason required · original row retained</small></div>
 				<figcaption>Illustrative items, prices, changes, and correction. Signed percentages show direction over the selected window.</figcaption>

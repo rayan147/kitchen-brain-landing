@@ -6,17 +6,21 @@ import { cta, demoCta } from '../../lib/site';
 const ingredientGroup = featureGroups.find((group) => group.id === 'ingredients');
 if (!ingredientGroup) throw new Error('Missing public feature group: ingredients');
 
+// US units, one price change (chef audit 2026-10-07: the recipe impacts did
+// not follow from the $4.70 case increase, and "last costed" was not the
+// previous price in the history). $42.10 → $46.80 on a 20 lb case at 91%
+// usable (the tour's and the recipes guide's yield) is $0.2582 more per usable lb; each recipe moves by its usable lb.
 const packFacts = [
-	{ label: 'Pack', left: '10 kg case', right: '22 lb case' },
-	{ label: 'Case price', left: '$46.80', right: '$49.20' },
-	{ label: 'Usable yield', left: '92%', right: '95%' },
-	{ label: 'Usable cost', left: '$5.09 / kg', right: '$5.19 / kg' }
+	{ label: 'Pack', left: '20 lb case', right: '25 lb case' },
+	{ label: 'Case price', left: '$46.80', right: '$61.50' },
+	{ label: 'Usable yield', left: '91%', right: '95%' },
+	{ label: 'Usable cost', left: '$2.57 / lb', right: '$2.59 / lb' }
 ] as const;
 
 const affectedRecipes = [
-	{ name: 'Herb roast chicken', use: '1.8 kg', change: '+$0.18' },
-	{ name: 'Grain bowl', use: '720 g', change: '+$0.07' },
-	{ name: 'Canapé tray', use: '450 g', change: '+$0.04' }
+	{ name: 'Herb roast chicken', use: '4 lb', change: '+$1.03' },
+	{ name: 'Grain bowl', use: '1.5 lb', change: '+$0.39' },
+	{ name: 'Canapé tray', use: '1 lb', change: '+$0.26' }
 ] as const;
 
 // Considered Strategy; not used because these questions and comparison rows
@@ -90,20 +94,20 @@ const faqItems = [
 					<div class="record-head"><span>Ingredient</span><span>Current</span></div>
 					<div class="ingredient-title">
 					<div><strong class="record-title">Chicken thigh</strong><p>Purchased by weight · usable after trim</p></div>
-						<strong>$5.09 / kg</strong>
+						<strong>$2.57 / lb</strong>
 					</div>
 				</div>
 				<div class="offer-join" aria-hidden="true"><span></span><span></span></div>
 				<div class="offers">
 					<div class="offer preferred">
 						<div class="record-head"><span>Northline Foods</span><span>In use</span></div>
-						<strong>$46.80</strong><small>10 kg case · 92% usable</small>
-						<p>$5.09 per usable kg</p>
+						<strong>$46.80</strong><small>20 lb case · 91% usable</small>
+						<p>$2.57 per usable lb</p>
 					</div>
 					<div class="offer">
 						<div class="record-head"><span>Market Supply</span><span>Offer</span></div>
-						<strong>$49.20</strong><small>22 lb case · 95% usable</small>
-						<p>$5.19 per usable kg</p>
+						<strong>$61.50</strong><small>25 lb case · 95% usable</small>
+						<p>$2.59 per usable lb</p>
 					</div>
 				</div>
 				<figcaption>Illustrative values. Every offer keeps its source, supplier, and effective date.</figcaption>
@@ -121,9 +125,9 @@ const faqItems = [
 				</p>
 			</div>
 			<figure class="price-drift" data-reveal>
-				<div><span>Last costed</span><strong>$42.10</strong><small>10 kg case</small></div>
+				<div><span>Last costed</span><strong>$42.10</strong><small>20 lb case</small></div>
 				<svg width="56" height="22" viewBox="0 0 56 22" aria-hidden="true"><path d="M1 11h47M41 4l7 7-7 7" /></svg>
-				<div><span>This invoice</span><strong>$46.80</strong><small>10 kg case</small></div>
+				<div><span>This invoice</span><strong>$46.80</strong><small>20 lb case</small></div>
 				<figcaption>The new case costs $4.70 more. Check the recipes that use it before quoting again.</figcaption>
 			</figure>
 		</div>
@@ -157,16 +161,16 @@ const faqItems = [
 					<div class="panel-bar"><span>Ingredient record</span><span>Costable</span></div>
 					<div class="workspace-title"><h3>Chicken thigh</h3><p>Protein · purchased by weight</p></div>
 					<dl class="fact-grid">
-						<div><dt>Purchase unit</dt><dd>10 kg case</dd></div>
-						<div><dt>Usable yield</dt><dd>92%</dd></div>
-						<div><dt>Purchased cost</dt><dd>$4.68 / kg</dd></div>
-						<div><dt>Usable cost</dt><dd>$5.09 / kg</dd></div>
+						<div><dt>Purchase unit</dt><dd>20 lb case</dd></div>
+						<div><dt>Usable yield</dt><dd>91%</dd></div>
+						<div><dt>Purchased cost</dt><dd>$2.34 / lb</dd></div>
+						<div><dt>Usable cost</dt><dd>$2.57 / lb</dd></div>
 					</dl>
-					<div class="source-line"><span>Current source</span><strong>Northline Foods · effective 28 Aug</strong></div>
+					<div class="source-line"><span>Current source</span><strong>Northline Foods · effective Aug 28</strong></div>
 				</div>
 				<div class="workspace-side">
-					<div><span>Kitchen facts</span><strong>Walk-in · Meat</strong><small>Par level 20 kg</small></div>
-					<div><span>Conversions</span><strong>1 case = 10 kg</strong><small>Unit and yield chosen, never guessed</small></div>
+					<div><span>Kitchen facts</span><strong>Walk-in · Meat</strong><small>Par level 40 lb</small></div>
+					<div><span>Conversions</span><strong>1 case = 20 lb</strong><small>Unit and yield chosen, never guessed</small></div>
 					<div><span>Used by</span><strong>3 recipes · 2 menus</strong><small>Checked before a change or delete</small></div>
 				</div>
 				<figcaption>Illustrative ingredient record built only from shipped CostCook fields and behavior.</figcaption>
@@ -197,7 +201,7 @@ const faqItems = [
 						<strong>{fact.label}</strong><span>{fact.left}</span><span>{fact.right}</span>
 					</div>
 				))}
-				<div class="comparison-result"><span>Preferred offer</span><strong>Northline Foods</strong><small>10¢ less per usable kg</small></div>
+				<div class="comparison-result"><span>Preferred offer</span><strong>Northline Foods</strong><small>2¢ less per usable lb</small></div>
 				<figcaption>Illustrative comparison. CostCook orders concurrent offers by usable-unit cost.</figcaption>
 			</figure>
 
@@ -205,9 +209,9 @@ const faqItems = [
 				<div class="history" data-reveal>
 					<h3>The source stays with the number.</h3>
 					<ol role="list">
-						<li><time>28 Aug</time><span><strong>$46.80</strong> Northline invoice</span></li>
-						<li><time>14 Aug</time><span><strong>$45.40</strong> Northline purchase</span></li>
-						<li><time>31 Jul</time><span><strong>$44.95</strong> Market price list</span></li>
+						<li><time>Aug 28</time><span><strong>$46.80</strong> Northline invoice</span></li>
+						<li><time>Aug 14</time><span><strong>$42.10</strong> Northline purchase</span></li>
+						<li><time>Jul 31</time><span><strong>$61.50</strong> Market price list</span></li>
 					</ol>
 				</div>
 				<div class="impact" data-reveal>
