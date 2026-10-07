@@ -294,11 +294,17 @@ describe("second review fixes (2026-10-07)", () => {
     expect(cameraOrigin("menu", 0)).toBeNull();
     expect(cameraOrigin("menu", 1)).toEqual({ x: 22, y: 50 });
   });
-  // Caterer: the phone frame shows the total and the food line only.
-  it("claims only what the offer frame shows", () => {
-    expect(captionsFor("decision", manifest).join(" ")).not.toMatch(
+  // Caterer: staff, rentals and the fee are claimed only now that the offer
+  // frame runs down to its total and shows them as lines.
+  it("names staff and rentals, which the offer frame now shows", () => {
+    expect(captionsFor("decision", manifest).join(" ")).toMatch(
       /staff and rentals/,
     );
+  });
+  // Caterer: her note asks for something for the vegetarians; the pack beat
+  // shows the vegetarian plates and says so.
+  it("answers her vegetarian request on the pack list", () => {
+    expect(captionsFor("pack", manifest).join(" ")).toMatch(/vegetarian/);
   });
   // Caterer: the day-after share matching the quote is the point, said so.
   it("ties the day-after share back to the price she was quoted", () => {

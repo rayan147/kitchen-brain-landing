@@ -115,7 +115,8 @@ export const FILM: Record<SceneId, Scene> = {
         to: 8,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
-        caption: "The offer reaches her phone: {offerTotal} for the day.",
+        caption:
+          "The offer reaches her phone: {offerTotal}, staff and rentals in.",
         scroll: [0, 100],
       },
       {
@@ -124,7 +125,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "phone",
         frames: ["events-offer-mobile.png"],
         caption: "Accept, or ask for changes. Her call.",
-        ring: { x: 1, y: 93, width: 98, height: 6 },
+        ring: { x: 1, y: 96.8, width: 98, height: 3 },
         scroll: [100, 100],
       },
     ],
@@ -157,7 +158,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-payments-paid-desktop.png"],
         caption: "Paid. The balance reminder goes out ten days before.",
-        ring: { x: 11, y: 57, width: 48, height: 8 },
+        ring: { x: 9, y: 44, width: 50, height: 10.5 },
       },
       {
         from: 14.5,
@@ -251,8 +252,12 @@ export const FILM: Record<SceneId, Scene> = {
         to: 8.5,
         layout: "screen",
         frames: ["events-pack-desktop.png"],
-        caption: "Tick each dish into the van. Allergens print on the label.",
-        ring: { x: 12, y: 46.5, width: 21, height: 4.5 },
+        caption:
+          "Every dish into the van, the vegetarian plates too. Allergens on each label.",
+        // The last row is the answer to her "something for the vegetarians";
+        // the caption sits on top, off it.
+        ring: { x: 3, y: 87, width: 94, height: 10 },
+        captionAt: "top",
       },
     ],
   },

@@ -22,121 +22,121 @@
   "frameSources": {
     "request-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs request"
     },
     "inquiry-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs request"
     },
     "menu-service.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs menu"
     },
     "proposal-sent-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs proposal"
     },
     "proposal-mobile.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs accept"
     },
     "agreement-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs agreement"
     },
     "payment-request-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs deposit"
     },
     "pay-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs deposit"
-    },
-    "payments-paid-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "24664bd69",
-      "via": "capture-film.mjs paid"
     },
     "book-event-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs book"
     },
     "booked-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs book"
     },
     "shop-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs kitchen"
     },
     "confirm-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs kitchen"
+    },
+    "payments-paid-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "9a15fe297",
+      "via": "capture-film.mjs paid"
     },
     "po-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs buy"
     },
     "receiving-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs receive"
     },
     "prep-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs lists"
     },
     "pack-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs lists"
     },
     "closeout-desktop.png": {
       "host": "localhost",
-      "app": "24664bd69",
+      "app": "9a15fe297",
       "via": "capture-film.mjs closeout"
     }
   },
   "guests": "150",
-  "appSha": "24664bd69",
+  "appSha": "9a15fe297",
   "capturedOn": "2026-10-07",
-  "proposalFoodCostPct": "25.8%",
+  "proposalFoodCostPct": "24.8%",
   "targetPct": "30%",
   "pricePerGuest": "$95.00",
   "revenue": "$14,250.00",
   "offerTotal": "$21,043.00",
-  "depositPaid": "$5,250.00",
-  "balanceReminderLine": "Reminder with a pay link goes out Wed, Jun 2.",
-  "balanceDue": "$15,793.00",
-  "eventDate": "Sat, Jun 12, 2027",
-  "closeoutPlanned": "$3,750.87",
-  "closeoutActual": "$3,675.88",
-  "closeoutDirection": "under",
-  "closeoutOver": "$74.99",
-  "closeoutPct": "25.8%",
   "deposit": "$5,250.00",
+  "depositPaid": "$5,250.00",
+  "balanceReminderLine": "Reminder with a pay link goes out Wed, Jun 9.",
+  "balanceDue": "$15,793.00",
+  "eventDate": "Sat, Jun 19, 2027",
+  "closeoutPlanned": "$3,608.27",
+  "closeoutActual": "$3,536.14",
+  "closeoutDirection": "under",
+  "closeoutOver": "$72.13",
+  "closeoutPct": "24.8%",
   "walks": {
     "test": {
-      "event": "test.app.costcook.io, the Brooks & Hale wedding (Sat Jun 12 2027)",
-      "how": "one walk: a quote request on the ordering site, menu and proposal, the client accepts on her phone, the agreement signed in DocuSeal and the deposit paid by card in Stripe test mode, Book the event with every requirement met, then shop, confirm, purchase orders, receiving, prep and pack"
+      "event": "test.app.costcook.io, the Lindqvist & Shaw wedding (Sat Jun 19 2027)",
+      "how": "one walk at develop 9a15fe297: a quote request on the ordering site, menu and proposal (138 short rib and 12 vegetarian mains, staff, rentals and a service fee), the client accepts on her phone, the agreement signed in DocuSeal and the deposit paid by card in Stripe test mode, Book the event with every requirement met, then shop, confirm, purchase orders, receiving, prep and pack"
     },
     "closeout": {
-      "how": "a read-only copy of test\u2019s database, run locally on the same build with its server clock moved to Jun 13 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event"
+      "how": "a read-only copy of test\u2019s database, run locally on the same build with its server clock moved to Jun 20 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event"
     },
-    "note": "Every frame is from that one wedding. The signatures and the card payment were done by hand by the owner; the client\u2019s email was switched to an inbox the owner reads before the offer went out, because test only emails approved addresses and DocuSeal mails the signer a one-time code. confirm-desktop.png is clipped 24 CSS px inside the dialog after capture, to drop the dimmed page."
+    "note": "Every frame is from that one wedding. The signatures and the card payment were done by hand by the owner; the client\u2019s email was switched to an inbox the owner reads before the offer went out, because test only emails approved addresses and DocuSeal mails the signer a one-time code. confirm-desktop.png (shot at 4x) is clipped 24 CSS px inside the dialog after capture, to drop the dimmed page."
   }
 }

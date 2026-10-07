@@ -451,9 +451,10 @@ const STEPS = {
 		await open(cp, manifest.offerUrl);
 		const accept = cp.getByRole('button', { name: 'Accept proposal' }).last();
 		await accept.waitFor({ timeout: 60_000 });
-		// One phone screen with the price, the event, the menu and the fixed
-		// Accept bar under the dish list.
-		const listBottom = (await docBox(cp.getByRole('heading', { name: /what we.ll serve/i }).locator('xpath=following::ul[1]'))).b;
+		// One phone screen with the price, the event, every line she pays for
+		// (the menu, staff, rentals, the service fee) down to the total, and the
+		// fixed Accept bar under it.
+		const listBottom = (await docBox(cp.getByRole('region', { name: 'Proposal total' }))).b;
 		const barTop = await accept.evaluate((el) => {
 			let n = el;
 			while (n.parentElement && !['fixed', 'sticky'].includes(getComputedStyle(n).position)) n = n.parentElement;
@@ -574,8 +575,13 @@ const STEPS = {
 		manifest.balanceReminderLine = text.match(/Reminder with a pay link goes out [^.]+\./)?.[0];
 		manifest.balanceDue = text.match(/(\$[\d,]+\.\d{2}) due /)?.[1];
 		await saveManifest();
-		const box = await union([card], 16);
-		await shoot(page, 'payments-paid-desktop', box);
+		// The deposit and balance rows: paid by card, and the balance's own
+		// reminder date. The card's head names the inbox payment requests go to,
+		// which on test is the owner's own, so the clip starts at the rows.
+		const cardBox = await docBox(card);
+		const top = (await docBox(card.getByText('Deposit', { exact: true }).first())).y - 24;
+		const bottom = (await docBox(card.getByText(/^Due dates are part of what the client agreed to/).first())).b + 24;
+		await shoot(page, 'payments-paid-desktop', { x: cardBox.x, y: top, width: cardBox.r - cardBox.x, height: bottom - top });
 		console.log('paid', manifest.depositPaid, '|', manifest.balanceReminderLine);
 	},
 

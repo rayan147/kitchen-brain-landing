@@ -1,18 +1,18 @@
 {
   "guests": "150",
   "pricePerGuest": "$95.00",
-  "foodCostPct": "25.8%",
-  "proposalFoodCostPct": "25.8%",
+  "foodCostPct": "24.8%",
+  "proposalFoodCostPct": "24.8%",
   "target": "30%",
   "deposit": "$5,250.00",
   "revenue": "$14,250.00",
   "offerTotal": "$21,043.00",
-  "plannedFoodCost": "$3,750.87",
-  "actualFoodCost": "$3,675.88",
-  "likelyShare": "25.8%",
+  "plannedFoodCost": "$3,608.27",
+  "actualFoodCost": "$3,536.14",
+  "likelyShare": "24.8%",
   "displayPrice": "$49/month",
   "trialDays": "15",
-  "developCommit": "24664bd69",
+  "developCommit": "9a15fe297",
   "capturedOn": "2026-10-07",
   "frames": [
     "events-request-mobile.png",
@@ -36,71 +36,71 @@
   "frameSources": {
     "events-request-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-inquiry-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-menu-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-offer-mobile.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-agreement-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-payment-request-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-pay-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-payments-paid-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-book-event-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-booked-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-shop-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-confirm-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-po-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-receiving-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-prep-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-pack-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     },
     "events-closeout-desktop.png": {
       "host": "localhost",
-      "app": "24664bd69"
+      "app": "9a15fe297"
     }
   }
 }
