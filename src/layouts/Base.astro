@@ -148,4 +148,13 @@ const ogImage = new URL('/og.png', site.url).href;
 		box-shadow: 0 0 0 100vmax var(--color-cream);
 		clip-path: inset(0 -100vmax);
 	}
+	/* No hairline between the bar and the opening: the heroes' border-block
+	   (or border-y) drew a rule under the navbar on 18 routes the homepage
+	   doesn't have (owner, 2026-10-07). The bottom rule still closes the hero.
+	   Considered deleting each component's top border; not used because one
+	   rule here covers every route and any future first section. */
+	[data-header-tone='cream'] + #main > :first-child:not(script),
+	[data-header-tone='cream'] + #main > :first-child:not(script) > :first-child {
+		border-top-width: 0;
+	}
 </style>
