@@ -1102,8 +1102,9 @@ requireText(heroSource, 'This is the food cost; staff, rentals, delivery and a s
 	}
 	// 2026-10-07 (chef review): one posset a guest and celery by weight moved the
 	// homepage wedding from $26.93 / 28.4% to $24.92 / 26.2%. The old pair may not
-	// come back in the homepage data.
-	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039']) {
+	// come back in the homepage data, nor the old prep line (celery 48 each) or
+	// the Dec 28 dates the deposit and Sage frames carried before their re-shoot.
+	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039', '48 each', 'Dec 28', '2026-12-28']) {
 		if (homeData.includes(stale)) failures.push(`homepage wedding: stale figure ${stale} is back (now $24.92 / 26.2%)`);
 	}
 	for (const figure of ['$95.00', '$24.92', '26.2%', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {

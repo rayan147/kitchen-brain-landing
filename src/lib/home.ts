@@ -139,7 +139,7 @@ export const eventStages = [
 		body: 'Buy in whole packs by supplier, then prep in order: sub-recipes first, scaled to the guest count, checked off on the phone.',
 		shot: shot(
 			'prep-list',
-			'Prep list on a phone: Mirepoix Base, make first, 6 batches for 18 kg; carrot 5.4 kg, celery 48 each, yellow onion 7.2 kg; 0 of 34 done.',
+			'Prep list on a phone: 1, Mirepoix Base, make first, 6 batches, makes 18 kg for Braised Short Rib: carrot 5.4 kg, celery 3.3 each, yellow onion 7.2 kg, canola oil 720 ml; then 2, House Beef Stock, 5 batches for the 36 L the short rib needs.',
 			[780, 1560],
 			true
 		)
