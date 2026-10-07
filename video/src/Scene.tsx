@@ -129,8 +129,11 @@ const BeatView: React.FC<{
     ) : beat.layout === "split" ? (
       <SplitScreen
         left={
+          // A short desktop capture sits at the panel's top, like the phone's
+          // pay page beside it, rather than floating in a blank band.
           <Screen
             src={first}
+            fit="fill-top"
             focus={beat.focus}
             startScale={startScale}
             originStart={originStart}
