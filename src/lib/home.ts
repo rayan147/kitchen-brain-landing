@@ -22,6 +22,8 @@ export type Shot = {
 	height: number;
 	/** A phone frame renders narrower than a desktop one. */
 	phone?: boolean;
+	/** The same screen in the app's phone layout, served below 48rem (HomeFrame). */
+	small?: { src: string; width: number; height: number };
 };
 
 /**
@@ -37,6 +39,16 @@ const shot = (name: string, alt: string, px: [number, number], phone = false): S
 	width: Math.round(px[0] / 2),
 	height: Math.round(px[1] / 2),
 	phone
+});
+
+/** Adds the phone capture `<name>-phone.png` (2x, 390 viewport) to a shot. */
+const withPhone = (base: Shot, px: [number, number]): Shot => ({
+	...base,
+	small: {
+		src: base.src.replace(/\.png$/, '-phone.png'),
+		width: Math.round(px[0] / 2),
+		height: Math.round(px[1] / 2)
+	}
 });
 
 export const heroShot = shot(
@@ -143,10 +155,13 @@ export const kitchenRows = [
 		pain: 'You quote $38 a head and find out if you made money when the month closes.',
 		heading: 'Food cost, worked out before you quote.',
 		body: 'Each dish shows its cost per guest and its share of the plate. A missing price is named, never counted as zero.',
-		shot: shot(
-			'food-cost-breakdown',
-			'Dishes per guest with each one’s share of cost: Braised Short Rib two portions at $6.86, $13.72; Lemon Posset $3.18; Wild Mushroom Polenta $2.93; Creamed Spinach $2.91.',
-			[1850, 846]
+		shot: withPhone(
+			shot(
+				'food-cost-breakdown',
+				'Dishes per guest with each one’s share of cost: Braised Short Rib, two portions, $13.72; Lemon Posset $3.18; Wild Mushroom Polenta, about 240 g a portion, $2.93; Creamed Spinach $2.91.',
+				[1850, 846]
+			),
+			[716, 1300]
 		)
 	},
 	{
@@ -156,10 +171,13 @@ export const kitchenRows = [
 		pain: 'The sheet says 40 lb of short rib. You buy 40 lb and you are short at 5 a.m.',
 		heading: 'Buy for what survives the knife.',
 		body: 'Each line carries its trim yield, so the amount to buy covers what you lose to the knife.',
-		shot: shot(
-			'yield-lines',
-			'Recipe lines with yield and the amount to buy: Roma tomato 60 g used at 91% yield, buy 66 g; bell pepper 82%; cucumber 90%; red onion 88%.',
-			[1540, 890]
+		shot: withPhone(
+			shot(
+				'yield-lines',
+				'Recipe lines with yield and the amount to buy: Roma tomato 60 g used at 91% yield, buy 66 g; bell pepper 82%; cucumber 90%.',
+				[1540, 890]
+			),
+			[716, 1600]
 		)
 	},
 	{
@@ -169,10 +187,13 @@ export const kitchenRows = [
 		pain: 'You are not typing 400 ingredients into another system.',
 		heading: 'Upload the invoice. Confirm what it read.',
 		body: 'Invoices, price sheets, spreadsheets and Word files. Lines that match wait for your OK, the rest are flagged for review, and it learns your names.',
-		shot: shot(
-			'import-review',
-			'Import review of a sample Green Valley Produce invoice GVP-48217: 7 products, 4 matched to ingredients, 2 flagged Needs review, 1 ready to create.',
-			[2236, 966]
+		shot: withPhone(
+			shot(
+				'import-review',
+				'Import review of a sample produce invoice: 7 products, 2 flagged Needs review and listed first, 4 matched to ingredients, 1 ready to create.',
+				[2236, 966]
+			),
+			[780, 1526]
 		)
 	},
 	{
@@ -182,10 +203,13 @@ export const kitchenRows = [
 		pain: 'A bride asked for an allergen sheet. You wrote it by hand.',
 		heading: 'Allergens from the recipe, on every dish.',
 		body: 'Allergens roll up through sub-recipes to each dish on the pack list, and labels print from your browser.',
-		shot: shot(
-			'allergens-labels',
-			'Pack list for 150 guests: six dishes, each with its allergens (Contains: Milk; Milk, Wheat; no listed allergens) and a Label button.',
-			[1360, 1208]
+		shot: withPhone(
+			shot(
+				'allergens-labels',
+				'Pack list for 150 guests: six dishes, each with its allergens (Contains: Milk; Milk, Wheat; no listed allergens) and a Label button.',
+				[1360, 1208]
+			),
+			[780, 1892]
 		)
 	}
 ] as const;
@@ -195,10 +219,13 @@ export const frontOfHouse = [
 		id: 'ordering',
 		heading: 'Online ordering',
 		body: 'Clients pick a menu, a date and pickup or delivery on your own ordering page. You approve, and their card payment confirms it.',
-		shot: shot(
-			'ordering-site',
-			'Your online ordering site: plan the meal, pickup or delivery, Coastal Dinner at $93.00 a guest.',
-			[2432, 1630]
+		shot: withPhone(
+			shot(
+				'ordering-site',
+				'Your online ordering site: plan the meal, pickup or delivery, Coastal Dinner at $93.00 a guest.',
+				[2432, 1630]
+			),
+			[780, 1810]
 		)
 	},
 	{

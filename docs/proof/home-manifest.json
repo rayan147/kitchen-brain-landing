@@ -45,10 +45,11 @@
     "sage-answer": "test.app.costcook.io Sage: 'What is still owed on the Nair & Castellano wedding, and when is it due?' -> still owes $10,750.00; Balance due 2026-12-28 with record link; suggested next step Open the wedding, 'You review it first.' (captured 2026-10-06; matches payment-schedule)",
     "hero-pricing": "Menu Wedding Plated Dinner, Price per guest panel (peer app :4197, develop 57a4c7f34): Food cost $26.93, Sells for $95.00, 28.4% food cost, target 30%, within target with 1.6 points to spare, food margin $68.07 a guest",
     "allergens-labels": "Order #783 Pack tab (peer app :4197, develop 57a4c7f34): six dishes with allergen chips (Contains: Milk; Focaccia and Whipped Goat Cheese Contains: Milk, Wheat; Braised Short Rib No listed allergens), portions and a Label button each",
-    "prep-list": "Order #783 Prep tab on a phone 390x844 (peer app :4197, develop 57a4c7f34): Mirepoix Base make first, 6 batches, 18 kg for Braised Short Rib; Carrot 5.4 kg, Celery 48 each, Yellow onion 7.2 kg, Canola oil 720 ml; sticky 0 of 34 \u00b7 Next: Carrot",
+    "prep-list": "Order #783 Prep tab on a phone 390x844 (peer app :4197, develop 57a4c7f34): Mirepoix Base make first, 6 batches, 18 kg for Braised Short Rib; Carrot 5.4 kg, Celery 48 each, Yellow onion 7.2 kg, Canola oil 720 ml; sticky 0 of 34 · Next: Carrot",
     "food-cost-breakdown": "Same menu, Dishes per guest table (peer app :4197): Braised Short Rib 2 x $6.86 = $13.72, Lemon Posset $3.18, Wild Mushroom Polenta $2.93, Creamed Spinach $2.91",
     "yield-lines": "Greek Salad recipe lines (peer app :4197): Bell pepper 82%, Cucumber 90%, Roma tomato 60 g at 91% buy 66 g, Red onion 88%, Feta 100%",
-    "invoice-inbox": "test.app.costcook.io Purchases > Invoice inbox: credit memo CM-3104 (forwarded) waiting in review; invoices HF-3102 and HF-3103 (new sender, unverified) waiting in review. Sender shown is the founder's public contact address."
+    "invoice-inbox": "test.app.costcook.io Purchases > Invoice inbox: credit memo CM-3104 (forwarded) waiting in review; invoices HF-3102 and HF-3103 (new sender, unverified) waiting in review. Sender shown is the founder's public contact address.",
+    "phone-variants": "food-cost, yield, import, allergens and ordering-site each have a -phone.png; alt text names only what both captures show"
   },
   "depositPaid": "$3,500.00",
   "sources": {
@@ -84,7 +85,20 @@
         "sage-answer"
       ],
       "capturedOn": "2026-10-06",
-      "note": "captured in the owner\u2019s signed-in Chrome, read-only, at about 2.3x"
+      "note": "captured in the owner’s signed-in Chrome, read-only, at about 2.3x"
+    },
+    "local-4191-phone": {
+      "appSha": "e002990784f6848dbeec063d68ce7144d2da77be (ordering app on :4192)",
+      "viewport": "390x844 at 2x",
+      "capturedOn": "2026-10-07",
+      "shots": [
+        "food-cost-breakdown-phone",
+        "yield-lines-phone",
+        "import-review-phone",
+        "allergens-labels-phone",
+        "ordering-site-phone"
+      ],
+      "note": "Phone variants served below 48rem (src/components/home/HomeFrame.astro). Each is the app’s own phone layout of the same screen as its desktop sibling, captured as one component (no column crops, no splices): Wedding Plated Dinner Dishes per guest (first four dishes); Greek Salad ingredient lines (bell pepper, cucumber, Roma tomato); import review of GVP-48217 Extracted products (Navel oranges row collapsed); order #783 Pack tab Dishes list (the floating progress bar hidden); the public ordering site top through Coastal Dinner. Figures match the desktop frames from peer-4197 (.72, .18, .93, .91; yields 82/90/91%, buy 66 g). The order header (Sat, Oct 10, Draft) and the billing banner are outside every capture."
     }
   }
 }

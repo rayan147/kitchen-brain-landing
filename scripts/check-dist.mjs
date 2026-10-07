@@ -3,7 +3,7 @@
 // sized by CSS alone, and until the external hashed stylesheet applies
 // it paints at 100% container width — the full-screen logo flash.
 // Runs as postbuild, so `npm run build` (local and Vercel) enforces it.
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { homepageStopIds } from './lib/homepage-stops.mjs';
 
@@ -182,6 +182,26 @@ for (const [tag, name] of homeImgs) {
 	}
 	if (name !== 'hero-pricing' && !/loading="lazy"/.test(tag)) {
 		console.error(`check-dist: homepage frame ${name} must load lazily`);
+		failed = true;
+	}
+}
+
+// Phone captures (design review 2026-10-07): the wide tables are served in the
+// app's own phone layout below 48rem. Each <source> carries its box so the
+// swap does not shift the page, and points at a file that shipped.
+const expectedPhone = ['food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site'];
+const phoneSources = [...homeHtml.matchAll(/<source\b[^>]*srcset="\/proof\/home\/([a-z-]+)-phone\.png"[^>]*>/g)];
+if (phoneSources.map((m) => m[1]).join(',') !== expectedPhone.join(',')) {
+	console.error(`check-dist: homepage phone captures are [${phoneSources.map((m) => m[1]).join(', ')}]; expected [${expectedPhone.join(', ')}]`);
+	failed = true;
+}
+for (const [tag, name] of phoneSources) {
+	if (!/\swidth="\d+"/.test(tag) || !/\sheight="\d+"/.test(tag) || !/media="\(max-width: 47\.99rem\)"/.test(tag)) {
+		console.error(`check-dist: phone capture ${name} needs width, height and the 47.99rem media query`);
+		failed = true;
+	}
+	if (!existsSync(join(dist, 'proof', 'home', `${name}-phone.png`))) {
+		console.error(`check-dist: phone capture ${name}-phone.png is not in dist`);
 		failed = true;
 	}
 }

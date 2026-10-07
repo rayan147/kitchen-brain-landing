@@ -15,6 +15,7 @@
  */
 import HomeBand from './HomeBand.astro';
 import SectionHandoff from '../SectionHandoff.astro';
+import HomeFrame from './HomeFrame.astro';
 import { kitchenRows, moreGuides } from '../../lib/home';
 ---
 <HomeBand
@@ -35,7 +36,7 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 					<a href={row.guide.href} class="home-guide">{row.guide.label}</a>
 				</div>
 				<figure class="row-figure">
-					<img src={row.shot.src} alt={row.shot.alt} width={row.shot.width} height={row.shot.height} loading="lazy" decoding="async" class="home-shot" />
+					<HomeFrame shot={row.shot} />
 				</figure>
 			</li>
 		))}
