@@ -1,0 +1,37 @@
+---
+/**
+ * Front of house (canvas S5). The canvas drew this band dark; the site is light
+ * only (CLAUDE.md, anti-reference: dark pages), so it takes its turn in the
+ * cream and soft-amber alternation (rule 1).
+ *
+ * Considered Composite; not used because it is two fixed cards.
+ */
+import HomeBand from './HomeBand.astro';
+import SectionHandoff from '../SectionHandoff.astro';
+import { frontOfHouse } from '../../lib/home';
+---
+<HomeBand
+	id="front"
+	tone="cream"
+	eyebrow="Front of house"
+	heading="Orders and invoices come to you."
+	lede="Your booking rules send each request down the quick path or to you as an inquiry, and supplier invoices arrive by email and wait for your OK."
+>
+	<div class="cards">
+		{frontOfHouse.map((card) => (
+			<article class="card" data-front={card.id} data-reveal>
+				<img src={card.shot.src} alt={card.shot.alt} width={card.shot.width} height={card.shot.height} loading="lazy" decoding="async" class="home-shot card-shot" />
+				<h3 class="home-h2">{card.heading}</h3>
+				<p class="home-body mt-3">{card.body}</p>
+				{'guide' in card && <a href={card.guide.href} class="home-guide">{card.guide.label}</a>}
+			</article>
+		))}
+	</div>
+	<SectionHandoff from="front" class="home-handoff" />
+</HomeBand>
+
+<style>
+	.cards { display: grid; gap: 3rem; margin-top: 3rem; }
+	.card-shot { aspect-ratio: 3 / 2; object-fit: cover; object-position: top left; margin-bottom: 1.5rem; }
+	@media (min-width: 64rem) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

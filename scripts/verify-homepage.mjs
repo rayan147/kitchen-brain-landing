@@ -174,7 +174,7 @@ try {
 
 	await navigate();
 	const sticky = await evaluate(`(() => new Promise((resolve) => {
-		const demo = document.querySelector('#demo');
+		const demo = document.querySelector('#event-walk');
 		document.documentElement.style.scrollBehavior = 'auto';
 		scrollTo(0, demo.offsetTop + demo.offsetHeight + 10);
 		requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -183,7 +183,7 @@ try {
 			resolve({ hidden: bar.hidden, actionHeight: action.getBoundingClientRect().height });
 		}));
 	}))()`);
-	assert(!sticky.hidden, 'mobile sticky action does not appear after the product tour');
+	assert(!sticky.hidden, 'mobile sticky action does not appear after the event walk');
 	assert(sticky.actionHeight >= 44, `mobile sticky action is ${sticky.actionHeight}px tall`);
 
 	await viewport(320, 844, true);
@@ -251,7 +251,7 @@ try {
 		primary: Boolean(document.querySelector('main .btn-primary')),
 		sections: [...document.querySelectorAll('main > section')].map(section => section.id).filter(Boolean)
 	}))()`);
-	assert(noScript.heading?.startsWith('The event you sold is the event you cook.'), 'no JavaScript: homepage identity is missing');
+	assert(noScript.heading?.startsWith('Know what the job makes before you cook it.'), 'no JavaScript: homepage identity is missing');
 	assert(noScript.primary, 'no JavaScript: primary action is missing');
 	// Assert visitor destinations rather than an obsolete minimum section count.
 	// The one explicit stop order, shared with check-landing-claims and check-dist.

@@ -1,0 +1,60 @@
+---
+/**
+ * The kitchen half (canvas S3 rows 02 to 04 and S4 row 07). Each row has the
+ * band's shape at a smaller scale (rule 3): eyebrow, heading, one sentence, one
+ * frame. The reader's own line sits above the heading in quotes-free italic,
+ * the inner voice, as the owner chose.
+ *
+ * Canvas row 06 (should have cost against did cost, with "[$ from orders]" and
+ * "[$ from purchases]") is not here: no captured record backs those figures.
+ *
+ * Considered Composite; not used because the rows are one flat list.
+ */
+import HomeBand from './HomeBand.astro';
+import SectionHandoff from '../SectionHandoff.astro';
+import { kitchenRows, moreGuides } from '../../lib/home';
+---
+<HomeBand
+	id="kitchen"
+	tone="amber"
+	eyebrow="Costs, buys and labels"
+	heading="Know the number before the month closes it."
+	lede="The same recipes that price the proposal cost the plate, size the order and write the allergen sheet."
+>
+	<ol role="list" class="rows">
+		{kitchenRows.map((row, index) => (
+			<li class="row" data-kitchen-row={row.id} data-reveal>
+				<div class="row-copy">
+					<p class="home-eyebrow">{String(index + 2).padStart(2, '0')} · {row.eyebrow}</p>
+					<p class="home-body pain">{row.pain}</p>
+					<h3 class="home-h2">{row.heading}</h3>
+					<p class="home-body mt-4">{row.body}</p>
+					<a href={row.guide.href} class="home-guide">{row.guide.label}</a>
+				</div>
+				<figure class="row-figure">
+					<img src={row.shot.src} alt={row.shot.alt} width={row.shot.width} height={row.shot.height} loading="lazy" decoding="async" class="home-shot" />
+				</figure>
+			</li>
+		))}
+	</ol>
+	<nav class="more" aria-labelledby="more-heading" data-home-more>
+		<p id="more-heading" class="home-eyebrow">Also in CostCook</p>
+		<ul role="list" class="more-list">
+			{moreGuides.map((guide) => <li><a href={guide.href} class="home-guide">{guide.label}</a></li>)}
+		</ul>
+	</nav>
+	<SectionHandoff from="kitchen" class="home-handoff" />
+</HomeBand>
+
+<style>
+	.rows { display: grid; gap: var(--spacing-section-tight); margin-top: 3rem; }
+	.row { display: grid; gap: 2rem; align-items: center; }
+	.pain { margin-top: .75rem; font-style: italic; }
+	.row-figure { margin: 0; }
+	.more { margin-top: var(--spacing-section-tight); }
+	.more-list { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin-top: .5rem; }
+	@media (min-width: 64rem) {
+		.row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 4rem; }
+		.row:nth-child(even) .row-copy { order: 2; }
+	}
+</style>

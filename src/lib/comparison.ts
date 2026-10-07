@@ -55,6 +55,7 @@
 import { SAGE_STATUS, sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } from './sage';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
+import { eventPayments } from './event-payments';
 import { acceptanceBoundary, depositMethods } from './events';
 import { dietary, allergenCount, allergenCountCapital } from './dietary';
 import { spell } from './words';
@@ -297,15 +298,15 @@ export const comparison: RowGroup[] = [
 				label: 'Event deposits tracked',
 				sheet: 'key',
 				costcook: 'yes',
-				note: `You record the deposit by hand, as ${depositMethods}, against what you asked for.`,
+				note: `What you asked for against what came in, paid by card from an email link or recorded by hand, as ${depositMethods}.`,
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},
 			{
-				label: comingPlans.eventPayments.comparisonLabel,
+				label: eventPayments.comparisonLabel,
 				sheet: 'key',
-				costcook: comingPlans.eventPayments.verdict,
-				note: comingPlans.eventPayments.comparisonNote,
+				costcook: eventPayments.verdict,
+				note: eventPayments.comparisonNote,
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},

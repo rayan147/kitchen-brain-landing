@@ -1,0 +1,218 @@
+/**
+ * The homepage's frames and the words beside them, in one place.
+ * Story: docs/stories/homepage-redesign-2026-10.story.md
+ * Layout rules: docs/superpowers/specs/2026-10-06-homepage-redesign-layout.md
+ *
+ * Every image is a real app frame; where it came from and what it shows is in
+ * docs/proof/home-manifest.json. width and height are the PNG's pixels halved
+ * (captured at 2x), so the browser reserves the right box before it loads.
+ * Every figure in a sentence here is read off one of these frames.
+ *
+ * Considered Strategy; not used because the sections differ in data, not in
+ * behavior: each one renders the same eyebrow, heading, sentence and frame.
+ */
+
+import { eventPayments } from './event-payments';
+import { acceptanceBoundary } from './events';
+
+export type Shot = {
+	src: string;
+	alt: string;
+	width: number;
+	height: number;
+	/** A phone frame renders narrower than a desktop one. */
+	phone?: boolean;
+};
+
+const shot = (name: string, alt: string, px: [number, number], phone = false): Shot => ({
+	src: `/proof/home/${name}.png`,
+	alt,
+	width: Math.round(px[0] / 2),
+	height: Math.round(px[1] / 2),
+	phone
+});
+
+export const heroShot = shot(
+	'hero-pricing',
+	'Price per guest on the menu: sells for $95.00, food cost $26.93, 28.4% against a 30% target, within target with 1.6 points to spare, food margin $68.07 a guest.',
+	[732, 814]
+);
+
+/** The flow strip: two ways in, one costed order, the kitchen, closeout. */
+export const flowLanes = [
+	{ title: 'Online order', steps: ['Orders on your site', 'You approve', 'Pays by card link'] },
+	{ title: 'Custom event', steps: ['Inquiry', 'Proposal on their phone', 'E-signature', 'Card deposit'] },
+	{ title: 'One costed order', steps: ['Booked, paid, menu and guest count locked'] },
+	{ title: 'Buy · cook · pack', steps: ['Shop', 'Purchase orders', 'Prep', 'Pack'] },
+	{ title: 'Closeout', steps: ['Should have cost against did cost'] }
+] as const;
+
+/**
+ * The event walk (rule 4): one tab per stage, in the app's order. Without
+ * JavaScript every panel renders, stacked, so nothing is hidden.
+ */
+export const eventStages = [
+	{
+		id: 'inquiry',
+		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
+		tab: 'Inquiry',
+		heading: 'The call goes in rough.',
+		body: 'Only a client or event name is required. A date not decided yet and a guest count that is an estimate are fine.',
+		shot: shot(
+			'inquiry-mobile',
+			'New inquiry on a phone: client Priya Nair by phone call, Nair & Castellano wedding, date not decided yet, 150 guests marked as an estimate.',
+			[780, 2274],
+			true
+		)
+	},
+	{
+		id: 'proposal',
+		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
+		tab: 'Proposal',
+		heading: 'She says yes on her phone.',
+		body: 'The client opens the proposal with no login, sees the total for her event, and taps Accept proposal or Ask for changes.',
+		shot: shot(
+			'proposal-mobile',
+			'Client proposal on a phone: Nair & Castellano wedding, $14,250.00 for 150 guests at $95.00 per guest, with Ask for changes and Accept proposal.',
+			[780, 1560],
+			true
+		)
+	},
+	{
+		id: 'deposit',
+		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
+		tab: 'Deposit',
+		heading: 'Paid by card from a link.',
+		body: eventPayments.homepage,
+		shot: shot(
+			'payment-schedule',
+			'Deposit and payments on the booked event: $3,500.00 asked for and received, deposit paid by card from an email link; balance $10,750.00 owed, due Mon, Dec 28, with Request payment.',
+			[916, 459]
+		)
+	},
+	{
+		id: 'confirm',
+		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
+		tab: 'Confirm order',
+		heading: acceptanceBoundary,
+		body: 'Confirming locks quantities and prices for the event. Shopping, prep and pack lists become checklists.',
+		shot: shot(
+			'confirm-dialog',
+			'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
+			[992, 476]
+		)
+	},
+	{
+		id: 'prep',
+		guide: { href: '/features/order-shop-prep-pack', label: 'How orders, shop, prep and pack work' },
+		tab: 'Shop / Prep',
+		heading: 'The lists come from the same menu.',
+		body: 'Buy in whole packs by supplier, then prep in order: sub-recipes first, scaled to the guest count, checked off on the phone.',
+		shot: shot(
+			'prep-list',
+			'Prep list on a phone: Mirepoix Base, make first, 6 batches for 18 kg; carrot 5.4 kg, celery 48 each, yellow onion 7.2 kg; 0 of 34 done.',
+			[780, 1688],
+			true
+		)
+	}
+] as const;
+
+/** The kitchen half: each row is eyebrow, heading, one sentence, one frame (rule 3). */
+export const kitchenRows = [
+	{
+		id: 'costs',
+		guide: { href: '/features/menus-and-quotes', label: 'How menus and quotes are priced' },
+		eyebrow: 'Costs itself',
+		pain: 'You quote $38 a head and find out if you made money when the month closes.',
+		heading: 'Food cost, worked out before you quote.',
+		body: 'Each dish shows its cost per guest and its share of the plate. A missing price is named, never counted as zero.',
+		shot: shot(
+			'food-cost-breakdown',
+			'Dishes per guest with each one’s share of cost: Braised Short Rib two portions at $6.86, $13.72; Lemon Posset $3.18; Wild Mushroom Polenta $2.93; Creamed Spinach $2.91.',
+			[1850, 846]
+		)
+	},
+	{
+		id: 'yield',
+		guide: { href: '/features/recipes-and-costing', label: 'How recipes are costed' },
+		eyebrow: 'Orders the right amount',
+		pain: 'The sheet says 40 lb of short rib. You buy 40 lb and you are short at 5 a.m.',
+		heading: 'Buy for what survives the knife.',
+		body: 'Each line carries its trim yield, so the amount to buy covers what you lose to the knife.',
+		shot: shot(
+			'yield-lines',
+			'Recipe lines with yield and the amount to buy: Roma tomato 60 g used at 91% yield, buy 66 g; bell pepper 82%; cucumber 90%; red onion 88%.',
+			[1540, 890]
+		)
+	},
+	{
+		id: 'paperwork',
+		guide: { href: '/features/invoices-and-price-list-import', label: 'How invoice and price-list import works' },
+		eyebrow: 'Reads your paperwork',
+		pain: 'You are not typing 400 ingredients into another system.',
+		heading: 'Upload the invoice. Confirm what it read.',
+		body: 'Invoices, price sheets, spreadsheets and Word files. Lines that match wait for your OK, the rest are flagged for review, and it learns your names.',
+		shot: shot(
+			'import-review',
+			'Import review of a sample Green Valley Produce invoice GVP-48217: 7 products, 4 matched to ingredients, 2 flagged Needs review, 1 ready to create.',
+			[2236, 966]
+		)
+	},
+	{
+		id: 'labels',
+		guide: { href: '/features/nutrition-facts-and-allergens', label: 'How allergens and nutrition work' },
+		eyebrow: 'Writes the labels',
+		pain: 'A bride asked for an allergen sheet. You wrote it by hand.',
+		heading: 'Allergens from the recipe, on every dish.',
+		body: 'Allergens roll up through sub-recipes to each dish on the pack list, and labels print from your browser.',
+		shot: shot(
+			'allergens-labels',
+			'Pack list for 150 guests: six dishes, each with its allergens (Contains: Milk; Milk, Wheat; no listed allergens) and a Label button.',
+			[1360, 1208]
+		)
+	}
+] as const;
+
+export const frontOfHouse = [
+	{
+		id: 'ordering',
+		heading: 'Online ordering',
+		body: 'Clients pick a menu, a date and pickup or delivery on your own ordering page. You approve, and their card payment confirms it.',
+		shot: shot(
+			'ordering-site',
+			'Your online ordering site: plan the meal, pickup or delivery, Coastal Dinner at $93.00 a guest.',
+			[2432, 1630]
+		)
+	},
+	{
+		id: 'invoice-email',
+		guide: { href: '/features/invoice-email', label: 'How invoice email works' },
+		heading: 'Invoices by email',
+		body: 'Suppliers send invoices to your kitchen’s private address. Each email shows what became of it, and nothing counts until you confirm it.',
+		shot: shot(
+			'invoice-inbox',
+			'Invoice inbox: a credit memo for returned flour, CM-3104, waiting in review, to come off your cost once confirmed; and invoices HF-3102 and HF-3103 from a new sender, waiting in review with a note to check the sender before confirming.',
+			[1568, 770]
+		)
+	}
+] as const;
+
+/** Under the kitchen band: the guides the bands above do not reach. */
+export const moreGuides = [
+	{ href: '/features/ingredients-and-supplier-prices', label: 'Ingredients and supplier prices' },
+	{ href: '/features/purchasing-and-receiving', label: 'Purchasing and receiving' },
+	{ href: '/features/inventory', label: 'Inventory' },
+	{ href: '/features/purchases-and-month-cost', label: 'Purchases and month cost' },
+	{ href: '/features/labels-and-printing', label: 'Labels and printing' },
+	{ href: '/features/guest-restrictions-and-dietary-guards', label: 'Guest restrictions' },
+	{ href: '/features/events-and-proposals#clients', label: 'Clients' },
+	{ href: '/features/team-and-access', label: 'Team and access' }
+] as const;
+
+export const sageGuide = { href: '/features/sage', label: 'How Sage works' } as const;
+
+export const sageShot = shot(
+	'sage-answer',
+	'Sage answering What is short for Saturday? with a link to the record it used.',
+	[1644, 940]
+);

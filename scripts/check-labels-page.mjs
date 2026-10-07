@@ -9,7 +9,6 @@ const featureHubPath = new URL('../dist/features/index.html', import.meta.url);
 const labelsSource = await readFile(new URL('../src/lib/labels.ts', import.meta.url), 'utf8');
 const comparisonSource = await readFile(new URL('../src/lib/comparison.ts', import.meta.url), 'utf8');
 const faqSource = await readFile(new URL('../src/lib/faq.ts', import.meta.url), 'utf8');
-const homepageSource = await readFile(new URL('../src/components/sections/TheOtherTools.astro', import.meta.url), 'utf8');
 const [html, featureHubHtml] = await Promise.all([readFile(pagePath, 'utf8'), readFile(featureHubPath, 'utf8')]);
 
 const coming = /LABELS_STATUS = 'coming'/.test(labelsSource);
@@ -58,7 +57,7 @@ if ((html.match(/data-labels-disclosure/g) ?? []).length !== 6) throw new Error(
 if ((html.match(/data-full-proof-link/g) ?? []).length !== 4) throw new Error('Every labels proof must have a full-size link.');
 if (html.includes('Six taps at the bench')) throw new Error('Labels page must not claim an unverified tap count.');
 if (!html.includes('<picture>') || !html.includes('(min-width: 40rem)')) throw new Error('Labels hero must art-direct one responsive proof request.');
-if (!comparisonSource.includes('labelsAvailability.verdict') || !faqSource.includes('labelsAvailability.faqStatus') || !homepageSource.includes('labelsAvailability.homepageTradeoff')) {
+if (!comparisonSource.includes('labelsAvailability.verdict') || !faqSource.includes('labelsAvailability.faqStatus')) {
 	throw new Error('Labels availability has drifted away from its shared source.');
 }
 if (!featureHubHtml.includes('href="/features/labels-and-printing"')) {

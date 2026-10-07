@@ -132,309 +132,85 @@ if (!homeHtml.includes('data-features-menu')) {
 	failed = true;
 }
 
-// The duplicated hero loop was retired by the 2026-09-11 review. Preserve
-// the one connected event and its complete, readable first cost result instead.
-for (const required of ['data-outcomes-guide', 'data-first-dish-preparation', '39.6%', '$26.93', '$89.78', '30% food-cost target']) {
- if (!homeHtml.includes(required)) { console.error(`check-dist: first event decision is missing ${required}`); failed = true; }
-}
+// THE HOMEPAGE CONTRACT, rebuilt with the page on 2026-10-06 (canvas
+// Home-A-story; docs/stories/homepage-redesign-2026-10.story.md; layout rules in
+// docs/superpowers/specs/2026-10-06-homepage-redesign-layout.md). The old
+// section-by-section pins went with the sections they pinned.
 
-// The written guide walks the film in order, so this list is the film's order:
-// the nutrition panel sits with the prep list it follows on screen, and the
-// Sage answer sits after the price carries back. Added 2026-09-06 with the two
-// beats (walkthrough v5).
-const demoGuideSteps = ['quote', 'shop', 'prep', 'nutrition', 'send', 'receive', 'update', 'ask'];
-if (
-	!homeHtml.includes('data-demo-guide') ||
-	!homeHtml.includes('data-demo-guide-jump') ||
-	!homeHtml.includes('data-demo-multi-run')
-) {
-	console.error('check-dist: homepage demo is missing its readable guide, jump link, or multi-run proof');
-	failed = true;
-}
-for (const step of demoGuideSteps) {
-	if (!homeHtml.includes(`data-demo-guide-step="${step}"`)) {
-		console.error(`check-dist: homepage demo guide is missing ${step}`);
-		failed = true;
-	}
-}
-
-const outcomeStages = ['quote', 'plan', 'buy', 'cost-again'];
-if (
-	!homeHtml.includes('data-outcomes-guide') ||
-	(homeHtml.match(/data-outcome-handoff/g) ?? []).length !== outcomeStages.length
-) {
-	console.error('check-dist: homepage outcomes are missing the guided route or one of its handoffs');
-	failed = true;
-}
-for (const stage of outcomeStages) {
-	if (!homeHtml.includes(`data-outcome-stage="${stage}"`)) {
-		console.error(`check-dist: homepage outcome route is missing ${stage}`);
-		failed = true;
-	}
-}
-
-// RC-56: the spreadsheet pain and its mirrored answers, read off the EMITTED
-// HTML rather than the component source. check-landing-claims.mjs pins both
-// lists in the .astro files, which proves the strings are written; it cannot
-// prove they render, and it reads them with a regex over the whole file that a
-// stray `title:` elsewhere in the module would poison. This is the same class
-// of hole as the tautological CTA check removed on 2026-09-05.
-//
-// The ORDER is the contract. TheProblem states four pains and CustomerOutcomes
-// answers them one for one; the homepage section order rests on a measurement
-// that is void if that pairing breaks (src/pages/index.astro).
-const stripTags = (html) => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
-const spreadsheetPains = [
-	'You quote from an old price',
-	'You rebuild the same order four times',
-	'You retype the list to buy it',
-	'You learn the margin after service',
-];
-const spreadsheetBefores = [
-	'A price the copy never got',
-	'One number, four tabs',
-	'Rows retyped into emails',
-	'An invoice in a folder, not the sheet',
-];
-const problemSectionHtml = homeHtml.slice(
-	homeHtml.indexOf('id="problem"'),
-	homeHtml.indexOf('id="yield"'),
-);
-const renderedPains = [...problemSectionHtml.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>/g)].map((match) =>
-	stripTags(match[1]),
-);
-if (renderedPains.join(' | ') !== spreadsheetPains.join(' | ')) {
-	console.error(
-		`check-dist: homepage pains render as [${renderedPains.join(', ')}] but the answers ` +
-			`in outcomes are written against [${spreadsheetPains.join(', ')}] (RC-56)`,
-	);
-	failed = true;
-}
-// The "Before" side of each handoff, in route order. Every handoff renders
-// Before then Instead, so the odd entries are the befores.
-const outcomesSectionHtml = homeHtml.slice(
- homeHtml.indexOf('data-outcomes-guide'), homeHtml.indexOf('id="demo"')
-);
-// Read the semantic before/after label, not the presentation's strong-tag count.
-const renderedBefores = [...outcomesSectionHtml.matchAll(/data-outcome-handoff[^>]*aria-label="([^"]+) becomes [^"]+"/g)]
- .map((match) => stripTags(match[1]));
-if (renderedBefores.join(' | ') !== spreadsheetBefores.join(' | ')) {
-	console.error(
-		`check-dist: homepage answers render befores [${renderedBefores.join(', ')}], which no ` +
-			`longer mirror the four pains one for one and in order (RC-56)`,
-	);
-	failed = true;
-}
-// The fifth element renders, and stays out of the ticket stack. If it ever
-// lands inside the <ol> it becomes a peer to the eye and the pairing above
-// silently stops meaning anything; the h3 count already catches the obvious
-// version of that, this catches the subtle one.
-if (!problemSectionHtml.includes('Those four are the slow ones')) {
-	console.error('check-dist: homepage diagnosis no longer names the silent failure (RC-56/RC-20)');
-	failed = true;
-}
-const problemListHtml = problemSectionHtml.slice(
-	problemSectionHtml.indexOf('<ol'),
-	problemSectionHtml.indexOf('</ol>'),
-);
-if (problemListHtml.includes('Those four are the slow ones')) {
-	console.error(
-		'check-dist: the fifth element has moved inside the ticket stack, which makes it read as a ' +
-			'fifth pain and unpairs the four from their answers (RC-56)',
-	);
-	failed = true;
-}
-if (!problemSectionHtml.includes('Most kitchens cost on a spreadsheet')) {
-	console.error('check-dist: homepage diagnosis no longer names the spreadsheet in its lede (RC-56)');
-	failed = true;
-}
-
-// The quiet-one block reads as a guide, not as three paragraphs: the shape
-// stated once, the two failures as two labelled rows, the rule at the end.
-// Pinned because the rows are <p> rather than <h3> on purpose (a heading here
-// would join the four-pain list above and unpair it from its four answers), so
-// nothing else in the build can see them go missing.
-for (const [text, label] of [
-	['A price you have not got yet', 'the missing-price row (RC-20)'],
-	['A conversion nobody checked', 'the missing-conversion row (RC-20)'],
-]) {
-	if (!problemSectionHtml.includes(text)) {
-		console.error(`check-dist: homepage diagnosis no longer names ${label}`);
-		failed = true;
-	}
-}
-
-// SECTION ORDER, at the rendered level. src/lib/stops.ts and index.astro are
-// pinned to each other in check-landing-claims.mjs, but nothing checked that
-// the HTML actually comes out in that order. The stops, in order, are
-// scripts/lib/homepage-stops.mjs: every one must render, in that order. The
-// proof video runs fourth since 2026-09-27 (it was second from 2026-09-06),
-// still ahead of the diagnosis; see the note in src/pages/index.astro.
+// Section order, at the rendered level (scripts/lib/homepage-stops.mjs).
 const homeSectionIds = [...homeHtml.matchAll(/<section[^>]*\sid="([a-z-]+)"/g)].map((m) => m[1]);
 const renderedStops = homeSectionIds.filter((id) => homepageStopIds.includes(id));
 if (renderedStops.join(',') !== homepageStopIds.join(',')) {
-	console.error(
-		`check-dist: homepage stops render as [${renderedStops.join(', ')}]; ` +
-			`expected [${homepageStopIds.join(', ')}] (scripts/lib/homepage-stops.mjs)`,
-	);
-	failed = true;
-}
-const demoIndex = homeSectionIds.indexOf('demo');
-const problemIndex = homeSectionIds.indexOf('problem');
-if (demoIndex === -1 || problemIndex === -1 || demoIndex > problemIndex) {
-	console.error(
-		`check-dist: homepage renders sections [${homeSectionIds.join(', ')}]; the proof video ` +
-			`must run before the diagnosis (2026-09-06 owner decision, src/pages/index.astro)`,
-	);
+	console.error(`check-dist: homepage renders bands [${renderedStops.join(', ')}]; expected [${homepageStopIds.join(', ')}]`);
 	failed = true;
 }
 
-// HEADING ORDER. The demo section lost its h2 on 2026-09-06 and regained one as
-// its eyebrow when it moved to second. If it loses it again, the first heading
-// under the page h1 becomes an h3 and the page skips a level at the top, which
-// no other check on this page would notice.
-const firstHeadingAfterH1 = homeHtml.slice(homeHtml.indexOf('</h1>')).match(/<(h[2-6])\b/);
-if (firstHeadingAfterH1?.[1] !== 'h2') {
-	console.error(
-		`check-dist: the first heading after the homepage h1 is ` +
-			`<${firstHeadingAfterH1?.[1] ?? 'none'}>, so the page skips a heading level at the top`,
-	);
+// Rule 1: the bands alternate cream and soft amber, hero first in cream.
+const bandTones = [...homeHtml.matchAll(/class="[^"]*\bhome-band--(cream|amber)\b/g)].map((m) => m[1]);
+if (bandTones.length !== homepageStopIds.length + 1 || bandTones.some((tone, i) => tone !== (i % 2 ? 'amber' : 'cream'))) {
+	console.error(`check-dist: homepage bands must alternate cream and amber from the hero; got [${bandTones.join(', ')}]`);
 	failed = true;
 }
 
-const intakeSources = [
-	'Photograph it',
-	'Drop the PDF or the doc in',
-	'Upload the spreadsheet',
-	'Paste the text'
-];
-if (
-	!homeHtml.includes('data-paper-intake') ||
-	!homeHtml.includes('data-intake-queue') ||
-	!homeHtml.includes('data-intake-confirmation')
-) {
-	console.error('check-dist: homepage paper intake is missing its source-to-confirmation path');
+// The hero: one h1, the accent word, the still in the media slot loaded eagerly.
+if ((homeHtml.match(/<h1\b/g) ?? []).length !== 1) {
+	console.error('check-dist: homepage must have exactly one h1');
 	failed = true;
 }
-for (const source of intakeSources) {
-	if (!homeHtml.includes(`data-intake-source="${source}"`)) {
-		console.error(`check-dist: homepage paper intake is missing ${source}`);
+const heroMedia = homeHtml.match(/<figure[^>]*data-hero-media[^>]*>([\s\S]*?)<\/figure>/)?.[1] ?? '';
+if (!/src="\/proof\/home\/hero-pricing\.png"[^>]*loading="eager"|loading="eager"[^>]*src="\/proof\/home\/hero-pricing\.png"/.test(heroMedia)) {
+	console.error('check-dist: the hero media slot must hold hero-pricing.png, loaded eagerly');
+	failed = true;
+}
+
+// Every homepage frame: real capture, measured box, lazy below the hero.
+const homeImgs = [...homeHtml.matchAll(/<img\b[^>]*src="\/proof\/home\/([a-z-]+)\.png"[^>]*>/g)];
+const expectedFrames = ['hero-pricing', 'inquiry-mobile', 'proposal-mobile', 'payment-schedule', 'confirm-dialog', 'prep-list', 'food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox', 'sage-answer'];
+const renderedFrames = homeImgs.map((m) => m[1]);
+if (renderedFrames.join(',') !== expectedFrames.join(',')) {
+	console.error(`check-dist: homepage frames render [${renderedFrames.join(', ')}]; expected [${expectedFrames.join(', ')}]`);
+	failed = true;
+}
+for (const [tag, name] of homeImgs) {
+	if (!/\swidth="\d+"/.test(tag) || !/\sheight="\d+"/.test(tag)) {
+		console.error(`check-dist: homepage frame ${name} has no width and height`);
+		failed = true;
+	}
+	if (!/\salt="[^"]{20,}"/.test(tag)) {
+		console.error(`check-dist: homepage frame ${name} needs alt text that says what it shows`);
+		failed = true;
+	}
+	if (name !== 'hero-pricing' && !/loading="lazy"/.test(tag)) {
+		console.error(`check-dist: homepage frame ${name} must load lazily`);
 		failed = true;
 	}
 }
 
-const nutritionSteps = ['01', '02', '03', '04', '05'];
-if (
-	!homeHtml.includes('data-nutrition-evidence') ||
-	!homeHtml.includes('data-nutrition-proof') ||
-	!homeHtml.includes('data-nutrition-cue')
-) {
-	console.error('check-dist: homepage nutrition section is missing its evidence rail or proof');
+// Rule 4: the event walk. Five stages in the app's order, every panel in the
+// HTML, and the tab row hidden until the script runs, so nothing is hidden
+// without JavaScript.
+const walkStages = [...homeHtml.matchAll(/data-event-stage="([a-z]+)"/g)].map((m) => m[1]);
+if (walkStages.join(',') !== 'inquiry,proposal,deposit,confirm,prep') {
+	console.error(`check-dist: the event walk renders stages [${walkStages.join(', ')}]; expected inquiry, proposal, deposit, confirm, prep`);
 	failed = true;
 }
-for (const step of nutritionSteps) {
-	if (!homeHtml.includes(`data-nutrition-step="${step}"`)) {
-		console.error(`check-dist: homepage nutrition evidence is missing step ${step}`);
-		failed = true;
-	}
-}
-
-const yieldStages = ['Used in recipe', 'Trim yield', 'Required to buy', 'Purchase cost', 'Line cost'];
-if (!homeHtml.includes('data-yield-path') || !homeHtml.includes('data-yield-proof')) {
-	console.error('check-dist: homepage yield section is missing its calculation path or product proof');
+if (!/<div[^>]*role="tablist"[^>]*\shidden\b/.test(homeHtml)) {
+	console.error('check-dist: the event walk tab row must ship hidden, for the script to reveal');
 	failed = true;
 }
-for (const stage of yieldStages) {
-	if (!homeHtml.includes(`data-yield-stage="${stage}"`)) {
-		console.error(`check-dist: homepage yield calculation is missing ${stage}`);
-		failed = true;
-	}
-}
-
-// The homepage Coming band, as the exact set of plans it renders. Today that is
-// Spanish and card payment for booked events (the owner ruling of 2026-09-27
-// added the second). Dietary characteristics (RC-60), buying to par (RC-43)
-// and kitchen labels (RC-35) all left the band by shipping, which is the only
-// way off it. The set is compared exactly, not by presence, so a plan that
-// appears without being added here fails as loudly as one that vanishes.
-const comingPlans = ['event-payments', 'spanish'];
-if (!homeHtml.includes('data-coming-plans')) {
-	console.error('check-dist: homepage is missing the Coming soon plan');
+if (/data-walk-panel[^>]*\shidden\b|\shidden\b[^>]*data-walk-panel/.test(homeHtml)) {
+	console.error('check-dist: an event walk panel ships hidden; every stage must read without JavaScript');
 	failed = true;
 }
-const renderedComingPlans = [...homeHtml.matchAll(/data-coming-plan="([^"]+)"/g)].map((m) => m[1]).sort();
-if (renderedComingPlans.join(',') !== comingPlans.join(',')) {
-	console.error(
-		`check-dist: homepage Coming band renders [${renderedComingPlans.join(', ')}]; ` +
-			`expected exactly [${comingPlans.join(', ')}]`,
-	);
+if ((homeHtml.match(/role="tab"/g) ?? []).length !== 5) {
+	console.error('check-dist: the event walk must have five tabs');
 	failed = true;
 }
 
-const realOrderInputs = ['One menu', 'Guest count', 'Current prices'];
-const realOrderOutputs = ['Food cost', 'Shopping', 'Prep', 'Pack'];
-if (!homeHtml.includes('data-real-order-path') || !homeHtml.includes('data-real-order-trial')) {
-	console.error('check-dist: homepage close is missing its real-order path or trial boundary');
-	failed = true;
-}
-for (const input of realOrderInputs) {
-	if (!homeHtml.includes(`data-order-input="${input}"`)) {
-		console.error(`check-dist: homepage real-order path is missing input ${input}`);
-		failed = true;
-	}
-}
-for (const output of realOrderOutputs) {
-	if (!homeHtml.includes(`data-order-output="${output}"`)) {
-		console.error(`check-dist: homepage real-order path is missing output ${output}`);
-		failed = true;
-	}
-}
-
-const founderConsequences = ['missing', 'connected', 'event'];
-if (
-	!homeHtml.includes('data-founder-trust') ||
-	!homeHtml.includes('data-founder-portrait') ||
-	!homeHtml.includes('data-founder-contact')
-) {
-	console.error('check-dist: homepage founder section is missing its portrait, trust scene, or contact');
-	failed = true;
-}
-for (const consequence of founderConsequences) {
-	if (!homeHtml.includes(`data-founder-consequence="${consequence}"`)) {
-		console.error(`check-dist: homepage founder section is missing ${consequence}`);
-		failed = true;
-	}
-}
-
-// Sage is one bounded path: records are read, a draft can be prepared,
-// and a person decides whether it moves. Preserve that story and both pieces
-// of product evidence when the homepage section is edited.
-const sageStages = ['read', 'prepare', 'approve'];
-const sageScopes = ['Run the shift', 'Check a recipe', 'Check stock and buying', 'Finish setup', 'Prepare one change'];
-const sageBoundaries = ['Evidence', 'Access', 'Action'];
-if (
-	!homeHtml.includes('data-sage-home') ||
-	!homeHtml.includes('data-sage-answer') ||
-	!homeHtml.includes('data-sage-onboarding')
-) {
-	console.error('check-dist: homepage Sage section is missing its answer or onboarding evidence');
-	failed = true;
-}
-for (const stage of sageStages) {
-	if (!homeHtml.includes(`data-sage-stage="${stage}"`)) {
-		console.error(`check-dist: homepage Sage path is missing ${stage}`);
-		failed = true;
-	}
-}
-for (const scope of sageScopes) {
-	if (!homeHtml.includes(`data-sage-scope="${scope}"`)) {
-		console.error(`check-dist: homepage Sage scope is missing ${scope}`);
-		failed = true;
-	}
-}
-for (const boundary of sageBoundaries) {
-	if (!homeHtml.includes(`data-sage-boundary="${boundary}"`)) {
-		console.error(`check-dist: homepage Sage boundary is missing ${boundary}`);
+// The close: the trial card and the founder.
+for (const hook of ['data-real-order-trial', 'data-founder-trust', 'data-home-sage']) {
+	if (!homeHtml.includes(hook)) {
+		console.error(`check-dist: homepage is missing ${hook}`);
 		failed = true;
 	}
 }
@@ -478,16 +254,7 @@ if (failed) process.exit(1);
 console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s) all carry intrinsic width/height`);
 console.log(`check-dist: ${pages.length} built page(s) carry no CSP-blocked inline script or event handler`);
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
-console.log('check-dist: homepage retains the connected event and early setup/cost evidence');
-console.log(`check-dist: homepage demo retains ${demoGuideSteps.length} readable handoffs and the multi-run boundary`);
-console.log(`check-dist: homepage outcomes retain ${outcomeStages.length} guided handoffs and their proof`);
 console.log(`check-dist: /compare renders a spreadsheet column on ${compareRowCount} rows across 5 group tables`);
-console.log(`check-dist: homepage diagnosis renders ${spreadsheetPains.length} spreadsheet pains mirrored by ${spreadsheetBefores.length} answers`);
-console.log(`check-dist: homepage paper intake retains ${intakeSources.length} sources, one queue, and confirmation`);
-console.log(`check-dist: homepage nutrition evidence retains ${nutritionSteps.length} guided steps and proof`);
-console.log(`check-dist: homepage yield calculation retains ${yieldStages.length} visible stages and proof`);
-console.log(`check-dist: homepage retains ${comingPlans.length} explicitly marked Coming soon plans`);
-console.log(`check-dist: homepage close retains ${realOrderInputs.length} real-order inputs, ${realOrderOutputs.length} outputs, and trial terms`);
-console.log(`check-dist: homepage founder trust retains a portrait, direct contact, and ${founderConsequences.length} product consequences`);
-console.log(`check-dist: homepage Sage retains ${sageStages.length} stages, ${sageScopes.length} jobs, and ${sageBoundaries.length} boundaries`);
+console.log(`check-dist: homepage renders ${homepageStopIds.length + 1} alternating bands and ${expectedFrames.length} measured frames, hero eager, the rest lazy`);
+console.log('check-dist: homepage event walk renders five stages, every panel readable without JavaScript');
 console.log(`check-dist: shared Sage icon is present across ${sageIconSurfaces.length} homepage and decision-route contexts`);

@@ -146,3 +146,12 @@ not as the page's snap.)
   wrong: Confirm order books the event; only the deposit is recorded by hand.)
 - The full-size link is visible text beside the image, not an aria-label
   wrapping it, so the image keeps its alt and the link's name is what it says.
+
+### Revision 2026-10-06 (payments and invoice email live)
+- Owner ruling: card payment for booked events and invoice email are live.
+  Step 11's "card deposits, balance reminders" removal is reversed: the
+  payments line renders `eventPayments.homepage` from
+  `src/lib/event-payments.ts` (the client pays by card from an email link; a
+  reminder with a pay link goes out on the day the balance is due, read off
+  kitchen-brain `balance-reminders.ts`). The Coming line is gone.
+- Customer invoices stay unbuilt and unclaimed.

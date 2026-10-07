@@ -38,7 +38,7 @@
 
 import type { Verdict } from './comparison';
 
-export const INVOICE_EMAIL_STATUS = 'coming' as Verdict;
+export const INVOICE_EMAIL_STATUS = 'yes' as Verdict;
 
 const invoiceEmailIsComing = INVOICE_EMAIL_STATUS !== 'yes';
 

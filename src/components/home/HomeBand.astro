@@ -1,0 +1,94 @@
+---
+/**
+ * One homepage band: the layout rules 1 to 3 of
+ * docs/superpowers/specs/2026-10-06-homepage-redesign-layout.md, in one place.
+ *
+ * Rule 1: bands alternate cream and soft amber instead of hairline rules.
+ * Rule 2: every band uses the same padding (--spacing-section) and the page
+ *   uses four type sizes only: --text-display (the h1), --text-h2 (band and row
+ *   headings), --text-body-lg (every sentence) and --text-eyebrow (eyebrows,
+ *   tab labels, captions). The shared tokens are read, never redefined, because
+ *   the feature pages use them too.
+ * Rule 3: the band opens with an amber eyebrow, a Fraunces heading and one
+ *   sentence; its frame or rows go in the slot.
+ *
+ * Contrast (AA, computed): ink-soft #49524c on softamber #f3e7d3 is 6.62:1 and
+ * on cream #faf5ea 7.44:1; amber-deep #8f5716 is 4.85:1 on softamber and
+ * 5.45:1 on cream, enough for the small eyebrow; green-deep #256549 (the hero's
+ * accent word and the primary button) is 5.66:1 and 6.36:1.
+ *
+ * Considered Template Method; not used because the bands differ only in their
+ * slot content, which Astro's slot already varies; a base class would add a
+ * layer with one hook.
+ */
+interface Props {
+	id: string;
+	tone: 'cream' | 'amber';
+	eyebrow?: string;
+	heading?: string;
+	lede?: string;
+	/** For a band whose heading is drawn by its own content. */
+	labelledBy?: string;
+}
+const { id, tone, eyebrow, heading, lede, labelledBy } = Astro.props;
+const headingId = `${id}-heading`;
+---
+<section id={id} class:list={['home-band', `home-band--${tone}`]} aria-labelledby={labelledBy ?? (heading ? headingId : undefined)}>
+	<div class="container-page">
+		{heading && (
+			<header class="band-head" data-reveal>
+				{eyebrow && <p class="home-eyebrow">{eyebrow}</p>}
+				<h2 id={headingId} class="home-h2">{heading}</h2>
+				{lede && <p class="home-body band-lede">{lede}</p>}
+			</header>
+		)}
+		<slot />
+	</div>
+</section>
+
+<style is:global>
+	.home-band { padding-block: var(--spacing-section); }
+	.home-band--cream { background: var(--color-cream); }
+	.home-band--amber { background: var(--color-softamber); }
+	.home-eyebrow {
+		color: var(--color-amber-deep);
+		font-size: var(--text-eyebrow);
+		line-height: var(--text-eyebrow--line-height);
+		font-weight: 700;
+		letter-spacing: .08em;
+		text-transform: uppercase;
+	}
+	.home-h2 {
+		margin-top: .75rem;
+		font-family: var(--font-display);
+		font-size: var(--text-h2);
+		line-height: var(--text-h2--line-height);
+		font-weight: 600;
+		text-wrap: balance;
+	}
+	.home-body {
+		color: var(--color-ink-soft);
+		font-size: var(--text-body-lg);
+		line-height: 1.6;
+	}
+	/* Captions and the trial line share the eyebrow's size: still four sizes. */
+	.home-small { color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
+	/* Rule 1: the hand-off keeps its link, not its dashed rule. */
+	.home-band .home-handoff { border-top: 0; padding-top: 0; }
+	/* A quiet link to the feature guide for the band or row it sits under. */
+	.home-guide { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: .5rem; color: var(--color-green-deep); font-size: var(--text-eyebrow); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+	.home-guide:hover { color: var(--color-ink); }
+	.band-head { max-width: 46rem; }
+	.band-lede { margin-top: 1rem; }
+	/* Rule 6: one frame for every screenshot. Flat, 8px radius, one shadow, no tilt. */
+	.home-shot {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+		background: var(--color-paper);
+		box-shadow: 0 1px 2px rgb(31 36 33 / .08), 0 12px 28px rgb(31 36 33 / .10);
+	}
+	/* A phone frame shows its top 40rem; taller captures crop from the bottom. */
+	.home-shot--phone { max-width: 20rem; max-height: 40rem; margin-inline: auto; object-fit: cover; object-position: top; }
+</style>

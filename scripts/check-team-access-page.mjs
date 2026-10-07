@@ -43,7 +43,9 @@ if ((html.match(/<dt[^>]*>Workspace access<\/dt>/g) ?? []).length !== 3
 // block inside #more; see src/components/sections/WhatElse.astro. What this
 // contract is for is unchanged: the homepage introduces team and access, and it
 // points at the page that carries it in full.
-if (!homeHtml.includes('data-more-block="access"') || !homeHtml.includes('href="/features/team-and-access"')) {
+// Since 2026-10-06 the introduction is a named link in the homepage's
+// "Also in CostCook" list (data-home-more).
+if (!homeHtml.includes('data-home-more') || !homeHtml.includes('href="/features/team-and-access"')) {
 	throw new Error('Homepage is missing the Team & Access introduction or destination.');
 }
 if (!featureHubHtml.includes('href="/features/team-and-connections"')) {

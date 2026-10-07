@@ -1,0 +1,61 @@
+---
+/**
+ * The close (canvas S7): the founder, the plan, the same primary as the hero.
+ * A stated exception to rule 3: it carries a portrait and the price card, not
+ * a screenshot. The founder line is the site's verified wording
+ * (BuiltForKitchens); every figure on the card is read from launchPlan.
+ *
+ * Considered Composite; not used because it is two fixed columns.
+ */
+import HomeBand from './HomeBand.astro';
+import { cta, demoCta, launchPlan, site } from '../../lib/site';
+---
+<HomeBand id="start" tone="cream" labelledBy="start-heading">
+	<div class="close-grid" data-home-close>
+		<div>
+			<figure class="founder" data-founder-trust>
+				<img src="/founder.jpg" alt={`${site.founderName}, chef and founder of CostCook`} width="384" height="384" loading="lazy" decoding="async" class="founder-photo" />
+				<figcaption>
+					<p class="home-body founder-line">I cooked professionally for twelve years before I built CostCook.</p>
+					<p class="home-small mt-2">{site.founderName}, chef and founder</p>
+				</figcaption>
+			</figure>
+			<h2 id="start-heading" class="home-h2 mt-10">Bring one real invoice. See it in 15 minutes.</h2>
+			<p class="home-body mt-4">For caterers and restaurants that cater. One kitchen per plan.</p>
+			<p class="home-body mt-4" data-real-order-setup>Your first dish takes about fifteen minutes: upload its invoices or price sheets, confirm what CostCook read, and type any line it could not.</p>
+			<div class="mt-6 flex flex-wrap gap-x-5 gap-y-3">
+				<a href={demoCta.href} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+				<a href="/features" class="btn-quiet">See everything it does, area by area</a>
+			</div>
+		</div>
+		<div class="plan" data-real-order-trial>
+			<p class="home-eyebrow">Launch plan</p>
+			<p class="plan-price">{launchPlan.displayPrice}</p>
+			<p class="home-small">{launchPlan.unit}</p>
+			<dl class="plan-terms">
+				<div><dt>Today</dt><dd>$0 charged</dd></div>
+				<div><dt>Free trial</dt><dd>{launchPlan.trialDays} days</dd></div>
+				<div><dt>Crew</dt><dd>Unlimited during launch</dd></div>
+				<div><dt>Cancel</dt><dd>Settings, no call</dd></div>
+			</dl>
+			<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary plan-cta">{cta.label}</a>
+			<p class="home-small mt-3">Card up front, charged $0 today. Cancel before day {launchPlan.trialDays + 1} from Settings, Billing.</p>
+			<p class="home-small mt-2">Questions first? <a href="/faq" class="home-guide">Read the FAQ</a></p>
+		</div>
+	</div>
+</HomeBand>
+
+<style>
+	.close-grid { display: grid; gap: 3rem; align-items: start; }
+	.founder { display: flex; gap: 1.25rem; align-items: center; margin: 0; }
+	.founder-photo { width: 5rem; height: 5rem; border-radius: 999px; object-fit: cover; flex: none; }
+	.founder-line { color: var(--color-ink); font-family: var(--font-display); font-style: italic; }
+	.plan { padding: 2rem; background: var(--color-paper); border-radius: 8px; box-shadow: 0 1px 2px rgb(31 36 33 / .08), 0 12px 28px rgb(31 36 33 / .10); }
+	.plan-price { margin-top: .5rem; font-family: var(--font-display); font-size: var(--text-display); line-height: 1; font-weight: 600; }
+	.plan-terms { margin-block: 1.5rem; }
+	.plan-terms div { display: flex; justify-content: space-between; gap: 1rem; padding-block: .6rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-body-lg); }
+	.plan-terms dt { color: var(--color-ink-soft); }
+	.plan-terms dd { font-weight: 600; }
+	.plan-cta { width: 100%; justify-content: center; }
+	@media (min-width: 64rem) { .close-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 5rem; } }
+</style>

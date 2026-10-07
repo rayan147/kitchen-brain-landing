@@ -1,0 +1,156 @@
+---
+/**
+ * The event walk (rule 4): Inquiry → Proposal → Deposit → Confirm order →
+ * Shop / Prep in one band, one stage per tab.
+ *
+ * NOTHING HIDDEN WITHOUT JAVASCRIPT. The server renders every panel, stacked,
+ * each with its own heading, and the tab row carries `hidden`. The script
+ * below shows the tab row and hides the inactive panels only once it runs, so
+ * a visitor with scripts off reads all five stages in order.
+ *
+ * Keyboard: the WAI-ARIA tabs pattern with automatic activation. Left and
+ * Right move between tabs and wrap, Home and End jump to the ends, and only
+ * the selected tab is in the tab order.
+ *
+ * Considered State; not used because the only state is which one of five
+ * panels is showing, a single index, and every stage behaves the same.
+ */
+import HomeBand from './HomeBand.astro';
+import SectionHandoff from '../SectionHandoff.astro';
+import { eventStages } from '../../lib/home';
+---
+<HomeBand
+	id="event-walk"
+	tone="cream"
+	eyebrow="Gets you booked and paid"
+	heading="From the first call to a booked, paid event."
+	lede="You chase the deposit by text and forget the balance until the week of the event. Here is one wedding, start to booked."
+>
+	<div class="walk" data-event-walk>
+		<div role="tablist" aria-label="Stages of one event" class="walk-tabs" hidden data-walk-tabs>
+			{eventStages.map((stage, index) => (
+				<button
+					type="button"
+					role="tab"
+					id={`walk-tab-${stage.id}`}
+					aria-controls={`walk-panel-${stage.id}`}
+					aria-selected={index === 0 ? 'true' : 'false'}
+					tabindex={index === 0 ? 0 : -1}
+					class="walk-tab"
+					data-walk-tab
+				>
+					<span class="walk-step" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+					{stage.tab}
+				</button>
+			))}
+		</div>
+
+		{eventStages.map((stage, index) => (
+			<section
+				id={`walk-panel-${stage.id}`}
+				class="walk-panel"
+				aria-labelledby={`walk-heading-${stage.id}`}
+				data-walk-panel
+				data-event-stage={stage.id}
+			>
+				<div class="walk-copy">
+					<p class="home-eyebrow">{String(index + 1).padStart(2, '0')} · {stage.tab}</p>
+					<h3 id={`walk-heading-${stage.id}`} class="home-h2">{stage.heading}</h3>
+					<p class="home-body mt-4" data-booking-payments={stage.id === 'deposit' ? 'event-payments' : undefined}>{stage.body}</p>
+					<a href={stage.guide.href} class="home-guide">{stage.guide.label}</a>
+				</div>
+				<figure class="walk-figure">
+					<img
+						src={stage.shot.src}
+						alt={stage.shot.alt}
+						width={stage.shot.width}
+						height={stage.shot.height}
+						loading="lazy"
+						decoding="async"
+						class:list={['home-shot', { 'home-shot--phone': stage.shot.phone }]}
+					/>
+				</figure>
+			</section>
+		))}
+	</div>
+	<p class="home-small mt-8">Rather watch it? <a href="/tour/main" class="home-guide">Take the product tour</a></p>
+	<SectionHandoff from="event-walk" class="home-handoff" />
+</HomeBand>
+
+<script>
+	for (const walk of document.querySelectorAll<HTMLElement>('[data-event-walk]')) {
+		const tablist = walk.querySelector<HTMLElement>('[data-walk-tabs]');
+		const tabs = [...walk.querySelectorAll<HTMLButtonElement>('[data-walk-tab]')];
+		const panels = [...walk.querySelectorAll<HTMLElement>('[data-walk-panel]')];
+		if (!tablist || tabs.length !== panels.length) continue;
+
+		const select = (index: number, focus: boolean) => {
+			tabs.forEach((tab, i) => {
+				const on = i === index;
+				tab.setAttribute('aria-selected', String(on));
+				tab.tabIndex = on ? 0 : -1;
+				panels[i].hidden = !on;
+			});
+			if (focus) tabs[index].focus();
+		};
+
+		// Upgrade: panels become tabpanels and only the first shows.
+		panels.forEach((panel, i) => {
+			panel.setAttribute('role', 'tabpanel');
+			panel.setAttribute('aria-labelledby', tabs[i].id);
+			panel.tabIndex = 0;
+		});
+		tablist.hidden = false;
+		walk.classList.add('is-tabbed');
+		select(0, false);
+
+		tabs.forEach((tab, i) => {
+			tab.addEventListener('click', () => select(i, false));
+			tab.addEventListener('keydown', (event) => {
+				const last = tabs.length - 1;
+				const next =
+					event.key === 'ArrowRight' ? (i === last ? 0 : i + 1)
+					: event.key === 'ArrowLeft' ? (i === 0 ? last : i - 1)
+					: event.key === 'Home' ? 0
+					: event.key === 'End' ? last
+					: null;
+				if (next === null) return;
+				event.preventDefault();
+				select(next, true);
+			});
+		});
+	}
+</script>
+
+<style>
+	.walk { margin-top: 2.5rem; }
+	/* The tabs wrap rather than scroll, so every stage stays on screen at
+	   any width and at 200% text. */
+	.walk-tabs { display: flex; flex-wrap: wrap; gap: .5rem; }
+	.walk-tab {
+		display: inline-flex;
+		align-items: center;
+		gap: .5rem;
+		min-height: 2.75rem;
+		padding: .5rem 1rem;
+		border: 1px solid var(--color-hairline-strong);
+		border-radius: 999px;
+		background: var(--color-paper);
+		color: var(--color-ink);
+		font-size: var(--text-eyebrow);
+		font-weight: 700;
+		cursor: pointer;
+	}
+	.walk-tab[aria-selected='true'] { background: var(--color-green-deep); border-color: var(--color-green-deep); color: var(--color-paper); }
+	.walk-tab:focus-visible { outline: 2px solid var(--color-green-deep); outline-offset: 3px; }
+	.walk-step { font-variant-numeric: tabular-nums; opacity: .75; }
+	.walk-panel { display: grid; gap: 2rem; align-items: center; padding-block: 2rem; }
+	/* Stacked (no script): each stage is separated by space, not a rule. */
+	.walk-panel + .walk-panel { margin-top: 1rem; }
+	.is-tabbed .walk-panel { margin-top: 0; }
+	.walk-panel:focus-visible { outline: 2px solid var(--color-green-deep); outline-offset: 6px; border-radius: 8px; }
+	.walk-figure { margin: 0; }
+	@media (min-width: 64rem) {
+		.walk-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 4rem; }
+	}
+</style>

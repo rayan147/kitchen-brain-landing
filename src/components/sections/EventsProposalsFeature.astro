@@ -20,10 +20,10 @@
  *    it and contradicts every other frame; the story's scenes end at the day's
  *    room. The kitchen half lives on /features/order-shop-prep-pack.
  *
- * MONEY. An event deposit is recorded by hand in production (A-14). The only
- * verbs for it on this page are ask, record and track, and the card payment
- * page is in the Coming block, read from src/lib/coming-plans.ts. The built-
- * page contract (scripts/check-events-proposals-page.mjs) pins that sentence.
+ * MONEY. Since 2026-10-06 the client pays the deposit and the balance by card
+ * from an email link (owner ruling; src/lib/event-payments.ts owns the words).
+ * The Payments note renders that file's sentence, and the built-page contract
+ * (scripts/check-events-proposals-page.mjs) pins it.
  *
  * CAPTURES. Every screenshot is a real frame of one wedding from
  * scripts/capture-events-proof.mjs (notes: docs/landing-capture/
@@ -37,7 +37,7 @@
  */
 import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
-import { comingPlans } from '../../lib/coming-plans';
+import { eventPayments } from '../../lib/event-payments';
 import { eventProof as proof } from '../../lib/proof';
 import { acceptanceBoundary, depositMethods, eventSteps, type EventStepName } from '../../lib/events';
 
@@ -66,7 +66,7 @@ const limits = [
 	'Clients is for owners and managers, and a client’s page shows no money.'
 ] as const;
 
-const payments = comingPlans.eventPayments;
+const payments = eventPayments;
 ---
 
 <!-- story: docs/stories/features-events-and-proposals.story.md -->
@@ -158,7 +158,7 @@ const payments = comingPlans.eventPayments;
 			<div data-reveal>
 				<h2 id="agreement-heading">The agreement and the deposit stay on the event.</h2>
 				<p>Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.</p>
-				<p data-events-money>You record the deposit by hand, as {depositMethods}, and the event shows what you asked for and what came in.</p>
+				<p data-events-money>The client pays by card from an email link, or you record it by hand, as {depositMethods}, and the event shows what you asked for and what came in.</p>
 			</div>
 			<figure class="proof panel" data-reveal>
 				<figcaption>Ask for a deposit · sample event</figcaption>
@@ -218,13 +218,13 @@ const payments = comingPlans.eventPayments;
 	<section id="limits" class="product-section" aria-labelledby="limits-heading">
 		<div class="container-page">
 			<div class="section-head" data-reveal>
-				<h2 id="limits-heading">Where it stops, and what is coming.</h2>
+				<h2 id="limits-heading">How the client pays, and where it stops.</h2>
 			</div>
 			<ul role="list" class="limit-list">
 				{limits.map((line) => <li data-events-limit data-reveal>{line}</li>)}
 			</ul>
-			<div class="coming-note" data-events-coming data-reveal>
-				<p class="ticket-label">Coming</p>
+			<div class="coming-note" data-events-payments data-reveal>
+				<p class="ticket-label">Payments</p>
 				<p class="coming-title">{payments.title}</p>
 				<p>{payments.homepage}</p>
 			</div>

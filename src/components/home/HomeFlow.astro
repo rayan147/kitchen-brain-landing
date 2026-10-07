@@ -1,0 +1,48 @@
+---
+/**
+ * How it fits together (canvas S2). A stated exception to rule 3: it has no
+ * screenshot, because it is the one diagram on the page, drawn as kitchen
+ * tickets (the only place the dashed ticket rule appears, rule 1).
+ *
+ * Considered Composite (lanes of steps); not used because the strip is two
+ * fixed levels rendered once, with no recursion.
+ */
+import HomeBand from './HomeBand.astro';
+import SectionHandoff from '../SectionHandoff.astro';
+import { flowLanes } from '../../lib/home';
+---
+<HomeBand
+	id="fits"
+	tone="amber"
+	eyebrow="How it fits together"
+	heading="Two ways in. One costed order."
+	lede="Sage answers questions about all of it, and invoices by email keep your prices current."
+>
+	<ol role="list" class="lanes">
+		{flowLanes.map((lane, index) => (
+			<li class="ticket" data-reveal style={`--reveal-delay: ${index * 60}ms`}>
+				<p class="home-eyebrow">{lane.title}</p>
+				<ul role="list" class="mt-3">
+					{lane.steps.map((step) => <li class="home-small step">{step}</li>)}
+				</ul>
+			</li>
+		))}
+	</ol>
+	<SectionHandoff from="fits" class="home-handoff" />
+</HomeBand>
+
+<style>
+	.lanes { display: grid; gap: 1rem; margin-top: 2.5rem; }
+	.ticket {
+		padding: 1rem 1.25rem;
+		background: var(--color-cream);
+		border: 1px dashed var(--color-ticket-rule);
+		border-radius: 8px;
+		transform: rotate(-1.5deg);
+	}
+	.ticket:nth-child(even) { transform: rotate(1.5deg); }
+	.step { padding-block: .35rem; color: var(--color-ink); border-top: 1px dashed var(--color-ticket-rule); }
+	.step:first-child { border-top: 0; }
+	@media (min-width: 48rem) { .lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+	@media (min-width: 72rem) { .lanes { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+</style>

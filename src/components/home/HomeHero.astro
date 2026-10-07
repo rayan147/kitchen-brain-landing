@@ -1,0 +1,53 @@
+---
+/**
+ * The hero (canvas S1). Story: docs/stories/homepage-redesign-2026-10.story.md
+ * Rule 5: one accent word, in kitchen green, matching the primary button and
+ * nothing else. Rule 6: the frame is flat, no tilt.
+ *
+ * The media slot holds the price-per-guest still today. The promo film (built
+ * on the promo-video branch) replaces it here without moving anything else:
+ * swap the <img> inside [data-hero-media] for the <video>, keep the still as
+ * its poster.
+ *
+ * Considered Strategy (still vs video media); not used because there is one
+ * medium at a time and the swap is a one-line edit at release, not a runtime
+ * choice.
+ */
+import { cta, demoCta, launchPlan } from '../../lib/site';
+import { heroShot } from '../../lib/home';
+---
+<!-- story: docs/stories/homepage-redesign-2026-10.story.md -->
+<section class="home-band home-band--cream hero" aria-labelledby="hero-heading">
+	<div class="container-page hero-grid">
+		<div>
+			<p class="home-eyebrow">Catering software, built by a chef</p>
+			<h1 id="hero-heading" class="anim-enter hero-h1">Know what the job <span class="accent">makes</span> before you cook it.</h1>
+			<p class="home-body mt-5 max-w-[52ch]">For caterers and restaurants that cater. Take the inquiry, send a proposal priced from your own recipes, get booked and paid by card link, and cook from shopping, prep and pack lists built from the same order.</p>
+			<div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+			</div>
+			<p class="home-small mt-3"><strong>{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} {launchPlan.unit}, {launchPlan.crew}. Card up front, charged $0 today.</p>
+		</div>
+		<figure class="hero-media" data-hero-media>
+			<img src={heroShot.src} alt={heroShot.alt} width={heroShot.width} height={heroShot.height} loading="eager" fetchpriority="high" decoding="async" class="home-shot hero-shot" />
+			<figcaption class="home-small mt-3">Sample wedding, checked before the quote goes out. Food only: packaging, rentals, staff and anything you cook over the guarantee sit outside it.</figcaption>
+		</figure>
+	</div>
+</section>
+
+<style>
+	.hero-grid { display: grid; gap: 3rem; align-items: center; }
+	.hero-h1 {
+		margin-top: 1rem;
+		font-family: var(--font-display);
+		font-size: var(--text-display);
+		line-height: var(--text-display--line-height);
+		letter-spacing: var(--text-display--letter-spacing);
+		font-weight: 600;
+		text-wrap: balance;
+	}
+	.accent { color: var(--color-green-deep); }
+	.hero-media { margin: 0; justify-self: center; width: 100%; max-width: 24rem; }
+	@media (min-width: 64rem) { .hero-grid { grid-template-columns: 1.15fr 1fr; gap: 4rem; } }
+</style>

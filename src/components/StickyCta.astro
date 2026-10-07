@@ -5,7 +5,8 @@
  * MEASURED 2026-08-29 at 390x844: the demo section's CTA ended near 4,500px
  * and the next one appeared at ~11,500px of a ~12,700px page, so a reader who
  * had just watched the proof scrolled seven thousand pixels with nothing to
- * act on. This bar appears once #demo has scrolled off the top and hides
+ * act on. This bar appears once #event-walk (the first proof band since the
+ * 2026-10-06 rebuild; it was #demo) has scrolled off the top and hides
  * again once #start is in view, which is the only stretch where the page has
  * no primary of its own. It never shows on the first screen, never over the
  * close, and never above md, where the page is short enough to see the ask.
@@ -50,7 +51,7 @@ import { cta, launchPlan } from '../lib/site';
 
 <script>
 	const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
-	const demo = document.getElementById('demo');
+	const demo = document.getElementById('event-walk');
 	const start = document.getElementById('start');
 	if (bar && demo && start) {
 		// A scroll listener, not an IntersectionObserver. The observer only fires

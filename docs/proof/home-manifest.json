@@ -1,0 +1,89 @@
+{
+  "world": "Harbor & Hearth Catering (renamed demo seed, sample values)",
+  "client": "Priya Nair",
+  "event": "Nair & Castellano wedding",
+  "eventDate": "Sat, Oct 10",
+  "menu": "Wedding Plated Dinner",
+  "orderId": 783,
+  "guests": "150",
+  "pricePerGuest": "$95.00",
+  "revenue": "$14,250.00",
+  "foodCostPct": "28.4%",
+  "foodCostPctProposalBuilder": "28.3%",
+  "targetPct": "30%",
+  "foodCost": "$4,039.96",
+  "foodCostPerGuest": "$26.93",
+  "foodMargin": "$10,210.04",
+  "deposit": "$3,500.00",
+  "balance": "$10,750.00",
+  "balanceDue": "$10,750.00",
+  "appSha": "e002990784f6848dbeec063d68ce7144d2da77be",
+  "appBranch": "fix/offer-walk-fixes-2026-10-05 (contains origin/develop 56c3ac996cbfae87d3e94f3ebb4fac9e5476dc8a)",
+  "capturedOn": "2026-10-05",
+  "notes": [
+    "foodCostPct is the order page and menu figure; the proposal builder showed 28.3% ($4,039.50) for the same menu minutes earlier.",
+    "Within target, so the order page shows no charge-at-least line.",
+    "Allergen answers for the 22 wedding ingredients were entered through the UI with the evidence note 'Sample kitchen data'.",
+    "menu-service and the proposal builder both read 28.3% ($4,039.50); the order page and menu read 28.4% ($4,039.96).",
+    "Stripe: test-mode connected account; deposit paid with Stripe test card 4242. App reads Stripe status only on the ?stripe=returned link, so a later approval needed that link reloaded.",
+    "balance-reminder was sent by running the app sweep with today=2026-10-07; the scheduled job would send it that morning."
+  ],
+  "target": "30%",
+  "foodCostPctMenuService": "28.3%",
+  "foodCostMenuService": "$4,039.50",
+  "suggestedAtTarget": "$90.00",
+  "frames": {
+    "menu-service": "Event step 2 Menu & service: $95.00 a guest, food cost 28.3%, target 30%, Suggested $90.00 at 30%, event totals $14,250.00 / $4,039.50",
+    "book-event": "Event page #book-event before booking: agreement not prepared, $3,500.00 deposit not asked",
+    "inquiry-mobile": "New inquiry form on a phone, filled, never saved (Priya Nair, Nair & Castellano wedding, date not decided, 150 guests)",
+    "payment-request": "Event page kitchen draft after Ask for a deposit and send the link: Deposit $3,500.00 owed, card by email link, Sent Oct 5, Send again; Balance $10,750.00 owed, due Wed Oct 7, Request payment",
+    "pay-mobile": "Client pay page on a phone (ordering app): Harbor & Hearth Catering has your date / Pay what you agreed / Pay $3,500.00",
+    "payment-schedule": "test.app.costcook.io event Nair & Castellano wedding (booked, Dec 28), Deposit and payments: Asked for $3,500.00, Received $3,500.00, Deposit Paid by card from email link, Balance $10,750.00 owed due Mon Dec 28, Request payment",
+    "balance-reminder": "The real reminder email from the app (balance-reminders sweep run with today=2026-10-07, the due day), rendered: the $10,750.00 balance is due Wednesday, October 7, Pay $10,750.00",
+    "ordering-site": "Public ordering site (ACTIVE) at desktop: Plan the meal. The kitchen confirms the details; Pickup or Delivery; Menu/Choices/Event/Contact/Review; Coastal Dinner $93.00 per guest",
+    "import-review": "Import review of a sample Green Valley Produce invoice GVP-48217: 4 matched, 2 need review, 1 ready to create",
+    "sage-answer": "Sage (Google provider) answering What is short for Saturday? with its source record",
+    "hero-pricing": "Menu Wedding Plated Dinner, Price per guest panel (peer app :4197, develop 57a4c7f34): Food cost $26.93, Sells for $95.00, 28.4% food cost, target 30%, within target with 1.6 points to spare, food margin $68.07 a guest",
+    "allergens-labels": "Order #783 Pack tab (peer app :4197, develop 57a4c7f34): six dishes with allergen chips (Contains: Milk; Focaccia and Whipped Goat Cheese Contains: Milk, Wheat; Braised Short Rib No listed allergens), portions and a Label button each",
+    "prep-list": "Order #783 Prep tab on a phone 390x844 (peer app :4197, develop 57a4c7f34): Mirepoix Base make first, 6 batches, 18 kg for Braised Short Rib; Carrot 5.4 kg, Celery 48 each, Yellow onion 7.2 kg, Canola oil 720 ml; sticky 0 of 34 \u00b7 Next: Carrot",
+    "food-cost-breakdown": "Same menu, Dishes per guest table (peer app :4197): Braised Short Rib 2 x $6.86 = $13.72, Lemon Posset $3.18, Wild Mushroom Polenta $2.93, Creamed Spinach $2.91",
+    "yield-lines": "Greek Salad recipe lines (peer app :4197): Bell pepper 82%, Cucumber 90%, Roma tomato 60 g at 91% buy 66 g, Red onion 88%, Feta 100%",
+    "invoice-inbox": "test.app.costcook.io Purchases > Invoice inbox: credit memo CM-3104 (forwarded) waiting in review; invoices HF-3102 and HF-3103 (new sender, unverified) waiting in review. Sender shown is the founder's public contact address."
+  },
+  "depositPaid": "$3,500.00",
+  "sources": {
+    "peer-4197": {
+      "appSha": "57a4c7f34",
+      "appBranch": "develop",
+      "shots": [
+        "hero-pricing",
+        "allergens-labels",
+        "prep-list",
+        "food-cost-breakdown",
+        "yield-lines"
+      ],
+      "capturedOn": "2026-10-06",
+      "note": "read-only; order 783 booked with Book anyway (deposit unpaid in that copy), so payment-schedule stays from the 4191 run where the test-card deposit was paid"
+    },
+    "local-4191": {
+      "appSha": "e002990784f6848dbeec063d68ce7144d2da77be",
+      "shots": [
+        "proposal-mobile",
+        "balance-reminder",
+        "import-review",
+        "ordering-site",
+        "sage-answer"
+      ],
+      "capturedOn": "2026-10-05"
+    },
+    "test-app": {
+      "host": "test.app.costcook.io",
+      "shots": [
+        "payment-schedule",
+        "invoice-inbox"
+      ],
+      "capturedOn": "2026-10-06",
+      "note": "captured in the owner\u2019s signed-in Chrome, read-only, at about 2.3x"
+    }
+  }
+}

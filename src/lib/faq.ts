@@ -25,6 +25,7 @@
 import { launchPlan, site } from './site';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
+import { eventPayments } from './event-payments';
 import { orderingAvailability } from './ordering';
 import { dietary } from './dietary';
 import { sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } from './sage';
@@ -184,7 +185,7 @@ export const faq: readonly FaqGroup[] = [
 			{
 				id: 'event-payments',
 				question: 'Can clients pay the event deposit by card?',
-				answer: [comingPlans.eventPayments.faq],
+				answer: [eventPayments.faq],
 				claims: ['RC-65']
 			},
 			{
