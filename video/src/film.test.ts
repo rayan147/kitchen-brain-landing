@@ -4,7 +4,9 @@ import {
   FILM,
   SCENE_ORDER,
   TITLE,
+  FADE_FRAMES,
   cameraStart,
+  questionFadeFrames,
   captionsFor,
   resolveCaption,
   sceneFrames,
@@ -17,10 +19,12 @@ const manifest: Manifest = {
   foodCostPct: "28.4%",
   proposalFoodCostPct: "28.3%",
   target: "30%",
-  deposit: "$3,500.00",
+  deposit: "$5,250.00",
   revenue: "$14,250.00",
-  plannedFoodCost: "$4,039.96",
-  actualFoodCost: "$4,093.50",
+  offerTotal: "$21,043.00",
+  plannedFoodCost: "$3,750.87",
+  actualFoodCost: "$3,675.88",
+  likelyShare: "25.8%",
   displayPrice: "$49/month",
   trialDays: "15",
   developCommit: "e00299078",
@@ -90,14 +94,17 @@ describe("FILM follows develop's event workflow", () => {
     );
     expect(all).not.toMatch(/Confirm order is/);
   });
-  // The pay page was captured in a 659 px window, not a phone: inside a
-  // phone frame it shrinks to half size and its copy cannot be read.
-  it("shows the pay page on its own, full frame, not inside a phone", () => {
+  // The pay page is a phone capture (390 px at 3x): it plays in the phone,
+  // beside the owner's ask for the deposit, not stretched to a desktop frame.
+  it("shows the pay page in the phone, beside the ask for the deposit", () => {
     const pay = FILM.agreement.beats.find((b) =>
       b.frames.includes("events-pay-mobile.png"),
     );
-    expect(pay?.layout).toBe("screen");
-    expect(pay?.frames).toEqual(["events-pay-mobile.png"]);
+    expect(pay?.layout).toBe("split");
+    expect(pay?.frames).toEqual([
+      "events-payment-request-desktop.png",
+      "events-pay-mobile.png",
+    ]);
   });
   // The offer frame is taller than the phone: the ring on the Accept bar only
   // lands if that beat holds the page at its bottom, where the bar is.
@@ -105,6 +112,11 @@ describe("FILM follows develop's event workflow", () => {
     const ringed = FILM.decision.beats.find((b) => b.ring);
     expect(ringed?.scroll).toEqual([100, 100]);
     expect(FILM.decision.beats[0].scroll?.[1]).toBe(100);
+  });
+  // Caterer review 2026-10-06: a food-only total read like a toy. The offer
+  // now carries staff, rentals and a service fee, and the caption says so.
+  it("quotes the whole offer, staff and rentals in", () => {
+    expect(captionsFor("decision", manifest).join(" ")).toContain("$21,043.00");
   });
   it("says what the paid frame shows about the balance reminder", () => {
     const paid = FILM.agreement.beats.find((b) =>
@@ -149,10 +161,13 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
     expect(sceneFrames("close")).toEqual(["events-closeout-desktop.png"]);
     expect(FILM.close.beats[FILM.close.beats.length - 1].layout).toBe("end");
   });
-  it("quotes the closeout's own planned and actual figures, as likely", () => {
-    expect(captionsFor("close", manifest).join(" ")).toContain(
-      "likely $4,093.50 against $4,039.96 planned",
-    );
+  // The card's dollar gap sets a plan that counts 2% misc against purchases
+  // that do not (reported as an app defect), so the payoff is the share.
+  it("ends on the closeout's likely share of the price, against the target", () => {
+    const close = captionsFor("close", manifest).join(" ");
+    expect(close).toContain("likely 25.8%");
+    expect(close).toContain("30%");
+    expect(close).not.toContain("$3,675.88");
   });
   it("never quotes the closeout's actual figure without saying likely", () => {
     for (const id of SCENE_ORDER)
@@ -164,16 +179,14 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
     expect(captionsFor("kitchen", manifest)).toContain(
       "Each supplier gets only its own lines.",
     );
-    expect(captionsFor("pack", manifest)).toEqual([
-      "Tick each dish as it goes into the van.",
-    ]);
+    expect(captionsFor("pack", manifest).join(" ")).toMatch(/allergens/i);
   });
   // Each beat is its own Sequence, so a repeated frame would snap the camera
   // back to scale 1 at the cut.
   it("starts the camera where the last beat left it when the frames repeat", () => {
     expect(cameraStart("menu", 0)).toBe(1);
     expect(cameraStart("menu", 1)).toBe(1.1);
-    expect(cameraStart("decision", 1)).toBe(1.25);
+    expect(cameraStart("decision", 1)).toBe(1);
     expect(cameraStart("agreement", 1)).toBe(1);
   });
   it("holds each chapter card long enough to read (at most 4 words a second)", () => {
@@ -222,9 +235,53 @@ describe("FILM captions and beats", () => {
     }
   });
   it("lists the app frames each scene shows", () => {
-    expect(sceneFrames("decision")).toEqual([
-      "events-proposal-sent-desktop.png",
-      "events-offer-mobile.png",
+    expect(sceneFrames("decision")).toEqual(["events-offer-mobile.png"]);
+  });
+});
+
+describe("the re-walk (caterer and motion reviews, 2026-10-06)", () => {
+  it("opens on her request from the ordering site, then the inquiry it became", () => {
+    expect(sceneFrames("coldOpen")).toEqual([
+      "events-request-mobile.png",
+      "events-inquiry-desktop.png",
     ]);
+    expect(captionsFor("coldOpen", manifest).join(" ")).not.toMatch(
+      /No date yet/,
+    );
+  });
+  it("asks how much to order without a 5 a.m. in the buying chapter", () => {
+    expect(FILM.kitchen.chapter).not.toMatch(/5\u00a0a\.m\.|5 a\.m\./);
+  });
+  it("ties Confirm to the final count", () => {
+    const confirm = FILM.kitchen.beats.find((b) =>
+      b.frames.includes("events-confirm-desktop.png"),
+    );
+    expect(confirm?.caption).toMatch(/final count/i);
+  });
+  it("rings what each caption names on the frames that carry a figure", () => {
+    for (const frame of [
+      "events-agreement-desktop.png",
+      "events-payments-paid-desktop.png",
+      "events-shop-desktop.png",
+      "events-confirm-desktop.png",
+      "events-receiving-desktop.png",
+      "events-pack-desktop.png",
+      "events-closeout-desktop.png",
+    ]) {
+      const beat = SCENE_ORDER.flatMap((id) => FILM[id].beats).find((b) =>
+        b.frames.includes(frame),
+      );
+      expect(beat?.ring, frame).toBeTruthy();
+    }
+  });
+});
+
+describe("chapter cards between scenes", () => {
+  // The scene fade overlaps the outgoing screen for FADE_FRAMES; the question
+  // waits it out, so the overlap reads as plain paper, never two texts at once.
+  it("keeps the question hidden until the scene fade is over", () => {
+    const [start, end] = questionFadeFrames(30);
+    expect(start).toBe(FADE_FRAMES);
+    expect(end).toBe(FADE_FRAMES + 15);
   });
 });

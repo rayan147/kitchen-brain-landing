@@ -53,8 +53,8 @@ export const EndCard: React.FC<{
         <div
           style={{
             fontFamily: FONT_BODY,
-            fontSize: TYPE.small,
-            marginTop: 8,
+            fontSize: TYPE.endPrice,
+            marginTop: 32,
             color: C.ink,
           }}
         >

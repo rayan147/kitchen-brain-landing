@@ -9,6 +9,9 @@ export const C = {
   paper: "#fdfefd",
   offwhite: "#f4f6f4",
   cream: "#faf5ea",
+  // The app's own page colour, read off the captures: what a screen sits on,
+  // so a wide frame's letterbox reads as more of the page, not a band.
+  appPage: "#f0ede4",
   ticketRule: "#e4d3b4",
   hairline: "#d3ddd6",
 } as const;

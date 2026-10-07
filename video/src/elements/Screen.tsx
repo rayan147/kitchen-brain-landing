@@ -21,8 +21,8 @@ const CAMERA = Easing.inOut(Easing.cubic);
 type Props = {
   src: string;
   focus?: { x: number; y: number; scale: number };
-  // "fill-top" covers the box from the top edge: a tall phone capture fills
-  // the phone frame instead of letterboxing inside it.
+  // "fill-top" fits the capture to the box's width from the top edge: a tall
+  // phone capture scrolls inside the phone, a short one sits at its top.
   fit?: "contain" | "fill-top";
   // For "fill-top": scroll the page from one vertical position to another
   // (0 = top, 100 = bottom) over the sequence, the way a thumb would.
@@ -30,7 +30,8 @@ type Props = {
   // The scale the camera starts from: where the previous beat left it when the
   // frame repeats, so the cut does not snap the zoom back.
   startScale?: number;
-  // Overlays (a ring) drawn inside the camera, so they move with the push-in.
+  // Overlays (a ring) drawn inside the camera and inside the picture's own
+  // box, so their percentages are of the capture, not of the frame around it.
   children?: React.ReactNode;
   style?: React.CSSProperties;
 };
@@ -48,14 +49,31 @@ export const Screen: React.FC<Props> = ({
 }) => {
   const frame = useCurrentFrame();
   const { durationInFrames, fps } = useVideoConfig();
-  const [exists, setExists] = useState<boolean | null>(null);
+  // The capture's own size, so the picture's box can be laid out exactly and
+  // a ring placed in percent of the capture lands on what it names.
+  const [size, setSize] = useState<{ w: number; h: number } | false | null>(
+    null,
+  );
   const [handle] = useState(() => delayRender(`frame ${src}`));
   useEffect(() => {
-    fetch(staticFile(`frames/${src}`), { method: "HEAD" })
-      .then((r) => setExists(r.ok))
-      .catch(() => setExists(false))
-      .finally(() => continueRender(handle));
+    const img = new Image();
+    img.onload = () => {
+      setSize({ w: img.naturalWidth, h: img.naturalHeight });
+      continueRender(handle);
+    };
+    img.onerror = () => {
+      setSize(false);
+      continueRender(handle);
+    };
+    img.src = staticFile(`frames/${src}`);
   }, [src, handle]);
+  const exists = size === null ? null : size !== false;
+  const scrolled = interpolate(
+    frame,
+    [Math.round(0.5 * fps), durationInFrames],
+    scroll,
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: CAMERA },
+  );
 
   if (exists === null) return null;
   if (!exists) {
@@ -84,7 +102,7 @@ export const Screen: React.FC<Props> = ({
         position: "absolute",
         inset: 0,
         overflow: "hidden",
-        backgroundColor: C.offwhite,
+        backgroundColor: C.appPage,
         ...style,
       }}
     >
@@ -92,6 +110,7 @@ export const Screen: React.FC<Props> = ({
         style={{
           position: "absolute",
           inset: 0,
+          containerType: "size",
           transformOrigin: focus ? `${focus.x}% ${focus.y}%` : "50% 50%",
           scale: interpolate(
             frame,
@@ -105,32 +124,52 @@ export const Screen: React.FC<Props> = ({
           ),
         }}
       >
-        <CanvasImage
-          src={staticFile(`frames/${src}`)}
-          premountFor={fps}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: fit === "fill-top" ? "cover" : "contain",
-            objectPosition:
-              fit === "fill-top"
-                ? `50% ${interpolate(
-                    frame,
-                    [Math.round(0.5 * fps), durationInFrames],
-                    scroll,
-                    {
-                      extrapolateLeft: "clamp",
-                      extrapolateRight: "clamp",
-                      easing: CAMERA,
-                    },
-                  )}%`
-                : "50% 50%",
-          }}
-        />
-        {children}
+        <div
+          style={pictureBox(size as { w: number; h: number }, fit, scrolled)}
+        >
+          <CanvasImage
+            src={staticFile(`frames/${src}`)}
+            premountFor={fps}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+            }}
+          />
+          {children}
+        </div>
       </div>
     </div>
   );
 };
+
+// The picture's box inside the screen, in container units: "contain" centres
+// the whole capture; "fill-top" fits its width and slides a tall one by
+// `scrolled` percent (0 = top, 100 = bottom).
+function pictureBox(
+  size: { w: number; h: number },
+  fit: "contain" | "fill-top",
+  scrolled: number,
+): React.CSSProperties {
+  const a = size.w / size.h;
+  if (fit === "fill-top") {
+    const h = `calc(100cqw / ${a})`;
+    return {
+      position: "absolute",
+      left: 0,
+      width: "100cqw",
+      height: h,
+      top: `min(0px, calc((100cqh - ${h}) * ${scrolled / 100}))`,
+    };
+  }
+  const w = `min(100cqw, calc(100cqh * ${a}))`;
+  const h = `min(100cqh, calc(100cqw / ${a}))`;
+  return {
+    position: "absolute",
+    width: w,
+    height: h,
+    left: `calc((100cqw - ${w}) / 2)`,
+    top: `calc((100cqh - ${h}) / 2)`,
+  };
+}

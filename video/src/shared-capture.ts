@@ -1,17 +1,17 @@
 import type { Manifest } from "./manifest";
 
-// The film reads its own capture run (scripts/capture-film.mjs: one wedding,
-// local develop for the kitchen half, test.app.costcook.io for the agreement,
-// deposit and booking), which the homepage can reuse. This maps that run's frame ids
+// The film reads its own capture run (scripts/capture-film.mjs: one walk of one
+// wedding on test.app.costcook.io, the closeout from a clock-shifted local copy
+// of its database), which the homepage can reuse. This maps that run's frame ids
 // and manifest onto the film's names. A frame the run has not shot is absent,
 // and the render guard reports it.
 // Considered Adapter; not used because there is one source and one target and
 // the translation is a table plus one function.
 
 export const FRAME_MAP: Record<string, string> = {
-  "inquiry-mobile.png": "events-inquiry-mobile.png",
+  "request-mobile.png": "events-request-mobile.png",
+  "inquiry-desktop.png": "events-inquiry-desktop.png",
   "menu-service.png": "events-menu-desktop.png",
-  "proposal-sent-desktop.png": "events-proposal-sent-desktop.png",
   "proposal-mobile.png": "events-offer-mobile.png",
   "agreement-desktop.png": "events-agreement-desktop.png",
   "payment-request-desktop.png": "events-payment-request-desktop.png",
@@ -35,8 +35,10 @@ const FIGURES = [
   "targetPct",
   "deposit",
   "revenue",
+  "offerTotal",
   "closeoutPlanned",
   "closeoutActual",
+  "closeoutPct",
   "appSha",
   "capturedOn",
 ] as const;
@@ -63,8 +65,10 @@ export function toFilmManifest(
     target: s.targetPct,
     deposit: s.deposit,
     revenue: s.revenue,
+    offerTotal: s.offerTotal,
     plannedFoodCost: s.closeoutPlanned,
     actualFoodCost: s.closeoutActual,
+    likelyShare: s.closeoutPct,
     displayPrice: site.displayPrice,
     trialDays: site.trialDays,
     developCommit: s.appSha,

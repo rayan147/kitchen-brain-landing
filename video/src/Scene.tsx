@@ -137,7 +137,8 @@ const BeatView: React.FC<{
         style={{
           position: "absolute",
           inset: 0,
-          // After a chapter card the UI fades up instead of cutting in.
+          // After a chapter card or the title the UI fades up instead of
+          // cutting in.
           opacity: fadeIn
             ? interpolate(frame, [0, 10], [0, 1], {
                 extrapolateLeft: "clamp",
@@ -200,7 +201,10 @@ export const Scene: React.FC<{ id: SceneId }> = ({ id }) => {
           <BeatView
             beat={beat}
             manifest={manifest}
-            fadeIn={Boolean(scene.chapter) && beat.from === CHAPTER_SECONDS}
+            fadeIn={
+              (Boolean(scene.chapter) && beat.from === CHAPTER_SECONDS) ||
+              scene.beats[i - 1]?.layout === "title"
+            }
             startScale={cameraStart(id, i)}
           />
         </Sequence>

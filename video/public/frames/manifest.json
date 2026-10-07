@@ -1,21 +1,23 @@
 {
   "guests": "150",
   "pricePerGuest": "$95.00",
-  "foodCostPct": "28.3%",
-  "proposalFoodCostPct": "28.3%",
+  "foodCostPct": "25.8%",
+  "proposalFoodCostPct": "25.8%",
   "target": "30%",
-  "deposit": "$3,500.00",
+  "deposit": "$5,250.00",
   "revenue": "$14,250.00",
-  "plannedFoodCost": "$4,039.96",
-  "actualFoodCost": "$4,093.50",
+  "offerTotal": "$21,043.00",
+  "plannedFoodCost": "$3,750.87",
+  "actualFoodCost": "$3,675.88",
+  "likelyShare": "25.8%",
   "displayPrice": "$49/month",
   "trialDays": "15",
-  "developCommit": "05dfa4165",
-  "capturedOn": "2026-10-06",
+  "developCommit": "24664bd69",
+  "capturedOn": "2026-10-07",
   "frames": [
-    "events-inquiry-mobile.png",
+    "events-request-mobile.png",
+    "events-inquiry-desktop.png",
     "events-menu-desktop.png",
-    "events-proposal-sent-desktop.png",
     "events-offer-mobile.png",
     "events-agreement-desktop.png",
     "events-payment-request-desktop.png",
@@ -32,73 +34,73 @@
     "events-closeout-desktop.png"
   ],
   "frameSources": {
-    "events-inquiry-mobile.png": {
-      "host": "localhost",
-      "app": "05dfa4165"
+    "events-request-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "24664bd69"
+    },
+    "events-inquiry-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-menu-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165"
-    },
-    "events-proposal-sent-desktop.png": {
-      "host": "localhost",
-      "app": "57a4c7f34"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-offer-mobile.png": {
-      "host": "localhost",
-      "app": "57a4c7f34"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-agreement-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+      "app": "24664bd69"
     },
     "events-payment-request-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+      "app": "24664bd69"
     },
     "events-pay-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+      "app": "24664bd69"
     },
     "events-payments-paid-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+      "app": "24664bd69"
     },
     "events-book-event-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+      "app": "24664bd69"
     },
     "events-booked-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)"
+      "app": "24664bd69"
     },
     "events-shop-desktop.png": {
-      "host": "localhost",
-      "app": "57a4c7f34"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-confirm-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-po-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-receiving-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-prep-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-pack-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69"
     },
     "events-closeout-desktop.png": {
       "host": "localhost",
-      "app": "57a4c7f34"
+      "app": "24664bd69"
     }
   }
 }

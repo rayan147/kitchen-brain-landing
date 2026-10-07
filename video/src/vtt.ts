@@ -10,7 +10,10 @@ function stamp(seconds: number): string {
 }
 
 // The cues come from the same beats the film renders, so the player's text and
-// the burned-in captions share one clock.
+// the burned-in captions share one clock: each cue starts when its caption
+// fades up (CAPTION_DELAY into the beat) and ends no later than the next one
+// starts, since scene fades overlap.
+const CAPTION_DELAY = 0.5;
 export function toVtt(manifest: Manifest): string {
   const starts = sceneStarts();
   const cues = SCENE_ORDER.flatMap((id) =>
@@ -18,7 +21,7 @@ export function toVtt(manifest: Manifest): string {
       b.caption
         ? [
             {
-              from: starts[id] + b.from,
+              from: starts[id] + b.from + CAPTION_DELAY,
               to: starts[id] + b.to,
               text: resolveCaption(b.caption, manifest),
             },
@@ -27,5 +30,9 @@ export function toVtt(manifest: Manifest): string {
     ),
   );
   cues.sort((a, b) => a.from - b.from);
+  cues.forEach((c, i) => {
+    const next = cues[i + 1];
+    if (next && c.to > next.from) c.to = next.from;
+  });
   return `WEBVTT\n\n${cues.map((c) => `${stamp(c.from)} --> ${stamp(c.to)}\n${c.text}`).join("\n\n")}\n`;
 }

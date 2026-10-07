@@ -15,17 +15,22 @@ export const ManifestSchema = z.object({
   target: z.string().min(1),
   deposit: z.string().min(1),
   revenue: z.string().min(1),
+  // The offer's total before tax, food plus staff, rentals and the service fee.
+  offerTotal: z.string().min(1),
   // The food-cost closeout, the day after the event: what the plan said the
   // food would cost and what was paid, both off the closeout's own card.
   plannedFoodCost: z.string().min(1),
   actualFoodCost: z.string().min(1),
+  // The closeout's "Food cost, share of the event price (likely)".
+  likelyShare: z.string().min(1),
   displayPrice: z.string().min(1),
   trialDays: z.string().min(1),
   developCommit: z.string().min(7),
   capturedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   frames: z.array(z.string().regex(/\.png$/)),
-  // Where each frame came from: frames in one film come from more than one
-  // app build and two hosts, so one commit cannot speak for all of them.
+  // Where each frame came from: one walk on test, its storefront and pay page
+  // on the ordering site, and the closeout on a local copy, so one host
+  // cannot speak for all of them.
   frameSources: z.record(
     z.string(),
     z.object({ host: z.string().min(1), app: z.string().min(1) }),

@@ -2,9 +2,9 @@ import type { Manifest } from "./manifest";
 
 // story: docs/stories/promo-video.story.md
 // The film follows develop's own event workflow (src/lib/events/derive.ts):
-// Inquiry, Menu & service (where the job is priced), Proposal and Client
-// decision, what Book the event still needs, Agreement and deposit, then
-// kitchen planning and Confirm order. One table drives the scenes, their
+// Inquiry (here, a request from the kitchen's ordering site), Menu & service
+// (where the job is priced), Proposal and Client decision, Agreement and
+// deposit, Book the event, then kitchen planning and Confirm order. One table drives the scenes, their
 // timing and the WebVTT file, so the three cannot drift apart.
 // Considered Template Method for scenes; not used because every scene is the
 // same shape (a chapter card, then timed beats), which is data, not behaviour.
@@ -50,21 +50,31 @@ type Scene = { chapter: string | null; seconds: number; beats: Beat[] };
 // its half-second fade-in.
 export const CHAPTER_SECONDS = 3.5;
 
-// Rings and focus points are first placements, read off the review stills;
-// they are tuned against the final captures.
+// Rings and focus points are measured off the frames of the 2026-10-07 walk
+// (percent of each frame's box); retune them whenever a frame is re-shot.
 export const FILM: Record<SceneId, Scene> = {
+  // She asks on the kitchen's ordering site; it lands as an inquiry.
   coldOpen: {
     chapter: null,
-    seconds: 7,
+    seconds: 11.5,
     beats: [
-      { from: 0, to: 3, layout: "title", frames: [] },
+      { from: 0, to: 2.5, layout: "title", frames: [] },
       {
-        from: 3,
+        from: 2.5,
         to: 7,
         layout: "phone",
-        frames: ["events-inquiry-mobile.png"],
-        caption: "A wedding. About {guests} guests. No date yet.",
-        scroll: [0, 45],
+        frames: ["events-request-mobile.png"],
+        caption:
+          "She asks on your site. A Saturday in June, {guests} guests, plated.",
+        scroll: [0, 60],
+      },
+      {
+        from: 7,
+        to: 11.5,
+        layout: "screen",
+        frames: ["events-inquiry-desktop.png"],
+        caption: "It lands as an inquiry. Nothing to retype.",
+        ring: { x: 3, y: 2, width: 40, height: 7 },
       },
     ],
   },
@@ -81,7 +91,7 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-menu-desktop.png"],
         caption: "{pricePerGuest} a guest. Food cost {proposalFoodCostPct}.",
         focus: { x: 22, y: 50, scale: 1.1 },
-        ring: { x: 18, y: 49, width: 48, height: 14 },
+        ring: { x: 17, y: 50, width: 39, height: 19 },
       },
       {
         from: 8.5,
@@ -89,8 +99,8 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-menu-desktop.png"],
         caption: "Under your {target} target. You know it before you send.",
-        focus: { x: 22, y: 50, scale: 1.1 },
-        ring: { x: 70, y: 66, width: 29, height: 8 },
+        focus: { x: 80, y: 60, scale: 1.15 },
+        ring: { x: 67, y: 70, width: 28, height: 10 },
       },
     ],
   },
@@ -101,30 +111,28 @@ export const FILM: Record<SceneId, Scene> = {
       {
         from: 3.5,
         to: 8,
-        layout: "split",
-        frames: ["events-proposal-sent-desktop.png", "events-offer-mobile.png"],
-        caption: "The proposal goes to her phone. No login.",
-        focus: { x: 4, y: 55, scale: 1.25 },
+        layout: "phone",
+        frames: ["events-offer-mobile.png"],
+        caption:
+          "The offer reaches her phone: {offerTotal}, staff and rentals in.",
         scroll: [0, 100],
       },
       {
         from: 8,
         to: 12.5,
-        layout: "split",
-        frames: ["events-proposal-sent-desktop.png", "events-offer-mobile.png"],
-        caption: "Accept proposal, or Ask for changes. Her call.",
-        focus: { x: 4, y: 55, scale: 1.25 },
-        ring: { x: 1, y: 91, width: 98, height: 8 },
+        layout: "phone",
+        frames: ["events-offer-mobile.png"],
+        caption: "Accept, or ask for changes. Her call.",
+        ring: { x: 1, y: 93, width: 98, height: 6 },
         scroll: [100, 100],
       },
     ],
   },
-  // Shot on test.app.costcook.io, where DocuSeal and Stripe test mode are set
-  // up: the agreement out for signature, the card deposit asked and paid, then
+  // The agreement out for signature, the card deposit asked and paid, then
   // Book the event once everything it asks for is in (booking-requirements.ts).
   agreement: {
     chapter: "Signed, and deposit paid?",
-    seconds: 21.5,
+    seconds: 21,
     beats: [
       {
         from: 3.5,
@@ -132,38 +140,35 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-agreement-desktop.png"],
         caption: "Built from the offer she accepted. She signs online.",
+        ring: { x: 52, y: 45, width: 19, height: 6.5 },
       },
       {
         from: 7,
-        to: 9.5,
-        layout: "screen",
-        frames: ["events-payment-request-desktop.png"],
-        caption: "Ask for {deposit}.",
+        to: 11,
+        layout: "split",
+        frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
+        caption: "Ask for {deposit}. She pays by card from the link.",
+        focus: { x: 0, y: 55, scale: 1.5 },
       },
       {
-        from: 9.5,
-        to: 12.5,
-        layout: "screen",
-        frames: ["events-pay-mobile.png"],
-        caption: "She pays by card from the link.",
-      },
-      {
-        from: 12.5,
-        to: 15.5,
+        from: 11,
+        to: 14.5,
         layout: "screen",
         frames: ["events-payments-paid-desktop.png"],
-        caption: "Paid. The balance reminder sends itself.",
+        caption: "Paid. The balance reminder goes out ten days before.",
+        ring: { x: 11, y: 57, width: 48, height: 8 },
       },
       {
-        from: 15.5,
-        to: 19.5,
+        from: 14.5,
+        to: 18.5,
         layout: "screen",
         frames: ["events-book-event-desktop.png"],
         caption: "Her yes is not a booking. Signed and paid is.",
+        ring: { x: 1.5, y: 63, width: 22, height: 28 },
       },
       {
-        from: 19.5,
-        to: 21.5,
+        from: 18.5,
+        to: 21,
         layout: "screen",
         frames: ["events-booked-desktop.png"],
         caption: "Booked.",
@@ -171,7 +176,7 @@ export const FILM: Record<SceneId, Scene> = {
     ],
   },
   kitchen: {
-    chapter: "How much do I buy so I\u2019m not short at 5\u00a0a.m.?",
+    chapter: "How much do I order so I\u2019m not short?",
     seconds: 17.5,
     beats: [
       {
@@ -180,15 +185,15 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-shop-desktop.png"],
         caption: "Whole packs, by supplier, for {guests}.",
-        ring: { x: 58, y: 23, width: 14, height: 8 },
+        ring: { x: 62, y: 23, width: 18, height: 8 },
       },
       {
         from: 9,
         to: 13,
         layout: "screen",
         frames: ["events-confirm-desktop.png"],
-        caption: "Confirm when the plan is ready. Prices and quantities lock.",
-        ring: { x: 73, y: 60, width: 19, height: 17 },
+        caption: "Final count in. Confirm, and prices and quantities lock.",
+        ring: { x: 74, y: 62, width: 21, height: 27 },
       },
       {
         from: 13,
@@ -211,7 +216,11 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-receiving-desktop.png"],
         caption:
-          "Tick off the delivery. Anything short stays under Still to get.",
+          "Check in the trucks. Anything short stays under Still to get.",
+        // Pushes in from below the bottom left corner, so Still to get rises
+        // clear of the caption.
+        focus: { x: 0, y: 130, scale: 1.6 },
+        ring: { x: 1.5, y: 68, width: 97, height: 14 },
       },
     ],
   },
@@ -226,6 +235,7 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-prep-desktop.png"],
         caption:
           "The prep list for {guests}, in the order the kitchen works it.",
+        ring: { x: 6, y: 30.5, width: 23, height: 7 },
       },
     ],
   },
@@ -238,28 +248,33 @@ export const FILM: Record<SceneId, Scene> = {
         to: 8.5,
         layout: "screen",
         frames: ["events-pack-desktop.png"],
-        caption: "Tick each dish as it goes into the van.",
+        caption: "Tick each dish into the van. Allergens print on the label.",
+        ring: { x: 11.5, y: 45, width: 22, height: 6 },
       },
     ],
   },
   // The closeout opens the day after the event and says "likely" until the
-  // kitchen records what it used, so the caption says it too. The menu frame
-  // is not replayed here: its Event totals round the planned food cost per
-  // guest ($4,039.50), a few cents off the closeout's own planned figure.
+  // kitchen records what it used. Its dollar gap sets a plan that counts 2%
+  // misc against purchases that do not (an app defect, reported), so the
+  // payoff is the likely share of the price, against the target set at the
+  // start.
   close: {
     chapter: null,
-    seconds: 11,
+    seconds: 12,
     beats: [
       {
         from: 0,
-        to: 6,
+        to: 7,
         layout: "screen",
         frames: ["events-closeout-desktop.png"],
         caption:
-          "Priced before her yes. Checked the day after: likely {actualFoodCost} against {plannedFoodCost} planned.",
-        ring: { x: 2, y: 57, width: 44, height: 11 },
+          "Priced before her yes. The day after: likely {likelyShare} of the price, under your {target} target.",
+        // From below the bottom right corner, so the share rises clear of the
+        // caption.
+        focus: { x: 100, y: 140, scale: 1.4 },
+        ring: { x: 72, y: 72, width: 25, height: 26 },
       },
-      { from: 6, to: 11, layout: "end", frames: [] },
+      { from: 7, to: 12, layout: "end", frames: [] },
     ],
   },
 };
@@ -313,4 +328,13 @@ export function sceneStarts(): Record<SceneId, number> {
 export function filmFrames(): number {
   const total = SCENE_ORDER.reduce((n, id) => n + FILM[id].seconds * FPS, 0);
   return total - (SCENE_ORDER.length - 1) * FADE_FRAMES;
+}
+
+/**
+ * The frames over which a chapter card's question fades up: after the scene
+ * fade that brings the card in, so the outgoing screen and the question never
+ * share the screen, then over half a second.
+ */
+export function questionFadeFrames(fps: number): [number, number] {
+  return [FADE_FRAMES, FADE_FRAMES + Math.round(0.5 * fps)];
 }

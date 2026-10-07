@@ -1,5 +1,6 @@
 import type React from "react";
 import { Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { questionFadeFrames } from "../film";
 import { FONT_DISPLAY } from "../fonts";
 import { C, EASE_OUT, TYPE } from "../tokens";
 
@@ -10,6 +11,7 @@ export const ChapterCard: React.FC<{
 }> = ({ question, style }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const fade = questionFadeFrames(fps);
   return (
     <div
       style={{
@@ -36,21 +38,16 @@ export const ChapterCard: React.FC<{
             fontSize: TYPE.chapter,
             lineHeight: 1.15,
             color: C.ink,
-            opacity: interpolate(frame, [0, 0.5 * fps], [0, 1], {
+            opacity: interpolate(frame, fade, [0, 1], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
               easing: Easing.bezier(...EASE_OUT),
             }),
-            translate: interpolate(
-              frame,
-              [0, 0.5 * fps],
-              ["0px 20px", "0px 0px"],
-              {
-                extrapolateLeft: "clamp",
-                extrapolateRight: "clamp",
-                easing: Easing.bezier(...EASE_OUT),
-              },
-            ),
+            translate: interpolate(frame, fade, ["0px 20px", "0px 0px"], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+              easing: Easing.bezier(...EASE_OUT),
+            }),
           }}
         >
           “{question}”
