@@ -1,177 +1,142 @@
 {
   "frames": [
     "agreement-desktop.png",
-    "payment-request-desktop.png",
-    "pay-mobile.png",
-    "payments-paid-desktop.png",
     "book-event-desktop.png",
     "booked-desktop.png",
-    "inquiry-mobile.png",
-    "menu-service.png",
-    "proposal-sent-desktop.png",
-    "proposal-mobile.png",
-    "shop-desktop.png",
+    "closeout-desktop.png",
     "confirm-desktop.png",
-    "po-desktop.png",
-    "receiving-desktop.png",
-    "prep-desktop.png",
+    "inquiry-desktop.png",
+    "menu-service.png",
     "pack-desktop.png",
-    "closeout-desktop.png"
+    "pay-mobile.png",
+    "payment-request-desktop.png",
+    "payments-paid-desktop.png",
+    "po-desktop.png",
+    "prep-desktop.png",
+    "proposal-mobile.png",
+    "proposal-sent-desktop.png",
+    "receiving-desktop.png",
+    "request-mobile.png",
+    "shop-desktop.png"
   ],
-  "guests": "150",
-  "appSha": "05dfa4165",
-  "capturedOn": "2026-10-06",
-  "proposalFoodCostPct": "28.3%",
-  "targetPct": "30%",
-  "pricePerGuest": "$95.00",
-  "revenue": "$14,250.00",
   "frameSources": {
+    "request-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs request"
+    },
+    "inquiry-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs request"
+    },
+    "menu-service.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs menu"
+    },
+    "proposal-sent-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs proposal"
+    },
+    "proposal-mobile.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs accept"
+    },
     "agreement-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
-      "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, 1511x785",
-      "walk": "test"
+      "app": "24664bd69",
+      "via": "capture-film.mjs agreement"
     },
     "payment-request-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
-      "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, cropped 900x578",
-      "walk": "test"
+      "app": "24664bd69",
+      "via": "capture-film.mjs deposit"
     },
     "pay-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
-      "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, 659 CSS px window, cropped to the pay card 798x356",
-      "walk": "test"
+      "app": "24664bd69",
+      "via": "capture-film.mjs deposit"
     },
     "payments-paid-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
-      "order": 52,
-      "via": "browser extension zoom capture, cropped 860x625",
-      "walk": "test"
+      "app": "24664bd69",
+      "via": "capture-film.mjs paid"
     },
     "book-event-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
-      "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, all requirements met, before pressing Book",
-      "walk": "test"
+      "app": "24664bd69",
+      "via": "capture-film.mjs book"
     },
     "booked-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "unrecorded (test deploy SHA not read off the host at capture; develop at or after 05dfa4165)",
-      "event": "959cac05-b348-43e6-b531-6afc376dc106",
-      "via": "browser extension zoom capture, cropped above the follow-up card (owner email)",
-      "walk": "test"
-    },
-    "proposal-mobile.png": {
-      "host": "localhost",
-      "app": "57a4c7f34",
-      "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
-      "shows": "kitchen logo in the header; service time 5:00 PM to 10:00 PM Eastern Time",
-      "walk": "local-reshoot",
-      "note": "throwaway copy of the capture database, the same wedding walked again after the five fixes"
+      "app": "24664bd69",
+      "via": "capture-film.mjs book"
     },
     "shop-desktop.png": {
-      "host": "localhost",
-      "app": "57a4c7f34",
-      "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
-      "shows": "overbuy note compares need to the whole buy",
-      "walk": "local-reshoot",
-      "note": "throwaway copy of the capture database, the same wedding walked again after the five fixes"
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs kitchen"
     },
-    "proposal-sent-desktop.png": {
-      "host": "localhost",
-      "app": "57a4c7f34",
-      "via": "capture-film.mjs reshoot with FILM_OUT, same wedding walked again after the five fixes (logo, service time, overbuy note)",
-      "shows": "the same send as proposal-mobile, so the split agrees on the time",
-      "walk": "local-reshoot",
-      "note": "throwaway copy of the capture database, the same wedding walked again after the five fixes"
+    "confirm-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs kitchen"
+    },
+    "po-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs buy"
+    },
+    "receiving-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs receive"
+    },
+    "prep-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs lists"
+    },
+    "pack-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "24664bd69",
+      "via": "capture-film.mjs lists"
     },
     "closeout-desktop.png": {
       "host": "localhost",
-      "app": "57a4c7f34",
-      "clock": "server clock moved to 2026-12-29T20:00Z with scripts/shift-clock.mjs, the day after the Dec 28 event; no date in the data edited",
-      "via": "capture-film.mjs closeout step",
-      "shows": "planned vs actual food cost, still marked likely because no draw is recorded",
-      "walk": "local"
-    },
-    "inquiry-mobile.png": {
-      "host": "localhost",
-      "app": "05dfa4165",
-      "walk": "local",
-      "via": "capture-film.mjs, shipped walk"
-    },
-    "menu-service.png": {
-      "host": "localhost",
-      "app": "05dfa4165",
-      "walk": "local",
-      "via": "capture-film.mjs, shipped walk"
-    },
-    "confirm-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165",
-      "walk": "local",
-      "via": "capture-film.mjs, shipped walk"
-    },
-    "po-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165",
-      "walk": "local",
-      "via": "capture-film.mjs, shipped walk"
-    },
-    "receiving-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165",
-      "walk": "local",
-      "via": "capture-film.mjs, shipped walk"
-    },
-    "prep-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165",
-      "walk": "local",
-      "via": "capture-film.mjs, shipped walk"
-    },
-    "pack-desktop.png": {
-      "host": "localhost",
-      "app": "05dfa4165",
-      "walk": "local",
-      "via": "capture-film.mjs, shipped walk"
+      "app": "24664bd69",
+      "via": "capture-film.mjs closeout"
     }
   },
-  "testEvent": {
-    "url": "https://test.app.costcook.io/events/959cac05-b348-43e6-b531-6afc376dc106",
-    "date": "2026-12-28"
-  },
-  "deposit": "$3,500.00",
-  "balanceDue": "$10,750.00",
-  "depositPaid": "$3,500.00",
-  "balanceReminderLine": "Reminder with a pay link goes out Mon, Dec 28.",
-  "eventDate": "Mon, Dec 28, 2026",
-  "eventUrl": "http://localhost:4197/events/de6729ac-4e91-4c30-b6e9-ed1b85ff4313",
-  "offerUrl": "http://localhost:4197/o/ZGQ2YzQyYjAtZmQxNi00YmUxLTgwMWMtMWYxZGU4NzdiMjhk.3aa63902-41f5-464b-a9cf-88f6479aa556.sXRoT4nwMLLZj-VO1sYnjT3T0_OFvaPCCAQJeApDDtM",
-  "orderHref": "/orders/783",
-  "closeoutPlanned": "$4,039.96",
-  "closeoutActual": "$4,093.50",
-  "closeoutOver": "$53.54",
-  "closeoutPct": "28.7%",
+  "guests": "150",
+  "appSha": "24664bd69",
+  "capturedOn": "2026-10-07",
+  "proposalFoodCostPct": "25.8%",
+  "targetPct": "30%",
+  "pricePerGuest": "$95.00",
+  "revenue": "$14,250.00",
+  "offerTotal": "$21,043.00",
+  "depositPaid": "$5,250.00",
+  "balanceReminderLine": "Reminder with a pay link goes out Wed, Jun 2.",
+  "balanceDue": "$15,793.00",
+  "eventDate": "Sat, Jun 12, 2027",
+  "closeoutPlanned": "$3,750.87",
+  "closeoutActual": "$3,675.88",
+  "closeoutDirection": "under",
+  "closeoutOver": "$74.99",
+  "closeoutPct": "25.8%",
+  "deposit": "$5,250.00",
   "walks": {
     "test": {
-      "event": "https://test.app.costcook.io/events/959cac05-b348-43e6-b531-6afc376dc106",
-      "how": "signed through DocuSeal and deposit paid by card in Stripe test mode, then Book the event with every requirement met"
+      "event": "test.app.costcook.io, the Brooks & Hale wedding (Sat Jun 12 2027)",
+      "how": "one walk: a quote request on the ordering site, menu and proposal, the client accepts on her phone, the agreement signed in DocuSeal and the deposit paid by card in Stripe test mode, Book the event with every requirement met, then shop, confirm, purchase orders, receiving, prep and pack"
     },
-    "local": {
-      "event": "http://localhost:4197/events/de6729ac-4e91-4c30-b6e9-ed1b85ff4313",
-      "order": "/orders/783",
-      "how": "the same wedding on a local copy of develop; booked with Book anyway and a typed reason (the agreement and deposit were done on test), then the kitchen half"
+    "closeout": {
+      "how": "a read-only copy of test\u2019s database, run locally on the same build with its server clock moved to Jun 13 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event"
     },
-    "local-reshoot": {
-      "how": "the same wedding walked again on a throwaway copy of the local database at 57a4c7f34, for the offer and shop frames the five fixes changed"
-    },
-    "note": "The film joins these walks of one wedding (Priya Nair, 150 guests, Dec 28 2026, $95 a guest). The kitchen frames after Booked come from the local walk, which was booked by override, not signed and paid."
+    "note": "Every frame is from that one wedding. The signatures and the card payment were done by hand by the owner; the client\u2019s email was switched to an inbox the owner reads before the offer went out, because test only emails approved addresses and DocuSeal mails the signer a one-time code. confirm-desktop.png is clipped 24 CSS px inside the dialog after capture, to drop the dimmed page."
   }
 }
