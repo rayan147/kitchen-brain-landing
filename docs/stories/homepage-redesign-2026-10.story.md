@@ -294,5 +294,6 @@ alt text, film transcript or link changed.
 - **Shared lines reworded, meaning held:** `agreementLine` (still worded as
   what the app does, not as this wedding's history) and
   `eventPayments.homepage` (card, email link, deposit and balance, whenever
-  you choose, reminder with a pay link three days before if still owed). Both
-  render only on the homepage.
+  you choose, reminder with a pay link three days before if still owed).
+  `agreementLine` renders only here; `eventPayments.homepage` is also the
+  events guide's Payments note, whose contract still passes.

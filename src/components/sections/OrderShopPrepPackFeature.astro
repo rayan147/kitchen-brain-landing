@@ -60,7 +60,7 @@ const faqItems = [
 			<div class="hero-copy">
 				<nav aria-label="Breadcrumb" class="breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Orders, shop, prep & pack</span></nav>
 				<h1 id="orders-heading">Turn one event into shopping, prep and pack lists.</h1>
-				<p class="hero-lede">Choose a menu, date and guest count, then review and confirm the order. The same saved plan tells your crew what to buy, prep and load, with separate progress for each list.</p>
+				<p class="hero-lede">Pick the menu, the date and the head count. Look it over and confirm. From then on the crew works off that one plan, what to buy, what to prep and what goes on the van, and each list gets checked off on its own.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -87,7 +87,7 @@ const faqItems = [
 
 	<section class="problem" aria-labelledby="problem-heading">
 		<div class="container-page problem-grid">
-			<div><h2 id="problem-heading">Eight hotel pans prepped. Seven in the van is still one pan short.</h2><p>Prep can be complete while pack-out is not. The handoff needs its own visible check, tied back to the event everyone agreed to run.</p></div>
+			<div><h2 id="problem-heading">Eight hotel pans prepped. Seven in the van is still one pan short.</h2><p>Prep can be done while pack-out is not. Loading the van needs its own check, against the event everyone agreed to.</p></div>
 			<div class="pan-scene" role="img" aria-label="Eight illustrative hotel pans prepared, seven packed, and one still open">
 				<div><small>Prep complete</small><strong>8 pans</strong><span>Kitchen sheet</span></div>
 				<div class="pan-mark" aria-hidden="true">→</div>
@@ -103,14 +103,14 @@ const faqItems = [
 
 	<section class="source" aria-labelledby="source-heading">
 		<div class="container-page source-grid">
-			<div><p class="eyebrow">The source</p><h2 id="source-heading">Hold the event steady for the crew running it.</h2><p>Confirming an order freezes the menu, date, guest count, plan, math, and money together. That preserves the commitment while later prices can move.</p></div>
+			<div><p class="eyebrow">The source</p><h2 id="source-heading">Lock the job before the crew starts on it.</h2><p>Confirm the order and the menu, date, head count, plan, math and money freeze together. Supplier prices can keep moving after that. What you agreed to stays put.</p></div>
 			<div class="source-record"><span>Confirmed event · illustrative</span><div><small>Menu</small><strong>Harvest Table</strong></div><div><small>Guests</small><strong>80</strong></div><div><small>Service</small><strong>Aug 30 · 6:00 PM</strong></div></div>
 		</div>
 	</section>
 
 	<section id="shop-the-order" class="product-section shop-section" aria-labelledby="shop-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="shop-heading">Show the buy math before the first aisle.</h2><p>Group the list by supplier or kitchen section. Keep the working on each line, save checks, and carry a left-to-grab count on the phone.</p></div>
+			<div class="section-intro"><h2 id="shop-heading">See the buy math before the first aisle.</h2><p>Sort the list by supplier or by kitchen section. Every line shows its working, your checks save, and the phone keeps count of what is left to grab.</p></div>
 			<figure class="work-sheet">
 				<div class="sheet-head"><span>Shop · Harvest Table</span><span>12 of 12 checked</span></div>
 				<div class="line-head"><span>Ingredient</span><span>Working</span><span>Buy</span></div>
@@ -123,7 +123,7 @@ const faqItems = [
 
 	<section id="prep-and-pack" class="product-section pack-section" aria-labelledby="pack-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="pack-heading">What leaves the shelf becomes two different promises.</h2><p>Prep follows the notes saved at confirmation. Pack carries food, equipment, and allergen context, then keeps the last open line visible at the loading door.</p></div>
+			<div class="section-intro"><h2 id="pack-heading">Prep and pack are two different jobs.</h2><p>Prep follows the notes saved when you confirmed. Pack covers the food, the equipment and the allergens, and keeps the last open line in front of you at the loading door.</p></div>
 			<figure class="pack-board">
 				<div class="prep-strip"><span><small>Prep</small><strong>7 of 7 tasks complete</strong></span><b class="state done">Ready for pack</b></div>
 				<div class="line-head"><span>Pack line</span><span>Progress</span><span>State</span></div>
@@ -136,14 +136,14 @@ const faqItems = [
 
 	<section class="recovery" aria-labelledby="recovery-heading">
 		<div class="container-page recovery-grid">
-			<div><h2 id="recovery-heading">When the plan moves, the checks tell the truth.</h2><p>Changed work, an older confirmed plan, and an incomplete pack close keep distinct states. Each one preserves what is safe and names the next action.</p></div>
+			<div><h2 id="recovery-heading">When the plan changes, the lists say so.</h2><p>Work that changed, an older confirmed plan, and a pack closed with lines still open each show up as their own state. Each keeps what is safe and tells you what to do next.</p></div>
 			<div class="recovery-list">{recoveryStates.map((item) => <div><span class="state attention">{item.label}</span><strong>{item.action}</strong><small>{item.note}</small></div>)}</div>
 		</div>
 	</section>
 
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
-			<div><h2 id="capabilities-heading">The complete Orders, shop, prep & pack list.</h2><p>Open the full shipped list when you want the details.</p><p class="count"><strong>{ordersGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<div><h2 id="capabilities-heading">Everything in Orders, shop, prep & pack.</h2><p>Open the full shipped list when you want the detail.</p><p class="count"><strong>{ordersGroup.items.length}</strong><span>shipped capabilities</span></p></div>
 			<details id="features-orders"><summary><span>See all {ordersGroup.items.length} shipped capabilities</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{ordersGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
 		</div>
 	</section>

@@ -137,3 +137,21 @@
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - The top quote is the film's sample event, not the tour's; the tour's garden wedding is the lower mockup.
 - $1,491.38 ÷ 180 ÷ 0.30 = $27.62 (was rounded early to $27.63).
+
+## Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only; the H1, the
+closing heading, the FAQ, the capability list, captions on screenshots and
+alt text are unchanged (the H1 and closing heading are pinned).
+- **Slogans out:** "Three files. One client waiting." is "Right now the job
+  lives in three places."; "Make the menu runnable before you make it
+  presentable." is "Get the menu right for the kitchen first."; "Cost before
+  commitment." is the page's own numbers, "$68 a head, at 39.6% food cost.";
+  "Compare without rewriting." is "The agreed number stays put."
+- **Consultant words out:** "workspace", "configured target", "changed
+  deliberately", "three working views", "shipped capabilities directly
+  involved in". Guest count is "head count" in running text.
+- **Lists cut:** "the plan, math, and money" is "the plan and the money"; the
+  quote steps' notes are short kitchen phrases.
+- **Meaning held:** confirming locks the quote and the kitchen plan
+  together; an event can override the menu's details; the confirmed quote
+  stays frozen beside today's cost.

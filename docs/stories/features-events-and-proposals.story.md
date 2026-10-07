@@ -148,3 +148,20 @@ page, /compare and the homepage rail). The signature is the Agreement step.
 - Booking is its own step in this app: Book the event waits on the signed agreement and the deposit (Book anyway asks for a reason). Confirm order only locks quantities and prices. The booked section, its new Book the event frame and the shared boundary line ("Their yes books nothing. The signed agreement and the deposit do.") say so.
 - The deposit frame is shown whole: it now lists the deposit and the balance with their due dates.
 - The calendar card still reads "Nair & #783" (app truncation; noted before).
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only; the H1 quote, the
+money sentence, the acceptance boundary, the limits and every caption and alt
+text are unchanged.
+- **Hero lede:** the five-noun list ("the menu, the proposal, their answer,
+  the agreement and the booked order") became "From there it is one record,
+  all the way to the booked order." The step bar under it already names the
+  six steps.
+- **Proposal, agreement, booked:** chained clauses split into short
+  sentences in the order a cook does them ("Look it over exactly as the
+  client will see it", "Book anyway and it asks why, and your reason stays on
+  the event"). The app's button names stay as written.
+- **Shared line:** `eventPayments.homepage`, read by the Payments note, was
+  reworded on the homepage pass with its meaning held (card, email link,
+  deposit and balance, sent whenever you choose, a reminder with a pay link
+  three days before if still owed). This page's contract still matches it.

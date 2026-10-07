@@ -29,11 +29,11 @@ const capabilityGroups = [
 const capabilityCount = capabilityGroups.reduce((total, group) => total + group.items.length, 0);
 
 const quoteSteps = [
-	{ label: 'Menu', note: 'Choose what each guest receives.' },
+	{ label: 'Menu', note: 'What goes on each plate.' },
 	{ label: 'Date', note: 'Put the job on the calendar.' },
-	{ label: 'Guests', note: 'Set the count the kitchen must serve.' },
-	{ label: 'Price', note: 'Test the number against food cost.' },
-	{ label: 'Confirm', note: 'Freeze plan, math, and money.' }
+	{ label: 'Guests', note: 'The count the kitchen cooks for.' },
+	{ label: 'Price', note: 'Hold it up against food cost.' },
+	{ label: 'Confirm', note: 'Lock the plan and the money.' }
 ] as const;
 
 const faqItems = [
@@ -92,7 +92,7 @@ const faqItems = [
 					<span>Menus and quotes</span>
 				</nav>
 				<h1 id="menus-quotes-heading" class="feature-display">Build your menu. Check the price per guest.</h1>
-				<p class="hero-lede">Choose your dishes and portions, then add the event date, guest count and selling price. Check the food cost before confirming the quote and the kitchen plan together.</p>
+				<p class="hero-lede">Pick the dishes and how much of each goes on a plate. Add the date, the head count and your price. Look at the food cost before you confirm, because confirming locks the quote and the kitchen plan together.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -153,10 +153,10 @@ const faqItems = [
 	<section class="handoff-problem" aria-labelledby="handoff-heading">
 		<div class="container-page problem-grid">
 			<div data-reveal>
-				<h2 id="handoff-heading">Three files. One client waiting.</h2>
+				<h2 id="handoff-heading">Right now the job lives in three places.</h2>
 				<p>
 					The dishes are in a menu document. The revised count is in an email. The number you
-					plan to send is in a spreadsheet. The copying only looks harmless while all three agree.
+					plan to send is in a spreadsheet. Copying between them works fine, right up until one of them changes.
 				</p>
 			</div>
 			<figure class="handoff" data-reveal>
@@ -186,10 +186,10 @@ const faqItems = [
 	<section id="menu-management" class="product-section menu-management" aria-labelledby="menu-management-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="menu-management-heading">Make the menu runnable before you make it presentable.</h2>
+				<h2 id="menu-management-heading">Get the menu right for the kitchen first.</h2>
 				<p>
-					Keep dishes, portions per guest, the default price, and the equipment the menu always
-					needs in one workspace.
+					Dishes, portions per guest, the default price and the equipment the menu always
+					needs, all kept together on the menu.
 				</p>
 			</div>
 
@@ -232,9 +232,9 @@ const faqItems = [
 			</figure>
 
 			<div class="feature-scenes" data-reveal>
-				<article><h3>Build what each guest receives.</h3><p>Dishes and portions per guest stay together, so the menu already carries the quantities an event will need.</p></article>
-				<article><h3>Price the menu from its food.</h3><p>Read cost per guest against the selling price, including the price that would meet your configured target.</p></article>
-				<article><h3>Keep the reusable plan safe.</h3><p>Attach fixed equipment counts, override details on one event, and check where a menu is used before deleting it.</p></article>
+				<article><h3>Build the plate.</h3><p>Dishes and portions per guest live together, so the menu already knows how much an event needs.</p></article>
+				<article><h3>Price it off the food.</h3><p>See cost per guest next to your selling price, and the price that would hit the target you set.</p></article>
+				<article><h3>Reuse it without breaking it.</h3><p>Set fixed equipment counts, change details on one event only, and see where a menu is used before you delete it.</p></article>
 			</div>
 		</div>
 	</section>
@@ -242,10 +242,10 @@ const faqItems = [
 	<section id="catering-quotes" class="product-section catering-quotes" aria-labelledby="catering-quotes-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="catering-quotes-heading">Know what the quote is carrying before you confirm it.</h2>
+				<h2 id="catering-quotes-heading">Know what the quote costs you before you confirm it.</h2>
 				<p>
-					A new event starts with a menu, date, guest count, and price. See the food cost while
-					the job is still a draft, then freeze the plan, math, and money together.
+					A new event starts with a menu, a date, a head count and a price. You see the food cost
+					while it is still a draft. When you confirm, the plan and the money lock together.
 				</p>
 			</div>
 			<p class="proposal-bridge" data-proposal-bridge data-reveal>
@@ -259,12 +259,12 @@ const faqItems = [
 						<li><span>{index + 1}</span><strong>{step.label}</strong><p>{step.note}</p></li>
 					))}
 				</ol>
-				<figcaption>Review happens before confirmation, while the number can still be changed deliberately.</figcaption>
+				<figcaption>You review before you confirm, while the number can still change.</figcaption>
 			</figure>
 
 			<div class="pricing-proof">
 				<div class="proof-copy" data-reveal>
-					<h3>Cost before commitment.</h3>
+					<h3>$68 a head, at 39.6% food cost.</h3>
 					<p>
 						For the 180-guest summer wedding in these screens, $68 per guest puts food cost at 39.6%. The same panel
 						names $89.78 as the price that would meet the 30% target.
@@ -303,10 +303,10 @@ const faqItems = [
 					/>
 				</figure>
 				<div>
-					<h3>Compare without rewriting.</h3>
+					<h3>The agreed number stays put.</h3>
 					<p>
-						The confirmed quote stays frozen while today's cost remains visible beside it. The
-						original number does not disappear just because a supplier price moved later.
+						The confirmed quote stays frozen, with today's cost right beside it. When a supplier
+						price moves later, you still see what you agreed to.
 					</p>
 				</div>
 			</div>
@@ -316,10 +316,10 @@ const faqItems = [
 	<section class="connected-proof" aria-labelledby="connected-heading">
 		<div class="container-page connected-grid">
 			<div data-reveal>
-				<h2 id="connected-heading">The quote should know what the kitchen has to pack.</h2>
+				<h2 id="connected-heading">The job you priced is the job you cook.</h2>
 				<p>
-					Confirmation is not the end of the record. The same frozen event becomes the source
-					for Shop, Prep, and Pack, so the kitchen runs the job that was priced.
+					Confirming does not close the book on it. The same locked event feeds Shop, Prep and
+					Pack.
 				</p>
 			</div>
 			<figure class="commitment-map" data-reveal>
@@ -328,7 +328,7 @@ const faqItems = [
 				</ol>
 				<div class="branch-rule" aria-hidden="true"></div>
 				<ul role="list"><li>Shop</li><li>Prep</li><li>Pack</li></ul>
-				<figcaption>One confirmed event feeds three working views without rebuilding the menu or guest count.</figcaption>
+				<figcaption>One confirmed event feeds all three. Nobody rebuilds the menu or the head count.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -336,7 +336,7 @@ const faqItems = [
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page">
 			<div class="capability-heading" data-reveal>
-				<div><h2 id="capabilities-heading">The complete Menus & Quotes list.</h2><p>Only the shipped capabilities directly involved in building, pricing, and confirming the job.</p></div>
+				<div><h2 id="capabilities-heading">Everything in Menus & Quotes.</h2><p>Only what ships today for building, pricing and confirming a job.</p></div>
 				<p class="count"><strong>{capabilityCount}</strong><span>relevant capabilities</span></p>
 			</div>
 			<div class="disclosures">
@@ -352,7 +352,7 @@ const faqItems = [
 
 	<section class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
-			<div class="faq-intro" data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions to settle before the number leaves your kitchen.</p></div>
+			<div class="faq-intro" data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>What people ask before a number goes out the door.</p></div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
 					<details data-reveal><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>
@@ -363,7 +363,7 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">Ready for the client. Ready for the kitchen.</h2><p>Bring one real menu, set the guest count, and follow the number into the plan the kitchen will run.</p></div>
+			<div><h2 id="closing-heading">Ready for the client. Ready for the kitchen.</h2><p>Bring one real menu, set the head count, and follow the number all the way to the kitchen’s plan.</p></div>
 			<div class="closing-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
