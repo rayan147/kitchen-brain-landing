@@ -20,13 +20,22 @@ type Props = {
 	path?: string;
 	/** Optional surface contract emitted as the first body child for design review. */
 	directionContract?: string;
+	/**
+	 * Paint the header band in the first section's tone so the two read as one
+	 * surface (owner, 2026-10-07: the homepage hero is cream and the off-white
+	 * header above it showed as a stripe). Omit it and the header sits on the
+	 * body's off-white, as every other page's first section does.
+	 * Considered Strategy; not used because it is one optional color token.
+	 */
+	headerTone?: 'cream';
 };
 
 const {
 	title = site.title,
 	description = site.description,
 	path = '/',
-	directionContract
+	directionContract,
+	headerTone
 } = Astro.props;
 // Slash form so canonical/og:url agree byte-for-byte with the sitemap.
 const canonical = new URL(path, site.url).href;
@@ -77,7 +86,9 @@ const ogImage = new URL('/og.png', site.url).href;
 		>
 			Skip to content
 		</a>
-		<SiteNav />
+		<div class:list={{ 'bg-cream': headerTone === 'cream' }} data-header-tone={headerTone}>
+			<SiteNav />
+		</div>
 		<!-- tabindex="-1": the skip link must move AT/keyboard focus here,
 		     not just scroll (WCAG 2.4.1). No ring: arrival is the feedback. -->
 		<main id="main" tabindex="-1" class="focus-visible:outline-none">
