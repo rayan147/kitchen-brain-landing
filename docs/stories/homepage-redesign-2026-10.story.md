@@ -47,7 +47,7 @@
 ### Step 3: The Plot (12 beats)
 | Beat | In this piece |
 |------|---------------|
-| 1 Opening Image | Hero: the price per guest panel, $95.00 a guest at 28.4% food cost. |
+| 1 Opening Image | Hero: the price per guest panel, $95.00 a guest at 26.2% food cost. |
 | 2 Theme Stated | "Know what the job makes before you cook it." |
 | 3 Set-Up | The flow strip: online order and custom event both end in one costed order. |
 | 4 Catalyst | The call comes in: Inquiry tab, rough answers are fine. |
@@ -142,3 +142,12 @@ Priya's yes comes in, then the deposit.
   rentals, delivery and a service fee go on the same proposal (RC-74).
 - **Sage as a record lookup, not "AI":** "Ask what the wedding still owes. It
   shows you the record." The hand-off reads "Ask about a job".
+
+### Revision 2026-10-07 (3): the chef's sample-data notes
+- One lemon posset a guest, not two; celery weighed (600 g in the mirepoix,
+  not 8 heads). The wedding now costs $24.92 a guest, 26.2% at $95.00, and
+  every kitchen frame is re-shot from those records.
+- The short rib keeps "No listed allergens": its recipe has no flour and no
+  wine, and the page does not add an ingredient to make a chip appear.
+- The wedding moves to Saturday, December 19, with the balance and the final
+  guest count due Wednesday, December 9 (the app's own wording on the offer).

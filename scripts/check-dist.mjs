@@ -189,7 +189,7 @@ for (const [tag, name] of homeImgs) {
 // Phone captures (design review 2026-10-07): the wide tables are served in the
 // app's own phone layout below 48rem. Each <source> carries its box so the
 // swap does not shift the page, and points at a file that shipped.
-const expectedPhone = ['food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site'];
+const expectedPhone = ['food-cost-breakdown', 'yield-lines', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox'];
 const phoneSources = [...homeHtml.matchAll(/<source\b[^>]*srcset="\/proof\/home\/([a-z-]+)-phone\.png"[^>]*>/g)];
 if (phoneSources.map((m) => m[1]).join(',') !== expectedPhone.join(',')) {
 	console.error(`check-dist: homepage phone captures are [${phoneSources.map((m) => m[1]).join(', ')}]; expected [${expectedPhone.join(', ')}]`);

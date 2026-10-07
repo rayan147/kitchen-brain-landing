@@ -53,8 +53,8 @@ const withPhone = (base: Shot, px: [number, number]): Shot => ({
 
 export const heroShot = shot(
 	'hero-pricing',
-	'Price per guest on the menu: sells for $95.00, food cost $26.93, 28.4% against a 30% target, within target with 1.6 points to spare, food margin $68.07 a guest.',
-	[732, 814]
+	'Price per guest on the menu: sells for $95.00, food cost $24.92, 26.2% against a 30% target, within target with 3.8 points to spare, food margin $70.08 a guest.',
+	[732, 842]
 );
 
 /**
@@ -95,7 +95,7 @@ export const eventStages = [
 		body: 'The client opens the proposal with no login, sees every line you put on it (the food, and any staff, rentals or service fee), and taps Accept proposal or Ask for changes.',
 		shot: shot(
 			'proposal-mobile',
-			'Client proposal on a phone from Harbor & Hearth Catering: Nair & Castellano wedding on December 28, 2026, $14,250.00 for 150 guests at $95.00 per guest, with Ask for changes and Accept proposal.',
+			'Client proposal on a phone from Harbor & Hearth Catering: Nair & Castellano wedding on December 19, 2026, $14,250.00 for 150 guests at $95.00 per guest, with Ask for changes and Accept proposal.',
 			[780, 1560],
 			true
 		)
@@ -158,10 +158,10 @@ export const kitchenRows = [
 		shot: withPhone(
 			shot(
 				'food-cost-breakdown',
-				'Dishes per guest with each one’s share of cost: Braised Short Rib, two portions, $13.72; Lemon Posset $3.18; Wild Mushroom Polenta, about 240 g a portion, $2.93; Creamed Spinach $2.91.',
-				[1850, 846]
+				'Dishes per guest with each one’s share of cost: Braised Short Rib, two portions, $13.30; Wild Mushroom Polenta, about 240 g a portion, $2.93; Creamed Spinach, half a portion, $2.91; Focaccia and Whipped Goat Cheese $2.56.',
+				[1880, 810]
 			),
-			[716, 1300]
+			[716, 1324]
 		)
 	},
 	{
@@ -207,7 +207,7 @@ export const kitchenRows = [
 			shot(
 				'allergens-labels',
 				'Pack list for 150 guests: six dishes, each with its allergens (Contains: Milk; Milk, Wheat; no listed allergens) and a Label button.',
-				[1360, 1208]
+				[1360, 1272]
 			),
 			[780, 1892]
 		)
@@ -233,10 +233,13 @@ export const frontOfHouse = [
 		guide: { href: '/features/invoice-email', label: 'How invoice email works' },
 		heading: 'Invoices by email',
 		body: 'Suppliers send invoices to your kitchen’s private address. Each email shows what became of it, and nothing counts until you confirm it.',
-		shot: shot(
-			'invoice-inbox',
-			'Invoice inbox: a credit memo for returned flour, CM-3104, waiting in review, to come off your cost once confirmed; and invoices HF-3102 and HF-3103 from a new sender, waiting in review with a note to check the sender before confirming.',
-			[1568, 770]
+		shot: withPhone(
+			shot(
+				'invoice-inbox',
+				'Invoice inbox: a credit memo for returned flour, CM-3104, waiting in review, to come off your cost once confirmed; and invoices HF-3102 and HF-3103 from a new sender, waiting in review with a note to check the sender before confirming.',
+				[1568, 770]
+			),
+			[760, 770]
 		)
 	}
 ] as const;

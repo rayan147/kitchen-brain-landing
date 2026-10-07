@@ -1100,7 +1100,13 @@ requireText(heroSource, 'This is the food cost; staff, rentals, delivery and a s
 	for (const retired of ['$26.98', '$89.94', '39.7%', '39.7 percent', '$4,856.55', '9.7 percentage']) {
 		if (wedding.includes(retired)) failures.push(`wedding figures: retired ${retired} is back (canonical: $26.93 / 39.6% / $89.78)`);
 	}
-	for (const figure of ['$95.00', '$26.93', '28.4%', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {
+	// 2026-10-07 (chef review): one posset a guest and celery by weight moved the
+	// homepage wedding from $26.93 / 28.4% to $24.92 / 26.2%. The old pair may not
+	// come back in the homepage data.
+	for (const stale of ['28.4%', '$68.07', '$13.72', '$4,039']) {
+		if (homeData.includes(stale)) failures.push(`homepage wedding: stale figure ${stale} is back (now $24.92 / 26.2%)`);
+	}
+	for (const figure of ['$95.00', '$24.92', '26.2%', '30% target', '$14,250.00', '$3,500.00', '$10,750.00']) {
 		requireText(homeData, figure, 'homepage frames carry the Nair & Castellano figures');
 	}
 }
