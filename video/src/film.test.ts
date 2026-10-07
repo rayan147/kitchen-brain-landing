@@ -92,7 +92,7 @@ describe("FILM follows develop's event workflow", () => {
     );
     expect(frames[book + 1]).toBe("events-booked-desktop.png");
     expect(FILM.agreement.beats[book].caption).toBe(
-      "Her yes is not a booking. Signed and paid is.",
+      "A yes is not a booking. Signed and paid is.",
     );
     const all = SCENE_ORDER.flatMap((id) => captionsFor(id, manifest)).join(
       "\n",
@@ -316,7 +316,7 @@ describe("second review fixes (2026-10-07)", () => {
   // Caterer: the day-after share matching the quote is the point, said so.
   it("ties the day-after share back to the price she was quoted", () => {
     expect(captionsFor("close", manifest).join(" ")).toContain(
-      "Priced at 25.8% before her yes",
+      "Quoted at 25.8%",
     );
   });
 });
@@ -386,5 +386,26 @@ describe("final closeout (2026-10-07)", () => {
     const close = captionsFor("close", manifest).join(" ");
     expect(close).not.toMatch(/likely/i);
     expect(close).toContain("The day after: 25.8%");
+  });
+});
+
+describe("the client, not she (2026-10-07)", () => {
+  // Owner: "who is a She?" Nobody talks about their own client that way. The
+  // film names the client, and the snap line drops the pronoun.
+  it("never calls the client she or her, in a caption or a chapter card", () => {
+    for (const id of SCENE_ORDER) {
+      const scene = FILM[id];
+      const lines = [
+        scene.chapter ?? "",
+        ...scene.beats.map((b) => b.caption ?? ""),
+      ];
+      for (const line of lines)
+        expect(line, `${id}: ${line}`).not.toMatch(/\b(she|her)\b/i);
+    }
+  });
+  it("keeps the snap line, without the pronoun", () => {
+    expect(captionsFor("agreement", manifest)).toContain(
+      "A yes is not a booking. Signed and paid is.",
+    );
   });
 });

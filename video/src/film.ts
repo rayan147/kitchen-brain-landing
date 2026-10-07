@@ -70,7 +70,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "phone",
         frames: ["events-request-mobile.png"],
         caption:
-          "She asks on your site. A Saturday in June, {guests} guests, plated.",
+          "A client asks on your site: Saturday in June, {guests} guests, plated.",
         scroll: [0, 60],
       },
       {
@@ -113,7 +113,7 @@ export const FILM: Record<SceneId, Scene> = {
   // what she asked for (the vegetarian main), what the total buys (the staff
   // line prints 56 at 38 dollars with no unit, so the caption says what 56 is), and her answer.
   decision: {
-    chapter: "Can she say yes from her phone?",
+    chapter: "Can the client say yes from a phone?",
     seconds: 18,
     beats: [
       {
@@ -121,7 +121,7 @@ export const FILM: Record<SceneId, Scene> = {
         to: 6.5,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
-        caption: "Her offer, on her phone: {offerTotal}.",
+        caption: "The offer, on the client's phone: {offerTotal}.",
         scroll: [0, 100],
       },
       {
@@ -130,7 +130,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "phone",
         frames: ["events-offer-mobile.png"],
         caption:
-          "Stuffed peppers on the menu for her {vegetarianPortions} vegetarians.",
+          "Stuffed peppers on the menu for the {vegetarianPortions} vegetarians.",
         ring: { x: 9, y: 61.9, width: 57, height: 1.9 },
         scroll: [100, 100],
       },
@@ -149,7 +149,7 @@ export const FILM: Record<SceneId, Scene> = {
         to: 18,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
-        caption: "Accept, or ask for changes. Her call.",
+        caption: "Accept, or ask for changes. The client decides.",
         ring: { x: 1, y: 95.3, width: 98, height: 4.4 },
         scroll: [100, 100],
       },
@@ -166,7 +166,7 @@ export const FILM: Record<SceneId, Scene> = {
         to: 6.5,
         layout: "screen",
         frames: ["events-agreement-desktop.png"],
-        caption: "Signed online, by her and by you.",
+        caption: "Signed online, by the client and by you.",
         ring: { x: 3, y: 58, width: 68, height: 9 },
       },
       {
@@ -174,7 +174,7 @@ export const FILM: Record<SceneId, Scene> = {
         to: 10.5,
         layout: "split",
         frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
-        caption: "Ask for {deposit}. She pays by card from the link.",
+        caption: "Ask for {deposit}. The client pays by card from the link.",
       },
       {
         from: 10.5,
@@ -191,7 +191,7 @@ export const FILM: Record<SceneId, Scene> = {
         to: 18.5,
         layout: "screen",
         frames: ["events-book-event-desktop.png"],
-        caption: "Her yes is not a booking. Signed and paid is.",
+        caption: "A yes is not a booking. Signed and paid is.",
         // Pulled back a touch, so the strip and its ring clear the frame edge.
         focus: { x: 50, y: 50, scale: 0.95 },
         ring: { x: 1.5, y: 63, width: 22, height: 28 },
@@ -306,7 +306,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-closeout-desktop.png"],
         caption:
-          "Priced at {proposalFoodCostPct} before her yes. The day after: {dayAfterShare}, under your {target} target.",
+          "Quoted at {proposalFoodCostPct}. The day after: {dayAfterShare}, under your {target} target.",
         // The card whole, no push: it is cropped to its own edges, and any push
         // cut its heading into fragments beside the caption, which sits on
         // top, off the card's figures.

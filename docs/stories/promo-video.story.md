@@ -32,7 +32,11 @@ Same wedding, same walk; no new walk. Fixed by re-shooting read-only pages and c
 
 ## Revision 2026-10-07, fourth walk (app fixed, then walked again)
 
-The defects the third review left on screen were fixed in the app (develop d3c7c9add) and the wedding walked again as Ellison & Park, Sat Jun 12 2027. The offer now reads "8 staff for 7 hours at $38.00 an hour"; the balance reminder goes out three days before the due day ("reminder three days ahead"); receiving reads "1 still to get"; prep counts whole items. Owner, on the ending: "likely" read as unsure. The kitchen's use is recorded and the review closed, so the Final Image states the share plainly: "Priced at 24.8% before her yes. The day after: 24.9%, under your 30% target."
+The defects the third review left on screen were fixed in the app (develop d3c7c9add) and the wedding walked again as Ellison & Park, Sat Jun 12 2027. The offer now reads "8 staff for 7 hours at $38.00 an hour"; the balance reminder goes out three days before the due day ("reminder three days ahead"); receiving reads "1 still to get"; prep counts whole items. Owner, on the ending: "likely" read as unsure. The kitchen's use is recorded and the review closed, so the Final Image states the share plainly: "Quoted at 24.8%. The day after: 24.9%, under your 30% target."
+
+## Revision 2026-10-07, voice (owner: "who is a She?")
+
+Step 5, the reader's voice: a caterer does not call a client "she". Every caption and chapter card now says "a client", "the client" or "the offer", and the snap line drops the pronoun: "A yes is not a booking. Signed and paid is." (`check-landing-claims.mjs` requires that line). Lines as shipped: "A client asks on your site: Saturday in June, 150 guests, plated." · "Can the client say yes from a phone?" · "The offer, on the client's phone: $21,043.00." · "Stuffed peppers on the menu for the 12 vegetarians." · "Accept, or ask for changes. The client decides." · "Signed online, by the client and by you." · "Ask for $5,250.00. The client pays by card from the link." · "Quoted at 24.8%. The day after: 24.9%, under your 30% target."
 
 ## The 11 steps
 

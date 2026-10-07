@@ -44,7 +44,7 @@ describe("toVtt", () => {
   // starts with it, not before.
   it("times the first caption from when it shows on screen", () => {
     expect(vtt).toContain(
-      "00:00:03.000 --> 00:00:07.000\nShe asks on your site. A Saturday in June, 150 guests, plated.",
+      "00:00:03.000 --> 00:00:07.000\nA client asks on your site: Saturday in June, 150 guests, plated.",
     );
   });
   // Scene fades overlap by half a second; a player that stacks overlapping
