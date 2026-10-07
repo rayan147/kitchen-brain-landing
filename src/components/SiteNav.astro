@@ -1,5 +1,5 @@
 ---
-import { blogMenu, cta, demoCta, featuresMenu, mobileMenu, nav, resourcesMenu, signIn } from '../lib/site';
+import { blogMenu, cta, demoCta, featuresMenu, mobileMenu, nav, resourcesMenu, signIn, siteMap } from '../lib/site';
 import BrandLockup from './BrandLockup.astro';
 import BlogMenuContents from './BlogMenuContents.astro';
 import FeatureMenuContents from './FeatureMenuContents.astro';
@@ -18,7 +18,14 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 
 <!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <!-- story: docs/stories/features-navigation.story.md -->
-<header class="site-header container-page relative flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
+<!-- The header spans the page, not the 72rem content column: the mark sits
+     at the left gutter, where readers look for it first (owner, 2026-10-07).
+     Capped at 96rem so on a very wide screen the mark and the trial button
+     do not drift apart. Same side padding as container-page, so up to 72rem
+     the mark sits on the content's left edge; wider than that the header
+     keeps to the left gutter by design, and the footer mark follows it
+     (design review 2026-10-07: they were 3vw against 4vw, 6-10px apart). -->
+<header class="site-header relative mx-auto w-full max-w-[96rem] px-[clamp(1.25rem,4vw,3rem)] flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
 	<!-- One sprite keeps every destination icon on the same 20px grid and
 	     stroke weight. Visible titles and descriptions carry their meaning. -->
 	<svg width="0" height="0" class="absolute overflow-hidden" aria-hidden="true">
@@ -128,16 +135,16 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 		</defs>
 	</svg>
 
-	<BrandLockup href="/" />
+	<BrandLockup href="/" size="header" />
 	<div class="header-actions flex flex-wrap items-center justify-end gap-2 sm:gap-3 lg:gap-4">
 		<nav aria-label="Main">
 			<ul role="list" class="flex items-center gap-3 lg:gap-5">
-				<li class="feature-disclosure relative">
+				<li class="feature-disclosure lg:relative">
 					<details data-nav-disclosure data-features-menu>
 						<summary
 							aria-label={featuresMenu.ariaLabel}
 							class:list={[
-								'inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink [&::-webkit-details-marker]:hidden',
+								'panel-trigger inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink [&::-webkit-details-marker]:hidden',
 								path.startsWith('/features') && 'text-ink'
 							]}
 						>
@@ -155,8 +162,15 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 						</summary>
 
 						<div
-							class="fixed inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-40 max-h-[min(78dvh,44rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift lg:absolute lg:inset-x-auto lg:top-full lg:right-auto lg:bottom-auto lg:left-1/2 lg:mt-2 lg:max-h-[calc(100dvh-9rem)] lg:w-[min(50rem,calc(100vw-2.5rem))] lg:-translate-x-1/2"
+							class="absolute inset-x-3 top-full z-40 max-h-[calc(100dvh-6.5rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift lg:inset-x-auto lg:right-auto lg:left-1/2 lg:mt-2 lg:max-h-[calc(100dvh-9rem)] lg:w-[min(50rem,calc(100vw-2.5rem))] lg:-translate-x-1/2"
 						>
+							<!-- Below lg the panel opens like Menu: under the header, over the
+							     same backdrop, with a Close row (design review 2026-10-07: it was
+							     a bottom sheet with neither, beside a Menu that had both). -->
+							<p class="flex items-center justify-between gap-x-3 border-b border-ticket-rule bg-cream py-1 pr-1 pl-4 lg:hidden">
+								<span class="min-w-0 font-display text-lg font-semibold">{featuresMenu.label}</span>
+								<button type="button" data-menu-close hidden class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-3 text-sm font-semibold text-ink-soft hover:bg-paper hover:text-ink">Close</button>
+							</p>
 							<FeatureMenuContents {path} idPrefix="global-features" />
 						</div>
 					</details>
@@ -211,37 +225,63 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
 						</summary>
-						<div class="absolute top-full right-0 z-40 mt-2 w-[min(44rem,calc(100vw-2.5rem))] overflow-hidden rounded-lg border border-ticket-rule bg-paper shadow-lift">
+						<div class="absolute top-full right-0 z-40 mt-2 w-[min(54rem,calc(100vw-2.5rem))] overflow-hidden rounded-lg border border-ticket-rule bg-paper shadow-lift">
 							<ResourcesMenuContents {path} />
 						</div>
 					</details>
 				</li>
 				<li class="xl:hidden">
+					<!-- GROUPED, ANCHORED, CLOSABLE (design review 2026-10-07). The Menu
+					     was a flat run of eleven links in a sheet pinned to the bottom of
+					     the screen, far from its trigger, with no backdrop and no close
+					     control. It now opens under the header, reads the footer's own
+					     groups (siteMap), and puts Sign in and the demo link in an action
+					     row. The backdrop is the summary's own ::before, so tapping it
+					     closes the menu with or without JavaScript. -->
 					<details data-nav-disclosure data-mobile-menu>
 						<summary
-							aria-label={mobileMenu.ariaLabel}
-							class="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-semibold text-ink-soft transition-colors duration-150 hover:text-ink [&::-webkit-details-marker]:hidden"
+							class="panel-trigger inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-ink-soft transition-colors duration-150 hover:text-ink [&::-webkit-details-marker]:hidden"
 						>
 							{mobileMenu.label}
 							<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="nav-chevron transition-transform duration-150 [details[open]_&]:rotate-180">
 								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
 						</summary>
-						<div class="fixed inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-40 max-h-[min(78dvh,44rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift">
-							<div class="border-b border-ticket-rule bg-cream px-4 py-3">
-								<p class="font-display text-lg font-semibold">Navigate CostCook</p>
+						<div class="absolute inset-x-3 top-full z-40 max-h-[calc(100dvh-6.5rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift sm:left-auto sm:w-[26rem]">
+							<div class="flex flex-wrap items-center justify-between gap-x-3 border-b border-ticket-rule bg-cream py-1 pr-1 pl-4">
+								<p class="min-w-0 font-display text-lg font-semibold [overflow-wrap:anywhere]">Navigate CostCook</p>
+								<button type="button" data-menu-close hidden class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-3 text-sm font-semibold text-ink-soft hover:bg-paper hover:text-ink">Close</button>
 							</div>
 
-							<div class="p-2">
-								<ul role="list">
-									<li class="tiny-features-link"><a href={featuresMenu.href} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{featuresMenu.label}</a></li>
-									{pricingItem && <li><a href={pricingItem.href} aria-current={path === pricingItem.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{pricingItem.label}</a></li>}
-									<li><a href={blogMenu.href} aria-current={blogActive ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{blogMenu.label}</a></li>
-									{resourcesMenu.items.map((item) => (
-										<li><a href={item.href} aria-current={path === item.href ? 'page' : undefined} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{item.label}</a></li>
-									))}
-									<li><a href={signIn.href} target={signIn.target} aria-label={signIn.ariaLabel} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{signIn.label}</a></li>
-								</ul>
+							<ul role="list" class="flex flex-wrap items-center gap-x-2 border-b border-ticket-rule p-2">
+								<li><a href={signIn.href} target={signIn.target} aria-label={signIn.ariaLabel} class="flex min-h-11 items-center px-3 text-sm font-medium text-ink-soft hover:bg-cream hover:text-ink">{signIn.label}</a></li>
+								<!-- The actions sit first, under the title: on a 320x568 phone they were
+								     two inner scrolls down (design review 2026-10-07).
+								     Phones only: the header's demo link moves in here so the bar is
+								     one row (mark, Menu, Free trial). Same label and target. -->
+								<li class="sm:hidden"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="flex min-h-11 items-center px-3 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 hover:bg-cream">{demoCta.label}</a></li>
+							</ul>
+
+							<div class="grid grid-cols-1 gap-x-2 gap-y-3 p-2 min-[360px]:grid-cols-2">
+								{siteMap.map((group, index) => (
+									<div class="min-w-0">
+										<p id={`mobile-menu-group-${index}`} class="eyebrow px-3 pt-2 [overflow-wrap:anywhere]">{group.heading}</p>
+										<ul role="list" aria-labelledby={`mobile-menu-group-${index}`}>
+											{group.links.map((item) => (
+												<li class:list={[item.phoneOnly && 'tiny-features-link']}>
+													<a
+														href={item.href}
+														target={item.target}
+														rel={item.rel}
+														aria-label={item.ariaLabel}
+														aria-current={path === item.href ? 'page' : undefined}
+														class="flex min-h-11 items-center px-3 text-sm font-medium [overflow-wrap:anywhere] text-ink-soft hover:bg-cream hover:text-ink"
+													>{item.label}</a>
+												</li>
+											))}
+										</ul>
+									</div>
+								))}
 							</div>
 						</div>
 					</details>
@@ -263,22 +303,25 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 			rel={demoCta.rel}
 			aria-label={demoCta.ariaLabel}
 			aria-current={path === demoCta.href ? 'page' : undefined}
-			class="nav-demo inline-flex min-h-11 items-center whitespace-nowrap px-1 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 transition-colors duration-150 hover:decoration-green"
+			class="nav-demo hidden min-h-11 sm:inline-flex items-center whitespace-nowrap px-1 text-sm font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 transition-colors duration-150 hover:decoration-green"
 		>
 			<!-- A LINK, NOT A SECOND BUTTON (2026-09-10). This was a bordered pill
 			     beside the primary, so the header read as three actions with two of
 			     them shaped like buttons. The demo is the quiet alternative
 			     (CLAUDE.md principle 5), so it takes the underlined-link register
 			     the Features menu footer already uses. Label and target unchanged. -->
-			<span>Book a demo</span>
+			<span>{demoCta.label}</span>
 		</a>
 		<a
 			href={cta.href}
 			target={cta.target}
 			rel={cta.rel}
-			aria-label={cta.ariaLabel}
 			class="btn-primary min-h-11 whitespace-nowrap px-4 py-3 text-sm sm:px-5"
 		>
+			<!-- No aria-label: the visible words are the name. Below xl the button
+			     reads "Free trial", and a name that does not start with what a
+			     speech-input user sees fails label-in-name (design audit
+			     2026-10-07). -->
 			<!-- The short form keeps "free trial": "Start" alone was the one place
 			     the button said nothing about what starting costs. -->
 			<span class="xl:hidden">Free trial</span>
@@ -292,7 +335,11 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 		display: none;
 	}
 
-	@media (max-width: 359px) {
+	/* ONE ROW ON PHONES (2026-10-07, owner, after a navbar review): below sm
+	   the bar holds the mark, Menu and Free trial. Features and Book a demo
+	   live inside Menu there. It was two rows, about 130px of an 844px
+	   screen; one row gives back about 50px above the fold. */
+	@media (max-width: 639px) {
 		.feature-disclosure {
 			display: none;
 		}
@@ -302,15 +349,41 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 		}
 	}
 
-	@media (max-width: 639px) {
-		.site-header {
-			display: grid;
+	/* The backdrop: tapping it is tapping the summary, which closes the panel.
+	   The Menu always has it; Features has it below lg, where it opens the same
+	   way. While a panel is open the page does not scroll (design review
+	   2026-10-07: the page scrolled away under the backdrop and the sticky
+	   bar painted over it). Both work without JavaScript. */
+	[data-mobile-menu][open] > .panel-trigger::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		background: color-mix(in oklab, var(--color-ink) 28%, transparent);
+		cursor: default;
+	}
+	:global(html:has([data-mobile-menu][open])) {
+		overflow: hidden;
+	}
+	@media (max-width: 63.99rem) {
+		[data-features-menu][open] > .panel-trigger::before {
+			content: '';
+			position: fixed;
+			inset: 0;
+			z-index: 30;
+			background: color-mix(in oklab, var(--color-ink) 28%, transparent);
+			cursor: default;
 		}
-
-		.header-actions {
-			width: 100%;
-			justify-content: space-between;
+		:global(html:has([data-features-menu][open])) {
+			overflow: hidden;
 		}
+	}
+	/* The bar's own links stay above the backdrop, so Free trial is one tap
+	   even with a panel open (design review 2026-10-07). */
+	.site-header > :global(a),
+	.header-actions > a {
+		position: relative;
+		z-index: 31;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -340,6 +413,16 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 		menu.addEventListener('focusout', (event) => {
 			const next = event.relatedTarget as Node | null;
 			if (menu.open && next && !menu.contains(next)) menu.open = false;
+		});
+	}
+
+	for (const close of document.querySelectorAll<HTMLButtonElement>('[data-menu-close]')) {
+		const menu = close.closest('details');
+		if (!menu) continue;
+		close.hidden = false;
+		close.addEventListener('click', () => {
+			menu.open = false;
+			menu.querySelector<HTMLElement>(':scope > summary')?.focus();
 		});
 	}
 

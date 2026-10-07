@@ -115,7 +115,7 @@ try {
 		})()`);
 		if (!state.title.includes('Sage kitchen assistant')) throw new Error(`${width}: wrong title`);
 		if (state.h1 !== 'Ask your kitchen. Check the answer.') throw new Error(`${width}: wrong H1`);
-		if (state.status !== 'Available now') throw new Error(`${width}: availability drifted`);
+		if (state.status !== 'In the app today') throw new Error(`${width}: availability drifted`);
 		if (state.faqCount !== 6 || state.abilityCount !== 12) throw new Error(`${width}: list count drifted`);
 		if (state.videoSources.join(',') !== 'video/webm,video/mp4') throw new Error(`${width}: video fallbacks drifted`);
 		if (state.videoTrack !== '/proof/sage-walkthrough.vtt') throw new Error(`${width}: caption track drifted`);

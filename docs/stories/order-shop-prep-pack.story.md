@@ -131,3 +131,23 @@
 - [x] 9 Setting: Phone beside the prep bench, a short gap between services, crew waiting for the next list.
 - [x] 10 Connection: You throughout; inputs lead to results, results to limits, limits to the trial decision. Shared terms keep the next action consistent.
 - [x] 11 Revision: Build and claim checks passed; every feature route inspected at desktop and mobile, with native disclosures and no JavaScript. Five-width regression checks and 320px/200% text passed. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+### Revision 2026-10-07: chef audit, numbers and US units
+- Illustrative frames rewritten in US units (lb, qt, gal, Aug 28) with arithmetic that reconciles on the page: see the commit "fix(features): receiving, order, ingredients and recipes add up".
+
+## Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only; the H1, the
+"Eight hotel pans" heading, the closing heading (pinned), the FAQ, the
+capability list, figure notes and alt text are unchanged.
+- **Slogans out:** "Hold the event steady for the crew running it." is "Lock
+  the job before the crew starts on it."; "What leaves the shelf becomes two
+  different promises." is "Prep and pack are two different jobs."; "When the
+  plan moves, the checks tell the truth." is "When the plan changes, the lists
+  say so."
+- **Consultant words out:** "preserves the commitment", "visible check, tied
+  back to", "allergen context", "keep distinct states", "names the next
+  action". Said the way a cook would: "Loading the van needs its own check".
+- **Meaning held:** confirming freezes menu, date, head count, plan, math and
+  money together while supplier prices can still move; the three recovery
+  states (changed work, an older confirmed plan, a pack closed with open
+  lines) each stay distinct and point to the next step.

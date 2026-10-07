@@ -73,7 +73,7 @@ const limits = [
 				</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">{demoCta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 			</div>
@@ -199,14 +199,9 @@ const limits = [
 	.status-line { margin-top: 1.25rem; max-width: 56ch; padding: .75rem 1rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); font-size: var(--text-body-sm); }
 	.status-word { font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-amber-deep); margin-right: .4rem; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
-	.hero-actions a, .closing-actions a { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
 	/* Scoped per feature page across this family, the same four declarations
 	   as EventsProposalsFeature.astro (hoisting is its own pass). */
-	.btn-outline { display: inline-flex; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 650; transition: background-color 160ms ease-out, color 160ms ease-out; }
-	.btn-outline:hover { background: var(--color-green); color: var(--color-paper); }
-	@media (prefers-reduced-motion: reduce) {
-		.btn-outline { transition: none; }
-	}
 	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.12; text-wrap: balance; }
 	h3 { font-weight: 650; font-size: var(--text-h3); line-height: 1.25; text-wrap: balance; }
 	.section-head { max-width: 62ch; }
@@ -226,8 +221,10 @@ const limits = [
 	.ticket-foot { padding: .75rem 1rem 1rem; border-top: 1px dashed var(--color-ticket-rule); font-size: var(--text-body-sm); color: var(--color-ink-soft); }
 
 	.section-head .setup-warning { padding: .75rem 1rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); color: var(--color-ink); font-weight: 600; }
-	.setup-cards { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
-	.setup-cards > li { padding: 1.25rem 1.5rem; border-top: 2px solid var(--color-hairline-strong); background: var(--color-paper); }
+	/* minmax(0, 1fr) and clamped padding: at 200% text on 320 the cards grew
+	   past the screen (design audit 2026-10-07). */
+	.setup-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+	.setup-cards > li { overflow-wrap: anywhere; padding: 1.25rem clamp(1rem, 4vw, 1.5rem); border-top: 2px solid var(--color-hairline-strong); background: var(--color-paper); }
 	.setup-cards h3 { margin-top: .4rem; }
 	.setup-cards p:not(.ticket-label) { margin-top: .75rem; color: var(--color-ink-soft); }
 	.gmail-steps { margin-top: .75rem; padding-left: 1.2rem; list-style: decimal; color: var(--color-ink-soft); }

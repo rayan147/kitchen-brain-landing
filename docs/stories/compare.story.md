@@ -160,3 +160,6 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 - The events rows read the deposit list and the acceptance boundary from
   `src/lib/events.ts`; the proposals note now ends "Their yes is not a
   signature or a booking. Confirm order is." (full stop, not a semicolon).
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The "Not listed" legend adds "ask them before you decide".

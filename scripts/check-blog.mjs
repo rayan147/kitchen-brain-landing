@@ -108,7 +108,7 @@ for (const slug of ['food-cost-per-guest', 'catering-menu-pricing']) {
 }
 
 for (const [slug, text, label] of [
-	['food-cost-per-guest', 'event shown on the CostCook homepage', 'current example provenance'],
+	['food-cost-per-guest', 'event shown in the CostCook product tour', 'current example provenance'],
 	['shopping-list-whole-packs', 'You cannot order 3.3 sealed cases.', 'whole-pack value'],
 	['scale-catering-prep-list', 'eight complete batches', 'batch and equipment-run boundary'],
 	['expected-vs-actual-food-cost', 'Attributed food cost =', 'event attribution boundary'],

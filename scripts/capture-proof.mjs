@@ -145,7 +145,7 @@ async function orderUrl(page) {
 	await page.goto(APP + '/orders/new', { waitUntil: 'load' });
 	await page.getByLabel('Search menus').fill(EVENT.menu);
 	await page.getByRole('group', { name: 'Menu' }).getByRole('radio', { name: EVENT.menu, exact: true }).check();
-	await page.getByLabel('Guests').fill(EVENT.guests);
+	await page.getByRole('spinbutton', { name: 'Guests' }).fill(EVENT.guests);
 	await page.getByLabel('Client or event').fill(EVENT.name);
 	const date = new Date(Date.now() + EVENT.daysOut * 86_400_000).toISOString().slice(0, 10);
 	await page.locator('input[name="eventDate"]').evaluate((el, v) => {
@@ -159,6 +159,34 @@ async function orderUrl(page) {
 	return page.url();
 }
 
+/**
+ * The demo world writes recipes in grams; the site is in US units. Display
+ * units go to US customary on Settings > Costing (reset-4188 does it), and the
+ * Greek Salad's Roma tomato line is restated as 2.1 oz (60 g) through the
+ * recipe editor and published, so the yield frame reads in one system.
+ * Sample data, through the UI; skipped when already in ounces.
+ */
+async function romaInOunces(page) {
+	await page.goto(APP + '/catalog/recipes/5', { waitUntil: 'load' });
+	await page.waitForTimeout(3000);
+	const row = page.locator('tr:has-text("Roma tomato")').locator('visible=true').first();
+	if ((await row.innerText()).includes('2.1 oz')) return;
+	await page.goto(APP + '/catalog/recipes/5?mode=edit&tab=cost', { waitUntil: 'load' });
+	await page.waitForTimeout(3000);
+	await page.getByRole('button', { name: 'More actions for Roma tomato' }).locator('visible=true').first().click();
+	await page.getByRole('menuitem', { name: 'Edit amount' }).click();
+	const form = page.getByRole('form', { name: 'Edit amounts for Roma tomato' });
+	await form.getByRole('textbox').first().fill('2.1');
+	await form.getByRole('combobox').first().click();
+	await page.getByRole('option', { name: /Ounce \(oz\)/ }).first().click();
+	await form.getByRole('button', { name: /Save amounts/ }).click();
+	await page.waitForTimeout(2000);
+	await page.goto(APP + '/catalog/recipes/5/publish', { waitUntil: 'load' });
+	await page.waitForTimeout(2000);
+	await page.getByRole('button', { name: /^Publish version/ }).first().click();
+	await page.waitForURL(/published=1/);
+}
+
 // ---------------------------------------------------------------- desktop
 {
 	const { ctx, page } = await context(1440);
@@ -167,8 +195,10 @@ async function orderUrl(page) {
 
 	if (wants('hero-pricing') || wants('outcome-quote')) {
 		await page.goto(order, { waitUntil: 'load' });
-		await page.locator('[data-ui-role="order-financial-summary"]').waitFor();
-		const status = page.locator('[data-ui-role="financial-status"]');
+		// App 7a7e407d9: one region, Price · Food cost · Get to 30%. Shot whole;
+		// its food total reads $4,847.95 (the film's card says .96, see above).
+		const status = page.getByRole('region', { name: 'Order financial summary' });
+		await status.waitFor();
 		// The target box and next step only, not the Live totals row. Since the
 		// 2026-09-04 rounding fix the app totals this wedding at $4,847.95, and
 		// the film's burned-in card reads $4,847.96; every other figure matches.
@@ -188,16 +218,18 @@ async function orderUrl(page) {
 		await shoot(page, 'outcome-price', [title, usable], { pad: 12 });
 	}
 
+	if (wants('yield-lines') || wants('yield-lines-mobile')) await romaInOunces(page);
+
 	if (wants('yield-lines')) {
 		await page.goto(APP + '/catalog/recipes/5', { waitUntil: 'load' });
-		const table = page.locator('section[aria-labelledby="lines-heading"] div[class*="overflow-x-auto"]').first();
+		await page.waitForTimeout(3000); // hydration
+		const table = page.locator('section[aria-labelledby="lines-heading"] table').first();
 		await table.waitFor();
-		// Roma tomato, opened: 60 g in the pot, 66 g on the list.
-		const roma = table.locator('tr:has-text("Roma tomato") summary').first();
-		await roma.click();
-		await table.locator('details[open]').first().waitFor({ timeout: 5_000 });
-		// Head row through the opened Roma tomato line: the argument, not the whole recipe.
-		await shoot(page, 'yield-lines', [table.locator('thead'), table.locator('tbody tr').nth(0), table.locator('tbody tr').nth(2)], { pad: 0 });
+		// Roma tomato, opened: 2.1 oz in the bowl, 2.3 oz on the list (app 7a7e407d9).
+		await page.getByRole('button', { name: 'Show calculation for Roma tomato' }).locator('visible=true').first().click();
+		await page.waitForTimeout(800);
+		// Head row through the opened Roma tomato calculation: the argument, not the whole recipe.
+		await shoot(page, 'yield-lines', [table.locator('thead'), table.locator('tbody tr').nth(0), table.locator('tbody tr').nth(3)], { pad: 0 });
 	}
 
 
@@ -213,8 +245,9 @@ async function orderUrl(page) {
 		await page.goto(order, { waitUntil: 'load' });
 		// On a phone the money bar is folded behind its toggle, which only works once hydrated.
 		await page.waitForTimeout(3000);
-		await page.getByRole('button', { name: /^Money/ }).first().click();
-		const guidance = page.locator('[data-ui-role="financial-guidance"]').locator('visible=true').first();
+		const money = page.getByRole('button', { name: /^Money/ }).first();
+		if (await money.count()) await money.click();
+		const guidance = page.getByRole('region', { name: 'Order financial summary' }).locator('visible=true').first();
 		await guidance.waitFor();
 		await shoot(page, 'hero-pricing-mobile', [guidance], { pad: 8 });
 	}
@@ -241,12 +274,13 @@ async function orderUrl(page) {
 
 	if (wants('yield-lines-mobile')) {
 		await page.goto(APP + '/catalog/recipes/5', { waitUntil: 'load' });
+		await page.waitForTimeout(3000); // hydration
 		const art = page.locator('article:has(h3:has-text("Roma tomato"))').locator('visible=true').first();
 		await art.waitFor();
-		await art.locator('summary').first().click();
-		await art.locator('details[open]').first().waitFor({ timeout: 5_000 });
-		// The line and its opened calculation; not the edit buttons under it.
-		await shoot(page, 'yield-lines-mobile', [art.locator('h3').first(), art.locator('details').first()], { pad: 16 });
+		await art.getByRole('button', { name: 'View line calculation' }).click();
+		await page.waitForTimeout(800);
+		// The line and its opened calculation (it opens inside the line).
+		await shoot(page, 'yield-lines-mobile', [art], { pad: 8 });
 	}
 
 

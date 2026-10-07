@@ -1,0 +1,171 @@
+---
+/**
+ * The event walk as the workflow rail
+ * (docs/superpowers/specs/2026-10-06-workflow-rail.md). It replaced the stage
+ * tabs (rule 4) and the "How it fits together" tickets on 2026-10-06, by owner
+ * decision: tabs showed one stage at a time and hid the very connection the
+ * band exists to show.
+ *
+ * Every stage renders in order with or without JavaScript. Between two stages
+ * a carry line names what passes forward; amber rings sit over the real frame
+ * where that stage's figure is (src/lib/home.ts, measured from the PNG). The
+ * rail and rings are decoration (aria-hidden); the figures are in the alt text
+ * and the carry lines.
+ *
+ * The one script marks stages as reached while scrolling (colour only);
+ * without it, or with reduced motion, every node is filled.
+ *
+ * Considered Composite; not used because the rail is one flat ordered list.
+ */
+import HomeBand from './HomeBand.astro';
+import SectionHandoff from '../SectionHandoff.astro';
+import HomeFrame from './HomeFrame.astro';
+import { eventStages } from '../../lib/home';
+---
+<HomeBand
+	id="event-walk"
+	tone="amber"
+	eyebrow="One wedding, 150 guests"
+	heading="From the first call to the shopping list."
+	lede="You chase the deposit by text, and the balance slips your mind until the week of the party. Here is one wedding, start to shopping list. Each step picks up where the last one left off."
+>
+	<ol role="list" class="rail" data-event-walk>
+		{eventStages.map((stage, index) => (
+			<li class="stage" data-event-stage={stage.id} data-rail-stage>
+				<span class="node" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+				<div class="stage-copy">
+					<p class="home-eyebrow">{String(index + 1).padStart(2, '0')} · {stage.tab}</p>
+					<h3 class="home-h3">{stage.heading}</h3>
+					<p class="home-body mt-4" data-booking-payments={stage.id === 'deposit' ? 'event-payments' : undefined}>{stage.body}</p>
+					<a href={stage.guide.href} class="home-guide">{stage.guide.label}</a>
+				</div>
+				<figure class:list={['stage-figure', { 'stage-figure--phone': stage.shot.phone }]}>
+					<div class="frame">
+						<HomeFrame shot={stage.shot} />
+						{'focus' in stage && stage.focus.map((box) => (
+							<span
+								class:list={['ring', { 'ring--wide': 'smallFocus' in stage }]}
+								aria-hidden="true"
+								style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}
+							></span>
+						))}
+						{'smallFocus' in stage && stage.smallFocus.map((box) => (
+							<span
+								class="ring ring--small"
+								aria-hidden="true"
+								style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}
+							></span>
+						))}
+					</div>
+				</figure>
+				{'carries' in stage && (
+					<p class="carry" data-carry>
+						<span class="sr-only">Carries forward to the next step: </span>
+						<span aria-hidden="true">Carries forward · </span>{stage.carries}
+					</p>
+				)}
+			</li>
+		))}
+	</ol>
+	<p class="home-small mt-10">Rather watch it? <a href="/tour/main" class="home-guide">Take the product tour</a></p>
+	<SectionHandoff from="event-walk" class="home-handoff" />
+</HomeBand>
+
+<script>
+	// Fill each node once its stage has been reached. Reduced motion, or no
+	// IntersectionObserver: leave the CSS default (every node filled).
+	const rail = document.querySelector<HTMLElement>('[data-event-walk]');
+	if (rail && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		rail.classList.add('is-tracking');
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-reached');
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ rootMargin: '0px 0px -40% 0px' }
+		);
+		rail.querySelectorAll('[data-rail-stage]').forEach((stage) => observer.observe(stage));
+	}
+</script>
+
+<style>
+	/* The rail: one line down the left edge, a node per stage. */
+	.rail { position: relative; margin-top: 3rem; padding-left: 3.25rem; }
+	.rail::before {
+		content: '';
+		position: absolute;
+		left: 1.125rem;
+		top: .5rem;
+		bottom: .5rem;
+		border-left: 2px solid var(--color-hairline-strong);
+	}
+	/* minmax(0, 1fr): the implicit auto track grew past 320px at 200% text. */
+	.stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+	.stage + .stage { margin-top: var(--spacing-section-tight); }
+	/* At 320px and 200% text the rail leaves the copy about 136px: words break
+	   rather than push the page sideways. */
+	.stage-copy, .carry { overflow-wrap: anywhere; }
+	.node {
+		position: absolute;
+		left: -3.25rem;
+		top: 0;
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border: 2px solid var(--color-green-deep);
+		border-radius: 999px;
+		background: var(--color-green-deep);
+		color: var(--color-paper);
+		font-size: var(--text-eyebrow);
+		font-weight: 700;
+		font-variant-numeric: tabular-nums;
+		transition: background-color .3s ease, color .3s ease;
+	}
+	.is-tracking .stage:not(.is-reached) .node { background: var(--color-paper); color: var(--color-green-deep); }
+	.stage-figure { margin: 0; }
+	.frame { position: relative; }
+	.frame :global(picture) { display: block; }
+	.stage-figure--phone .frame { max-width: 20rem; margin-inline: auto; }
+	.ring {
+		position: absolute;
+		border: 2px solid var(--color-amber);
+		border-radius: 8px;
+		box-shadow: 0 0 0 4px rgb(185 118 42 / .18);
+		pointer-events: none;
+	}
+	/* A stage with a phone capture (HomeFrame swaps it in below 48rem, the same
+	   query) rings each capture with its own measured boxes. */
+	.ring--small { display: none; }
+	@media (max-width: 47.99rem) {
+		.ring--wide { display: none; }
+		.ring--small { display: block; }
+	}
+	/* The carry line sits on the rail, between this stage and the next. */
+	.carry {
+		position: relative;
+		color: var(--color-amber-deep);
+		font-size: var(--text-eyebrow);
+		font-weight: 700;
+		letter-spacing: .04em;
+	}
+	.carry::before {
+		content: '';
+		position: absolute;
+		left: calc(-3.25rem + 1.125rem - 5px);
+		top: .35em;
+		width: 12px;
+		height: 12px;
+		border-radius: 999px;
+		background: var(--color-amber);
+	}
+	@media (min-width: 64rem) {
+		.stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); column-gap: 4rem; align-items: start; }
+		.carry { grid-column: 1 / -1; }
+	}
+	@media (prefers-reduced-motion: reduce) { .node { transition: none; } }
+</style>

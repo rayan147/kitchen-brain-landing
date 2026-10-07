@@ -141,3 +141,6 @@ Every beat above still applies; only the frame around it changed.
 ## Claim correction · 2026-09-27 (what Staff can open)
 
 - [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The role-stack caption "A role is a boundary, not a badge." became "Each role sees what its job needs." The hero primary is the trial; "Compare team roles" is the quiet link.

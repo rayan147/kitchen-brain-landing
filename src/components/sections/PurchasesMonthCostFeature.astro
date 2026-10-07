@@ -6,17 +6,22 @@ import { cta, demoCta } from '../../lib/site';
 const ledgerGroup = featureGroups.find((group) => group.id === 'ledger');
 if (!ledgerGroup) throw new Error('Missing public feature group: ledger');
 
+// Labels are the app's (MonthFoodCostHeader on kitchen-brain main):
+// "Should have cost (recipe estimate)", "Did cost", "Unaccounted gap"
+// (chef review 2026-10-07).
 const purchaseSources = [
 	{ source: 'Invoice import', record: 'Northline Foods · INV-8831', amount: '$2,184.30' },
-	{ source: 'Receiving', record: 'PO-1048 · received delivery', amount: '$423.00' },
+	// The whole delivery: 9 × $46.80 chicken, 4 × $18 spinach, 2 × $75 oil.
+	{ source: 'Receiving', record: 'PO-1048 · received delivery', amount: '$643.20' },
 	{ source: 'Order log', record: 'Harbor wedding · market run', amount: '$186.40' },
 	{ source: 'Quick log', record: 'Produce top-up · cash receipt', amount: '$74.20' }
 ] as const;
 
 const historyRows = [
-	{ label: 'Chicken thigh · 10 kg case', before: '$43.00', after: '$47.00', change: '+9.3%' },
-	{ label: 'Baby spinach · 2 kg case', before: '$18.60', after: '$17.90', change: '−3.8%' },
-	{ label: 'Olive oil · 5 L tin', before: '$51.20', after: '$51.20', change: 'No change' }
+	// The same packs and prices as PO-1048 on the receiving guide.
+	{ label: 'Chicken thigh · 20 lb case', before: '$42.10', after: '$46.80', change: '+11.2%' },
+	{ label: 'Baby spinach · 4 lb case', before: '$18.60', after: '$18.00', change: '−3.2%' },
+	{ label: 'Olive oil · 1 gal tin', before: '$72.00', after: '$75.00', change: '+4.2%' }
 ] as const;
 
 const recoveryStates = [
@@ -61,21 +66,21 @@ const faqItems = [
 				<p class="hero-lede">Bring your purchase records together and compare monthly spending with the ingredient use calculated from your orders. Review the difference, including logged waste and anything still unexplained.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
-					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-outline">Book a 15-min demo</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 				</div>
 				<FeatureTrialTerms />
 			</div>
 
 			<figure class="month-sheet ledger-enter">
 				<p class="figure-note">Illustrative August close</p>
-				<div class="sheet-top"><span>Food-cost review · 1–31 Aug</span><span class="status review">Review</span></div>
-				<div class="month-working" aria-label="Theoretical use 18,420 dollars, actual spend 19,135 dollars, difference 715 dollars">
-					<div><small>Theoretical use</small><strong>$18,420</strong></div>
+				<div class="sheet-top"><span>Food-cost review · Aug 1–31</span><span class="status review">Review</span></div>
+				<div class="month-working" aria-label="Should have cost 18,420 dollars, did cost 19,135 dollars, difference 715 dollars">
+					<div><small>Should have cost</small><strong>$18,420</strong></div>
 					<span aria-hidden="true">→</span>
-					<div><small>Actual spend</small><strong>$19,135</strong></div>
+					<div><small>Did cost</small><strong>$19,135</strong></div>
 					<div class="difference"><small>Difference</small><strong>+$715</strong></div>
 				</div>
-				<div class="gap-split"><span><small>Logged waste</small><strong>$286</strong></span><span><small>Still unaccounted</small><strong>$429</strong></span></div>
+				<div class="gap-split"><span><small>Logged waste</small><strong>$286</strong></span><span><small>Unaccounted gap</small><strong>$429</strong></span></div>
 				<figcaption>Illustrative amounts. The difference stays open until the supporting records explain it.</figcaption>
 			</figure>
 		</div>
@@ -83,7 +88,7 @@ const faqItems = [
 
 	<section class="problem" aria-labelledby="problem-heading">
 		<div class="container-page problem-grid">
-			<div><h2 id="problem-heading">A $715 gap is not automatically $715 of waste.</h2><p>Waste can explain the part you logged. Late purchases, corrections, and count quality can explain—or limit—other parts. The remainder should stay named without assigning blame.</p></div>
+			<div><h2 id="problem-heading">A $715 gap is not automatically $715 of waste.</h2><p>Waste can explain the part you logged. Late purchases, corrections, and count quality can explain, or limit, other parts. The remainder should stay named without assigning blame.</p></div>
 			<div class="gap-scene" role="img" aria-label="An illustrative 715 dollar gap separates into 286 dollars of logged waste and 429 dollars still unaccounted">
 				<div><small>Month difference</small><strong>$715</strong><span>Needs review</span></div>
 				<div class="gap-mark" aria-hidden="true">=</div>
@@ -94,7 +99,7 @@ const faqItems = [
 
 	<nav class="story-nav container-page" aria-label="On this page">
 		<a href="#purchase-ledger"><span>See every purchase source</span><small>Keep imported, received, order, and quick-log entries in one dated record.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
-		<a href="#month-close"><span>Explain the month</span><small>Compare theoretical use with actual spend, then keep known and unknown parts distinct.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#month-close"><span>Explain the month</span><small>Compare what the food should have cost with what it did cost, then keep known and unknown parts distinct.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
 	</nav>
 
 	<section id="purchase-ledger" class="product-section ledger-section" aria-labelledby="purchase-ledger-heading">
@@ -115,10 +120,10 @@ const faqItems = [
 			<div class="section-intro"><h2 id="month-close-heading">Make the month show its working.</h2><p>Compare the cost of ingredients calculated from orders with recorded purchases. Logged waste may explain part of the difference. The rest remains open for review.</p></div>
 			<figure class="reconciliation">
 				<div class="recon-head"><span>August food-cost bridge</span><span>Illustrative amounts</span></div>
-				<div class="recon-line"><span>Theoretical ingredient use</span><strong>$18,420</strong></div>
-				<div class="recon-line actual"><span>Actual purchase spend</span><strong>$19,135</strong></div>
+				<div class="recon-line"><span>Should have cost (recipe estimate)</span><strong>$18,420</strong></div>
+				<div class="recon-line actual"><span>Did cost (what you paid)</span><strong>$19,135</strong></div>
 				<div class="recon-line variance"><span>Difference to explain</span><strong>+$715</strong></div>
-				<div class="recon-breakdown"><div><small>Explained by logged waste</small><strong>$286</strong><span>Cost saved with the waste record</span></div><div><small>Still unaccounted</small><strong>$429</strong><span>Kept open for review</span></div></div>
+				<div class="recon-breakdown"><div><small>Explained by logged waste</small><strong>$286</strong><span>Cost saved with the waste record</span></div><div><small>Unaccounted gap</small><strong>$429</strong><span>Kept open for review</span></div></div>
 				<figcaption>Illustrative reconciliation. The unaccounted gap is named without being auto-classified as waste.</figcaption>
 			</figure>
 		</div>
@@ -128,7 +133,7 @@ const faqItems = [
 		<div class="container-page history-grid">
 			<div><h2 id="history-heading">Let dates and corrections keep the past intact.</h2><p>Ingredient prices follow the purchase date. Choose a date range to see price increases and decreases. Correct a wrong amount by adding an adjustment and a reason; keep the original record.</p></div>
 			<figure class="history-sheet">
-				<div class="history-top"><span>Price movement · illustrative</span><span>1–31 Aug</span></div>
+				<div class="history-top"><span>Price movement · illustrative</span><span>Aug 1–31</span></div>
 				{historyRows.map((row) => <div class="history-line"><strong>{row.label}</strong><span>{row.before} → {row.after}</span><b>{row.change}</b></div>)}
 				<div class="adjustment"><span class="status adjusted">Adjusted</span><strong>Produce receipt +$12.40</strong><small>Reason required · original row retained</small></div>
 				<figcaption>Illustrative items, prices, changes, and correction. Signed percentages show direction over the selected window.</figcaption>
@@ -155,7 +160,7 @@ const faqItems = [
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">
-		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the month with the known and unknown parts still visible.</h2><p>Bring one real month. Follow every purchase into the ledger and inspect the result beside the records that support it.</p></div><div class="closing-actions"><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a></div></div>
+		<div class="container-page closing-grid"><div><h2 id="closing-heading">Close the month with the known and unknown parts still visible.</h2><p>Bring one real month. Follow every purchase into the ledger and inspect the result beside the records that support it.</p></div><div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div></div>
 		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>
@@ -167,8 +172,6 @@ const faqItems = [
 	.hero h1 { max-width: 13ch; margin-top: 1.5rem; }
 	.hero-lede { max-width: 56ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
-	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
-	.btn-outline:hover { background: var(--color-softgreen); }
 	.figure-note { margin-bottom: .7rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.month-sheet, .ledger-sheet, .reconciliation, .history-sheet { min-width: 0; background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.month-sheet { padding: clamp(1.15rem, 3vw, 1.75rem); }

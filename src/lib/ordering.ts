@@ -51,7 +51,7 @@ import type { Verdict } from './comparison';
 
 export const ORDERING_STATUS = 'yes' as Verdict;
 
-export const orderingStatusWord = ORDERING_STATUS === 'yes' ? 'Available now' : 'Coming';
+export const orderingStatusWord = ORDERING_STATUS === 'yes' ? 'In the app today' : 'Coming';
 const orderingIsComing = ORDERING_STATUS !== 'yes';
 
 /** One status flip, with each public surface receiving copy for its own job. */
@@ -59,7 +59,7 @@ export const orderingAvailability = {
 	isComing: orderingIsComing,
 	verdict: ORDERING_STATUS,
 	word: orderingStatusWord,
-	featureLead: orderingIsComing ? 'Built, not deployed, marked Coming.' : 'Available now.',
+	featureLead: orderingIsComing ? 'Built, not deployed, marked Coming.' : 'In the app today.',
 	featureDetail: orderingIsComing
 		? 'A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives awaiting kitchen confirmation, which means you still say yes to it. The storefront and the embeddable widget are built and are not deployed anywhere a customer could reach, so this stays marked Coming.'
 		: 'Put your menus on an ordering page of your own. A client picks a menu, the dishes, a date and the headcount, leaves their contact and diet needs, and sends it. It arrives awaiting kitchen confirmation, and you approve or decline. Approval emails a pay link, and the client’s payment through your Stripe account confirms the order.',
@@ -73,7 +73,7 @@ export const orderingAvailability = {
 			]
 		: [
 				'Yes. Put your menus on an ordering page of your own, or on a site you already have. A client picks a menu, the dishes and a date (closed and full dates are greyed out), chooses pickup or delivery, and sends the request. Nothing is charged, and it arrives awaiting kitchen confirmation rather than as a booked event. You approve or decline it, or let clear requests approve themselves.',
-				'Approval emails the client a pay link. They pay on Stripe’s page, into your own Stripe account, within 72 hours, and that payment confirms the order. A balance due date sends one reminder email with its own pay link. Every amount is worked out by CostCook after the selections arrive: the browser sends what the client chose, without prices. A custom request, or one your booking rules send to you, takes no money and comes to you as an inquiry to price. Card payment works for these online orders only; there are no saved cards, no automatic refunds and no client invoices.'
+				'Approval emails the client a pay link. They pay on Stripe’s page, into your own Stripe account, within 72 hours, and that payment confirms the order. A balance due date sends one reminder email with its own pay link. Every amount is worked out by CostCook after the selections arrive: the browser sends what the client chose, without prices. A custom request, or one your booking rules send to you, takes no money and comes to you as an inquiry to price. There are no saved cards, no automatic refunds and no client invoices.'
 			]
 } as const;
 
@@ -97,7 +97,9 @@ export const ordering = {
 		'What arrives is awaiting kitchen confirmation. Approval is not confirmation: the client’s payment confirms the order, and nothing on the site may call a request booked.',
 		'The browser sends the selections without prices. CostCook re-reads what is published and available and works out every amount.',
 		'The pay link is good for 72 hours. If nothing is paid, the day is freed and the order waits to be approved again.',
-		'Card payment is for online orders only, through your own Stripe account. No saved cards, no automatic refunds, one reminder per balance, and no client invoices.',
+		// "online orders only" contradicted event card payment, live since the
+		// owner ruling of 2026-10-06 (chef audit 2026-10-07).
+		'Card payment runs through your own Stripe account. No saved cards, no automatic refunds, one reminder per balance, and no client invoices.',
 		'The widget speaks five states outward and takes no inbound command: nothing navigates, injects or reaches into the frame.'
 	]
 } as const;

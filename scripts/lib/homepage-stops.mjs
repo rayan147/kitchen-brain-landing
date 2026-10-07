@@ -18,21 +18,18 @@
  * Considered Iterator; not used because this is a flat, fixed list read by
  * plain array methods.
  */
+// 2026-10-06: the canvas rebuild (docs/stories/homepage-redesign-2026-10.story.md),
+// seven bands alternating cream and soft amber after the hero.
 export const homepageStops = [
-	{ id: 'booking', component: 'EventBooking' },
-	{ id: 'outcomes', component: 'CustomerOutcomes' },
-	{ id: 'demo', component: 'SeeItRun' },
-	{ id: 'problem', component: 'TheProblem' },
-	{ id: 'yield', component: 'TheYield' },
-	{ id: 'trust', component: 'BuiltForKitchens' },
-	{ id: 'who', component: 'WhoThisIsFor' },
-	{ id: 'more', component: 'WhatElse' },
-	{ id: 'alternatives', component: 'TheOtherTools' },
-	{ id: 'start', component: 'StartHere' }
+	{ id: 'event-walk', component: 'HomeEventWalk' },
+	{ id: 'kitchen', component: 'HomeKitchen' },
+	{ id: 'front', component: 'HomeFrontOfHouse' },
+	{ id: 'sage', component: 'HomeSage' },
+	{ id: 'start', component: 'HomeClose' }
 ];
 
 /** Section ids, in order, as src/lib/stops.ts and the built page carry them. */
 export const homepageStopIds = homepageStops.map((stop) => stop.id);
 
 /** Components, in order, as src/pages/index.astro composes them after the hero. */
-export const homepageComponentOrder = ['<Hero />', ...homepageStops.map((stop) => `<${stop.component} />`)];
+export const homepageComponentOrder = ['<HomeHero />', ...homepageStops.map((stop) => `<${stop.component} />`)];

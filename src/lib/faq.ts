@@ -25,6 +25,7 @@
 import { launchPlan, site } from './site';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
+import { eventPayments } from './event-payments';
 import { orderingAvailability } from './ordering';
 import { dietary } from './dietary';
 import { sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } from './sage';
@@ -158,7 +159,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'labels',
 				question: 'Does it do nutrition labels?',
 				answer: [
-					'As a calculated estimate, yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Print nutrition label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
+					'As a calculated estimate, yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Once every ingredient source is confirmed and no line is blank, Print label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock; until then the recipe calls it a draft estimate and will not print it. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
 					labelsAvailability.nutritionFaqCrosslink
 				],
 				claims: ['RC-42', 'RC-47', 'RC-50']
@@ -184,7 +185,7 @@ export const faq: readonly FaqGroup[] = [
 			{
 				id: 'event-payments',
 				question: 'Can clients pay the event deposit by card?',
-				answer: [comingPlans.eventPayments.faq],
+				answer: [eventPayments.faq],
 				claims: ['RC-65']
 			},
 			{
@@ -246,7 +247,11 @@ export const faq: readonly FaqGroup[] = [
 				question: 'The client added forty guests. What do I retype?',
 				answer: [
 					'The guest count.',
-					'Recipes scale from it, shared ingredients roll together, whole packs recalculate, and the Shop, Prep and Pack tabs stay on the same plan.'
+					'Recipes scale from it, shared ingredients roll together, whole packs recalculate, and the Shop, Prep and Pack tabs stay on the same plan.',
+					// After Confirm order (chef audit 2026-10-07: the answer only covered
+					// a draft). kitchen-brain: "Reopen as draft", refused once a purchase
+					// order has gone out or receiving has started.
+					'If you already pressed Confirm order, reopen it as a draft first, change the count, and confirm again. That works until you create a purchase order for it or start receiving. Reopening refreshes quantities and prices from the menu as it is today.'
 				],
 				claims: ['RC-03', 'RC-22', 'RC-24', 'RC-25']
 			},

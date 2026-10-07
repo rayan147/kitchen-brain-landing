@@ -16,7 +16,7 @@ const required = [
 	'id="features-assistant"',
 	'id="sage-feature-heading"',
 	'Ask Sage about your kitchen.',
-	'Available now',
+	'In the app today',
 	'id="watch-sage"',
 	'/proof/sage-walkthrough.webm',
 	'/proof/sage-walkthrough.mp4',

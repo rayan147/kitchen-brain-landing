@@ -23,8 +23,8 @@ for (const [text, label] of [
 ]) requireText(text, label);
 
 const entryCount = (html.match(/data-faq-entry/g) ?? []).length;
-// 38 since 2026-09-27: the event-payments answer (RC-65) reads the Coming
-// plan's faq wording, which nothing rendered before.
+// 38 since 2026-09-27: the event-payments answer (RC-65), which since
+// 2026-10-06 reads src/lib/event-payments.ts (shipped).
 if (entryCount !== 38) failures.push(`expected 38 FAQ answers, received ${entryCount}`);
 
 if (faqMarkup.includes('<details')) failures.push('FAQ answers must remain open; found a details disclosure');
@@ -37,8 +37,8 @@ for (const [text, label] of [
 	['charges $0 during the trial', 'bounded trial charge'],
 	['Previously loaded order pages remain readable with no signal', 'bounded offline behavior'],
 	['actions that write data need a connection', 'offline write boundary'],
-	['Not yet. Card payment for booked events is Coming soon', 'event card payment is Coming, not shipped (RC-65)'],
-	['Today you record the deposit by hand, as a check, cash, a transfer or your own card processor', 'event deposit recorded by hand (RC-65)']
+	['Yes. The client pays the deposit and the balance by card from a link in an email', 'event card payment is live (RC-65a, 2026-10-06)'],
+	['You can still record a payment by hand, as a check, cash, a transfer or your own card processor', 'a payment can still be recorded by hand (RC-65a)']
 ]) requireText(text, label);
 
 for (const staleClaim of ['there is no invoice for the 15 days', 'works with no signal and with JavaScript off']) {

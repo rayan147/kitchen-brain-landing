@@ -1,0 +1,110 @@
+{
+  "guests": "150",
+  "pricePerGuest": "$95.00",
+  "foodCostPct": "24.8%",
+  "proposalFoodCostPct": "24.8%",
+  "target": "30%",
+  "deposit": "$5,250.00",
+  "revenue": "$14,250.00",
+  "offerTotal": "$21,043.00",
+  "plannedFoodCost": "$3,536.15",
+  "actualFoodCost": "$3,542.63",
+  "dayAfterShare": "24.9%",
+  "mainPortions": "138",
+  "vegetarianPortions": "12",
+  "staffPeople": "8",
+  "staffHours": "7",
+  "displayPrice": "$49/month",
+  "trialDays": "15",
+  "developCommit": "d3c7c9add",
+  "capturedOn": "2026-10-07",
+  "frames": [
+    "events-request-mobile.png",
+    "events-inquiry-desktop.png",
+    "events-menu-desktop.png",
+    "events-offer-mobile.png",
+    "events-agreement-desktop.png",
+    "events-payment-request-desktop.png",
+    "events-pay-mobile.png",
+    "events-payments-paid-desktop.png",
+    "events-book-event-desktop.png",
+    "events-booked-desktop.png",
+    "events-shop-desktop.png",
+    "events-confirm-desktop.png",
+    "events-po-desktop.png",
+    "events-receiving-desktop.png",
+    "events-prep-desktop.png",
+    "events-pack-desktop.png",
+    "events-closeout-desktop.png"
+  ],
+  "frameSources": {
+    "events-request-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-inquiry-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-menu-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "fe0ac720d"
+    },
+    "events-offer-mobile.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-agreement-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-payment-request-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-pay-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-payments-paid-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-book-event-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-booked-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-shop-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-confirm-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-po-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-receiving-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-prep-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-pack-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "d3c7c9add"
+    },
+    "events-closeout-desktop.png": {
+      "host": "localhost",
+      "app": "d3c7c9add"
+    }
+  }
+}

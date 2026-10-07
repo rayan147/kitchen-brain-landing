@@ -7,14 +7,14 @@ type Props = {
 
 const { path } = Astro.props;
 
-// Considered Composite; not used because these are two fixed groups of leaf
+// Considered Composite; not used because these are three fixed groups of leaf
 // destinations. The variation is flat navigation data, not a recursive tree.
 
 
 ---
 
 <!-- story: docs/stories/resources-navigation.story.md -->
-<div class="grid lg:grid-cols-2">
+<div class="grid lg:grid-cols-3">
 	{resourcesMenu.groups.map((group, groupIndex) => (
 		<section
 			aria-labelledby={`resources-menu-group-${groupIndex}`}

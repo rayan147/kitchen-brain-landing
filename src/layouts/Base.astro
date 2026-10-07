@@ -20,13 +20,23 @@ type Props = {
 	path?: string;
 	/** Optional surface contract emitted as the first body child for design review. */
 	directionContract?: string;
+	/**
+	 * Paint the header band in the first section's tone so the two read as one
+	 * surface (owner, 2026-10-07: the homepage hero is cream and the off-white
+	 * header above it showed as a stripe). Cream is the default on every route
+	 * (owner, 2026-10-07: "make the navbar sub route the same color as the home
+	 * navbar"), so the bar is one colour across the site.
+	 * Considered Strategy; not used because it is one optional color token.
+	 */
+	headerTone?: 'cream';
 };
 
 const {
 	title = site.title,
 	description = site.description,
 	path = '/',
-	directionContract
+	directionContract,
+	headerTone = 'cream'
 } = Astro.props;
 // Slash form so canonical/og:url agree byte-for-byte with the sitemap.
 const canonical = new URL(path, site.url).href;
@@ -51,7 +61,9 @@ const ogImage = new URL('/og.png', site.url).href;
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
 		<link rel="preload" href={instrumentLatin} as="font" type="font/woff2" crossorigin />
-		<meta name="theme-color" content="#F4F6F4" />
+		<!-- Cream, the header every route opens on: browsers tint their bar with
+		     it, and gray-green flashed against the cream page (owner, 2026-10-07). -->
+		<meta name="theme-color" content="#FAF5EA" />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content={site.name} />
@@ -77,7 +89,9 @@ const ogImage = new URL('/og.png', site.url).href;
 		>
 			Skip to content
 		</a>
-		<SiteNav />
+		<div class:list={{ 'bg-cream': headerTone === 'cream' }} data-header-tone={headerTone}>
+			<SiteNav />
+		</div>
 		<!-- tabindex="-1": the skip link must move AT/keyboard focus here,
 		     not just scroll (WCAG 2.4.1). No ring: arrival is the feedback. -->
 		<main id="main" tabindex="-1" class="focus-visible:outline-none">
@@ -123,3 +137,37 @@ const ogImage = new URL('/og.png', site.url).href;
 		</script>
 	</body>
 </html>
+
+<style is:global>
+	/* The cream header runs straight into the page's opening, so the bar and
+	   the opening read as one surface on every route, as on the homepage
+	   (owner, 2026-10-07). Only the opening is cream: the rest of the page
+	   stays on the body's off-white so tickets keep their figure/ground
+	   (design review 2026-10-07: whole-page cream flattened .fd-ticket, the
+	   events phone and the softamber notes). The opening is
+	   - the first section, when the page is a run of sections;
+	   - the wrapper's first section, when an <article>/<div> wraps the page;
+	   - an element marked [data-opening], when one long section is the page
+	     (/compare, /pricing): its intro takes the cream instead.
+	   :nth-child(1 of :not(script)) skips leading JSON-LD (/faq, posts).
+	   Considered a data-opening attribute on every route; not used because
+	   the structural rule already finds 30 openings and new routes inherit it. */
+	[data-header-tone='cream'] + #main > section:nth-child(1 of :not(script)):not(:has([data-opening])),
+	[data-header-tone='cream'] + #main > :is(article, div):nth-child(1 of :not(script)) > :nth-child(1 of :not(script)),
+	[data-header-tone='cream'] + #main [data-opening] {
+		background-color: var(--color-cream);
+		/* Full bleed even inside the 72rem container (/contact, /pricing). */
+		box-shadow: 0 0 0 100vmax var(--color-cream);
+		clip-path: inset(0 -100vmax);
+		/* No hairline between the bar and the opening: heroes' border-block
+		   drew a rule under the navbar the homepage doesn't have (owner,
+		   2026-10-07). The bottom rule still closes the hero. */
+		border-top-width: 0;
+	}
+	/* A marked intro sits inside its section's top padding: run the cream up
+	   through that padding to the bar, and give the intro room to end. */
+	[data-header-tone='cream'] + #main [data-opening] {
+		clip-path: inset(-100vmax -100vmax 0);
+		padding-bottom: clamp(2rem, 4vw, 3rem);
+	}
+</style>

@@ -6,15 +6,14 @@ import { moneyClaims } from './lib/money-claims.mjs';
  * Built-page contract for /features/events-and-proposals.
  *
  * WHAT THIS IS ACTUALLY GUARDING. Not that the page exists: that the three
- * boundaries a friendly rewrite drops first are still on it. The deposit is
- * recorded by hand in production (inventory A-14), so the money sentence is
- * pinned word for word. The client's yes is not a signature or a booking, and
- * Confirm order is (A-07, D-04). The six step names are the app's own step bar
- * in its order (A-03), so a trial user meets the same words. And the card
- * payment page stays in a Coming block until it ships (RC-65): this script
- * reads comingPlans.eventPayments.homepage out of src/lib/coming-plans.ts and
- * requires that exact sentence on this page, on the homepage's EventBooking
- * Coming line and on /pricing, so the three cannot drift from the plan.
+ * boundaries a friendly rewrite drops first are still on it. The money
+ * sentence is pinned word for word: the client pays by card from an email link
+ * (live 2026-10-06, src/lib/event-payments.ts) or the owner records it by hand.
+ * The client's yes is not a signature or a booking, and Confirm order is
+ * (A-07, D-04). The six step names are the app's own step bar in its order
+ * (A-03), so a trial user meets the same words. And the payments sentence is
+ * read out of src/lib/event-payments.ts and required on this page and on the
+ * homepage, so the two cannot drift.
  *
  * Every failure is collected and reported together, then the script exits 1,
  * like its sibling page contracts.
@@ -27,8 +26,7 @@ const html = readFileSync(join(dist, 'features/events-and-proposals/index.html')
 const featureHub = readFileSync(join(dist, 'features/index.html'), 'utf8');
 const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
 const compareHtml = readFileSync(join(dist, 'compare/index.html'), 'utf8');
-const pricingHtml = readFileSync(join(dist, 'pricing/index.html'), 'utf8');
-const comingPlansSource = readFileSync(new URL('../src/lib/coming-plans.ts', import.meta.url), 'utf8');
+const eventPaymentsSource = readFileSync(new URL('../src/lib/event-payments.ts', import.meta.url), 'utf8');
 
 const failures = [];
 const fail = (message) => {
@@ -40,9 +38,9 @@ const decode = (text) =>
 
 // The money boundary, as one sentence, on the page.
 const money =
-	'You record the deposit by hand, as a check, cash, a transfer or your own card processor, and the event shows what you asked for and what came in.';
+	'The client pays by card from an email link, or you record it by hand, as a check, cash, a transfer or your own card processor, and the event shows what you asked for and what came in.';
 if (!html.includes('data-events-money')) fail('the deposit sentence lost its hook');
-if (!html.includes(money)) fail('the money boundary sentence changed; an event deposit is recorded by hand (A-14)');
+if (!html.includes(money)) fail('the money sentence changed; it names the card link and the by-hand record (src/lib/event-payments.ts)');
 
 // No sentence on the page may say the deposit is taken, collected, charged or
 // accepted, or that CostCook invoices the client. Same patterns as the source
@@ -53,8 +51,8 @@ for (const [pattern, label] of moneyClaims) {
 }
 
 // The acceptance boundary.
-if (!html.includes('Their yes is not a signature or a booking. Confirm order is.')) {
-	fail('the "not a signature or a booking" boundary is gone');
+if (!html.includes('Their yes books nothing. The signed agreement and the deposit do.')) {
+	fail('the "their yes books nothing" boundary is gone');
 }
 
 // The six steps, in the app's order, and no seventh.
@@ -64,22 +62,18 @@ if (steps.join('|') !== expected.join('|')) {
 	fail(`the step bar renders [${steps.join(', ')}]; the app's six steps are ${expected.join(', ')}`);
 }
 
-// The Coming block, carrying both halves of the plan, in the plan's own words.
-if (!html.includes('data-events-coming')) fail('the Coming block is gone');
-const eventPaymentsSource = comingPlansSource.slice(comingPlansSource.indexOf('eventPayments: {'));
-const planSentence = eventPaymentsSource.match(/homepage:\s*'([^']+)'/)?.[1];
-if (!planSentence) {
-	fail('could not read comingPlans.eventPayments.homepage from src/lib/coming-plans.ts');
+// The Payments note, in src/lib/event-payments.ts's own words (live since
+// 2026-10-06), on this page and on the homepage.
+if (!html.includes('data-events-payments')) fail('the Payments note is gone');
+const paymentsSentence = eventPaymentsSource.match(/homepage:\s*'([^']+)'/)?.[1];
+if (!paymentsSentence) {
+	fail('could not read eventPayments.homepage from src/lib/event-payments.ts');
 } else {
-	if (!decode(html).includes(planSentence)) fail('the Coming block does not render comingPlans.eventPayments.homepage');
-	const bookingComing = homeHtml.match(/<p[^>]*data-booking-coming="event-payments"[^>]*>([\s\S]*?)<\/p>/)?.[1];
-	if (!bookingComing || !decode(bookingComing).includes(planSentence)) {
-		fail('the homepage EventBooking Coming line does not render comingPlans.eventPayments.homepage');
+	if (!decode(html).includes(paymentsSentence)) fail('the Payments note does not render eventPayments.homepage');
+	const bookingPayments = homeHtml.match(/<p[^>]*data-booking-payments="event-payments"[^>]*>([\s\S]*?)<\/p>/)?.[1];
+	if (!bookingPayments || !decode(bookingPayments).includes(paymentsSentence)) {
+		fail('the homepage payments line does not render eventPayments.homepage');
 	}
-	if (!decode(pricingHtml).includes(planSentence)) fail('/pricing does not render comingPlans.eventPayments.homepage');
-}
-for (const phrase of ['A card payment page for the deposit and the balance of a booked event', 'a reminder email before the balance is due']) {
-	if (!html.includes(phrase)) fail(`the Coming block no longer names "${phrase}"`);
 }
 
 // The limits, still five.
@@ -139,5 +133,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-	'Events & proposals page contract passed: the hand-recorded deposit sentence, the acceptance boundary, six steps in order, five limits, and the Coming block.'
+	'Events & proposals page contract passed: the money sentence, the acceptance boundary, six steps in order, five limits, and the Payments note.'
 );

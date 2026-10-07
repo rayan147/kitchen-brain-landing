@@ -1,0 +1,40 @@
+{
+	"name": "video",
+	"version": "1.0.0",
+	"description": "My Remotion video",
+	"repository": {},
+	"license": "UNLICENSED",
+	"private": true,
+	"dependencies": {
+		"@remotion/cli": "4.0.533",
+		"@remotion/google-fonts": "4.0.533",
+		"@remotion/media": "4.0.533",
+		"@remotion/transitions": "4.0.533",
+		"react": "19.2.3",
+		"react-dom": "19.2.3",
+		"remotion": "4.0.533",
+		"zod": "4.5.4"
+	},
+	"devDependencies": {
+		"@remotion/eslint-config-flat": "4.0.533",
+		"@types/react": "19.2.7",
+		"@types/web": "0.0.166",
+		"eslint": "9.39.5",
+		"prettier": "3.8.1",
+		"tsx": "^4.23.15",
+		"typescript": "5.9.3",
+		"vitest": "^5.0.3"
+	},
+	"scripts": {
+		"dev": "remotion studio",
+		"studio": "remotion studio",
+		"test": "vitest run",
+		"typecheck": "tsc --noEmit",
+		"still": "remotion still",
+		"render:check": "tsx scripts/render-check.mts",
+		"render": "npm run render:check && remotion render PromoFilm out/promo.mp4",
+		"lint": "eslint src && tsc",
+		"frames": "tsx scripts/copy-frames.mts",
+		"vtt": "tsx scripts/write-vtt.mts"
+	}
+}

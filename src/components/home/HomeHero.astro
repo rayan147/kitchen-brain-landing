@@ -1,0 +1,87 @@
+---
+/**
+ * The hero (canvas S1). Story: docs/stories/homepage-redesign-2026-10.story.md
+ * Rule 5: one accent word, in kitchen green, matching the primary button and
+ * nothing else. Rule 6: the frame is flat, no tilt.
+ *
+ * The media slot holds the promo film (owner, 2026-10-07): the browser's own
+ * player, no autoplay, so nothing moves on its own. preload="metadata", not
+ * "none": with "none" Chrome's native player ignored clicks on the poster and
+ * on its play button (owner: "the video is not playable"); "metadata" is what
+ * the Sage film already plays with, and the MP4 is faststart, so it is a small
+ * read at the head of the file. A scripted play button was tried first and
+ * hit the same dead click. The poster is the film's own "What do I charge a
+ * head?" card: nothing on it sits where the control bar does.
+ * The film is music only and its words are burned in, so there is no
+ * caption track to double them; the transcript below the player carries the
+ * same words for anyone who cannot watch.
+ *
+ * Considered Strategy (still vs video media); not used because there is one
+ * medium at a time, not a runtime choice.
+ */
+import { cta, demoCta, launchPlan } from '../../lib/site';
+import { heroFilm } from '../../lib/home';
+---
+<!-- story: docs/stories/homepage-redesign-2026-10.story.md -->
+<section class="home-band home-band--cream hero" aria-labelledby="hero-heading">
+	<div class="container-page hero-grid">
+		<div>
+			<p class="home-eyebrow">Catering software, built by a chef</p>
+			<h1 id="hero-heading" class="anim-enter hero-h1">Know what the job <span class="accent">makes</span> before you cook it.</h1>
+			<p class="home-body mt-5 max-w-[52ch]">For caterers and restaurants that cater. You price the job off your own recipes. The client says yes on their phone and pays by card from a link. Then the same order tells you what to buy, prep and pack.</p>
+			<div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary" data-hero-cta>{cta.label}</a>
+				<a href={demoCta.href} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+			</div>
+			<p class="home-small mt-3"><strong>{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} {launchPlan.unit}, {launchPlan.crew}. The card starts the subscription; you pay $0 until day {launchPlan.trialDays + 1}.</p>
+		</div>
+		<figure class="hero-media" data-hero-media>
+			<video class="hero-film" controls playsinline preload="metadata" poster={heroFilm.poster} width={heroFilm.width} height={heroFilm.height} aria-label={heroFilm.label}>
+				<source src={heroFilm.mp4} type="video/mp4" />
+				<source src={heroFilm.webm} type="video/webm" />
+				<a href={heroFilm.mp4}>Download the film (MP4)</a>
+			</video>
+			<figcaption class="home-small mt-3">One sample wedding, from the client's inquiry to the food cost the day after. 1 min 58 s, music only, every word on screen. Captured in CostCook on Oct 7, 2026.</figcaption>
+			<details class="hero-transcript home-small mt-2">
+				<summary>Read what the film shows</summary>
+				<p class="mt-2">{heroFilm.opening}</p>
+				{heroFilm.chapters.map((chapter) => (
+					<div class="mt-2">
+						{chapter.question && <p class="hero-transcript-q">{chapter.question}</p>}
+						{chapter.lines.map((line) => <p>{line}</p>)}
+					</div>
+				))}
+				<p class="mt-2">{heroFilm.end}</p>
+			</details>
+		</figure>
+	</div>
+</section>
+
+<style>
+	/* The header shares the hero's cream (owner 2026-10-07), so the band's
+	   full top padding read as a 160px gap under it at 1440 (design review).
+	   The hero opens on the tight step instead. */
+	.hero { padding-top: var(--spacing-section-tight); }
+	.hero-grid { display: grid; gap: 3rem; align-items: center; }
+	.hero-h1 {
+		margin-top: 1rem;
+		font-family: var(--font-display);
+		font-size: var(--text-display);
+		line-height: var(--text-display--line-height);
+		letter-spacing: var(--text-display--letter-spacing);
+		font-weight: 600;
+		text-wrap: balance;
+	}
+	.accent { color: var(--color-green-deep); }
+	.hero-media { margin: 0; width: 100%; min-width: 0; }
+	/* 16:9 before the poster loads, so nothing below shifts. Same frame as
+	   every other app capture: 8px radius, one lift shadow. */
+	.hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 8px; box-shadow: var(--shadow-lift); background: var(--color-paper); }
+	.hero-transcript summary { cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; width: fit-content; min-height: 2.75rem; display: flex; align-items: center; gap: 0.5rem; }
+	.hero-transcript summary::before { content: '▸'; text-decoration: none; }
+	.hero-transcript[open] summary::before { content: '▾'; }
+	.hero-transcript-q { font-weight: 600; }
+	/* The film needs width to stay legible, so the media column is the wider
+	   one on desktop (a 24rem still column left it 216px tall). */
+	@media (min-width: 64rem) { .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 3.5rem; } }
+</style>

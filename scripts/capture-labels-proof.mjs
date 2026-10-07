@@ -5,7 +5,7 @@
 //
 // The app is the demo world (kitchen-brain-develop-demo `sandbox/demo`, the
 // guarded scratch DB) with the `label_printing` flag on for the demo business,
-// signed in through /demo. The walk is the cook's: open the prep list for the
+// signed in by magic link. The walk is the cook's: open the pack list for the
 // tour's wedding order, tap Label on Braised Short Rib, choose Refrigerated,
 // accept the FDA Food Code shelf-life suggestion, two containers, print. The
 // print view is opened with auto=0 so the system dialog stays closed.
@@ -21,7 +21,11 @@ import { resolve } from 'node:path';
 const APP = process.env.APP ?? 'http://localhost:4181';
 const OUT = resolve(import.meta.dirname, '../public/proof/labels');
 mkdirSync(OUT, { recursive: true });
-const ORDER_NAME = 'Alvarez-Whitman Wedding';
+// The homepage's wedding (Sat Dec 19, 150 guests), confirmed by
+// capture-events-proof.mjs run with SKIP_CLOSEOUT=1 (re-shot 2026-10-07 from
+// app 7a7e407d9, served with FEATURE_LABEL_PRINTING_ENABLED=true).
+const ORDER_NAME = 'Nair & Castellano wedding';
+const CONTAINERS = '10';
 
 const browser = await chromium.launch({
 	executablePath: '/usr/bin/google-chrome',
@@ -52,7 +56,21 @@ async function clip(page, locator, name, pad = 0) {
 async function signedIn(width) {
 	const ctx = await browser.newContext({ viewport: { width, height: 2600 }, deviceScaleFactor: 2, reducedMotion: 'reduce' });
 	const page = await ctx.newPage();
-	await page.goto(APP + '/demo', { waitUntil: 'load', timeout: 120_000 });
+	// /demo's one-tap sign-in is gone; the harness exposes the mailed link.
+	const email = 'marisol@example.com';
+	await page.goto(APP + '/login', { waitUntil: 'load', timeout: 120_000 });
+	await page.getByLabel('Email').fill(email);
+	await page.getByRole('button', { name: 'Send sign-in link' }).click();
+	await page.getByRole('heading', { name: 'Check your email' }).waitFor();
+	let link = null;
+	for (let i = 0; i < 40 && !link; i++) {
+		const r = await page.request.get(APP + '/api/test/magic-link?email=' + encodeURIComponent(email));
+		if (r.ok()) link = (await r.json()).url;
+		if (!link) await page.waitForTimeout(250);
+	}
+	if (!link) throw new Error('no magic link captured; is MAGIC_LINK_TEST_CAPTURE=1 set?');
+	const u = new URL(link);
+	await page.goto(APP + u.pathname + u.search, { waitUntil: 'load' });
 	await page.waitForTimeout(800);
 	return { ctx, page };
 }
@@ -64,17 +82,17 @@ async function prepUrl(page) {
 	await page.locator('#list-search').fill(ORDER_NAME).catch(() => {});
 	await page.waitForTimeout(600);
 	const link = page.getByRole('link', { name: new RegExp(ORDER_NAME) }).first();
-	if (!(await link.count())) throw new Error('the wedding order is missing; run scripts/capture-proof.mjs first, it creates it');
-	return new URL(await link.getAttribute('href'), page.url()).href.replace(/\/?$/, '/prep');
+	if (!(await link.count())) throw new Error('the wedding order is missing; run SKIP_CLOSEOUT=1 scripts/capture-events-proof.mjs first');
+	return new URL(await link.getAttribute('href'), page.url()).href.replace(/\/?$/, '/pack');
 }
 
 /** Opens the Label dialog for Braised Short Rib and fills it to the point of printing. */
 async function fillDialog(page) {
 	await page.waitForTimeout(4000); // the dialog is client-side
-	const section = page.locator('section:has(h3:has-text("Braised Short Rib"))').first();
+	// App 7a7e407d9: Label lives on the Pack tab, one button per dish.
 	const dlg = page.getByRole('dialog').first();
 	for (let attempt = 0; attempt < 4 && !(await dlg.count()); attempt++) {
-		await section.getByRole('button', { name: /^Label/ }).locator('visible=true').first().click();
+		await page.getByRole('button', { name: 'Label Braised Short Rib' }).locator('visible=true').first().click();
 		await page.waitForTimeout(1500);
 	}
 	await dlg.waitFor({ timeout: 10_000 });
@@ -85,7 +103,10 @@ async function fillDialog(page) {
 		await suggestion.click();
 		await page.waitForTimeout(800);
 	}
-	await dlg.locator('button:has-text("+")').first().click();
+	// 300 portions across ten hotel pans, one label each (chef review: two
+	// containers for a 300-portion batch was not a kitchen).
+	await dlg.getByRole('spinbutton', { name: 'How many physical containers?' }).fill(CONTAINERS);
+	await dlg.getByRole('spinbutton', { name: 'How many physical containers?' }).blur();
 	await dlg.getByRole('button', { name: /^Print \d+ labels?/ }).waitFor();
 	await page.waitForTimeout(400);
 	return dlg;
@@ -102,9 +123,9 @@ async function fillDialog(page) {
 	{
 		await settle(page);
 		const box = await dlg.boundingBox();
-		const storage = await dlg.locator('input[name="storageState"][value="opened"]').first().locator('xpath=ancestor::label[1] | ancestor::div[1]').first().boundingBox();
-		const note = await dlg.getByText(/identical apart from their number/).first().boundingBox();
-		const bottom = Math.max(storage.y + storage.height, note.y + note.height) + 10;
+		const storage = await dlg.getByRole('group', { name: 'Storage condition' }).boundingBox();
+		const sticker = await dlg.getByRole('region', { name: 'The sticker' }).boundingBox();
+		const bottom = Math.min(Math.max(storage.y + storage.height, sticker.y + sticker.height) + 10, box.y + box.height);
 		await page.screenshot({ path: `${OUT}/dialog-wide.png`, clip: { x: box.x, y: box.y, width: box.width, height: bottom - box.y }, animations: 'disabled', caret: 'hide' });
 		console.log('wrote dialog-wide');
 	}
@@ -116,12 +137,16 @@ async function fillDialog(page) {
 	await page.goto(u.href, { waitUntil: 'load' });
 	await page.waitForTimeout(1500);
 	const stickers = page.locator('[data-ui-role="label-sticker"]');
-	const first = await stickers.first().boundingBox();
-	const last = await stickers.last().boundingBox();
+	// Every sticker on the sheet: ten labels lay out in columns, so first and
+	// last alone cut a column in half.
+	const boxes = await stickers.evaluateAll((els) => els.map((e) => { const r = e.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, r: r.right + scrollX, b: r.bottom + scrollY }; }));
+	const x0 = Math.min(...boxes.map((b) => b.x)), y0 = Math.min(...boxes.map((b) => b.y));
+	const x1 = Math.max(...boxes.map((b) => b.r)), y1 = Math.max(...boxes.map((b) => b.b));
 	await settle(page);
 	await page.screenshot({
 		path: `${OUT}/print-sheet.png`,
-		clip: { x: Math.min(first.x, last.x) - 12, y: first.y - 12, width: Math.max(first.x + first.width, last.x + last.width) - Math.min(first.x, last.x) + 24, height: last.y + last.height - first.y + 24 },
+		fullPage: true,
+		clip: { x: x0 - 12, y: y0 - 12, width: x1 - x0 + 24, height: y1 - y0 + 24 },
 		animations: 'disabled',
 		caret: 'hide'
 	});

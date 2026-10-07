@@ -13,8 +13,8 @@ const capabilityCount = capabilities.reduce((total, group) => total + group.item
 
 const costPath = [
 	{ name: 'Case', note: 'What the supplier charged for the whole pack.' },
-	{ name: 'Unit', note: 'The price per kilo, litre, or each.' },
-	{ name: 'Edible', note: 'What remains after trim and cooking loss.' },
+	{ name: 'Unit', note: 'The price per pound, quart, or each.' },
+	{ name: 'Edible', note: 'What survives the trim.' },
 	{ name: 'Plate', note: 'That ingredient’s share of one dish.' },
 	{ name: 'Event', note: 'The food cost the quote is judged against.' }
 ];
@@ -91,9 +91,9 @@ const faqItems = [
 						target={demoCta.target}
 						rel={demoCta.rel}
 						aria-label={demoCta.ariaLabel}
-						class="btn-outline"
+						class="btn-quiet"
 					>
-						Book a 15-min demo
+						{demoCta.label}
 					</a>
 				</div>
 				<FeatureTrialTerms />
@@ -109,16 +109,19 @@ const faqItems = [
 						</div>
 						<strong class="record-title">Herb roast chicken</strong>
 						<dl class="record-facts">
-							<div><dt>Yield</dt><dd>6.4 kg</dd></div>
-							<div><dt>Portion</dt><dd>265 g</dd></div>
+							<div><dt>Yield</dt><dd>9 lb cooked</dd></div>
+							<div><dt>Portion</dt><dd>6 oz</dd></div>
 						</dl>
 						<div class="record-rule"></div>
 						<p class="record-label">Ingredients</p>
 						<ul role="list" class="ingredient-lines">
-							<li><span>Chicken thigh</span><strong>7.8 kg</strong></li>
-							<li><span>Herb marinade</span><strong>1.1 kg</strong></li>
+							<!-- The product tour's recipe (src/lib/tour.ts), in US units and one
+							     weight throughout (chef audit 2026-10-07: 7.8 kg here, 6.4 kg in
+							     the builder below). -->
+							<li><span>Chicken thigh, trimmed</span><strong>12 lb</strong></li>
+							<li><span>Herb marinade</span><strong>2.4 lb</strong></li>
 							<li><span>Lemon</span><strong>12 each</strong></li>
-							<li><span>Pan jus</span><strong>1.4 L</strong></li>
+							<li><span>Pan jus</span><strong>1.5 qt</strong></li>
 						</ul>
 						<p class="method-line">Roast, rest, portion, and hold for service.</p>
 					</div>
@@ -132,20 +135,20 @@ const faqItems = [
 						</div>
 						<strong class="record-title">Herb roast chicken</strong>
 						<dl class="cost-facts">
-							<div><dt>Recipe cost</dt><dd>$164.16</dd></div>
-							<div><dt>Per portion</dt><dd>$6.84</dd></div>
-							<div><dt>Food cost</dt><dd>30.4%</dd></div>
+							<div><dt>Recipe cost</dt><dd>$64.69</dd></div>
+							<div><dt>Per portion</dt><dd>$2.70</dd></div>
+							<div><dt>Food cost</dt><dd>30.0%</dd></div>
 						</dl>
 						<div class="record-rule"></div>
 						<p class="record-label">The path stays visible</p>
 						<ul role="list" class="cost-lines">
-							<li><span>Purchased amount</span><strong>8.6 kg</strong></li>
-							<li><span>Usable yield</span><strong>91%</strong></li>
-							<li><span>Cost contribution</span><strong>$109.42</strong></li>
+							<li><span>Purchased amount</span><strong>13.2 lb</strong></li>
+							<li><span>Trim yield</span><strong>91%</strong></li>
+							<li><span>Cost contribution</span><strong>$46.02</strong></li>
 						</ul>
 					</div>
 				</div>
-				<figcaption>Illustrative values: $164.16 ÷ 24 = $6.84 food per portion. At a $22.50 selling price, that is 30.4% food cost. Food cost excludes labor, rentals, tax and profit.</figcaption>
+				<figcaption>Illustrative values: $64.69 ÷ 24 = $2.70 food per portion. At a $9.00 selling price, that is 30.0% food cost. Food cost excludes labor, rentals, tax and profit.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -229,7 +232,7 @@ const faqItems = [
 					<div class="builder-title">
 						<div>
 							<small>Recipe name</small>
-							<strong>Lemon herb chicken</strong>
+							<strong>Herb roast chicken</strong>
 						</div>
 						<div>
 							<small>Batch yield</small>
@@ -240,8 +243,8 @@ const faqItems = [
 						<div class="builder-row builder-head" role="row">
 							<span role="columnheader">Ingredient</span><span role="columnheader">Used</span><span role="columnheader">Prep</span>
 						</div>
-						<div class="builder-row" role="row"><span role="cell">Chicken thigh</span><strong role="cell">6.4 kg</strong><span role="cell">trimmed</span></div>
-						<div class="builder-row active" role="row"><span role="cell">Herb marinade</span><strong role="cell">1.1 kg</strong><span role="cell">sub-recipe</span></div>
+						<div class="builder-row" role="row"><span role="cell">Chicken thigh</span><strong role="cell">12 lb</strong><span role="cell">trimmed</span></div>
+						<div class="builder-row active" role="row"><span role="cell">Herb marinade</span><strong role="cell">2.4 lb</strong><span role="cell">sub-recipe</span></div>
 						<div class="builder-row" role="row"><span role="cell">Lemon</span><strong role="cell">12 each</strong><span role="cell">zested</span></div>
 						<div class="builder-row add-row" role="row"><span role="cell">Add an ingredient</span><span role="cell"></span><span role="cell">Type, pick, next line</span></div>
 					</div>
@@ -255,15 +258,15 @@ const faqItems = [
 							<svg width="34" height="18" viewBox="0 0 34 18" aria-hidden="true"><path d="M1 9h26M22 3l6 6-6 6" /></svg>
 							<div><small>Target</small><strong>80</strong><span>portions</span></div>
 						</div>
-						<p>Chicken thigh <strong>21.3 kg</strong></p>
-						<p>Herb marinade <strong>3.7 kg</strong></p>
+						<p>Chicken thigh <strong>40 lb</strong></p>
+						<p>Herb marinade <strong>8 lb</strong></p>
 					</div>
 					<div class="print-preview">
 						<div class="print-stamp">Printed 8:42 AM</div>
-						<strong>Lemon herb chicken</strong>
+						<strong>Herb roast chicken</strong>
 						<p>Roast until browned. Rest before portioning.</p>
 						<div class="print-rule"></div>
-						<small>24 portions · 265 g each</small>
+						<small>24 portions · 6 oz each</small>
 					</div>
 				</div>
 				<figcaption>Illustrative walkthrough of shipped recipe-builder, scaling-preview, and print-sheet behavior.</figcaption>
@@ -351,11 +354,11 @@ const faqItems = [
 						<source media="(max-width: 639px)" srcset="/proof/yield-lines-mobile.png" />
 						<img
 							src="/proof/yield-lines.png"
-							width="2272"
-							height="1370"
+							width="1490"
+							height="1042"
 							loading="lazy"
 							decoding="async"
-							alt="CostCook recipe lines showing ingredient amounts used, usable yield, quantity to buy, preparation state, and each line's cost."
+							alt="CostCook recipe lines for a Greek salad: bell pepper 0.25 each at 82% yield, cucumber 0.3 each at 90%, and Roma tomato 2.1 oz at 91% yield, 2.3 oz to buy, 12% of cost, $0.17. Roma tomato is opened: 2.1 oz usable quantity, trim yield 91%, required as purchased 2.1 oz ÷ 0.91 = 2.3 oz, a 25 lb case at $29.14, line cost $0.17, and the recorded purchase it came from."
 						/>
 					</picture>
 					<figcaption>Each ingredient carries its own working, not just a share of the final total.</figcaption>
@@ -467,17 +470,17 @@ const faqItems = [
 				<p>Bring one real menu and follow it from recipe to quote, with the working shown.</p>
 			</div>
 			<div class="closing-actions">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
+					{cta.label}
+				</a>
 				<a
 					href={demoCta.href}
 					target={demoCta.target}
 					rel={demoCta.rel}
 					aria-label={demoCta.ariaLabel}
-					class="btn-primary"
+					class="btn-quiet"
 				>
-					Book a 15-min demo
-				</a>
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">
-					{cta.label}
+					{demoCta.label}
 				</a>
 			</div>
 		</div>
@@ -525,22 +528,6 @@ const faqItems = [
 		flex-wrap: wrap;
 		gap: 0.85rem;
 		margin-top: 2rem;
-	}
-
-	.btn-outline {
-		display: inline-flex;
-		min-height: 44px;
-		align-items: center;
-		padding: 0.9rem 1.6rem;
-		border: 1px solid var(--color-green);
-		border-radius: 999px;
-		color: var(--color-green-deep);
-		font-weight: 600;
-		transition: background-color 150ms ease-out;
-	}
-
-	.btn-outline:hover {
-		background: var(--color-softgreen);
 	}
 
 	.record-flow {
@@ -1606,7 +1593,6 @@ const faqItems = [
 
 	@media (prefers-reduced-motion: reduce) {
 		.product-nav a,
-		.btn-outline,
 		.disclosures svg,
 		.faq-list summary svg {
 			transition: none;
