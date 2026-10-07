@@ -10,9 +10,11 @@
  *   payment for the balance (test.app event Nair & Castellano wedding,
  *   2026-10-06; public/proof/home/payment-schedule.png).
  * - The reminder: kitchen-brain src/lib/server/orders/approval/balance-reminders.ts,
- *   "the daily sweep that reminds the client on the day it falls due", for a
- *   card balance still owed. The email carries a pay link
- *   (public/proof/home/balance-reminder.png).
+ *   "the daily sweep that reminds the client a few days before it falls due"
+ *   (BALANCE_REMINDER_LEAD_DAYS = 3 on develop 7a7e407d9; it was the due day
+ *   before), for a card balance still owed. The email carries a pay link
+ *   (public/proof/home/balance-reminder.png, sent by that sweep as of Dec 6
+ *   for the Dec 9 balance).
  *
  * Every surface that rendered the Coming entry renders this instead, so the
  * wording changes here and nowhere else.
@@ -30,7 +32,7 @@ export const eventPayments = {
 	comparisonLabel: 'Card payment for event deposits and balances',
 	verdict: 'yes' as const,
 	homepage:
-		'The client pays the deposit and the balance by card from an email link. Send the balance request whenever you choose, and if it is still owed on the due day, a reminder with a pay link goes out.',
-	comparisonNote: `The deposit and the balance are paid by card from an email link; a reminder goes out on the day the balance is due. You can still record a payment by hand, as ${depositMethods}.`,
-	faq: `Yes. The client pays the deposit and the balance by card from a link in an email, and CostCook shows what was asked for against what came in. On the day the balance is due, the client gets a reminder email with a pay link. You can still record a payment by hand, as ${depositMethods}.`
+		'The client pays the deposit and the balance by card from an email link. Send the balance request whenever you choose, and if it is still owed three days before it is due, a reminder with a pay link goes out.',
+	comparisonNote: `The deposit and the balance are paid by card from an email link; a reminder goes out three days before the balance is due. You can still record a payment by hand, as ${depositMethods}.`,
+	faq: `Yes. The client pays the deposit and the balance by card from a link in an email, and CostCook shows what was asked for against what came in. Three days before the balance is due, if it is still owed, the client gets a reminder email with a pay link. You can still record a payment by hand, as ${depositMethods}.`
 } as const;

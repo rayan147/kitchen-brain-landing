@@ -152,8 +152,8 @@ not as the page's snap.)
   Step 11's "card deposits, balance reminders" removal is reversed: the
   payments line renders `eventPayments.homepage` from
   `src/lib/event-payments.ts` (the client pays by card from an email link; a
-  reminder with a pay link goes out on the day the balance is due, read off
-  kitchen-brain `balance-reminders.ts`). The Coming line is gone.
+  reminder with a pay link goes out three days before the balance is due, read off
+  kitchen-brain `balance-reminders.ts` on develop 7a7e407d9). The Coming line is gone.
 - Customer invoices stay unbuilt and unclaimed.
 
 ## Revision 2026-10-07 (boundary line)

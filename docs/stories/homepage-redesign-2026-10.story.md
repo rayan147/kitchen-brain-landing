@@ -106,7 +106,7 @@ Priya's yes comes in, then the deposit.
   "the workflow runs itself", "You don't type it", "nothing typed", "write
   themselves", "email themselves", "goes out on its own", "Sure matches go
   straight in" were rewritten to what the frames show (upload, confirm,
-  review; a reminder on the day the balance is due).
+  review; a reminder three days before the balance is due).
 - **Canvas brackets** "[$ from orders] / [$ from purchases]" are cut: no
   captured record backs a figure.
 - **Final Image (CTA):** `cta.label`, with the trial terms from `launchPlan`.
@@ -177,7 +177,7 @@ Priya's yes comes in, then the deposit.
   app does: the sample wedding's agreement is not prepared, so the heading
   stays "Paid by card from a link." and nothing says it was signed.
 - **The balance, before the due day:** "Send the balance request whenever you
-  choose, and if it is still owed on the due day, a reminder with a pay link
+  choose, and if it is still owed three days before it is due, a reminder with a pay link
   goes out." (the Request payment button is in the frame).
 - **No number the frames do not show:** the yield row's pain line drops "40 lb
   of short rib" (2 oz a plate against 300 portions) for "The recipe says what

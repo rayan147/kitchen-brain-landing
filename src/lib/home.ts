@@ -145,8 +145,8 @@ export const eventStages = [
 		id: 'inquiry',
 		carries: 'Priya Nair · 150 guests',
 		focus: [
-			{ x: 3.5, y: 3, w: 93, h: 7.5 },
-			{ x: 3.5, y: 81.8, w: 93, h: 7.8 }
+			{ x: 3.4, y: 4, w: 93.3, h: 6.4 },
+			{ x: 3.4, y: 85.3, w: 93.3, h: 6.7 }
 		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Inquiry',
@@ -154,15 +154,15 @@ export const eventStages = [
 		body: 'Only a client or event name is required. A date not decided yet and a guest count that is an estimate are fine.',
 		shot: shot(
 			'inquiry-mobile',
-			'New inquiry on a phone: client Priya Nair, reached by phone call, Nair & Castellano wedding, date not decided yet, 150 guests marked as an estimate.',
-			[780, 1560],
+			'New inquiry on a phone: client Priya Nair, a new client, phone (207) 555-0187, reached by phone call, Nair & Castellano wedding, date not decided yet, 150 guests marked as an estimate.',
+			[780, 1740],
 			true
 		)
 	},
 	{
 		id: 'proposal',
 		carries: '$14,250.00 accepted, asked as $3,500.00 now and $10,750.00 later',
-		focus: [{ x: 4, y: 26.6, w: 92, h: 17.3 }] as Focus[],
+		focus: [{ x: 3.1, y: 26.2, w: 93.8, h: 17.5 }] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Proposal',
 		heading: 'She says yes on her phone.',
@@ -180,14 +180,14 @@ export const eventStages = [
 		// deposit (Book the event, app 7a7e407d9).
 		carries: 'The Nair & Castellano wedding, deposit paid',
 		focus: [
-			{ x: 2.2, y: 13.5, w: 23.2, h: 17.6 },
-			{ x: 77, y: 63.7, w: 21.2, h: 10.1 }
+			{ x: 1.6, y: 12, w: 23.5, h: 17.6 },
+			{ x: 78.3, y: 66.4, w: 20, h: 9.3 }
 		] as Focus[],
 		// The same two figures on the phone capture (design review 2026-10-07:
 		// the wide frame drew 6px labels at 390px). Measured from its pixels.
 		smallFocus: [
-			{ x: 2.4, y: 9.6, w: 95.2, h: 31 },
-			{ x: 59.8, y: 69.3, w: 37.8, h: 9.1 }
+			{ x: 1.1, y: 9, w: 97.9, h: 28.9 },
+			{ x: 59.8, y: 71.4, w: 39.1, h: 8.5 }
 		] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Deposit',
@@ -199,15 +199,15 @@ export const eventStages = [
 			shot(
 				'payment-schedule',
 				'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
-				[1378, 716]
+				[1466, 772]
 			),
-			[748, 794]
+			[748, 850]
 		)
 	},
 	{
 		id: 'confirm',
 		carries: 'The same menu, quantities and prices locked',
-		focus: [{ x: 8.6, y: 32.7, w: 79, h: 20.8 }] as Focus[],
+		focus: [{ x: 8.1, y: 31.9, w: 83.9, h: 21.8 }] as Focus[],
 		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
 		tab: 'Confirm order',
 		heading: acceptanceBoundary,
@@ -236,7 +236,7 @@ export const eventStages = [
 		shot: shot(
 			'shop-list',
 			'Shopping list on a phone, Highland Meats, $2,155.59: beef short rib, boneless, need 152.7 lb, buy 10 cases of 7 kg, $2,122.40; beef bones, need 27.6 lb, 1 case of 15 kg, $33.19; neither counted on the shelf yet.',
-			[780, 788],
+			[780, 800],
 			true
 		)
 	}
@@ -255,9 +255,9 @@ export const kitchenRows = [
 			shot(
 				'food-cost-breakdown',
 				'Dishes per guest with each one’s share of cost: Braised Short Rib, two portions, $14.56; Wild Mushroom Polenta, about 240 g a portion, $2.93; Creamed Spinach, half a portion, $2.91; Focaccia and Whipped Goat Cheese $2.56.',
-				[1880, 810]
+				[1880, 808]
 			),
-			[716, 1324]
+			[780, 1384]
 		)
 	},
 	{
@@ -273,11 +273,11 @@ export const kitchenRows = [
 			shot(
 				'yield-lines',
 				'A recipe line with its yield and the amount to buy: Roma tomato, 60 g used at 91% yield, buy 66 g.',
-				[1540, 890]
+				[1540, 874]
 			),
 			// Cropped to the tomato line: the cucumber's 0.3 each rounded to the
 			// same 0.3 to buy, so the yield did nothing on screen (third chef review).
-			[716, 512]
+			[724, 514]
 		)
 	},
 	{
@@ -291,9 +291,9 @@ export const kitchenRows = [
 			shot(
 				'import-review',
 				'Import review of a sample produce invoice: 7 products, 2 flagged Needs review and listed first, 4 matched to ingredients, 1 ready to create.',
-				[2236, 966]
+				[2336, 968]
 			),
-			[780, 1526]
+			[780, 1536]
 		)
 	},
 	{
@@ -306,10 +306,10 @@ export const kitchenRows = [
 		shot: withPhone(
 			shot(
 				'allergens-labels',
-				'Pack list for 150 guests: six dishes, each with its allergens (Contains: Milk; Milk, Wheat; no listed allergens) and a Label button.',
-				[1360, 1272]
+				'Pack list for 150 guests: six dishes, each with its allergens (Contains: Milk; Contains: Milk, Wheat and May contain: Egg, Sesame, Soy; No listed allergens) and a Label button.',
+				[1360, 1212]
 			),
-			[780, 1892]
+			[780, 1902]
 		)
 	}
 ] as const;
@@ -325,9 +325,9 @@ export const frontOfHouse = [
 			shot(
 				'ordering-site',
 				'Your online ordering site: a 20 guest minimum, 72 hours notice, pickup or delivery, and the Coastal Dinner at $93.00 a guest.',
-				[2432, 1630]
+				[2432, 1702]
 			),
-			[780, 1810]
+			[780, 1634]
 		)
 	},
 	{
@@ -362,8 +362,8 @@ export const sageGuide = { href: '/features/sage', label: 'How Sage works' } as 
 
 export const sageShot = shot(
 	'sage-answer',
-	'Sage asked what is still owed on the Nair & Castellano wedding on December 19: a balance of $10,750.00, citing one record (balance due December 9, 2026; the $3,500.00 deposit already paid) with a link to the wedding.',
+	'Sage asked what is still owed on the Nair & Castellano wedding on December 19: $10,750.00, due December 9, 2026, citing two records with links to the wedding (the $3,500.00 deposit paid by card link; the balance due December 9), and the order total of $14,250.00 with no customer invoice issued yet.',
 	// Cropped above the suggested-next-step card: its green button read as the
 	// page's primary (design review 2026-10-07).
-	[808, 676]
+	[808, 1014]
 );
