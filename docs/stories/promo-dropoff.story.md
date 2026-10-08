@@ -93,7 +93,7 @@ The paid beat: the money tab's card, "$1,273.08 paid of $1,273.08", "Paid in ful
 
 ### Step 10 — Hand-offs and point of view
 
-POV locked to "you" (the owner) and "the client". Each scene hands to the next by the order's own state: priced → approved → paid → shopped → prepped and packed → closed. No chapter cards at 43 seconds; 15-frame fades between scenes.
+POV locked to "you" (the owner) and "the client". Each scene hands to the next by the order's own state: priced → approved → paid → shopped → prepped and packed → closed. No chapter cards at 45.5 seconds; 15-frame fades between scenes.
 
 ### Step 11 — Revise and finish
 
@@ -101,4 +101,5 @@ POV locked to "you" (the owner) and "the client". Each scene hands to the next b
 - Cut "2 stuffed peppers packed" from under the caption: the caption moved to the top, off the row it names.
 - Cut any comparison of the arrival's 29.3% (with misc) with the closeout's 29.1% (without): the ending compares the day-after share with the target only.
 - Not "you approve": nobody clicked Approve; the frame says "Approved automatically".
+- After the caterer and motion reviews (2026-10-08): the ending says the over-plan figure first ("$2.47 over plan"), because it is the card's biggest number; "The price is set" became "The client sees the full price" (the phone says estimate); the approval line says you can still decline; the price frame is cropped to the price card (the header still said Draft); the pack frame starts at the check, pulled back so the caption sits on paper; supplier-order caption on top, off the Send button; a ring on the shop list's Buy column.
 - Every figure is a manifest token; `film-dropoff.test.ts` and `check-landing-claims.mjs` hold the rules.

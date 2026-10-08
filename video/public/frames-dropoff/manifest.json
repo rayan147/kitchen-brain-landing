@@ -27,6 +27,7 @@
     "dropoff-pay-mobile.png",
     "dropoff-review-mobile.png",
     "dropoff-sent-mobile.png",
+    "pack-checked-desktop.png",
     "pack-desktop.png",
     "po-desktop.png",
     "prep-desktop.png",
@@ -84,6 +85,10 @@
     "dropoff-arrived-approval-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "b063d7bba"
+    },
+    "pack-checked-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "9754b5b8e"
     }
   }
 }

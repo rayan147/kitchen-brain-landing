@@ -9,6 +9,7 @@
     "dropoff-pay-mobile.png",
     "dropoff-review-mobile.png",
     "dropoff-sent-mobile.png",
+    "pack-checked-desktop.png",
     "pack-desktop.png",
     "po-desktop.png",
     "prep-desktop.png",
@@ -80,12 +81,17 @@
     "dropoff-arrived-price-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "b063d7bba",
-      "via": "crop of dropoff-arrived-desktop.png (PIL), its text unchanged"
+      "via": "crop of dropoff-arrived-desktop.png (PIL): the price card only, its text unchanged; the header's draft badge stays out"
     },
     "dropoff-arrived-approval-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "b063d7bba",
       "via": "crop of dropoff-arrived-desktop.png (PIL), its text unchanged"
+    },
+    "pack-checked-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "9754b5b8e",
+      "via": "crop of pack-desktop.png (PIL): from \"What to look at\" down, its text unchanged"
     }
   },
   "appSha": "9754b5b8e",
