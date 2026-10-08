@@ -74,29 +74,29 @@ const legend = [
 				Compare CostCook, Parsley, meez and spreadsheets.
 			</h1>
 			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">
-				You are choosing what your kitchen can rely on when the guest count changes,
-				the order goes out, and the delivery reaches the back door.
+				The real question is which one holds up when the count changes on a Thursday
+				and the truck is due Friday morning.
 			</p>
 			<p class="mt-5 max-w-[62ch] text-ink-soft">
-				Compare available features, product limits and monthly prices. Competitor entries describe their cited pricing pages on the date below; they are not hands-on product tests.
+				Below is what each one does, where CostCook stops, and what each costs a month. The Parsley and meez columns are read off their own pricing pages on the date below, not from using their software.
 			</p>
 			<!-- The spreadsheet column, 2026-09-05 (RC-57). Most kitchens reading this
 			     page are costing on a sheet today, and it was the one option the table
 			     never showed them. It is not a fourth product: it has no pricing page,
 			     so its cells report the reader's own work instead. -->
 			<p class="mt-5 max-w-[62ch] text-ink-soft">
-				Already use a spreadsheet? Its column shows what you would build or enter and maintain yourself.
+				Costing on a spreadsheet now? That column shows what you would have to build or type in, and then keep up, yourself.
 			</p>
 		</div>
 
 		<section class="mt-10 border-y border-ticket-rule py-8" aria-labelledby="fit-title">
-			<h2 id="fit-title" class="text-h3 font-semibold">Start with the tradeoff</h2>
+			<h2 id="fit-title" class="text-h3 font-semibold">The short version</h2>
 			<div class="mt-5 grid gap-8 md:grid-cols-2 md:gap-0">
 				<div class="md:pr-10">
 					<h3 class="text-base font-semibold font-body">CostCook fits the job when</h3>
 					<p class="mt-3 max-w-[52ch] text-ink-soft">
-						one kitchen needs recipes, food cost, prep, purchasing, receiving, and inventory
-						to follow the same changing event. It is one {launchPlan.displayPrice} plan.
+						one kitchen needs its recipes, food cost, prep, buying, receiving and stock to
+						keep up with an event that keeps changing. It is one {launchPlan.displayPrice} plan.
 					</p>
 				</div>
 				<div class="border-t border-ticket-rule pt-8 md:border-t-0 md:border-l md:pt-0 md:pl-10">
@@ -118,7 +118,7 @@ const legend = [
 		     CostCook is billed monthly and comparing across bases would be the
 		     first thing a careful reader caught. -->
 		<section class="mt-10" aria-labelledby="monthly-price-title">
-			<h2 id="monthly-price-title" class="text-h3 font-semibold">Monthly price on the cited pages</h2>
+			<h2 id="monthly-price-title" class="text-h3 font-semibold">What each costs a month, from their own pages</h2>
 			<div class="mt-5 grid grid-cols-1 gap-6 border-y border-ticket-rule py-8 sm:grid-cols-3">
 				<div>
 					<p class="text-sm font-semibold text-amber-deep">CostCook</p>
@@ -143,7 +143,7 @@ const legend = [
 		     "Not listed" cell is the one thing on this page that could become a
 		     false statement about another company. -->
 		<div class="mt-10 max-w-3xl">
-			<h2 class="text-h3 font-semibold">Read each cell literally</h2>
+			<h2 class="text-h3 font-semibold">How to read a cell</h2>
 			<dl class="mt-4 space-y-3 text-ink-soft">
 				{legend.map((entry) => (
 					<div class="sm:flex sm:gap-4">
@@ -165,7 +165,7 @@ const legend = [
 			<p class="mt-5 max-w-[58ch] text-ink-soft">
 				Their columns were read from{' '}
 				<a href={competitors[0].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">Parsley&rsquo;s pricing page</a>{' '}and{' '}
-				<a href={competitors[1].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">meez&rsquo;s pricing page</a>{' '}on {VERIFIED_ON}. Prices and tiers move. If you find a row that is out of date,
+				<a href={competitors[1].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">meez&rsquo;s pricing page</a>{' '}on {VERIFIED_ON}. Prices and tiers move. If you spot a row that has gone stale,
 				<a href="/contact" class="btn-quiet">tell Rayan which row needs checking</a>.
 			</p>
 		</div>
@@ -286,10 +286,10 @@ const legend = [
 		))}
 
 		<div class="mt-16 max-w-[62ch] border-t border-ticket-rule pt-8">
-			<h2 class="text-h3 font-semibold">Four rules built for event work</h2>
+			<h2 class="text-h3 font-semibold">Four rules for when the event changes</h2>
 			<p class="mt-4 text-ink-soft">
-				These rules came from the places event kitchens lose trust when software smooths
-				over uncertainty. They explain how the work behaves, not four more checkmarks.
+				Each one is a place where software that guesses has burned a caterer. They are
+				about how the work behaves, and they are not four more checkmarks.
 			</p>
 			<ul role="list" class="mt-5 space-y-4 text-ink-soft">
 				<li>
@@ -316,7 +316,7 @@ const legend = [
 		</div>
 
 		<div class="mt-14 border-t border-ticket-rule pt-8">
-			<h2 class="text-h2 font-semibold">Bring one real menu. Leave with an answer.</h2>
+			<h2 class="text-h2 font-semibold">Bring one real menu and get your answer.</h2>
 			<p class="mt-4 max-w-[58ch] text-ink-soft">
 				{launchPlan.trialDays} days free, then {launchPlan.displayPrice}. If a row marked
 				No is the one you need, one of the others may be the better buy,

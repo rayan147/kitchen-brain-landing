@@ -29,7 +29,7 @@ In CostCook, open **Settings**, then **Invoice email**. Purchases may also show 
 
 The first card, **Ask your suppliers to send invoices here**, shows **Your invoice address**. It starts with `invoices-`, then sixteen letters and numbers. That code is the whole key to your kitchen's mail, so it says nothing about your business and cannot be guessed.
 
-The page is honest about what the address can do: "Invoices sent to this address wait in review. Nothing counts until you check it, so the worst a stranger can do is add to your review list."
+The page says plainly what the address can and can't do: "Invoices sent to this address wait in review. Nothing counts until you check it, so the worst a stranger can do is add to your review list."
 
 ## Step 2: Send your sales rep the message
 

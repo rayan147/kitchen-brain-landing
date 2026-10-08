@@ -106,9 +106,9 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'math',
 		label: 'Recipes & food costing',
 		appArea: 'Recipes / Herb roast chicken',
-		title: 'Keep the working recipe and its cost on one record.',
-		intro: 'Open the dish the kitchen will cook and follow its price from purchased weight through trim yield to one portion.',
-		callout: 'The same 12 lb of chicken has to survive the recipe, the purchase order, and the back door.',
+		title: 'The recipe you cook, with what it costs on the same page.',
+		intro: 'Open the dish and follow the price from the case you bought, through the trim, down to one portion.',
+		callout: 'The same 12 lb of chicken is in the recipe, on the purchase order and at the back door.',
 		featureHref: featureMenuHref('math'),
 		metrics: [
 			{ label: 'Recipe cost', value: formatCurrency(tourRecipeCostingProof.recipeCost) },
@@ -142,8 +142,8 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'menus',
 		label: 'Menus & quotes',
 		appArea: 'Menus / Garden wedding supper',
-		title: 'Say the per-guest price with the food cost beside it.',
-		intro: 'Choose dishes and portions, enter 180 guests and a selling price, then check food cost against your target.',
+		title: 'Quote the price a head with the food cost right next to it.',
+		intro: 'Pick the dishes and portions, put in 180 guests and a price, and see the food cost against your target.',
 		callout: 'At 180 guests, one dollar per head is a $180 decision.',
 		featureHref: featureMenuHref('menus'),
 		metrics: [
@@ -176,8 +176,8 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'ingredients',
 		label: 'Ingredients & supplier prices',
 		appArea: 'Ingredients / Chicken thigh, boneless',
-		title: 'Keep the buying facts attached to the ingredient.',
-		intro: 'Compare the current pack, usable yield, supplier offers, and every recipe that will move when the price changes.',
+		title: 'What you pay for chicken lives on the chicken.',
+		intro: 'The pack you buy now, what is left after trim, what each supplier wants for it, and every recipe that moves when the price does.',
 		callout: 'A cheaper case is not cheaper if the usable pound costs more.',
 		featureHref: featureMenuHref('ingredients'),
 		metrics: [
@@ -209,8 +209,8 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'import',
 		label: 'Invoices & price-list import',
 		appArea: 'Import / Harbor Foods invoice 88421',
-		title: 'Review the invoice before saving its prices.',
-		intro: 'Keep the original invoice beside the extracted rows, then confirm exact matches and resolve the uncertain ones.',
+		title: 'Look the invoice over before its prices go in.',
+		intro: 'The invoice sits next to the lines read off it. Confirm the ones that match and sort out the ones that do not.',
 		callout: 'Three doubtful rows wait. The other sixteen do not need typing twice.',
 		featureHref: featureMenuHref('import'),
 		metrics: [
@@ -235,7 +235,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Computed total', value: formatCurrency(tourRecipeCostingProof.invoiceTotal), tone: 'good' },
 				{ label: 'Difference', value: '$0.00', tone: 'good' }
 			],
-			footnote: 'Four of 19 invoice rows are shown. The total includes all 19. In CostCook, review and save the records before they change your prices.'
+			footnote: 'Four of 19 invoice rows are shown. The total includes all 19. In CostCook, nothing changes your prices until you review and save it.'
 		}
 	},
 	{
@@ -248,7 +248,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Invoice email',
 		appArea: 'Purchases / Invoice inbox',
 		title: 'See what became of every email your suppliers send.',
-		intro: 'Suppliers send invoices to your kitchen’s private address. Each email is listed with what it became, and an invoice waits in review.',
+		intro: 'Suppliers send invoices to your kitchen’s own private address. Every email is listed with what it turned out to be, and an invoice waits for you to review it.',
 		callout: 'A statement is kept, not imported. It repeats invoices you already have.',
 		featureHref: featureMenuHref('inbox', invoiceEmailAvailability.isComing),
 		metrics: [
@@ -283,8 +283,8 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'nutrition',
 		label: 'Nutrition facts & allergens',
 		appArea: 'Recipes / Herb roast chicken / Nutrition',
-		title: 'Keep the label numbers and allergen review on the recipe.',
-		intro: 'See nutrition estimates per portion, review the ingredient sources and allergens, then use the recipe’s print action in CostCook.',
+		title: 'Nutrition and allergens, on the recipe.',
+		intro: 'See the nutrition estimate per portion, check where each ingredient’s numbers came from and its allergens, then print from the recipe in CostCook.',
 		callout: 'A blank nutrient stays blank. It never becomes a made-up zero.',
 		featureHref: featureMenuHref('nutrition'),
 		metrics: [
@@ -325,7 +325,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Guests\u2019 restrictions',
 		appArea: 'Orders / Garden wedding supper / Guests\u2019 restrictions',
 		title: 'Check every dish against the guests who asked.',
-		intro: 'Record who is eating by allergen or by diet, then read each dish back as conflict, check or clear with the ingredient that caused it named.',
+		intro: 'Put in who is eating, by allergen or by diet. Each dish comes back as conflict, check or clear, and names the ingredient behind it.',
 		callout: 'An ingredient nobody reviewed is never clear. The order says how many are left.',
 		featureHref: featureMenuHref('guards'),
 		metrics: [
@@ -362,7 +362,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Labels & printing',
 		appArea: 'Prep / Garden wedding supper / Labels',
 		title: 'Choose the date and allergen facts before a sticker prints.',
-		intro: 'Labels start from the prep list. The cook settles the storage and use-by facts, then CostCook freezes what each sticker said for reprints.',
+		intro: 'Labels start from the prep list. The cook sets the storage and the use-by, and CostCook keeps what each sticker said so a reprint matches.',
 		callout: 'A label can repeat the date you chose. It cannot choose a food-safety date for you.',
 		featureHref: featureMenuHref('labels', labelsAvailability.isComing),
 		metrics: [
@@ -402,7 +402,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Events & proposals',
 		appArea: 'Events / Garden wedding supper',
 		title: 'Send the proposal, then book the yes.',
-		intro: 'Take the inquiry, send the priced proposal to the client’s phone, and press Confirm order once they accept.',
+		intro: 'Take the inquiry, send the priced proposal to the client’s phone, and when they accept, press Confirm order.',
 		callout: acceptanceBoundary,
 		featureHref: featureMenuHref('events'),
 		metrics: [
@@ -440,8 +440,8 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Orders, shop, prep & pack',
 		appArea: 'Orders / Garden wedding supper',
 		title: 'Run shop, prep, and pack from the quote you confirmed.',
-		intro: 'Confirm the order to work from shopping, prep and pack lists for 180 guests. Previously loaded pages stay readable offline; reconnect to save check-offs.',
-		callout: 'One guest count. Three lists. No second round of typing.',
+		intro: 'Confirm the order and you work from shopping, prep and pack lists for 180 guests. A page you already opened still reads with no signal; you need to reconnect to save check-offs.',
+		callout: 'Type the guest count once. All three lists come off it.',
 		featureHref: featureMenuHref('orders'),
 		metrics: [
 			{ label: 'Event', value: 'Sat, Aug 29' },
@@ -475,7 +475,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Purchasing & receiving',
 		appArea: 'Purchasing / PO-1047 / Receive',
 		title: 'Compare what you sent with what came through the back door.',
-		intro: 'Open the purchase order, record the delivered quantity, and keep the short line visible until someone handles it.',
+		intro: 'Open the purchase order, put in what actually came, and the short line stays in view until somebody deals with it.',
 		callout: 'The invoice says delivered. The back door says five pounds short.',
 		featureHref: featureMenuHref('purchasing'),
 		metrics: [
@@ -500,7 +500,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Follow-up line', value: 'Chicken thigh', tone: 'attention' },
 				{ label: 'Unexpected items', value: 'None', tone: 'good' }
 			],
-			footnote: 'Four of 12 delivery lines are shown. Save the reviewed delivery to record purchases and update eligible prices. Shortfalls stay visible for follow-up.'
+			footnote: 'Four of 12 delivery lines are shown. Save the delivery once you have checked it, and the purchases are recorded and the prices that qualify update. Anything short stays in view until you follow it up.'
 		}
 	},
 	{
@@ -509,7 +509,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Inventory',
 		appArea: 'Inventory / Walk-in 1',
 		title: 'Build the next shopping list from a count you can trust.',
-		intro: 'Start with a stock count, then follow deliveries, waste and packed orders. Check the count date before using it to reduce a shopping list.',
+		intro: 'Count the shelf, then deliveries, waste and packed orders move the number from there. Look at when it was counted before you let it cut the shopping list.',
 		callout: '“Never counted” is an answer. Zero is a different one.',
 		featureHref: featureMenuHref('inventory'),
 		metrics: [
@@ -544,8 +544,8 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Purchases & month cost',
 		appArea: 'Purchases / July cost review',
 		title: 'Name the month’s gap without guessing what caused it.',
-		intro: 'Compare what July’s food should have cost with what it did cost. Deduct recorded waste to see the amount still unexplained.',
-		callout: 'The gap is evidence to review, not a waste number to blame on the crew.',
+		intro: 'Put what July’s food should have cost next to what it did cost. Take off the waste you logged and you see what is still unexplained.',
+		callout: 'The gap is something to look into. Do not hang it on the crew as waste.',
 		featureHref: featureMenuHref('ledger'),
 		metrics: [
 			{ label: 'Should have cost', value: '$8,420.00' },
@@ -577,8 +577,8 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'team',
 		label: 'Team & access',
 		appArea: 'Settings / Team & access',
-		title: 'See what each team role can do.',
-		intro: 'Invite teammates by email. Owners, Managers and Staff have different actions; Staff can open recipe costs and Analytics. Invitations join as Staff.',
+		title: 'Who on the crew can do what.',
+		intro: 'Invite people by email. Owners, Managers and Staff can each do different things, and Staff can open recipe costs and Analytics. Everyone invited joins as Staff.',
 		callout: 'The cook can open the work. Publishing, billing, and approvals still have named owners.',
 		featureHref: featureMenuHref('team'),
 		metrics: [
@@ -612,9 +612,9 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'assistant',
 		label: 'Sage, the assistant',
 		appArea: 'Sage / Saturday event check',
-		title: 'Ask the question, then inspect the records behind the answer.',
-		intro: 'Sage checks your own CostCook records, names missing evidence, and keeps its drafts behind your approval.',
-		callout: 'An answer without its source is just another number to recheck.',
+		title: 'Ask, then check the records behind the answer.',
+		intro: 'Sage looks through your own CostCook records, says what is missing, and nothing it drafts goes through until you approve it.',
+		callout: 'An answer that will not show its source is one more number to check yourself.',
 		featureHref: featureMenuHref('assistant'),
 		metrics: [
 			{ label: 'Question', value: 'Saturday risk check' },

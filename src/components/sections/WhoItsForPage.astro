@@ -5,11 +5,11 @@ import { cta, demoCta } from '../../lib/site';
 const fitSignals = [
 	{
 		title: 'Catering and private events',
-		body: 'Each job has its own menu, date, guest count, and price to defend.'
+		body: 'Every job has its own menu, date and guest count, and a price you have to stand behind.'
 	},
 	{
 		title: 'Restaurant event work',
-		body: 'Regular service stays regular while special dinners and catering get their own plans.'
+		body: 'Your regular service runs the way it always has. The special dinners and the catering get their own plans.'
 	},
 	{
 		title: 'Meal prep and dated production',
@@ -17,14 +17,14 @@ const fitSignals = [
 	},
 	{
 		title: 'Menus that keep changing',
-		body: 'Recipes, quantities, buying, and food cost need to follow the latest plan.'
+		body: 'When the menu changes, the quantities, the buying and the food cost have to change with it.'
 	}
 ] as const;
 
 const workPath = [
 	{ label: 'Menu + guests', href: '/features/menus-and-quotes', note: 'Set the dated plan.' },
 	{ label: 'Recipes', href: '/features/recipes-and-costing', note: 'Scale the food.' },
-	{ label: 'Shop · Prep · Pack', href: '/features/order-shop-prep-pack', note: 'Run the kitchen.' },
+	{ label: 'Shop · Prep · Pack', href: '/features/order-shop-prep-pack', note: 'Buy it, cook it, load it.' },
 	{ label: 'Purchases + cost', href: '/features/purchases-and-month-cost', note: 'See what was spent.' }
 ] as const;
 
@@ -45,11 +45,11 @@ const limits = [
 				</nav>
 				<h1 id="audience-heading">Is CostCook right for your kitchen?</h1>
 				<p class="hero-lede">
-					If you cost changing menus and buy for a date and guest count, start here. CostCook connects recipes, shopping, prep and packing for one kitchen.
+					If your menus change and you buy for a date and a guest count, you are in the right place. CostCook takes one kitchen from the recipe through the shopping, the prep and the pack.
 				</p>
 				<div class="hero-actions">
-					<a href="#fit-test" class="btn-quiet">Check your kitchen’s needs</a>
-					<a href="#limits-heading" class="btn-quiet">See what is not supported</a>
+					<a href="#fit-test" class="btn-quiet">See if it fits your work</a>
+					<a href="#limits-heading" class="btn-quiet">See what it will not do</a>
 				</div>
 			</div>
 
@@ -81,10 +81,11 @@ const limits = [
 	<section id="fit-test" class="fit-test" aria-labelledby="fit-heading">
 		<div class="container-page fit-layout">
 			<div class="section-copy">
-				<h2 id="fit-heading">Look at the calendar, not the category.</h2>
+				<h2 id="fit-heading">Look at your calendar, not the sign out front.</h2>
 				<p>
-					CostCook fits the part of your kitchen that begins with a menu, a date, and a guest count.
-					Your business can do that work all the time or alongside regular restaurant service.
+					CostCook is for the work that starts with a menu, a date and a guest count. Maybe
+					that is all you do. Maybe it is the private dinners you run on top of regular
+					service. Either way, it fits.
 				</p>
 			</div>
 			<ul role="list" class="fit-signals">
@@ -96,10 +97,10 @@ const limits = [
 	<section class="work-together" aria-labelledby="work-heading">
 		<div class="container-page">
 			<div class="section-copy">
-				<h2 id="work-heading">When the event moves, the working plan moves with it.</h2>
+				<h2 id="work-heading">When the job changes, the plan changes with it.</h2>
 				<p>
-					CostCook carries the dated plan through recipe quantities, shopping, prep, pack,
-					purchasing, and food cost. Regular service can keep its own rhythm beside it.
+					One dated plan runs through the recipe quantities, the shopping, prep and pack,
+					the purchasing and the food cost. Regular service keeps its own rhythm next to it.
 				</p>
 			</div>
 			<ol class="work-path">
@@ -122,9 +123,9 @@ const limits = [
 			<div>
 				<h2 id="limits-heading">Fit also means knowing where it stops.</h2>
 				<p>
-					CostCook does not support these three requirements. If any is essential to your kitchen, compare the alternatives before starting a trial.
+					CostCook does not do these three. If you cannot work without one of them, look at the other options before you start a trial.
 				</p>
-				<a href="/compare" class="btn-quiet">Read the full product comparison</a>
+				<a href="/compare" class="btn-quiet">See the full comparison</a>
 			</div>
 			<div class="limits-ticket">
 				<p>Before you start</p>
@@ -137,7 +138,7 @@ const limits = [
 		<div class="container-page close-layout">
 			<div>
 				<h2 id="close-heading">Bring one real menu and one guest count.</h2>
-				<p>See whether CostCook matches the work you need to price and run next.</p>
+				<p>Put your next job through it and see whether it holds up.</p>
 			</div>
 			<!-- Considered Composite; not used because this is a fixed pair of
                  content groups. Bounded columns keep billing text from shrinking the heading. -->

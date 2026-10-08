@@ -1,6 +1,6 @@
 ---
 title: "How to cost a recipe from case price to portion cost"
-description: "Follow a supplier case through unit conversion, usable yield, recipe quantity, and portions without hiding the arithmetic."
+description: "Take a supplier case through units, usable yield, the recipe and the portion, with all the arithmetic left in."
 publishedDate: 2026-09-03
 category: Recipes & yield
 menuGroup: Cost the work
@@ -13,11 +13,11 @@ featureLabel: See recipe costing with the working shown
 ---
 <!-- story: docs/stories/blog-case-to-portion.story.md -->
 
-The supplier sells a case. The recipe uses pounds, ounces, cups, or eaches. The guest receives a portion. Recipe costing is the path between those three facts.
+You buy by the case. The recipe calls for pounds, ounces, cups or eaches. The guest gets a portion. Costing a recipe is just the walk from the first to the last.
 
 ## Read the purchase as it arrives
 
-Record the case price, pack quantity, pack unit, and the ingredient identity together. A case described as “4 × 5 lb” is a 20 lb purchase, but only if all four packs contain the same ingredient and weight.
+Write down the case price, how many packs, the pack unit and what the product actually is, all in one place. A case described as “4 × 5 lb” is a 20 lb purchase, but only if all four packs contain the same ingredient and weight.
 
 Use a common unit before you compare or divide:
 
@@ -43,7 +43,7 @@ Cost per usable lb = case price ÷ usable quantity
 $24.00 ÷ 17 lb ≈ $1.41 per usable lb
 ```
 
-Yield should describe the product and preparation you actually use. Peeled onions, whole onions, roasted onions, and drained canned onions do not necessarily share a yield or unit path.
+Use the yield for the product you actually buy and the way you actually prep it. Peeled, whole, roasted and drained canned onions won't necessarily share a yield, or even a unit.
 
 ## Cost the amount used by the recipe
 
@@ -54,7 +54,7 @@ Recipe line cost = usable unit cost × recipe quantity
 $1.4118 per usable lb × 6 lb ≈ $8.47
 ```
 
-Keep full precision while calculating and round the displayed result at the end. Rounding every intermediate conversion can create small differences that become noticeable across many portions.
+Carry every decimal while you work and round once, at the end. Round at every step and the pennies start to show across a few hundred portions.
 
 ## Divide by the yield of the recipe
 
@@ -65,18 +65,18 @@ Portion cost = recipe cost ÷ finished portions
 $8.4706 ÷ 24 ≈ $0.35 per portion
 ```
 
-For a sub-recipe, the same logic applies. Cost the whole batch, record its finished yield, then let the parent recipe use only the quantity it needs.
+A sub-recipe works the same way. Cost the whole batch, write down what it yields, and the recipe that uses it takes only what it needs.
 
 ## Stop when the units do not connect
 
-Do not force a result when the purchase and recipe units cannot be reconciled. A bottle priced by each and a recipe measured in fluid ounces needs the bottle volume. A bunch used as grams needs a measured bunch weight. Missing conversion evidence should leave a visible gap rather than silently treating unlike units as equal.
+If the unit you buy in and the unit the recipe uses don't connect, don't force it. A bottle priced by each and a recipe measured in fluid ounces needs the bottle volume. A bunch used as grams needs a measured bunch weight. Until you have that number, leave the gap where you can see it. Don't quietly treat the two units as the same.
 
 ## Keep the chain open
 
-The useful audit trail is short:
+The trail is short:
 
 ```text
 Case price → purchase unit → usable yield → recipe quantity → batch yield → portion cost
 ```
 
-When the supplier price or yield changes, you can revisit the affected link instead of rebuilding the recipe from memory.
+When a case price or a yield changes, you fix that one link instead of rebuilding the recipe from memory.

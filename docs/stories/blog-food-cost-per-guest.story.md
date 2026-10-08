@@ -7,7 +7,9 @@
 - **Voice:** Second person; calm, exact, kitchen-literate; no hacks, secrets, or guarantees.
 - **Dialogue:** A familiar price becomes a decision only after the food has had its say.
 - **Headline:** How to calculate food cost per guest for a catering event
-- **Snap:** A round price can still make a crooked quote.
+- **Snap:** A round price can still be a crooked quote.
 - **Life:** The customer is waiting while the latest invoice sits beside the event sheet.
 - **Connection:** Cost per guest hands off to menu pricing and quote review.
 - **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — exposed the unrounded per-guest cost before applying the target percentage, corrected the example provenance to the homepage evidence, and recalculated the reading time at 200 words per minute.
+
+**Revision 2026-10-08: chef voice pass.** Opening, the $68 snap setup, the $89.78 decision and the close rewritten in plain kitchen speech; snap is now "A round price can still be a crooked quote." Figures, equations and the pinned provenance line unchanged. Why: owner asked that the site read like a working chef wrote it, not AI.

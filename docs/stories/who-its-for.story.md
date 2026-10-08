@@ -150,3 +150,11 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 ## Claim correction · 2026-09-27 (what Staff can open)
 
 - [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+## Revision 2026-10-08: chef voice pass
+- Owner: the site should read like a working chef-owner wrote it, not like AI. Copy only; the pinned heading, ticket, four fit-signal titles, limits heading and the three limits are unchanged.
+- "Look at the calendar, not the category." became "Look at your calendar, not the sign out front." The body says it in short turns: "Maybe that is all you do. Maybe it is the private dinners you run on top of regular service. Either way, it fits."
+- "When the event moves, the working plan moves with it." became "When the job changes, the plan changes with it."
+- Fit-signal bodies: "price to defend" is "a price you have to stand behind"; "Regular service stays regular" is "Your regular service runs the way it always has."
+- Limits intro: "does not support these three requirements... compare the alternatives" became "does not do these three. If you cannot work without one of them, look at the other options before you start a trial."
+- Known, not caused here: verify-who-its-for still expects the old heading "The work decides whether CostCook fits." and fails at baseline.

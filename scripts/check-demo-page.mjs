@@ -19,7 +19,7 @@ for (const [text, label] of [
 	['Start with the job.', 'kitchen step'],
 	['Now name the person bringing it.', 'contact step'],
 	['Sent. Now take your 15 minutes.', 'sent-and-booking state'],
-	['A working session, not a feature parade.', 'bounded agenda'],
+	['Fifteen minutes on your job.', 'bounded agenda'],
 	['Not ready for a call?', 'self-serve recovery'],
 	['request-demo-working-session', 'emitted direction contract'],
 	['data-demo-form', 'progressive form hook'],

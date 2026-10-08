@@ -184,3 +184,8 @@ definition are unchanged.
   against the orders you sent. Anything short stays in view until you follow
   it up." Team: "An order page you already opened still reads with no signal,
   but you need to reconnect to change anything." Meanings held.
+
+## Revision 2026-10-08: chef voice pass (the rest of the site)
+- Pricing: eyebrow "Priced by the kitchen", heading "One price for the kitchen, however big the crew.", lede and Stripe line in plain words ("Stripe takes your card, charges $0 today..."). Figures still read from site.ts; "feature groups contain work marked Coming" is pinned and kept.
+- Area hub group titles that were slogans or triplets: "Upload the paperwork. Review the details. Save your changes." is "Upload the paperwork, check it against the original, then save."; "Price it, confirm it, run it." is "One order, from the price to the pack-out."; "The shelf, computed, never guessed." is "What is on the shelf, worked out from a real count."; "Find kitchen settings and team access in one place." is "Kitchen settings, and who on the team can do what." Per-feature item lines kept as the feature pages settled them.
+- Connections: "The reason there is no long list of connectors here is that..." is "There is no long list of connectors here because...".

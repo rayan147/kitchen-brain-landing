@@ -99,3 +99,5 @@ One alarming total becomes two useful totals; purchase spend becomes a bounded a
 - Removed claims that allocation alone proves physical consumption or waste.
 - Recalculated the reading time at 200 words per minute.
 - **Final image:** The event is closed, the leftover stock belongs to the shelf, and the next quote starts from a better number.
+
+**Revision 2026-10-08: chef voice pass.** Monday opening, baseline, attribution and close rewritten; the slogan heading "Explain the $34; do not decorate it" is now "Find out where the $34 went". Pinned "Attributed food cost =" block and all figures unchanged. Why: owner asked that the site read like a working chef wrote it, not AI.

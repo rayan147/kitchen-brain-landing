@@ -163,3 +163,10 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - The "Not listed" legend adds "ask them before you decide".
+
+## Revision 2026-10-08: chef voice pass
+- Owner: the site should read like a working chef-owner wrote it, not like AI. Copy only. No cell's verdict, competitor tier, price, date or hedge changed; the RC-57 spreadsheet legend line and the No-row sheet notes are pinned and kept.
+- Lede: "You are choosing what your kitchen can rely on when..." became "The real question is which one holds up when the count changes on a Thursday and the truck is due Friday morning."
+- "Competitor entries describe their cited pricing pages...; they are not hands-on product tests" became "read off their own pricing pages on the date below, not from using their software." Same boundary, plainer.
+- Slogan and consultant headings went plain: "Start with the tradeoff" is "The short version"; "Read each cell literally" is "How to read a cell"; "Four rules built for event work" is "Four rules for when the event changes"; the close is "Bring one real menu and get your answer."
+- Two row notes lost "review the extracted records" phrasing (invoice scanning, receiving).

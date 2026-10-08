@@ -12,19 +12,19 @@ type GroupGuide = {
 const groupGuides: Record<string, GroupGuide> = {
 	money: {
 		shortLabel: 'Money',
-		description: 'See what you pay, when billing starts, and how to cancel.'
+		description: 'What you pay, when the card gets charged, and how to walk away.'
 	},
 	fit: {
 		shortLabel: 'Fit',
-		description: 'Check supported kitchen work and the limits that could rule CostCook out.'
+		description: 'The kind of kitchen it suits, and the limits that could rule it out for yours.'
 	},
 	how: {
 		shortLabel: 'The work',
-		description: 'Follow a quote through buying, receiving, inventory, prep, and pack.'
+		description: 'What happens to a quote once it is real: the buy, the truck, the shelf, the prep and the pack.'
 	},
 	start: {
 		shortLabel: 'Getting started',
-		description: 'See how records get in, what works on a phone, and who answers.'
+		description: 'Getting your prices and recipes in, using it on a phone, and who picks up when you write.'
 	}
 };
 
@@ -46,7 +46,7 @@ const decisionFacts = [
 			<div class="faq-hero-copy">
 				<h1 id="faq-title">Questions before you try CostCook?</h1>
 				<p>
-					Check the trial, cancellation, setup and product limits. Choose a topic below or read all {faqCount} answers.
+					Straight answers on the money, the fit, and the catch. All {faqCount} are open on this page, so read the ones you came for.
 				</p>
 				<div class="hero-actions">
 					<a class="btn-quiet" href="#money">Read the trial and billing answers</a>
@@ -81,7 +81,7 @@ const decisionFacts = [
 
 	<nav class="question-map" aria-label="Question groups">
 		<div class="container-page question-map-inner">
-			<p>Choose what you need answered</p>
+			<p>Jump to a topic</p>
 			<ul role="list">
 				{
 					faq.map((group) => (
