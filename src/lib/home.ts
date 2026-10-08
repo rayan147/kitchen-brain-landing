@@ -70,35 +70,31 @@ export const heroFilm = {
 	poster: '/film/costcook-promo-poster.jpg',
 	width: 1920,
 	height: 1080,
-	label: 'CostCook film, 1 minute 58 seconds: one sample wedding from inquiry to the day after',
+	label: 'CostCook film, 1 minute 55 seconds: one sample wedding from inquiry to the day after',
 	opening: 'Know what the job makes before you cook it.',
 	chapters: [
 		{
 			question: null,
-			lines: [
-				'A client asks on your site: Saturday in June, 150 guests, plated.',
-				'It lands as an inquiry. Nothing to retype.'
-			]
+			lines: ['A client calls about a wedding. Write it down as it comes.', 'Date not decided, about 150 guests. Rough is fine.']
 		},
 		{
 			question: 'What do I charge a head?',
-			lines: ['$95.00 a guest. Food cost 24.8%.', 'Under your 30% target. You know it before you send.']
+			lines: ['$95.00 a guest. Food cost 29.2%.', 'Under your 30% target. You know it before you send.']
 		},
 		{
 			question: 'Can the client say yes from a phone?',
 			lines: [
-				"The offer, on the client's phone: $21,043.00.",
-				'Stuffed peppers on the menu for the 12 vegetarians.',
-				'8 staff for 7 hours, the rentals and the service fee.',
-				'Accept, or ask for changes. The client decides.'
+				"The offer, on the client's phone: $14,250.00.",
+				'Accept, or ask for changes. The client decides.',
+				'Accepted, from the phone. Next, the agreement.'
 			]
 		},
 		{
 			question: 'Signed, and deposit paid?',
 			lines: [
-				'Signed online, by the client and by you.',
-				'Ask for $5,250.00. The client pays by card from the link.',
-				'Paid. Balance due ten days out, reminder three days ahead.',
+				'Deposit $3,500.00, paid by card from the link.',
+				'The balance, $10,750.00, is due Wed, Dec 9.',
+				'Signed on paper? Upload the copy. It stays with the event.',
 				'A yes is not a booking. Signed and paid is.',
 				'Booked.'
 			]
@@ -107,7 +103,7 @@ export const heroFilm = {
 			question: 'How much do I order so I’m not short?',
 			lines: [
 				"Whole packs, by supplier, for 150. What's left stays on the shelf.",
-				'Final count in. Confirm, and prices and quantities lock.',
+				'Confirm, and prices and quantities lock.',
 				'Each supplier gets only its own lines.'
 			]
 		},
@@ -117,15 +113,15 @@ export const heroFilm = {
 		},
 		{
 			question: 'What does the crew start on at 5 a.m.?',
-			lines: ['Bases first, then every dish: 138 short rib, 12 stuffed peppers.']
+			lines: ['Bases first, then every dish: 300 portions of short rib.']
 		},
 		{
 			question: 'Is everything in the van?',
-			lines: ['Every dish into the van, the 12 vegetarian plates too. Allergens on each label.']
+			lines: ['Every dish into the van, allergens on each label.']
 		},
 		{
 			question: null,
-			lines: ['Quoted at 24.8%. The day after: 24.9%, under your 30% target.']
+			lines: ['The day after, at what you paid: 28% of the price, under your 30% target.']
 		}
 	],
 	end: 'CostCook. $49/month, per kitchen. Try it free for 15 days. costcook.io'

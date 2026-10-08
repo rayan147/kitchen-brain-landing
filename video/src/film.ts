@@ -1,11 +1,12 @@
 import type { Manifest } from "./manifest";
 
 // story: docs/stories/promo-video.story.md
-// The film follows develop's own event workflow (src/lib/events/derive.ts):
-// Inquiry (here, a request from the kitchen's ordering site), Menu & service
-// (where the job is priced), Proposal and Client decision, Agreement and
-// deposit, Book the event, then kitchen planning and Confirm order. One table drives the scenes, their
-// timing and the WebVTT file, so the three cannot drift apart.
+// The film follows the Nair & Castellano wedding, the one the homepage frames
+// show, through develop's own event workflow (src/lib/events/derive.ts):
+// Inquiry (a phone call), Menu & service (where the job is priced), Proposal
+// and Client decision, Agreement and deposit, Book the event, then kitchen
+// planning and Confirm order. One table drives the scenes, their timing and
+// the WebVTT file, so the three cannot drift apart.
 // Considered Template Method for scenes; not used because every scene is the
 // same shape (a chapter card, then timed beats), which is data, not behaviour.
 
@@ -56,9 +57,10 @@ type Scene = { chapter: string | null; seconds: number; beats: Beat[] };
 export const CHAPTER_SECONDS = 3.5;
 
 // Rings and focus points are measured off the frames of the 2026-10-07 walk
-// (percent of each frame's box); retune them whenever a frame is re-shot.
+// of the Nair & Castellano wedding on local develop (percent of each frame's
+// box); retune them whenever a frame is re-shot.
 export const FILM: Record<SceneId, Scene> = {
-  // She asks on the kitchen's ordering site; it lands as an inquiry.
+  // The client calls; the inquiry goes in as she says it, date not decided.
   coldOpen: {
     chapter: null,
     seconds: 11.5,
@@ -68,18 +70,19 @@ export const FILM: Record<SceneId, Scene> = {
         from: 2.5,
         to: 7,
         layout: "phone",
-        frames: ["events-request-mobile.png"],
-        caption:
-          "A client asks on your site: Saturday in June, {guests} guests, plated.",
-        scroll: [0, 60],
+        frames: ["events-inquiry-mobile.png"],
+        caption: "A client calls about a wedding. Write it down as it comes.",
+        ring: { x: 3.5, y: 31.8, width: 32, height: 5.8 },
+        scroll: [0, 0],
       },
       {
         from: 7,
         to: 11.5,
-        layout: "screen",
-        frames: ["events-inquiry-desktop.png"],
-        caption: "It lands as an inquiry. Nothing to retype.",
-        ring: { x: 3, y: 2, width: 40, height: 7 },
+        layout: "phone",
+        frames: ["events-inquiry-mobile.png"],
+        caption: "Date not decided, about {guests} guests. Rough is fine.",
+        ring: { x: 3.5, y: 77.5, width: 93, height: 19.5 },
+        scroll: [100, 100],
       },
     ],
   },
@@ -96,7 +99,7 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-menu-desktop.png"],
         caption: "{pricePerGuest} a guest. Food cost {proposalFoodCostPct}.",
         focus: { x: 22, y: 50, scale: 1.1 },
-        ring: { x: 16.5, y: 49, width: 43, height: 21.5 },
+        ring: { x: 17.5, y: 49, width: 43, height: 20.5 },
       },
       {
         from: 8.5,
@@ -105,100 +108,90 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-menu-desktop.png"],
         caption: "Under your {target} target. You know it before you send.",
         focus: { x: 80, y: 60, scale: 1.15 },
-        ring: { x: 67, y: 70, width: 28, height: 10 },
+        ring: { x: 68, y: 70, width: 27.5, height: 9.5 },
       },
     ],
   },
-  // The offer as she sees it, scrolled once to its foot; the rings then walk
-  // what she asked for (the vegetarian main), what the total buys (the staff
-  // line prints 56 at 38 dollars with no unit, so the caption says what 56 is), and her answer.
+  // The offer as she sees it on her phone, its total, her two buttons, then
+  // her answer. The offer frame is the homepage capture of this wedding's
+  // offer (a fresh world on the same build); the acceptance is this walk's.
   decision: {
     chapter: "Can the client say yes from a phone?",
-    seconds: 18,
+    seconds: 15,
     beats: [
       {
         from: 3.5,
-        to: 6.5,
+        to: 7.5,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
         caption: "The offer, on the client's phone: {offerTotal}.",
-        scroll: [0, 100],
+        ring: { x: 5, y: 27, width: 90, height: 15.8 },
+        scroll: [0, 0],
       },
       {
-        from: 6.5,
-        to: 10.5,
-        layout: "phone",
-        frames: ["events-offer-mobile.png"],
-        caption:
-          "Stuffed peppers on the menu for the {vegetarianPortions} vegetarians.",
-        ring: { x: 9, y: 61.9, width: 57, height: 1.9 },
-        scroll: [100, 100],
-      },
-      {
-        from: 10.5,
-        to: 14.5,
-        layout: "phone",
-        frames: ["events-offer-mobile.png"],
-        caption:
-          "{staffPeople} staff for {staffHours} hours, the rentals and the service fee.",
-        ring: { x: 8, y: 67.3, width: 84, height: 3.9 },
-        scroll: [100, 100],
-      },
-      {
-        from: 14.5,
-        to: 18,
+        from: 7.5,
+        to: 11.5,
         layout: "phone",
         frames: ["events-offer-mobile.png"],
         caption: "Accept, or ask for changes. The client decides.",
-        ring: { x: 1, y: 95.3, width: 98, height: 4.4 },
+        ring: { x: 2, y: 91.5, width: 96.5, height: 7.5 },
         scroll: [100, 100],
+      },
+      {
+        from: 11.5,
+        to: 15,
+        layout: "phone",
+        frames: ["events-accepted-mobile.png"],
+        caption: "Accepted, from the phone. Next, the agreement.",
       },
     ],
   },
-  // The agreement out for signature, the card deposit asked and paid, then
-  // Book the event once everything it asks for is in (booking-requirements.ts).
+  // The deposit paid by card, the balance's due day, the agreement signed on
+  // paper (local develop has no online signing, so the app takes the signed
+  // copy), then Book the event once everything it asks for is in
+  // (booking-requirements.ts).
   agreement: {
     chapter: "Signed, and deposit paid?",
-    seconds: 21,
+    seconds: 21.5,
     beats: [
       {
         from: 3.5,
-        to: 6.5,
-        layout: "screen",
-        frames: ["events-agreement-desktop.png"],
-        caption: "Signed online, by the client and by you.",
-        ring: { x: 3, y: 58, width: 68, height: 9 },
-      },
-      {
-        from: 6.5,
-        to: 10.5,
-        layout: "split",
-        frames: ["events-payment-request-desktop.png", "events-pay-mobile.png"],
-        caption: "Ask for {deposit}. The client pays by card from the link.",
-      },
-      {
-        from: 10.5,
-        to: 14.5,
+        to: 7.5,
         layout: "screen",
         frames: ["events-payments-paid-desktop.png"],
-        // The reminder goes out three days before the due day (owner ruling
-        // 2026-10-07), as the paid frame prints.
-        caption: "Paid. Balance due ten days out, reminder three days ahead.",
-        ring: { x: 60, y: 52.5, width: 37.5, height: 15 },
+        caption: "Deposit {deposit}, paid by card from the link.",
+        ring: { x: 2.5, y: 50, width: 53, height: 25 },
       },
       {
-        from: 14.5,
-        to: 18.5,
+        from: 7.5,
+        to: 11,
+        layout: "screen",
+        frames: ["events-payments-paid-desktop.png"],
+        caption: "The balance, {balance}, is due {balanceDue}.",
+        // The balance row is the card's foot; the caption sits on top.
+        captionAt: "top",
+        ring: { x: 2.5, y: 79, width: 96, height: 15 },
+      },
+      {
+        from: 11,
+        to: 15,
+        layout: "screen",
+        frames: ["events-agreement-desktop.png"],
+        caption: "Signed on paper? Upload the copy. It stays with the event.",
+        // A short card scaled up: at the bottom the caption covered its link.
+        captionAt: "top",
+      },
+      {
+        from: 15,
+        to: 19,
         layout: "screen",
         frames: ["events-book-event-desktop.png"],
         caption: "A yes is not a booking. Signed and paid is.",
-        // Pulled back a touch, so the strip and its ring clear the frame edge.
-        focus: { x: 50, y: 50, scale: 0.95 },
-        ring: { x: 1.5, y: 63, width: 22, height: 28 },
+        ring: { x: 1.5, y: 28, width: 97, height: 30 },
       },
       {
-        from: 18.5,
-        to: 21,
+        from: 19,
+        to: 21.5,
         layout: "screen",
         frames: ["events-booked-desktop.png"],
         caption: "Booked.",
@@ -214,20 +207,20 @@ export const FILM: Record<SceneId, Scene> = {
         to: 9,
         layout: "screen",
         frames: ["events-shop-desktop.png"],
-        // "Uses 127.8 lb of 138.9 lb": the case you open is not all food cost,
+        // "Uses 11.3 lb of 16.5 lb": the pack you open is not all food cost,
         // which the closeout's "at what you paid" figure leans on.
         caption:
           "Whole packs, by supplier, for {guests}. What's left stays on the shelf.",
-        ring: { x: 3, y: 20.5, width: 94, height: 14 },
+        ring: { x: 2, y: 58.5, width: 96, height: 11 },
       },
       {
         from: 9,
         to: 13,
         layout: "screen",
         frames: ["events-confirm-desktop.png"],
-        caption: "Final count in. Confirm, and prices and quantities lock.",
+        caption: "Confirm, and prices and quantities lock.",
         fromScale: 0.94,
-        ring: { x: 74, y: 62, width: 21, height: 27 },
+        ring: { x: 74, y: 62, width: 22, height: 27 },
       },
       {
         from: 13,
@@ -239,7 +232,7 @@ export const FILM: Record<SceneId, Scene> = {
     ],
   },
   // After the plan is confirmed: the delivery (/orders/<id>/receiving), the
-  // prep list (/orders/<id>/prep), then the van (/orders/<id>/pack).
+  // prep list and the pack list (the order's Prep and Pack tabs).
   receive: {
     chapter: "Did it all come off the truck?",
     seconds: 9.5,
@@ -251,10 +244,9 @@ export const FILM: Record<SceneId, Scene> = {
         frames: ["events-receiving-desktop.png"],
         caption:
           "Check in the trucks. Anything short stays under Still to get.",
-        // Pushes in from below the bottom left corner, so Still to get rises
-        // clear of the caption.
-        focus: { x: 0, y: 130, scale: 1.6 },
-        ring: { x: 1.5, y: 61, width: 60, height: 17.5 },
+        // Still to get is at the frame's foot; the caption sits on top.
+        captionAt: "top",
+        ring: { x: 2, y: 75, width: 96, height: 20 },
       },
     ],
   },
@@ -268,8 +260,8 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-prep-desktop.png"],
         caption:
-          "Bases first, then every dish: {mainPortions} short rib, {vegetarianPortions} stuffed peppers.",
-        ring: { x: 2.5, y: 45, width: 95, height: 6.5 },
+          "Bases first, then every dish: {mainPortions} portions of short rib.",
+        ring: { x: 2.5, y: 49.8, width: 95, height: 6.8 },
       },
     ],
   },
@@ -282,20 +274,16 @@ export const FILM: Record<SceneId, Scene> = {
         to: 9.5,
         layout: "screen",
         frames: ["events-pack-desktop.png"],
-        caption:
-          "Every dish into the van, the {vegetarianPortions} vegetarian plates too. Allergens on each label.",
-        // The last row is the answer to her "something for the vegetarians";
-        // the caption sits on top, off it.
-        ring: { x: 3, y: 87, width: 94, height: 10 },
-        captionAt: "top",
+        caption: "Every dish into the van, allergens on each label.",
+        ring: { x: 2.5, y: 67, width: 95, height: 17 },
       },
     ],
   },
   // The closeout opens the day after the event and says "likely" until the
   // kitchen records what it used. The walk records it and closes the review,
-  // so the share is final; plan and actual are both ingredients only since
-  // develop d3c7c9add. The payoff is that share against the target set at the
-  // start.
+  // so the share is final. Its figures are plan and paid, ingredients only, a
+  // different basis from the menu's live-price figure, so the caption states
+  // the share against the target and does not compare it with the quote.
   close: {
     chapter: null,
     seconds: 12,
@@ -306,12 +294,9 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-closeout-desktop.png"],
         caption:
-          "Quoted at {proposalFoodCostPct}. The day after: {dayAfterShare}, under your {target} target.",
-        // The card whole, no push: it is cropped to its own edges, and any push
-        // cut its heading into fragments beside the caption, which sits on
-        // top, off the card's figures.
+          "The day after, at what you paid: {dayAfterShare} of the price, under your {target} target.",
         captionAt: "top",
-        ring: { x: 72.5, y: 74, width: 22, height: 22 },
+        ring: { x: 46.5, y: 63, width: 35, height: 30 },
       },
       { from: 7, to: 12, layout: "end", frames: [] },
     ],
