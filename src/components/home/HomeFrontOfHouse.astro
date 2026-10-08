@@ -16,7 +16,7 @@ import { frontOfHouse } from '../../lib/home';
 	tone="amber"
 	eyebrow="Front of house"
 	heading="Orders and invoices come to you."
-	lede="Clients order off your own page. Your booking rules decide which requests take the quick path and which land with you as an inquiry. Supplier invoices come in by email and sit there until you OK them."
+	lede="Clients order off your own page, or right from your website. Your booking rules decide which requests take the quick path and which land with you as an inquiry. Supplier invoices come in by email and sit there until you OK them."
 >
 	<div class="cards">
 		{frontOfHouse.map((card) => (
@@ -33,11 +33,14 @@ import { frontOfHouse } from '../../lib/home';
 
 <style>
 	.cards { display: grid; gap: 3rem; margin-top: 3rem; }
-	/* :global: the img renders inside HomeFrame. The 3:2 crop is for the wide
-	   desktop captures; a phone gets the app's phone capture whole. */
+	/* :global: the img renders inside HomeFrame. The 6:5 crop is for the
+	   desktop captures (3:2 until 2026-10-07; the ordering frame is the widget
+	   inside a website, and its menu row sits below a 3:2 cut). The invoice
+	   inbox keeps its left column, where every line its alt names sits. A phone
+	   gets the app's phone capture whole. */
 	.card :global(.card-shot) { margin-bottom: 1.5rem; }
 	@media (min-width: 48rem) {
-		.card :global(.card-shot) { aspect-ratio: 3 / 2; object-fit: cover; object-position: top left; }
+		.card :global(.card-shot) { aspect-ratio: 6 / 5; object-fit: cover; object-position: top left; }
 	}
 	@media (min-width: 64rem) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>

@@ -320,14 +320,17 @@ export const frontOfHouse = [
 		heading: 'Online ordering',
 		// "Confirm" is the event walk's word for booking, so this row says
 		// "approve" and "pay" (third chef review 2026-10-07).
-		body: 'On your own ordering page, a client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request. They pay by card.',
+		// The widget is Settings > Integrations > Ordering site > Put on your
+		// website: one script tag, a sandboxed frame (develop 7a7e407d9). The
+		// frame is that widget in a sample page for the sample kitchen.
+		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request. They pay by card.',
 		shot: withPhone(
 			shot(
 				'ordering-site',
-				'Your online ordering site: a 20 guest minimum, 72 hours notice, pickup or delivery, and the Coastal Dinner at $93.00 a guest.',
-				[2432, 1702]
+				'The ordering widget on a caterer’s own website: under the kitchen’s Order catering heading, CostCook’s order form for Harbor & Hearth Catering with a 20 guest minimum, 72 hours notice, pickup or delivery, the steps Menu to Review, and the Coastal Dinner at $93.00 a guest.',
+				[2496, 2136]
 			),
-			[780, 1634]
+			[780, 2866]
 		)
 	},
 	{
