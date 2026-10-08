@@ -1,7 +1,7 @@
 ---
 title: "How to scale a catering prep list without making half a pot"
 description: "Go from guests to portions, batches, equipment runs and cases, and keep each kind of rounding from throwing off the next."
-publishedDate: 2026-09-10
+publishedDate: 2026-08-27
 category: Running the event
 menuGroup: Plan and buy
 menuIcon: prep

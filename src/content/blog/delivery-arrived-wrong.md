@@ -1,7 +1,7 @@
 ---
 title: "The delivery arrived wrong. What should you check before accepting it?"
 description: "Check the purchase order, the cases at the door and the invoice line by line, so a short or a substitute doesn’t end up as your stock count."
-publishedDate: 2026-08-27
+publishedDate: 2026-08-13
 category: Buying & suppliers
 menuGroup: Plan and buy
 menuIcon: receiving

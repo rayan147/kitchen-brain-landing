@@ -1021,9 +1021,9 @@ const forbiddenClaims = [
 	[/\bfree while/i, 'unapproved pricing promise'],
 	[/\beverything downstream re-reads/i, 'confirmed-order repricing implication'],
 	[/\bhandles it automatically\b/i, 'unqualified automation promise'],
-	// A booked event's deposit is recorded by hand in production (inventory A-14),
-	// and customer invoices are an unbuilt PRD (front-of-house 06). Both patterns
-	// live in scripts/lib/money-claims.mjs, shared with the built events page.
+	// The deposit wording (inventory A-14, RC-65) lives in
+	// scripts/lib/money-claims.mjs, shared with the built events page. The
+	// client invoicing guard there was retired by the owner ruling of 2026-10-08.
 	...moneyClaims,
 	// RC-49. The assistant's model and provider are configuration, not claims,
 	// and the default has never been evaluated on the marketed branch.

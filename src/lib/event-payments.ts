@@ -36,3 +36,28 @@ export const eventPayments = {
 	comparisonNote: `The deposit and the balance are paid by card from an email link; a reminder goes out three days before the balance is due. You can still record a payment by hand, as ${depositMethods}.`,
 	faq: `Yes. The client pays the deposit and the balance by card from a link in an email, and CostCook shows what was asked for against what came in. Three days before the balance is due, if it is still owed, the client gets a reminder email with a pay link. You can still record a payment by hand, as ${depositMethods}.`
 } as const;
+
+/**
+ * The customer invoice, as shipped (owner ruling 2026-10-08, "yes, update
+ * them"; until then the events page said there was none). Read off
+ * kitchen-brain develop 185451a1b; Issue invoice and Send invoice are at
+ * 7a7e407d9 too:
+ * - src/lib/components/orders/CustomerInvoiceCard.svelte,
+ *   on the order's Money tab: Issue invoice, "Issued from the revision the
+ *   client accepted, so the total is the one they signed.", payments applied
+ *   (receivables/auto-apply.ts applies them), Copy client link, "The link
+ *   doesn't expire."
+ * - SendInvoiceAction.svelte: Send invoice, then Send again.
+ * - The client's copy, src/routes/invoice: Pay $X on a secure Stripe page for
+ *   the next payment owed, or the kitchen's own How to pay lines when it is not
+ *   a card payment (receivables/invoice-pay.ts); Print or save as PDF.
+ * - receivables/read.ts and issue.ts: only an order from an event's accepted
+ *   proposal has one. An online order carries an Approval and no agreement, so
+ *   it has no invoice.
+ * Left out: the QuickBooks line on the card, because QuickBooks is Coming here.
+ */
+export const eventInvoice = {
+	title: 'An invoice from the proposal they accepted',
+	body: 'On the order’s Money tab, Issue invoice makes a numbered invoice from the proposal the client accepted, so the total is the one they signed, and what they’ve already paid comes off it. Send invoice emails them a link that doesn’t expire. If you take cards through CostCook, it has a Pay button for what’s due next. If you collect it yourself, it shows the payment instructions you saved. They can print it or save it as a PDF.',
+	onlineOrders: 'An invoice comes from an accepted proposal, so an online order has none.'
+} as const;
