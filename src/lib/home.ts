@@ -321,7 +321,7 @@ export const frontOfHouse = [
 		// The widget is Settings > Integrations > Ordering site > Put on your
 		// website: one script tag, a sandboxed frame (develop 7a7e407d9). The
 		// frame is that widget in a sample page for the sample kitchen.
-		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request. They pay by card.',
+		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request, and your booking rules decide whether they pay by card up front.',
 		shot: withPhone(
 			shot(
 				'ordering-site',

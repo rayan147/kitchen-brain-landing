@@ -70,7 +70,7 @@ export const orderingAvailability = {
 	featureLead: orderingIsComing ? 'Built, not deployed, marked Coming.' : 'In the app today.',
 	featureDetail: orderingIsComing
 		? 'A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives awaiting kitchen confirmation, which means you still say yes to it. The storefront and the embeddable widget are built and are not deployed anywhere a customer could reach, so this stays marked Coming.'
-		: 'Put your menus on an ordering page of your own, or paste one snippet into the website you already have. A client picks a menu, the dishes, a date and the headcount, leaves their contact and diet needs, and sends it. It arrives awaiting kitchen confirmation, and you approve or decline. Approval emails a pay link, and the client’s payment through your Stripe account confirms the order.',
+		: 'Put your menus on an ordering page of your own, or paste one snippet into the website you already have. A client picks a menu, the dishes, a date and the headcount, leaves their contact and diet needs, and sends it. It arrives awaiting kitchen confirmation, and you approve or decline. Your booking rules decide what happens next: approving confirms it, or emails a pay link and the client’s payment through your Stripe account confirms it.',
 	menuDescription: orderingIsComing
 		? 'A storefront and an embeddable widget, built and not yet deployed.'
 		: 'Clients request from your own ordering page; you approve, and their payment confirms it.',
@@ -81,7 +81,7 @@ export const orderingAvailability = {
 			]
 		: [
 				'Yes. Put your menus on an ordering page of your own, or on a site you already have. A client picks a menu, the dishes and a date (closed and full dates are greyed out), chooses pickup or delivery, and sends the request. Nothing is charged, and it arrives awaiting kitchen confirmation rather than as a booked event. You approve or decline it, or let clear requests approve themselves.',
-				'Approval emails the client a pay link. They pay on Stripe’s page, into your own Stripe account, within 72 hours, and that payment confirms the order. A balance due date sends one reminder email with its own pay link. Every amount is worked out by CostCook after the selections arrive: the browser sends what the client chose, without prices. A custom request, or one your booking rules send to you, takes no money and comes to you as an inquiry to price. There are no saved cards, no automatic refunds and no client invoices.'
+				'What approval does is set by your booking rules. A new account takes no online payment, so approving confirms the order. Set a rule to pay in full, or a deposit then the balance, and approval emails the client a pay link instead: they pay on Stripe’s page, into your own Stripe account, within 72 hours, and that payment confirms the order. A balance gets its own pay link and one reminder email. Every amount is worked out by CostCook after the selections arrive: the browser sends what the client chose, without prices. A bespoke request, or one your booking rules send to you, takes no money and comes to you to price. There are no saved cards and no automatic refunds.'
 			]
 } as const;
 
