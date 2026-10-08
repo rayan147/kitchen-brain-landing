@@ -41,7 +41,7 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         to: 8,
         layout: "phone",
         frames: ["dropoff-review-mobile.png"],
-        caption: "The client sees the full price before anyone calls.",
+        caption: "The client sees the price before anyone calls.",
         // The whole review, down to the send button, scrolled once.
         scroll: [0, 100],
       },
@@ -61,7 +61,9 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         // misc and the closeout's does not, so the two dollar figures never
         // share the film.
         frames: ["dropoff-arrived-price-desktop.png"],
-        caption: "It arrives priced. Food cost {foodCostWithMisc}.",
+        // "with misc": the closeout's share at the end leaves misc out, so
+        // without the word the cost would seem to fall while it came in over.
+        caption: "It arrives priced. Food cost {foodCostWithMisc}, with misc.",
         ring: { x: 1, y: 15, width: 41, height: 82 },
         // Pulled back so the cropped panel's left edge clears the frame.
         focus: { x: 50, y: 50, scale: 0.9 },
@@ -96,8 +98,7 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         to: 4,
         layout: "phone",
         frames: ["dropoff-pay-link-mobile.png"],
-        caption:
-          "The kitchen sends a pay link. The client pays {paid} by card.",
+        caption: "The client gets a pay link and pays {paid} by card.",
       },
       {
         from: 4,
@@ -106,6 +107,9 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         frames: ["dropoff-paid-desktop.png"],
         caption: "Nobody typed the order twice or chased the money.",
         ring: { x: 79.5, y: 6, width: 16.5, height: 14 },
+        // Pulled back to the scale of the frames around it.
+        focus: { x: 50, y: 40, scale: 0.8 },
+        fromScale: 0.8,
       },
     ],
   },
@@ -125,6 +129,9 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         caption:
           "Whole packs, by supplier, for {guests}. The rest stays on the shelf.",
         ring: { x: 61.5, y: 23, width: 19, height: 38 },
+        // Pulled back so the third supplier's name clears the caption.
+        focus: { x: 50, y: 0, scale: 0.86 },
+        fromScale: 0.86,
       },
       {
         from: 4.5,
@@ -134,6 +141,8 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         caption: "Each supplier gets only its own lines.",
         // The first supplier's send row: Email, to its own address.
         ring: { x: 3, y: 14.5, width: 94, height: 9.5 },
+        focus: { x: 50, y: 0, scale: 0.86 },
+        fromScale: 0.86,
       },
     ],
   },
@@ -157,15 +166,15 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         from: 3.5,
         to: 8,
         layout: "screen",
-        frames: ["pack-checked-desktop.png"],
-        // From "What to look at" down: the check against the client's
-        // vegetarians, then the stuffed pepper row the caption names. Pulled
-        // back so the caption on top sits on paper, not on the check.
+        // The whole pack frame again: the client's note ("Two of the forty
+        // are vegetarian") is where the 2 comes from, above the check and the
+        // stuffed pepper row. Pulled back so the caption on top sits on paper.
+        frames: ["pack-desktop.png"],
         caption:
-          "{vegetarianPortions} stuffed peppers for the vegetarians. Every dish checked for allergens.",
-        ring: { x: 3, y: 82.5, width: 93.5, height: 14 },
-        focus: { x: 50, y: 100, scale: 0.76 },
-        fromScale: 0.76,
+          "{vegetarianPortions} stuffed peppers, and no clashes with the guests' restrictions.",
+        ring: { x: 3, y: 85.5, width: 93.5, height: 11.5 },
+        focus: { x: 50, y: 100, scale: 0.72 },
+        fromScale: 0.72,
         captionAt: "top",
       },
     ],
@@ -181,13 +190,13 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         from: 0,
         to: 6.5,
         layout: "screen",
-        frames: ["closeout-desktop.png"],
+        frames: ["closeout-card-desktop.png"],
         // The card's biggest figure is the over-plan amount, so the caption
         // says it first, and the ring takes in both figures it names.
         caption:
-          "The next day it came in {closeoutOver} {closeoutDirection} plan, still under your {targetPct} target at {closeoutPct}.",
+          "The next day it came in {closeoutOver} {closeoutDirection} plan, still under your {targetPct} target at {closeoutPct} without misc.",
         captionAt: "top",
-        ring: { x: 49, y: 59.5, width: 46.5, height: 17 },
+        ring: { x: 49, y: 54.5, width: 46.5, height: 19 },
         focus: { x: 50, y: 60, scale: 0.96 },
         fromScale: 0.96,
       },

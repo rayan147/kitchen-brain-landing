@@ -1,5 +1,6 @@
 {
   "frames": [
+    "closeout-card-desktop.png",
     "closeout-desktop.png",
     "dropoff-arrived-approval-desktop.png",
     "dropoff-arrived-price-desktop.png",
@@ -100,6 +101,11 @@
       "app": "6a82f780a",
       "via": "capture-film.mjs arrived",
       "note": "the pay link of practice order 61 (2026-10-08), sent with order 59's menu, 40 guests, day and address, so the same $1,273.08; order 59's own link was already paid, and its first shot carried the old \"Pay to hold your date\" heading. Order 61 was declined after the shot."
+    },
+    "closeout-card-desktop.png": {
+      "host": "localhost",
+      "app": "9754b5b8e",
+      "via": "crop of closeout-desktop.png (PIL): the \"Back to order\" link cut off the top, the rest unchanged"
     }
   },
   "appSha": "9754b5b8e",

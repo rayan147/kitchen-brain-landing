@@ -18,6 +18,7 @@
   "appSha": "9754b5b8e",
   "capturedOn": "2026-10-08",
   "frames": [
+    "closeout-card-desktop.png",
     "closeout-desktop.png",
     "dropoff-arrived-approval-desktop.png",
     "dropoff-arrived-price-desktop.png",
@@ -94,6 +95,10 @@
     "dropoff-pay-link-mobile.png": {
       "host": "sites-test.costcook.io",
       "app": "6a82f780a"
+    },
+    "closeout-card-desktop.png": {
+      "host": "localhost",
+      "app": "9754b5b8e"
     }
   }
 }
