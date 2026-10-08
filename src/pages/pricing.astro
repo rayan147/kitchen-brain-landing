@@ -11,12 +11,13 @@ import { comingPlanList } from '../lib/coming-plans';
 // Included at launch, 2026-09-27 (gap report S11). One plan, no tier gating
 // (inventory plan_matrix). Labels and online ordering read their status files,
 // so a status flip back to Coming drops them here instead of leaving pricing
-// promising them. The events line names the deposit boundary because card
-// payment for events is a Coming plan, not part of this price.
+// promising them. The events line says how the client pays, in
+// event-payments.ts's words: card payment for booked events shipped
+// (owner ruling 2026-10-06, RC-65).
 // Considered Strategy; not used because this is a static list with two
 // status-read entries, not interchangeable behavior.
 const included = [
-	'Events and proposals, with the deposit recorded by hand',
+	'Events and proposals, with the deposit and balance paid by card from an email link',
 	'Clients and the calendar',
 	'Recipe and menu costing',
 	'Orders, shopping, prep, and pack plans',
