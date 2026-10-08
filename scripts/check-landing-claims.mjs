@@ -1090,9 +1090,14 @@ requireText(startHereSource, 'type any line it could not', 'close keeps the type
 // staff, rentals and the service fee on the offer itself, so RC-74 is now
 // carried by the film's own words in the transcript, and the hero names the
 // film as a sample.
+// UPDATED 2026-10-07 (owner: the film follows Nair & Castellano): that offer
+// is food only, 150 at $95.00, so the film claims no staff or rentals lines
+// and RC-74 rides on the decision step's own words. The transcript carries
+// the menu's figures as its frame prints them.
 requireText(heroSource, 'One sample wedding', 'hero names the film as a sample');
-requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], '8 staff for 7 hours, the rentals and the service fee.', 'hero film transcript says where staff, rentals and the fee go (RC-74)');
-requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], '$95.00 a guest. Food cost 24.8%.', 'hero film transcript carries the price-per-guest check');
+requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], 'plus any staff, rentals or service fee', 'the client-decision step says where staff, rentals and the fee go (RC-74)');
+requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], '$95.00 a guest. Food cost 29.2%.', 'hero film transcript carries the price-per-guest check');
+requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], 'Signed on paper? Upload the copy. It stays with the event.', 'hero film transcript names the paper route the walk took, not online signing');
 // 5. One wedding, one set of numbers. The tour, the menus guide and the blog
 //    keep the film's 180-guest wedding ($26.93 / 39.6% / $89.78); the retired
 //    Aug 29 figures may not come back anywhere. The homepage since 2026-10-06

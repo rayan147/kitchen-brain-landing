@@ -26,10 +26,9 @@ const manifest: Manifest = {
   plannedFoodCost: "$3,750.87",
   actualFoodCost: "$3,675.88",
   dayAfterShare: "25.8%",
-  mainPortions: "138",
-  vegetarianPortions: "12",
-  staffPeople: "8",
-  staffHours: "7",
+  balance: "$10,750.00",
+  balanceDue: "Wed, Dec 9",
+  mainPortions: "300",
   displayPrice: "$49/month",
   trialDays: "15",
   developCommit: "e00299078",
@@ -99,35 +98,41 @@ describe("FILM follows develop's event workflow", () => {
     );
     expect(all).not.toMatch(/Confirm order is/);
   });
-  // The pay page is a phone capture (390 px at 3x): it plays in the phone,
-  // beside the owner's ask for the deposit, not stretched to a desktop frame.
-  it("shows the pay page in the phone, beside the ask for the deposit", () => {
-    const pay = FILM.agreement.beats.find((b) =>
-      b.frames.includes("events-pay-mobile.png"),
+  // Local develop has no online signing provider; the app takes a signed
+  // copy instead, and Book counts it. The caption names that route, never an
+  // online signature.
+  it("takes the agreement's paper route and says so", () => {
+    const paper = FILM.agreement.beats.find((b) =>
+      b.frames.includes("events-agreement-desktop.png"),
     );
-    expect(pay?.layout).toBe("split");
-    expect(pay?.frames).toEqual([
-      "events-payment-request-desktop.png",
-      "events-pay-mobile.png",
-    ]);
+    expect(paper?.caption).toMatch(/Signed on paper\? Upload the copy/);
+    const all = SCENE_ORDER.flatMap((id) => captionsFor(id, manifest)).join(" ");
+    expect(all).not.toMatch(/Signed online|e-?sign/i);
   });
-  // The offer frame is taller than the phone: the ring on the Accept bar only
-  // lands if that beat holds the page at its bottom, where the bar is.
+  // The offer frame is about a phone screen tall: the ring on the Accept bar
+  // only lands if that beat holds the page at its bottom, where the bar is.
   it("holds the offer at its bottom while the ring circles the Accept bar", () => {
-    const ringed = FILM.decision.beats.find((b) => b.ring);
-    expect(ringed?.scroll).toEqual([100, 100]);
-    expect(FILM.decision.beats[0].scroll?.[1]).toBe(100);
-  });
-  // Caterer review 2026-10-06: a food-only total read like a toy. The offer
-  // now carries staff, rentals and a service fee, and the caption says so.
-  it("quotes the whole offer, staff and rentals in", () => {
-    expect(captionsFor("decision", manifest).join(" ")).toContain("$21,043.00");
-  });
-  it("says what the paid frame shows about the balance reminder", () => {
-    const paid = FILM.agreement.beats.find((b) =>
-      b.frames.includes("events-payments-paid-desktop.png"),
+    const accept = FILM.decision.beats.find((b) =>
+      b.caption?.startsWith("Accept, or ask for changes"),
     );
-    expect(paid?.caption).toMatch(/reminder/i);
+    expect(accept?.ring).toBeTruthy();
+    expect(accept?.scroll).toEqual([100, 100]);
+  });
+  // This wedding's offer is the food alone (150 at $95.00), no staff or
+  // rentals lines: the caption quotes the total the frames print, nothing more.
+  it("quotes the offer total the Payments card prints", () => {
+    expect(captionsFor("decision", manifest).join(" ")).toContain(
+      manifest.offerTotal,
+    );
+  });
+  it("names the balance and its due day, off the paid frame", () => {
+    const balance = FILM.agreement.beats.find((b) =>
+      b.caption?.includes("{balance}"),
+    );
+    expect(balance?.frames).toEqual(["events-payments-paid-desktop.png"]);
+    expect(resolveCaption(balance!.caption!, manifest)).toBe(
+      "The balance, $10,750.00, is due Wed, Dec 9.",
+    );
   });
 });
 
@@ -145,9 +150,9 @@ describe("after the kitchen plan, the delivery then the prep", () => {
 });
 
 describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
-  it("says the deposit link is a card payment", () => {
+  it("says the deposit was paid by card from the link", () => {
     expect(captionsFor("agreement", manifest).join(" ")).toMatch(
-      /pays by card from the link/,
+      /paid by card from the link/,
     );
   });
   it("never runs the same frames twice in a row without something new on them", () => {
@@ -172,7 +177,7 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
   // kitchen's use recorded, so the share is final, not "likely".
   it("ends on the closeout's share of the price, against the target", () => {
     const close = captionsFor("close", manifest).join(" ");
-    expect(close).toContain("The day after: 25.8%");
+    expect(close).toContain("The day after, at what you paid: 25.8%");
     expect(close).toContain("30%");
     expect(close).not.toContain("$3,675.88");
   });
@@ -242,32 +247,36 @@ describe("FILM captions and beats", () => {
     }
   });
   it("lists the app frames each scene shows", () => {
-    expect(sceneFrames("decision")).toEqual(["events-offer-mobile.png"]);
+    expect(sceneFrames("decision")).toEqual([
+      "events-offer-mobile.png",
+      "events-accepted-mobile.png",
+    ]);
   });
 });
 
 describe("the re-walk (caterer and motion reviews, 2026-10-06)", () => {
-  it("opens on her request from the ordering site, then the inquiry it became", () => {
-    expect(sceneFrames("coldOpen")).toEqual([
-      "events-request-mobile.png",
-      "events-inquiry-desktop.png",
-    ]);
-    expect(captionsFor("coldOpen", manifest).join(" ")).not.toMatch(
-      /No date yet/,
-    );
+  // Nair & Castellano came in as a phone call, not from the ordering site:
+  // the film opens on the inquiry form as it was taken, date not decided.
+  it("opens on the phone-call inquiry, as it was taken", () => {
+    expect(sceneFrames("coldOpen")).toEqual(["events-inquiry-mobile.png"]);
+    const open = captionsFor("coldOpen", manifest).join(" ");
+    expect(open).toMatch(/calls/);
+    expect(open).not.toMatch(/on your site/);
   });
   it("asks how much to order without a 5 a.m. in the buying chapter", () => {
     expect(FILM.kitchen.chapter).not.toMatch(/5\u00a0a\.m\.|5 a\.m\./);
   });
-  it("ties Confirm to the final count", () => {
+  // This wedding's final count is still to come (due with the balance), so
+  // the Confirm caption claims only what the dialog says.
+  it("says only what the Confirm dialog says", () => {
     const confirm = FILM.kitchen.beats.find((b) =>
       b.frames.includes("events-confirm-desktop.png"),
     );
-    expect(confirm?.caption).toMatch(/final count/i);
+    expect(confirm?.caption).toBe("Confirm, and prices and quantities lock.");
   });
   it("rings what each caption names on the frames that carry a figure", () => {
     for (const frame of [
-      "events-agreement-desktop.png",
+      "events-book-event-desktop.png",
       "events-payments-paid-desktop.png",
       "events-shop-desktop.png",
       "events-confirm-desktop.png",
@@ -300,24 +309,26 @@ describe("second review fixes (2026-10-07)", () => {
     expect(cameraOrigin("menu", 0)).toBeNull();
     expect(cameraOrigin("menu", 1)).toEqual({ x: 22, y: 50 });
   });
-  // Caterer: staff, rentals and the fee are claimed only now that the offer
-  // frame runs down to its total and shows them as lines. Third round: the
-  // staff line prints "56 × $38.00", so the caption says what 56 is.
-  it("names staff by people and hours, and the rentals", () => {
-    expect(captionsFor("decision", manifest).join(" ")).toMatch(
-      /8 staff for 7 hours, the rentals/,
+  // The prep list counts the main in portions (two a guest on this menu).
+  it("counts the main off the prep list", () => {
+    expect(captionsFor("prep", manifest)[0]).toBe(
+      "Bases first, then every dish: 300 portions of short rib.",
     );
   });
-  // Caterer: her note asks for something for the vegetarians; the pack beat
-  // shows the vegetarian plates and says so.
-  it("answers her vegetarian request on the pack list", () => {
-    expect(captionsFor("pack", manifest).join(" ")).toMatch(/vegetarian/);
+  // Nair & Castellano's menu has no vegetarian main and its offer no staff or
+  // rentals lines; nothing the frames do not show is claimed.
+  it("names nothing this wedding does not have", () => {
+    const all = SCENE_ORDER.flatMap((id) => captionsFor(id, manifest)).join(" ");
+    expect(all).not.toMatch(/vegetarian|stuffed pepper|staff|rental|service fee/i);
   });
-  // Caterer: the day-after share matching the quote is the point, said so.
-  it("ties the day-after share back to the price she was quoted", () => {
-    expect(captionsFor("close", manifest).join(" ")).toContain(
-      "Quoted at 25.8%",
-    );
+  // The menu's food cost is at live prices for the menu; the closeout's share
+  // is plan and paid, ingredients only. Different bases, so the close states
+  // its share against the target and never as "quoted at".
+  it("does not set the day-after share against the menu's figure", () => {
+    const close = captionsFor("close", manifest).join(" ");
+    expect(close).not.toMatch(/Quoted at/);
+    for (const b of FILM.close.beats)
+      expect(b.caption ?? "").not.toContain("{proposalFoodCostPct}");
   });
 });
 
@@ -329,28 +340,10 @@ describe("closeout caption placement", () => {
 });
 
 describe("third review fixes (2026-10-07)", () => {
-  // Caterer: the agreement frame is re-shot signed, so the caption is past.
-  it("says the agreement is signed, as its frame now shows", () => {
-    expect(captionsFor("agreement", manifest)[0]).toMatch(/Signed online/);
-  });
-  // Owner ruling 2026-10-07: the reminder now goes out three days before the
-  // due day, and the paid frame says so; the caption names that lead.
-  it("names the reminder's three days of notice", () => {
-    expect(captionsFor("agreement", manifest).join(" ")).toMatch(
-      /reminder three days ahead/,
-    );
-  });
-  // Caterer: the split behind 0.92 portions, on the frame that prints it.
-  it("names the 138 / 12 split on the prep list", () => {
-    expect(captionsFor("prep", manifest)[0]).toMatch(
-      /138 short rib, 12 stuffed peppers/,
-    );
-  });
-  // Caterer: the vegetarian main is called out on her own offer.
-  it("points out the vegetarian main on the offer", () => {
-    expect(captionsFor("decision", manifest).join(" ")).toMatch(
-      /12 vegetarians/,
-    );
+  // The paid frame's balance row says when its reminder went; the caption
+  // claims no lead time for it.
+  it("claims no reminder lead time", () => {
+    expect(captionsFor("agreement", manifest).join(" ")).not.toMatch(/reminder/i);
   });
 });
 
@@ -385,7 +378,7 @@ describe("final closeout (2026-10-07)", () => {
   it("states the day-after share without a hedge", () => {
     const close = captionsFor("close", manifest).join(" ");
     expect(close).not.toMatch(/likely/i);
-    expect(close).toContain("The day after: 25.8%");
+    expect(close).toContain("The day after, at what you paid: 25.8%");
   });
 });
 
