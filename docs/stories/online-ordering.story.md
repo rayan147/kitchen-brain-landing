@@ -47,4 +47,7 @@ Ordering site (read 2026-10-08).
   hand-off line (Next: ...), the family's device.
 - [x] **11. Revise.** Cut the payment-partner detail to one clause; cut the
   logo limits; the Go live list is the app's blockers only, no suggestions.
+  2026-10-08: the two Setup captures stack at their real size (790 px), and
+  scroll inside their frame on a phone with an Open full-size link; side by
+  side they shrank to about 70% and the owner found them hard to read.
   Close: "Put one menu on it and send yourself an order."
