@@ -914,8 +914,13 @@ const STEPS = {
 				manifest.vegetarianPortions = packText.match(/Stuffed Pepper, Rice and Feta\b\D*?(\d+)\b/)?.[1];
 				if (!manifest.mainPortions || !manifest.vegetarianPortions) throw new Error(`pack list counts not found: ${packText.slice(0, 300)}`);
 				await saveManifest();
-				const box = await union([title, dishes], 24);
-				const from = Math.max(box.y - 40, (await bannerBottom(page)) + 8);
+				// The lunch starts at the client's own dietary note: the "Routed by"
+				// line under the title names the walk's temporary booking rule.
+				const start = process.env.FILM === 'dropoff' ? page.locator('main section, main div').filter({ has: page.getByText('Customer dietary and allergy notes') }).filter({ hasNotText: 'What to look at' }).last() : title;
+				// As wide as the dishes card: the notes cards run on into the
+				// column that holds Load out.
+				const box = { ...(await union([start, dishes], 24)), ...(({ x, width }) => ({ x, width }))(await union([dishes], 24)) };
+				const from = Math.max(box.y - (process.env.FILM === 'dropoff' ? 0 : 40), (await bannerBottom(page)) + 8);
 				await shoot(page, name, { x: box.x, y: from, width: box.width, height: Math.min(box.y + box.height - from, 1000) });
 				continue;
 			}
