@@ -18,7 +18,7 @@ const required = [
 	'aria-label="On this page"',
 	'/proof/hero-pricing-mobile.png',
 	'/proof/hero-pricing.png',
-	'/demo-poster.jpg',
+	'/proof/order-price-today.png',
 	'id="faq-heading"',
 	'What is menu management software?',
 	'Can I reopen a confirmed event?',
