@@ -164,3 +164,29 @@ A. **Production.** If Gate 0 finds pay links still 404 on order.costcook.io, do 
 B. **Deposits.** `features.ts` says production records the deposit by hand. The 2026-10-06 ruling says event payments are live. Post 3 waits for the deployed app to settle which one is true. Then it says either "ask for a deposit and record it" or "the client pays the deposit from a link".
 
 C. **Blog menu.** Either a third group, "Take the order" (posts 1 to 3 together), or posts 1 and 2 under "Plan and buy" and post 3 under "Cost the work". A third group is clearer but is a menu layout change.
+
+## Decisions, 2026-10-08 (owner: "go with your recommendations")
+
+- **A, Gate 0: held.** order.costcook.io serves kitchen-brain 1bd7ef34
+  (2026-09-09); its `apps/ordering/src/routes` has no `[store]/pay`, which
+  7a7e407d9 has. `production.yml` Deploy still fails in 4 s (last run
+  2026-09-27). Posts 1 and 2 are not written in this pass. The live
+  `/features/online-ordering` page (film included) shows the pay link; that is
+  the owner's separate call.
+- **B, deposits:** post 3 says what `/features/events-and-proposals` and
+  `src/lib/event-payments.ts` say (card by email link, or recorded by hand).
+- **C, menu:** no third group. Post 3 joins "Plan and buy"; the new credit
+  memo post joins "Cost the work". New icons `calendar` and `credit`.
+- **Correction to Post 3's outline:** at 7a7e407d9 **Book the event** is its
+  own step and waits on the agreement and deposit; **Confirm order** comes
+  after and locks quantities and prices. "This event is booked" is not an app
+  string.
+- **Added (owner):** a third invoice-email post,
+  `supplier-credit-memo-by-email`, gated with invoice email like the setup guide.
+- **Dates (owner):** every built post is one week apart by `order`, newest
+  today: order 1 on 2026-07-16 through order 13 on 2026-10-08. This sets
+  dates earlier than the blog's real launch (2026-09-03), at the owner's ask.
+- **Reviews run:** kb-caterer-owner, humanize-reviewer, and a source truth
+  pass against 7a7e407d9; their fixes are in. Open for the owner: the truth
+  pass found a customer invoice (Issue invoice / Send invoice) at 7a7e407d9,
+  while the live events page says "There is no customer invoice in CostCook."

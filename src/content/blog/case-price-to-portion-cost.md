@@ -1,7 +1,7 @@
 ---
 title: "How to cost a recipe from case price to portion cost"
 description: "Take a supplier case through units, usable yield, the recipe and the portion, with all the arithmetic left in."
-publishedDate: 2026-09-03
+publishedDate: 2026-07-30
 category: Recipes & yield
 menuGroup: Cost the work
 menuIcon: yield
