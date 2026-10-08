@@ -1,6 +1,6 @@
 ---
 title: "Catering menu pricing: margin, markup, and food-cost target"
-description: "Understand the three percentages people mix together when pricing catering menus, then calculate each one from the same food cost."
+description: "The three percentages people mix up when they price a catering menu, each one worked from the same food cost."
 publishedDate: 2026-09-03
 category: Costing & pricing
 menuGroup: Cost the work
@@ -13,11 +13,11 @@ featureLabel: See menu pricing and quote review
 ---
 <!-- story: docs/stories/blog-menu-pricing.story.md -->
 
-Markup, margin, and food-cost percentage can all describe the same menu, but they do not describe the same relationship. If you use the words interchangeably, two correct calculators can appear to disagree.
+Markup, margin and food-cost percentage can all be about the same menu and still measure different things. Use the words as if they mean the same and two calculators that are both right will look like they disagree.
 
 ## Food-cost percentage
 
-Food-cost percentage asks how much of the selling price is consumed by ingredients.
+Food-cost percentage asks how much of the selling price goes to ingredients.
 
 ```text
 Food-cost percentage = food cost ÷ selling price × 100
@@ -61,7 +61,7 @@ For the same menu:
 ($68.00 − $26.93) ÷ $68.00 ≈ 60.4% food-only margin
 ```
 
-This is simply the other side of the 39.6% food-cost percentage. It is still not net profit because only food cost has been removed.
+It's just the 39.6% food cost seen from the other side. Still not profit: the only cost taken out so far is food.
 
 ## Price from a target
 
@@ -72,10 +72,10 @@ Selling price = food cost per guest ÷ target percentage
 $26.9331 ÷ 0.30 ≈ $89.78 per guest
 ```
 
-This calculation is a decision aid, not a command. If the market will not support the result, the honest choices are to change the menu, change portions, negotiate buying, revise the target with full knowledge of the consequence, or decide the event is not a fit.
+That number helps you decide. It doesn't decide for you. If your market won't pay it, the honest moves are to change the menu, change the portions, push your suppliers on price, lower the target knowing what that costs you, or pass on the event.
 
 ## Pick one language for the quote review
 
-For catering work, food-cost percentage is often the clearest way to compare different menus against the same internal target. Markup remains useful when you are deliberately pricing from a cost base. Margin is useful only when everyone agrees which costs have been removed.
+For catering work, food-cost percentage is often the clearest way to compare different menus against the same internal target. Markup still works when you are pricing up from cost on purpose. Margin only helps when everyone at the table agrees which costs came out.
 
-Write the chosen target beside the quote. Also name what is outside the number. A percentage without its cost boundary is a confident-looking ambiguity.
+Write your target next to the quote, and write down what the number leaves out. A percentage that doesn't say what it covers only looks sure of itself.

@@ -99,3 +99,5 @@ The index turns “another software blog” into “the answer to the kitchen qu
 - Cut generic restaurant advice, trend commentary, unsupported savings, and invented outcomes.
 - Keep every example explicitly illustrative unless it is drawn from approved product evidence.
 - **Final image:** You close the article with the number worked through and the next kitchen decision named.
+
+**Revision 2026-10-08: chef voice pass.** Index lede and the featured guide's Decide line rewritten in a cook's voice ("with the arithmetic left in so you can run it again when the count or a case price moves"); the article handoff line under the pinned "See the working inside the product." now reads "The same question, shown in CostCook." All eleven posts got the same pass (see each tracker). Pinned headings, the evidence-boundary menu line, figures and readMinutes unchanged (readMinutes rechecked at 200 wpm). Why: owner asked that the site read like a working chef wrote it, not AI.

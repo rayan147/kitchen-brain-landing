@@ -1,6 +1,6 @@
 ---
 title: "The event is over. What should the food have cost, and what did you actually spend?"
-description: "Reconcile expected recipe cost with attributed purchases, documented stock use, leftovers, and recorded differences before judging an event’s result."
+description: "Before you judge how an event did, set what the menu should have cost against what you bought for it, what came off the shelf and what is left over."
 publishedDate: 2026-09-03
 category: Costing & pricing
 menuGroup: Cost the work
@@ -13,7 +13,7 @@ featureLabel: See expected and purchased cost together
 ---
 <!-- story: docs/stories/blog-expected-vs-actual-food-cost.story.md -->
 
-Saturday's 180-guest wedding is finished. On Monday, the menu says food should have cost $2,466, while the supplier invoices total $2,612. It looks like a $146 miss, but the storeroom still contains food bought for more than this event.
+Saturday's 180-guest wedding is finished. Monday morning, the menu says food should have cost $2,466 and the supplier invoices add up to $2,612. Looks like you missed by $146. But the storeroom still holds food you bought for more than just this event.
 
 What you bought and what the event used are different numbers.
 
@@ -30,7 +30,7 @@ Guests = 180
 $2,466.00 ÷ 180 = $13.70 expected food cost per guest
 ```
 
-This is the baseline you approved before production. It does not prove what the kitchen consumed; it states what the plan should have consumed under its recorded assumptions.
+That's the number you signed off on before you cooked. It doesn't tell you what the kitchen actually used. It tells you what the plan should have used, if its assumptions held.
 
 ## Do not call every purchase event usage
 
@@ -38,7 +38,7 @@ The supplier invoices for the event week total $2,612. Some of those purchases r
 
 The unopened oil on Monday is not Saturday's food cost.
 
-Start with a consistent attribution boundary:
+Draw the line the same way every time:
 
 ```text
 Attributed food cost = beginning stock documented as used by the event
@@ -46,7 +46,7 @@ Attributed food cost = beginning stock documented as used by the event
                      − closing stock retained from those assigned goods
 ```
 
-“Assigned” matters. If an invoice serves three events, allocate or count the relevant stock instead of charging the entire document to the wedding. Call the result actual usage only when physical counts and recorded movements account for all the food inside that boundary.
+“Assigned” is the word doing the work. If one invoice fed three events, split it or count what's left, instead of charging the whole thing to the wedding. And only call the result actual usage when real counts and recorded movements account for all the food inside that line.
 
 ## Reconcile the 180-guest wedding
 
@@ -68,7 +68,7 @@ $2,500.00 attributed − $2,466.00 expected = $34.00 unfavorable variance
 $2,500.00 ÷ 180 ≈ $13.89 attributed food cost per guest
 ```
 
-The purchase total was $146 above the expected cost. Once the recorded stock boundary is respected, the attributed variance is $34. That is not proof of physical consumption when counts or movements are missing.
+The invoices came in $146 over plan. Count the stock properly and the attributed variance is $34. If counts or movements are missing, that still isn't proof of what actually got used.
 
 ## Put both numbers against the sale
 
@@ -84,11 +84,11 @@ Attributed food-cost percentage:
 $2,500.00 ÷ $12,240.00 × 100 ≈ 20.4%
 ```
 
-These are food-only percentages. They do not become profit figures unless every other relevant cost has also been handled.
+Both are food only. They tell you nothing about profit until every other cost is in too.
 
-## Explain the $34; do not decorate it
+## Find out where the $34 went
 
-The remaining difference is a prompt to inspect evidence, not permission to pick a cause. In this example, the records show:
+The $34 is a reason to go through the records. It isn't a license to pick whichever cause you like. In this example, the records show:
 
 ```text
 Recorded production waste =          +$38.00
@@ -97,7 +97,7 @@ Lower-cost accepted substitution =    −$4.00
 Explained variance =                  +$34.00
 ```
 
-Other events may point to changed supplier prices, overproduction, portion drift, an incorrect yield, a receiving error, unrecorded transfers, or a stock-count mistake. Leave unexplained amounts labelled unexplained until you have evidence.
+Other events may point to changed supplier prices, overproduction, portion drift, an incorrect yield, a receiving error, unrecorded transfers, or a stock-count mistake. If you can't explain an amount yet, call it unexplained until you can.
 
 ## Carry the answer into the next event
 
@@ -109,4 +109,4 @@ Close the job with both sides intact:
 - Which recorded causes explain the variance.
 - Which recipe, yield, buying, or production assumption needs review.
 
-The wedding closes with a named $34 attributed variance, not a guessed $146 loss. The remaining $184 stays on the shelf, ready to belong to the next job only when that job uses it.
+The wedding closes on a $34 variance you can name, instead of a $146 loss you guessed at. The $184 left on the shelf belongs to the next job only when the next job uses it.
