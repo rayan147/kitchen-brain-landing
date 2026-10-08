@@ -28,10 +28,10 @@
  *  2. The browser sends menu, item, portion and modifier selections without
  *     prices. The server re-resolves publication and availability and computes
  *     every amount. No surface may suggest a client's browser knows a price.
- *  3. Card payment is Stripe Connect on the kitchen's own account, for
- *     storefront orders only. Event and proposal deposits are recorded by hand.
- *     No saved cards, no automatic refunds, one reminder per balance, and no
- *     client invoices.
+ *  3. Card payment is Stripe Connect on the kitchen's own account. (Event
+ *     deposits and balances are paid by card too since the owner ruling of
+ *     2026-10-06; src/lib/event-payments.ts.) No saved cards, no automatic
+ *     refunds, one reminder per balance, and no client invoices.
  *  4. The widget protocol has five outbound states and no inbound command: no
  *     navigation, HTML, script, client-contact or payment payload crosses into
  *     the frame. Approved embed origins are defence in depth, not
@@ -40,16 +40,24 @@
  * THE WORD. ORDERING_STATUS is 'yes' with RC-59. The feature group's status
  * reads it, and the claim guard pins it with the ledger row.
  *
- * STILL NOT HERE, AND ON PURPOSE: no `comparisonNote` and no `seoDescription`.
- * A /compare row obligates re-verifying two competitors' living pricing pages
- * against VERIFIED_ON (RC-40), and a dedicated page obligates captures of the
- * live storefront. Both are later work.
+ * THE PAGE. /features/online-ordering exists since 2026-10-08 (owner: show
+ * the drop-off film and say the form can sit on the caterer's own website).
+ * Its settings walk is read off local develop 7a7e407d9: Settings >
+ * Integrations > Ordering site, tabs Setup, Menus, Look, Put on your website.
+ * Its captures come from that app, never the live storefront, and the website
+ * tab is printed as text because a local capture names localhost and a real
+ * site id. Still no `comparisonNote`: a /compare row obligates re-verifying
+ * two competitors' pricing pages (RC-40).
  *
  * No pattern: a table the sections render.
  */
 import type { Verdict } from './comparison';
 
 export const ORDERING_STATUS = 'yes' as Verdict;
+
+export const orderingRoute = '/features/online-ordering';
+export const orderingSeoDescription =
+	'Clients order catering from your own ordering page or a form on your website. The order arrives priced, and you approve it.';
 
 export const orderingStatusWord = ORDERING_STATUS === 'yes' ? 'In the app today' : 'Coming';
 const orderingIsComing = ORDERING_STATUS !== 'yes';
@@ -62,7 +70,7 @@ export const orderingAvailability = {
 	featureLead: orderingIsComing ? 'Built, not deployed, marked Coming.' : 'In the app today.',
 	featureDetail: orderingIsComing
 		? 'A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives awaiting kitchen confirmation, which means you still say yes to it. The storefront and the embeddable widget are built and are not deployed anywhere a customer could reach, so this stays marked Coming.'
-		: 'Put your menus on an ordering page of your own, or paste one snippet into the website you already have. A client picks a menu, the dishes, a date and the headcount, leaves their contact and diet needs, and sends it. It arrives awaiting kitchen confirmation, and you approve or decline. Approval emails a pay link, and the client’s payment through your Stripe account confirms the order.',
+		: 'Put your menus on an ordering page of your own, or paste one snippet into the website you already have. A client picks a menu, the dishes, a date and the headcount, leaves their contact and diet needs, and sends it. It arrives awaiting kitchen confirmation, and you approve or decline. Your booking rules decide what happens next: approving confirms it, or emails a pay link and the client’s payment through your Stripe account confirms it.',
 	menuDescription: orderingIsComing
 		? 'A storefront and an embeddable widget, built and not yet deployed.'
 		: 'Clients request from your own ordering page; you approve, and their payment confirms it.',
@@ -73,7 +81,7 @@ export const orderingAvailability = {
 			]
 		: [
 				'Yes. Put your menus on an ordering page of your own, or on a site you already have. A client picks a menu, the dishes and a date (closed and full dates are greyed out), chooses pickup or delivery, and sends the request. Nothing is charged, and it arrives awaiting kitchen confirmation rather than as a booked event. You approve or decline it, or let clear requests approve themselves.',
-				'Approval emails the client a pay link. They pay on Stripe’s page, into your own Stripe account, within 72 hours, and that payment confirms the order. A balance due date sends one reminder email with its own pay link. Every amount is worked out by CostCook after the selections arrive: the browser sends what the client chose, without prices. A custom request, or one your booking rules send to you, takes no money and comes to you as an inquiry to price. There are no saved cards, no automatic refunds and no client invoices.'
+				'What approval does is set by your booking rules. A new account takes no online payment, so approving confirms the order. Set a rule to pay in full, or a deposit then the balance, and approval emails the client a pay link instead: they pay on Stripe’s page, into your own Stripe account, within 72 hours, and that payment confirms the order. A balance gets its own pay link and one reminder email. Every amount is worked out by CostCook after the selections arrive: the browser sends what the client chose, without prices. A bespoke request, or one your booking rules send to you, takes no money and comes to you to price. There are no saved cards and no automatic refunds.'
 			]
 } as const;
 

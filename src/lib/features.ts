@@ -3,7 +3,7 @@
 import { SAGE_STATUS, sageDraftKinds, sageDraftKindsOr, sageReadToolCount } from './sage';
 import { spell, spellCapital } from './words';
 import { labelsAvailability } from './labels';
-import { orderingAvailability } from './ordering';
+import { orderingAvailability, orderingRoute } from './ordering';
 import { allergenCount } from './dietary';
 import { depositMethods } from './events';
 import { inboxLimits, invoiceEmailAvailability, invoiceEmailRoute } from './invoice-email';
@@ -127,6 +127,8 @@ export type FeatureGroup = {
 	title: string;
 	status?: 'available' | 'in-development';
 	items: readonly FeatureItem[];
+	/** A dedicated guide page, linked under the group on its area page. */
+	guide?: { href: string; label: string };
 };
 
 export const featureGroups: readonly FeatureGroup[] = [
@@ -395,7 +397,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		status: orderingAvailability.isComing ? 'in-development' : 'available',
 		items: [
 			{ lead: orderingAvailability.featureLead, detail: orderingAvailability.featureDetail }
-		]
+		],
+		// The guide carries the lunch film and the settings walk (2026-10-08).
+		guide: { href: orderingRoute, label: 'How online ordering works' }
 	},
 	{
 		/* RC-42. Shipped on sandbox/demo: src/lib/core/nutrition.ts carries
@@ -687,6 +691,15 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				featureId: 'events',
 				icon: 'orders'
 			},
+			// Added 2026-10-08 at the owner's request, after events because a
+			// client's own order is the other way work arrives. Shipped (RC-59),
+			// so no chip; the tour carries its stop.
+			{
+				label: 'Online ordering',
+				description: 'Clients order from your page or your own website; you approve.',
+				featureId: 'ordering',
+				icon: 'menu'
+			},
 			{
 				label: 'Orders, shop, prep & pack',
 				description: 'Turn one menu and guest count into the plan for the day.',
@@ -750,6 +763,7 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['ingredients', '/features/ingredients-and-supplier-prices'],
 	['import', '/features/invoices-and-price-list-import'],
 	['inbox', invoiceEmailRoute],
+	['ordering', orderingRoute],
 	['orders', '/features/order-shop-prep-pack'],
 	['purchasing', '/features/purchasing-and-receiving'],
 	['ledger', '/features/purchases-and-month-cost'],

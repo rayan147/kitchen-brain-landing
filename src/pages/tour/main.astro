@@ -1,7 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProductTour from '../../components/sections/ProductTour.astro';
-import { tourSeedKey } from '../../lib/tour';
+import { tourSeedKey, tourStops } from '../../lib/tour';
+import { spell } from '../../lib/words';
+
+// The stop count is read, never typed: the tour grew from thirteen to
+// fifteen stops and the description kept saying thirteen.
+const stopCount = spell(tourStops.length);
 
 const directionContract = [
 	'THESIS: Let a prospect inspect one connected event across every feature instead of reading another catalogue.',
@@ -9,14 +14,14 @@ const directionContract = [
 	'STORY: A 180-guest wedding travels from recipe and quote to buying, back-door receipt, month review, labels, and sourced Sage answer.',
 	'FIRST VIEWPORT: Editorial invitation and one physical dataset ticket establish the event before the product shell.',
 	`FORM: Seeded connected-event product workspace; seed key ${tourSeedKey}.`,
-	'INTERACTION: One active stop at a time, all thirteen always reachable, keyboard-operable tabs, mobile select, and visible progress.',
+	`INTERACTION: One active stop at a time, all ${stopCount} always reachable, keyboard-operable tabs, mobile select, and visible progress.`,
 	'PROOF: Exact parity with the Features dropdown is validated in code and every amount is persistently labelled illustrative.'
 ].join(' ');
 ---
 
 <Base
 	title="Take the CostCook product tour"
-	description="Click through thirteen sample screens from one catering event, from recipe costs to shopping, prep, packing and the month’s cost review. No account needed; anything Coming is marked."
+	description={`Click through ${stopCount} sample screens from one catering event, from recipe costs to shopping, prep, packing and the month’s cost review. No account needed; anything Coming is marked.`}
 	path="/tour/main"
 	directionContract={directionContract}
 >
