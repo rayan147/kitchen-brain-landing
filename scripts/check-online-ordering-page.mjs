@@ -76,7 +76,13 @@ if (!html.includes('data-ordering-snippet')) fail('the snippet ticket is gone');
 // Never a working id or a local address.
 if (/site_[A-Za-z0-9]{6,}/.test(html)) fail('the page prints a site id');
 if (/localhost|127\.0\.0\.1/.test(prose)) fail('the page prints a local address');
-if (/request[^.]{0,40}\bbooked\b/i.test(prose) && !/A request isn’t a booking/.test(prose)) fail('a request is called booked');
+if (/request[^.]{0,40}\bbooked\b/i.test(prose)) fail('a request is called booked');
+// A new account approves into a confirmed order with no money taken
+// (kitchen-brain booking/rules.ts); the page may not promise a pay link always.
+for (const rule of ['Fixed menu: no online payment', 'Fixed menu: pay in full', 'Fixed menu: deposit, then the balance']) {
+	if (!html.includes(`data-ordering-rule="${rule}"`)) fail(`booking rule outcome missing: ${rule}`);
+}
+if (/Approve, and the client gets an email with a pay link/.test(prose)) fail('the page says every approval sends a pay link');
 if (prose.includes('—')) fail('an em dash in the copy');
 
 const primaries = [...html.matchAll(/<a[^>]*class="btn-primary"[^>]*>([\s\S]*?)<\/a>/g)].map((m) => decode(m[1]).trim());

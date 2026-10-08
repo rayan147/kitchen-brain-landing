@@ -22,15 +22,14 @@
 import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
 import { ordering, orderingAvailability as availability } from '../../lib/ordering';
-import { orderingFilm, orderingLimits, orderingTabs, goLiveNeeds, paymentChoices } from '../../lib/ordering-guide';
+import { bookingRuleOutcomes, orderingFilm, orderingLimits, orderingTabs, goLiveNeeds, paymentChoices } from '../../lib/ordering-guide';
 
 // The shape the app's "Snippet for your web person" box prints
 // (website/+page.svelte), with the two values the app fills in left as words.
+// Two lines, as the app prints them; the ticket wraps them, never the data.
 const snippet = [
 	'<div id="order-here"></div>',
-	'<script src="https://[your ordering address]/ordering.js"',
-	'  data-site-id="[your site id]" data-target="#order-here"',
-	'  data-ordering-origin="https://[your ordering address]"></script>'
+	'<script src="https://[your ordering address]/ordering.js" data-site-id="[your site id]" data-target="#order-here" data-ordering-origin="https://[your ordering address]"></script>'
 ].join('\n');
 ---
 
@@ -47,7 +46,8 @@ const snippet = [
 				<h1 id="ordering-heading" class="feature-display">The client fills in the order. You approve it.</h1>
 				<p class="hero-lede">
 					Put your menus on an ordering page of your own, or on the website you already have.
-					The request comes in priced. You approve it, and the client pays from a link.
+					The request comes in priced and you approve it. If your booking rules ask for money up
+					front, the client pays by card from a link.
 				</p>
 				<p class="status-line" data-ordering-status={availability.verdict}>
 					<span class="status-word">{availability.word}</span> Settings &gt; Integrations &gt; Ordering site.
@@ -103,7 +103,7 @@ const snippet = [
 			<div>
 				<div class="section-head" data-reveal>
 					<h2 id="website-heading">Put the order form on your website.</h2>
-					<p>It’s on the last tab, <strong>Put on your website</strong>. There are three steps, and the hard one goes to whoever looks after your site.</p>
+					<p>It’s on the last tab, <strong>Put on your website</strong>. Your link and the snippet show up there once Setup has your name. Then there are three steps, and the hard one goes to whoever looks after your site.</p>
 				</div>
 				<ol role="list" class="steps">
 					<li data-reveal>
@@ -114,7 +114,7 @@ const snippet = [
 					<li data-reveal style="--reveal-delay: 60ms">
 						<p class="ticket-label">02</p>
 						<h3>Send the snippet</h3>
-						<p><strong>Copy snippet</strong>, or press <strong>Email it to them</strong> and the app writes the email to your web person for you.</p>
+						<p>Press <strong>Copy snippet</strong>, or <strong>Email it to them</strong>: your mail app opens with the snippet in it, and you add their address.</p>
 					</li>
 					<li data-reveal style="--reveal-delay: 120ms">
 						<p class="ticket-label">03</p>
@@ -122,11 +122,12 @@ const snippet = [
 						<p>Under the snippet the app says where it has been seen and when. If it turns up on a site you didn’t list, it says so, with a button to add that site.</p>
 					</li>
 				</ol>
+				<p class="section-note" data-reveal>Until you press Go live, the form on your site says “Not taking online orders right now.” That’s expected, not broken.</p>
 			</div>
 			<figure class="ticket" data-reveal data-ordering-snippet>
 				<figcaption>Snippet for your web person · the app writes it</figcaption>
 				<pre><code>{snippet}</code></pre>
-				<p class="ticket-foot">Your address and site id fill the brackets. The script is under 12 KB and loads nothing else.</p>
+				<p class="ticket-foot">A sample with blanks: use <strong>Copy snippet</strong> in the app for the real one. The script is under 12 KB, adds its own small stylesheet and the form in a sealed frame, and touches nothing else on your page.</p>
 				<p class="snap" data-ordering-snap>Your web person pastes two lines. You never touch the code.</p>
 			</figure>
 		</div>
@@ -139,7 +140,7 @@ const snippet = [
 		<div class="container-page">
 			<div class="section-head" data-reveal>
 				<h2 id="settings-heading">Four tabs, then Go live.</h2>
-				<p>Settings &gt; Integrations, then <strong>Manage storefront</strong> on the Ordering site card. Everything saves as you type, so there is no Save button to forget.</p>
+				<p>Settings &gt; Integrations, then <strong>Manage storefront</strong> on the Ordering site card. It saves as you type. There’s no Save button.</p>
 			</div>
 			<ol role="list" class="tabs">
 				{orderingTabs.map((tab, index) => (
@@ -192,9 +193,19 @@ const snippet = [
 	<section id="after" class="product-section soft" aria-labelledby="after-heading">
 		<div class="container-page split">
 			<div data-reveal>
-				<h2 id="after-heading">A request isn’t a booking. The payment is.</h2>
-				<p>It lands in Orders waiting on you. Approve it or decline it. In Settings &gt; Booking you can let clear requests approve themselves; that is off until you turn it on.</p>
-				<p>Approve, and the client gets an email with a pay link. Once they pay, the order is confirmed and goes on your Shop list with the rest of the week. A custom or large request takes no money and comes to you as an inquiry to price.</p>
+				<h2 id="after-heading">What they pay up front is your call.</h2>
+				<p>The request lands in Orders waiting on you. Approve it or decline it. Under Settings &gt; Booking, <strong>Approving requests</strong> can let clear ones through on their own; it’s off until you turn it on.</p>
+				<p>What happens when you approve is set by your <strong>Booking rules</strong>, on the same page:</p>
+				<dl class="choices">
+					{bookingRuleOutcomes.map((rule) => (
+						<div data-ordering-rule={rule.label}>
+							<dt>{rule.label}</dt>
+							<dd>{rule.detail}</dd>
+						</div>
+					))}
+				</dl>
+				<p>Collecting it yourself? Pick <strong>You collect it</strong> in Setup. The client gets an approval email instead of a pay link, and you record the payment on the order.</p>
+				<p>A request for something bespoke, like staff on site or rentals, takes no money. It comes to you to price, and you can move it to an inquiry.</p>
 			</div>
 			<ul role="list" class="limit-list" aria-label="Where it stops">
 				{orderingLimits.map((line) => <li data-ordering-limit>{line}</li>)}
@@ -206,7 +217,7 @@ const snippet = [
 		<div class="container-page closing-grid" data-reveal>
 			<div>
 				<h2 id="closing-heading">Put one menu on it and send yourself an order.</h2>
-				<p>Turn on your lunch menu, open your link on your phone, and order lunch for 20. You’ll see what your clients see, and what lands in Orders.</p>
+				<p>Turn on your lunch menu, open your link on your phone, and order lunch for 20. You’ll see what your clients see, and what lands in Orders. Decline it after, so it doesn’t sit there like a real job.</p>
 			</div>
 			<div class="closing-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
@@ -240,6 +251,7 @@ const snippet = [
 	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.12; text-wrap: balance; }
 	h3 { font-weight: 650; font-size: var(--text-h3); line-height: 1.25; text-wrap: balance; }
 	.section-head { max-width: 62ch; }
+	.section-note { margin-top: 1.5rem; max-width: 60ch; color: var(--color-ink-soft); }
 	.section-head p, .split > div > p { margin-top: 1.25rem; max-width: 60ch; color: var(--color-ink-soft); }
 	.handoff { padding-top: 2rem; font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.ticket-label { font-family: var(--font-mono); font-size: var(--text-eyebrow); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-amber-deep); }

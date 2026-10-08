@@ -57,7 +57,7 @@ export const ORDERING_STATUS = 'yes' as Verdict;
 
 export const orderingRoute = '/features/online-ordering';
 export const orderingSeoDescription =
-	'Clients order catering from your own ordering page or a form on your website. It arrives priced, you approve it, and their payment confirms it.';
+	'Clients order catering from your own ordering page or a form on your website. The order arrives priced, and you approve it.';
 
 export const orderingStatusWord = ORDERING_STATUS === 'yes' ? 'In the app today' : 'Coming';
 const orderingIsComing = ORDERING_STATUS !== 'yes';
