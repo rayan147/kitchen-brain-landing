@@ -272,10 +272,14 @@ const STEPS = {
 	// Then the pay page on the client's phone, from the order's own pay link; the card is
 	// typed by hand, never by this script.
 	async arrived() {
-		await open(page, '/orders');
-		const link = page.locator('main a[href^="/orders/"]').filter({ hasText: DROPOFF.name }).first();
-		await link.waitFor({ timeout: 60_000 });
-		manifest.orderHref = (await link.getAttribute('href')).replace(/[?#].*$/, '');
+		// A new storefront order is a draft until it is paid; the default list
+		// view leads with what needs doing, so read the drafts.
+		await open(page, '/orders?status=draft');
+		const links = page.locator('main a[href^="/orders/"]').filter({ hasText: DROPOFF.name });
+		await links.first().waitFor({ timeout: 60_000 });
+		// The newest order of that name: an earlier walk may have left one.
+		const hrefs = (await links.evaluateAll((as) => as.map((a) => a.getAttribute('href')))).map((h) => h.replace(/[?#].*$/, ''));
+		manifest.orderHref = hrefs.sort((x, y) => Number(y.split('/').pop()) - Number(x.split('/').pop()))[0];
 		await saveManifest();
 		await open(page, manifest.orderHref);
 		const title = page.getByRole('heading', { level: 1 });
@@ -947,7 +951,9 @@ const STEPS = {
 		await open(page, `${manifest.orderHref}?tab=shop`);
 		const head = page.locator('.group-head').first();
 		await head.waitFor({ timeout: 60_000 });
-		const box = await union([page.getByRole('table', { name: 'Ingredients grouped by supplier' }).locator('[role="row"]').first(), page.locator('[role="rowgroup"]').nth(1)], 16);
+		// The whole table, every supplier group with its total: the rowgroups are
+		// display: contents on develop and have no box of their own.
+		const box = await union([page.getByRole('table', { name: 'Ingredients grouped by supplier' })], 16);
 		await shoot(page, 'shop-desktop', box);
 	},
 
