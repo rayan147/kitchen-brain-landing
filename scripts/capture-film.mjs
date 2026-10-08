@@ -312,11 +312,29 @@ const STEPS = {
 		const title = page.getByRole('heading', { level: 1 });
 		const text = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
 		if (!/Confirmed/.test(text)) throw new Error(`the order is not confirmed yet: ${text.slice(0, 300)}`);
-		const strip = page.getByText(/Confirmed/).first().locator('xpath=ancestor::*[self::section or self::div][1]');
-		const box = await union([title, strip], 24);
-		await shoot(page, 'dropoff-paid-desktop', { x: box.x, y: Math.max(box.y - 24, (await bannerBottom(page)) + 8), width: Math.max(box.width, 1100), height: box.height + 24 });
 		await open(page, `${manifest.orderHref}?tab=money`);
-		console.log((await page.locator('main').innerText()).replace(/\n{2,}/g, '\n').slice(0, 1500));
+		// The money tab's payment card: "Paid in full", the card payment and its
+		// Paid badge. (The order's header strip compacts once the order is
+		// confirmed, and showed neither.)
+		const card = page.locator('main section, main div').filter({ hasText: 'Paid in full' }).filter({ hasText: /Paid by card/ }).filter({ hasNotText: 'Food cost' }).last();
+		await card.waitFor({ timeout: 60_000 });
+		const box = await union([card], 16);
+		await shoot(page, 'dropoff-paid-desktop', { x: box.x, y: Math.max(box.y, (await bannerBottom(page)) + 8), width: box.width, height: box.height });
+		// The figures the lunch's captions quote, each as this tab prints it.
+		const money = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
+		const read = (pattern, what) => {
+			const m = money.match(pattern);
+			if (!m) throw new Error(`money tab has no ${what}: ${money.slice(0, 400)}`);
+			return m[1];
+		};
+		manifest.paid = read(/Paid by card · [^$]*(\$[\d,]+\.\d{2})/, 'card payment');
+		manifest.quoted = read(/You quoted (\$[\d,]+\.\d{2})/, 'quoted price');
+		manifest.guests = read(/You quoted \$[\d,]+\.\d{2} (\d+) guests/, 'guest count');
+		manifest.foodCostWithMisc = read(/([\d.]+%) with misc/, 'food cost with misc');
+		manifest.targetPct = read(/target (\d+%)/, 'target');
+		manifest.packsToBuy = read(/Packs to buy (\$[\d,]+\.\d{2})/, 'packs to buy');
+		await saveManifest();
+		console.log(manifest.paid, manifest.quoted, manifest.guests, manifest.foodCostWithMisc, manifest.targetPct, manifest.packsToBuy);
 	},
 
 	// The office lunch on the ordering site, on a phone, up to the review; DRY

@@ -1,4 +1,31 @@
-import type { Manifest } from "./manifest";
+import { ManifestSchema, type Manifest } from "./manifest";
+import {
+  CHAPTER_SECONDS,
+  FADE_FRAMES,
+  FPS,
+  cameraOriginOf,
+  cameraStartOf,
+  captionsOf,
+  questionFadeFrames,
+  resolveCaption,
+  sceneFramesOf,
+  sceneStartsOf,
+  totalFramesOf,
+  type Beat,
+  type Film,
+  type FilmScene,
+  type Focus,
+  type Ring,
+} from "./film-model";
+
+export {
+  CHAPTER_SECONDS,
+  FADE_FRAMES,
+  FPS,
+  questionFadeFrames,
+  resolveCaption,
+};
+export type { Beat, Focus, Ring };
 
 // story: docs/stories/promo-video.story.md
 // The film follows develop's own event workflow (src/lib/events/derive.ts):
@@ -24,40 +51,9 @@ export type SceneId = (typeof SCENE_ORDER)[number];
 
 export const TITLE = "Know what the job makes before you cook it.";
 
-// Percent of the frame box. `focus` pushes the camera toward (x, y) up to
-// `scale`; `ring` circles what the caption names.
-export type Ring = { x: number; y: number; width: number; height: number };
-export type Focus = { x: number; y: number; scale: number };
-
-// A beat is one stretch of screen time, in seconds from the scene's start.
-// "screen": one desktop frame. "phone": one phone frame, placed where the
-// split screen puts it. "split": desktop left, phone right. "title" and "end"
-// are the film's two cards.
-export type Beat = {
-  from: number;
-  to: number;
-  layout: "screen" | "phone" | "split" | "title" | "end";
-  frames: string[];
-  caption?: string;
-  ring?: Ring;
-  focus?: Focus;
-  scroll?: [number, number];
-  // Where the caption sits: at the bottom unless what it names is there.
-  captionAt?: "top";
-  // The scale the camera starts from on a cut to a much closer frame, so the
-  // cut does not jump (the Confirm dialog after the shop table).
-  fromScale?: number;
-};
-
-type Scene = { chapter: string | null; seconds: number; beats: Beat[] };
-
-// Long enough for the longest question (12 words) at 4 words a second after
-// its half-second fade-in.
-export const CHAPTER_SECONDS = 3.5;
-
 // Rings and focus points are measured off the frames of the 2026-10-07 walk
 // (percent of each frame's box); retune them whenever a frame is re-shot.
-export const FILM: Record<SceneId, Scene> = {
+export const FILM: Record<SceneId, FilmScene> = {
   // She asks on the kitchen's ordering site; it lands as an inquiry.
   coldOpen: {
     chapter: null,
@@ -318,79 +314,28 @@ export const FILM: Record<SceneId, Scene> = {
   },
 };
 
-export function resolveCaption(template: string, manifest: Manifest): string {
-  return template.replace(/\{(\w+)\}/g, (_, key: string) => {
-    const value = (manifest as unknown as Record<string, unknown>)[key];
-    if (typeof value !== "string") throw new Error(`unresolved token {${key}}`);
-    return value;
-  });
-}
+// The wedding as a film, for the renderer, the VTT writer and the render guard.
+export const WEDDING: Film = {
+  id: "PromoFilm",
+  title: TITLE,
+  order: SCENE_ORDER,
+  scenes: FILM,
+  framesDir: "frames",
+  parseManifest: (json) => ManifestSchema.parse(json),
+};
 
-export function captionsFor(scene: SceneId, manifest: Manifest): string[] {
-  return FILM[scene].beats.flatMap((b) =>
-    b.caption ? [resolveCaption(b.caption, manifest)] : [],
-  );
-}
-
-/**
- * The camera scale a beat starts from: where the previous beat left it when
- * both show the same frames (each beat is its own Sequence, so otherwise the
- * zoom snaps back to 1 at the cut), else 1.
- */
-export function cameraStart(scene: SceneId, index: number): number {
-  const beats = FILM[scene].beats;
-  const prev = beats[index - 1];
-  const own = beats[index].fromScale ?? 1;
-  if (!prev?.focus) return own;
-  return prev.frames.join() === beats[index].frames.join()
-    ? prev.focus.scale
-    : own;
-}
-
-/**
- * Where the camera's origin starts: the previous beat's focus point when both
- * show the same frames, so carrying the scale over does not also snap the
- * origin (which shifts the page sideways at the cut), else null.
- */
-export function cameraOrigin(
+// The wedding's own names for the film-model functions, kept for its tests
+// and scripts.
+export const captionsFor = (scene: SceneId, manifest: Manifest): string[] =>
+  captionsOf(WEDDING, scene, manifest);
+export const cameraStart = (scene: SceneId, index: number): number =>
+  cameraStartOf(WEDDING, scene, index);
+export const cameraOrigin = (
   scene: SceneId,
   index: number,
-): { x: number; y: number } | null {
-  const beats = FILM[scene].beats;
-  const prev = beats[index - 1];
-  if (!prev?.focus || prev.frames.join() !== beats[index].frames.join())
-    return null;
-  return { x: prev.focus.x, y: prev.focus.y };
-}
-
-export function sceneFrames(scene: SceneId): string[] {
-  return [...new Set(FILM[scene].beats.flatMap((b) => b.frames))];
-}
-
-export const FPS = 30;
-export const FADE_FRAMES = 15;
-
-/** Start of each scene in seconds, with the fades between scenes overlapping. */
-export function sceneStarts(): Record<SceneId, number> {
-  let t = 0;
-  const starts = {} as Record<SceneId, number>;
-  for (const id of SCENE_ORDER) {
-    starts[id] = t;
-    t += FILM[id].seconds - FADE_FRAMES / FPS;
-  }
-  return starts;
-}
-
-export function filmFrames(): number {
-  const total = SCENE_ORDER.reduce((n, id) => n + FILM[id].seconds * FPS, 0);
-  return total - (SCENE_ORDER.length - 1) * FADE_FRAMES;
-}
-
-/**
- * The frames over which a chapter card's question fades up: after the scene
- * fade that brings the card in, so the outgoing screen and the question never
- * share the screen, then over half a second.
- */
-export function questionFadeFrames(fps: number): [number, number] {
-  return [FADE_FRAMES, FADE_FRAMES + Math.round(0.5 * fps)];
-}
+): { x: number; y: number } | null => cameraOriginOf(WEDDING, scene, index);
+export const sceneFrames = (scene: SceneId): string[] =>
+  sceneFramesOf(WEDDING, scene);
+export const sceneStarts = (): Record<SceneId, number> =>
+  sceneStartsOf(WEDDING) as Record<SceneId, number>;
+export const filmFrames = (): number => totalFramesOf(WEDDING);

@@ -16,21 +16,18 @@ import { SplitScreen } from "./elements/SplitScreen";
 import {
   CHAPTER_SECONDS,
   FADE_FRAMES,
-  FILM,
-  SCENE_ORDER,
-  TITLE,
-  cameraOrigin,
-  cameraStart,
+  cameraOriginOf,
+  cameraStartOf,
   resolveCaption,
   type Beat,
-  type SceneId,
-} from "./film";
+  type Film,
+  type FilmManifest,
+} from "./film-model";
 import { FONT_DISPLAY } from "./fonts";
-import type { Manifest } from "./manifest";
 import { C, EASE_OUT, TYPE } from "./tokens";
 import { useManifest } from "./useManifest";
 
-const Title: React.FC = () => {
+const Title: React.FC<{ text: string }> = ({ text }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   return (
@@ -63,7 +60,7 @@ const Title: React.FC = () => {
           }),
         }}
       >
-        {TITLE}
+        {text}
       </h1>
     </div>
   );
@@ -75,13 +72,15 @@ const Title: React.FC = () => {
 const Shot: React.FC<{
   beat: Beat;
   src: string;
+  dir: string;
   phone?: boolean;
   startScale?: number;
   originStart?: { x: number; y: number } | null;
-}> = ({ beat, src, phone, startScale, originStart }) => (
+}> = ({ beat, src, dir, phone, startScale, originStart }) => (
   <div style={{ position: "absolute", inset: 0 }}>
     <Screen
       src={src}
+      dir={dir}
       fit={phone ? "fill-top" : "contain"}
       scroll={phone ? beat.scroll : undefined}
       focus={phone ? undefined : beat.focus}
@@ -94,13 +93,15 @@ const Shot: React.FC<{
 );
 
 const BeatView: React.FC<{
+  film: Film;
   beat: Beat;
-  manifest: Manifest;
+  manifest: FilmManifest;
   // The frame the UI starts fading up from, or null to cut in.
   fadeIn: number | null;
   startScale: number;
   originStart: { x: number; y: number } | null;
-}> = ({ beat, manifest, fadeIn, startScale, originStart }) => {
+}> = ({ film, beat, manifest, fadeIn, startScale, originStart }) => {
+  const dir = film.framesDir;
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const [first, second] = beat.frames;
@@ -108,7 +109,7 @@ const BeatView: React.FC<{
   const captionFrom = Math.round(0.5 * fps);
   const body =
     beat.layout === "title" ? (
-      <Title />
+      <Title text={film.title ?? ""} />
     ) : beat.layout === "end" ? (
       <EndCard
         displayPrice={manifest.displayPrice}
@@ -121,7 +122,7 @@ const BeatView: React.FC<{
         left={null}
         right={
           <PhoneFrame>
-            <Shot beat={beat} src={first} phone />
+            <Shot beat={beat} src={first} dir={dir} phone />
           </PhoneFrame>
         }
         style={{ backgroundColor: C.offwhite }}
@@ -133,6 +134,7 @@ const BeatView: React.FC<{
           // pay page beside it, rather than floating in a blank band.
           <Screen
             src={first}
+            dir={dir}
             fit="fill-top"
             focus={beat.focus}
             startScale={startScale}
@@ -141,7 +143,7 @@ const BeatView: React.FC<{
         }
         right={
           <PhoneFrame>
-            <Shot beat={beat} src={second} phone />
+            <Shot beat={beat} src={second} dir={dir} phone />
           </PhoneFrame>
         }
       />
@@ -149,6 +151,7 @@ const BeatView: React.FC<{
       <Shot
         beat={beat}
         src={first}
+        dir={dir}
         startScale={startScale}
         originStart={originStart}
       />
@@ -196,13 +199,13 @@ const BeatView: React.FC<{
   );
 };
 
-// Pattern: none. One renderer reads a scene's beats from film.ts; every scene
+// Pattern: none. One renderer reads a scene's beats from its film's table; every scene
 // is the same shape, so the variation lives in the table, not in components.
-export const Scene: React.FC<{ id: SceneId }> = ({ id }) => {
+export const Scene: React.FC<{ film: Film; id: string }> = ({ film, id }) => {
   const { fps } = useVideoConfig();
-  const manifest = useManifest();
+  const manifest = useManifest(film);
   if (!manifest) return null;
-  const scene = FILM[id];
+  const scene = film.scenes[id];
   // Paper under every beat: a beat or the end card fades in from opacity 0 on
   // the frame the layer before it unmounts, and without this that frame is
   // black (one frame at every chapter card and before the end card).
@@ -226,18 +229,19 @@ export const Scene: React.FC<{ id: SceneId }> = ({ id }) => {
           premountFor={fps}
         >
           <BeatView
+            film={film}
             beat={beat}
             manifest={manifest}
             fadeIn={
               (Boolean(scene.chapter) && beat.from === CHAPTER_SECONDS) ||
               scene.beats[i - 1]?.layout === "title"
                 ? 0
-                : !scene.chapter && i === 0 && id !== SCENE_ORDER[0]
+                : !scene.chapter && i === 0 && id !== film.order[0]
                   ? FADE_FRAMES
                   : null
             }
-            startScale={cameraStart(id, i)}
-            originStart={cameraOrigin(id, i)}
+            startScale={cameraStartOf(film, id, i)}
+            originStart={cameraOriginOf(film, id, i)}
           />
         </Sequence>
       ))}

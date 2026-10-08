@@ -2,15 +2,26 @@
 // from the app by the capture run the manifest names. See src/render-guard.ts.
 import { readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
-import { FILM, SCENE_ORDER, sceneFrames } from "../src/film";
+import { WEDDING } from "../src/film";
+import { DROPOFF } from "../src/film-dropoff";
+import { filmFramesList } from "../src/film-model";
 import { ManifestSchema } from "../src/manifest";
+import { DropoffManifestSchema } from "../src/manifest-dropoff";
 import { frameProblems, sourceCounts } from "../src/render-guard";
 
-const out = resolve(import.meta.dirname, "../public/frames");
-const manifest = ManifestSchema.parse(
-  JSON.parse(await readFile(resolve(out, "manifest.json"), "utf8")),
+// FILM=dropoff checks the office lunch; the default is the wedding.
+const dropoff = process.env.FILM === "dropoff";
+const film = dropoff ? DROPOFF : WEDDING;
+const out = resolve(import.meta.dirname, "../public", film.framesDir);
+const json: unknown = JSON.parse(
+  await readFile(resolve(out, "manifest.json"), "utf8"),
 );
-const filmFrames = [...new Set(SCENE_ORDER.flatMap((id) => sceneFrames(id)))];
+const manifest = dropoff
+  ? (({ appSha, ...m }) => ({ ...m, developCommit: appSha }))(
+      DropoffManifestSchema.parse(json),
+    )
+  : ManifestSchema.parse(json);
+const filmFrames = filmFramesList(film);
 const problems = frameProblems(
   filmFrames,
   manifest,
@@ -21,5 +32,5 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(
-  `render check passed: ${filmFrames.length} app frames, ${Object.keys(FILM).length} scenes\n  ${sourceCounts(filmFrames, manifest.frameSources).join("\n  ")}`,
+  `render check passed: ${filmFrames.length} app frames, ${film.order.length} scenes\n  ${sourceCounts(filmFrames, manifest.frameSources).join("\n  ")}`,
 );

@@ -2,9 +2,11 @@ import { Composition, Folder } from "remotion";
 import { Caption } from "./elements/Caption";
 import { ChapterCard } from "./elements/ChapterCard";
 import { EndCard } from "./elements/EndCard";
-import { PromoFilm } from "./PromoFilm";
+import { DropoffFilm, PromoFilm } from "./PromoFilm";
+import { DROPOFF } from "./film-dropoff";
+import { totalFramesOf } from "./film-model";
 import { Scene } from "./Scene";
-import { FILM, SCENE_ORDER, filmFrames } from "./film";
+import { FILM, SCENE_ORDER, WEDDING, filmFrames } from "./film";
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -47,7 +49,7 @@ export const RemotionRoot: React.FC = () => (
           height={1080}
           fps={30}
           durationInFrames={FILM[id].seconds * 30}
-          defaultProps={{ id }}
+          defaultProps={{ film: WEDDING, id }}
         />
       ))}
     </Folder>
@@ -58,6 +60,14 @@ export const RemotionRoot: React.FC = () => (
       height={1080}
       fps={30}
       durationInFrames={filmFrames()}
+    />
+    <Composition
+      id="DropoffFilm"
+      component={DropoffFilm}
+      width={1920}
+      height={1080}
+      fps={30}
+      durationInFrames={totalFramesOf(DROPOFF)}
     />
   </>
 );

@@ -35,6 +35,8 @@
 		"render": "npm run render:check && remotion render PromoFilm out/promo.mp4",
 		"lint": "eslint src && tsc",
 		"frames": "tsx scripts/copy-frames.mts",
+		"frames:dropoff": "tsx scripts/copy-dropoff-frames.mts",
+		"render:dropoff": "FILM=dropoff npm run render:check && remotion render DropoffFilm out/dropoff.mp4",
 		"vtt": "tsx scripts/write-vtt.mts"
 	}
 }

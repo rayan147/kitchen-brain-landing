@@ -3,15 +3,17 @@ import { TransitionSeries, linearTiming } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { Fragment } from "react";
 import { interpolate, staticFile, useVideoConfig } from "remotion";
-import { FADE_FRAMES, FILM, SCENE_ORDER, filmFrames } from "./film";
+import { WEDDING } from "./film";
+import { DROPOFF } from "./film-dropoff";
+import { FADE_FRAMES, totalFramesOf, type Film } from "./film-model";
 import { Scene } from "./Scene";
 
-// The scenes come from film.ts in the app's own workflow order. They are
-// generated from that one table on purpose: their timing is edited there, so
-// the film, the VTT and the render guard read the same numbers.
-export const PromoFilm: React.FC = () => {
+// The scenes come from the film's table in the app's own workflow order. They
+// are generated from that one table on purpose: their timing is edited there,
+// so the film, the VTT and the render guard read the same numbers.
+export const FilmComposition: React.FC<{ film: Film }> = ({ film }) => {
   const { fps } = useVideoConfig();
-  const total = filmFrames();
+  const total = totalFramesOf(film);
   return (
     <>
       <Audio
@@ -26,7 +28,7 @@ export const PromoFilm: React.FC = () => {
         }
       />
       <TransitionSeries>
-        {SCENE_ORDER.map((id, i) => (
+        {film.order.map((id, i) => (
           <Fragment key={id}>
             {i > 0 ? (
               <TransitionSeries.Transition
@@ -36,10 +38,10 @@ export const PromoFilm: React.FC = () => {
             ) : null}
             <TransitionSeries.Sequence
               name={id}
-              durationInFrames={FILM[id].seconds * fps}
+              durationInFrames={film.scenes[id].seconds * fps}
               premountFor={fps}
             >
-              <Scene id={id} />
+              <Scene film={film} id={id} />
             </TransitionSeries.Sequence>
           </Fragment>
         ))}
@@ -47,3 +49,6 @@ export const PromoFilm: React.FC = () => {
     </>
   );
 };
+
+export const PromoFilm: React.FC = () => <FilmComposition film={WEDDING} />;
+export const DropoffFilm: React.FC = () => <FilmComposition film={DROPOFF} />;

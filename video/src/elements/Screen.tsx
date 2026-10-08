@@ -20,6 +20,8 @@ const CAMERA = Easing.inOut(Easing.cubic);
 
 type Props = {
   src: string;
+  // The folder under public/ the frame lives in: each film has its own.
+  dir?: string;
   focus?: { x: number; y: number; scale: number };
   // "fill-top" fits the capture to the box's width from the top edge: a tall
   // phone capture scrolls inside the phone, a short one sits at its top, the
@@ -44,6 +46,7 @@ type Props = {
 // says what to capture, and scripts/render-check.mjs refuses to render it.
 export const Screen: React.FC<Props> = ({
   src,
+  dir = "frames",
   focus,
   fit = "contain",
   scroll = [0, 0],
@@ -70,8 +73,8 @@ export const Screen: React.FC<Props> = ({
       setSize(false);
       continueRender(handle);
     };
-    img.src = staticFile(`frames/${src}`);
-  }, [src, handle]);
+    img.src = staticFile(`${dir}/${src}`);
+  }, [dir, src, handle]);
   const exists = size === null ? null : size !== false;
   const scrolled = interpolate(
     frame,
@@ -133,7 +136,7 @@ export const Screen: React.FC<Props> = ({
           style={pictureBox(size as { w: number; h: number }, fit, scrolled)}
         >
           <CanvasImage
-            src={staticFile(`frames/${src}`)}
+            src={staticFile(`${dir}/${src}`)}
             premountFor={fps}
             style={{
               position: "absolute",

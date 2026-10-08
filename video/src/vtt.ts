@@ -1,4 +1,5 @@
-import { FILM, SCENE_ORDER, resolveCaption, sceneStarts } from "./film";
+import { WEDDING } from "./film";
+import { resolveCaption, sceneStartsOf, type Film } from "./film-model";
 import type { Manifest } from "./manifest";
 
 function stamp(seconds: number): string {
@@ -15,9 +16,13 @@ function stamp(seconds: number): string {
 // starts, since scene fades overlap.
 const CAPTION_DELAY = 0.5;
 export function toVtt(manifest: Manifest): string {
-  const starts = sceneStarts();
-  const cues = SCENE_ORDER.flatMap((id) =>
-    FILM[id].beats.flatMap((b) =>
+  return toVttOf(WEDDING, manifest);
+}
+
+export function toVttOf(film: Film, manifest: object): string {
+  const starts = sceneStartsOf(film);
+  const cues = film.order.flatMap((id) =>
+    film.scenes[id].beats.flatMap((b) =>
       b.caption
         ? [
             {

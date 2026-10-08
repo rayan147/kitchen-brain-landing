@@ -1,16 +1,29 @@
-// Writes out/promo.vtt from film.ts and the current manifest, so the player
-// and screen readers get the same words the film burns in.
+// Writes the film's WebVTT (out/promo.vtt, or out/dropoff.vtt with FILM=dropoff)
+// from its table and manifest, so the player and screen readers get the same
+// words the film burns in.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { WEDDING } from "../src/film";
+import { DROPOFF } from "../src/film-dropoff";
 import { ManifestSchema } from "../src/manifest";
-import { toVtt } from "../src/vtt";
+import { DropoffManifestSchema } from "../src/manifest-dropoff";
+import { toVttOf } from "../src/vtt";
+
+// FILM=dropoff writes out/dropoff.vtt; the default is the wedding's promo.vtt.
+const dropoff = process.env.FILM === "dropoff";
+const film = dropoff ? DROPOFF : WEDDING;
 
 const root = resolve(import.meta.dirname, "..");
-const manifest = ManifestSchema.parse(
-  JSON.parse(
-    await readFile(resolve(root, "public/frames/manifest.json"), "utf8"),
+const json: unknown = JSON.parse(
+  await readFile(
+    resolve(root, "public", film.framesDir, "manifest.json"),
+    "utf8",
   ),
 );
+const manifest = dropoff
+  ? DropoffManifestSchema.parse(json)
+  : ManifestSchema.parse(json);
+const name = dropoff ? "dropoff.vtt" : "promo.vtt";
 await mkdir(resolve(root, "out"), { recursive: true });
-await writeFile(resolve(root, "out/promo.vtt"), toVtt(manifest));
-console.log("wrote out/promo.vtt");
+await writeFile(resolve(root, "out", name), toVttOf(film, manifest));
+console.log(`wrote out/${name}`);

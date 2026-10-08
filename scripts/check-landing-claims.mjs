@@ -1229,6 +1229,33 @@ requireText(heroSource, 'What you do about the gap is your call', 'hero caption 
 	}
 }
 
+// 2026-10-08 PROMO FILM TWO, the office lunch from the ordering site. Same
+// ledger, same house rules, read as text.
+{
+	const film = await read('video/src/film-dropoff.ts');
+	const sentences = [...film.matchAll(/'([^'\n]+)'|"([^"\n]+)"/g)]
+		.map((m) => m[1] ?? m[2])
+		.filter((t) => /\s/.test(t) && !/\.png$/.test(t));
+	const text = sentences.join('\n');
+	if (/[—–]/.test(text)) failures.push('film two: a caption carries an em or en dash');
+	if (/!/.test(text)) failures.push('film two: a caption carries an exclamation point');
+	for (const banned of [/no typing/i, /fully automatic/i, /seamless/i, /in one click/i, /closeout/i, /\b(she|her|he|his)\b/i, /\blikely\b/]) {
+		// Tokens ({closeoutPct}) are names, not copy.
+		if (banned.test(text.replace(/\{\w+\}/g, ''))) failures.push(`film two: banned phrase ${banned}`);
+	}
+	// Nobody pressed Approve on the lunch: the order approved itself on a clear
+	// day with a priced menu, and its frame says so.
+	if (/\b(you approve|tap approve|press approve|click approve)\b/i.test(text)) failures.push('film two: nobody approved the lunch by hand');
+	requireText(film, 'Nobody retyped it. Nobody chased the money.', 'film two snap line');
+	if (/\$\d|\d+(\.\d+)?%/.test(text)) failures.push('film two: a figure is typed into a caption; use a {token} from the manifest');
+	const manifest = JSON.parse(await read('public/proof/film-dropoff/manifest.json'));
+	// "under your target" is only true while the closeout share is under it.
+	if (/\{closeoutPct\}, under your \{targetPct\}/.test(text) && !(parseFloat(manifest.closeoutPct) < parseFloat(manifest.targetPct))) {
+		failures.push(`film two: the closeout share ${manifest.closeoutPct} is not under the ${manifest.targetPct} target`);
+	}
+	if (manifest.closeoutFinal !== true) failures.push('film two: the closeout share is quoted before the review was closed');
+}
+
 if (failures.length > 0) {
 	console.error(`Landing claim check failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);

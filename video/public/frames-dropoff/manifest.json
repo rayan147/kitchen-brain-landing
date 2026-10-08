@@ -1,0 +1,89 @@
+{
+  "guests": "40",
+  "paid": "$1,273.08",
+  "quoted": "$1,160.00",
+  "foodCostWithMisc": "29.3%",
+  "targetPct": "30%",
+  "packsToBuy": "$892.50",
+  "mainPortions": "38",
+  "vegetarianPortions": "2",
+  "closeoutPlanned": "$335.64",
+  "closeoutActual": "$338.11",
+  "closeoutOver": "$2.47",
+  "closeoutDirection": "over",
+  "closeoutPct": "29.1%",
+  "closeoutFinal": true,
+  "displayPrice": "$49/month",
+  "trialDays": "15",
+  "appSha": "9754b5b8e",
+  "capturedOn": "2026-10-08",
+  "frames": [
+    "closeout-desktop.png",
+    "dropoff-arrived-approval-desktop.png",
+    "dropoff-arrived-desktop.png",
+    "dropoff-arrived-price-desktop.png",
+    "dropoff-dishes-mobile.png",
+    "dropoff-paid-desktop.png",
+    "dropoff-pay-mobile.png",
+    "dropoff-review-mobile.png",
+    "dropoff-sent-mobile.png",
+    "pack-desktop.png",
+    "po-desktop.png",
+    "prep-desktop.png",
+    "shop-desktop.png"
+  ],
+  "frameSources": {
+    "dropoff-dishes-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "922f9459f"
+    },
+    "dropoff-review-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "922f9459f"
+    },
+    "dropoff-sent-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "922f9459f"
+    },
+    "dropoff-arrived-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "b063d7bba"
+    },
+    "dropoff-pay-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "922f9459f"
+    },
+    "dropoff-paid-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "9754b5b8e"
+    },
+    "shop-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "b063d7bba"
+    },
+    "po-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "b063d7bba"
+    },
+    "prep-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "9754b5b8e"
+    },
+    "pack-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "9754b5b8e"
+    },
+    "closeout-desktop.png": {
+      "host": "localhost",
+      "app": "9754b5b8e"
+    },
+    "dropoff-arrived-price-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "b063d7bba"
+    },
+    "dropoff-arrived-approval-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "b063d7bba"
+    }
+  }
+}
