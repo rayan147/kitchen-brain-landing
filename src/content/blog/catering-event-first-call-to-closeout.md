@@ -79,7 +79,7 @@ Sometimes you book anyway: a regular client, a deposit promised by Friday. **Boo
 
 Behind all this sits the kitchen draft. After their yes, press **Prepare the kitchen draft**; the deposit is asked for from there. It isn't on a day yet, and it doesn't pull anyone onto the crew.
 
-When they want one document of what they owe, open the order's **Money** tab and press **Issue invoice**. It's made from the proposal they accepted, so the total is the one they signed, and what they've already paid comes off it. **Send invoice** emails them a link that doesn't expire. From it they pay what's due next by card, or see how to pay you another way, from the instructions you set, and they can print it or save it as a PDF.
+When they want one document of what they owe, open the order's **Money** tab and press **Issue invoice**. It's made from the proposal they accepted, so the total is the one they signed, and what they've already paid comes off it. **Send invoice** emails them a link that doesn't expire. If you take cards through CostCook, it has a Pay button for what's due next. If you collect it yourself, it shows the payment instructions you saved. They can print it or save it as a PDF.
 
 ## 8. Confirm order: the kitchen's numbers lock
 

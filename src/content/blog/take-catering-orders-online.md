@@ -17,11 +17,11 @@ The office manager texts at 4:40: "Lunch Thursday for 40, the chicken one again,
 
 Online ordering has the client type it once, on their own phone, and it reaches you already priced. It isn't booked until you approve it, and under a pay rule, not until they've paid.
 
-This guide follows one office lunch from their phone to the food cost.
+Here's one office lunch for 40, from their phone to the food cost.
 
 ## What the client sees
 
-They open your link or the form on your website. No account, no login. The steps run across the top: **Menu**, **Choices**, **Event**, **Contact**, **Review**.
+They open your link or the form on your website. They don't need an account. The steps run across the top: **Menu**, **Choices**, **Event**, **Contact**, **Review**.
 
 1. **Choose a menu.** Only the menus you switched on, at your price per guest.
 2. **Choose dishes and options.** The choices you set on that menu.
@@ -37,7 +37,7 @@ Their phone sends only what they picked, and CostCook prices it again from what 
 
 The request shows up in **Orders** with a **New online request** badge, under **Needs a look**. Open it and the page asks **Approve this request?** Above the buttons it says what approving will do, in one line. Under the pay-in-full rule, that line is "The client pays by card on Stripe. The payment confirms the order."
 
-It arrives priced, with the food cost against your menu, so you know what the job is worth before you say yes.
+It arrives priced, with the food cost against your menu, before you say yes.
 
 Then **Approve** or **Decline**. Decline asks for one line the client will read, and sends it with **Decline and tell the client**.
 
@@ -51,7 +51,7 @@ What approving does is set in **Settings > Booking**, under **Booking rules**. R
 
 If you take cards through CostCook, asking for money means an email: your kitchen can take the event, and a **Pay** button with the amount. They pay on Stripe's page, into your own Stripe account. Stripe takes the card, and you never see it. If you collect it yourself, the email says what's owed and by when, and you record the payment when it comes in.
 
-If you'd rather not decide each one, **Approving requests** on the same page has **Approve clear requests automatically**. It's off until you turn it on. When it's on, a fixed-menu request on an open day, with at least your minimum notice, approves itself. A custom request, or a day short on prep time or servers, still comes to you.
+If you'd rather not decide each one, **Approving requests** on the same page has **Approve clear requests automatically**. It's off until you turn it on. When it's on, a fixed-menu request on an open day, inside your lead time and booking window and under your limits, approves itself. A custom request, a day short on prep time or servers, or one over a hard limit still comes to you.
 
 ## One lunch for 40, start to finish
 
@@ -62,7 +62,7 @@ This is the order from our online ordering film, an example kitchen that takes c
 3. It was a fixed-menu request on a clear day, so it approved itself. The kitchen could still have declined it.
 4. The client gets the pay link and pays $1,273.08 by card.
 5. Shopping is in whole packs, by supplier, for 40. Each supplier gets only its own lines.
-6. The next day it came in $2.47 over plan. Counting the food alone, without misc, that's 29.1% of the price, still under the kitchen's 30% target.
+6. The next day the food came in $2.47 over plan: 29.1% of the price for the food alone. The 29.3% at step 2 also counted misc, so the two aren't the same measure. Both are under the kitchen's 30% target.
 
 The kitchen didn't touch it until the shopping at step 5.
 

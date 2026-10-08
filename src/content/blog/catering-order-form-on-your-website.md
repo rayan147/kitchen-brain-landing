@@ -17,13 +17,11 @@ Your website has a catering page. It has a photo of a grazing table, a PDF menu 
 
 That page can take the order itself. CostCook gives you an order form that sits on your own site, under your own heading, and sends each request to Orders already priced. Your web person pastes two lines. You never touch the code.
 
-Set it up once, then check that it worked.
-
 ## Before you start
 
 You need to be the owner or a manager, with one menu already priced in CostCook. Know who looks after your website, and the exact address your site opens on. Type it into your browser and copy what the address bar shows, `www` or not.
 
-Everything here is in **Settings > Integrations**. Press **Manage storefront** on the Ordering site card. While something still needs fixing, it reads **Review ordering site**. It saves as you type.
+Everything here is in **Settings > Integrations**. Press **Manage storefront** on the Ordering site card. It saves as you type.
 
 ## Step 1: Get it ready to go live
 
@@ -68,11 +66,11 @@ Tell me when it's on, and which address the page opens on.
 
 ## Step 4: Go live, then check it showed up
 
-Back in CostCook, press **Go live**. It asks once: clients can pick a menu and send a request, and each one arrives in Orders for you to confirm.
+Back in CostCook, press **Go live**. It asks you once to be sure. After that, clients can pick a menu and send a request, and each one lands in Orders for you to confirm.
 
 Then open your catering page and load it once. Back on **Put on your website**, under the snippet, the app says where the form has been seen and when: **Seen on** your address, with the date. Until a page with the snippet has opened, it says **Not seen on any site yet**.
 
-Then send yourself an order. Turn off automatic approval first, or your test approves itself and emails you a pay link. Use your own email and pick a day you're open. Check that it lands in **Orders** with a **New online request** badge, then decline it so it doesn't sit there like a real job.
+Then send yourself an order. Turn off automatic approval first, or your test approves itself as a real order, and under a pay rule emails you a pay link. Use your own email and pick a day you're open. Check that it lands in **Orders** with a **New online request** badge, then decline it so it doesn't sit there like a real job.
 
 ## If it doesn't show
 

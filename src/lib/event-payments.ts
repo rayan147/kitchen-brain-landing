@@ -58,6 +58,6 @@ export const eventPayments = {
  */
 export const eventInvoice = {
 	title: 'An invoice from the proposal they accepted',
-	body: 'On the order’s Money tab, Issue invoice makes a numbered invoice from the proposal the client accepted, so the total is the one they signed, and what they’ve already paid comes off it. Send invoice emails them a link that doesn’t expire. From it they pay what’s due next by card, or see how to pay you another way, from the instructions you set, and they can print it or save it as a PDF.',
+	body: 'On the order’s Money tab, Issue invoice makes a numbered invoice from the proposal the client accepted, so the total is the one they signed, and what they’ve already paid comes off it. Send invoice emails them a link that doesn’t expire. If you take cards through CostCook, it has a Pay button for what’s due next. If you collect it yourself, it shows the payment instructions you saved. They can print it or save it as a PDF.',
 	onlineOrders: 'An invoice comes from an accepted proposal, so an online order has none.'
 } as const;
