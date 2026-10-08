@@ -1,7 +1,7 @@
 ---
 title: "How supplier price changes reach the recipes you already costed"
 description: "Keep where the price came from, compare the same amount of food, change the price on purpose, and follow it into your recipes and open quotes."
-publishedDate: 2026-09-03
+publishedDate: 2026-08-20
 category: Buying & suppliers
 menuGroup: Plan and buy
 menuIcon: prices

@@ -40,12 +40,13 @@ const expectedPosts = [
 	'expected-vs-actual-food-cost',
 	'scale-catering-prep-list',
 	'review-supplier-invoice',
-	// RC-73: the setup guide publishes only with the feature (src/lib/blog.ts).
-	...(invoiceEmailLive ? [setupGuideSlug] : [])
+	'catering-event-first-call-to-closeout',
+	// RC-73: the invoice email guides publish only with the feature (src/lib/blog.ts).
+	...(invoiceEmailLive ? [setupGuideSlug, 'supplier-credit-memo-by-email'] : [])
 ];
 // The menu spells the published count (BlogMenuContents, spellCapital), so the
 // pin follows the list above instead of a typed word.
-const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen'];
+const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
 requireText(indexHtml, `${countWords[expectedPosts.length - 10]} worked guides. The assumptions stay beside the arithmetic.`, 'Blog menu evidence boundary');
 // While invoice email is Coming, its setup guide must not be built or linked.
 if (!invoiceEmailLive) {
@@ -113,6 +114,12 @@ for (const [slug, text, label] of [
 	['scale-catering-prep-list', 'eight complete batches', 'batch and equipment-run boundary'],
 	['expected-vs-actual-food-cost', 'Attributed food cost =', 'event attribution boundary'],
 	['supplier-price-changes', 'The risk starts when a draft quote still carries the old cost.', 'draft quote risk'],
+	// Book the event and Confirm order are two steps at app 7a7e407d9.
+	['catering-event-first-call-to-closeout', 'Their yes books nothing. The signed agreement and the deposit do', 'acceptance boundary'],
+	['catering-event-first-call-to-closeout', 'Book the event</strong> is its own step', 'booking before Confirm order'],
+	...(invoiceEmailLive
+		? [['supplier-credit-memo-by-email', 'It adds no purchases and changes no prices.', 'credit never moves a price']]
+		: []),
 ]) {
 	requireText(readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'), text, `${slug} ${label}`);
 }
