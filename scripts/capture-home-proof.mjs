@@ -420,6 +420,35 @@ try {
 			await shoot(p, name, ctx === desk ? { x: list.x - 16, y: head.y - 16, width: list.r - list.x + 32, height: bottom - head.y + 24 } : { x: 0, y: head.y - 24, width: 390, height: bottom - head.y + 40 });
 		}
 
+		// The invoice inbox, newest two emails: Harbor Foods' HF-3102 and HF-3103
+		// held from an address the kitchen has not approved, and HF-3106 from
+		// its approved billing address waiting in review. The mail went in
+		// through the app's own inbox code (scripts/inbox-fixture.ts and the
+		// worker's sweepInbox, with the Google reader) before this run, by a
+		// script the owner ran; this phase only reads the page.
+		// Desktop at 780 wide, not 1440: the homepage crops this card 6:5 from
+		// the top left, and at 1440 the two cards run 2:1, so the dates and
+		// HF-3106's Review link would fall outside it.
+		const narrow = await browser.newContext({ ...DESKTOP, viewport: { width: 780, height: 900 }, storageState: await desk.storageState() });
+		for (const [name, ctx] of [['invoice-inbox', narrow], ['invoice-inbox-phone', phone]]) {
+			if (!want(name)) continue;
+			const p = await ctx.newPage();
+			await p.goto(`${APP}/purchases/inbox`);
+			await hydrate(p);
+			const card = (subject) => p.getByText(subject, { exact: true }).first().evaluate((el) => {
+				let n = el;
+				while (n.parentElement && !/(article|li)/i.test(n.tagName) && getComputedStyle(n).borderTopWidth === '0px') n = n.parentElement;
+				const r = n.getBoundingClientRect();
+				return { x: r.left + scrollX, y: r.top + scrollY, r: r.right + scrollX, b: r.bottom + scrollY };
+			});
+			const held = await card('Invoices HF-3102 and HF-3103');
+			const waiting = await card('Invoice HF-3106');
+			if (ctx === phone) await p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
+			await shoot(p, name, ctx === narrow
+				? { x: held.x - 12, y: held.y - 12, width: held.r - held.x + 24, height: waiting.b - held.y + 24 }
+				: { x: 0, y: held.y - 12, width: 390, height: waiting.b - held.y + 24 });
+		}
+
 		// Online ordering, as a client meets it on the kitchen's own website: the
 		// ordering widget (ordering.js, pasted verbatim from Settings >
 		// Integrations > Ordering site > Put on your website) mounted in a plain

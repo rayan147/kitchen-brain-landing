@@ -299,3 +299,14 @@ alt text, film transcript or link changed.
   you choose, reminder with a pay link three days before if still owed).
   `agreementLine` renders only here; `eventPayments.homepage` is also the
   events guide's Payments note, whose contract still passes.
+
+### Revision 2026-10-08 (9): the invoice inbox from local develop
+
+The last test.app frame is gone. Scene 5's inbox now shows what develop does
+with mail: two Harbor Foods invoices from an address the kitchen never
+approved sit held and unread ("Held: sender not on your list"), and HF-3106
+from the approved billing address waits in review until the cook confirms it.
+The section's line ("none of it counts until you confirm it") already says
+this; the held card shows the other half without a word added. Steps 6 and 11
+re-checked: the alt names only what both captures show, no new claim in copy.
+

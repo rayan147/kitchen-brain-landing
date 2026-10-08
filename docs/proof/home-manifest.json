@@ -20,12 +20,13 @@
   "appBranch": "develop (local)",
   "capturedOn": "2026-10-07",
   "notes": [
-    "Re-shot 2026-10-07 from kitchen-brain 7a7e407d9 by scripts/capture-home-proof.mjs (three phases, see its header). Every homepage frame but invoice-inbox comes from that code.",
+    "Re-shot 2026-10-07 from kitchen-brain 7a7e407d9 by scripts/capture-home-proof.mjs (three phases, see its header); invoice-inbox joined it on 2026-10-08, so every homepage frame comes from that code.",
     "Within target, so the order page shows no charge-at-least line.",
     "Allergen answers for the 22 wedding ingredients were entered through the UI with the evidence note 'Sample kitchen data'.",
     "Stripe: test-mode connected account; deposit paid with Stripe test card 4242 through the client link on 2026-10-07 (first walked on e00299078; that world was copied with VACUUM INTO and migrated 0195-0197 to 7a7e407d9, served on :4193 by a script the owner ran, keys never read).",
     "balance-reminder: develop sweeps three days ahead (BALANCE_REMINDER_LEAD_DAYS = 3), so the app's own queueBalanceReminders ran with today=2026-12-06 and sent through local Mailpit; the email was rendered as sent.",
-    "prep-list was retired: no section renders it since shop-list replaced it on the rail."
+    "prep-list was retired: no section renders it since shop-list replaced it on the rail.",
+    "invoice-inbox (2026-10-08): the keyed world's inbox was fed through the app's own code by a script the owner ran (Google key from the owner's shell, never read): Harbor Foods added as a supplier and billing@harborfoods.example approved for it (findOrCreateSupplier, addApprovedSender); the worker's sweepInbox read the three emails a keyless run had left 'Being read again'; scripts/inbox-fixture.ts delivered fixture 06 (HF-3106) from the approved address and fixture 02 (HF-3102, HF-3103) from accounts@harborfoods-billing.example, which is on no list. Backup: e2e/.scratch/home.before-inbox-20261008.db."
   ],
   "target": "30%",
   "frames": {
@@ -44,8 +45,8 @@
     "payment-schedule-phone": "The same block in the app’s phone layout (390 wide, 2x); rings measured on this capture",
     "food-cost-breakdown": "Wedding Plated Dinner, Dishes per guest, first four dishes: Braised Short Rib 2 x $7.28 = $14.56, Wild Mushroom Polenta about 240 g a portion $2.93, Creamed Spinach 0.5 x $5.82 = $2.91, Focaccia and Whipped Goat Cheese $2.56; phone variant the same four",
     "yield-lines": "Greek Salad recipe lines (develop :4188): Bell pepper 82%, Cucumber 90%, Roma tomato 60 g at 91% buy 66 g, Red onion 88%, Feta 100% Same as used; phone variant is the Roma tomato card",
-    "invoice-inbox": "test.app.costcook.io Purchases > Invoice inbox: credit memo CM-3104 (forwarded) waiting in review; invoices HF-3102 and HF-3103 (new sender, unverified) waiting in review. Sender shown is the founder's public contact address.",
-    "phone-variants": "food-cost, yield, import, allergens, ordering-site and payment-schedule each have a -phone.png from the app’s own phone layout (390 wide, 2x); alt text names only what both captures show.",
+    "invoice-inbox": "Purchases > Invoice inbox (develop :4193, 780 wide so the cards sit near the homepage's 6:5 crop): invoices HF-3102 and HF-3103 from accounts@harborfoods-billing.example, Held: sender not on your list, not read, Let this one through; Harbor Foods invoice HF-3106 from billing@harborfoods.example, Invoice, waiting in review, counts once you confirm it. Phone variant: the same two cards at 390 wide.",
+    "phone-variants": "food-cost, yield, import, allergens, ordering-site, invoice-inbox and payment-schedule each have a -phone.png from the app’s own phone layout (390 wide, 2x); alt text names only what both captures show.",
     "proposal-mobile": "Client offer on a phone (develop 7a7e407d9, fresh world), sent and captured before acceptance: respond by Wed Oct 14, $14,250.00, 150 guests at $95.00, Dec 19, service 5:00 PM to 10:00 PM Eastern Time; no sample logo in that world",
     "confirm-dialog": "Order #784 Confirm order dialog, opened and cancelled (Keep editing): confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists"
   },
@@ -70,7 +71,9 @@
         "ordering-site",
         "ordering-site-phone",
         "sage-answer",
-        "balance-reminder"
+        "balance-reminder",
+        "invoice-inbox",
+        "invoice-inbox-phone"
       ],
       "note": "The Dec 19 wedding world (order #784, draft, deposit paid by test card), served by develop code with Stripe test keys, the Google reader and Sage. Nothing written: the Confirm dialog was opened and cancelled. Sage was asked until the answer described the records correctly (one answer said the deposit left \"a total order value of $14,250.00\"; not used). ordering-site and ordering-site-phone: the widget in a sample host page on 127.0.0.1:4370 (scratchpad hostsite/index.html), approved as an allowed website in the app."
     },
@@ -85,15 +88,6 @@
         "proposal-mobile"
       ],
       "note": "yield-lines from the events world (Greek Salad unchanged: Roma tomato 60 g at 91%, buy 66 g); inquiry and offer from a fresh demo world walked to a sent offer, captured before acceptance, on a 390 x 780 phone screen (inquiry: the form from Client to the estimate tick, the fixed bar hidden)."
-    },
-    "test-app": {
-      "host": "test.app.costcook.io",
-      "shots": [
-        "invoice-inbox",
-        "invoice-inbox-phone"
-      ],
-      "capturedOn": "2026-10-06",
-      "note": "captured in the owner’s signed-in Chrome, read-only, at about 2.3x; invoice-inbox-phone is one crop of invoice-inbox. Not re-shot 2026-10-07: local develop receives no supplier email."
     }
   },
   "sampleDataChanges2026-10-07": [
