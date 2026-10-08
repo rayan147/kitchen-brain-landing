@@ -435,6 +435,42 @@ export const tourStops: readonly TourStop[] = [
 		}
 	},
 	{
+		/* Added 2026-10-08 with the Features menu item. Settings labels from
+		   kitchen-brain local develop 7a7e407d9 (src/lib/ordering-guide.ts). */
+		id: 'online-ordering',
+		featureId: 'ordering',
+		label: 'Online ordering',
+		appArea: 'Settings / Ordering site',
+		title: 'Let clients order from your own website.',
+		intro: 'Put your menus on an ordering page of your own, or paste the snippet into the website you already have. Requests land in Orders priced, and you approve them.',
+		callout: 'The form only shows on the websites you list.',
+		featureHref: featureMenuHref('ordering'),
+		metrics: [
+			{ label: 'Ordering site', value: 'Live', tone: 'good' },
+			{ label: 'Menus on the site', value: '2' },
+			{ label: 'Smallest group', value: '20 guests' },
+			{ label: 'Notice', value: '72 hours' }
+		],
+		columns: ['Tab', 'What you set', 'Where it stands'],
+		rows: [
+			['Setup', 'Pickup, delivery, how they pay', 'Done'],
+			['Menus', 'Lunch drop-off, priced per guest', 'On the site'],
+			['Look', 'Logo and four colours', 'Done'],
+			['Put on your website', 'Websites that will show it', '1 website']
+		],
+		aside: {
+			title: 'Newest request',
+			status: 'Waiting on you',
+			lines: [
+				{ label: 'Guests', value: '40' },
+				{ label: 'Menu', value: 'Lunch drop-off' },
+				{ label: 'Booking rule', value: 'Pay in full' },
+				{ label: 'Next', value: 'Approve or decline', tone: 'attention' }
+			],
+			footnote: 'Illustrative tour values. If your booking rules take no online payment, approving confirms the order.'
+		}
+	},
+	{
 		id: 'orders-plan',
 		featureId: 'orders',
 		label: 'Orders, shop, prep & pack',

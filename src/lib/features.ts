@@ -691,6 +691,15 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				featureId: 'events',
 				icon: 'orders'
 			},
+			// Added 2026-10-08 at the owner's request, after events because a
+			// client's own order is the other way work arrives. Shipped (RC-59),
+			// so no chip; the tour carries its stop.
+			{
+				label: 'Online ordering',
+				description: 'Clients order from your page or your own website; you approve.',
+				featureId: 'ordering',
+				icon: 'menu'
+			},
 			{
 				label: 'Orders, shop, prep & pack',
 				description: 'Turn one menu and guest count into the plan for the day.',
