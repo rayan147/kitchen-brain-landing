@@ -293,14 +293,17 @@ const faqItems = [
 
 			<div class="confirmed-proof" data-reveal>
 				<figure>
-					<img
-						src="/demo-poster.jpg"
-						width="1600"
-						height="1000"
-						loading="lazy"
-						decoding="async"
-						alt="Confirmed CostCook event showing 180 guests at $68 per guest, quoted food cost of $26.93 per guest, current food cost of $27.13, and Shop, Prep, and Pack tabs below."
-					/>
+					<picture>
+						<source media="(max-width: 639px)" srcset="/proof/order-price-today-mobile.png" width="780" height="1358" />
+						<img
+							src="/proof/order-price-today.png"
+							width="1888"
+							height="722"
+							loading="lazy"
+							decoding="async"
+							alt="A confirmed wedding order for 150 guests, prices locked: $95.00 a guest, locked when confirmed; food cost 27.6% against a 30% target, food $26.18 a guest; and today's ingredient prices, unchanged since it was quoted."
+						/>
+					</picture>
 				</figure>
 				<div>
 					<h3>The agreed number stays put.</h3>

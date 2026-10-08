@@ -11,3 +11,5 @@
 - **Life:** A wet case lands on the scale and the recipe still says “six onions.”
 - **Connection:** Portion cost hands off to per-guest menu cost.
 - **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — retained unrounded yield cost through the worked equation so the displayed result is reproducible; recalculated the reading time at 200 words per minute.
+
+**Revision 2026-10-08: chef voice pass.** Intro, record/yield/rounding/sub-recipe/unit-gap paragraphs said the way a cook would ("Carry every decimal while you work and round once, at the end."); description rewritten. Snap, figures and the pinned worked equation unchanged. Why: owner asked that the site read like a working chef wrote it, not AI.

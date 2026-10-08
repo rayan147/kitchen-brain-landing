@@ -242,7 +242,7 @@ export const comparison: RowGroup[] = [
 				label: 'Invoice scanning',
 				sheet: 'key',
 				costcook: 'yes',
-				note: 'Upload a photo, PDF, spreadsheet or Word document, or paste text. Review the extracted records before saving.',
+				note: 'Upload a photo, PDF, spreadsheet or Word document, or paste text. You look over what it read before anything saves.',
 				parsley: '$69/month add-on; also listed in Enterprise',
 				meez: 'Premium, $199'
 			},
@@ -369,7 +369,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'key',
 				sheetNote: 'What arrived comes back in by hand, against the order you sent.',
 				costcook: 'yes',
-				note: 'Record what arrived, review quantities and prices, then save the delivery to record the purchase.',
+				note: 'Mark what arrived, look over the quantities and prices, then save the delivery and the purchase is recorded.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},

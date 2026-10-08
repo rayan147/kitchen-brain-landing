@@ -1,6 +1,6 @@
 ---
 title: "The delivery arrived wrong. What should you check before accepting it?"
-description: "Compare the purchase order, delivered cases, and invoice line by line so a shortage or substitution does not become the new stock record."
+description: "Check the purchase order, the cases at the door and the invoice line by line, so a short or a substitute doesn’t end up as your stock count."
 publishedDate: 2026-09-03
 category: Buying & suppliers
 menuGroup: Plan and buy
@@ -13,7 +13,7 @@ featureLabel: See purchasing and receiving in CostCook
 ---
 <!-- story: docs/stories/blog-delivery-arrived-wrong.story.md -->
 
-Six cases are sitting at the back door. The driver wants a signature. Five cases are what you ordered; the sixth is a smaller substitute. Counting six and writing “received” would be quick, but it would not be true.
+Six cases are sitting at the back door. The driver wants a signature. Five cases are what you ordered; the sixth is a smaller substitute. Count six, write “received”, and you're done in a minute. It also wouldn't be true.
 
 ## Put three records beside each other
 
@@ -23,7 +23,7 @@ Check the purchase order, the physical delivery, and the supplier invoice as thr
 2. **The delivery** is what is physically in front of you.
 3. **The invoice** says what the supplier intends to charge.
 
-The three may agree. When they do not, preserve the difference instead of editing one record until they appear to match. A consistent receiving method exists to confirm that the quantity, quality, and price received match what was ordered, not merely to count boxes. The open textbook [Basic Kitchen and Food Service Management](https://opentextbc.ca/basickitchenandfoodservicemanagement/chapter/receiving/) explains why the invoice should be checked against the purchase order as the goods arrive.
+Sometimes all three agree. When they don't, keep the difference on record. Don't edit one of them until they look like they match. Receiving is there to check that the quantity, quality and price match what you ordered. Counting boxes is the least of it. The open textbook [Basic Kitchen and Food Service Management](https://opentextbc.ca/basickitchenandfoodservicemanagement/chapter/receiving/) explains why the invoice should be checked against the purchase order as the goods arrive.
 
 Six boxes can still be five cases and a problem.
 
@@ -57,30 +57,30 @@ The supplier delivered six physical cases, but the kitchen is **10 lb short** an
 
 ## Decide each difference separately
 
-Do not turn receiving into one yes-or-no decision. Check:
+Receiving isn't one yes or no. Check:
 
 - **Identity:** Is this the product and specification you approved?
 - **Quantity:** How many cases, packs, pounds, or eaches actually arrived?
 - **Condition:** Is the product at an acceptable temperature and in acceptable condition under your food-safety procedures?
 - **Price:** Does the invoice price match the agreed or accepted amount?
 
-A usable substitution can still create a shortage. A correct quantity can still carry the wrong price. Accepting the food does not require pretending every other fact agreed.
+A substitute you can use can still leave you short. The right count can still come at the wrong price. You can take the food without pretending everything else matched.
 
 ## Record the substitute as itself
 
-If you accept the 30 lb substitute, receive five cases against the original item and record the substitute on its own line. Do not give it the original 40 lb pack merely to make the order look complete.
+If you accept the 30 lb substitute, receive five cases against the original item and record the substitute on its own line. Don't call it a 40 lb case just so the order looks complete.
 
 Keep the supplier description, pack, price, invoice, and receiving decision together. If the substitute should become an approved buying option, review its usable yield and recipe conversion before it becomes a current ingredient price. Different chicken specifications can produce different usable quantities even when both are sold by the pound.
 
 ## Keep uncertainty out of recipe cost
 
-The delivery can be put away while a price or item match remains under review. That unresolved line should not silently rewrite every recipe using chicken.
+Put the delivery away while you sort out the price or the item. That open line shouldn't quietly change the cost of every recipe with chicken in it.
 
-The same boundary applies to a scan or imported invoice: extracted text can help stage the line, but a person still confirms what the product, pack, quantity, and price mean.
+Same goes for a scanned or imported invoice. What gets read off the page can set up the line, but a person still confirms the product, pack, quantity and price.
 
 ## Commit only what arrived
 
-Finish receiving with a short record of the outcome:
+Finish with a short note of what happened:
 
 ```text
 Received against original order: 5 × 40 lb

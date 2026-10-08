@@ -178,3 +178,10 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 - The competing chicken offer is Coastal Meats, so Northline stays the guides' supplier.
 - The bride is the tree-nut allergy (as on the guards guide); the gluten-free conflict is two guests.
 - The month scene reviews July, the month that has closed by Aug 28, with the app's "Should have cost" / "Did cost" labels.
+
+## Revision 2026-10-08: chef voice pass
+- Owner: the site should read like a working chef-owner wrote it, not like AI. Copy only; every figure, status word, boundary and pinned phrase kept ("Follow one event from quote to pack list.", "Each stop follows its public status.", "Revenue after food cost").
+- Stop titles that read as instructions to a software user became things a cook says: "Keep the buying facts attached to the ingredient" is now "What you pay for chicken lives on the chicken"; "See what each team role can do" is now "Who on the crew can do what".
+- Intros lost the parallel-list rhythm and words like "resolve", "extracted rows", "inspect": the invoice "sits next to the lines read off it"; the delivery's short line "stays in view until somebody deals with it".
+- The slogan triplet "One guest count. Three lists. No second round of typing." became "Type the guest count once. All three lists come off it." Offline meaning unchanged (opened pages read without signal, check-offs need a connection).
+- Snap line unchanged: "At 180 guests, one dollar per head is a $180 decision."

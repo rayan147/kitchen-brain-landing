@@ -1,6 +1,6 @@
 ---
 title: "How to check a supplier invoice before it changes your recipe costs"
-description: "Confirm the ingredient, pack, unit conversion, and price difference before an imported invoice line becomes the current recipe cost."
+description: "Check the ingredient, the pack, the unit math and the price change before an imported invoice line becomes what your recipes cost."
 publishedDate: 2026-09-03
 category: Buying & suppliers
 menuGroup: Plan and buy
@@ -13,9 +13,9 @@ featureLabel: See invoices staged for review in CostCook
 ---
 <!-- story: docs/stories/blog-review-supplier-invoice.story.md -->
 
-A supplier PDF says `TOM PASTE 6/#10 38.40`. Your ingredient record still carries $34.20 per case. The document can be read perfectly and still be applied to the wrong product, pack, or unit.
+A supplier PDF says `TOM PASTE 6/#10 38.40`. Your ingredient record still carries $34.20 per case. The line can be read perfectly and still land on the wrong product, pack or unit.
 
-Reading the line is the fast part. Deciding what it means is the important part.
+Reading the line takes a second. Working out what it means is the job.
 
 ## Keep the original line visible
 
@@ -25,7 +25,7 @@ Start with the source exactly as it arrived:
 TOM PASTE 6/#10 38.40
 ```
 
-Then stage the possible facts without treating them as approved:
+Then write down what it might mean, without treating any of it as settled:
 
 ```text
 Possible product: tomato paste
@@ -34,13 +34,13 @@ Possible case price: $38.40
 Supplier item code: confirm from the document or supplier record
 ```
 
-If the line is unclear, quote the unclear text rather than completing it from a guess. A scan can extract characters; it cannot establish that the abbreviated item is the ingredient your recipes use.
+If part of the line is unclear, copy it as written instead of filling in a guess. A scan can read the characters. It can't tell you that the abbreviation is the ingredient your recipes use.
 
 OCR can read 38.40. It cannot taste the difference between a case and a can.
 
 ## Confirm identity before price
 
-Match the line using evidence that distinguishes similar products:
+Match the line on the things that tell similar products apart:
 
 - Supplier and supplier item code.
 - Full product description or brand.
@@ -48,11 +48,11 @@ Match the line using evidence that distinguishes similar products:
 - Purchase unit and net quantity.
 - The ingredient or approved supplier option already on file.
 
-Tomato paste, tomato sauce, and crushed tomatoes are not interchangeable because a text match finds “tomato.” A six-can case and a single can are not interchangeable because both show the same container size.
+Paste, sauce and crushed tomatoes are three different products, even if a text search finds “tomato” in all of them. A six-can case and a single can are not the same buy just because both say #10.
 
 ## Convert the confirmed pack
 
-For this illustrative example, one confirmed case contains six 111 oz cans. Preserve precision through the conversion:
+In this example, one confirmed case holds six 111 oz cans. Keep every decimal through the conversion:
 
 ```text
 Previous case price = $34.20
@@ -70,7 +70,7 @@ The case increased by $4.20:
 ($38.40 − $34.20) ÷ $34.20 × 100 ≈ 12.3%
 ```
 
-That percentage is meaningful only because the old and new records describe the same six-can case.
+That 12.3% only means something because the old price and the new one are for the same six-can case.
 
 ## Show the recipe consequence
 
@@ -87,7 +87,7 @@ Change using unrounded values:
 $1.6144 − $1.4378 ≈ $0.18 per sauce batch
 ```
 
-The case increased by $4.20, but this recipe line changes by about $0.18 per batch. Keep the unit path visible so the small downstream number does not look disconnected from the supplier document.
+The case went up $4.20. This recipe line goes up about $0.18 a batch. Keep the unit math showing, so that small number still traces back to the invoice.
 
 ## Review what the line would touch
 
@@ -99,11 +99,11 @@ Before committing the new price, check:
 4. Which confirmed quotes should preserve the historical price while showing a current comparison.
 5. Whether the invoice documents a delivered purchase or only a proposed price.
 
-An invoice is purchase evidence, but the received product and pack still have to agree with the record. A price list is an offer, not proof of a purchase. Keep those sources distinct.
+An invoice shows you bought it, but what came in the door still has to match the record. A price list is only an offer. Don't mix the two up.
 
 ## Commit the reviewed fact
 
-The final record should retain enough context to explain itself later:
+The record you keep should explain itself when you come back to it:
 
 ```text
 Supplier item: confirmed
@@ -114,4 +114,4 @@ Effective source: this invoice
 Reviewer decision: accepted
 ```
 
-Only then should $38.40 become current. The invoice remains beside the new price, and the next recipe cost has a source you can inspect instead of a number that appeared behind you.
+Only then does $38.40 become the current price. The invoice stays next to it, and the next time a recipe costs out you can see where the number came from, instead of finding it changed behind your back.

@@ -165,7 +165,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'math',
 		section: 'Recipes and costing',
 		kicker: 'The costing math',
-		title: 'From recipe quantities to food cost, with the calculations shown.',
+		title: 'From recipe quantities to food cost, with the working shown.',
 		items: [
 			{ lead: 'One connected plan.', detail: 'Menu times guest count becomes what to buy, cook, and pack, with the cost attached.' },
 			{ lead: 'Real unit conversion.', detail: 'Weight, volume, and count convert only through facts you set per ingredient, never a global guess table.' },
@@ -202,7 +202,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'ingredients',
 		section: 'Recipes and costing',
 		kicker: 'Ingredients',
-		title: 'Buying facts that stay attached to the food.',
+		title: 'What you pay for an ingredient lives on the ingredient.',
 		items: [
 			{ lead: 'Missing ingredient details.', detail: 'See which ingredients can be costed and which need a price, yield or conversion.' },
 			{ lead: 'Shareable filters.', detail: 'Bookmark or share a filtered ingredient list and reopen the same search.' },
@@ -261,7 +261,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'orders',
 		section: 'The day itself',
 		kicker: 'Orders, the event',
-		title: 'Price it, confirm it, run it.',
+		title: 'One order, from the price to the pack-out.',
 		items: [
 			{ lead: 'Costed before commitment.', detail: 'A new order is a menu, a date, guests, and a price, estimated live as you set it up.' },
 			{ lead: 'Three tabs, one plan.', detail: 'Shop, Prep, and Pack all read the same computed plan.' },
@@ -329,7 +329,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'inventory',
 		section: 'The day itself',
 		kicker: 'Inventory',
-		title: 'The shelf, computed, never guessed.',
+		title: 'What is on the shelf, worked out from a real count.',
 		items: [
 			{ lead: 'Stock on hand.', detail: 'Start with a dated physical count, then add deliveries and subtract recorded use and waste.' },
 			{ lead: 'Dated count history.', detail: 'Each count keeps the unit cost recorded at the time. A later correction does not replace the old count.' },
@@ -343,7 +343,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'import',
 		section: 'Getting prices in',
 		kicker: 'Document import',
-		title: 'Upload the paperwork. Review the details. Save your changes.',
+		title: 'Upload the paperwork, check it against the original, then save.',
 		items: [
 			{ lead: 'Upload or paste.', detail: 'Drop files, paste text, or photograph paper. The workspace queues and tracks each one.' },
 			{ lead: 'Check the document type.', detail: 'Check how the document was identified. Change its type, replace an unreadable file or leave it out.' },
@@ -467,7 +467,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'team',
 		section: 'Team, and what it connects to',
 		kicker: 'Team & settings',
-		title: 'Find kitchen settings and team access in one place.',
+		title: 'Kitchen settings, and who on the team can do what.',
 		items: [
 			{ lead: 'Settings that need attention.', detail: 'Settings are grouped by task and show where a decision is needed.' },
 			{ lead: 'Preview costing changes.', detail: 'Costing settings preview their impact and name which menus go over target before you save.' },

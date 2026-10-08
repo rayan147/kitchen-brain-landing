@@ -67,7 +67,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'card',
 				question: 'Why a card up front?',
 				answer: [
-					'The trial starts a subscription that bills automatically on day 16 unless you cancel first. Stripe handles your card details; you pay $0 during the trial.'
+					'Because the trial is the subscription. It bills automatically on day 16 unless you cancel first. Stripe holds the card, and you pay $0 during the trial.'
 				],
 				claims: ['RC-34']
 			},
@@ -113,7 +113,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'who',
 				question: 'Who is this for?',
 				answer: [
-					'Catering and meal prep run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. You can start with one recipe, then use a menu and guest count to plan an event.'
+					'Catering and meal prep run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. Start with one recipe. When the next event comes in, give it a menu and a guest count and plan it from there.'
 				],
 				claims: ['RC-01', 'RC-03', 'RC-44']
 			},
@@ -121,7 +121,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'restaurant',
 				question: 'I run a restaurant. Will CostCook fit?',
 				answer: [
-					'Yes, for the part of your business that moves by event, menu, date, and guest count: catering, special dinners, and other changing menus. CostCook carries that plan through recipe costing, shopping, prep, pack, purchasing, and food cost. You can run regular restaurant service alongside that work and still belong here. The <a href="/compare">comparison page</a> shows the product limits that may still matter to you.'
+					'Yes, for the part of your business that comes with a date and a guest count: catering, special dinners, a menu that keeps changing. CostCook carries that plan through recipe costing, shopping, prep, pack, purchasing, and food cost. Your regular service can keep running the way it does, and you still belong here. The <a href="/compare">comparison page</a> lists the limits that might still matter to you.'
 				],
 				claims: ['RC-01', 'RC-03', 'RC-21', 'RC-22', 'RC-24', 'RC-25', 'RC-26', 'RC-30', 'RC-40', 'RC-44']
 			},
@@ -137,7 +137,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'permissions',
 				question: 'Can I give a cook the prep list without showing them the costs?',
 				answer: [
-					'No. Owner, Manager and Staff protect specific sensitive actions, but there is no per-screen control, so a cook on Staff can still open recipe costs and Analytics. A little is held back: Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
+					'No. Owner, Manager and Staff guard certain sensitive actions, but there is no per-screen control, so a cook on Staff can still open recipe costs and Analytics. A little is held back: Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
 				],
 				claims: ['RC-44', 'RC-52']
 			},
@@ -194,7 +194,7 @@ export const faq: readonly FaqGroup[] = [
 				question: 'What is Sage?',
 				answer: [
 					`An assistant inside CostCook with ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. Every answer shows where its numbers came from. It can prepare ${spell(sageDraftKinds.length)} kinds of draft (${sageDraftKindsAnd}), and nothing changes until a manager or owner approves the draft. It cannot reach another kitchen and it never changes a record on its own.`,
-					'Sage is available now and stays within reach during setup. Its starting questions follow the setup stage and the records entered so far, and a Back to setup action returns you to the unfinished stage. See the <a href="/features/sage">Sage feature guide and video</a>.'
+					'Sage is available now, and it is there during setup too. The questions it starts you on depend on the setup stage you are in and what you have entered so far, and Back to setup takes you to the stage you left unfinished. See the <a href="/features/sage">Sage feature guide and video</a>.'
 				],
 				claims: ['RC-46', 'RC-49']
 			},
@@ -202,7 +202,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'integrations',
 				question: 'Does it connect to Square or QuickBooks?',
 				answer: [
-					'No. Square, QuickBooks and an API for custom connections are marked Coming and are not available in your trial or subscription. No release date is promised. Check the <a href="/compare">comparison page</a> if these connections are essential.'
+					'No. Square, QuickBooks and an API for your own connections are marked Coming. They are not in the trial or the subscription, and I am not promising a date. If you cannot run without them, look at the <a href="/compare">comparison page</a> first.'
 				],
 				claims: ['RC-35', 'RC-45', 'RC-46']
 			},
@@ -259,7 +259,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'shopping',
 				question: 'What does the shopping list look like?',
 				answer: [
-					'Grouped by supplier, rounded to the whole packs you actually buy, with a supplier subtotal. Sub-recipes like a stock or a mirepoix are treated as batches to make rather than things to shop for, and a recent, trusted stock count reduces the buying; missing or stale counts do not.'
+					'Grouped by supplier, rounded to the whole packs you actually buy, with a subtotal for each supplier. A stock or a mirepoix shows up as a batch to make, not something to shop for. A recent count you trust takes stock off the buy. A missing or stale count does not.'
 				],
 				claims: ['RC-18', 'RC-22']
 			},
@@ -275,7 +275,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'receiving',
 				question: 'What happens when the truck is short?',
 				answer: [
-					'Receiving records what the delivery actually was against what you ordered: full, over, short, substituted, missing, or unexpected, with the received value beside the ordered value. Review the quantities and prices, then save the delivery.'
+					'You check what actually came off the truck against what you ordered: full, over, short, substituted, missing, or unexpected, with the received value next to the ordered value. Look over the quantities and prices, then save the delivery.'
 				],
 				claims: ['RC-27', 'RC-37']
 			},
@@ -291,7 +291,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'multi-event',
 				question: 'Can I shop and prep for several events at once?',
 				answer: [
-					'Yes, for the planning. Two to twelve events can be created together and open a combined Shop, Prep and Pack workspace that totals the shopping and the prep across all of them, with the pack list keeping a column per event. Confirming, freezing prices and sending purchase orders all stay per order; the combined run does not confirm or buy.'
+					'Yes, for the planning. Create two to twelve events together and they open one Shop, Prep and Pack workspace. The shopping and the prep are totaled across all of them, and the pack list keeps a column for each event. Confirming, freezing prices and sending purchase orders still happen one order at a time. The combined run does not confirm or buy anything.'
 				],
 				claims: ['RC-36']
 			},
@@ -331,7 +331,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'prices-in',
 				question: 'How do my supplier prices get in?',
 				answer: [
-					'Photograph the price list, drop in the PDF or the Word document, upload the spreadsheet, or paste the text. Review the supplier, ingredients, pack sizes and prices before saving. Nothing changes your costing until you save the reviewed records, and whatever could not be read is quoted back as it appeared rather than guessed. Keying an awkward invoice in by hand is still a supported way to do it.'
+					'Photograph the price list, drop in the PDF or the Word document, upload the spreadsheet, or paste the text. Check the supplier, the ingredients, the pack sizes and the prices before you save. Nothing changes your costing until you save, and anything it could not read comes back exactly as it appeared, not guessed at. You can still key an awkward invoice in by hand.'
 				],
 				claims: ['RC-09', 'RC-26', 'RC-38', 'RC-39']
 			},
@@ -339,7 +339,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'catalog',
 				question: 'Do I have to type every ingredient?',
 				answer: [
-					'No. CostCook includes roughly 1,500 ingredient names and supplier abbreviations to help match your paperwork. You still enter or import your own pack sizes and prices.'
+					'No. CostCook comes with roughly 1,500 ingredient names and supplier abbreviations, so your paperwork has something to match against. Your own pack sizes and prices you still enter or import.'
 				],
 				claims: ['RC-41']
 			},
@@ -347,7 +347,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'recipes-in',
 				question: 'How do my recipes get in?',
 				answer: [
-					'Upload a photo, PDF, spreadsheet or document, or paste the recipe text. Review the draft before saving it. Recipes can carry sub-recipes and a trim yield on each line, and the yield moves how much you buy as well as what the plate costs.'
+					'Upload a photo, PDF, spreadsheet or document, or paste the recipe text, and look the draft over before you save it. A recipe can carry sub-recipes and a trim yield on each line, and the yield changes how much you buy as well as what the plate costs.'
 				],
 				claims: ['RC-16', 'RC-19', 'RC-38']
 			},
@@ -355,7 +355,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'phone',
 				question: 'Does it work on a phone in a walk-in with one bar?',
 				answer: [
-					'Previously loaded order pages remain readable with no signal and show when they were cached. A page you did not load before going offline shows the offline fallback, and actions that write data need a connection. With a connection, core pages are server-rendered and remain readable with JavaScript off.'
+					'Previously loaded order pages remain readable with no signal and show when they were cached, so open the order before you walk into the cooler. A page you had not loaded shows the offline fallback instead, and actions that write data need a connection. With signal, the core pages come from the server and still read with JavaScript off.'
 				],
 				claims: ['RC-54']
 			},

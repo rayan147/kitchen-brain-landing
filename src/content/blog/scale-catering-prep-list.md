@@ -1,6 +1,6 @@
 ---
 title: "How to scale a catering prep list without making half a pot"
-description: "Convert guests into portions, recipe batches, equipment runs, and supplier packs without letting one kind of rounding distort another."
+description: "Go from guests to portions, batches, equipment runs and cases, and keep each kind of rounding from throwing off the next."
 publishedDate: 2026-09-03
 category: Running the event
 menuGroup: Plan and buy
@@ -19,7 +19,7 @@ Guests scale portions. The kitchen cooks batches.
 
 ## Set the portion requirement first
 
-Keep the guaranteed guest count and any planned buffer separate. That lets the quote retain its real head count while production shows why it is preparing more.
+Keep the guaranteed count and your buffer apart. The quote keeps the real head count, and the prep list shows why you're cooking more.
 
 For this illustrative event:
 
@@ -30,7 +30,7 @@ Service buffer = 5%
 Required portions = 180 × 1.05 = 189 portions
 ```
 
-The five-percent buffer is an example, not a universal recommendation. Use the policy, service style, guarantees, and risk your business has deliberately chosen.
+Five percent is just the example here. Use the buffer you've settled on for your service style, your guarantees and the risk you're willing to carry.
 
 ## Convert portions into recipe batches
 
@@ -43,7 +43,7 @@ Batches required = required portions ÷ portions per batch
 
 The kitchen can prepare eight complete batches. It cannot prepare 7.875 validated batches on purpose.
 
-If the braise is produced only as a complete validated batch, round the production quantity up:
+If you only make the braise in full batches, round up:
 
 ```text
 Production batches = 8
@@ -51,7 +51,7 @@ Finished portions = 8 × 24 = 192
 Planned cushion = 192 − 189 = 3 portions
 ```
 
-Do not hide the three portions by changing the guest count to 192. They are a production remainder, not twelve additional customers.
+Don't bury those three portions by bumping the guest count to 192. They're what's left over from full batches, not twelve more guests.
 
 ## Scale the ingredients from the batch
 
@@ -71,11 +71,11 @@ Stock:     8 × 3 qt  = 24 qt
 Onions:    8 × 2 lb  = 16 lb
 ```
 
-This is the prep requirement. It should remain connected to the recipe version and yield that produced it.
+That's your prep. Keep it tied to the recipe version and yield it came from.
 
 ## Turn batches into equipment runs
 
-If the kettle safely holds two recipe batches, the board should not list one enormous eight-batch task:
+If the kettle safely holds two batches, don't put one giant eight-batch job on the board:
 
 ```text
 8 recipe batches ÷ 2 batches per kettle run = 4 kettle runs
@@ -89,7 +89,7 @@ Each run: 2 recipe batches / 48 portions
 Total: 8 batches / 192 portions
 ```
 
-Equipment capacity, cooling space, cook time, and staffing may create different operating units for different dishes. The batch rule belongs to the kitchen's actual method, not to a universal multiplier.
+Kettle size, cooling space, cook time and who's on shift can make each dish run in different chunks. The batch rule comes from how your kitchen actually cooks it. No multiplier knows that.
 
 ## Let the shopping list round separately
 
@@ -103,9 +103,9 @@ Purchased quantity = 4 × 40 lb = 160 lb
 Quantity above prep need = 160 lb − 144 lb = 16 lb
 ```
 
-The shopping list says four cases. The prep list still says 144 lb. Do not tell the crew to prepare all 160 lb merely because buying rounded to a whole pack. The remaining 16 lb needs its own stock or future-use decision.
+The shopping list says four cases. The prep list still says 144 lb. Don't tell the crew to cook all 160 lb just because the buy rounded up to a full case. Decide on its own what the other 16 lb is for: the shelf, or a later job.
 
-## Give the crew the executable plan
+## Give the crew a plan they can cook
 
 The complete path is:
 
@@ -119,4 +119,4 @@ The complete path is:
 → 16 lb remains outside this prep plan
 ```
 
-Each arrow crosses a real operating boundary. Keep those boundaries visible, and tomorrow's board can show four full kettle runs and three planned spare portions instead of a mystery fraction copied from a calculator.
+Each arrow is a real step in the kitchen. Keep every step in view, and tomorrow's board says four full kettle runs and three spare portions, not a mystery fraction somebody copied off a calculator.

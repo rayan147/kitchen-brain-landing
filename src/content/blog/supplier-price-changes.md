@@ -1,6 +1,6 @@
 ---
 title: "How supplier price changes reach the recipes you already costed"
-description: "Keep the source, compare like-for-like packs, choose the current price deliberately, and trace the result into recipes and open quotes."
+description: "Keep where the price came from, compare the same amount of food, change the price on purpose, and follow it into your recipes and open quotes."
 publishedDate: 2026-09-03
 category: Buying & suppliers
 menuGroup: Plan and buy
@@ -13,43 +13,43 @@ featureLabel: See supplier prices carried into recipes
 ---
 <!-- story: docs/stories/blog-supplier-price-changes.story.md -->
 
-A new supplier sheet says the case is $27.50. The recipe was costed when it was $24. The difficult part is not typing the new price. It is knowing which product the price belongs to, when it became true, and which decisions still depend on the old one.
+A new supplier sheet says the case is $27.50. The recipe was costed when it was $24. Typing in the new price is the easy part. The hard part is knowing which product it's for, when it started, and what is still riding on the old number.
 
 ## Keep the source beside the proposed change
 
-Record the supplier, document, date, product description, pack, unit, and quoted amount before updating the current price. A price line without its source is hard to challenge when the invoice disagrees later.
+Before you change the price, write down the supplier, the document, the date, the product description, the pack, the unit and the amount. A price with no source leaves you nothing to argue with when the invoice comes in different.
 
-Do not silently apply uncertain text from a scan. Stage what was read, show anything ambiguous as it appeared, and let a person confirm the product and amount.
+If it came off a scan and you're not sure what it says, don't just let it through. Hold what was read, show anything unclear exactly as it appeared, and have a person confirm the product and the amount.
 
 ## Compare the same amount of food
 
-Two case prices are comparable only after the pack quantities and units are normalized.
+You can only compare two case prices once they're in the same pack size and unit.
 
 ```text
 Supplier A: $27.50 for 20 lb = $1.375 per purchased lb
 Supplier B: $31.20 for 24 lb = $1.300 per purchased lb
 ```
 
-Supplier B has the higher case total but the lower purchased-pound price. The decision may still depend on usable yield, product specification, minimum order, delivery, and whether the kitchen has approved that substitution.
+Supplier B has the higher case total but the lower purchased-pound price. Which one you buy can still come down to usable yield, spec, minimum order, delivery, and whether you've approved that swap.
 
 ## Choose what becomes current
 
-A price list is an offer, not proof that you bought the item at that price. An invoice is evidence of a purchase, but the delivered pack and quantity still have to match the record. Make the update deliberate and keep its effective date.
+A price list is what they're offering. It doesn't prove you paid it. An invoice shows you bought something, but the pack and quantity that showed up still have to match the record. Change the price on purpose, and keep the date it took effect.
 
 ## Let the current price reach recipe cost
 
-Once the selected ingredient price changes, every active recipe using that ingredient should calculate from the same current record. Sub-recipes carry their updated share into parent dishes, and menus carry the dishes into their per-guest cost.
+Once you change the price, every active recipe that uses that ingredient should cost from the same record. Sub-recipes carry their new share up into the dishes that use them, and menus carry the dishes into cost per guest.
 
-The risk starts when a draft quote still carries the old cost. Current prices should inform its estimate before commitment. For a confirmed event, preserve what was quoted and show the current comparison separately rather than rewriting the historical promise.
+The risk starts when a draft quote still carries the old cost. Until it's committed, a draft should cost at today's prices. For a confirmed event, keep what you quoted and show today's cost next to it. Don't rewrite what you already promised.
 
 ## Review the affected decisions
 
-After a material price update, check:
+After a price change that matters, check:
 
 1. Recipes where the ingredient is a large share of cost.
 2. Menus close to the configured food-cost target.
 3. Draft quotes not yet sent or confirmed.
 4. Confirmed events where current cost has moved away from quoted cost.
-5. Purchase choices where another approved supplier pack is now more suitable.
+5. Buying choices where another approved supplier pack is now the better buy.
 
-One sourced price should travel through the costing chain. It should not become six manual edits whose dates and origins are impossible to reconstruct.
+One price, with its source, should run through the whole costing chain. Not six hand edits that nobody can date or trace a month from now.

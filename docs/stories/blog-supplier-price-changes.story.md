@@ -11,3 +11,5 @@
 - **Life:** Friday's price list arrives after Monday's wedding quote was sent.
 - **Connection:** Supplier changes hand off to invoice review and quoted-versus-current costing.
 - **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — clarified the draft-quote risk and recalculated the reading time at 200 words per minute.
+
+**Revision 2026-10-08: chef voice pass.** Hard-part opening, source, scan, comparison, price-list and close paragraphs plainer; description rewritten. Pinned snap and all figures unchanged; draft-vs-confirmed boundary kept in meaning. Why: owner asked that the site read like a working chef wrote it, not AI.
