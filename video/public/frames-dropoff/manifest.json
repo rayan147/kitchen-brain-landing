@@ -20,13 +20,11 @@
   "frames": [
     "closeout-desktop.png",
     "dropoff-arrived-approval-desktop.png",
-    "dropoff-arrived-desktop.png",
     "dropoff-arrived-price-desktop.png",
     "dropoff-dishes-mobile.png",
     "dropoff-paid-desktop.png",
     "dropoff-pay-mobile.png",
     "dropoff-review-mobile.png",
-    "dropoff-sent-mobile.png",
     "pack-checked-desktop.png",
     "pack-desktop.png",
     "po-desktop.png",
@@ -36,19 +34,11 @@
   "frameSources": {
     "dropoff-dishes-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "922f9459f"
+      "app": "79e58bca0"
     },
     "dropoff-review-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "922f9459f"
-    },
-    "dropoff-sent-mobile.png": {
-      "host": "sites-test.costcook.io",
-      "app": "922f9459f"
-    },
-    "dropoff-arrived-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "922f9459f"
+      "app": "79e58bca0"
     },
     "dropoff-pay-mobile.png": {
       "host": "sites-test.costcook.io",
@@ -68,11 +58,11 @@
     },
     "prep-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "9754b5b8e"
+      "app": "79e58bca0"
     },
     "pack-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "9754b5b8e"
+      "app": "79e58bca0"
     },
     "closeout-desktop.png": {
       "host": "localhost",
@@ -88,7 +78,7 @@
     },
     "pack-checked-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "9754b5b8e"
+      "app": "79e58bca0"
     }
   }
 }

@@ -380,12 +380,13 @@ const STEPS = {
 		console.log(text.slice(0, 2500));
 		console.log('BUTTONS', (await p.getByRole('button').allInnerTexts()).join(' | '));
 		{
-			// From the review heading down to the estimated total: what was ordered,
-			// when, where, and the price before anyone calls.
+			// From the review heading down to the send button: what was ordered,
+			// the price before anyone calls, how long it holds, and the one action.
+			// (Cut at the total, the phone stood half empty in the film.)
 			const head = p.getByRole('heading', { name: /Review the estimate and request/ });
-			const total = p.getByText('Estimated total', { exact: true }).first().locator('xpath=..');
+			const send = p.getByRole('button', { name: 'Send request to kitchen' });
 			const top = (await docBox(head)).y - 24;
-			await shoot(p, 'dropoff-review-mobile', { x: 0, y: top, width: 390, height: (await docBox(total)).b + 24 - top });
+			await shoot(p, 'dropoff-review-mobile', { x: 0, y: top, width: 390, height: (await docBox(send)).b + 24 - top });
 		}
 		if (process.env.DRY) return phone.close();
 		await p.getByRole('button', { name: 'Send request to kitchen' }).click();
@@ -1032,8 +1033,14 @@ const STEPS = {
 		// 9a15fe297 the subtitle printed an ISO date, so the clip started at the
 		// card; develop d3c7c9add prints "Sat, Jun 12, 2027".)
 		const box = await union([title, card], 24);
-		const figures = await docBox(card.getByText('Food cost, share of the event price', { exact: false }).locator('xpath=..'));
-		await shoot(page, 'closeout-desktop', { x: box.x, y: box.y - 40, width: box.width, height: figures.b + 14 - (box.y - 40) });
+		if (process.env.FILM === 'dropoff') {
+			// The whole card, with its bottom edge and its full-packs line (right
+			// since develop fe0ac720d): cut at the figures, the card hung open.
+			await shoot(page, 'closeout-desktop', { x: box.x, y: box.y - 40, width: box.width, height: box.height + 40 });
+		} else {
+			const figures = await docBox(card.getByText('Food cost, share of the event price', { exact: false }).locator('xpath=..'));
+			await shoot(page, 'closeout-desktop', { x: box.x, y: box.y - 40, width: box.width, height: figures.b + 14 - (box.y - 40) });
+		}
 		console.log('closeout', manifest.closeoutPlanned, manifest.closeoutActual, manifest.closeoutOver, manifest.closeoutPct);
 	},
 };

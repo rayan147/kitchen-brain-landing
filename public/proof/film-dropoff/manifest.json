@@ -16,15 +16,15 @@
   "frameSources": {
     "dropoff-dishes-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "922f9459f",
+      "app": "79e58bca0",
       "via": "capture-film.mjs order",
-      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
+      "note": "re-shot with the review, same choices as order 59"
     },
     "dropoff-review-mobile.png": {
       "host": "sites-test.costcook.io",
-      "app": "922f9459f",
+      "app": "79e58bca0",
       "via": "capture-film.mjs order",
-      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
+      "note": "re-shot without sending (DRY) on 2026-10-08 with the same menu, guests, day and address as order 59; the first shot stopped at the total"
     },
     "dropoff-pay-mobile.png": {
       "host": "sites-test.costcook.io",
@@ -51,12 +51,12 @@
     },
     "prep-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "9754b5b8e",
+      "app": "79e58bca0",
       "via": "capture-film.mjs lists"
     },
     "pack-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "9754b5b8e",
+      "app": "79e58bca0",
       "via": "capture-film.mjs lists"
     },
     "closeout-desktop.png": {
@@ -78,7 +78,7 @@
     },
     "pack-checked-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "9754b5b8e",
+      "app": "79e58bca0",
       "via": "crop of pack-desktop.png (PIL): from \"What to look at\" down, its text unchanged"
     }
   },

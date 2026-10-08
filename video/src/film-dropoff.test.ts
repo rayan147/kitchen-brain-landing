@@ -40,10 +40,12 @@ describe("the office lunch film", () => {
     expect(captions.join(" ")).not.toMatch(/[{}]/);
   });
 
-  it("runs about forty seconds", () => {
+  // The plan said about 40 s; the owner took the recommendation (2026-10-08)
+  // to keep every caption's reading time instead, which lands near 46 s.
+  it("runs under fifty seconds", () => {
     const seconds = totalFramesOf(DROPOFF) / FPS;
     expect(seconds).toBeGreaterThan(38);
-    expect(seconds).toBeLessThan(46);
+    expect(seconds).toBeLessThan(50);
     expect(FADE_FRAMES).toBe(15);
   });
 

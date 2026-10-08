@@ -7,8 +7,8 @@ import { DropoffManifestSchema } from "./manifest-dropoff";
 // site (order 59 on test, 2026-10-07/08). No proposal, no contract: the client
 // orders, the order approves itself on a clear day with a priced menu, the
 // client pays by card, and the kitchen shops, preps and packs. It ends on the
-// lunch's food cost the day after. About 45 seconds, no chapter cards (the
-// plan's length; the owner has not chosen one).
+// lunch's food cost the day after. About 46 seconds, no chapter cards (the
+// plan said about 40; the owner kept the reading time, 2026-10-08).
 //
 // Rings are measured off the frames in public/proof/film-dropoff (percent of
 // each frame's box); retune them whenever a frame is re-shot.
@@ -26,7 +26,7 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
   // The client, on a phone, on the kitchen's ordering site.
   order: {
     chapter: null,
-    seconds: 7,
+    seconds: 8,
     beats: [
       {
         from: 0,
@@ -38,10 +38,12 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
       },
       {
         from: 3.5,
-        to: 7,
+        to: 8,
         layout: "phone",
         frames: ["dropoff-review-mobile.png"],
         caption: "The client sees the full price before anyone calls.",
+        // The whole review, down to the send button, scrolled once.
+        scroll: [0, 100],
       },
     ],
   },
@@ -83,8 +85,14 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
       {
         from: 0,
         to: 2.75,
-        layout: "phone",
-        frames: ["dropoff-pay-mobile.png"],
+        // The kitchen's side (the client pays the whole amount up front) beside
+        // the pay page on the client's phone. Alone, the short pay page left
+        // the phone half blank.
+        layout: "split",
+        frames: [
+          "dropoff-arrived-approval-desktop.png",
+          "dropoff-pay-mobile.png",
+        ],
         caption: "The client pays {paid} by card.",
       },
       {
@@ -166,7 +174,7 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         caption:
           "The day after: {closeoutOver} {closeoutDirection} plan. Food cost {closeoutPct}, under your {targetPct} target.",
         captionAt: "top",
-        ring: { x: 72.5, y: 74, width: 25, height: 22 },
+        ring: { x: 72.5, y: 59.5, width: 22.5, height: 16 },
       },
       { from: 5.5, to: 10.5, layout: "end", frames: [] },
     ],
