@@ -155,3 +155,5 @@ alt text are unchanged (the H1 and closing heading are pinned).
 - **Meaning held:** confirming locks the quote and the kitchen plan
   together; an event can override the menu's details; the confirmed quote
   stays frozen beside today's cost.
+
+- **Follow-up (features pass):** the capabilities heading reads "What is in ..." instead of "Everything in ...". At 200% text on a 320px phone, "Everything" at display size did not fit the column (verify-feature-parity caught it on Recipes & Costing), so every guide now uses the shorter words.

@@ -151,3 +151,5 @@ capability list, figure notes and alt text are unchanged.
   money together while supplier prices can still move; the three recovery
   states (changed work, an older confirmed plan, a pack closed with open
   lines) each stay distinct and point to the next step.
+
+- **Follow-up (features pass):** the capabilities heading reads "What is in ..." instead of "Everything in ...". At 200% text on a 320px phone, "Everything" at display size did not fit the column (verify-feature-parity caught it on Recipes & Costing), so every guide now uses the shorter words.

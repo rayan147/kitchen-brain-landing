@@ -62,7 +62,7 @@ export const orderingAvailability = {
 	featureLead: orderingIsComing ? 'Built, not deployed, marked Coming.' : 'In the app today.',
 	featureDetail: orderingIsComing
 		? 'A customer picks from the menu you published, sizes the choices, gives you the date and the headcount, leaves their contact, and reads it back before sending. It arrives awaiting kitchen confirmation, which means you still say yes to it. The storefront and the embeddable widget are built and are not deployed anywhere a customer could reach, so this stays marked Coming.'
-		: 'Put your menus on an ordering page of your own. A client picks a menu, the dishes, a date and the headcount, leaves their contact and diet needs, and sends it. It arrives awaiting kitchen confirmation, and you approve or decline. Approval emails a pay link, and the client’s payment through your Stripe account confirms the order.',
+		: 'Put your menus on an ordering page of your own, or paste one snippet into the website you already have. A client picks a menu, the dishes, a date and the headcount, leaves their contact and diet needs, and sends it. It arrives awaiting kitchen confirmation, and you approve or decline. Approval emails a pay link, and the client’s payment through your Stripe account confirms the order.',
 	menuDescription: orderingIsComing
 		? 'A storefront and an embeddable widget, built and not yet deployed.'
 		: 'Clients request from your own ordering page; you approve, and their payment confirms it.',

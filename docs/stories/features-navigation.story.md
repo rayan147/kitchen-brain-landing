@@ -164,3 +164,23 @@ From 360px through narrow-tablet widths, **Features** keeps its own contained tw
 - [x] 9 Scene: A phone at the prep bench between services.
 - [x] 10 Connection: You throughout; choose a task, inspect what it does, read limits, decide.
 - [x] 11 Revision: Built pages, shared consumers, status wording, five responsive widths and 320px/200% text verified. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+### Revision 2026-10-07: chef voice pass (hub and area pages)
+Owner: make the site read like a chef wrote it. Copy only; the hub H1, area
+names, walls, item lead/detail lines, statuses, counts and the Coming
+definition are unchanged.
+- **Hub lede:** "Explore recipes, food costs, supplier prices and event
+  lists. ... grouped by kitchen task; future additions are marked Coming." is
+  "Recipes, food cost, supplier prices, event lists. The N available features
+  below are sorted by kitchen job, and anything still being built is marked
+  Coming."
+- **Hub:** "Choose the part of your week you want help with." is "Start with
+  the part of your week that eats the most time."; "Those future capabilities
+  do not count toward" is "None of that is counted in"; "with its limits
+  stated" is "says where it stops".
+- **Area ledes (src/lib/features.ts SECTION_META):** said in the order a cook
+  does the job. Getting prices in: "Nothing reaches your ingredient costs
+  until you confirm it." The day itself: "When the truck comes, check it
+  against the orders you sent. Anything short stays in view until you follow
+  it up." Team: "An order page you already opened still reads with no signal,
+  but you need to reconnect to change anything." Meanings held.

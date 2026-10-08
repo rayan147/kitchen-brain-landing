@@ -113,7 +113,7 @@ try {
 			capabilitiesClosed: [...document.querySelectorAll('[data-capability-disclosure]')].every((details) => !details.open)
 		}))()`);
 		assert(state.title.includes('Nutrition facts and allergen management software'), `${width}: wrong title`);
-		assert(state.h1 === 'One recipe. Two answers you cannot guess at.', `${width}: wrong H1`);
+		assert(state.h1 === 'Check nutrition and allergens from your recipe.', `${width}: wrong H1`);
 		assert(state.overflow === 0, `${width}: horizontal overflow is ${state.overflow}px`);
 		assert(state.faqCount === 6 && state.capabilityCount === 2, `${width}: disclosure count drifted`);
 		assert(state.proofCount === 4, `${width}: proof count is ${state.proofCount}`);
@@ -161,7 +161,7 @@ try {
 	await send('Page.navigate', { url: route });
 	await delay(500);
 	const noScript = await evaluate(`(() => ({ heading: document.querySelector('h1')?.textContent.trim(), proofCount: document.querySelectorAll('[data-proof-image]').length, capabilityCount: document.querySelectorAll('[data-capability-disclosure] li').length, hiddenRevealCount: document.querySelectorAll('.reveal-pending').length }))()`);
-	assert(noScript.heading === 'One recipe. Two answers you cannot guess at.', 'no JavaScript: hero did not render');
+	assert(noScript.heading === 'Check nutrition and allergens from your recipe.', 'no JavaScript: hero did not render');
 	assert(noScript.proofCount === 4, 'no JavaScript: proof did not render');
 	assert(noScript.capabilityCount > 0, 'no JavaScript: capability content did not render');
 	assert(noScript.hiddenRevealCount === 0, 'no JavaScript: content stayed reveal-hidden');

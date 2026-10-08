@@ -142,3 +142,22 @@
 - "Trim yield" everywhere (app field name; CONTEXT avoids "usable yield").
 - The impact row is Chicken pot pie, not the tour's herb roast chicken, which buys from Harbor.
 - History names the Aug 28 price as the PO-1048 delivery and gives the Market Supply pack (25 lb).
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it, not AI. Copy only; the H1,
+the FAQ, the capability list, the illustrative comparison and its caption
+("CostCook orders concurrent offers by usable-unit cost"), and every
+screenshot caption and alt text are unchanged.
+- **Slogan headings out:** "Compare the food, not the shape of the case." is
+  "A cheaper case can cost you more."; "The supplier price keeps walking." is
+  "The price follows the ingredient into the recipe."; "A price you can
+  trace. A quote you can defend." is "Know where every price came from before
+  you quote." (pin in check-ingredients-supplier-prices-page.mjs moved, pure
+  wording).
+- **Plainer lines:** the problem paragraph is said the way it happens ("The
+  invoice went up and the case size changed, but your spreadsheet still has
+  the old number."); "reconciles" is "adds up to"; "invisible adjustment" is
+  "never buried in the price".
+- **Meaning held:** every offer keeps its source and date; trim and cooking
+  loss stay visible; the price-change impact on recipes is shown before you
+  adopt it.

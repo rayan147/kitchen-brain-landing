@@ -245,9 +245,11 @@ the quiet link; no route scrolls sideways at 200% text on 320 or 390.
   still: the film shows staff, rentals and the service fee on the offer.
 - **Transcript:** the film's on-screen words, in order, in a "Read what the
   film shows" disclosure under the player (principle 4).
-- **Open:** the film follows the Ellison & Park wedding (Jun 12, 2027,
-  $5,250 deposit); the rail below follows Nair & Castellano (Dec 19, $3,500).
-  Owner to choose which wedding the page keeps.
+- **Closed 2026-10-07 (owner: the film follows Nair & Castellano):** the
+  film was re-cut on the rail's own wedding (Dec 19, 150 at $95.00, $3,500
+  deposit), carried forward on local develop 7a7e407d9; the page now tells
+  one wedding top to bottom (`docs/stories/promo-video.story.md`, revision
+  "Nair & Castellano").
 - **Playable (owner: "the video is not playable"):** the browser's own
   player with preload="metadata"; with "none", Chrome's player ignored clicks.
   The poster is now the "What do I charge a head?" chapter card, so the

@@ -47,14 +47,14 @@ import { comingDefinition } from '../../lib/availability';
 				Find the tools for your next catering job.
 			</h1>
 			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
-				Explore recipes, food costs, supplier prices and event lists. The {featureCount} available features below are grouped by kitchen task; future additions are marked Coming.
+				Recipes, food cost, supplier prices, event lists. The {featureCount} available features below are sorted by kitchen job, and anything still being built is marked Coming.
 			</p>
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
-				Choose the part of your week you want help with. Each guide shows what you enter, what you get and the limits to check before trying it.
+				Start with the part of your week that eats the most time. Each guide shows what you put in, what you get back, and where it stops.
 			</p>
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
 				{spellCapital(inDevelopmentFeatureGroups.length)} feature groups below contain work marked Coming. {comingDefinition}{' '}
-				Those future capabilities do not count toward the {featureCount} shipped features.
+				None of that is counted in the {featureCount} shipped features.
 			</p>
 			<p class="mt-6">
 				<a href="/#demo" class="btn-quiet">Watch the 2:53 product tour</a>
@@ -112,7 +112,7 @@ import { comingDefinition } from '../../lib/availability';
 		    two-level list the menu renders, with one rendering here. */}
 		<section class="mt-16 border-t border-ticket-rule pt-8" aria-labelledby="feature-guides-heading" data-feature-guides>
 			<h2 id="feature-guides-heading" class="text-h3 font-semibold">Or open one guide</h2>
-			<p class="mt-3 max-w-[66ch] text-ink-soft">Each guide follows one job through the app, with its limits stated.</p>
+			<p class="mt-3 max-w-[66ch] text-ink-soft">Each guide walks one job through the app and says where it stops.</p>
 			<div class="mt-6 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
 				{featureMenuSections.map((group) => (
 					<div>
@@ -131,7 +131,7 @@ import { comingDefinition } from '../../lib/availability';
 		</section>
 
 		<p class="mt-16 max-w-[66ch] border-t border-ticket-rule pt-6 text-ink-soft">
-			Want a guided look? Bring one menu to a 15-minute demo.{' '}
+			Rather have someone walk you through it? Bring one menu to a 15-minute demo.{' '}
 			<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet"
 				>{demoCta.label}</a
 			>

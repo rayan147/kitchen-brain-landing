@@ -122,3 +122,11 @@
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - The badge reads "In the app today", not "Available now".
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only; this guide was
+already close to the voice, so the pass only breaks semicolon chains into
+short sentences (hero lede, the change-address card, the inbox note, the
+review paragraphs). The H1, the snap line, the review heading, the limits,
+the setup warning and every app label (Change what this email is, Held as
+spam, Let it through, Stop the old address now) are unchanged.

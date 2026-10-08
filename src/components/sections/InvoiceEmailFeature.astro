@@ -65,8 +65,8 @@ const limits = [
 					Your supplier already emails the invoice. Give them the address.
 				</h1>
 				<p class="hero-lede">
-					Each kitchen gets a private invoice address; what arrives waits in review, and
-					nothing reaches your costs until you confirm it.
+					Each kitchen gets its own private invoice address. Whatever lands there waits in
+					review, and none of it touches your costs until you confirm it.
 				</p>
 				<p class="status-line" data-invoice-email-status={availability.verdict}>
 					<span class="status-word">{availability.word}</span> {availability.pageSentence}
@@ -109,7 +109,7 @@ const limits = [
 				<li data-reveal style="--reveal-delay: 120ms">
 					<p class="ticket-label">03</p>
 					<h3>Change the address</h3>
-					<p>Make a new address if junk starts; the old one keeps working for {inboxLimits.graceDays} days, or Stop the old address now.</p>
+					<p>If junk starts showing up, make a new address. The old one keeps working for {inboxLimits.graceDays} days, or you can Stop the old address now.</p>
 				</li>
 			</ol>
 			<p class="handoff">Next: See what has arrived.</p>
@@ -133,7 +133,7 @@ const limits = [
 					</div>
 				))}
 			</dl>
-			<p class="section-note" data-reveal>When the inbox got it wrong, Change what this email is reads it again as what you chose; Held as spam has Let it through.</p>
+			<p class="section-note" data-reveal>If the inbox got one wrong, Change what this email is reads it again as what you picked. Anything Held as spam has Let it through.</p>
 			<p class="handoff">Next: Review.</p>
 		</div>
 	</section>
@@ -142,13 +142,13 @@ const limits = [
 		<div class="container-page split">
 			<div data-reveal>
 				<h2 id="review-heading">An emailed invoice opens in the same review as an upload.</h2>
-				<p>The inbox marks a New sender when the address is not one of your suppliers yet and warns when the sender could not be verified; the review says who sent it.</p>
-				<p>Check the lines, the pack sizes and the total against the original, then confirm; until then it changes no cost.</p>
+				<p>The inbox marks a New sender when the address is not one of your suppliers yet, and warns you when the sender could not be verified. The review tells you who sent it.</p>
+				<p>Check the lines, the pack sizes and the total against the original, then confirm. Until you do, it changes no cost.</p>
 				<p class="snap" data-invoice-email-snap>Nothing counts until you check it, so the worst a stranger can do is add to your review list.</p>
 			</div>
 			<div class="review-links" data-reveal>
 				<p class="ticket-label">What review checks</p>
-				<p>The review is the invoice import guide’s: totals that must add up, duplicates blocked, and the original beside every line.</p>
+				<p>It is the same review the invoice import guide shows: the totals have to add up, duplicates get blocked, and the original sits beside every line.</p>
 				<a href="/features/invoices-and-price-list-import">Invoices &amp; price-list import</a>
 			</div>
 		</div>
@@ -170,7 +170,7 @@ const limits = [
 			<div>
 				<h2 id="closing-heading">Start with the rep who sends the most.</h2>
 				{availability.isComing
-					? <p>Until invoice email is receiving mail, upload that rep’s next invoice as a photo or PDF during the trial; it goes through the same review.</p>
+					? <p>Until invoice email is receiving mail, upload that rep’s next invoice as a photo or PDF during the trial. It goes through the same review.</p>
 					: <p>Send them the message on the first day of the trial, then check the Invoice inbox when their next invoice is due. <a href="/blog/supplier-invoices-by-email" data-invoice-email-guide>Read the setup guide</a>.</p>}
 			</div>
 			<div class="closing-actions">

@@ -25,12 +25,12 @@ if (allergenItems.length !== allergenLeads.size) {
 const capabilityGroups = [
 	{
 		label: 'Nutrition facts',
-		title: 'Calculate the panel from the recipe.',
+		title: 'The panel, worked out from the recipe.',
 		items: nutritionGroup.items
 	},
 	{
 		label: 'Allergen management',
-		title: 'Carry reviewed ingredient evidence into the kitchen.',
+		title: 'What you reviewed on each ingredient, carried into the kitchen.',
 		items: allergenItems
 	}
 ] as const;
@@ -69,20 +69,20 @@ const proofAssets = {
 
 const evidenceSteps = [
 	{
-		title: 'Evidence enters',
-		detail: 'A supplier record, package label, or kitchen review names what is known.'
+		title: 'Where it comes from',
+		detail: 'A supplier record, the package label or your own kitchen’s review says what is in it.'
 	},
 	{
-		title: 'The ingredient carries it',
-		detail: `${allergenCountCapital} allergen tags, the major US allergens, stay attached to the ingredient rather than its name.`
+		title: 'It stays on the ingredient',
+		detail: `${allergenCountCapital} allergen tags, the major US allergens, stick to the ingredient itself, not to its name.`
 	},
 	{
-		title: 'The recipe rolls it up',
-		detail: 'Dishes include their ingredient and sub-recipe allergens, with incomplete review still visible.'
+		title: 'The recipe adds it up',
+		detail: 'A dish picks up the allergens of its ingredients and sub-recipes, and anything not yet reviewed still shows.'
 	},
 	{
 		title: 'The pack list shows it',
-		detail: 'Allergen badges reach pack-out, where the kitchen needs the answer.'
+		detail: 'Allergen badges ride along to pack-out, where somebody actually needs the answer.'
 	}
 ] as const;
 
@@ -139,7 +139,7 @@ const faqItems = [
 					<span>Nutrition facts &amp; allergens</span>
 				</nav>
 				<h1 id="nutrition-feature-heading">Check nutrition and allergens from your recipe.</h1>
-				<p class="hero-lede">Match your ingredients to nutrient sources and review their allergen information. See per-portion nutrition, what is still missing, and a label that prints once nothing is. Your kitchen still needs to review the food and its suitability for each guest.</p>
+				<p class="hero-lede">Match each ingredient to a nutrient source and check its allergens. You see nutrition per portion, what is still missing, and a label that will not print until nothing is. Whether the food suits a given guest is still your kitchen’s call to review.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -174,10 +174,10 @@ const faqItems = [
 	<section class="split" aria-labelledby="split-heading">
 		<div class="container-page split-grid">
 			<div class="split-copy" data-reveal>
-				<h2 id="split-heading">Sunday night should not start two new spreadsheets.</h2>
+				<h2 id="split-heading">One question about the polenta, two new spreadsheets.</h2>
 				<p>
 					A customer asks how much protein is in the polenta and whether it contains milk.
-					When those answers live apart from the recipe, one ingredient change makes both old.
+					Keep those answers apart from the recipe and the next ingredient swap puts both of them out of date.
 				</p>
 			</div>
 			<div class="broken-path" data-reveal aria-label="One recipe copied separately into a nutrition sheet and an allergen note">
@@ -188,13 +188,13 @@ const faqItems = [
 			</div>
 		</div>
 		<p class="container-page split-end" data-reveal>
-			The same ingredient line should carry the cost, the nutrient source, and the allergen evidence.
+			The ingredient line that carries the cost should carry the nutrient source and the allergen evidence too.
 		</p>
 	</section>
 
 	<nav class="product-nav container-page" aria-label="On this page">
-		<a href="#nutrition-facts"><span>Nutrition facts</span><strong>Per portion, from matched source profiles, with blanks left blank.</strong></a>
-		<a href="#allergen-management"><span>Allergen management</span><strong>Ingredient evidence rolled into recipes and pack lists.</strong></a>
+		<a href="#nutrition-facts"><span>Nutrition facts</span><strong>Per portion, from the source you matched, blanks left blank.</strong></a>
+		<a href="#allergen-management"><span>Allergen management</span><strong>Allergens from each ingredient, carried to the recipe and the pack list.</strong></a>
 	</nav>
 
 	<section id="nutrition-facts" class="product-section nutrition-facts" aria-labelledby="nutrition-heading">
@@ -202,8 +202,8 @@ const faqItems = [
 			<div class="product-copy" data-reveal>
 				<h2 id="nutrition-heading">Nutrition facts that stop where the source stops.</h2>
 				<p>
-					Match an ingredient to the USDA profile that fits its state. CostCook carries that
-					source through sub-recipes, quantities, and portions into the dish.
+					Pick the USDA profile that matches the ingredient in the state you use it. That source
+					follows it through sub-recipes and quantities, down to a portion of the dish.
 				</p>
 				<dl class="source-facts">
 					<div><dt>Serving basis</dt><dd>Per portion or per batch</dd></div>
@@ -237,10 +237,10 @@ const faqItems = [
 
 	<section id="allergen-management" class="product-section allergens" aria-labelledby="allergen-heading">
 		<div class="container-page allergen-heading" data-reveal>
-			<h2 id="allergen-heading">An allergen tag needs more than a familiar ingredient name.</h2>
+			<h2 id="allergen-heading">A name that sounds right is not an allergen answer.</h2>
 			<p>
-				CostCook records evidence on the ingredient, rolls reviewed tags through every recipe
-				that uses it, and leaves incomplete review visible all the way to pack-out.
+				The evidence lives on the ingredient. Reviewed tags roll up into every recipe that uses
+				it, and anything not yet reviewed stays flagged all the way to pack-out.
 			</p>
 		</div>
 		<figure class="container-page allergen-proof" data-reveal>
@@ -273,19 +273,19 @@ const faqItems = [
 			))}
 		</ol>
 		<div class="container-page evidence-note" data-reveal>
-			<strong>Incomplete stays visible.</strong>
-			<p>A curated catalog fact may help, but a name match never invents food-safety data. A chef override needs a written reason, and no screen makes an allergen-free claim.</p>
+			<strong>Not reviewed stays on screen.</strong>
+			<p>A fact from the curated catalog can help. A matching name never makes up food-safety data. If a chef overrides a tag, they write down why, and no screen makes an allergen-free claim.</p>
 		</div>
 	</section>
 
 	<section class="print-proof" aria-labelledby="print-heading">
 		<div class="container-page print-grid">
 			<div class="print-copy" data-reveal>
-				<h2 id="print-heading">The sheet carries the answer and its limits.</h2>
+				<h2 id="print-heading">The label prints its own limits.</h2>
 				<p>
-					Preview label shows the panel as it stands. Print label switches on once every source is
-					confirmed and no line is blank, then your browser puts the sheet on label stock. The direct
-					label-printer integration is marked for later.
+					Preview label shows the panel as it stands right now. Print label switches on once every
+					source is confirmed and no line is blank, and your browser prints the sheet onto label
+					stock. Sending it straight to a label printer is marked for later.
 				</p>
 				<ul role="list">
 					{printedContents.map((item) => <li>{item}</li>)}
@@ -315,8 +315,8 @@ const faqItems = [
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
 			<div class="capabilities-intro" data-reveal>
-				<h2 id="capabilities-heading">{capabilityCount} shipped details, without the safety claims they cannot carry.</h2>
-				<p>Open either chapter for the exact public feature inventory.</p>
+				<h2 id="capabilities-heading">{capabilityCount} things it does today, and none of the safety claims it cannot back up.</h2>
+				<p>Open either list for every detail.</p>
 				<div class="boundary-list">
 					<h3>Four boundaries stay in view</h3>
 					<ul role="list">{nutrition.notClaimed.map((line) => <li>{line}</li>)}</ul>
@@ -339,7 +339,7 @@ const faqItems = [
 		<div class="container-page faq-grid">
 			<div class="faq-intro" data-reveal>
 				<h2 id="faq-heading">Frequently asked questions</h2>
-				<p>The source, missing-value, printing, and food-safety questions worth settling first.</p>
+				<p>Settle these before you hand anyone a label.</p>
 			</div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
@@ -356,7 +356,7 @@ const faqItems = [
 		<div class="container-page closing-grid" data-reveal>
 			<div>
 				<h2 id="closing-heading">Print the answer. Keep the evidence.</h2>
-				<p>Bring one real recipe, match the ingredients you know, and leave every missing fact visible until you know it too.</p>
+				<p>Bring one real recipe. Match the ingredients you know, and leave the rest blank until you know them too.</p>
 			</div>
 			<div class="closing-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
@@ -383,7 +383,7 @@ const faqItems = [
 	.hero-copy, .split-grid > *, .product-grid > *, .allergen-heading > *, .print-grid > *, .capabilities-grid > *, .faq-grid > *, .closing-grid > * { min-width: 0; }
 	.breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; font-size: var(--text-eyebrow); line-height: var(--text-eyebrow--line-height); color: var(--color-ink-soft); }
 	.breadcrumb a, .onward a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 650; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
-	.hero h1 { max-width: 13ch; font-family: var(--font-display); font-size: var(--text-display); font-weight: 600; line-height: var(--text-display--line-height); letter-spacing: var(--text-display--letter-spacing); text-wrap: balance; }
+	.hero h1 { max-width: 15ch; font-family: var(--font-display); font-size: var(--text-display); font-weight: 600; line-height: var(--text-display--line-height); letter-spacing: var(--text-display--letter-spacing); text-wrap: balance; }
 	.hero h1::after { display: block; width: min(6.5ch, 100%); height: 0.28rem; margin-top: 1.2rem; background: var(--color-ink); content: ''; }
 	.hero-lede { max-width: 48ch; margin-top: 1.35rem; color: var(--color-ink-soft); font-size: var(--text-lede); line-height: 1.55; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
@@ -504,7 +504,7 @@ const faqItems = [
 	}
 
 	@media (min-width: 72rem) {
-		.hero-grid { grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr); }
+		.hero-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 	}
 
 	@media (max-width: 47.999rem) {
