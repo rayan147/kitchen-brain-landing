@@ -43,9 +43,9 @@ const included = [
 >
 	<section class="container-page py-section" aria-labelledby="pricing-title">
 		<div class="max-w-3xl" data-opening>
-			<p class="eyebrow">Per kitchen, not per seat</p>
-			<h1 id="pricing-title" class="mt-4 text-display font-semibold">One kitchen. One launch plan.</h1>
-			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">The subscription is per kitchen, not per teammate, and the crew is unlimited. The verified owner manages billing and can invite the team.</p>
+			<p class="eyebrow">Priced by the kitchen</p>
+			<h1 id="pricing-title" class="mt-4 text-display font-semibold">One price for the kitchen, however big the crew.</h1>
+			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">You pay for the kitchen, not for each cook in it, and there is no cap on the crew. The verified owner handles billing and sends the invites.</p>
 		</div>
 
 		<div id="launch-terms" class="mt-10 grid grid-cols-1 gap-8 border-y border-ticket-rule py-8 lg:grid-cols-[7fr_5fr]">
@@ -53,7 +53,7 @@ const included = [
 				<p class="text-sm font-semibold text-amber-deep">CostCook Launch</p>
 				<p class="mt-2 text-h2 font-semibold">{launchPlan.displayPrice}</p>
                 <p class="mt-3 max-w-[54ch] text-ink-soft">{launchPlan.crewTerms}</p>
-				<p class="mt-3 max-w-[54ch] text-ink-soft">Start with {launchPlan.trialDays} days free. Stripe securely collects payment details, charges $0 today, and begins monthly billing after the trial unless you cancel.</p>
+				<p class="mt-3 max-w-[54ch] text-ink-soft">The first {launchPlan.trialDays} days are free. Stripe takes your card, charges $0 today, and starts billing you monthly when the trial ends unless you cancel.</p>
 				<!-- The launch price is introductory and the page used to be silent about
 				     it, which left a reader unable to tell whether $49 was the price or a
 				     promotion. It says both halves now: it will rise, and it will not rise

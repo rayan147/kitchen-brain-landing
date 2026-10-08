@@ -167,3 +167,9 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - Guest-change answer: reopen works until you create a purchase order or start receiving, and it refreshes quantities and prices (the app's rule).
+
+## Revision 2026-10-08: chef voice pass
+- Owner: the site should read like a working chef-owner wrote it, not like AI. Copy only; every answer keeps its yes, no or limit exactly, and every pinned phrase stays ("charges $0 during the trial", "Previously loaded order pages remain readable with no signal", "actions that write data need a connection", "Cancel before day 16", the event-payments lines).
+- Hero: "Check the trial, cancellation, setup and product limits" became "Straight answers on the money, the fit, and the catch." The topic map says "Jump to a topic"; the four chapter lines say it the way the reader would ("how to walk away", "who picks up when you write").
+- Answers that read like a manual got a cook's word order: shopping ("A stock or a mirepoix shows up as a batch to make"), receiving ("what actually came off the truck"), multi-event, prices in, catalog, recipes in, phone ("open the order before you walk into the cooler"), Sage during setup, Square and QuickBooks ("I am not promising a date"), the card question ("Because the trial is the subscription").
+- Snap answer unchanged: "The guest count."
