@@ -128,8 +128,8 @@ try {
 			contract: document.documentElement.innerHTML.includes('faq-answer-sheet')
 		};
 	})()`);
-	assert(desktop.title === 'Know the catch before you hand over the card.', 'desktop: page identity is missing');
-	assert(desktop.entryCount === 36, `desktop: expected 36 answers, received ${desktop.entryCount}`);
+	assert(desktop.title === 'Questions before you try CostCook?', 'desktop: page identity is missing');
+	assert(desktop.entryCount === 38, `desktop: expected 38 answers, received ${desktop.entryCount}`);
 	assert(desktop.disclosureCount === 0, `desktop: found ${desktop.disclosureCount} hidden disclosures`);
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
@@ -183,8 +183,8 @@ try {
 		entryCount: document.querySelectorAll('[data-faq-entry]').length,
 		jsonLd: document.querySelector('script[type="application/ld+json"]')?.textContent.length ?? 0
 	}))()`);
-	assert(noScript.heading === 'Know the catch before you hand over the card.', 'no JavaScript: page identity is missing');
-	assert(noScript.entryCount === 36, `no JavaScript: expected 36 answers, received ${noScript.entryCount}`);
+	assert(noScript.heading === 'Questions before you try CostCook?', 'no JavaScript: page identity is missing');
+	assert(noScript.entryCount === 38, `no JavaScript: expected 38 answers, received ${noScript.entryCount}`);
 	assert(noScript.jsonLd > 100, 'no JavaScript: FAQ structured data is missing');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

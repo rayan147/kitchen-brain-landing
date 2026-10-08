@@ -50,7 +50,7 @@ const legend = [
 	{ status: 'no', meaning: 'CostCook does not do this.' },
 	{
 		subject: NOT_LISTED,
-		meaning: 'Not named on their own pricing page on the date below. It does not mean their product cannot do it.'
+		meaning: 'Not named on their own pricing page on the date below. It does not mean their product cannot do it; ask them before you decide.'
 	},
 	// Added 2026-09-05 with the spreadsheet column (RC-57). No mark, for the same
 	// reason the row above has none: a glyph would turn a description of work
@@ -69,7 +69,7 @@ const legend = [
 	path="/compare"
 >
 	<section class="container-page py-section" aria-labelledby="compare-title">
-		<div class="max-w-3xl">
+		<div class="max-w-3xl" data-opening>
 			<h1 id="compare-title" class="text-display font-semibold [overflow-wrap:anywhere]">
 				Compare CostCook, Parsley, meez and spreadsheets.
 			</h1>
@@ -119,7 +119,7 @@ const legend = [
 		     first thing a careful reader caught. -->
 		<section class="mt-10" aria-labelledby="monthly-price-title">
 			<h2 id="monthly-price-title" class="text-h3 font-semibold">Monthly price on the cited pages</h2>
-			<div class="mt-5 grid gap-6 border-y border-ticket-rule py-8 sm:grid-cols-3">
+			<div class="mt-5 grid grid-cols-1 gap-6 border-y border-ticket-rule py-8 sm:grid-cols-3">
 				<div>
 					<p class="text-sm font-semibold text-amber-deep">CostCook</p>
 					<p class="mt-2 text-h2 font-semibold">{launchPlan.displayPrice}</p>
@@ -326,7 +326,7 @@ const legend = [
 			<div class="mt-7 flex flex-wrap items-center gap-5">
 				<a href={cta.href} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">
-					Book a 15-min demo
+					{demoCta.label}
 				</a>
 			</div>
 		</div>

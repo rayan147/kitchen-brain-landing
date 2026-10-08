@@ -118,9 +118,10 @@ try {
 			};
 		})()`);
 		assert(state.title.includes('Kitchen label printing for caterers'), `${width}: wrong title`);
-		assert(state.h1 === 'The sticker says what you chose. Nothing more.', `${width}: wrong H1`);
+		assert(state.h1 === 'Kitchen date labels, printed from Prep and Pack.', `${width}: wrong H1`);
 		assert(state.overflow === 0, `${width}: horizontal overflow is ${state.overflow}px`);
-		assert(state.status === 'Coming', `${width}: status is ${state.status}`);
+		// Available since 2026-09-27 (RC-35); the badge reads the shared status word.
+		assert(state.status === 'In the app today', `${width}: status is ${state.status}`);
 		assert(state.proofTop < height, `${width}: authentic proof starts at ${state.proofTop}px below a ${height}px viewport`);
 		assert(state.faqCount === 6 && state.allClosed, `${width}: FAQ inventory drifted or opens by default`);
 		assert(state.navCount === 3 && state.proofLinkCount === 4, `${width}: chapter or proof links are missing`);
@@ -165,7 +166,7 @@ try {
 	await send('Page.navigate', { url: route });
 	await delay(500);
 	const noScript = await evaluate(`(() => ({ h1: document.querySelector('h1')?.textContent.trim(), faq: document.querySelectorAll('[data-labels-disclosure]').length, hidden: document.querySelectorAll('.reveal-pending').length }))()`);
-	assert(noScript.h1 === 'The sticker says what you chose. Nothing more.', 'no JavaScript: hero did not render');
+	assert(noScript.h1 === 'Kitchen date labels, printed from Prep and Pack.', 'no JavaScript: hero did not render');
 	assert(noScript.faq === 6 && noScript.hidden === 0, 'no JavaScript: route content did not remain available');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

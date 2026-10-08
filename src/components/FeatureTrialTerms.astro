@@ -11,8 +11,8 @@ import { launchPlan } from '../lib/site';
 </p>
 <style>
   .feature-trial-terms { margin-top: 1rem; max-width: 60ch; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.55; }
-  /* 24px minimum target (WCAG 2.2 AA, 2.5.8). Inline at body-sm these links
-     measured 18px tall on a phone, which verify-compare caught on /compare;
-     every feature page carries the same two links. */
-  a { display: inline-block; min-height: 24px; text-decoration: underline; text-underline-offset: .2em; }
+  /* 44px target, the site's floor (design audit 2026-10-07: these were 24px
+     on every guide). Padding grows the hit box and the negative margin keeps
+     the line where it was, the same trick as btn-quiet. */
+  a { display: inline-block; min-height: 44px; padding-block: .625rem; margin-block: -.625rem; text-decoration: underline; text-underline-offset: .2em; }
 </style>

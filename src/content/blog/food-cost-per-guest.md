@@ -36,7 +36,7 @@ Food cost per guest = total food cost ÷ guests
 Food-cost percentage = total food cost ÷ revenue × 100
 ```
 
-Consider the illustrative 180-guest event shown on the CostCook homepage:
+Consider the illustrative 180-guest event shown in the CostCook product tour:
 
 ```text
 180 guests × $68.00 = $12,240.00 revenue

@@ -146,3 +146,15 @@ not as the page's snap.)
   wrong: Confirm order books the event; only the deposit is recorded by hand.)
 - The full-size link is visible text beside the image, not an aria-label
   wrapping it, so the image keeps its alt and the link's name is what it says.
+
+### Revision 2026-10-06 (payments and invoice email live)
+- Owner ruling: card payment for booked events and invoice email are live.
+  Step 11's "card deposits, balance reminders" removal is reversed: the
+  payments line renders `eventPayments.homepage` from
+  `src/lib/event-payments.ts` (the client pays by card from an email link; a
+  reminder with a pay link goes out three days before the balance is due, read off
+  kitchen-brain `balance-reminders.ts` on develop 7a7e407d9). The Coming line is gone.
+- Customer invoices stay unbuilt and unclaimed.
+
+## Revision 2026-10-07 (boundary line)
+- The shared line under the client's yes now reads "Their yes books nothing. The signed agreement and the deposit do." In the owner's chosen app (local develop 7a7e407d9) Book the event is its own step; Confirm order no longer books. The homepage's own steps still need a pass against that app.

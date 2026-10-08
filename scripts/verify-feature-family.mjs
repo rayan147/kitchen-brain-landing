@@ -156,7 +156,9 @@ try {
 				const heroActionsGroup = document.querySelector('.hero-actions');
 				return {
 					trialTerms: document.querySelector("[data-feature-trial-terms]")?.textContent || "",
-					ambiguousDemo: [...document.querySelectorAll('main a[href="/demo"]')].some(node => !/demo/i.test(node.textContent)),
+					// "Book 15 minutes" (demoCta.label since 2026-10-07) names the call as
+					// plainly as "demo" did; anything else on a /demo link is ambiguous.
+					ambiguousDemo: [...document.querySelectorAll('main a[href="/demo"]')].some(node => !/demo|15 minutes/i.test(node.textContent)),
 					h1Count: document.querySelectorAll('h1').length,
 					heroH2Count: document.querySelectorAll('.hero h2').length,
 					overflow: document.documentElement.scrollWidth - innerWidth,

@@ -129,3 +129,39 @@ instead. Pinned by `scripts/check-events-proposals-page.mjs`.)
   the balance of a booked event, and a reminder email before the balance is
   due." (it said "events you book by hand"; booking is Confirm order, only the
   deposit is recorded by hand). The demo link renders `demoCta.label`.
+
+### Revision 2026-10-07: the snap line, reworded
+"Their yes is not a signature or a booking. Confirm order is." read to a chef
+reviewer as if Confirm order were the signature. The line is now "Their yes
+books nothing. Confirm order does." (`acceptanceBoundary`, shared by this
+page, /compare and the homepage rail). The signature is the Agreement step.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The payments line is titled "Card payment for event deposits and balances", not "for booked events": the deposit is paid before Confirm order books it.
+
+### Revision 2026-10-07: the opening quote
+- "A wedding in October, about 150. Can you send something?" The old line named October 10 while the inquiry capture beside it has "date not decided yet" ticked; the date is settled later, as the calendar shows.
+- Known app bug, not page copy: the calendar card reads "Nair & #783" (the app shortens the event name to its first word plus the order number). Flagged for kitchen-brain.
+
+## Revision 2026-10-07 (re-shot from the owner's chosen app: local develop 7a7e407d9)
+- One wedding, one date: every capture is the Nair & Castellano wedding on Sat Dec 19, $95, 150 guests, $3,500 deposit, balance due Wed Dec 9, the homepage's event. H1: "A wedding in December, about 150."
+- Booking is its own step in this app: Book the event waits on the signed agreement and the deposit (Book anyway asks for a reason). Confirm order only locks quantities and prices. The booked section, its new Book the event frame and the shared boundary line ("Their yes books nothing. The signed agreement and the deposit do.") say so.
+- The deposit frame is shown whole: it now lists the deposit and the balance with their due dates.
+- The calendar card still reads "Nair & #783" (app truncation; noted before).
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only; the H1 quote, the
+money sentence, the acceptance boundary, the limits and every caption and alt
+text are unchanged.
+- **Hero lede:** the five-noun list ("the menu, the proposal, their answer,
+  the agreement and the booked order") became "From there it is one record,
+  all the way to the booked order." The step bar under it already names the
+  six steps.
+- **Proposal, agreement, booked:** chained clauses split into short
+  sentences in the order a cook does them ("Look it over exactly as the
+  client will see it", "Book anyway and it asks why, and your reason stays on
+  the event"). The app's button names stay as written.
+- **Shared line:** `eventPayments.homepage`, read by the Payments note, was
+  reworded on the homepage pass with its meaning held (card, email link,
+  deposit and balance, sent whenever you choose, a reminder with a pay link
+  three days before if still owed). This page's contract still matches it.

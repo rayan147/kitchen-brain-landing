@@ -15,10 +15,9 @@ const manifest: Manifest = {
   plannedFoodCost: "$3,750.87",
   actualFoodCost: "$3,675.88",
   dayAfterShare: "25.8%",
-  mainPortions: "138",
-  vegetarianPortions: "12",
-  staffPeople: "8",
-  staffHours: "7",
+  balance: "$10,750.00",
+  balanceDue: "Wed, Dec 9",
+  mainPortions: "300",
   displayPrice: "$49/month",
   trialDays: "15",
   developCommit: "e00299078",
@@ -44,7 +43,7 @@ describe("toVtt", () => {
   // starts with it, not before.
   it("times the first caption from when it shows on screen", () => {
     expect(vtt).toContain(
-      "00:00:03.000 --> 00:00:07.000\nA client asks on your site: Saturday in June, 150 guests, plated.",
+      "00:00:03.000 --> 00:00:07.000\nA client calls about a wedding. Write it down as it comes.",
     );
   });
   // Scene fades overlap by half a second; a player that stacks overlapping

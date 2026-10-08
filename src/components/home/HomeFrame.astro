@@ -1,0 +1,28 @@
+---
+/**
+ * One screenshot frame (rule 6). When the shot has a phone capture, a phone
+ * gets that instead: the app's own phone layout of the same screen, captured
+ * whole, never a column crop (a crop narrow enough to read drops the figures
+ * the alt names). The alt is written to be true of both captures. The design
+ * review (2026-10-07) measured the wide tables at 0.3x to 0.5x on a 390px
+ * phone, about 5 to 8px text.
+ *
+ * Considered Strategy (a desktop and a phone renderer); not used because the
+ * variation is data: one optional second source. A <picture> is the seam.
+ */
+import type { Shot } from '../../lib/home';
+
+interface Props {
+	shot: Shot;
+	class?: string;
+}
+const { shot, class: className } = Astro.props;
+---
+{shot.small ? (
+	<picture>
+		<source media="(max-width: 47.99rem)" srcset={shot.small.src} width={shot.small.width} height={shot.small.height} />
+		<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" class:list={['home-shot', className]} />
+	</picture>
+) : (
+	<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" class:list={['home-shot', className]} />
+)}

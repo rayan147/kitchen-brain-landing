@@ -43,12 +43,22 @@
  * carried once, by notClaimed[0], in the exact words the guard reads, which is
  * where a boundary belongs. Do not re-add it to the caption.
  *
+ * RE-SHOT ON DEVELOP, 2026-10-07 (owner: "local develop latest"; capture
+ * notes in scripts/capture-nutrition-proof.mjs). Develop gates printing: a
+ * dish with an unconfirmed source or a blank label line is a "Draft estimate.
+ * Not ready to print.", Preview label shows it with a dash per blank line and
+ * Print label off, and the print route refuses until the gate clears. None of
+ * the demo world's 90 recipes cleared it, so the proof is the honest draft on
+ * Wild Mushroom Polenta (the wedding menu) and the print sentence names the
+ * gate. What the printed sheet carries is read from develop's
+ * NutritionLabelSheet.svelte, not from a capture.
+ *
  * No pattern: a table the section renders once.
  */
 import { dietary, allergenCount } from './dietary';
 
 export const nutrition = {
-	verified: { sha: 'dff9469c', branch: 'sandbox/demo', on: '2026-08-29' },
+	verified: { sha: '7a7e407d9', branch: 'develop (local)', on: '2026-10-07' },
 	href: '/features/nutrition-facts-and-allergens',
 	/** In the order a meal-prep reader asks. */
 	points: [
@@ -65,8 +75,8 @@ export const nutrition = {
 			detail: 'A profile missing a value leaves the row blank instead of counting it as zero. An incomplete dish is never totalled as a complete one.'
 		},
 		{
-			lead: 'Print it from the recipe.',
-			detail: 'Print nutrition label opens a sheet your browser puts on label stock, with your kitchen name at the top.'
+			lead: 'Print it once it is whole.',
+			detail: 'Preview label shows the panel any time. Print label switches on when every source is confirmed and no line is blank, and your browser puts the sheet on label stock, kitchen name at the top.'
 		},
 		{
 			lead: 'Allergens ride along, with evidence.',
@@ -86,16 +96,16 @@ export const nutrition = {
 		panel: {
 			src: '/proof/nutrition-panel.png',
 			width: 2272,
-			height: 1732,
-			alt: 'The complete Nutrition section for a 297 gram Chicken Burrito Bowl. The summary shows 339 calories, 22 grams protein, 48.1 grams carbohydrate, and 7 grams fat. All fifteen Nutrition Facts rows are populated, including explicit zero values for trans fat, added sugars, and vitamin D. The allergen review says Contains: Milk, Soy, and the source is USDA FoodData Central branded record 2704502.'
+			height: 1176,
+			alt: 'The Nutrition tab for Wild Mushroom Polenta, one 240 gram portion: Draft estimate. Not ready to print, 7 label lines blank because no source reports them; 530 calories, 19 grams fat, 18 grams protein, 77 grams carbs, each a draft from unconfirmed sources; 8 of 15 label lines filled; then the ingredient sources, most gaps first, and the ingredient statement.'
 		},
 		label: {
 			src: '/proof/nutrition-label.png',
-			width: 768,
-			height: 1956,
-			alt: 'The printable nutrition label sheet for Chicken Burrito Bowl from Maple and Main Catering. The complete per-portion Nutrition Facts panel shows 339 calories, 7 grams total fat, 3.5 grams saturated fat, 0 grams trans fat, 50.5 milligrams cholesterol, 561 milligrams sodium, 48.1 grams carbohydrate, 3.9 grams fiber, 6 grams total sugars, 0 grams added sugars, 22 grams protein, 0 micrograms vitamin D, 199 milligrams calcium, 2.6 milligrams iron, and 680 milligrams potassium. The sheet also lists the ingredient, Contains: Milk, Soy, USDA FoodData Central 2704502, and the calculated-estimate disclaimer.'
+			width: 1344,
+			height: 1944,
+			alt: 'Preview label for Wild Mushroom Polenta from Harbor and Hearth Catering, marked Draft estimate. Not ready to print. The Nutrition Facts panel for one 240 gram portion shows 530 calories, 19 grams total fat, 300 milligrams sodium, 77 grams total carbohydrate, 5 grams dietary fiber, 18 grams protein, 300 milligrams calcium and 0.6 milligrams iron, and a dash for saturated fat, trans fat, cholesterol, total and added sugars, vitamin D and potassium. Below it, the ingredients in recipe order and Print label, switched off.'
 		},
 		caption:
-			'Captured from the live CostCook demo on 2026-08-29. A 297 g Chicken Burrito Bowl, on USDA FoodData Central branded record 2704502, with milk and soy confirmed.'
+			'Captured in CostCook on 2026-10-07: Wild Mushroom Polenta from the sample wedding menu, one 240 g portion, still a draft. Print label stays off until every line has a confirmed source.'
 	}
 } as const;

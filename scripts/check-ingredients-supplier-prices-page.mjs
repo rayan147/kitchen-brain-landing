@@ -16,7 +16,7 @@ const required = [
 	'/proof/yield-lines.png',
 	'id="faq-heading"',
 	'Can one ingredient have prices from more than one supplier?',
-	'A price you can trace. A quote you can defend.',
+	'Know where every price came from before you quote.',
 	'ingredients-one-comparable-cost',
 	'docs/stories/ingredients-supplier-prices.story.md'
 ];

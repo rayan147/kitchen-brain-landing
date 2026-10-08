@@ -54,7 +54,7 @@ export const sage = {
 	tagline:
 		'Ask about your kitchen. Sage reads your records, shows where every number came from, and can prepare a draft for you to approve.',
 	/** Internal provenance for release review; never printed beside the captures. */
-	verified: { sha: '99321170', branch: 'sandbox/demo', on: '2026-08-29' },
+	verified: { sha: '7a7e407d9', branch: 'develop (local)', on: '2026-10-07' },
 	href: '/features/sage',
 	onboarding: {
 		entry: 'Open Ask Sage from the setup header.',
@@ -97,22 +97,27 @@ export const sage = {
 		{ lead: 'It has limits, and a stop.', detail: 'Sage has answer time limits and a daily usage cap. If it stops, you can continue working in the rest of CostCook.' }
 	],
 	proof: {
+		// Re-shot on local develop 7a7e407d9, 2026-10-07, in the wedding's sample
+		// kitchen (scripts/capture-sage-proof.mjs). The answer was checked against
+		// the records: $7.00 + $0.20 + $0.08 = $7.28, the homepage's short rib.
 		desktop: {
 			src: '/proof/sage-answer.png',
-			width: 1426,
-			height: 670,
-			alt: 'A Sage answer. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record.'
+			width: 1428,
+			height: 808,
+			alt: 'A Sage answer. You asked: why does the Braised Short Rib cost what it costs? Sage: the Braised Short Rib costs $7.28 per portion to make, driven almost entirely by the boneless beef short rib. Three cited lines, each linked to the recipe: beef short rib, boneless, $7.00 per portion, 96 percent of the recipe cost; House Beef Stock, $0.20, 3 percent; Mirepoix Base, $0.08, 1 percent.'
 		},
 		mobile: {
 			src: '/proof/sage-answer-mobile.png',
-			width: 708,
-			height: 814,
-			alt: 'A Sage answer on a phone. You asked: which ingredient prices went up recently? Sage: Calculated, cucumber from Coastline Produce rose by 37.5 percent. Confirmed, the price went from $24.00 to $33.00. Confirmed, this change was found across 2 purchases, last seen on 2026-08-26. Where this came from: ingredient, cucumber, $24.00 to $33.00, with a link to the record.'
+			width: 780,
+			height: 1100,
+			alt: 'The same Sage answer on a phone: the Braised Short Rib costs $7.28 per portion, beef short rib $7.00 (96 percent), House Beef Stock $0.20 (3 percent), Mirepoix Base $0.08 (1 percent), each linked to the recipe.'
 		},
 		caption:
-			'A different kitchen from the wedding in the tour: cucumber rose from $24.00 to $33.00 across two linked purchases.'
+			'The wedding’s short rib, $7.28 a portion, broken into the three lines that make it, each linked to the recipe it came from.'
 	}
 } as const;
 
 /** The status word every surface prints beside the name. */
-export const sageStatusWord = SAGE_STATUS === 'yes' ? 'Available now' : 'Coming';
+// "In the app today", not "Available now": the badge reads as a fact, not a sales
+// line (chef audit 2026-10-07). Same word on labels, invoice email, ordering.
+export const sageStatusWord = SAGE_STATUS === 'yes' ? 'In the app today' : 'Coming';

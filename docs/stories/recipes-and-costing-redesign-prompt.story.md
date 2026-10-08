@@ -132,3 +132,29 @@
 - [x] 9 Setting: Phone beside the prep bench, a short gap between services, crew waiting for the next list.
 - [x] 10 Connection: You throughout; inputs lead to results, results to limits, limits to the trial decision. Shared terms keep the next action consistent.
 - [x] 11 Revision: Build and claim checks passed; every feature route inspected at desktop and mobile, with native disclosures and no JavaScript. Five-width regression checks and 320px/200% text passed. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+### Revision 2026-10-07: chef audit, numbers and US units
+- Illustrative frames rewritten in US units (lb, qt, gal, Aug 28) with arithmetic that reconciles on the page: see the commit "fix(features): receiving, order, ingredients and recipes add up".
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- Edible is "what survives the trim": cooking loss never reaches cost on a prepped-weight line.
+- "Trim yield" and "At a $9.00 selling price".
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it, not AI. Copy only; the H1
+(pinned in verify-feature-parity), the FAQ, the capability list, the
+illustrative figures and every screenshot caption and alt text are unchanged.
+- **Slogan headings out:** "Three places. One answer due today." is "Right
+  now one dish lives in three places."; "The kitchen version is a decision,
+  not the last tab left open." is "You pick the version the kitchen cooks
+  from."; "Ready for the line. Ready to price." is "Start with the dish you
+  sell most." (both pins in check-recipes-costing-page.mjs moved with them,
+  pure wording).
+- **Consultant words out:** "reconciles" (now "adds up to"), "publish
+  deliberately", "check readiness", "maintained component", "open to
+  inspection", "cost contribution" in running text.
+- **Meaning held:** scaling never changes the saved recipe; the crew's
+  kitchen view is read-only; earlier published versions stay readable;
+  archive and restore never erase published history; a missing price is
+  named, never zero.

@@ -16,8 +16,8 @@
 //   CHROME_PATH  the browser binary                   /usr/bin/google-chrome
 //
 // THE DATE IS FIXED, AND EVERY RE-SHOOT MUST UPDATE IT. EVENT.date below is
-// October 10, 2026, and the page copy and the alt text in src/lib/proof.ts
-// name that date ("October 10, about 150, a wedding"), so it is not computed:
+// December 19, 2026, and the page copy and the alt text in src/lib/proof.ts
+// name that date ("December, about 150, a wedding"), so it is not computed:
 // a moving date would make every new capture disagree with the words beside
 // it. Before a re-shoot, pick a Saturday about two weeks out, set EVENT.date,
 // and change the copy and alts with it. The script refuses a date that is not
@@ -25,7 +25,10 @@
 //
 // STANDING THE APP UP (the script drives it, it does not build it)
 //
-// The app is kitchen-brain PRODUCTION, origin/main, exported clean so nothing
+// 2026-10-07: the owner chose local develop as the source (7a7e407d9 for the
+// re-shoot; production's deploy job had failed since 09-09). Export that
+// commit the same way below in place of origin/main. Earlier: the app was
+// kitchen-brain PRODUCTION, origin/main, exported clean so nothing
 // unshipped reaches a marketing frame (git archive reads the commit and
 // touches no worktree). Use a NEW scratch folder each time: an older export
 // left in place mixes files and fails to build. First shot against develop
@@ -109,11 +112,16 @@ const EVENT = {
 	name: 'Nair & Castellano wedding',
 	guests: '150',
 	menu: 'Wedding Plated Dinner',
-	date: '2026-10-10', // a Saturday two weeks out; the week has no other orders. Fixed: see header
+	// Sat Dec 19, the homepage's wedding (re-shot 2026-10-07 so the guide and
+	// the homepage carry one date). Fixed: see header.
+	date: '2026-12-19',
 	start: '17:00',
 	end: '22:00',
-	terms: 'Final guest count is due two weeks before the wedding.',
-	deposit: '3500'
+	// The payment schedule states the final-count date (the balance date), so
+	// the note says something else.
+	terms: 'Please send dietary needs and allergies with the final count.',
+	deposit: '3500',
+	balanceDays: '10'
 };
 
 // Text that must never be in a shipped frame (brief: no Load out, no signing
@@ -259,8 +267,10 @@ try {
 	// ------------------------------------------------ 1. inquiry, phone width
 	await page.goto(`${APP}/events/new`);
 	await hydrate(page);
+	// The Client combobox is its own search field (app e00299078; it used to
+	// open a separate "Find a client" box).
 	await page.getByRole('combobox', { name: 'Client' }).click();
-	await page.getByRole('combobox', { name: 'Find a client' }).fill(EVENT.client);
+	await page.getByRole('combobox', { name: 'Client' }).fill(EVENT.client);
 	await page.getByRole('option', { name: /Add.*as new client/ }).click();
 	await page.getByLabel('Phone or email').fill(EVENT.phone);
 	await page.getByLabel('Event name', { exact: true }).fill(EVENT.name);
@@ -346,17 +356,34 @@ try {
 	}
 
 	// ------------------------------------------------ proposal (editor not shot)
+	// One-page proposal editor (app e00299078). The client carries over from
+	// the inquiry; the payment schedule is part of the terms: $3,500 deposit,
+	// balance 10 days out (Wed Dec 9, the homepage's balance date).
 	await page.goto(`${eventUrl}/proposal`);
 	await hydrate(page);
-	await page.getByLabel('Customer name').fill(EVENT.client);
-	await page.getByLabel('Customer email (needed before sending)').fill(EVENT.email);
-	await page.getByRole('button', { name: 'Continue to what it includes' }).click();
-	await page.getByRole('button', { name: 'Continue to tax and terms' }).click();
-	await page.getByLabel('Terms the customer will read').fill(EVENT.terms);
-	await page.getByRole('button', { name: 'Save and review offer' }).click();
+	if (await page.getByLabel('Client email').count()) {
+		await page.getByLabel('Client email').fill(EVENT.email);
+		await page.getByLabel('Client email').blur();
+	}
+	// The editor autosaves; its controls wait while it does.
+	await page.getByRole('status').filter({ hasText: 'Saved' }).first().waitFor();
+	await page.waitForTimeout(800);
+	if (!(await page.getByRole('button', { name: 'Save these terms' }).count())) await page.getByRole('button', { name: /^Terms (Add|Edit)/ }).click();
+	{
+		const terms = page.getByRole('region', { name: 'Terms on the proposal' });
+		await terms.getByText('A deposit, then the balance', { exact: true }).click();
+		await terms.getByText('A fixed amount', { exact: false }).first().click();
+		await terms.getByLabel('Deposit dollars').fill(EVENT.deposit);
+		await terms.getByLabel('Balance due (days before the event)').fill(EVENT.balanceDays);
+		await terms.getByLabel('Anything else the client should know · optional').fill(EVENT.terms);
+		await terms.getByRole('button', { name: 'Save these terms' }).click();
+		await page.waitForTimeout(1500);
+	}
+	await page.getByRole('button', { name: 'Preview & send' }).click();
 	await page.waitForURL(/\/proposal\/send\?revision=/);
 	await hydrate(page);
-	await page.locator('#send-offer-form').getByRole('button', { name: /Send offer to/ }).click();
+	// "Send offer to <client>" on desktop, "Send offer" on a phone.
+	await page.getByRole('button', { name: /^Send offer( to |$)/ }).first().click();
 	await page.waitForURL(/\/decision/);
 	await hydrate(page);
 	await page.getByRole('button', { name: 'Copy offer link' }).click();
@@ -390,7 +417,7 @@ try {
 		await accept.click();
 		await cp.getByLabel('Your full name').fill(EVENT.client);
 		await cp.getByRole('button', { name: /^Accept for / }).click();
-		await cp.getByRole('heading', { name: /proposal accepted/ }).waitFor();
+		await cp.getByRole('heading', { name: /proposal accepted/i }).waitFor();
 		await client.close();
 	}
 
@@ -419,12 +446,21 @@ try {
 	await page.reload();
 	await hydrate(page);
 	{
-		const heading = draft.getByRole('heading', { name: 'Deposit', exact: true });
+		const heading = draft.getByRole('heading', { name: 'Deposit and payments', exact: true, level: 3 });
 		const record = draft.getByRole('link', { name: 'Record the money on the kitchen draft', exact: true });
 		const card = await docBox(draft);
 		const top = await docBox(heading);
 		const bottom = await docBox(record);
 		await shoot(page, 'events-deposit-desktop', { x: card.x - 16, y: top.y - 24, width: card.r - card.x + 32, height: bottom.b - top.y + 48 });
+	}
+	// ------------------------------------------------ 5b. book the event, desktop
+	// Booking is its own step (app 7a7e407d9): it waits on the signed agreement
+	// and the deposit. Shot before either, so the frame shows the gate.
+	{
+		const book = page.getByRole('region', { name: 'Book the event', exact: true });
+		await book.waitFor();
+		const b = await docBox(book);
+		await shoot(page, 'events-book-desktop', { x: b.x - 16, y: b.y - 16, width: b.r - b.x + 32, height: b.b - b.y + 32 });
 	}
 	const orderHref = await draft.getByRole('link', { name: 'Open the kitchen draft', exact: true }).getAttribute('href');
 	const orderId = Number(orderHref.split('/').at(-1));
@@ -432,24 +468,54 @@ try {
 	// ------------------------------------------------ capacity, on Settings > Booking
 	await page.goto(`${APP}/settings/booking`);
 	await hydrate(page);
-	await page.getByLabel('Vans', { exact: true }).fill('2');
-	await page.getByLabel('Most orders a day', { exact: true }).fill('3');
-	await page.getByRole('button', { name: 'Save capacity' }).click();
-	await page.waitForTimeout(1500);
+	// The Capacity fields save as you leave them (app e00299078).
+	await page.getByRole('textbox', { name: 'Vans', exact: true }).fill('2');
+	await page.getByRole('textbox', { name: 'Vans', exact: true }).blur();
+	await page.getByRole('textbox', { name: 'Orders a day', exact: true }).fill('3');
+	await page.getByRole('textbox', { name: 'Orders a day', exact: true }).blur();
+	await page.waitForTimeout(2500);
+
+	// ------------------------------------------------ allergen review (not shot)
+	// Confirm order waits on every dish's allergens (app dd97eaab9). Answered
+	// through each ingredient's Allergens page, from the ingredient's name:
+	// dairy contains Milk, the focaccia sheet contains Wheat, everything else
+	// is free from all nine. Sample data; recorded in the notes.
+	{
+		const CONTAINS = { 'Butter, unsalted': ['Milk'], 'Heavy cream': ['Milk'], 'Goat cheese': ['Milk'], 'Parmesan, block': ['Milk'], 'Greek yogurt': ['Milk'], 'Focaccia sheet': ['Wheat'] };
+		const ALLERGENS = ['Wheat', 'Milk', 'Egg', 'Fish', 'Crustacean shellfish', 'Tree nuts', 'Peanuts', 'Soy', 'Sesame'];
+		const rows = (await db.execute({ sql: `with recursive rr(id) as (
+			select mi.recipe_id from menu_items mi join menus m on m.id = mi.menu_id where m.name = ?
+			union select rl.sub_recipe_id from recipe_lines rl join rr on rl.recipe_id = rr.id where rl.sub_recipe_id is not null)
+			select distinct i.id, i.name from recipe_lines rl join rr on rl.recipe_id = rr.id join ingredients i on i.id = rl.ingredient_id`, args: [EVENT.menu] })).rows;
+		for (const row of rows) {
+			await page.goto(`${APP}/ingredients/${row.id}/allergens`);
+			await hydrate(page);
+			for (const allergen of ALLERGENS) {
+				const want = (CONTAINS[row.name] ?? []).includes(allergen) ? 'Contains' : 'Free from';
+				const radio = page.getByRole('group', { name: allergen, exact: true }).getByRole('radio', { name: want, exact: true });
+				if (!(await radio.isChecked())) await radio.click();
+				if (!(await radio.isChecked())) throw new Error(`${row.name}: ${allergen} did not take ${want}`);
+			}
+			if (!(await page.getByLabel(/where did you check it/i).count())) continue;
+			await page.getByLabel(/where did you check it/i).fill('Sample data: read from the ingredient name');
+			await page.getByRole('button', { name: /^Save \d+ change/ }).click();
+			await page.waitForURL(/[?&]saved=/);
+		}
+	}
 
 	// ------------------------------------------------ 6. confirm dialog, desktop
 	await page.goto(`${APP}${orderHref}`);
 	await hydrate(page);
 	await page.getByRole('button', { name: 'Confirm order' }).first().click();
 	const confirm = page.getByRole('alertdialog');
-	await confirm.getByText('Confirm this order?').waitFor();
+	await confirm.getByRole('heading', { name: 'Confirm order?' }).waitFor();
 	await page.waitForTimeout(600);
 	{
 		const b = await confirm.boundingBox();
 		// Viewport coordinates: the dialog is fixed over the page.
 		await shoot(page, 'events-confirm-desktop', { x: b.x - 24, y: b.y - 24, width: b.width + 48, height: b.height + 48 }, { fullPage: false });
 	}
-	await confirm.getByRole('button', { name: 'Confirm order' }).click();
+	await confirm.getByRole('button', { name: 'Confirm', exact: true }).click();
 	await confirm.waitFor({ state: 'hidden' });
 	await page.waitForTimeout(1500);
 	{
@@ -474,6 +540,8 @@ try {
 	}
 
 	// ------------------------------------------------ 8. closeout, desktop
+	// SKIP_CLOSEOUT=1 keeps the order on its date for later walks (labels).
+	if (!process.env.SKIP_CLOSEOUT) {
 	// Closeout opens the day after the event. Move the event to yesterday (in
 	// the app's own zone) in the scratch data: the only write not done through
 	// the UI, and recorded in the notes.
@@ -498,9 +566,11 @@ try {
 		await shoot(page, 'events-closeout-desktop', { x: box.x - 24, y: box.y - 24, width: box.width + 48, height: box.height + 48 });
 	}
 
+	}
+
 	console.log(`\n${shots.length} frames written to public/proof/`);
 	for (const s of shots) console.log(`  ${s.name}.png  ${s.px}`);
-	console.log(`event ${eventId}, order ${orderId}, closeout date ${yesterday}`);
+	console.log(`event ${eventId}, order ${orderId}`);
 } finally {
 	await browser.close();
 	db.close();

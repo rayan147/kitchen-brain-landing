@@ -130,3 +130,26 @@
 - [x] 9 Setting: Phone beside the prep bench, a short gap between services, crew waiting for the next list.
 - [x] 10 Connection: You throughout; inputs lead to results, results to limits, limits to the trial decision. Shared terms keep the next action consistent.
 - [x] 11 Revision: Build and claim checks passed; every feature route inspected at desktop and mobile, with native disclosures and no JavaScript. Five-width regression checks and 320px/200% text passed. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- One em-dash pair became commas ("explain, or limit, other parts").
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- The app's labels: "Should have cost (recipe estimate)", "Did cost (what you paid)", "Unaccounted gap" for what is left after logged waste.
+- PO-1048 $643.20; chicken $42.10 → $46.80, +11.2%. The tour's month is July, so the two closes are different months.
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only.
+- **Slogans out:** "Let dates and corrections keep the past intact." is "Old
+  numbers stay the way they were."; "When the evidence stops, the conclusion
+  stops." is "It stops where the records stop."; "Make the month show its
+  working." is "Make the month show its math."
+- **Plainer:** the hero is "hold the month's spending up against what your
+  orders say you should have used"; the gap paragraph says "shaky counts" and
+  "with nobody blamed".
+- **Kept:** the H1, "A $715 gap is not automatically $715 of waste." (the
+  waste boundary), the closing heading (pinned), every illustrative figure
+  and figcaption, the FAQ, the capability list, and the limits: a late
+  purchase keeps its date, a correction keeps its reason, turnover waits for
+  trusted counts.

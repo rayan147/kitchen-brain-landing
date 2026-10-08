@@ -36,7 +36,7 @@ export const clientInvoiceClaim = new RegExp(
 );
 
 export const moneyClaims = [
-	[eventDepositClaim, 'event deposit collection claim (A-14, RC-65: recorded by hand; card payment is Coming)'],
+	[eventDepositClaim, 'event deposit collection claim (RC-65: the client pays from an email link; CostCook never collects, takes or charges)'],
 	[clientInvoiceClaim, 'client invoicing claim (front-of-house PRD 06 is unbuilt)']
 ];
 

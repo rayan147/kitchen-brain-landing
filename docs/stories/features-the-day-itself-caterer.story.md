@@ -15,3 +15,6 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 - [x] 9 Scene: A phone at the prep bench between services.
 - [x] 10 Connection: You throughout; choose a task, inspect what it does, read limits, decide.
 - [x] 11 Revision: Built pages, shared consumers, status wording, five responsive widths and 320px/200% text verified. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- Taking orders reads "In the app today", not "Available now".

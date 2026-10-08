@@ -53,7 +53,7 @@ try {
 			return;
 		}
 		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
-		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
+		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400 && !message.params.response.url.includes('/_vercel/insights/')) {
 			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
 		}
 	});
@@ -112,7 +112,7 @@ try {
 			genericRevealCount: document.querySelectorAll('.ledger-page [data-reveal]').length
 		};
 	})()`);
-	assert(desktop.title?.startsWith('Know what the month'), 'desktop: page identity is missing');
+	assert(desktop.title?.startsWith('Compare planned food cost'), 'desktop: page identity is missing');
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest action target is ${desktop.minTarget}px`);
 	assert(desktop.chapters, 'desktop: a required story chapter is missing');
@@ -154,7 +154,7 @@ try {
 	await send('Emulation.setScriptExecutionDisabled', { value: true });
 	await navigate();
 	const noScript = await evaluate(`(() => ({ heading: document.querySelector('h1')?.textContent.trim(), capabilityCount: document.querySelectorAll('#features-ledger li').length }))()`);
-	assert(noScript.heading?.startsWith('Know what the month'), 'no JavaScript: hero did not render');
+	assert(noScript.heading?.startsWith('Compare planned food cost'), 'no JavaScript: hero did not render');
 	assert(noScript.capabilityCount > 0, 'no JavaScript: capability list did not render');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

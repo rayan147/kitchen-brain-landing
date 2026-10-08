@@ -110,7 +110,7 @@ try {
 			bodyHeight: document.body.scrollHeight
 		}))()`);
 		if (!state.title.includes('Invoice and supplier price-list import software')) throw new Error(`${width}: wrong title`);
-		if (state.h1 !== 'Bring in the paperwork. Keep the final say.') throw new Error(`${width}: wrong H1`);
+		if (state.h1 !== 'Upload paperwork. Check prices before saving.') throw new Error(`${width}: wrong H1`);
 		if (state.anchors.join(',') !== '#invoice-import,#price-list-import') throw new Error(`${width}: chapter anchors drifted`);
 		if (state.faqCount !== 6 || state.disclosureCount !== 8) throw new Error(`${width}: disclosure count drifted`);
 		if (state.scrollWidth !== state.innerWidth) throw new Error(`${width}: horizontal overflow ${state.scrollWidth}/${state.innerWidth}`);

@@ -14,7 +14,7 @@ const required = [
 	'aria-label="On this page"',
 	'id="faq-heading"',
 	'Will a stale count reduce what the shopping list buys?',
-	'A shelf number ready to use.',
+	'Count one shelf before your next shop.',
 	'inventory-count-movement-trust',
 	'docs/stories/inventory.story.md'
 ];

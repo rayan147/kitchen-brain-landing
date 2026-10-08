@@ -127,3 +127,46 @@
 ## Claim correction · 2026-09-27 (Sage tools and drafts)
 
 - [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The badge reads "In the app today", not "Available now" (a fact, not a sales line). The video caption drops "A different kitchen from the wedding in the tour", which read like a note left in.
+
+## Revision 2026-10-07: re-shot on local develop, the wedding's short rib
+
+- **Source:** kitchen-brain 7a7e407d9, the Nair & Castellano sample kitchen
+  (`scripts/capture-sage-proof.mjs`; Sage needs the keyed world).
+- **Answer:** "Why does the Braised Short Rib cost what it costs?" answered
+  $7.28 a portion: short rib $7.00 (96%), House Beef Stock $0.20 (3%),
+  Mirepoix Base $0.08 (1%), each linked to the recipe. Checked against the
+  records before use; the same $7.28 the homepage's food-cost frame shows.
+  Retires the Harbor Table / cucumber price-move answer.
+- **Workspace still:** develop's /sage is now Conversations; a new one opens on
+  "Ask your first question" with starting questions from the records (the
+  sample world's next orders, so they name a baby shower, not the wedding).
+- **Video:** rebuilt by `scripts/sage-video/assemble.mjs` from those stills;
+  the setup still stays (onboarding unchanged, owner). End card now says
+  "Every number links to the record it came from." and "In the app today"
+  (it said "Eleven checks read" and "Available now", neither on any frame).
+  Chapter 0:15 says the same instead of a shopping-list draft no frame shows.
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only on the page's own
+lines; src/lib/sage.ts (abilities, rules, onboarding lines, proof caption),
+the video chapters, FAQ, alt text and captions are unchanged.
+- **Hero lede:** "Check the answer’s source records. An Owner or Manager can
+  approve a shopping-list draft." is "You can check the records behind every
+  answer. If it drafts a shopping list, an Owner or Manager approves it."
+- **Video intro:** "A 20-second path from an unfinished setup stage to a
+  checkable answer and a human decision. These are captured CostCook states,
+  not a concept animation." is "Twenty seconds: a setup stage left half done,
+  an answer you can check, and a person making the call. Every screen is
+  captured from CostCook, not drawn for the video."
+- **Guardrails:** "Useful because the boundaries are visible." is "You can see
+  exactly where it stops."; "An answer stays separate from an action. A
+  prepared draft stays separate from approval." is "Answering a question
+  changes nothing. A draft stays a draft until a manager or owner approves
+  it."
+- **Kept (pinned, RC-49):** the H1, "Ask before the kitchen is fully set up.",
+  "Questions you can ask. A shopping list you can approve.", the snap line,
+  the closing heading, "In the app today", read-only over your records,
+  drafts only, approval by a manager or owner.

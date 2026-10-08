@@ -37,10 +37,11 @@ export function pngSize(publicPath: string): { width: number; height: number } {
  * Considered Factory Method (a capture class per frame kind); not used
  * because every frame is the same three fields and `shot` builds them all.
  */
-const sampleServiceTime = '17:00 to 22:00';
 
 const shot = (src: string, alt: string) => ({ src, alt, ...pngSize(src) });
 
+// Re-shot 2026-10-07 from app 7a7e407d9 (local develop, the owner's chosen
+// source) for Sat Dec 19, the homepage's wedding. scripts/capture-events-proof.mjs.
 export const eventProof = {
 	inquiry: shot(
 		'/proof/events-inquiry-mobile.png',
@@ -48,26 +49,31 @@ export const eventProof = {
 	),
 	workspace: shot(
 		'/proof/events-workspace-desktop.png',
-		`The event page for the Nair & Castellano wedding, marked Inquiry, with Edit details. Chips: Saturday October 10, 2026, in 13 days; 150 guests; ${sampleServiceTime}; add a venue; Priya Nair. A warning: The event is coming up and isn’t booked. Confirm the plan with the client soon. A six-step bar: Inquiry, captured; Menu & service, 2 of 3, you are here; Proposal, price and send; Client decision, accept or decline; Agreement, send and collect signature; Booked, kitchen planning opens. The Next step card reads Set the menu and service, for 150 guests, with Dishes 1 saved, Service style plated and Staff & rentals optional, and the buttons Set menu and service and Start from a saved menu. Beside it, a follow-up for Monday September 28, tomorrow, owned by Marisol Vega, with Mark done and Snooze.`
+		'The event page for the Nair & Castellano wedding, marked Inquiry, with Edit details. Chips: Sat, Dec 19, 2026, in 73 days; 150 guests; 5:00 PM to 10:00 PM; add a venue; Priya Nair. A six-step bar: Inquiry, captured; Menu & service, 2 of 3, you are here; Proposal, price and send; Client decision, accept or decline; Agreement, send and collect signature; Booked, kitchen planning opens. The Next step card reads Set the menu and service, for 150 guests, with Dishes 6 saved, Service style plated and Staff & rentals optional, and the buttons Set menu and service and Start from a saved menu. Beside it, an upcoming follow-up for Thu, Oct 8, tomorrow, owned by Marisol Vega, with Mark done and Snooze.'
 	),
 	offer: shot(
 		'/proof/events-offer-mobile.png',
-		`The client’s proposal page on a phone, from Harbor & Hearth Catering, with a logo placeholder and a phone icon. Proposal for Priya Nair: Nair & Castellano wedding, please respond by Sunday October 4, 7 days left. Total for your event $14,250.00, 150 guests at $95.00 per guest. Your event: date October 10, 2026, 150 guests, venue to be confirmed, service time ${sampleServiceTime}, New York time, and the line We’ll confirm these details with you before the event. What we’ll serve: Wedding Plated Dinner, $14,250.00, 150 guests at $95.00 per guest, with six dishes: braised short rib, creamed spinach, focaccia and whipped goat cheese, lemon posset, roasted beet and citrus, and wild mushroom polenta. Buttons at the bottom: Ask for changes, and Accept proposal.`
+		'The client’s proposal page on a phone, from Harbor & Hearth Catering, with a phone icon. Proposal for Priya Nair: Nair & Castellano wedding, please respond by Wed, Oct 14, 7 days left. Total for your event $14,250.00, 150 guests at $95.00 per guest. Your event: date December 19, 2026, 150 guests, venue to be confirmed, service time 5:00 PM to 10:00 PM Eastern Time, and the line We’ll confirm these details with you before the event. What we’ll serve: Wedding Plated Dinner, $14,250.00, 150 guests at $95.00 per guest, with six dishes: braised short rib, creamed spinach, focaccia and whipped goat cheese, lemon posset, roasted beet and citrus, and wild mushroom polenta. Buttons at the bottom: Ask for changes, and Accept proposal.'
 	),
 	deposit: shot(
 		'/proof/events-deposit-desktop.png',
-		'The Deposit panel on the event: Asked for $3,500.00, Received $0.00, Nothing received yet, and the link Record the money on the kitchen draft.'
+		'The Deposit and payments panel on the event: Asked for $3,500.00, Received $0.00, Nothing received yet, and Payment requests go to priya.nair@example.com. Below, two payments to request, each check, cash or transfer with a link to add payment instructions: the deposit, $3,500.00 owed, and the balance, $10,750.00 owed, due Wed, Dec 9. At the bottom, the link Record the money on the kitchen draft.'
 	),
 	draft: shot(
 		'/proof/events-kitchen-draft-desktop.png',
-		'The Kitchen draft section on the event: The kitchen draft is ready. It is tentative: it holds no day and draws no crew until you book the event. Below it, the link Open the kitchen draft.'
+		'The Kitchen draft section on the event: The kitchen draft is ready. It is tentative: it holds no day and draws no crew until you confirm the order. Below it, the link Open the kitchen draft.'
+	),
+	book: shot(
+		'/proof/events-book-desktop.png',
+		'The Book the event panel: Still missing before you book: the agreement is not prepared yet, so nobody has signed it; the $3,500.00 deposit has not come in yet. A link, Go to the deposit. A box asking Why book without them?, with the note Your reason is kept with the event, with your name and the time, and the button Book anyway.'
 	),
 	confirm: shot(
 		'/proof/events-confirm-desktop.png',
-		'A dialog titled Confirm this order?: Quantities, ingredient prices, and calculated totals will freeze as they are now. Later recipe or price changes will not alter this order. Order Nair & Castellano wedding, event date October 10, 2026, 150 guests, revenue $14,250.00. Buttons: Keep editing, and Confirm order.'
+		'A dialog titled Confirm order?: Confirming locks quantities and prices for Nair & Castellano wedding. Shopping, prep and pack lists become checklists. Buttons: Keep editing, and Confirm.'
 	),
 	calendar: shot(
 		'/proof/events-calendar-desktop.png',
-		'The calendar in week view for October 4 to 10, 2026, with Month, Week, Today and + New order, and the filters Confirmed 1, Drafts 0 and Requests 0. Sunday to Friday each read 0 of 3 orders and 0 of 2 vans. Saturday the 10th reads 1 of 3 orders and 0 of 2 vans and holds one card: 5:00 PM, Nair & #783, Confirmed, 150 guests, $14,250.00, 28.4% food cost.'
+		'The calendar in week view for Dec 13 to Dec 19, 2026, with Month, Week, Today and + New order, and the filters Confirmed 1, Drafts 0 and Requests 0. Sunday to Friday each read 0 of 3 orders and 0 of 2 vans. Saturday the 19th reads 1 of 3 orders and 0 of 2 vans and holds one card: 5:00 PM, Nair & #783, Confirmed, 150 guests, $14,250.00, 28.4% food cost.'
 	)
 };
+

@@ -55,6 +55,7 @@
 import { SAGE_STATUS, sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } from './sage';
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
+import { eventPayments } from './event-payments';
 import { acceptanceBoundary, depositMethods } from './events';
 import { dietary, allergenCount, allergenCountCapital } from './dietary';
 import { spell } from './words';
@@ -297,15 +298,15 @@ export const comparison: RowGroup[] = [
 				label: 'Event deposits tracked',
 				sheet: 'key',
 				costcook: 'yes',
-				note: `You record the deposit by hand, as ${depositMethods}, against what you asked for.`,
+				note: `What you asked for against what came in, paid by card from an email link or recorded by hand, as ${depositMethods}.`,
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},
 			{
-				label: comingPlans.eventPayments.comparisonLabel,
+				label: eventPayments.comparisonLabel,
 				sheet: 'key',
-				costcook: comingPlans.eventPayments.verdict,
-				note: comingPlans.eventPayments.comparisonNote,
+				costcook: eventPayments.verdict,
+				note: eventPayments.comparisonNote,
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},
@@ -435,11 +436,10 @@ export const comparison: RowGroup[] = [
 			{
 				label: 'Printed USDA nutrition labels',
 				sheet: 'build',
-				/* Moved from coming to yes on 2026-08-29 (RC-50): the print page is on
-				   sandbox/demo with no flag. Browser print; kitchen date labels are the
-				   "Kitchen label printing" row below, a yes since 2026-09-27 (RC-35). */
+				/* Yes since 2026-08-29 (RC-50); develop gates it on confirmed sources and
+				   no blank lines (the note says so). Kitchen date labels: the row below. */
 				costcook: 'yes',
-				note: 'Printed from the recipe through the browser onto label stock. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
+				note: 'Printed from the recipe through the browser onto label stock, once every source is confirmed and no line is blank. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
 				parsley: 'Chef Plus, $189',
 				meez: 'Enterprise, custom'
 			},

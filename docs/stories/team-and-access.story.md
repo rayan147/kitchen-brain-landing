@@ -141,3 +141,25 @@ Every beat above still applies; only the frame around it changed.
 ## Claim correction · 2026-09-27 (what Staff can open)
 
 - [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- The role-stack caption "A role is a boundary, not a badge." became "Each role sees what its job needs." The hero primary is the trial; "Compare team roles" is the quiet link.
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only; the H1, the
+"Before you invite" constraint, the access-check table, the not-the-right-fit
+line, the FAQ, role summaries and the closing heading are unchanged (pinned
+or RC-52 boundaries).
+- **Repeat cut:** the second "Give each teammate their own sign-in." under
+  the H1 is "Everyone signs in as themselves."
+- **Limit, said plainly:** "CostCook does not let you hide one screen, expose
+  one field, or assemble a custom role. ... that boundary is not available
+  today." is "You cannot hide a screen, show just one field, or build your own
+  role. If a cook needs the prep list but must not be able to open costs,
+  CostCook cannot do that today." Same RC-52 meaning.
+- **Consultant words out:** "workspace" (dt labels, closing body), "an action
+  reserved for", "keep the sensitive work attached to the role that should
+  carry it". The heading "What this is not." is "Where it stops."
+- **Caption:** "Each role sees what its job needs." implied hidden screens,
+  which the page says do not exist; it is now "Three roles, one kitchen
+  account."

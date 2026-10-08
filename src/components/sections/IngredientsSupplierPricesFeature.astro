@@ -6,17 +6,23 @@ import { cta, demoCta } from '../../lib/site';
 const ingredientGroup = featureGroups.find((group) => group.id === 'ingredients');
 if (!ingredientGroup) throw new Error('Missing public feature group: ingredients');
 
+// US units, one price change (chef audit 2026-10-07: the recipe impacts did
+// not follow from the $4.70 case increase, and "last costed" was not the
+// previous price in the history). $42.10 → $46.80 on a 20 lb case at 91%
+// usable (the tour's and the recipes guide's yield) is $0.2582 more per usable lb; each recipe moves by its usable lb.
 const packFacts = [
-	{ label: 'Pack', left: '10 kg case', right: '22 lb case' },
-	{ label: 'Case price', left: '$46.80', right: '$49.20' },
-	{ label: 'Usable yield', left: '92%', right: '95%' },
-	{ label: 'Usable cost', left: '$5.09 / kg', right: '$5.19 / kg' }
+	{ label: 'Pack', left: '20 lb case', right: '25 lb case' },
+	{ label: 'Case price', left: '$46.80', right: '$61.50' },
+	{ label: 'Trim yield', left: '91%', right: '95%' },
+	{ label: 'Usable cost', left: '$2.57 / lb', right: '$2.59 / lb' }
 ] as const;
 
 const affectedRecipes = [
-	{ name: 'Herb roast chicken', use: '1.8 kg', change: '+$0.18' },
-	{ name: 'Grain bowl', use: '720 g', change: '+$0.07' },
-	{ name: 'Canapé tray', use: '450 g', change: '+$0.04' }
+	// Not the tour's herb roast chicken (Harbor, 40 lb case): this is the
+	// guides' kitchen, buying thighs from Northline (chef review 2026-10-07).
+	{ name: 'Chicken pot pie', use: '4 lb', change: '+$1.03' },
+	{ name: 'Grain bowl', use: '1.5 lb', change: '+$0.39' },
+	{ name: 'Canapé tray', use: '1 lb', change: '+$0.26' }
 ] as const;
 
 // Considered Strategy; not used because these questions and comparison rows
@@ -30,7 +36,7 @@ const faqItems = [
 	{
 		question: 'How does CostCook compare different pack sizes?',
 		answer:
-			'Each offer keeps its pack quantity, purchase unit, price, and usable yield. CostCook converts those facts to the same usable-unit cost so a case and a bag can be compared on equal terms.'
+			'Each offer keeps its pack quantity, purchase unit, price, and trim yield. CostCook converts those facts to the same usable-unit cost so a case and a bag can be compared on equal terms.'
 	},
 	{
 		question: 'Where did the current price come from?',
@@ -66,7 +72,7 @@ const faqItems = [
 					<span>Ingredients and supplier prices</span>
 				</nav>
 				<h1 id="ingredients-prices-heading" class="feature-display">Compare supplier prices by what you can use.</h1>
-				<p class="hero-lede">Enter the case price, pack size and usable yield for one ingredient. Compare suppliers per usable kilo, pound or item, and see which recipes a price change affects.</p>
+				<p class="hero-lede">Put in the case price, the pack size and the trim yield for one ingredient. Compare suppliers by what you can actually use, per pound, kilo or each, and see which recipes a price change hits.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -76,9 +82,9 @@ const faqItems = [
 						target={demoCta.target}
 						rel={demoCta.rel}
 						aria-label={demoCta.ariaLabel}
-						class="btn-outline"
+						class="btn-quiet"
 					>
-						Book a 15-min demo
+						{demoCta.label}
 					</a>
 				</div>
 				<FeatureTrialTerms />
@@ -90,20 +96,20 @@ const faqItems = [
 					<div class="record-head"><span>Ingredient</span><span>Current</span></div>
 					<div class="ingredient-title">
 					<div><strong class="record-title">Chicken thigh</strong><p>Purchased by weight · usable after trim</p></div>
-						<strong>$5.09 / kg</strong>
+						<strong>$2.57 / lb</strong>
 					</div>
 				</div>
 				<div class="offer-join" aria-hidden="true"><span></span><span></span></div>
 				<div class="offers">
 					<div class="offer preferred">
 						<div class="record-head"><span>Northline Foods</span><span>In use</span></div>
-						<strong>$46.80</strong><small>10 kg case · 92% usable</small>
-						<p>$5.09 per usable kg</p>
+						<strong>$46.80</strong><small>20 lb case · 91% usable</small>
+						<p>$2.57 per usable lb</p>
 					</div>
 					<div class="offer">
 						<div class="record-head"><span>Market Supply</span><span>Offer</span></div>
-						<strong>$49.20</strong><small>22 lb case · 95% usable</small>
-						<p>$5.19 per usable kg</p>
+						<strong>$61.50</strong><small>25 lb case · 95% usable</small>
+						<p>$2.59 per usable lb</p>
 					</div>
 				</div>
 				<figcaption>Illustrative values. Every offer keeps its source, supplier, and effective date.</figcaption>
@@ -116,14 +122,14 @@ const faqItems = [
 			<div data-reveal>
 				<h2 id="problem-heading">The old price still looks right.</h2>
 				<p>
-					The invoice changed. The pack changed. The spreadsheet did not. By the time the food-cost
-					percentage looks wrong, the number may already be in front of a customer.
+					The invoice went up and the case size changed, but your spreadsheet still has the old
+					number. By the time the food cost looks wrong, you may have already quoted it to a client.
 				</p>
 			</div>
 			<figure class="price-drift" data-reveal>
-				<div><span>Last costed</span><strong>$42.10</strong><small>10 kg case</small></div>
+				<div><span>Last costed</span><strong>$42.10</strong><small>20 lb case</small></div>
 				<svg width="56" height="22" viewBox="0 0 56 22" aria-hidden="true"><path d="M1 11h47M41 4l7 7-7 7" /></svg>
-				<div><span>This invoice</span><strong>$46.80</strong><small>10 kg case</small></div>
+				<div><span>This invoice</span><strong>$46.80</strong><small>20 lb case</small></div>
 				<figcaption>The new case costs $4.70 more. Check the recipes that use it before quoting again.</figcaption>
 			</figure>
 		</div>
@@ -132,12 +138,12 @@ const faqItems = [
 	<nav class="story-nav container-page" aria-label="On this page">
 		<a href="#ingredient-records">
 			<span>Ingredient records</span>
-			<small>Keep purchase, yield, storage, and allergen facts on the food.</small>
+			<small>What you buy, the yield, where it is stored and its allergens, all on the ingredient.</small>
 			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
 		</a>
 		<a href="#supplier-prices">
 			<span>Supplier prices</span>
-			<small>Compare unlike packs by the usable unit and keep the source.</small>
+			<small>Compare different case sizes by what you can use, and keep where each price came from.</small>
 			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
 		</a>
 	</nav>
@@ -145,10 +151,10 @@ const faqItems = [
 	<section id="ingredient-records" class="product-section ingredient-chapter" aria-labelledby="ingredient-records-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="ingredient-records-heading">One ingredient record, wherever the food is used.</h2>
+				<h2 id="ingredient-records-heading">Set up the ingredient once. Every recipe uses it.</h2>
 				<p>
-					Start from scratch, a USDA reference, or a purchase. Keep the buying unit, usable yield,
-					conversions, suppliers, allergens, storage area, and par level together.
+					Start from scratch, from a USDA reference or from a purchase. The buying unit, trim
+					yield, conversions, suppliers, allergens, storage area and par level all live on it.
 				</p>
 			</div>
 
@@ -157,25 +163,25 @@ const faqItems = [
 					<div class="panel-bar"><span>Ingredient record</span><span>Costable</span></div>
 					<div class="workspace-title"><h3>Chicken thigh</h3><p>Protein · purchased by weight</p></div>
 					<dl class="fact-grid">
-						<div><dt>Purchase unit</dt><dd>10 kg case</dd></div>
-						<div><dt>Usable yield</dt><dd>92%</dd></div>
-						<div><dt>Purchased cost</dt><dd>$4.68 / kg</dd></div>
-						<div><dt>Usable cost</dt><dd>$5.09 / kg</dd></div>
+						<div><dt>Purchase unit</dt><dd>20 lb case</dd></div>
+						<div><dt>Trim yield</dt><dd>91%</dd></div>
+						<div><dt>Purchased cost</dt><dd>$2.34 / lb</dd></div>
+						<div><dt>Usable cost</dt><dd>$2.57 / lb</dd></div>
 					</dl>
-					<div class="source-line"><span>Current source</span><strong>Northline Foods · effective 28 Aug</strong></div>
+					<div class="source-line"><span>Current source</span><strong>Northline Foods · effective Aug 28</strong></div>
 				</div>
 				<div class="workspace-side">
-					<div><span>Kitchen facts</span><strong>Walk-in · Meat</strong><small>Par level 20 kg</small></div>
-					<div><span>Conversions</span><strong>1 case = 10 kg</strong><small>Unit and yield chosen, never guessed</small></div>
+					<div><span>Kitchen facts</span><strong>Walk-in · Meat</strong><small>Par level 40 lb</small></div>
+					<div><span>Conversions</span><strong>1 case = 20 lb</strong><small>Unit and yield chosen, never guessed</small></div>
 					<div><span>Used by</span><strong>3 recipes · 2 menus</strong><small>Checked before a change or delete</small></div>
 				</div>
 				<figcaption>Illustrative ingredient record built only from shipped CostCook fields and behavior.</figcaption>
 			</figure>
 
 			<div class="feature-scenes">
-				<article><h3>Enter it where you meet it.</h3><p>Create an ingredient from the catalog, from a purchase, or inside the recipe you are already building.</p></article>
-				<article><h3>Keep purchased and usable separate.</h3><p>See both costs side by side. Trim and cooking loss remain facts, not an invisible adjustment.</p></article>
-				<article><h3>Find what still needs attention.</h3><p>The ingredient list shows which items can be costed and which still need a price or unit conversion.</p></article>
+				<article><h3>Add it where you run into it.</h3><p>Create an ingredient from the catalog, from a purchase, or inside the recipe you are already building.</p></article>
+				<article><h3>Keep purchased and usable separate.</h3><p>Both costs sit side by side. Trim and cooking loss show as numbers you can see, never buried in the price.</p></article>
+				<article><h3>See what still needs a price.</h3><p>The ingredient list shows which items can be costed and which still need a price or unit conversion.</p></article>
 			</div>
 		</div>
 	</section>
@@ -183,10 +189,10 @@ const faqItems = [
 	<section id="supplier-prices" class="product-section supplier-chapter" aria-labelledby="supplier-prices-heading">
 		<div class="container-page">
 			<div class="section-intro supplier-intro" data-reveal>
-				<h2 id="supplier-prices-heading">Compare the food, not the shape of the case.</h2>
+				<h2 id="supplier-prices-heading">A cheaper case can cost you more.</h2>
 				<p>
-					A lower case price can still cost more after pack size and yield. Convert each offer to
-					the same usable unit, keep its source and date, then choose the price you want to use.
+					Pack size and yield change the math. Each offer comes down to the same usable unit and
+					keeps its source and date. Then you pick the price you want to use.
 				</p>
 			</div>
 
@@ -197,7 +203,7 @@ const faqItems = [
 						<strong>{fact.label}</strong><span>{fact.left}</span><span>{fact.right}</span>
 					</div>
 				))}
-				<div class="comparison-result"><span>Preferred offer</span><strong>Northline Foods</strong><small>10¢ less per usable kg</small></div>
+				<div class="comparison-result"><span>Preferred offer</span><strong>Northline Foods</strong><small>2¢ less per usable lb</small></div>
 				<figcaption>Illustrative comparison. CostCook orders concurrent offers by usable-unit cost.</figcaption>
 			</figure>
 
@@ -205,13 +211,13 @@ const faqItems = [
 				<div class="history" data-reveal>
 					<h3>The source stays with the number.</h3>
 					<ol role="list">
-						<li><time>28 Aug</time><span><strong>$46.80</strong> Northline invoice</span></li>
-						<li><time>14 Aug</time><span><strong>$45.40</strong> Northline purchase</span></li>
-						<li><time>31 Jul</time><span><strong>$44.95</strong> Market price list</span></li>
+						<li><time>Aug 28</time><span><strong>$46.80</strong> Northline delivery, PO-1048</span></li>
+						<li><time>Aug 14</time><span><strong>$42.10</strong> Northline purchase</span></li>
+						<li><time>Jul 31</time><span><strong>$61.50</strong> Market Supply list, 25 lb case</span></li>
 					</ol>
 				</div>
 				<div class="impact" data-reveal>
-					<h3>See what the change touches first.</h3>
+					<h3>See which recipes it hits first.</h3>
 					<ul role="list">
 						{affectedRecipes.map((recipe) => (
 							<li><span><strong>{recipe.name}</strong><small>{recipe.use} in recipe</small></span><b>{recipe.change}</b></li>
@@ -226,21 +232,21 @@ const faqItems = [
 	<section class="evidence" aria-labelledby="evidence-heading">
 		<div class="container-page evidence-grid">
 			<div data-reveal>
-				<h2 id="evidence-heading">The supplier price keeps walking.</h2>
+				<h2 id="evidence-heading">The price follows the ingredient into the recipe.</h2>
 				<p>
-					Once the ingredient is inside a recipe, purchased amount, usable yield, quantity to buy,
-					prep state, and cost contribution remain on the same line.
+					Inside a recipe the ingredient keeps its own line: what you bought, the trim yield, how
+					much to buy, the prep state and what it adds to the cost.
 				</p>
 				<ul role="list">
 					<li>Missing prices are named instead of reading as zero.</li>
-					<li>Every ingredient line reconciles to the recipe total.</li>
-					<li>The arithmetic opens when a number needs checking.</li>
+					<li>Every ingredient line adds up to the recipe total.</li>
+					<li>Open the math whenever a number needs checking.</li>
 				</ul>
 			</div>
 			<figure class="screenshot-frame" data-reveal>
 				<picture>
 					<source media="(max-width: 639px)" srcset="/proof/yield-lines-mobile.png" />
-					<img src="/proof/yield-lines.png" width="2272" height="1370" loading="lazy" decoding="async" alt="CostCook recipe lines showing ingredient amounts used, usable yield, quantity to buy, preparation state, and each line's cost." />
+					<img src="/proof/yield-lines.png" width="1490" height="1042" loading="lazy" decoding="async" alt="CostCook recipe lines for a Greek salad: bell pepper 0.25 each at 82% yield, cucumber 0.3 each at 90%, and Roma tomato 2.1 oz at 91% yield, 2.3 oz to buy, 12% of cost, $0.17. Roma tomato is opened: 2.1 oz usable quantity, trim yield 91%, required as purchased 2.1 oz ÷ 0.91 = 2.3 oz, a 25 lb case at $29.14, line cost $0.17, and the recorded purchase it came from." />
 				</picture>
 				<figcaption>Real CostCook interface: each ingredient carries its working into the recipe.</figcaption>
 			</figure>
@@ -250,7 +256,7 @@ const faqItems = [
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
 			<div data-reveal>
-				<h2 id="capabilities-heading">The complete Ingredients list.</h2>
+				<h2 id="capabilities-heading">What is in Ingredients.</h2>
 				<p>Open the details to check what is available today.</p>
 				<p class="count"><strong>{ingredientGroup.items.length}</strong><span>shipped capabilities</span></p>
 			</div>
@@ -265,7 +271,7 @@ const faqItems = [
 
 	<section class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
-			<div data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions behind comparing a supplier price you can trust.</p></div>
+			<div data-reveal><h2 id="faq-heading">Frequently asked questions</h2><p>What people ask before they trust a supplier price.</p></div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
 					<details data-reveal><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>
@@ -276,10 +282,10 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">A price you can trace. A quote you can defend.</h2><p>Bring one supplier sheet and one real ingredient. Follow the case price into the recipe with the working shown.</p></div>
+			<div><h2 id="closing-heading">Know where every price came from before you quote.</h2><p>Bring one supplier sheet and one real ingredient. Follow the case price into the recipe, with the math showing.</p></div>
 			<div class="closing-actions">
-				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-primary">Book a 15-min demo</a>
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
 			</div>
 		</div>
 		<div class="container-page onward feature-onward"><a href="/features">See every CostCook feature</a></div>
@@ -293,8 +299,6 @@ const faqItems = [
 	.hero h1 { max-width: 12ch; margin-top: 1.5rem; }
 	.hero-lede { max-width: 55ch; margin-top: 1.75rem; font-size: var(--text-lede); line-height: 1.55; color: var(--color-ink-soft); }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
-	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; padding: .9rem 1.6rem; border: 1px solid var(--color-green); border-radius: 999px; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
-	.btn-outline:hover { background: var(--color-softgreen); }
 	.figure-note { margin-bottom: .7rem; font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-amber-deep); }
 	.ingredient-record, .offer { min-width: 0; padding: clamp(1.1rem, 2.5vw, 1.6rem); background: var(--color-paper); box-shadow: var(--shadow-ticket); }
 	.ingredient-record { border-top: 3px solid var(--color-green); }

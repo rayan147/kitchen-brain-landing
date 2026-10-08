@@ -38,7 +38,7 @@
 
 import type { Verdict } from './comparison';
 
-export const INVOICE_EMAIL_STATUS = 'coming' as Verdict;
+export const INVOICE_EMAIL_STATUS = 'yes' as Verdict;
 
 const invoiceEmailIsComing = INVOICE_EMAIL_STATUS !== 'yes';
 
@@ -81,7 +81,7 @@ export const gmailSteps = [
 export const invoiceEmailAvailability = {
 	isComing: invoiceEmailIsComing,
 	verdict: INVOICE_EMAIL_STATUS,
-	word: invoiceEmailIsComing ? 'Coming' : 'Available now',
+	word: invoiceEmailIsComing ? 'Coming' : 'In the app today',
 	/** Follows the status word on the feature page, so it does not repeat it. */
 	pageSentence: invoiceEmailIsComing
 		? 'It is built, and it is not receiving email for trial kitchens yet, so keep uploading invoices until this line changes.'

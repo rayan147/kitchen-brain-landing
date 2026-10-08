@@ -22,7 +22,7 @@
 			]
 		},
 		{
-			"source": "/(demo\\.mp4|demo\\.webm|demo-poster\\.jpg)",
+			"source": "/(demo\\.mp4|demo\\.webm|demo-poster\\.jpg|film/.*)",
 			"headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
 		}
 	]

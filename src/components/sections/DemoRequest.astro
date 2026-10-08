@@ -267,7 +267,7 @@ import { DEMO_TRAP_FIELD } from '../../lib/demo-request';
 				<p>You can still see the working product or start with your own data.</p>
 			</div>
 			<div class="alternative-actions">
-				<a href="/tour/main" class="btn-outline">Take the product tour</a>
+				<a href="/tour/main" class="btn-quiet">Take the product tour</a>
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-quiet">{cta.label}</a>
 			</div>
 		</div>
@@ -550,9 +550,7 @@ import { DEMO_TRAP_FIELD } from '../../lib/demo-request';
 	.agenda-list strong { color: var(--color-green-deep); }
 	.agenda-list span { color: var(--color-ink-soft); line-height: 1.5; }
 	.alternatives-grid { align-items: center; }
-	.alternative-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
-	.btn-outline { display: inline-flex; min-height: 44px; align-items: center; border: 1px solid var(--color-green); border-radius: 999px; padding: 0.9rem 1.5rem; color: var(--color-green-deep); font-weight: 600; transition: background-color 150ms ease-out; }
-	.btn-outline:hover { background: var(--color-softgreen); }
+	.alternative-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
 
 	@media (min-width: 48rem) {
 		.field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -585,10 +583,8 @@ import { DEMO_TRAP_FIELD } from '../../lib/demo-request';
 
 	@media (max-width: 30rem) {
 		.form-actions, .form-actions-split, .prepared-actions, .alternative-actions { align-items: stretch; flex-direction: column; }
-		.form-actions .btn-primary, .form-actions .btn-quiet, .prepared-actions a, .alternative-actions a { justify-content: center; width: 100%; }
+		.form-actions .btn-primary, .form-actions .btn-quiet, .prepared-actions a { justify-content: center; width: 100%; }
+		.alternative-actions { align-items: flex-start; }
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.btn-outline { transition: none; }
-	}
 </style>

@@ -94,9 +94,13 @@ export const signIn = {
 	target: '_self'
 } as const;
 
+// "Book 15 minutes", the label CLAUDE.md names (third chef review
+// 2026-10-07: "Book a 15-min demo" read like the sales funnel a burned
+// caterer runs from). The accessible name starts with the visible words, so
+// speech input can say what it sees (WCAG 2.5.3).
 export const demoCta = {
-	label: 'Book a 15-min demo',
-	ariaLabel: 'Book a demo: prepare a 15-minute CostCook session',
+	label: 'Book 15 minutes',
+	ariaLabel: 'Book 15 minutes: prepare a CostCook session with Rayan',
 	href: '/demo',
 	target: '_self',
 	rel: undefined
@@ -117,15 +121,16 @@ export const contactCta = {
  * hardest. scripts/check-landing-claims.mjs now fails on the old phrasing.
  * A reader with one kitchen and a sous asks whether the sous is another $49.
  * `crew` answers that on the same line (FAQ "Do I pay per user?", pricing
- * page: teammates unlimited during launch).
+ * page: teammates unlimited). "During launch" was dropped by owner ruling
+ * 2026-10-07: unlimited crew is the standing offer (RC-34).
  */
 export const launchPlan = {
 	displayPrice: import.meta.env.PUBLIC_LAUNCH_PRICE_DISPLAY?.trim() || '$49/month',
 	trialDays: 15,
 	unit: 'per kitchen',
-	crew: 'unlimited crew during launch',
-	crewTerms: 'Teammates are unlimited during launch. Post-launch teammate limits have not been announced.',
-	billingNote: 'per kitchen, unlimited crew during launch, after a 15-day free trial.'
+	crew: 'unlimited crew',
+	crewTerms: 'Teammates are unlimited.',
+	billingNote: 'per kitchen, unlimited crew, after a 15-day free trial.'
 } as const;
 
 const productTourHref = '/tour/main';
@@ -186,7 +191,9 @@ const resourceNav = [
 		label: 'Contact',
 		href: contactCta.href,
 		header: 'resources',
-		group: 'Make the decision',
+		// Its own group, the footer's and the Menu's "Talk to us" (design review
+		// 2026-10-07: it sat under "Make the decision" in this dropdown only).
+		group: 'Talk to us',
 		icon: 'contact',
 		description: 'Email or call Rayan when your question needs a person.'
 	}
@@ -204,8 +211,9 @@ export const nav: readonly { label: string; href: string; header: 'direct' | 'bl
 
 export const resourcesMenu = {
 	label: 'Resources',
-	ariaLabel: 'CostCook resources',
-	groups: ['See it work', 'Make the decision'] as const,
+	// Starts with the visible word, so speech input can say what it sees.
+	ariaLabel: 'Resources: tour, fit, setup, comparisons and contact',
+	groups: ['See it work', 'Make the decision', 'Talk to us'] as const,
 	items: resourceNav
 } as const;
 
@@ -216,10 +224,56 @@ export const blogMenu = {
 	ariaLabel: 'Blog guides, broken down by kitchen question'
 } as const;
 
+// No aria-label: the button's name is its visible word, so a speech-input
+// user who says "click Menu" reaches it (WCAG 2.5.3, design review
+// 2026-10-07). It used to be named "Site navigation".
 export const mobileMenu = {
-	label: 'Menu',
-	ariaLabel: 'Site navigation'
+	label: 'Menu'
 } as const;
+
+export type SiteLink = {
+	label: string;
+	href: string;
+	target?: string;
+	rel?: string;
+	ariaLabel?: string;
+	/** Phone Menu only: the bar already shows this destination from sm up. */
+	phoneOnly?: boolean;
+};
+
+/**
+ * The site map in four groups, read by the phone Menu and the footer, so the
+ * two lists of every destination cannot disagree (design review 2026-10-07:
+ * the Menu was one flat run of eleven links while the footer had grouped the
+ * same links). The resource groups are the header's own Resources groups;
+ * "Talk to us" adds the phone and email to Contact, where a reader looking for
+ * a person looks. Sign in and the demo link are actions,
+ * not destinations: each renderer places them itself.
+ *
+ * Considered Composite; not used because the map is one fixed level of
+ * headings over links, and both renderers loop it the same way.
+ */
+export const siteMap: readonly { heading: string; links: readonly SiteLink[] }[] = [
+	{
+		heading: 'Product',
+		links: [
+			{ label: 'Every feature', href: '/features', phoneOnly: true },
+			...nav.filter((item) => item.header !== 'resources')
+		]
+	},
+	...resourcesMenu.groups.map((group) => ({
+		heading: group,
+		links: [
+			...resourceNav.filter((item) => item.group === group),
+			...(group === 'Talk to us'
+				? [
+						{ label: site.phone, href: site.phoneHref },
+						{ label: site.email, href: `mailto:${site.email}` }
+					]
+				: [])
+		]
+	}))
+];
 
 /**
  * Header disclosure copy. The curated destinations live beside the feature

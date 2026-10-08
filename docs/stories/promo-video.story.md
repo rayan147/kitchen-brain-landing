@@ -38,6 +38,21 @@ The defects the third review left on screen were fixed in the app (develop d3c7c
 
 Step 5, the reader's voice: a caterer does not call a client "she". Every caption and chapter card now says "a client", "the client" or "the offer", and the snap line drops the pronoun: "A yes is not a booking. Signed and paid is." (`check-landing-claims.mjs` requires that line). Lines as shipped: "A client asks on your site: Saturday in June, 150 guests, plated." · "Can the client say yes from a phone?" · "The offer, on the client's phone: $21,043.00." · "Stuffed peppers on the menu for the 12 vegetarians." · "Accept, or ask for changes. The client decides." · "Signed online, by the client and by you." · "Ask for $5,250.00. The client pays by card from the link." · "Quoted at 24.8%. The day after: 24.9%, under your 30% target."
 
+## Revision 2026-10-07, Nair & Castellano (owner: "the film follows Nair & Castellano"; supersedes the revisions above where they differ)
+
+The film now tells the homepage's own wedding, so the page is one story top to bottom: Priya Nair, Nair & Castellano wedding, Sat Dec 19 2026, 150 guests, Wedding Plated Dinner at $95.00 a guest. It was carried forward once on local develop 7a7e407d9 (`scripts/capture-film-local.mjs`, record in `public/proof/film/manifest.json`) from where the homepage capture left it. Step 1 is unchanged; the beats change with the wedding, because the film may only say what this wedding shows:
+
+- **Beat 1, Opening Image:** the client called, not from the ordering site. The cold open is the inquiry form as it was taken: "A client calls about a wedding. Write it down as it comes." then "Date not decided, about 150 guests. Rough is fine." (The rough-inquiry beat of the first draft comes back, because it is true here.)
+- **Beats 4 and 5:** the menu frame prints $95.00 a guest at 29.2% food cost, under the 30% target (live prices on the Menu & service step).
+- **Beats 6 and 7:** the offer is the food alone, $14,250.00 for 150 at $95.00, no staff, rentals or fee lines, and no vegetarian main on this menu. The staff line, the stuffed peppers and both vegetarian captions are cut. The offer frame is the homepage's own capture of this wedding's offer (same build, a fresh world on :4188, before acceptance); the acceptance is this world's: "Accepted, from the phone. Next, the agreement."
+- **Beat 8, Fun and Games:** the deposit ($3,500.00) was already paid by Stripe test card, so the ask and the pay page are not re-shot; the paid card carries it ("Deposit $3,500.00, paid by card from the link.") and the balance's due day ("The balance, $10,750.00, is due Wed, Dec 9."). No reminder lead time is claimed. Local develop has no online signing provider; the app's own route is "collect the signatures on paper, then upload the signed copy", and Book counts that copy. The walk took it, with a source line on the frame that says the copy is sample data, and the caption names the route: "Signed on paper? Upload the copy. It stays with the event." "Signed online, by the client and by you." is cut.
+- **Beat 9, Midpoint:** unchanged snap line, still true: Book the event read "Everything booking asks for is in": "A yes is not a booking. Signed and paid is."
+- **Beat 10:** shop, then Confirm. The final count is not in yet (it is due with the balance), so the Confirm caption claims only what the dialog says: "Confirm, and prices and quantities lock."
+- **Prep and pack:** the menu has two short rib portions a guest, so the prep list counts 300: "Bases first, then every dish: 300 portions of short rib." The pack beat drops the vegetarian plates: "Every dish into the van, allergens on each label."
+- **Beat 12, Final Image:** the review closed with the kitchen's use recorded, so the share is final. The closeout's plan is ingredients only and the menu's 29.2% is at live prices for the menu, two different bases, so the close no longer says "Quoted at": "The day after, at what you paid: 28% of the price, under your 30% target."
+
+Snap line: unchanged. Point of view: unchanged ("you", the client named as "the client"). Every figure is a manifest token; the vitest suite now also reads the shipped capture record.
+
 ## The 11 steps
 
 | # | Step | What you build | Done |

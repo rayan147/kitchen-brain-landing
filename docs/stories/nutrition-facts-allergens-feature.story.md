@@ -132,3 +132,54 @@
 ## Claim correction · 2026-09-27 (allergen count)
 
 - [x] 11 Revision: "Fourteen allergens" was false; the app tags the fixed US nine (milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soy, sesame; kitchen-brain drizzle/0034_dizzy_klaw.sql). The count word is now computed from `allergenNames` in `src/lib/dietary.ts`. Beats, scenes, point of view and snap line unchanged; only the number moved. Gap report S3.
+
+### Revision 2026-10-07: the showcase caption
+- The caption says the burrito bowl is matched to one USDA branded record (a packaged product), and that a dish built from your own ingredients adds up each ingredient's source, blanks where one is missing. A multi-ingredient capture is still owed.
+
+## Revision 2026-10-07: re-shot on local develop, the honest draft
+
+- **Source:** kitchen-brain 7a7e407d9 (owner: "local develop latest"), the
+  wedding's sample kitchen, `scripts/capture-nutrition-proof.mjs`.
+- **Dish:** Wild Mushroom Polenta, one of the six on the Nair & Castellano
+  Wedding Plated Dinner (owner: every re-shoot follows that wedding). The
+  Chicken Burrito Bowl / Maple & Main frames are retired.
+- **What changed in the app, and so in the story:** develop calls a dish with
+  an unconfirmed source or a blank label line a "Draft estimate. Not ready to
+  print." Preview label shows the panel with a dash per blank line and Print
+  label off; the print route refuses until the gate clears. None of the demo
+  world's 90 recipes cleared it, so the Midpoint beat is no longer "a complete
+  panel" but "the screen says draft before it shows a number": 530 calories,
+  19 g fat, 18 g protein, 77 g carbs, 8 of 15 lines filled, 7 blank.
+- **Print claim:** "Yes, once the dish is complete." Same on the FAQ, the
+  comparison note, the features hub and the labels lede. The printed sheet's
+  contents list stays, read from develop's `NutritionLabelSheet.svelte`
+  (kitchen name, calculated estimate, panel, ingredients in recipe order,
+  Contains / May contain, sources, print time, the not-a-compliance-claim line).
+- **Allergens:** Parmesan and unsalted butter carry Contains: milk; dietary
+  columns stay Not reviewed. The phone frame is those two cards.
+- Snap line unchanged: "A blank row beats a made-up zero."
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only; no markup, link,
+CTA, number, alt text or screenshot caption changed.
+- **Slogan and consultant headings out:** "Sunday night should not start two
+  new spreadsheets." is "One question about the polenta, two new
+  spreadsheets."; "An allergen tag needs more than a familiar ingredient
+  name." is "A name that sounds right is not an allergen answer."; "The sheet
+  carries the answer and its limits." is "The label prints its own limits.";
+  "{n} shipped details, without the safety claims they cannot carry." is
+  "{n} things it does today, and none of the safety claims it cannot back up."
+- **Evidence path in kitchen words:** "Evidence enters / The ingredient
+  carries it / The recipe rolls it up" became "Where it comes from / It stays
+  on the ingredient / The recipe adds it up"; badges "ride along to pack-out,
+  where somebody actually needs the answer."
+- **Hero and meta:** the suitability boundary is kept as a plain sentence:
+  "Whether the food suits a given guest is still your kitchen's call to
+  review." The label still "will not print until nothing is" missing.
+- **Kept on purpose (pinned or boundary):** the H1, "Print label switches
+  on", "A blank row beats a made-up zero.", "no screen makes an allergen-free
+  claim", the closing heading "Print the answer. Keep the evidence.", the
+  not-claimed list in nutrition.ts (including "not a retail-label compliance
+  claim"), the printed-contents list, FAQ and capability items. "A name match
+  never invents food-safety data" is now "A matching name never makes up
+  food-safety data", the same boundary.

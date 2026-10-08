@@ -1,0 +1,91 @@
+---
+/**
+ * The close (canvas S7): the founder, the plan, the same primary as the hero.
+ * A stated exception to rule 3: it carries a portrait and the price card, not
+ * a screenshot. The founder line is the site's verified wording
+ * (BuiltForKitchens); every figure on the card is read from launchPlan.
+ *
+ * The heading points at the trial, not the demo, and the quiet links follow
+ * the plan card in the document (review 2026-10-07).
+ *
+ * Considered Composite; not used because it is two fixed columns.
+ */
+import HomeBand from './HomeBand.astro';
+import { cta, demoCta, launchPlan, site } from '../../lib/site';
+
+// The amount at display size, the period at body size: at 200% text on a
+// 320px phone "$49/month" in display type broke as "mont|h" (design review
+// 2026-10-07).
+const [priceAmount, pricePer] = launchPlan.displayPrice.split('/');
+---
+<HomeBand id="start" tone="amber" labelledBy="start-heading">
+	<div class="close-grid" data-home-close>
+		<div class="close-copy">
+			<figure class="founder" data-founder-trust>
+				<img src="/founder.jpg" alt={`${site.founderName}, chef and founder of CostCook`} width="384" height="384" loading="lazy" decoding="async" class="founder-photo" />
+				<figcaption>
+					<p class="home-body founder-line">I cooked professionally for twelve years before I built CostCook.</p>
+					<p class="home-small mt-2">{site.founderName}, chef and founder</p>
+				</figcaption>
+			</figure>
+			<h2 id="start-heading" class="home-h2 mt-10">Cost your first dish before your next quote.</h2>
+			<p class="home-body mt-4">For caterers and restaurants that cater. One kitchen per plan.</p>
+			<p class="home-body mt-4" data-real-order-setup>Give your first dish about fifteen minutes. Upload its invoices or price sheets, confirm what CostCook read, and type any line it could not.</p>
+		</div>
+		<div class="plan" data-real-order-trial>
+			<p class="home-eyebrow">Launch plan</p>
+			<p class="plan-price">{priceAmount}{pricePer && <span class="plan-per">/{pricePer}</span>}</p>
+			<p class="home-small">{launchPlan.unit}</p>
+			<dl class="plan-terms">
+				<div><dt>Today</dt><dd>$0 charged</dd></div>
+				<div><dt>Free trial</dt><dd>{launchPlan.trialDays} days</dd></div>
+				<div><dt>Crew</dt><dd>Unlimited</dd></div>
+				<div><dt>Cancel</dt><dd>Settings, no call</dd></div>
+			</dl>
+			<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary plan-cta">{cta.label}</a>
+			<p class="home-small mt-3">The card starts the subscription, and you pay $0 until day {launchPlan.trialDays + 1}. Cancel before then from Settings, Billing and nothing is charged.</p>
+			<p class="home-small mt-2">Questions first? <a href="/faq" class="home-guide">Read the FAQ</a></p>
+		</div>
+		<div class="close-more flex flex-wrap gap-x-5 gap-y-3">
+			<a href={demoCta.href} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+			<a href="/features" class="btn-quiet">See everything it does, area by area</a>
+		</div>
+	</div>
+</HomeBand>
+
+<style>
+	/* minmax(0, 1fr), not the implicit auto track: at 200% text on a phone the
+	   auto track grew to the copy's min-content and the page scrolled sideways
+	   (design review 2026-10-07, WCAG 1.4.10). */
+	.close-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; align-items: start; }
+	/* Wraps at 200% text, where the 5rem photo and the italic line no longer fit side by side. */
+	.founder { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; margin: 0; }
+	.founder figcaption { flex: 1 1 12rem; min-width: 0; }
+	.founder-photo { width: 5rem; height: 5rem; border-radius: 999px; object-fit: cover; flex: none; }
+	.founder-line { color: var(--color-ink); font-family: var(--font-display); font-style: italic; }
+	/* Narrower padding and breakable words on a small phone at 200% text,
+	   where 2rem a side left the card 112px of text. */
+	.plan { padding: clamp(1rem, 6vw, 2rem); overflow-wrap: break-word; background: var(--color-paper); border-radius: 8px; box-shadow: var(--shadow-lift); }
+	.plan-per { font-family: var(--font-body); font-size: var(--text-body-lg); font-weight: 500; }
+	.plan-price { margin-top: .5rem; font-family: var(--font-display); font-size: var(--text-display); line-height: 1; font-weight: 600; }
+	.plan-terms { margin-block: 1.5rem; }
+	.plan-terms div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; padding-block: .6rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-body-lg); }
+	.plan-terms dt { color: var(--color-ink-soft); }
+	.plan-terms dd { font-weight: 600; }
+	.plan-cta { width: 100%; justify-content: center; white-space: normal; text-align: center; }
+	/* Reading order (review 2026-10-07): copy, then the plan and its primary,
+	   then the quiet links, so on a phone the trial comes before the demo. On
+	   desktop the links sit back under the copy, beside the plan. */
+	@media (min-width: 64rem) {
+		.close-grid {
+			grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+			grid-template-areas: 'copy plan' 'more plan';
+			grid-template-rows: auto 1fr;
+			column-gap: 5rem;
+			row-gap: 1.5rem;
+		}
+		.close-copy { grid-area: copy; }
+		.plan { grid-area: plan; }
+		.close-more { grid-area: more; align-self: start; }
+	}
+</style>

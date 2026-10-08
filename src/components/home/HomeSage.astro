@@ -1,0 +1,39 @@
+---
+/**
+ * Sage (canvas S6). Words from src/lib/sage.ts, so the draft kinds and the
+ * approval boundary stay the ones kitchen-brain ships (RC-49).
+ *
+ * Considered Strategy; not used because there is one band and one frame.
+ */
+import HomeBand from './HomeBand.astro';
+import SectionHandoff from '../SectionHandoff.astro';
+import SageIcon from '../SageIcon.astro';
+import { sageGuide, sageShot } from '../../lib/home';
+import { sageDraftKindsOr, sageStatusWord } from '../../lib/sage';
+---
+<HomeBand id="sage" tone="cream" labelledBy="sage-heading">
+	<div class="sage-grid" data-home-sage>
+		<div>
+			<SageIcon size={44} context="homepage" />
+			<!-- The status prints only while Sage is Coming: "Available now" over a
+			     shipped feature read as marketing (third chef review 2026-10-07). -->
+			<p class="home-eyebrow mt-4">Sage, the kitchen assistant{sageStatusWord === 'Coming' && <> · {sageStatusWord}</>}</p>
+			<h2 id="sage-heading" class="home-h2">Ask what the wedding still owes.</h2>
+			<p class="home-body mt-4">It reads only your kitchen’s records and links the record behind each number. It can draft {sageDraftKindsOr}. Nothing changes until a manager or owner approves it.</p>
+			<a href={sageGuide.href} class="home-guide">{sageGuide.label}</a>
+		</div>
+		<figure class="sage-figure">
+			<img src={sageShot.src} alt={sageShot.alt} width={sageShot.width} height={sageShot.height} loading="lazy" decoding="async" class="home-shot" />
+		</figure>
+	</div>
+	<SectionHandoff from="sage" class="home-handoff" />
+</HomeBand>
+
+<style>
+	.sage-grid { display: grid; gap: 2.5rem; align-items: center; }
+	/* The frame is Sage's side panel, opened from the app sidebar (2026-10-07),
+	   so it is portrait at panel width. Capped so it reads at the panel's own
+	   size instead of stretching to the column. */
+	.sage-figure { margin: 0; width: 100%; max-width: 26rem; justify-self: center; }
+	@media (min-width: 64rem) { .sage-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 4rem; } }
+</style>

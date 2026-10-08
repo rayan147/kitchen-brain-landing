@@ -159,3 +159,22 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 ## Claim correction · 2026-09-27 (what Staff can open)
 
 - [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+### Revision 2026-10-07: chef audit of the feature and resource routes
+- Stop 9 (events) no longer calls event card payment Coming: the client pays the deposit by card from an email link, or it is recorded by hand (owner ruling 2026-10-06). "Start the guided tour" is a quiet link; the green button is only the trial.
+
+### Revision 2026-10-07: US units and a chicken that adds up (chef audit)
+- 8 oz trimmed raw thigh a portion (about 6 oz cooked), 12 lb for 24, in 40 lb cases at $139.60 ($3.49/lb, $3.84/lb usable at 91%). Recipe $64.69, $2.70 a portion.
+- Lemons at the invoice price ($0.27 each; 12 at 82% = $3.97). Event need 90 lemons, not 96.
+- The orders and inventory stops buy with the trim: 98.9 lb needed, 80 lb on hand, 18.9 lb (one 40 lb case) to buy; the delivery is 5 lb short.
+- Nutrition is a 6 oz cooked portion: 498 kcal, 44.6 g protein. The restriction stop checks the menu's own dishes.
+- Menu food cost, price and quote are unchanged: $1,491.38, $28.00, $5,040, 29.6% (four of seven dishes shown).
+
+
+## Revision 2026-10-07 (chef review of the sub-routes)
+- One global food-cost target: 30%, as the app's captures judge it. Room to target 0.4 pts (was a 31% target on this menu only).
+- Lemons need 110, not 90: 12 usable at 82% is 14.6 bought a batch, × 7.5 batches.
+- "Trim yield", the app's field name; "At a $9.00 selling price" replaces "the plate's share".
+- The competing chicken offer is Coastal Meats, so Northline stays the guides' supplier.
+- The bride is the tree-nut allergy (as on the guards guide); the gluten-free conflict is two guests.
+- The month scene reviews July, the month that has closed by Aug 28, with the app's "Should have cost" / "Did cost" labels.

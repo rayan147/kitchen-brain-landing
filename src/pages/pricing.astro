@@ -24,7 +24,7 @@ const included = [
 	'Analytics',
 	...(labelsAvailability.isComing ? [] : ['Kitchen labels']),
 	...(orderingAvailability.isComing ? [] : ['Online ordering']),
-	'Unlimited teammates during launch'
+	'Unlimited teammates'
 ];
 
 // The in-development cards are read from features.ts, not typed here. They
@@ -38,17 +38,17 @@ const included = [
 
 <Base
 	title="CostCook pricing for catering kitchens"
-	description="One CostCook launch plan per kitchen, with unlimited teammates during launch."
+	description="One CostCook launch plan per kitchen, with unlimited teammates."
 	path="/pricing"
 >
 	<section class="container-page py-section" aria-labelledby="pricing-title">
-		<div class="max-w-3xl">
+		<div class="max-w-3xl" data-opening>
 			<p class="eyebrow">Per kitchen, not per seat</p>
 			<h1 id="pricing-title" class="mt-4 text-display font-semibold">One kitchen. One launch plan.</h1>
-			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">The subscription is per kitchen, not per teammate, and the crew is unlimited during launch. The verified owner manages billing and can invite the team.</p>
+			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">The subscription is per kitchen, not per teammate, and the crew is unlimited. The verified owner manages billing and can invite the team.</p>
 		</div>
 
-		<div id="launch-terms" class="mt-10 grid gap-8 border-y border-ticket-rule py-8 lg:grid-cols-[7fr_5fr]">
+		<div id="launch-terms" class="mt-10 grid grid-cols-1 gap-8 border-y border-ticket-rule py-8 lg:grid-cols-[7fr_5fr]">
 			<div>
 				<p class="text-sm font-semibold text-amber-deep">CostCook Launch</p>
 				<p class="mt-2 text-h2 font-semibold">{launchPlan.displayPrice}</p>
@@ -64,7 +64,7 @@ const included = [
 					moves it moves for kitchens that sign up after, never for yours. The price you
 					start on is the price you keep.
 				</p>
-				<a href={cta.href} aria-label={cta.ariaLabel} class="btn-primary mt-7">Start {launchPlan.trialDays}-day free trial</a>
+				<a href={cta.href} aria-label={cta.ariaLabel} class="btn-primary mt-7">{cta.label}</a>
 			</div>
 			<div>
 				<h2 class="text-h3 font-semibold">Included at launch</h2>
@@ -109,7 +109,7 @@ const included = [
 			     still has one primary. -->
 			<p>Wondering how that compares? <a href="/compare" class="btn-quiet">See it against Parsley and meez</a>.</p>
 			<p>Have a question about the plan? <a href={contactCta.href} class="btn-quiet">Contact Rayan</a>.</p>
-			<p>Want to see your own menu run first? <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} class="btn-quiet">Book a 15-minute demo</a>.</p>
+			<p>Want to see your own menu run first? <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} class="btn-quiet">{demoCta.label}</a>.</p>
 		</div>
 	</section>
 </Base>
