@@ -7,7 +7,7 @@ import { DropoffManifestSchema } from "./manifest-dropoff";
 // site (order 59 on test, 2026-10-07/08). No proposal, no contract: the client
 // orders, the order approves itself on a clear day with a priced menu, the
 // client pays by card, and the kitchen shops, preps and packs. It ends on the
-// lunch's food cost the day after. About 48 seconds, no chapter cards (the
+// lunch's food cost the day after. About 50 seconds, no chapter cards (the
 // plan said about 40; the owner kept the reading time, 2026-10-08).
 //
 // Rings are measured off the frames in public/proof/film-dropoff (percent of
@@ -51,7 +51,7 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
   // clear and the menu had a price (the frame says so; nobody clicked Approve).
   arrives: {
     chapter: null,
-    seconds: 8.25,
+    seconds: 8.5,
     beats: [
       {
         from: 0,
@@ -69,7 +69,7 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
       },
       {
         from: 3.75,
-        to: 8.25,
+        to: 8.5,
         layout: "screen",
         frames: ["dropoff-arrived-approval-desktop.png"],
         // The frame says the owner can still decline while nothing is paid;
@@ -83,22 +83,25 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
       },
     ],
   },
-  // What the client sees once the card goes through, then the order's money
-  // card, Paid in full.
+  // How the paid order got there: the review said nothing was due, the
+  // order approved itself, then the client gets a pay link and pays from it.
+  // Without this beat the film went from "No payment is due now" straight to
+  // "Payment received" (owner, 2026-10-08).
   paid: {
     chapter: null,
-    seconds: 6.25,
+    seconds: 7.5,
     beats: [
       {
         from: 0,
-        to: 2.75,
+        to: 4,
         layout: "phone",
-        frames: ["dropoff-pay-paid-mobile.png"],
-        caption: "{paid}, paid by card on the phone.",
+        frames: ["dropoff-pay-link-mobile.png"],
+        caption:
+          "The kitchen sends a pay link. The client pays {paid} by card.",
       },
       {
-        from: 2.75,
-        to: 6.25,
+        from: 4,
+        to: 7.5,
         layout: "screen",
         frames: ["dropoff-paid-desktop.png"],
         caption: "Nobody typed the order twice or chased the money.",

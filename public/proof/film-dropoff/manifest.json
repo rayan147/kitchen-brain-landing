@@ -5,6 +5,7 @@
     "dropoff-arrived-price-desktop.png",
     "dropoff-dishes-mobile.png",
     "dropoff-paid-desktop.png",
+    "dropoff-pay-link-mobile.png",
     "dropoff-pay-mobile.png",
     "dropoff-pay-paid-mobile.png",
     "dropoff-review-mobile.png",
@@ -93,6 +94,12 @@
       "app": "922f9459f",
       "via": "crop of shop-desktop.png (PIL): the first three supplier groups, their text unchanged; the two test suppliers named after real distributors stay out",
       "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
+    },
+    "dropoff-pay-link-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "6a82f780a",
+      "via": "capture-film.mjs arrived",
+      "note": "the pay link of practice order 61 (2026-10-08), sent with order 59's menu, 40 guests, day and address, so the same $1,273.08; order 59's own link was already paid, and its first shot carried the old \"Pay to hold your date\" heading. Order 61 was declined after the shot."
     }
   },
   "appSha": "9754b5b8e",

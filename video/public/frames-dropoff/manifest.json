@@ -23,6 +23,7 @@
     "dropoff-arrived-price-desktop.png",
     "dropoff-dishes-mobile.png",
     "dropoff-paid-desktop.png",
+    "dropoff-pay-link-mobile.png",
     "dropoff-pay-mobile.png",
     "dropoff-pay-paid-mobile.png",
     "dropoff-review-mobile.png",
@@ -89,6 +90,10 @@
     "shop-top-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "922f9459f"
+    },
+    "dropoff-pay-link-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "6a82f780a"
     }
   }
 }

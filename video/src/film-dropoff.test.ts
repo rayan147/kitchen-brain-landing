@@ -42,6 +42,12 @@ describe("the office lunch film", () => {
 
   // The plan said about 40 s; the owner took the recommendation (2026-10-08)
   // to keep every caption's reading time instead, which lands near 46 s.
+  // Remotion takes whole frames: a scene of 8.25 s is 247.5 of them.
+  it("gives every scene a whole number of frames", () => {
+    for (const id of DROPOFF_ORDER)
+      expect(Number.isInteger(DROPOFF.scenes[id].seconds * FPS)).toBe(true);
+  });
+
   it("runs under fifty seconds", () => {
     const seconds = totalFramesOf(DROPOFF) / FPS;
     expect(seconds).toBeGreaterThan(38);
