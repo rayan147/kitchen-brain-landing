@@ -154,3 +154,9 @@ Content: `src/pages/contact.astro` and its shared data/response states.
 - [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
 - [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
 - [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.
+
+## Revision 2026-10-08: chef voice pass
+- Owner: humanize the copy so a chef could have written it. Copy only; the form's labels, buttons, error and confirmation messages (pinned by verify-resources and the endpoint tests) and the sensitive-information line are unchanged.
+- Lede no longer guesses a pronoun for Rayan: "The answer comes back by email, usually the same day, and you do not need a trial to ask."
+- "What helps me answer" uses the reader's words: "how many are on the crew", "where it is going wrong".
+- /contact/sent opens "Sent. Your question is with me."; /contact/not-sent opens "That did not go through." and says "nothing reached me", matching /demo/not-sent's first-person honesty.
