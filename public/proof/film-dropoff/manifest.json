@@ -2,13 +2,11 @@
   "frames": [
     "closeout-desktop.png",
     "dropoff-arrived-approval-desktop.png",
-    "dropoff-arrived-desktop.png",
     "dropoff-arrived-price-desktop.png",
     "dropoff-dishes-mobile.png",
     "dropoff-paid-desktop.png",
     "dropoff-pay-mobile.png",
     "dropoff-review-mobile.png",
-    "dropoff-sent-mobile.png",
     "pack-checked-desktop.png",
     "pack-desktop.png",
     "po-desktop.png",
@@ -20,31 +18,19 @@
       "host": "sites-test.costcook.io",
       "app": "922f9459f",
       "via": "capture-film.mjs order",
-      "note": "the ordering site, not the app: the receipt reads \"Pay the deposit securely\", wording c43c00bf9 removed, so it still ran 922f9459f when the app ran b063d7bba"
+      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     },
     "dropoff-review-mobile.png": {
       "host": "sites-test.costcook.io",
       "app": "922f9459f",
       "via": "capture-film.mjs order",
-      "note": "the ordering site, not the app: the receipt reads \"Pay the deposit securely\", wording c43c00bf9 removed, so it still ran 922f9459f when the app ran b063d7bba"
-    },
-    "dropoff-sent-mobile.png": {
-      "host": "sites-test.costcook.io",
-      "app": "922f9459f",
-      "via": "capture-film.mjs order",
-      "note": "the ordering site, not the app: the receipt reads \"Pay the deposit securely\", wording c43c00bf9 removed, so it still ran 922f9459f when the app ran b063d7bba"
-    },
-    "dropoff-arrived-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "b063d7bba",
-      "via": "capture-film.mjs arrived",
-      "note": "test ran b063d7bba (peer deploy, deployed/test 2026-10-07T23:33Z) when this was shot; the walk script had 922f9459f hand-set"
+      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     },
     "dropoff-pay-mobile.png": {
       "host": "sites-test.costcook.io",
       "app": "922f9459f",
       "via": "capture-film.mjs arrived",
-      "note": "the ordering site, not the app: the receipt reads \"Pay the deposit securely\", wording c43c00bf9 removed, so it still ran 922f9459f when the app ran b063d7bba"
+      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     },
     "dropoff-paid-desktop.png": {
       "host": "test.app.costcook.io",
@@ -53,15 +39,15 @@
     },
     "shop-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba",
+      "app": "922f9459f",
       "via": "capture-film.mjs shop",
-      "note": "test ran b063d7bba (peer deploy, deployed/test 2026-10-07T23:33Z) when this was shot; the walk script had 922f9459f hand-set"
+      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     },
     "po-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba",
+      "app": "922f9459f",
       "via": "capture-film.mjs buy",
-      "note": "test ran b063d7bba (peer deploy, deployed/test 2026-10-07T23:33Z) when this was shot; the walk script had 922f9459f hand-set"
+      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     },
     "prep-desktop.png": {
       "host": "test.app.costcook.io",
@@ -80,13 +66,15 @@
     },
     "dropoff-arrived-price-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba",
-      "via": "crop of dropoff-arrived-desktop.png (PIL): the price card only, its text unchanged; the header's draft badge stays out"
+      "app": "922f9459f",
+      "via": "crop of the arrival frame (capture-film.mjs arrived; not published: it names another test order) (PIL): the price card only, its text unchanged; the header's draft badge stays out",
+      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     },
     "dropoff-arrived-approval-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba",
-      "via": "crop of dropoff-arrived-desktop.png (PIL), its text unchanged"
+      "app": "922f9459f",
+      "via": "crop of the arrival frame (capture-film.mjs arrived; not published: it names another test order) (PIL), its text unchanged",
+      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     },
     "pack-checked-desktop.png": {
       "host": "test.app.costcook.io",

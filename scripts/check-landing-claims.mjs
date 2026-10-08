@@ -1214,6 +1214,7 @@ requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], 'Signed on paper?
 	// day with a priced menu, and its frame says so.
 	if (/\b(you approve|tap approve|press approve|click approve)\b/i.test(text)) failures.push('film two: nobody approved the lunch by hand');
 	requireText(film, 'Nobody retyped it. Nobody chased the money.', 'film two snap line');
+	if (!/^\| RC-75 \|.*APPLIED/m.test(ledger)) failures.push('film two: RC-75 (ordering site to paid order) has no APPLIED ledger row');
 	if (/\$\d|\d+(\.\d+)?%/.test(text)) failures.push('film two: a figure is typed into a caption; use a {token} from the manifest');
 	const manifest = JSON.parse(await read('public/proof/film-dropoff/manifest.json'));
 	// "under your target" is only true while the closeout share is under it.

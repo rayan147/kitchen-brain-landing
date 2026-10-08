@@ -48,7 +48,7 @@
     },
     "dropoff-arrived-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba"
+      "app": "922f9459f"
     },
     "dropoff-pay-mobile.png": {
       "host": "sites-test.costcook.io",
@@ -60,11 +60,11 @@
     },
     "shop-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba"
+      "app": "922f9459f"
     },
     "po-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba"
+      "app": "922f9459f"
     },
     "prep-desktop.png": {
       "host": "test.app.costcook.io",
@@ -80,11 +80,11 @@
     },
     "dropoff-arrived-price-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba"
+      "app": "922f9459f"
     },
     "dropoff-arrived-approval-desktop.png": {
       "host": "test.app.costcook.io",
-      "app": "b063d7bba"
+      "app": "922f9459f"
     },
     "pack-checked-desktop.png": {
       "host": "test.app.costcook.io",
