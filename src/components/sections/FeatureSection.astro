@@ -106,6 +106,9 @@ const siblings = featureSections.filter((other) => other.slug !== entry.slug);
 								))}
 							</ul>
 						)}
+						{group.guide && group.status !== 'in-development' && (
+							<a href={group.guide.href} class="mt-4 inline-flex min-h-11 items-center font-semibold text-green-deep underline decoration-ticket-rule decoration-1 underline-offset-4 hover:decoration-ink">{group.guide.label}</a>
+						)}
 					</div>
 				))
 			}

@@ -28,10 +28,10 @@
  *  2. The browser sends menu, item, portion and modifier selections without
  *     prices. The server re-resolves publication and availability and computes
  *     every amount. No surface may suggest a client's browser knows a price.
- *  3. Card payment is Stripe Connect on the kitchen's own account, for
- *     storefront orders only. Event and proposal deposits are recorded by hand.
- *     No saved cards, no automatic refunds, one reminder per balance, and no
- *     client invoices.
+ *  3. Card payment is Stripe Connect on the kitchen's own account. (Event
+ *     deposits and balances are paid by card too since the owner ruling of
+ *     2026-10-06; src/lib/event-payments.ts.) No saved cards, no automatic
+ *     refunds, one reminder per balance, and no client invoices.
  *  4. The widget protocol has five outbound states and no inbound command: no
  *     navigation, HTML, script, client-contact or payment payload crosses into
  *     the frame. Approved embed origins are defence in depth, not
@@ -40,16 +40,24 @@
  * THE WORD. ORDERING_STATUS is 'yes' with RC-59. The feature group's status
  * reads it, and the claim guard pins it with the ledger row.
  *
- * STILL NOT HERE, AND ON PURPOSE: no `comparisonNote` and no `seoDescription`.
- * A /compare row obligates re-verifying two competitors' living pricing pages
- * against VERIFIED_ON (RC-40), and a dedicated page obligates captures of the
- * live storefront. Both are later work.
+ * THE PAGE. /features/online-ordering exists since 2026-10-08 (owner: show
+ * the drop-off film and say the form can sit on the caterer's own website).
+ * Its settings walk is read off local develop 7a7e407d9: Settings >
+ * Integrations > Ordering site, tabs Setup, Menus, Look, Put on your website.
+ * Its captures come from that app, never the live storefront, and the website
+ * tab is printed as text because a local capture names localhost and a real
+ * site id. Still no `comparisonNote`: a /compare row obligates re-verifying
+ * two competitors' pricing pages (RC-40).
  *
  * No pattern: a table the sections render.
  */
 import type { Verdict } from './comparison';
 
 export const ORDERING_STATUS = 'yes' as Verdict;
+
+export const orderingRoute = '/features/online-ordering';
+export const orderingSeoDescription =
+	'Clients order catering from your own ordering page or a form on your website. It arrives priced, you approve it, and their payment confirms it.';
 
 export const orderingStatusWord = ORDERING_STATUS === 'yes' ? 'In the app today' : 'Coming';
 const orderingIsComing = ORDERING_STATUS !== 'yes';

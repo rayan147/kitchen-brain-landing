@@ -14,6 +14,7 @@
 
 import { eventPayments } from './event-payments';
 import { acceptanceBoundary, agreementLine } from './events';
+import { orderingRoute } from './ordering';
 
 export type Shot = {
 	src: string;
@@ -313,6 +314,7 @@ export const kitchenRows = [
 export const frontOfHouse = [
 	{
 		id: 'ordering',
+		guide: { href: orderingRoute, label: 'How online ordering works' },
 		heading: 'Online ordering',
 		// "Confirm" is the event walk's word for booking, so this row says
 		// "approve" and "pay" (third chef review 2026-10-07).
