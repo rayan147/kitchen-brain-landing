@@ -157,3 +157,14 @@ alt text are unchanged (the H1 and closing heading are pinned).
   stays frozen beside today's cost.
 
 - **Follow-up (features pass):** the capabilities heading reads "What is in ..." instead of "Everything in ...". At 200% text on a 320px phone, "Everything" at display size did not fit the column (verify-feature-parity caught it on Recipes & Costing), so every guide now uses the shorter words.
+
+### Revision 2026-10-08: the quote frame from local develop
+
+The confirmed-quote frame was `/demo-poster.jpg`, a still from the retired
+demo video (180 guests at $68, a cursor, a burned-in caption). It is now
+`/proof/order-price-today.png` (scripts/capture-price-today-proof.mjs): the
+Nair & Castellano wedding, confirmed on local develop 7a7e407d9, price a
+guest $95.00 locked when confirmed, food cost 27.6% against 30%, and the
+app's own "Today's ingredient prices" line ("unchanged since you quoted
+this"). The copy beside it already says this; no words changed. The alt
+names only what the frame shows.

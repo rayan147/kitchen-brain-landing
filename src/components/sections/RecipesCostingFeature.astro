@@ -368,14 +368,17 @@ const faqItems = [
 
 			<div class="quote-evidence" data-reveal>
 				<figure>
-					<img
-						src="/demo-poster.jpg"
-						width="1600"
-						height="1000"
-						loading="lazy"
-						decoding="async"
-						alt="CostCook order screen showing food cost per guest, the price needed to meet the target, and quoted cost compared with current prices."
-					/>
+					<picture>
+						<source media="(max-width: 639px)" srcset="/proof/order-price-today-mobile.png" width="780" height="1358" />
+						<img
+							src="/proof/order-price-today.png"
+							width="1888"
+							height="722"
+							loading="lazy"
+							decoding="async"
+							alt="A confirmed wedding order for 150 guests, prices locked: $95.00 a guest, locked when confirmed; food cost 27.6% against a 30% target, food $26.18 a guest; and today's ingredient prices, unchanged since it was quoted."
+						/>
+					</picture>
 				</figure>
 				<div>
 					<h3>Price the menu before you commit.</h3>
