@@ -1213,12 +1213,12 @@ requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], 'Signed on paper?
 	// Nobody pressed Approve on the lunch: the order approved itself on a clear
 	// day with a priced menu, and its frame says so.
 	if (/\b(you approve|tap approve|press approve|click approve)\b/i.test(text)) failures.push('film two: nobody approved the lunch by hand');
-	requireText(film, 'Nobody retyped it. Nobody chased the money.', 'film two snap line');
+	requireText(film, 'Nobody typed the order twice or chased the money.', 'film two snap line');
 	if (!/^\| RC-75 \|.*APPLIED/m.test(ledger)) failures.push('film two: RC-75 (ordering site to paid order) has no APPLIED ledger row');
 	if (/\$\d|\d+(\.\d+)?%/.test(text)) failures.push('film two: a figure is typed into a caption; use a {token} from the manifest');
 	const manifest = JSON.parse(await read('public/proof/film-dropoff/manifest.json'));
 	// "under your target" is only true while the closeout share is under it.
-	if (/\{closeoutPct\}, under your \{targetPct\}/.test(text) && !(parseFloat(manifest.closeoutPct) < parseFloat(manifest.targetPct))) {
+	if (/under your \{targetPct\} target at \{closeoutPct\}/.test(text) && !(parseFloat(manifest.closeoutPct) < parseFloat(manifest.targetPct))) {
 		failures.push(`film two: the closeout share ${manifest.closeoutPct} is not under the ${manifest.targetPct} target`);
 	}
 	if (manifest.closeoutFinal !== true) failures.push('film two: the closeout share is quoted before the review was closed');

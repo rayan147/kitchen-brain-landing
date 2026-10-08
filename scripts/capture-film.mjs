@@ -337,6 +337,18 @@ const STEPS = {
 		console.log(manifest.paid, manifest.quoted, manifest.guests, manifest.foodCostWithMisc, manifest.targetPct, manifest.packsToBuy);
 	},
 
+	// The pay link on the client's phone once paid: what the client sees after
+	// the card goes through. Read-only.
+	async payPaid() {
+		if (!manifest.payUrl) throw new Error('run the arrived step first');
+		const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: DPR, reducedMotion: 'reduce' });
+		const p = await phone.newPage();
+		await open(p, manifest.payUrl);
+		await p.getByText('Payment received').first().waitFor({ timeout: 60_000 });
+		await shoot(p, 'dropoff-pay-paid-mobile', { x: 0, y: await bannerBottom(p), width: 390, height: 844 - (await bannerBottom(p)) }, { fullPage: false });
+		await phone.close();
+	},
+
 	// The office lunch on the ordering site, on a phone, up to the review; DRY
 	// stops there, otherwise it sends the request. Frames: the dishes with the
 	// running estimate, and the review.

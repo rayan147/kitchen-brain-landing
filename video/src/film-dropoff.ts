@@ -7,7 +7,7 @@ import { DropoffManifestSchema } from "./manifest-dropoff";
 // site (order 59 on test, 2026-10-07/08). No proposal, no contract: the client
 // orders, the order approves itself on a clear day with a priced menu, the
 // client pays by card, and the kitchen shops, preps and packs. It ends on the
-// lunch's food cost the day after. About 46 seconds, no chapter cards (the
+// lunch's food cost the day after. About 48 seconds, no chapter cards (the
 // plan said about 40; the owner kept the reading time, 2026-10-08).
 //
 // Rings are measured off the frames in public/proof/film-dropoff (percent of
@@ -51,82 +51,86 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
   // clear and the menu had a price (the frame says so; nobody clicked Approve).
   arrives: {
     chapter: null,
-    seconds: 8,
+    seconds: 8.25,
     beats: [
       {
         from: 0,
         to: 3.75,
         layout: "screen",
+        // The food cost and target panels only: the order's food line counts
+        // misc and the closeout's does not, so the two dollar figures never
+        // share the film.
         frames: ["dropoff-arrived-price-desktop.png"],
-        // The order's own figure, with misc. The closeout below leaves misc
-        // out, so no caption sets the two against each other.
         caption: "It arrives priced. Food cost {foodCostWithMisc}.",
-        ring: { x: 32.5, y: 4, width: 29, height: 92 },
+        ring: { x: 1, y: 15, width: 41, height: 82 },
+        // Pulled back so the cropped panel's left edge clears the frame.
+        focus: { x: 50, y: 50, scale: 0.9 },
+        fromScale: 0.9,
       },
       {
         from: 3.75,
-        to: 8,
+        to: 8.25,
         layout: "screen",
         frames: ["dropoff-arrived-approval-desktop.png"],
         // The frame says the owner can still decline while nothing is paid;
         // the caption says so too, so "approved" does not read as lost control.
         caption:
-          "A clear day and a priced menu: approved, and you can still decline.",
+          "Clear day, priced menu, so it approved itself. You can still decline.",
         ring: { x: 1.5, y: 32, width: 97, height: 37 },
+        // Pulled back so the card's borders clear the frame edges.
+        focus: { x: 50, y: 55, scale: 0.94 },
+        fromScale: 0.94,
       },
     ],
   },
-  // The pay page on the client's phone, then the order, now Paid. (A split
-  // screen left the order's one-line header as a thin strip in a blank panel.)
+  // What the client sees once the card goes through, then the order's money
+  // card, Paid in full.
   paid: {
     chapter: null,
-    seconds: 6.5,
+    seconds: 6.25,
     beats: [
       {
         from: 0,
         to: 2.75,
-        // The kitchen's side (the client pays the whole amount up front) beside
-        // the pay page on the client's phone. Alone, the short pay page left
-        // the phone half blank.
-        layout: "split",
-        frames: [
-          "dropoff-arrived-approval-desktop.png",
-          "dropoff-pay-mobile.png",
-        ],
-        caption: "The client pays {paid} by card.",
+        layout: "phone",
+        frames: ["dropoff-pay-paid-mobile.png"],
+        caption: "{paid}, paid by card on the phone.",
       },
       {
         from: 2.75,
-        to: 6.5,
+        to: 6.25,
         layout: "screen",
         frames: ["dropoff-paid-desktop.png"],
-        caption: "Paid. Nobody retyped it. Nobody chased the money.",
+        caption: "Nobody typed the order twice or chased the money.",
         ring: { x: 79.5, y: 6, width: 16.5, height: 14 },
       },
     ],
   },
+  // The shop list cut to its first three suppliers: the test account names
+  // two others after real distributors.
   kitchen: {
     chapter: null,
-    seconds: 8,
+    seconds: 8.5,
     beats: [
       {
         from: 0,
-        to: 4,
+        to: 4.5,
         layout: "screen",
-        frames: ["shop-desktop.png"],
-        caption: "Whole packs, by supplier, for {guests} guests.",
-        // The Buy column of the first supplier's rows (the case counts).
-        ring: { x: 62, y: 18.5, width: 18, height: 28 },
+        frames: ["shop-top-desktop.png"],
+        // The amber "Uses 0.9 gal of 1.6 gal" rows are the whole packs; the
+        // caption says where the rest goes.
+        caption:
+          "Whole packs, by supplier, for {guests}. The rest stays on the shelf.",
+        ring: { x: 61.5, y: 23, width: 19, height: 38 },
       },
       {
-        from: 4,
-        to: 8,
+        from: 4.5,
+        to: 8.5,
         layout: "screen",
-        frames: ["po-desktop.png"],
+        frames: ["shop-top-desktop.png"],
         caption: "Each supplier gets only its own lines.",
-        // On top, over the dialog's subtitle (it says the same), off the
-        // Send button the frame exists for.
-        captionAt: "top",
+        // The first supplier's send row: Email, to its own address.
+        ring: { x: 3, y: 14.5, width: 94, height: 9.5 },
       },
     ],
   },
@@ -140,6 +144,11 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         layout: "screen",
         frames: ["prep-desktop.png"],
         caption: "A prep order the crew works top to bottom.",
+        // On top, with the column pulled back below it: at the bottom it cut
+        // the list's All / Left to do switch in half.
+        captionAt: "top",
+        focus: { x: 50, y: 100, scale: 0.8 },
+        fromScale: 0.8,
       },
       {
         from: 3.5,
@@ -149,10 +158,11 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
         // From "What to look at" down: the check against the client's
         // vegetarians, then the stuffed pepper row the caption names. Pulled
         // back so the caption on top sits on paper, not on the check.
-        caption: "{vegetarianPortions} stuffed peppers. Every dish checked.",
+        caption:
+          "{vegetarianPortions} stuffed peppers for the vegetarians. Every dish checked for allergens.",
         ring: { x: 3, y: 82.5, width: 93.5, height: 14 },
-        focus: { x: 50, y: 100, scale: 0.82 },
-        fromScale: 0.82,
+        focus: { x: 50, y: 100, scale: 0.76 },
+        fromScale: 0.76,
         captionAt: "top",
       },
     ],
@@ -162,21 +172,23 @@ const SCENES: Record<(typeof DROPOFF_ORDER)[number], FilmScene> = {
   // misc, the closeout does not.
   close: {
     chapter: null,
-    seconds: 10.5,
+    seconds: 11.5,
     beats: [
       {
         from: 0,
-        to: 5.5,
+        to: 6.5,
         layout: "screen",
         frames: ["closeout-desktop.png"],
         // The card's biggest figure is the over-plan amount, so the caption
-        // says it first, then the share against the target.
+        // says it first, and the ring takes in both figures it names.
         caption:
-          "The day after: {closeoutOver} {closeoutDirection} plan. Food cost {closeoutPct}, under your {targetPct} target.",
+          "The next day it came in {closeoutOver} {closeoutDirection} plan, still under your {targetPct} target at {closeoutPct}.",
         captionAt: "top",
-        ring: { x: 72.5, y: 59.5, width: 22.5, height: 16 },
+        ring: { x: 49, y: 59.5, width: 46.5, height: 17 },
+        focus: { x: 50, y: 60, scale: 0.96 },
+        fromScale: 0.96,
       },
-      { from: 5.5, to: 10.5, layout: "end", frames: [] },
+      { from: 6.5, to: 11.5, layout: "end", frames: [] },
     ],
   },
 };

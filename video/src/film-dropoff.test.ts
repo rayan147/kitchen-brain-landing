@@ -73,9 +73,9 @@ describe("the office lunch film", () => {
   });
 
   it("carries the snap line once", () => {
-    expect(
-      captions.filter((c) => c.includes("Nobody chased the money.")),
-    ).toHaveLength(1);
+    expect(captions.filter((c) => c.includes("chased the money"))).toHaveLength(
+      1,
+    );
   });
 
   // The arrival's food cost counts misc and the closeout's share does not, so

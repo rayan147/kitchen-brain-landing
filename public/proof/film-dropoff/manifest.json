@@ -6,12 +6,14 @@
     "dropoff-dishes-mobile.png",
     "dropoff-paid-desktop.png",
     "dropoff-pay-mobile.png",
+    "dropoff-pay-paid-mobile.png",
     "dropoff-review-mobile.png",
     "pack-checked-desktop.png",
     "pack-desktop.png",
     "po-desktop.png",
     "prep-desktop.png",
-    "shop-desktop.png"
+    "shop-desktop.png",
+    "shop-top-desktop.png"
   ],
   "frameSources": {
     "dropoff-dishes-mobile.png": {
@@ -67,7 +69,7 @@
     "dropoff-arrived-price-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "922f9459f",
-      "via": "crop of the arrival frame (capture-film.mjs arrived; not published: it names another test order) (PIL): the price card only, its text unchanged; the header's draft badge stays out",
+      "via": "crop of the arrival frame (capture-film.mjs arrived; not published: it names another test order): the food cost and target panels down to the bar, their text unchanged. The sales and food lines stay out: the order counts misc in its food figure and the closeout does not.",
       "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     },
     "dropoff-arrived-approval-desktop.png": {
@@ -80,6 +82,17 @@
       "host": "test.app.costcook.io",
       "app": "79e58bca0",
       "via": "crop of pack-desktop.png (PIL): from \"What to look at\" down, its text unchanged"
+    },
+    "dropoff-pay-paid-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "6a82f780a",
+      "via": "capture-film.mjs payPaid; the top 5 CSS px (the test banner's edge) cropped off"
+    },
+    "shop-top-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "922f9459f",
+      "via": "crop of shop-desktop.png (PIL): the first three supplier groups, their text unchanged; the two test suppliers named after real distributors stay out",
+      "shotBefore": "the next deploy to test (b063d7bba, stack update 2026-10-08T09:37:35Z)"
     }
   },
   "appSha": "9754b5b8e",

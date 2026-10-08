@@ -24,12 +24,14 @@
     "dropoff-dishes-mobile.png",
     "dropoff-paid-desktop.png",
     "dropoff-pay-mobile.png",
+    "dropoff-pay-paid-mobile.png",
     "dropoff-review-mobile.png",
     "pack-checked-desktop.png",
     "pack-desktop.png",
     "po-desktop.png",
     "prep-desktop.png",
-    "shop-desktop.png"
+    "shop-desktop.png",
+    "shop-top-desktop.png"
   ],
   "frameSources": {
     "dropoff-dishes-mobile.png": {
@@ -79,6 +81,14 @@
     "pack-checked-desktop.png": {
       "host": "test.app.costcook.io",
       "app": "79e58bca0"
+    },
+    "dropoff-pay-paid-mobile.png": {
+      "host": "sites-test.costcook.io",
+      "app": "6a82f780a"
+    },
+    "shop-top-desktop.png": {
+      "host": "test.app.costcook.io",
+      "app": "922f9459f"
     }
   }
 }
