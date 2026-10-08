@@ -43,7 +43,7 @@ if (!html.includes('data-events-money')) fail('the deposit sentence lost its hoo
 if (!html.includes(money)) fail('the money sentence changed; it names the card link and the by-hand record (src/lib/event-payments.ts)');
 
 // No sentence on the page may say the deposit is taken, collected, charged or
-// accepted, or that CostCook invoices the client. Same patterns as the source
+// accepted. Same patterns as the source
 // scan (scripts/lib/money-claims.mjs), run on the rendered prose.
 const prose = html.replace(/<[^>]+>/g, ' ');
 for (const [pattern, label] of moneyClaims) {
@@ -74,6 +74,16 @@ if (!paymentsSentence) {
 	if (!bookingPayments || !decode(bookingPayments).includes(paymentsSentence)) {
 		fail('the homepage payments line does not render eventPayments.homepage');
 	}
+}
+
+// The invoice (owner ruling 2026-10-08), in src/lib/event-payments.ts's own
+// words, and the limit that replaced "There is no customer invoice".
+const invoiceBody = eventPaymentsSource.match(/body:\s*'([^']+)'/)?.[1];
+if (!html.includes('data-events-invoice')) fail('the Invoice note is gone');
+if (!invoiceBody || !decode(html).includes(invoiceBody)) fail('the Invoice note does not render eventInvoice.body');
+if (decode(html).includes('There is no customer invoice')) fail('the retired "no customer invoice" limit is back');
+if (!decode(html).includes('An invoice comes from an accepted proposal, so an online order has none.')) {
+	fail('the online-order invoice limit is gone');
 }
 
 // The limits, still five.
@@ -133,5 +143,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-	'Events & proposals page contract passed: the money sentence, the acceptance boundary, six steps in order, five limits, and the Payments note.'
+	'Events & proposals page contract passed: the money sentence, the acceptance boundary, six steps in order, five limits, the Payments note and the Invoice note.'
 );

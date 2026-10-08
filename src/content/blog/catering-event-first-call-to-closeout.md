@@ -1,13 +1,13 @@
 ---
 title: "Running a catering event in CostCook, from the first call to closeout"
 description: "One wedding followed through every step: the inquiry, the costed menu, the proposal they accept on their phone, the agreement, the deposit, booking, buying, prep, pack, receiving and the food-cost closeout."
-publishedDate: 2026-10-01
+publishedDate: 2026-09-17
 category: Running the event
 menuGroup: Plan and buy
 menuIcon: calendar
 featured: false
 order: 12
-readMinutes: 9
+readMinutes: 10
 featureHref: /features/events-and-proposals
 featureLabel: See events and proposals in CostCook
 ---
@@ -78,6 +78,8 @@ The block then shows **Asked for** against **Received**, so you can see what's o
 Sometimes you book anyway: a regular client, a deposit promised by Friday. **Book anyway** asks why, and your reason stays on the event for whoever asks in six weeks.
 
 Behind all this sits the kitchen draft. After their yes, press **Prepare the kitchen draft**; the deposit is asked for from there. It isn't on a day yet, and it doesn't pull anyone onto the crew.
+
+When they want one document of what they owe, open the order's **Money** tab and press **Issue invoice**. It's made from the proposal they accepted, so the total is the one they signed, and what they've already paid comes off it. **Send invoice** emails them a link that doesn't expire. From it they pay what's due next by card, or see how to pay you another way, from the instructions you set, and they can print it or save it as a PDF.
 
 ## 8. Confirm order: the kitchen's numbers lock
 

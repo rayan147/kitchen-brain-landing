@@ -42,7 +42,11 @@ const expectedPosts = [
 	'review-supplier-invoice',
 	'catering-event-first-call-to-closeout',
 	// RC-73: the invoice email guides publish only with the feature (src/lib/blog.ts).
-	...(invoiceEmailLive ? [setupGuideSlug, 'supplier-credit-memo-by-email'] : [])
+	...(invoiceEmailLive ? [setupGuideSlug, 'supplier-credit-memo-by-email'] : []),
+	// The ordering guides publish with online ordering, which check-landing-claims
+	// pins at 'yes' (RC-59); the owner lifted the pay-link hold on 2026-10-08.
+	'take-catering-orders-online',
+	'catering-order-form-on-your-website'
 ];
 // The menu spells the published count (BlogMenuContents, spellCapital), so the
 // pin follows the list above instead of a typed word.
@@ -120,6 +124,11 @@ for (const [slug, text, label] of [
 	...(invoiceEmailLive
 		? [['supplier-credit-memo-by-email', 'It adds no purchases and changes no prices.', 'credit never moves a price']]
 		: []),
+	// RC-59: approval is not confirmation; the film's own figure, labelled as its kitchen.
+	['take-catering-orders-online', 'It isn’t booked until you approve it', 'approval boundary'],
+	['take-catering-orders-online', 'pays $1,273.08 by card', 'film figure'],
+	['catering-order-form-on-your-website', 'Your web person pastes two lines. You never touch the code.', 'snap line'],
+	['catering-order-form-on-your-website', 'Not taking online orders right now.', 'not-live troubleshooting'],
 ]) {
 	requireText(readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'), text, `${slug} ${label}`);
 }

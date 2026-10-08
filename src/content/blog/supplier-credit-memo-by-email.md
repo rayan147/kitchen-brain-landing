@@ -1,7 +1,7 @@
 ---
 title: "Your supplier emailed a credit memo. Where does it go?"
 description: "A credit for a short case is not a cheaper price. Send it to your invoice address, check it reads as a credit, and see it named beside the month's food spend."
-publishedDate: 2026-10-08
+publishedDate: 2026-09-24
 category: Buying & suppliers
 menuGroup: Cost the work
 menuIcon: credit

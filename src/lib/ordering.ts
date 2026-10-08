@@ -31,7 +31,9 @@
  *  3. Card payment is Stripe Connect on the kitchen's own account. (Event
  *     deposits and balances are paid by card too since the owner ruling of
  *     2026-10-06; src/lib/event-payments.ts.) No saved cards, no automatic
- *     refunds, one reminder per balance, and no client invoices.
+ *     refunds, one reminder per balance, and no invoice for an online order
+ *     (an invoice is issued from an event's accepted proposal; owner ruling
+ *     2026-10-08, src/lib/event-payments.ts).
  *  4. The widget protocol has five outbound states and no inbound command: no
  *     navigation, HTML, script, client-contact or payment payload crosses into
  *     the frame. Approved embed origins are defence in depth, not
@@ -107,7 +109,7 @@ export const ordering = {
 		'The pay link is good for 72 hours. If nothing is paid, the day is freed and the order waits to be approved again.',
 		// "online orders only" contradicted event card payment, live since the
 		// owner ruling of 2026-10-06 (chef audit 2026-10-07).
-		'Card payment runs through your own Stripe account. No saved cards, no automatic refunds, one reminder per balance, and no client invoices.',
+		'Card payment runs through your own Stripe account. No saved cards, no automatic refunds, one reminder per balance, and no invoice for an online order.',
 		'The widget speaks five states outward and takes no inbound command: nothing navigates, injects or reaches into the frame.'
 	]
 } as const;

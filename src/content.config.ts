@@ -16,7 +16,8 @@ const blog = defineCollection({
 		menuGroup: z.enum(['Cost the work', 'Plan and buy']),
 		menuIcon: z.enum([
 			'calculator', 'percent', 'yield', 'guests', 'packs', 'prices',
-			'receiving', 'variance', 'prep', 'invoice', 'calendar', 'credit'
+			'receiving', 'variance', 'prep', 'invoice', 'calendar', 'credit',
+			'order', 'web'
 		]),
 		featured: z.boolean().default(false),
 		order: z.number().int().positive(),

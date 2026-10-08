@@ -37,7 +37,7 @@
  */
 import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
-import { eventPayments } from '../../lib/event-payments';
+import { eventInvoice, eventPayments } from '../../lib/event-payments';
 import { eventProof as proof } from '../../lib/proof';
 import { acceptanceBoundary, depositMethods, eventSteps, type EventStepName } from '../../lib/events';
 
@@ -61,7 +61,9 @@ const pipelineTabs = ['Needs attention', 'Booked · coming up', 'In pipeline', '
 const limits = [
 	'A kitchen draft holds one service, so an event with a lunch and a dinner is booked by hand for now.',
 	'Confirm order checks the day’s room, not whether the agreement is signed or the deposit has arrived.',
-	'There is no customer invoice in CostCook.',
+	// Was "There is no customer invoice in CostCook." until the owner ruling of
+	// 2026-10-08; the invoice is described beside Payments below.
+	eventInvoice.onlineOrders,
 	'Nothing is tracked after Packed: no delivery step, no drivers and no staffing roster.',
 	'Clients is for owners and managers, and a client’s page shows no money.'
 ] as const;
@@ -235,6 +237,11 @@ const payments = eventPayments;
 				<p class="coming-title">{payments.title}</p>
 				<p>{payments.homepage}</p>
 			</div>
+			<div class="coming-note" data-events-invoice data-reveal>
+				<p class="ticket-label">Invoice</p>
+				<p class="coming-title">{eventInvoice.title}</p>
+				<p>{eventInvoice.body}</p>
+			</div>
 		</div>
 	</section>
 
@@ -321,6 +328,7 @@ const payments = eventPayments;
 	.limit-list { display: grid; gap: 1.25rem; margin-top: 2.5rem; max-width: 76ch; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
 	.limit-list > li { padding-top: .9rem; border-top: 1px solid var(--color-hairline-strong); font-size: var(--text-body-sm); line-height: 1.55; color: var(--color-ink-soft); }
 	.coming-note { max-width: 46rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
+	.coming-note + .coming-note { margin-top: 1rem; }
 	.coming-title { margin-top: .4rem; font-weight: 700; }
 	.coming-note p:last-child { margin-top: .4rem; color: var(--color-ink-soft); }
 

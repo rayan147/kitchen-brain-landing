@@ -66,7 +66,7 @@
 | 8 Fun and Games | Proposal, agreement, deposit. |
 | 9 Midpoint | Book the event: the check that lists what is missing. |
 | 10 Bad Guys | Head count changes, short deliveries, price moves. |
-| 11 All Is Lost | The limits (one service, no invoice, nothing after Packed). |
+| 11 All Is Lost | The limits (one service, nothing after Packed). |
 | 12 Finale | Closeout, then Copy a past event for the next call. |
 
 ### Step 4: Scenes
@@ -100,3 +100,9 @@ links its deeper guide.
 ### Step 11: Revise
 Cut online orders (held). Cut charge lines and payment terms (gated on the
 landing). Cut "This event is booked" (no such string in the app).
+
+2026-10-08 revision (owner: customer invoices, "yes update them"): step 7
+gains Issue invoice and Send invoice on the draft's Money tab, read off
+kitchen-brain develop 185451a1b (`CustomerInvoiceCard.svelte`,
+`SendInvoiceAction.svelte`, `routes/invoice`, `receivables/invoice-pay.ts`).
+The QuickBooks line on the card stays out (Coming here).

@@ -190,3 +190,25 @@ C. **Blog menu.** Either a third group, "Take the order" (posts 1 to 3 together)
   pass against 7a7e407d9; their fixes are in. Open for the owner: the truth
   pass found a customer invoice (Issue invoice / Send invoice) at 7a7e407d9,
   while the live events page says "There is no customer invoice in CostCook."
+
+## Decisions, 2026-10-08, second pass (owner: "no prod will deploy, there is no traffic now so add the paylink, 2 yes update them")
+
+- **A reversed: Gate 0 lifted.** Production will deploy; no traffic yet. Posts 1
+  and 2 written: `take-catering-orders-online` (order 14) and
+  `catering-order-form-on-your-website` (order 15), menu group Plan and buy,
+  icons `order` and `web`. `src/lib/blog.ts` now also holds ordering posts while
+  ordering reads Coming. Labels read off kitchen-brain develop 185451a1b.
+- **Customer invoice claimed.** The events page limit "There is no customer
+  invoice in CostCook." became "An invoice comes from an accepted proposal, so
+  an online order has none.", an Invoice note sits beside Payments
+  (`eventInvoice` in `src/lib/event-payments.ts`), the event guide's step 7
+  issues and sends it, and the client invoicing guard in
+  `scripts/lib/money-claims.mjs` is retired. `ordering.ts` says "no invoice for
+  an online order". The Sage film line in `home.ts` is unchanged (it matches
+  the footage).
+- **Dates:** still one week apart, newest today: order 1 on 2026-07-02 through
+  order 15 on 2026-10-08.
+- **Reviews:** kb-caterer-owner, humanize-reviewer and a develop source truth
+  pass; fixes applied (rule list order, card vs collect-it-yourself email,
+  auto-approve conditions, Review ordering site label, misc basis in the
+  worked lunch, frame wording in the web-person note).

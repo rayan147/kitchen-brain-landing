@@ -49,7 +49,7 @@
 | 7 B Story | The client, deciding on their phone at their own pace. |
 | 8 Fun and Games | Pipeline tabs, menu with live food cost, preview and send, remind/extend/withdraw, update the offer, agreement, kitchen draft, deposit tracked, Confirm order, calendar and the day's room. |
 | 9 Midpoint | "This event is booked." and the order is on the calendar against the day's vans. |
-| 10 Bad Guys | Limits: deposit recorded by hand; one service per kitchen draft; acceptance is not a signature or a booking; nothing tracked after Packed; no customer invoice. |
+| 10 Bad Guys | Limits: deposit recorded by hand; one service per kitchen draft; acceptance is not a signature or a booking; nothing tracked after Packed; an online order has no invoice. |
 | 11 All Is Lost | Keep chasing yeses in email and find the loss at closeout. |
 | 12 Finale | Start the trial with the next real inquiry. |
 
@@ -165,3 +165,14 @@ text are unchanged.
   reworded on the homepage pass with its meaning held (card, email link,
   deposit and balance, sent whenever you choose, a reminder with a pay link
   three days before if still owed). This page's contract still matches it.
+
+### Revision 2026-10-08: the customer invoice
+
+Owner ruling ("yes update them"): the customer invoice is live. The limit
+"There is no customer invoice in CostCook." became "An invoice comes from an
+accepted proposal, so an online order has none." (still five limits), and an
+Invoice note sits beside Payments in `src/lib/event-payments.ts`'s words
+(`eventInvoice`). Evidence: kitchen-brain develop 185451a1b,
+`CustomerInvoiceCard.svelte`, `SendInvoiceAction.svelte`, `routes/invoice`,
+`receivables/invoice-pay.ts`, `receivables/read.ts`. The client invoicing
+guard in `scripts/lib/money-claims.mjs` is retired. QuickBooks stays out.
