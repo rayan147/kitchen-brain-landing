@@ -16,7 +16,7 @@ const costPath = [
 	{ name: 'Unit', note: 'The price per pound, quart, or each.' },
 	{ name: 'Edible', note: 'What survives the trim.' },
 	{ name: 'Plate', note: 'That ingredient’s share of one dish.' },
-	{ name: 'Event', note: 'The food cost the quote is judged against.' }
+	{ name: 'Event', note: 'The food cost you hold the quote up against.' }
 ];
 
 const dishes = ['Roast chicken', 'Grain bowl', 'Lunch box', 'Canapé tray', 'Family meal'];
@@ -24,8 +24,8 @@ const dishes = ['Roast chicken', 'Grain bowl', 'Lunch box', 'Canapé tray', 'Fam
 const recipeLifecycle = [
 	{ name: 'Draft', detail: 'Private while the recipe is still being built.' },
 	{ name: 'Ready', detail: 'Required recipe facts are checked before publishing.' },
-	{ name: 'Published', detail: 'The current approved version is explicit.' },
-	{ name: 'Kitchen view', detail: 'The crew reads the working method without edit controls.' },
+	{ name: 'Published', detail: 'Everyone can see which version is current.' },
+	{ name: 'Kitchen view', detail: 'The crew reads the method. They cannot edit it.' },
 	{ name: 'History', detail: 'Earlier published versions stay available to read.' }
 ] as const;
 
@@ -71,6 +71,7 @@ const faqItems = [
 ---
 
 <!-- story: docs/stories/recipes-and-costing-redesign-prompt.story.md -->
+<!-- story: docs/stories/recipes-and-costing-redesign-prompt.story.md -->
 <article class="recipes-costing">
 	<section class="hero" aria-labelledby="recipes-costing-heading">
 		<div class="container-page hero-grid">
@@ -81,7 +82,7 @@ const faqItems = [
 					<span>Recipes and costing</span>
 				</nav>
 				<h1 id="recipes-costing-heading" class="feature-display">Cost a recipe before you quote.</h1>
-				<p class="hero-lede">Keep ingredients, quantities, method and food cost together. Start with one recipe and its current ingredient prices, then scale the portions without changing the original.</p>
+				<p class="hero-lede">Ingredients, amounts, method and food cost live on one recipe. Start with one dish and what you pay for its ingredients today. Scale the portions and the original stays as you wrote it.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -156,11 +157,11 @@ const faqItems = [
 	<section class="split-problem" aria-labelledby="split-heading">
 		<div class="container-page problem-grid">
 			<div data-reveal>
-				<h2 id="split-heading">Three places. One answer due today.</h2>
+				<h2 id="split-heading">Right now one dish lives in three places.</h2>
 				<p>
 					The method is in a binder. The current case price is in a purchase record. The quote is
-					waiting in a spreadsheet. The split feels harmless until the kitchen and the customer
-					need their answers on the same afternoon.
+					waiting in a spreadsheet. That works fine until the kitchen and the client both need
+					an answer the same afternoon.
 				</p>
 			</div>
 			<figure class="handoff" data-reveal>
@@ -188,7 +189,7 @@ const faqItems = [
 					<span>Quote</span>
 					<strong>What you say</strong>
 				</div>
-				<figcaption>One working recipe should carry both the method and the math.</figcaption>
+				<figcaption>The method and the math belong on the same recipe.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -201,7 +202,7 @@ const faqItems = [
 		</a>
 		<a href="#recipe-lifecycle">
 			<span>Publishing and recipe history</span>
-			<small>Move from a private draft to kitchen view, with earlier versions still readable.</small>
+			<small>From a private draft to what the crew reads, with old versions still there.</small>
 			<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg>
 		</a>
 		<a href="#recipe-costing">
@@ -215,11 +216,11 @@ const faqItems = [
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
 				<h2 id="management-heading">
-					One working recipe, from first draft to prep sheet.
+					One recipe, from first draft to prep sheet.
 				</h2>
 				<p>
-					Build the dish while the details are in your hands. Keep ingredients, prep, yield,
-					sub-recipes, and the version the kitchen should use in one record.
+					Write the dish down while it is still in your hands. Ingredients, prep, yield,
+					sub-recipes and the version the kitchen should cook from all stay on one recipe.
 				</p>
 			</div>
 
@@ -275,15 +276,15 @@ const faqItems = [
 			<div class="feature-scenes">
 				<article>
 					<h3>Build without leaving the recipe.</h3>
-					<p>Type, pick, and move to the next line. Add a missing ingredient without losing the recipe already in your hands.</p>
+					<p>Type, pick, next line. Missing an ingredient? Add it right there without losing what you have built.</p>
 				</article>
 				<article>
-					<h3>Scale without rewriting the original.</h3>
-					<p>Preview a target amount or work from what you have on hand. The saved recipe stays exactly where you left it.</p>
+					<h3>Scale it and leave the original alone.</h3>
+					<p>Preview a bigger or smaller batch, or work from what you have on hand. The saved recipe stays exactly as you left it.</p>
 				</article>
 				<article>
-					<h3>Hand off the current version.</h3>
-					<p>Print a clean kitchen sheet with the time it was printed, so the paper on the prep table says when it left the system.</p>
+					<h3>Print the version the kitchen cooks from.</h3>
+					<p>The kitchen sheet prints with the time on it, so the paper on the prep table tells you how old it is.</p>
 				</article>
 			</div>
 		</div>
@@ -292,8 +293,8 @@ const faqItems = [
 	<section id="recipe-lifecycle" class="product-section lifecycle" aria-labelledby="lifecycle-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="lifecycle-heading">The kitchen version is a decision, not the last tab left open.</h2>
-				<p>Build in private, check readiness, publish deliberately, and give the crew a read-only kitchen view. Earlier published versions remain available when you need to see what changed.</p>
+				<h2 id="lifecycle-heading">You pick the version the kitchen cooks from.</h2>
+				<p>Build it in private. Once it passes the ready check, you publish it, and the crew gets a kitchen view they can read but not edit. Earlier published versions stay there when you need to see what changed.</p>
 			</div>
 			<figure class="lifecycle-path" data-reveal>
 				<ol role="list">
@@ -301,12 +302,12 @@ const faqItems = [
 						<li><span>{String(index + 1).padStart(2, '0')}</span><strong>{step.name}</strong><p>{step.detail}</p></li>
 					))}
 				</ol>
-				<figcaption>Archive and restore sit beside this path for owners; they do not erase the published history.</figcaption>
+				<figcaption>Owners can also archive and restore. Neither one erases the published history.</figcaption>
 			</figure>
 			<div class="filing-strip" data-reveal>
-				<div><h3>File it the way the kitchen looks for it.</h3><p>Collections, tags, stations and shelves give a growing recipe book more than one useful way back in.</p></div>
+				<div><h3>File it the way the kitchen looks for it.</h3><p>Collections, tags, stations and shelves. When the book gets big, there is more than one way back to a recipe.</p></div>
 				<ul role="list"><li>Collections</li><li>Tags</li><li>Stations</li><li>Shelves</li></ul>
-				<div><h3>Keep the method in working order.</h3><p>Structured method steps can be reordered without turning the full procedure into one loose paragraph.</p></div>
+				<div><h3>Keep the method in steps.</h3><p>Structured method steps move up and down, so the method never turns into one long paragraph.</p></div>
 			</div>
 		</div>
 	</section>
@@ -315,11 +316,11 @@ const faqItems = [
 		<div class="container-page">
 			<div class="section-intro costing-intro" data-reveal>
 				<h2 id="costing-heading">
-					See the cost change before the quote does.
+					Catch a cost change before it reaches the quote.
 				</h2>
 				<p>
-					A case price only becomes useful after the pack, usable yield, sub-recipe, portion,
-					and guest count have had their say. Keep every step open to inspection.
+					A case price tells you little until the pack size, the usable yield, the sub-recipe,
+					the portion and the head count have had their say. Every step stays open so you can check it.
 				</p>
 			</div>
 
@@ -333,19 +334,19 @@ const faqItems = [
 						</li>
 					))}
 				</ol>
-				<figcaption>From case price to event cost. Every step stays available when a number needs checking.</figcaption>
+				<figcaption>Case price to event cost. When a number looks off, every step is there to check.</figcaption>
 			</figure>
 
 			<div class="costing-evidence">
 				<div class="evidence-copy" data-reveal>
-					<h3>Open the arithmetic.</h3>
+					<h3>Show the math.</h3>
 					<p>
-						Purchased amount, yield, quantity to buy, prep state, and cost contribution sit on
-						the same line. Open any calculation and follow the number back to its facts.
+						What you bought, the yield, how much to buy, the prep state and what the line adds to
+						the cost all sit together. Open any of it and trace the number back.
 					</p>
 					<ul role="list">
 						<li>Missing prices are named instead of reading as zero.</li>
-						<li>Every line reconciles to the recipe total.</li>
+						<li>Every line adds up to the recipe total.</li>
 						<li>Trim and cooking loss remain separate facts.</li>
 					</ul>
 				</div>
@@ -377,10 +378,10 @@ const faqItems = [
 					/>
 				</figure>
 				<div>
-					<h3>Price the menu before commitment.</h3>
+					<h3>Price the menu before you commit.</h3>
 					<p>
-						See cost per guest against the price you plan to charge, then compare the frozen quote
-						with today's prices after the order is confirmed.
+						See cost per guest next to what you plan to charge. Once the order is confirmed, hold
+						the frozen quote up against today's prices.
 					</p>
 				</div>
 			</div>
@@ -392,8 +393,8 @@ const faqItems = [
 			<div data-reveal>
 				<h2 id="connected-heading">A sauce is one recipe, even in five dishes.</h2>
 				<p>
-					Cost the batch once. Reuse it wherever it belongs. When its facts change, you can see
-					which recipes and menus are touched before you decide what to do next.
+					Cost the batch once and use it wherever it goes. When something in it changes, you see
+					which recipes and menus it touches before you decide what to do.
 				</p>
 			</div>
 			<figure class="subrecipe-map" data-reveal>
@@ -406,7 +407,7 @@ const faqItems = [
 				<ul role="list">
 					{dishes.map((dish) => <li>{dish}</li>)}
 				</ul>
-				<figcaption>One maintained component, reused without copying its costing facts into five places.</figcaption>
+				<figcaption>One sauce in five dishes, costed in one place.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -415,7 +416,7 @@ const faqItems = [
 		<div class="container-page">
 			<div class="capability-heading" data-reveal>
 				<div>
-					<h2 id="capabilities-heading">The complete Recipes & Costing list.</h2>
+					<h2 id="capabilities-heading">What is in Recipes & Costing.</h2>
 					<p>Open the details to check what is available today.</p>
 				</div>
 				<p class="count"><strong>{capabilityCount}</strong><span>shipped capabilities</span></p>
@@ -444,7 +445,7 @@ const faqItems = [
 		<div class="container-page faq-grid">
 			<div class="faq-intro" data-reveal>
 				<h2 id="faq-heading">Frequently asked questions</h2>
-				<p>The practical questions that come up before you bring a real recipe into the room.</p>
+				<p>What people ask before they bring a real recipe in.</p>
 			</div>
 
 			<div class="faq-list">
@@ -466,8 +467,8 @@ const faqItems = [
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
 			<div>
-				<h2 id="closing-heading">Ready for the line. Ready to price.</h2>
-				<p>Bring one real menu and follow it from recipe to quote, with the working shown.</p>
+				<h2 id="closing-heading">Start with the dish you sell most.</h2>
+				<p>Bring one real menu and follow it from recipe to quote, with the math showing.</p>
 			</div>
 			<div class="closing-actions">
 				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">

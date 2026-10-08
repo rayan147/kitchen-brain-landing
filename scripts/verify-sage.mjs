@@ -114,9 +114,10 @@ try {
 			};
 		})()`);
 		if (!state.title.includes('Sage kitchen assistant')) throw new Error(`${width}: wrong title`);
-		if (state.h1 !== 'Ask your kitchen. Check the answer.') throw new Error(`${width}: wrong H1`);
+		if (state.h1 !== 'Ask Sage about your kitchen.') throw new Error(`${width}: wrong H1`);
 		if (state.status !== 'In the app today') throw new Error(`${width}: availability drifted`);
-		if (state.faqCount !== 6 || state.abilityCount !== 12) throw new Error(`${width}: list count drifted`);
+		// 13 since 2026-09-27: the guest-count draft joined the list (RC-49, 23818c8).
+		if (state.faqCount !== 6 || state.abilityCount !== 13) throw new Error(`${width}: list count drifted`);
 		if (state.videoSources.join(',') !== 'video/webm,video/mp4') throw new Error(`${width}: video fallbacks drifted`);
 		if (state.videoTrack !== '/proof/sage-walkthrough.vtt') throw new Error(`${width}: caption track drifted`);
 		if (state.scrollWidth !== state.innerWidth) throw new Error(`${width}: horizontal overflow ${state.scrollWidth}/${state.innerWidth}`);

@@ -15,7 +15,7 @@ const deliveryLines = [
 const recoveryStates = [
 	{ label: 'Send failed', action: 'Retry the same PO', note: 'The failure stays on the record.' },
 	{ label: 'Short or missing', action: 'Keep it on the rebuy list', note: 'Mark handled or reopen it later.' },
-	{ label: 'Unexpected line', action: 'Review before posting', note: 'Do not turn an unplanned item into a silent purchase.' }
+	{ label: 'Unexpected line', action: 'Review before posting', note: 'Something you never ordered does not sneak in as a purchase.' }
 ] as const;
 
 // Considered Strategy; not used because these FAQ and evidence rows are static
@@ -51,7 +51,7 @@ const faqItems = [
 			<div class="hero-copy">
 				<nav aria-label="Breadcrumb" class="breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Purchasing & receiving</span></nav>
 				<h1 id="purchasing-heading">Check the delivery against the order you sent.</h1>
-				<p class="hero-lede">Review a purchase order for each supplier. When it arrives, record the quantities and prices you received, then save the delivery. Shortages stay visible for follow-up.</p>
+				<p class="hero-lede">Look over one purchase order per supplier. When the truck shows up, put in what actually came and what it cost, then save the delivery. Anything short stays on the list until you deal with it.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -78,7 +78,7 @@ const faqItems = [
 
 	<section class="problem" aria-labelledby="problem-heading">
 		<div class="container-page problem-grid">
-			<div><h2 id="problem-heading">Ten cases ordered. Nine at the back door is not ten in the walk-in.</h2><p>A tidy purchase order describes the promise. Receiving records the delivery as it is: short, over, substituted, missing, or unexpected.</p></div>
+			<div><h2 id="problem-heading">Ten cases ordered. Nine at the back door is not ten in the walk-in.</h2><p>The purchase order is what they promised. Receiving is what showed up: short, over, subbed, missing, or something you never ordered.</p></div>
 			<div class="door-scene" role="img" aria-label="An illustrative supplier order and receiving slip disagree by one case">
 				<div><small>Supplier order</small><strong>10 cases</strong><span>Sent Aug 27 · 3:42 PM</span></div>
 				<div class="door-mark" aria-hidden="true">≠</div>
@@ -94,7 +94,7 @@ const faqItems = [
 
 	<section id="send-the-order" class="product-section send-section" aria-labelledby="send-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="send-heading">Start with the promise the supplier actually received.</h2><p>Confirming an event offers a purchase order for each supplier. Review the exact email, print a stable PO, or record that you handled it yourself.</p></div>
+			<div class="section-intro"><h2 id="send-heading">Start with the order the supplier actually got.</h2><p>When you confirm an event, it offers a purchase order for each supplier. Read the exact email before it goes, print the PO, or mark that you handled it yourself.</p></div>
 			<figure class="po-sheet">
 				<div class="po-main">
 					<div class="panel-bar"><span>Purchase order PO-1048</span><span>Review before sending</span></div>
@@ -114,7 +114,7 @@ const faqItems = [
 
 	<section id="receive-the-delivery" class="product-section receive-section" aria-labelledby="receive-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="receive-heading">Once it is sent, those same lines are ready at the door.</h2><p>A sent purchase order creates the receiving checklist. Change ordered to arrived without building a second record from the delivery slip.</p></div>
+			<div class="section-intro"><h2 id="receive-heading">Once it is sent, those same lines are ready at the door.</h2><p>Send the PO and the receiving checklist is already built. At the back door you change ordered to arrived. Nobody rebuilds it from the delivery slip.</p></div>
 			<figure class="receiving-board">
 				<div class="receiving-head"><span>Receive PO-1048 · Northline Foods</span><span>Illustrative delivery</span></div>
 				<div class="line-head"><span>Ingredient</span><span>Ordered</span><span>Arrived</span><span>Price / case</span><span>State</span></div>
@@ -127,21 +127,21 @@ const faqItems = [
 
 	<section class="posting-proof" aria-labelledby="posting-heading">
 		<div class="container-page posting-grid">
-			<div><h2 id="posting-heading">The actual delivery becomes the buying fact.</h2><p>Save the reviewed delivery once. Its quantities and prices update purchases and ingredient prices together. Unresolved shortages stay on the follow-up list.</p></div>
+			<div><h2 id="posting-heading">What actually came in is what gets recorded.</h2><p>Save the checked delivery once. Its quantities and prices go into your purchases and your ingredient prices together. Anything still short stays on the follow-up list.</p></div>
 			<div class="posting-record"><span>After posting · illustrative</span><div><small>Purchases recorded</small><strong>3 lines · $643.20</strong></div><div><small>Current pack price</small><strong>$46.80 / case</strong></div><div><small>Rebuy list</small><strong>1 case open</strong></div></div>
 		</div>
 	</section>
 
 	<section class="recovery" aria-labelledby="recovery-heading">
 		<div class="container-page recovery-grid">
-			<div><h2 id="recovery-heading">A problem at the handoff keeps a recovery path.</h2><p>Send failures, short lines, and unexpected items do not collapse into one warning. Each one says what happened and what you can do next.</p></div>
+			<div><h2 id="recovery-heading">When something goes wrong at the door, there is a way back.</h2><p>A failed send, a short line and a surprise item each get their own warning. Each one says what happened and what you can do next.</p></div>
 			<div class="recovery-list">{recoveryStates.map((state) => <div><span class="status review">{state.label}</span><strong>{state.action}</strong><small>{state.note}</small></div>)}</div>
 		</div>
 	</section>
 
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
-			<div><h2 id="capabilities-heading">The complete Purchasing & receiving list.</h2><p>Open the full shipped list when you want the details.</p><p class="count"><strong>{purchasingGroup.items.length}</strong><span>shipped capabilities</span></p></div>
+			<div><h2 id="capabilities-heading">What is in Purchasing & receiving.</h2><p>Open the full shipped list when you want the detail.</p><p class="count"><strong>{purchasingGroup.items.length}</strong><span>shipped capabilities</span></p></div>
 			<details id="features-purchasing"><summary><span>See all {purchasingGroup.items.length} shipped capabilities</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><ul role="list">{purchasingGroup.items.map((item) => <li><strong>{item.lead}</strong> <span>{item.detail}</span></li>)}</ul></details>
 		</div>
 	</section>
@@ -151,7 +151,7 @@ const faqItems = [
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">
-		<div class="container-page closing-grid"><div><h2 id="closing-heading">Walk back into prep with one record.</h2><p>Bring one real supplier order. Follow it from the message you send to the quantity, price, and shortfall you receive.</p></div><div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div></div>
+		<div class="container-page closing-grid"><div><h2 id="closing-heading">Walk back into prep with one record.</h2><p>Bring one real supplier order. Follow it from the order you send to what shows up, what it cost and what is still short.</p></div><div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div></div>
 		<div class="container-page onward"><a href="/features">See every CostCook feature</a></div>
 	</section>
 </article>

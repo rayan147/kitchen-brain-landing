@@ -117,7 +117,7 @@ try {
 			viewportHeight: innerHeight
 		};
 	})()`);
-	assert(desktop.title?.startsWith('One confirmed order.'), 'desktop: page identity is missing');
+	assert(desktop.title?.startsWith('Turn one event into'), 'desktop: page identity is missing');
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest action target is ${desktop.minTarget}px`);
 	assert(desktop.chapters, 'desktop: a required story chapter is missing');
@@ -168,7 +168,7 @@ try {
 	await send('Emulation.setScriptExecutionDisabled', { value: true });
 	await navigate();
 	const noScript = await evaluate(`(() => ({ heading: document.querySelector('h1')?.textContent.trim(), capabilityCount: document.querySelectorAll('#features-orders li').length }))()`);
-	assert(noScript.heading?.startsWith('One confirmed order.'), 'no JavaScript: hero did not render');
+	assert(noScript.heading?.startsWith('Turn one event into'), 'no JavaScript: hero did not render');
 	assert(noScript.capabilityCount > 0, 'no JavaScript: capability list did not render');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

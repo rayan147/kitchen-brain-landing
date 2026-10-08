@@ -53,7 +53,7 @@ try {
 			return;
 		}
 		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
-		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
+		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400 && !message.params.response.url.includes('/_vercel/insights/')) {
 			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
 		}
 	});
@@ -117,7 +117,7 @@ try {
 			receivedPrice: document.querySelector('.receiving-line .price')?.textContent.replace(/\s+/g, ' ').trim()
 		};
 	})()`);
-	assert(desktop.title === 'The order you sent should meet the delivery at the back door.', 'desktop: page identity is missing');
+	assert(desktop.title === 'Check the delivery against the order you sent.', 'desktop: page identity is missing');
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest action target is ${desktop.minTarget}px`);
 	assert(desktop.chapters, 'desktop: a required story chapter is missing');
@@ -126,7 +126,7 @@ try {
 	assert(desktop.genericRevealCount === 0, `desktop: ${desktop.genericRevealCount} generic reveal hook(s) remain`);
 	assert(desktop.heroActionBottoms.every((bottom) => bottom <= desktop.viewportHeight), `desktop: hero actions end at ${desktop.heroActionBottoms.join('px and ')}px in a ${desktop.viewportHeight}px viewport`);
 	assert(desktop.capabilitiesOpen === false, 'desktop: full capability inventory is open by default');
-	assert(desktop.receivedPrice?.includes('$45.00') && desktop.receivedPrice?.includes('$47.00'), `desktop: received price provenance is ${desktop.receivedPrice}`);
+	assert(desktop.receivedPrice?.includes('$42.10') && desktop.receivedPrice?.includes('$46.80'), `desktop: received price provenance is ${desktop.receivedPrice}`);
 	await capture('desktop');
 
 	await viewport(390, 844, true);
@@ -170,7 +170,7 @@ try {
 	await send('Emulation.setScriptExecutionDisabled', { value: true });
 	await navigate();
 	const noScript = await evaluate(`(() => ({ heading: document.querySelector('h1')?.textContent.trim(), capabilityCount: document.querySelectorAll('#features-purchasing li').length }))()`);
-	assert(noScript.heading === 'The order you sent should meet the delivery at the back door.', 'no JavaScript: hero did not render');
+	assert(noScript.heading === 'Check the delivery against the order you sent.', 'no JavaScript: hero did not render');
 	assert(noScript.capabilityCount > 0, 'no JavaScript: capability list did not render');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
 	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);

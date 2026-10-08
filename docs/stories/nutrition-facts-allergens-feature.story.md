@@ -158,3 +158,28 @@
 - **Allergens:** Parmesan and unsalted butter carry Contains: milk; dietary
   columns stay Not reviewed. The phone frame is those two cards.
 - Snap line unchanged: "A blank row beats a made-up zero."
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. Copy only; no markup, link,
+CTA, number, alt text or screenshot caption changed.
+- **Slogan and consultant headings out:** "Sunday night should not start two
+  new spreadsheets." is "One question about the polenta, two new
+  spreadsheets."; "An allergen tag needs more than a familiar ingredient
+  name." is "A name that sounds right is not an allergen answer."; "The sheet
+  carries the answer and its limits." is "The label prints its own limits.";
+  "{n} shipped details, without the safety claims they cannot carry." is
+  "{n} things it does today, and none of the safety claims it cannot back up."
+- **Evidence path in kitchen words:** "Evidence enters / The ingredient
+  carries it / The recipe rolls it up" became "Where it comes from / It stays
+  on the ingredient / The recipe adds it up"; badges "ride along to pack-out,
+  where somebody actually needs the answer."
+- **Hero and meta:** the suitability boundary is kept as a plain sentence:
+  "Whether the food suits a given guest is still your kitchen's call to
+  review." The label still "will not print until nothing is" missing.
+- **Kept on purpose (pinned or boundary):** the H1, "Print label switches
+  on", "A blank row beats a made-up zero.", "no screen makes an allergen-free
+  claim", the closing heading "Print the answer. Keep the evidence.", the
+  not-claimed list in nutrition.ts (including "not a retail-label compliance
+  claim"), the printed-contents list, FAQ and capability items. "A name match
+  never invents food-safety data" is now "A matching name never makes up
+  food-safety data", the same boundary.

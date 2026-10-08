@@ -11,7 +11,7 @@ const required = [
 	'id="recipe-management"',
 	'id="recipe-costing"',
 	'id="recipe-lifecycle"',
-	'The kitchen version is a decision, not the last tab left open.',
+	'You pick the version the kitchen cooks from.',
 	'Earlier published versions',
 	'Collections',
 	'Structured method',
@@ -21,7 +21,7 @@ const required = [
 	'id="faq-heading"',
 	'What is recipe management software?',
 	'Will a later price change rewrite a confirmed quote?',
-	'Ready for the line. Ready to price.',
+	'Start with the dish you sell most.',
 	'recipes-costing-one-record'
 ];
 

@@ -130,3 +130,24 @@ Wet hands, the walk-in door held with a foot, a phone propped on the lowboy. Ref
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - Custom stock width reads "about ¾ to 8½ in (20 to 220 mm)"; millimeters spelled the US way.
 - Re-shot 2026-10-07 from app 7a7e407d9 (owner's chosen source): the homepage's wedding (Nair & Castellano, Dec 19), Braised Short Rib, 300 portions across ten containers, Harbor & Hearth Catering. Label opens from the pack list, a recipe or an ingredient in this build, so the copy no longer says prep list. The made date is the capture day (Oct 7), weeks before the event.
+
+### Revision 2026-10-07: chef voice pass
+Owner: make the site read like a chef wrote it. This page already talked
+shop ("A soaked sticker costs a tap.", "nobody is asked at 5 a.m."), so the
+pass is light and copy only.
+- **Hero lede:** "Choose the storage condition, use-by date and number of
+  containers before printing. The label record keeps the wording for later
+  reprints." is "Pick how it is stored, the use-by date and how many
+  containers, then print. The wording is saved, so a reprint says the same
+  thing." The pinned Settings sentence after it is unchanged.
+- **The record:** "frozen without a stock size or a printer in it ... not a
+  recomposition from a recipe that has moved" is "The saved label has no
+  stock size or printer baked in ... not a fresh one built from a recipe that
+  has changed since." The date-source line is split; "It does not print."
+  stays as "That part does not print."
+- **Stock and close:** "Only the geometry changes" is "Only the size and
+  shape change"; the available-state close drops its six-item list for
+  "Labels are in the same plan as the rest of it."
+- **Kept on purpose:** the H1s (pinned), "In the app today", the status
+  word and the Coming branch's wording (availability), labels.ts (steps,
+  stock, not-claimed list, already in this voice), FAQ, captions.
