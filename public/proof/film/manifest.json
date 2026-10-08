@@ -36,7 +36,7 @@
     "payments-paid-desktop.png": {
       "host": "localhost:4193",
       "app": "7a7e407d9",
-      "via": "capture-film-local.mjs paid"
+      "via": "capture-film-local.mjs paid (clipped after capture to 719 px tall at 2x, just below the balance row: the line under it, \"Reminder sent Wed, Oct 7.\", comes from the homepage capture running the reminder sweep with its clock on Dec 6 and would read as a reminder two months early)"
     },
     "agreement-desktop.png": {
       "host": "localhost:4193",

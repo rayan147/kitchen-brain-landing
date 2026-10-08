@@ -281,10 +281,13 @@ const STEPS = {
 		if (!manifest.deposit || !manifest.balance) throw new Error('could not read the deposit and balance');
 		await saveManifest();
 		const b = await docBox(card);
-		// Down to the balance's reminder line. The pay-link row under it counts
-		// the links that can pay the balance, and copying one for an earlier
-		// probe of this walk made a second; that row stays out.
-		const bottom = (await docBox(card.getByText(/^Reminder sent /).first())).b + 24;
+		// Down to the balance row, above its reminder line: "Reminder sent Wed,
+		// Oct 7." comes from the homepage capture's sweep run with its clock on
+		// Dec 6, and reads as a reminder two months early. (The shipped frame
+		// was clipped there after capture; this clip matches it.) The pay-link
+		// row further down is out too: copying a link for an earlier probe of
+		// this walk made a second one.
+		const bottom = (await docBox(card.getByText(/^Reminder sent /).first())).y - 1;
 		await shoot(page, 'payments-paid-desktop', { x: b.x, y: b.y, width: b.r - b.x, height: bottom - b.y });
 	},
 

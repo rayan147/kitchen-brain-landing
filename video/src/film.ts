@@ -160,7 +160,7 @@ export const FILM: Record<SceneId, Scene> = {
         layout: "screen",
         frames: ["events-payments-paid-desktop.png"],
         caption: "Deposit {deposit}, paid by card from the link.",
-        ring: { x: 2.5, y: 50, width: 53, height: 25 },
+        ring: { x: 2.5, y: 55.5, width: 53, height: 28 },
       },
       {
         from: 7.5,
@@ -170,7 +170,9 @@ export const FILM: Record<SceneId, Scene> = {
         caption: "The balance, {balance}, is due {balanceDue}.",
         // The balance row is the card's foot; the caption sits on top.
         captionAt: "top",
-        ring: { x: 2.5, y: 79, width: 96, height: 15 },
+        // The frame ends below the balance row: the reminder line under it
+        // came from the homepage capture's clock-shifted sweep.
+        ring: { x: 2.5, y: 89, width: 96, height: 10.5 },
       },
       {
         from: 11,
