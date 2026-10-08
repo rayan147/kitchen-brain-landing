@@ -1,147 +1,132 @@
 {
   "frames": [
+    "inquiry-mobile.png",
+    "menu-service.png",
+    "proposal-mobile.png",
+    "accepted-mobile.png",
+    "payments-paid-desktop.png",
     "agreement-desktop.png",
+    "signed-desktop.png",
     "book-event-desktop.png",
     "booked-desktop.png",
-    "closeout-desktop.png",
+    "shop-desktop.png",
     "confirm-desktop.png",
-    "inquiry-desktop.png",
-    "menu-service.png",
-    "pack-desktop.png",
-    "pay-mobile.png",
-    "payment-request-desktop.png",
-    "payments-paid-desktop.png",
     "po-desktop.png",
-    "prep-desktop.png",
-    "proposal-mobile.png",
-    "proposal-sent-desktop.png",
     "receiving-desktop.png",
-    "request-mobile.png",
-    "shop-desktop.png"
+    "prep-desktop.png",
+    "pack-desktop.png",
+    "closeout-desktop.png"
   ],
-  "frameSources": {
-    "request-mobile.png": {
-      "host": "sites-test.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs request"
-    },
-    "inquiry-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs request"
-    },
-    "menu-service.png": {
-      "host": "test.app.costcook.io",
-      "app": "fe0ac720d",
-      "via": "capture-film.mjs menu (re-shot read-only after develop fe0ac720d made the menu total the exact food cost, $3,536.15, the figure the closeout plans)"
-    },
-    "proposal-sent-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs proposal"
-    },
-    "proposal-mobile.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs accept"
-    },
-    "agreement-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs agreement"
-    },
-    "payment-request-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs deposit (clipped to 1080x400 px from x 0, y 40 after capture: tight to the figures, the client email line out)"
-    },
-    "pay-mobile.png": {
-      "host": "sites-test.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs deposit"
-    },
-    "payments-paid-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs paid (clipped below \"Copy pay link\" after capture)"
-    },
-    "book-event-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs book"
-    },
-    "booked-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs book"
-    },
-    "shop-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs kitchen"
-    },
-    "confirm-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs kitchen (clipped 24 CSS px inside the dialog after capture, to drop the dimmed page)"
-    },
-    "po-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs buy"
-    },
-    "receiving-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs receive"
-    },
-    "prep-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs lists"
-    },
-    "pack-desktop.png": {
-      "host": "test.app.costcook.io",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs lists"
-    },
-    "closeout-desktop.png": {
-      "host": "localhost",
-      "app": "d3c7c9add",
-      "via": "capture-film.mjs closeout"
-    }
-  },
-  "guests": "150",
-  "appSha": "d3c7c9add",
-  "capturedOn": "2026-10-07",
-  "proposalFoodCostPct": "24.8%",
+  "proposalFoodCostPct": "29.2%",
   "targetPct": "30%",
   "pricePerGuest": "$95.00",
   "revenue": "$14,250.00",
-  "staffPeople": "8",
-  "staffHours": "7",
-  "offerTotal": "$21,043.00",
-  "deposit": "$5,250.00",
-  "depositPaid": "$5,250.00",
-  "balanceReminderLine": "Reminder with a pay link goes out Sun, May 30, 3 days before it is due.",
-  "balanceDue": "$15,793.00",
-  "eventDate": "Sat, Jun 12, 2027",
-  "mainPortions": "138",
-  "vegetarianPortions": "12",
-  "closeoutPlanned": "$3,536.15",
-  "closeoutActual": "$3,542.63",
+  "guests": "150",
+  "frameSources": {
+    "menu-service.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs menu"
+    },
+    "accepted-mobile.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs accepted"
+    },
+    "payments-paid-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs paid"
+    },
+    "agreement-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs agreement"
+    },
+    "signed-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs book"
+    },
+    "book-event-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs book"
+    },
+    "booked-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs book"
+    },
+    "shop-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs kitchen"
+    },
+    "confirm-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs kitchen"
+    },
+    "po-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs buy"
+    },
+    "receiving-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs receive"
+    },
+    "prep-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs lists"
+    },
+    "pack-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs lists"
+    },
+    "closeout-desktop.png": {
+      "host": "localhost:4193",
+      "app": "7a7e407d9",
+      "via": "capture-film-local.mjs closeout"
+    },
+    "inquiry-mobile.png": {
+      "host": "localhost:4188",
+      "app": "7a7e407d9",
+      "via": "reused from public/proof/home/inquiry-mobile.png (capture-home-proof.mjs, local develop on :4188, a fresh demo world walked with the same client and wedding; the form filled, captured before the save)"
+    },
+    "proposal-mobile.png": {
+      "host": "localhost:4188",
+      "app": "7a7e407d9",
+      "via": "reused from public/proof/home/proposal-mobile.png (capture-home-proof.mjs, local develop on :4188, the same wedding offer sent in that fresh world, captured before acceptance)"
+    }
+  },
+  "appSha": "7a7e407d9",
+  "capturedOn": "2026-10-07",
+  "deposit": "$3,500.00",
+  "offerTotal": "$14,250.00",
+  "balance": "$10,750.00",
+  "balanceDue": "Wed, Dec 9",
+  "eventDate": "Sat, Dec 19, 2026",
+  "foodCostPct": "27.6%",
+  "mainPortions": "300",
+  "packDishes": "6",
+  "dateMove": "orders.event_date and events.service_date moved 2026-12-19 -> 2026-10-06 for order 784 / event d240353e-66b2-4067-b979-0e6c155c6835, right before the closeout frame",
+  "closeoutPlanned": "$3,926.98",
+  "closeoutActual": "$3,988.28",
   "closeoutDirection": "over",
-  "closeoutOver": "$6.48",
-  "closeoutPct": "24.9%",
+  "closeoutOver": "$61.30",
+  "closeoutPct": "28%",
   "closeoutFinal": true,
   "walks": {
-    "test": {
-      "event": "test.app.costcook.io, the Ellison & Park wedding (Sat Jun 12 2027)",
-      "how": "one walk at develop d3c7c9add: a quote request on the ordering site, menu and proposal (138 short rib and 12 vegetarian mains, 8 staff for 7 hours, rentals and an 18% service fee), the client accepts on her phone, the agreement signed in DocuSeal and the deposit paid by card in Stripe test mode, Book the event with every requirement met, then shop and prep in US customary units (the account was switched for the shot and back), confirm, purchase orders, receiving with the arugula one case short, prep and pack"
+    "local": {
+      "event": "localhost:4193, local develop 7a7e407d9: the Nair & Castellano wedding (Priya Nair, Sat Dec 19 2026, event d240353e, order #784), the homepage frames’ own world (docs/proof/home-manifest.json)",
+      "how": "continued once with scripts/capture-film-local.mjs from where the homepage capture left it (phone-call inquiry, Wedding Plated Dinner at $95.00 a guest for 150, offer accepted on the client’s phone, $3,500.00 deposit paid with Stripe test card 4242 on 2026-10-07): the agreement written and approved, its signed copy uploaded through the app’s paper route because local develop has no online signing provider, Book the event with every requirement met, guest restrictions marked None declared, Confirm order, supplier orders sent (four emails to sample example.com addresses, one print, two marked as buying), receiving with the arugula one clamshell short, Finish check-in, prep and pack; then the event and order moved to yesterday (the one raw write, guarded), the kitchen’s use recorded at each Shop-list need, 27 buying records dated Sep 28 to Oct 5 set aside as bought before this event’s supplier orders went out, and the food-cost review closed"
     },
-    "closeout": {
-      "how": "a read-only copy of test’s database, run locally on the same build with its server clock moved to Jun 13 2027 (scripts/shift-clock.mjs), because the closeout opens the day after the event; there the kitchen’s use of every ingredient was recorded as planned and the food-cost review closed, so the card reads Closed and its share is final"
-    },
-    "note": "Every frame is from that one wedding. The signatures and the card payment were done by hand by the owner; the client’s email was switched to an inbox the owner reads before the offer went out, because test only emails approved addresses and DocuSeal mails the signer a one-time code. Three frames are clipped after capture (payment request, paid, confirm), as their frameSources say."
+    "reused": "inquiry-mobile and proposal-mobile come from the homepage capture of the same wedding in a fresh demo world on :4188 (same client, name, date, price); that world is not home.db, so the offer frame is the offer as sent there, and accepted-mobile is the acceptance in home.db",
+    "note": "Every frame is the Nair & Castellano wedding. The signed copy is sample data: the saved revision PDF uploaded as the paper copy, and its source line on the frame says so. The agreement page and the upload card still say an uploaded copy does not count as signed while Book counts it (booking-requirements.ts); kept out of every frame. Copying the balance pay link during a probe made a second live link; the paid frame ends above that row. Backups: home.before-film-nc-20261007.db (before the agreement) and home.before-film-nc-closeout-20261007.db (before the date move), next to home.db. The supplier emails record no provider message id; recipients are reserved example.com addresses."
   }
 }
