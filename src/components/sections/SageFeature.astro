@@ -136,21 +136,24 @@ const videoChapters = [
 	<section class="setup-section" aria-labelledby="setup-heading">
 		<div class="container-page setup-grid">
 			<figure class="setup-capture" data-reveal>
-				<!-- Cropped to the header and the stage heading, the two things the
-				     caption and alt name; the whole 1280px window drew 4px text on a
-				     phone (readability review 2026-10-09). The capture is 1x. -->
+				<!-- The setup header over stage 1, cropped from the onboarding capture
+				     (/proof/setup/01-kitchen.png, the Harbor & Hearth kitchen): the
+				     caption's claim is the header's Ask Sage, and the stage under it shows
+				     setup is still in progress. The old whole-window
+				     frame drew 4px text on a phone and named an older sample kitchen
+				     (readability review 2026-10-09). The capture is 2x. -->
 				<div class="shot-pan" tabindex="0" role="region" aria-label="Setup header capture, scrolls sideways on a phone">
 					<img
-						src="/proof/sage-onboarding-header.png"
-						alt="CostCook setup on the Ingredients stage. The header says Set up your kitchen and Progress saves after each stage, with Ask Sage, Support and Save and exit actions."
-						width="860"
-						height="330"
-						style="--shot-w: 860px"
+						src="/proof/sage-setup-header.png"
+						alt="CostCook setup, stage 1 of 5. The header says Set up your kitchen, Harbor & Hearth Catering, stage 1 of 5, saves after each stage, with Ask Sage, Support and Save and exit actions, above stage 1, Identify your kitchen, with its three ticks: Name the kitchen, Set the food-cost target, Add one supplier."
+						width="1550"
+						height="870"
+						style="--shot-w: 775px"
 						loading="lazy"
 						decoding="async"
 					/>
 				</div>
-				<figcaption>Captured setup state. Ask Sage is present in the setup header. <a class="full-size" href="/proof/sage-onboarding.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
+				<figcaption>Captured setup state. Ask Sage is present in the setup header. <a class="full-size" href="/proof/setup/01-kitchen.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 			</figure>
 			<div class="setup-copy" data-reveal>
 				<h2 id="setup-heading">Ask before the kitchen is fully set up.</h2>
@@ -386,6 +389,8 @@ const videoChapters = [
 		.hero-grid { grid-template-columns: minmax(0, 0.88fr) minmax(30rem, 1.12fr); align-items: start; }
 		.video-grid { grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1.28fr); }
 		.setup-grid, .proof-grid { grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr); }
+		/* The setup header capture needs about 620px to keep its 0.8x floor. */
+		.setup-grid { grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.7fr); }
 		.questions-grid, .faq-grid { grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr); }
 		.guardrail-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 		.guardrail-list li { padding-right: 2rem; }

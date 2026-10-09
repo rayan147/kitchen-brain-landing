@@ -73,6 +73,12 @@ const faqItems = [
 			'You can reopen while preserving the frozen prices, and the screen says that clearly. Once purchasing has started, reopening is refused so completed work is not invalidated.'
 	}
 ] as const;
+// Ring boxes in percent of each capture (hero-pricing.png 2208x554,
+// hero-pricing-mobile.png 748x1268): the food cost and the Get to 30% price.
+const priceRings = {
+	wide: [{ x: 33.7, y: 26.5, w: 7.4, h: 14.5 }, { x: 63.4, y: 28.5, w: 35, h: 32 }],
+	small: [{ x: 5.5, y: 38.6, w: 21.5, h: 6 }, { x: 6, y: 71.6, w: 88.5, h: 12.2 }]
+};
 ---
 
 <!-- story: docs/stories/menus-and-quotes-redesign.story.md -->
@@ -276,17 +282,24 @@ const faqItems = [
 					</ul>
 				</div>
 				<figure class="screenshot-frame" data-reveal>
-					<picture>
-						<source media="(max-width: 63.99rem)" srcset="/proof/hero-pricing-mobile.png" width="748" height="1268" />
-						<img
-							src="/proof/hero-pricing.png"
-							width="2208"
-							height="554"
-							loading="lazy"
-							decoding="async"
-							alt="CostCook order price panel for 180 guests at $68.00 a guest, $27.00 below the menu’s $95.00. Food cost 39.6% against a 30% target: sales $12,240.00, food $4,847.95 ($26.93 a guest), food margin $7,392.05. Get to 30%: charge $89.78 a guest, $16,160.40 total, or use the menu price, $95.00, 28.4%, within target."
-						/>
-					</picture>
+					<!-- Amber rings on the two figures the copy names, 39.6% and the
+					     $89.78 that meets the target, measured from each capture's
+					     pixels; one set per source, switched at the same 64rem. -->
+					<div class="ringed">
+						<picture>
+							<source media="(max-width: 63.99rem)" srcset="/proof/hero-pricing-mobile.png" width="748" height="1268" />
+							<img
+								src="/proof/hero-pricing.png"
+								width="2208"
+								height="554"
+								loading="lazy"
+								decoding="async"
+								alt="CostCook order price panel for 180 guests at $68.00 a guest, $27.00 below the menu’s $95.00. Food cost 39.6% against a 30% target: sales $12,240.00, food $4,847.95 ($26.93 a guest), food margin $7,392.05. Get to 30%: charge $89.78 a guest, $16,160.40 total, or use the menu price, $95.00, 28.4%, within target."
+							/>
+						</picture>
+						{priceRings.wide.map((box) => <span class="price-ring price-ring--wide" aria-hidden="true" style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}></span>)}
+						{priceRings.small.map((box) => <span class="price-ring price-ring--small" aria-hidden="true" style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}></span>)}
+					</div>
 					<figcaption>Captured from CostCook, sample event.</figcaption>
 				</figure>
 			</div>
@@ -587,5 +600,17 @@ const faqItems = [
 	   text (readability review 2026-10-09). */
 	@media (max-width: 63.99rem) {
 		.screenshot-frame img, .confirmed-proof img { max-width: 24.5rem; margin-inline: auto; }
+	}
+	/* Same ring as the homepage walk (HomeEventWalk .ring). Considered a
+	   shared Ring component; not used because the rings are four boxes of
+	   data on one frame here, and a component would own one style rule. */
+	.ringed { position: relative; }
+	.ringed picture { display: block; }
+	.price-ring { position: absolute; border: 2px solid var(--color-amber); border-radius: 8px; box-shadow: 0 0 0 4px rgb(185 118 42 / .18); pointer-events: none; }
+	.price-ring--small { display: none; }
+	@media (max-width: 63.99rem) {
+		.pricing-proof .ringed { max-width: 24.5rem; margin-inline: auto; }
+		.price-ring--wide { display: none; }
+		.price-ring--small { display: block; }
 	}
 </style>

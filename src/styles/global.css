@@ -304,10 +304,17 @@
 	outline-offset: -2px;
 }
 /* min-width outranks max-width in CSS, so a page's own `max-width: 100%`
-   shrinks the capture only down to the floor. */
+   shrinks the capture only down to the floor. Phones and tablets only: on a
+   desktop a sideways scroll has no cue, and the two whole-window captures
+   wider than the 1056px column (events workspace, onboarding stage 1) hid
+   their right edge, so there they fit the column at about 0.75x. */
 .shot-pan img {
-	min-width: calc(var(--shot-w, 0px) * 0.8);
 	height: auto;
+}
+@media (max-width: 63.99rem) {
+	.shot-pan img {
+		min-width: calc(var(--shot-w, 0px) * 0.8);
+	}
 }
 
 /* Letter-spaced small-caps label that opens most sections. */
