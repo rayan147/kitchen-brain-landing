@@ -44,7 +44,10 @@ const shot = (name: string, alt: string, px: [number, number], phone = false): S
 	phone
 });
 
-/** Adds the phone capture `<name>-phone.png` (2x, 390 viewport) to a shot. */
+/**
+ * Adds the phone source `<name>-phone.png` to a shot: a 2x capture at a 390
+ * viewport, or (confirm-dialog only) the wide capture without its margins.
+ */
 const withPhone = (base: Shot, px: [number, number]): Shot => ({
 	...base,
 	small: {
