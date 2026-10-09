@@ -334,7 +334,7 @@ export const frontOfHouse = [
 			shot(
 				'invoice-inbox',
 				'Invoice inbox: invoices HF-3102 and HF-3103 held, not read, because the address they came from is not on your list, with Let this one through; and Harbor Foods invoice HF-3106 from its approved address, waiting in review, counting once you confirm it.',
-				[1416, 1158]
+				[1184, 1198]
 			),
 			[780, 1254]
 		)

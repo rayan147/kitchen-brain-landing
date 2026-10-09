@@ -435,11 +435,12 @@ try {
 		// through the app's own inbox code (scripts/inbox-fixture.ts and the
 		// worker's sweepInbox, with the Google reader) before this run, by a
 		// script the owner ran; this phase only reads the page.
-		// Desktop at 780 wide, not 1440: the homepage crops this card 6:5 from
+		// Desktop at 600 wide since 2026-10-09 (SLOT): at 780 its 14px text drew at
+		// 10px in the homepage card, and the card sat half the ordering card's
+		// height. Before that, at 780 wide, not 1440: the homepage crops this card 6:5 from
 		// the top left, and at 1440 the two cards run 2:1, so the dates and
 		// HF-3106's Review link would fall outside it.
-		const narrow = await browser.newContext({ ...DESKTOP, viewport: { width: 780, height: 900 }, storageState: await desk.storageState() });
-		for (const [name, ctx] of [['invoice-inbox', narrow], ['invoice-inbox-phone', phone]]) {
+		for (const [name, ctx] of [['invoice-inbox', slot], ['invoice-inbox-phone', phone]]) {
 			if (!want(name)) continue;
 			const p = await ctx.newPage();
 			await p.goto(`${APP}/purchases/inbox`);
@@ -453,7 +454,7 @@ try {
 			const held = await card('Invoices HF-3102 and HF-3103');
 			const waiting = await card('Invoice HF-3106');
 			if (ctx === phone) await p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
-			await shoot(p, name, ctx === narrow
+			await shoot(p, name, ctx === slot
 				? { x: held.x - 12, y: held.y - 12, width: held.r - held.x + 24, height: waiting.b - held.y + 24 }
 				: { x: 0, y: held.y - 12, width: 390, height: waiting.b - held.y + 24 });
 		}
