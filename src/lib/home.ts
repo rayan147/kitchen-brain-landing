@@ -242,7 +242,7 @@ export const kitchenRows = [
 		eyebrow: 'Food cost',
 		pain: 'You quote $95 a head and find out if you made money when the month closes.',
 		heading: 'See the food cost before you quote.',
-		body: 'Every dish shows what it costs per guest and its share of the total. If a price is missing, it tells you which one. It never slips in as zero.',
+		body: 'Every dish shows what it costs per guest, with a bar for its share of the total. If a price is missing, it tells you which one. It never slips in as zero.',
 		shot: withPhone(
 			shot(
 				'food-cost-breakdown',
@@ -320,7 +320,7 @@ export const frontOfHouse = [
 			shot(
 				'ordering-site',
 				'The ordering widget on a caterer’s own website: under the kitchen’s Order catering heading, CostCook’s order form for Harbor & Hearth Catering with a 20 guest minimum, 72 hours notice, pickup or delivery, the steps Menu to Review, and the Coastal Dinner at $93.00 a guest.',
-				[1200, 1874]
+				[1200, 1926]
 			),
 			[780, 2866]
 		)

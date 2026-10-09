@@ -310,3 +310,11 @@ The section's line ("none of it counts until you confirm it") already says
 this; the held card shows the other half without a word added. Steps 6 and 11
 re-checked: the alt names only what both captures show, no new claim in copy.
 
+
+**Revision 2026-10-09 (readable captures).** The food cost, import, allergens,
+ordering and invoice frames were re-shot at the width the page shows them, so
+the cook reads each at 1:1 instead of squinting at 6 to 8px. At that width the
+menu's table loses its column heads, so the food-cost line now names what the
+eye sees: "what it costs per guest, with a bar for its share of the total".
+Steps 6 and 11 re-checked: every alt names only what its capture shows; no new
+claim in copy.

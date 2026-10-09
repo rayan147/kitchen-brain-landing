@@ -80,7 +80,7 @@ const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, red
 // 1440 screen each sits in a column 440 to 550px wide; shot at 1440 they drew
 // the app's 14px text at 6 to 8px (readability review 2026-10-09). At 600 the
 // app reflows to its narrow layout, so the same screen fits the column whole.
-const SLOT = { viewport: { width: Number(process.env.SLOT_W ?? 600), height: 900 }, deviceScaleFactor: 2, reducedMotion: 'reduce' };
+const SLOT = { viewport: { width: 600, height: 900 }, deviceScaleFactor: 2, reducedMotion: 'reduce' };
 const hideStuck = (p) => p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
 
 async function settle(page) {
@@ -369,7 +369,7 @@ try {
 			const wide = (l) => l.evaluate((el) => { let n = el; while (n && n.getBoundingClientRect().width < 340) n = n.parentElement; const r = n.getBoundingClientRect(); return { y: r.top + scrollY }; });
 			const top = (await wide(head)).y;
 			const next = (await wide(p.getByText('Stone Mill Dairy').first())).y;
-			await p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
+			await hideStuck(p);
 			await shoot(p, 'shop-list', { x: 0, y: top - 12, width: 390, height: next - top + 12 });
 		}
 
@@ -453,7 +453,7 @@ try {
 			});
 			const held = await card('Invoices HF-3102 and HF-3103');
 			const waiting = await card('Invoice HF-3106');
-			if (ctx === phone) await p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
+			await hideStuck(p);
 			await shoot(p, name, ctx === slot
 				? { x: held.x - 12, y: held.y - 12, width: held.r - held.x + 24, height: waiting.b - held.y + 24 }
 				: { x: 0, y: held.y - 12, width: 390, height: waiting.b - held.y + 24 });
