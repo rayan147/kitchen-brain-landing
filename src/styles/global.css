@@ -279,6 +279,25 @@
 	}
 }
 
+/* REFLOW AT 200% TEXT (issue #79). On a phone, anything inside the page may
+   shrink below its content's widest word or row. A grid track or flex row
+   otherwise grows to its content's min-content width, and at 200% text on a
+   320px or 390px screen hero copy, buttons and the illustrative panels ran
+   past the screen, where the articles' overflow-x: clip cut them off with no
+   scrollbar (WCAG 1.4.10). :where() keeps this at zero specificity, so any
+   explicit min-width (the screenshot floor below) still wins. Blocks only:
+   a figure such as $18,420 or an icon keeps its own width, so it moves to a
+   new line whole instead of breaking. At 100% text
+   nothing changed: full-page captures of 32 routes at 390 matched before and
+   after. Considered fixing each page's grids one by one; not used because
+   eight pages held over twenty such rows, and the next one written would
+   repeat the bug. */
+@media (max-width: 47.99rem) {
+	main :where(div, section, article, aside, header, footer, nav, figure, figcaption, ul, ol, li, dl, dt, dd, p, h1, h2, h3, h4, blockquote, details, summary, form, fieldset, picture) {
+		min-width: 0;
+	}
+}
+
 /* READABLE CAPTURES. A screenshot may shrink to fit its column, but never
    below 0.8x of its own CSS size (half the 2x PNG), where the app's 14px text
    reads at about 11px. Past that floor it keeps its size and scrolls sideways

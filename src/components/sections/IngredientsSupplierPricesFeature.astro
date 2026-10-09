@@ -415,6 +415,17 @@ const faqItems = [
 	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
 	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
 
+	/* REFLOW AT 200% TEXT (issue #79). A grid with no column template sizes
+	   its one implicit track to its content's min-content width, so at 200%
+	   text on a phone the hero and the product panels grew past the screen
+	   and the article's overflow-x: clip cut their right edge off. One
+	   shrinkable track below the breakpoints; the media rules below set the
+	   wide layouts. Rows that pair a label and a value wrap instead of
+	   pushing the value out. */
+	.hero-grid, .ingredient-workspace, .workspace-side, .problem-grid, .section-intro, .evidence-grid, .capabilities-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, 1fr); }
+	.record-head, .panel-bar, .ingredient-title { flex-wrap: wrap; }
+	.ingredient-title > *, .workspace-title > *, .source-line > * { min-width: 0; overflow-wrap: anywhere; }
+
 	@media (min-width: 720px) {
 		.hero-grid { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
 		.problem-grid, .section-intro, .evidence-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }

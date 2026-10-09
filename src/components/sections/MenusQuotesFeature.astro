@@ -458,7 +458,7 @@ const priceRings = {
 	.workspace-main, .price-check, .equipment-sheet { border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.workspace-main { min-width: 0; padding: clamp(1rem, 3vw, 1.75rem); }
 	.workspace-bar { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--color-hairline); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
-	.workspace-title { display: grid; grid-template-columns: 1fr auto; gap: 2rem; padding-block: 1.5rem; }
+	.workspace-title { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; padding-block: 1.5rem; }
 	.workspace-title small { display: block; font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
 	.workspace-title strong { display: block; margin-top: 0.25rem; font-family: var(--font-display); font-size: var(--text-record-sm); }
 	.menu-row { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(6rem, 0.35fr) minmax(4rem, 0.25fr); gap: 1rem; align-items: center; padding: 0.8rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-caption); }
@@ -551,6 +551,16 @@ const priceRings = {
 	.closing p { max-width: 55ch; margin-top: 1rem; color: var(--color-ink-soft); }
 	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--color-hairline-strong); }
 	.onward a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
+
+	/* REFLOW AT 200% TEXT (issue #79). A grid with no column template sizes
+	   its one implicit track to its content's min-content width, so at 200%
+	   text on a phone the hero and the product panels grew past the screen
+	   and the article's overflow-x: clip cut their right edge off. One
+	   shrinkable track below the breakpoints; the media rules below set the
+	   wide layouts. Rows that pair a label and a value wrap instead of
+	   pushing the value out. */
+	.hero-grid, .record-pair, .menu-workspace, .workspace-side { grid-template-columns: minmax(0, 1fr); }
+	.record-head, .workspace-bar { flex-wrap: wrap; }
 
 	@media (min-width: 640px) {
 		.product-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
