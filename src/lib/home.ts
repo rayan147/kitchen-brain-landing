@@ -176,13 +176,10 @@ export const eventStages = [
 		// Not "booked": booking waits on the signed agreement as well as the
 		// deposit (Book the event, app 7a7e407d9).
 		carries: 'The Nair & Castellano wedding, deposit paid',
+		// The phone capture at every width (readability review 2026-10-09): the
+		// wide one drew 6px labels at 390px and 9px in the rail's 490px column
+		// at 1440. Rings measured from the phone capture's pixels.
 		focus: [
-			{ x: 1.6, y: 12, w: 23.5, h: 17.6 },
-			{ x: 78.3, y: 66.4, w: 20, h: 9.3 }
-		] as Focus[],
-		// The same two figures on the phone capture (design review 2026-10-07:
-		// the wide frame drew 6px labels at 390px). Measured from its pixels.
-		smallFocus: [
 			{ x: 1.1, y: 9, w: 97.9, h: 28.9 },
 			{ x: 59.8, y: 71.4, w: 39.1, h: 8.5 }
 		] as Focus[],
@@ -192,13 +189,11 @@ export const eventStages = [
 		// The signature lives here, not in the client's yes (RC-64: claimable,
 		// not capturable, so it is a sentence without a frame).
 		body: `${agreementLine} ${eventPayments.homepage}`,
-		shot: withPhone(
-			shot(
-				'payment-schedule',
-				'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
-				[1466, 772]
-			),
-			[748, 850]
+		shot: shot(
+			'payment-schedule-phone',
+			'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
+			[748, 850],
+			true
 		)
 	},
 	{
@@ -247,12 +242,12 @@ export const kitchenRows = [
 		eyebrow: 'Food cost',
 		pain: 'You quote $95 a head and find out if you made money when the month closes.',
 		heading: 'See the food cost before you quote.',
-		body: 'Every dish shows what it costs per guest and its share of the total. If a price is missing, it tells you which one. It never slips in as zero.',
+		body: 'Every dish shows what it costs per guest, with a bar for its share of the total. If a price is missing, it tells you which one. It never slips in as zero.',
 		shot: withPhone(
 			shot(
 				'food-cost-breakdown',
 				'Dishes per guest with each one’s share of cost: Braised Short Rib, two portions, $14.56; Wild Mushroom Polenta, about 240 g a portion, $2.93; Creamed Spinach, half a portion, $2.91; Focaccia and Whipped Goat Cheese $2.56.',
-				[1880, 808]
+				[1200, 1322]
 			),
 			[780, 1384]
 		)
@@ -266,14 +261,13 @@ export const kitchenRows = [
 		pain: 'The recipe says what goes on the plate. You buy exactly that and you are short at 5 a.m.',
 		heading: 'Buy for what survives the knife.',
 		body: 'Each recipe line carries its trim yield. 60 g of Roma tomato in the recipe at 91% yield means you buy 66 g.',
-		shot: withPhone(
-			shot(
-				'yield-lines',
-				'A recipe line with its yield and the amount to buy: Roma tomato, 60 g used at 91% yield, buy 66 g.',
-				[1540, 874]
-			),
-			// Cropped to the tomato line: the cucumber's 0.3 each rounded to the
-			// same 0.3 to buy, so the yield did nothing on screen (third chef review).
+		// The tomato card at every width (readability review 2026-10-09): the
+		// six-column table drew 8px text in this row's column at 1440. Cropped
+		// to the tomato line: the cucumber's 0.3 each rounded to the same 0.3 to
+		// buy, so the yield did nothing on screen (third chef review).
+		shot: shot(
+			'yield-lines-phone',
+			'A recipe line with its yield and the amount to buy: Roma tomato, 60 g used at 91% yield, buy 66 g.',
 			[724, 514]
 		)
 	},
@@ -288,7 +282,7 @@ export const kitchenRows = [
 			shot(
 				'import-review',
 				'Import review of a sample produce invoice: 7 products, 2 flagged Needs review and listed first, 4 matched to ingredients, 1 ready to create.',
-				[2336, 968]
+				[1200, 1296]
 			),
 			[780, 1536]
 		)
@@ -304,7 +298,7 @@ export const kitchenRows = [
 			shot(
 				'allergens-labels',
 				'Pack list for 150 guests: six dishes, each with its allergens (Contains: Milk; Contains: Milk, Wheat and May contain: Egg, Sesame, Soy; No listed allergens) and a Label button.',
-				[1360, 1212]
+				[1200, 1818]
 			),
 			[780, 1902]
 		)
@@ -326,7 +320,7 @@ export const frontOfHouse = [
 			shot(
 				'ordering-site',
 				'The ordering widget on a caterer’s own website: under the kitchen’s Order catering heading, CostCook’s order form for Harbor & Hearth Catering with a 20 guest minimum, 72 hours notice, pickup or delivery, the steps Menu to Review, and the Coastal Dinner at $93.00 a guest.',
-				[2496, 2136]
+				[1200, 1926]
 			),
 			[780, 2866]
 		)
@@ -340,7 +334,7 @@ export const frontOfHouse = [
 			shot(
 				'invoice-inbox',
 				'Invoice inbox: invoices HF-3102 and HF-3103 held, not read, because the address they came from is not on your list, with Let this one through; and Harbor Foods invoice HF-3106 from its approved address, waiting in review, counting once you confirm it.',
-				[1416, 1158]
+				[1184, 1198]
 			),
 			[780, 1254]
 		)

@@ -21,8 +21,8 @@ const { shot, class: className } = Astro.props;
 {shot.small ? (
 	<picture>
 		<source media="(max-width: 47.99rem)" srcset={shot.small.src} width={shot.small.width} height={shot.small.height} />
-		<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" class:list={['home-shot', className]} />
+		<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} style={`--shot-max: ${shot.width}px`} loading="lazy" decoding="async" class:list={['home-shot', className]} />
 	</picture>
 ) : (
-	<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" class:list={['home-shot', className]} />
+	<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} style={`--shot-max: ${shot.width}px`} loading="lazy" decoding="async" class:list={['home-shot', className]} />
 )}

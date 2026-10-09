@@ -352,14 +352,14 @@ const faqItems = [
 				</div>
 				<figure class="screenshot-frame" data-reveal>
 					<picture>
-						<source media="(max-width: 639px)" srcset="/proof/yield-lines-mobile.png" />
+						<source media="(max-width: 63.99rem)" srcset="/proof/yield-lines-mobile.png" width="748" height="1102" />
 						<img
 							src="/proof/yield-lines.png"
 							width="1490"
 							height="1042"
 							loading="lazy"
 							decoding="async"
-							alt="CostCook recipe lines for a Greek salad: bell pepper 0.25 each at 82% yield, cucumber 0.3 each at 90%, and Roma tomato 2.1 oz at 91% yield, 2.3 oz to buy, 12% of cost, $0.17. Roma tomato is opened: 2.1 oz usable quantity, trim yield 91%, required as purchased 2.1 oz ÷ 0.91 = 2.3 oz, a 25 lb case at $29.14, line cost $0.17, and the recorded purchase it came from."
+							alt="A CostCook recipe line, Roma tomato: 2.1 oz at 91% yield, 2.3 oz to buy, 12% of cost, $0.17. Opened, it shows its working: 2.1 oz usable quantity, trim yield 91%, required as purchased 2.1 oz ÷ 0.91 = 2.3 oz, a 25 lb case at $29.14, line cost $0.17, and the recorded purchase it came from."
 						/>
 					</picture>
 					<figcaption>Each ingredient carries its own working, not just a share of the final total.</figcaption>
@@ -369,7 +369,7 @@ const faqItems = [
 			<div class="quote-evidence" data-reveal>
 				<figure>
 					<picture>
-						<source media="(max-width: 639px)" srcset="/proof/order-price-today-mobile.png" width="780" height="1358" />
+						<source media="(max-width: 63.99rem)" srcset="/proof/order-price-today-mobile.png" width="780" height="1358" />
 						<img
 							src="/proof/order-price-today.png"
 							width="1888"
@@ -1485,8 +1485,10 @@ const faqItems = [
 			grid-template-columns: minmax(15rem, 0.6fr) minmax(0, 1.4fr);
 		}
 
+		/* 1.6fr, not 1.4fr: the 944px price panel needs about 760px to keep
+		   its figures at 11px (readability review 2026-10-09). */
 		.quote-evidence {
-			grid-template-columns: minmax(0, 1.4fr) minmax(15rem, 0.6fr);
+			grid-template-columns: minmax(0, 1.6fr) minmax(14rem, 0.5fr);
 		}
 
 		.faq-grid {
@@ -1601,5 +1603,11 @@ const faqItems = [
 		.faq-list summary svg {
 			transition: none;
 		}
+	}
+	/* Below 64rem the frame gets the app's phone capture, held at its own CSS
+	   size: the desktop capture squeezed into a tablet column drew 7 to 9px
+	   text (readability review 2026-10-09). */
+	@media (max-width: 63.99rem) {
+		.screenshot-frame, .quote-evidence figure { max-width: 24.5rem; margin-inline: auto; }
 	}
 </style>

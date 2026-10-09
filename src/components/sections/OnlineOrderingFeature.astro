@@ -157,15 +157,15 @@ const snippet = [
 
 			<div class="captures">
 				<figure data-reveal>
-					<div class="scroll" tabindex="0" role="region" aria-label="Pickup and delivery capture, scrolls sideways on a phone">
-					<img src="/proof/ordering-setup-delivery.png" width="790" height="391" loading="lazy" decoding="async" alt="The Setup tab’s Pickup and delivery card: Pickup switched on with Place, Address and an optional Note for customers; Delivery switched on with a $25.00 delivery fee, added only when the customer picks delivery, and a box to charge sales tax on the delivery fee." />
+					<div class="shot-pan" tabindex="0" role="region" aria-label="Pickup and delivery screenshot">
+					<img src="/proof/ordering-setup-delivery.png" style="--shot-w: 790px" width="790" height="391" loading="lazy" decoding="async" alt="The Setup tab’s Pickup and delivery card: Pickup switched on with Place, Address and an optional Note for customers; Delivery switched on with a $25.00 delivery fee, added only when the customer picks delivery, and a box to charge sales tax on the delivery fee." />
 					</div>
 					<a class="full-size" href="/proof/ordering-setup-delivery.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
 					<figcaption>Setup: how the food gets to them. Pickup needs a place and an address; delivery can carry a fee.</figcaption>
 				</figure>
 				<figure data-reveal style="--reveal-delay: 60ms">
-					<div class="scroll" tabindex="0" role="region" aria-label="Payments and tax capture, scrolls sideways on a phone">
-					<img src="/proof/ordering-setup-payments.png" width="790" height="795" loading="lazy" decoding="async" alt="The Setup tab’s Payments and tax card: three choices, Card, through CostCook (Stripe connected), A partner collects it, and You collect it (invoice, check, cash or ACH after you confirm); the deposit from booking rules; an estimated tax percentage; and an example estimate for 50 guests at $32.00 plus $25.00 delivery, $1,625.00 before tax." />
+					<div class="shot-pan" tabindex="0" role="region" aria-label="Payments and tax screenshot">
+					<img src="/proof/ordering-setup-payments.png" style="--shot-w: 790px" width="790" height="795" loading="lazy" decoding="async" alt="The Setup tab’s Payments and tax card: three choices, Card, through CostCook (Stripe connected), A partner collects it, and You collect it (invoice, check, cash or ACH after you confirm); the deposit from booking rules; an estimated tax percentage; and an example estimate for 50 guests at $32.00 plus $25.00 delivery, $1,625.00 before tax." />
 					</div>
 					<a class="full-size" href="/proof/ordering-setup-payments.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
 					<figcaption>Setup: how they pay. Pick one of three; only card needs Stripe.</figcaption>
@@ -295,13 +295,12 @@ const snippet = [
 	/* The cards are 790 CSS px (2x PNGs). Side by side they shrank to about
 	   70%, and the owner found them hard to read (2026-10-08), so each card gets
 	   its own row at no more than its real size. Under 48rem the image keeps a
-	   readable minimum width and scrolls inside its own frame, the same device
-	   as the events page; the page itself never scrolls sideways. */
+	   readable floor and scrolls inside its own frame (.shot-pan, global.css);
+	   the page itself never scrolls sideways. */
 	.captures { display: grid; gap: 3rem; margin-top: 3rem; grid-template-columns: minmax(0, 1fr); max-width: 790px; }
 	.captures figure { min-width: 0; }
-	.captures .scroll { overflow-x: auto; border-radius: .5rem; }
-	.captures .scroll:focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
-	.captures img { display: block; width: 100%; min-width: 34rem; height: auto; border: 1px solid var(--color-hairline-strong); border-radius: .5rem; background: var(--color-paper); }
+	.captures .shot-pan { border-radius: .5rem; }
+	.captures img { display: block; width: 100%; height: auto; border: 1px solid var(--color-hairline-strong); border-radius: .5rem; background: var(--color-paper); }
 	.captures .full-size { display: inline-flex; min-height: 44px; align-items: center; font-size: var(--text-body-sm); font-weight: 600; color: var(--color-green-deep); text-decoration: underline; }
 	.captures figcaption { font-size: var(--text-body-sm); color: var(--color-ink-soft); }
 
@@ -322,9 +321,6 @@ const snippet = [
 	.closing-grid p { margin-top: 1rem; max-width: 56ch; color: var(--color-ink-soft); }
 	.onward { display: flex; flex-wrap: wrap; gap: 1.5rem; padding-bottom: var(--spacing-section-tight); }
 
-	@media (min-width: 48rem) {
-		.captures img { min-width: 0; }
-	}
 	@media (min-width: 40rem) {
 		.ways { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }

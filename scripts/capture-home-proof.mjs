@@ -30,7 +30,7 @@
 // animations off, caret hidden, fonts loaded, toasts removed, and every clip's
 // text checked against FORBIDDEN. Each frame prints its PNG pixels (the `px`
 // in src/lib/home.ts) and, where the rail rings a figure, the ring in percent
-// of the PNG (the `focus` / `smallFocus` there).
+// of the PNG (the `focus` there).
 //
 // Considered Template Method (a phase skeleton with per-frame hooks); not
 // used because each phase is a short straight walk against a different world
@@ -76,6 +76,12 @@ await mkdir(OUT, { recursive: true });
 const browser = await chromium.launch({ executablePath: CHROME_PATH, headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--font-render-hinting=none'] });
 const DESKTOP = { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, reducedMotion: 'reduce' };
 const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, reducedMotion: 'reduce', isMobile: true, hasTouch: true };
+// The homepage's wide frames are shot at the width they are shown at. On a
+// 1440 screen each sits in a column 440 to 550px wide; shot at 1440 they drew
+// the app's 14px text at 6 to 8px (readability review 2026-10-09). At 600 the
+// app reflows to its narrow layout, so the same screen fits the column whole.
+const SLOT = { viewport: { width: 600, height: 900 }, deviceScaleFactor: 2, reducedMotion: 'reduce' };
+const hideStuck = (p) => p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
 
 async function settle(page) {
 	await page.waitForLoadState('load');
@@ -318,16 +324,18 @@ try {
 		const desk = await browser.newContext(DESKTOP);
 		await signIn(desk);
 		const phone = await browser.newContext({ ...PHONE, storageState: await desk.storageState() });
+		const slot = await browser.newContext({ ...SLOT, storageState: await desk.storageState() });
 		const eventUrl = `${APP}/events/${EVENT.eventId}`;
 
 		// The deposit block on the wedding: asked, received, the balance owed.
-		for (const [name, ctx, pad] of [['payment-schedule', desk, 20], ['payment-schedule-phone', phone, 12]]) {
+		for (const [name, ctx, pad] of [['payment-schedule', slot, 16], ['payment-schedule-phone', phone, 12]]) {
 			if (!want(name)) continue;
 			const p = await ctx.newPage();
 			await p.goto(eventUrl);
 			await hydrate(p);
 			const box = p.locator('[data-ui-role="event-deposit"]').first();
 			await box.waitFor();
+			await hideStuck(p);
 			const d = await docBox(box);
 			const req = await docBox(box.getByRole('button', { name: /Request payment/ }));
 			const clip = await shoot(p, name, { x: d.x - pad, y: d.y - pad, width: d.r - d.x + pad * 2, height: req.b - d.y + pad * 2 });
@@ -361,12 +369,12 @@ try {
 			const wide = (l) => l.evaluate((el) => { let n = el; while (n && n.getBoundingClientRect().width < 340) n = n.parentElement; const r = n.getBoundingClientRect(); return { y: r.top + scrollY }; });
 			const top = (await wide(head)).y;
 			const next = (await wide(p.getByText('Stone Mill Dairy').first())).y;
-			await p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
+			await hideStuck(p);
 			await shoot(p, 'shop-list', { x: 0, y: top - 12, width: 390, height: next - top + 12 });
 		}
 
 		// The menu's Dishes per guest: the first four dishes.
-		for (const [name, ctx] of [['food-cost-breakdown', desk], ['food-cost-breakdown-phone', phone]]) {
+		for (const [name, ctx] of [['food-cost-breakdown', slot], ['food-cost-breakdown-phone', phone]]) {
 			if (!want(name)) continue;
 			const p = await ctx.newPage();
 			await p.goto(`${APP}/catalog/menus/9`);
@@ -378,14 +386,15 @@ try {
 			const g4 = await docBox(groups.nth(3));
 			const g5 = await docBox(groups.nth(4));
 			const bottom = Math.round(((g4.y + g4.b) / 2 + (g5.y + g5.b) / 2) / 2);
-			const pad = ctx === desk ? 16 : 0;
-			const x = ctx === desk ? d.x - pad : 0;
-			const w = ctx === desk ? d.r - d.x + pad * 2 : 390;
+			if (ctx === slot) await hideStuck(p);
+			const pad = ctx === slot ? 16 : 0;
+			const x = ctx === slot ? d.x - pad : 0;
+			const w = ctx === slot ? d.r - d.x + pad * 2 : 390;
 			await shoot(p, name, { x, y: d.y - 16, width: w, height: bottom - d.y + 16 });
 		}
 
 		// The Pack tab's dishes, allergens on each, a Label button each.
-		for (const [name, ctx] of [['allergens-labels', desk], ['allergens-labels-phone', phone]]) {
+		for (const [name, ctx] of [['allergens-labels', slot], ['allergens-labels-phone', phone]]) {
 			if (!want(name)) continue;
 			const p = await ctx.newPage();
 			await p.goto(`${APP}/orders/${EVENT.order}?tab=pack`);
@@ -393,13 +402,13 @@ try {
 			await p.waitForTimeout(1500);
 			const card = p.getByText('Lemon Posset', { exact: true }).first().locator('xpath=ancestor::*[count(.//button[normalize-space()="Label"])>=6][1]');
 			const c = await docBox(card);
-			if (ctx === phone) await p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
-			const pad = ctx === desk ? 16 : 0;
-			await shoot(p, name, ctx === desk ? { x: c.x - pad, y: c.y - pad, width: c.r - c.x + pad * 2, height: c.b - c.y + pad * 2 } : { x: 0, y: c.y - 12, width: 390, height: c.b - c.y + 24 });
+			await hideStuck(p);
+			const pad = ctx === slot ? 16 : 0;
+			await shoot(p, name, ctx === slot ? { x: c.x - pad, y: c.y - pad, width: c.r - c.x + pad * 2, height: c.b - c.y + pad * 2 } : { x: 0, y: c.y - 12, width: 390, height: c.b - c.y + 24 });
 		}
 
 		// The sample produce invoice's import review, rows collapsed.
-		for (const [name, ctx] of [['import-review', desk], ['import-review-phone', phone]]) {
+		for (const [name, ctx] of [['import-review', slot], ['import-review-phone', phone]]) {
 			if (!want(name)) continue;
 			const p = await ctx.newPage();
 			await p.goto(`${APP}/import/source/5`);
@@ -416,8 +425,8 @@ try {
 			const last = p.getByText('Ready to create', { exact: true }).last();
 			const bottom = await last.evaluate((e) => { let n = e; for (let i = 0; i < 6 && n.parentElement; i++) { n = n.parentElement; if (n.getBoundingClientRect().height > 60) break; } return n.getBoundingClientRect().bottom + scrollY; });
 			const list = await docBox(p.getByText('Extracted products', { exact: true }).locator('xpath=ancestor::section[1]'));
-			if (ctx === phone) await p.evaluate(() => { for (const e of document.querySelectorAll('header, [data-sonner-toaster]')) e.style.visibility = 'hidden'; });
-			await shoot(p, name, ctx === desk ? { x: list.x - 16, y: head.y - 16, width: list.r - list.x + 32, height: bottom - head.y + 24 } : { x: 0, y: head.y - 24, width: 390, height: bottom - head.y + 40 });
+			await p.evaluate(() => { for (const e of document.querySelectorAll('header, [data-sonner-toaster]')) e.style.visibility = 'hidden'; });
+			await shoot(p, name, ctx === slot ? { x: list.x - 16, y: head.y - 16, width: list.r - list.x + 32, height: bottom - head.y + 24 } : { x: 0, y: head.y - 24, width: 390, height: bottom - head.y + 40 });
 		}
 
 		// The invoice inbox, newest two emails: Harbor Foods' HF-3102 and HF-3103
@@ -426,11 +435,12 @@ try {
 		// through the app's own inbox code (scripts/inbox-fixture.ts and the
 		// worker's sweepInbox, with the Google reader) before this run, by a
 		// script the owner ran; this phase only reads the page.
-		// Desktop at 780 wide, not 1440: the homepage crops this card 6:5 from
+		// Desktop at 600 wide since 2026-10-09 (SLOT): at 780 its 14px text drew at
+		// 10px in the homepage card, and the card sat half the ordering card's
+		// height. Before that, at 780 wide, not 1440: the homepage crops this card 6:5 from
 		// the top left, and at 1440 the two cards run 2:1, so the dates and
 		// HF-3106's Review link would fall outside it.
-		const narrow = await browser.newContext({ ...DESKTOP, viewport: { width: 780, height: 900 }, storageState: await desk.storageState() });
-		for (const [name, ctx] of [['invoice-inbox', narrow], ['invoice-inbox-phone', phone]]) {
+		for (const [name, ctx] of [['invoice-inbox', slot], ['invoice-inbox-phone', phone]]) {
 			if (!want(name)) continue;
 			const p = await ctx.newPage();
 			await p.goto(`${APP}/purchases/inbox`);
@@ -443,8 +453,8 @@ try {
 			});
 			const held = await card('Invoices HF-3102 and HF-3103');
 			const waiting = await card('Invoice HF-3106');
-			if (ctx === phone) await p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
-			await shoot(p, name, ctx === narrow
+			await hideStuck(p);
+			await shoot(p, name, ctx === slot
 				? { x: held.x - 12, y: held.y - 12, width: held.r - held.x + 24, height: waiting.b - held.y + 24 }
 				: { x: 0, y: held.y - 12, width: 390, height: waiting.b - held.y + 24 });
 		}
@@ -458,7 +468,7 @@ try {
 		// the first menu. The page around the widget is sample, the widget is the
 		// app's.
 		const HOST = process.env.HOST ?? 'http://127.0.0.1:4370/';
-		for (const [name, opts] of [['ordering-site', DESKTOP], ['ordering-site-phone', PHONE]]) {
+		for (const [name, opts] of [['ordering-site', SLOT], ['ordering-site-phone', PHONE]]) {
 			if (!want(name)) continue;
 			const ctx = await browser.newContext({ ...opts, viewport: { width: opts.viewport.width, height: 2600 } });
 			const p = await ctx.newPage();

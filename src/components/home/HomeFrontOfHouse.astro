@@ -33,14 +33,18 @@ import { frontOfHouse } from '../../lib/home';
 
 <style>
 	.cards { display: grid; gap: 3rem; margin-top: 3rem; }
-	/* :global: the img renders inside HomeFrame. The 6:5 crop is for the
-	   desktop captures (3:2 until 2026-10-07; the ordering frame is the widget
-	   inside a website, and its menu row sits below a 3:2 cut). The invoice
-	   inbox is shot 780 wide so its two cards sit near 6:5 whole. A phone
-	   gets the app's phone capture whole. */
+	/* :global: the img renders inside HomeFrame. Each card shows its capture
+	   whole. The 6:5 crop (3:2 until 2026-10-07) went on 2026-10-09: the
+	   ordering frame is now shot 600 wide so it reads at 1:1 in its card, and
+	   that frame runs taller than 6:5 to reach its Coastal Dinner row. The
+	   invoice inbox is shot at 600 too: it stands about two thirds of the
+	   ordering card's height, where at 780 it stood half. */
 	.card :global(.card-shot) { margin-bottom: 1.5rem; }
-	@media (min-width: 48rem) {
-		.card :global(.card-shot) { aspect-ratio: 6 / 5; object-fit: cover; object-position: top left; }
+	/* Side by side, each card's rows (frame, heading, line, link) share one
+	   grid, so the two headings line up under frames of different heights. */
+	@media (min-width: 64rem) {
+		.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3rem; row-gap: 0; }
+		.card { display: grid; grid-row: span 4; grid-template-rows: subgrid; align-content: start; }
+		.card > :global(*) { align-self: start; }
 	}
-	@media (min-width: 64rem) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>

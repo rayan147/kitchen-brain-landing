@@ -135,6 +135,59 @@ const ogImage = new URL('/og.png', site.url).href;
 				}
 			}
 		</script>
+
+		<script>
+			// Screenshot frames (.shot-pan, global.css) are a named, focusable
+			// region only while they scroll: a phone, or a tablet with a wide
+			// capture. On a desktop the capture fits and the frame was a dead tab
+			// stop with a name about scrolling (accessibility review 2026-10-09).
+			// The HTML ships every frame focusable, so without JavaScript each one
+			// can still be scrolled from the keyboard.
+			// Pattern: Observer. Why: a frame's scroll state changes with the
+			// viewport and with the capture's load, and one ResizeObserver hears
+			// both. Alternative rejected: a resize listener, which misses a lazy
+			// image arriving after the first layout.
+			const pans = document.querySelectorAll<HTMLElement>('.shot-pan');
+			if (pans.length > 0 && 'ResizeObserver' in window) {
+				const sync = (pan: HTMLElement) => {
+					const label = pan.dataset.panLabel ?? pan.getAttribute('aria-label') ?? '';
+					pan.dataset.panLabel = label;
+					const hint = pan.nextElementSibling?.classList.contains('pan-hint') ? pan.nextElementSibling : null;
+					if (pan.scrollWidth > pan.clientWidth + 1) {
+						pan.setAttribute('tabindex', '0');
+						pan.setAttribute('role', 'region');
+						if (label) pan.setAttribute('aria-label', label);
+						// A touch scrollbar is invisible, so the frame says it
+						// scrolls (design review 2026-10-09). Hidden from AT: the
+						// region itself is focusable and scrolls by keyboard.
+						if (!hint) {
+							const p = document.createElement('p');
+							p.className = 'pan-hint';
+							p.setAttribute('aria-hidden', 'true');
+							p.textContent = 'Scroll sideways to see the whole screen.';
+							pan.after(p);
+						}
+					} else {
+						pan.removeAttribute('tabindex');
+						pan.removeAttribute('role');
+						pan.removeAttribute('aria-label');
+						hint?.remove();
+					}
+				};
+				const ro = new ResizeObserver((entries) => {
+					for (const entry of entries) {
+						const pan = (entry.target as HTMLElement).closest<HTMLElement>('.shot-pan');
+						if (pan) sync(pan);
+					}
+				});
+				for (const pan of pans) {
+					sync(pan);
+					ro.observe(pan);
+					const img = pan.querySelector('img');
+					if (img) ro.observe(img);
+				}
+			}
+		</script>
 	</body>
 </html>
 
