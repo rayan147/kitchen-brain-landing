@@ -347,17 +347,23 @@ const faqItems = [
 		   computed result together; the longer evidence continues below. */
 		.hero-grid { gap: 1rem; padding-block: 1.25rem 2rem; }
 		.hero h1 { margin-top: .25rem; }
-		.hero-lede { margin-top: .7rem; font-size: var(--text-body-sm); line-height: 1.38; }
+		/* The lede and both actions keep their desktop size: phones are where
+		   this page is read, so the first frame wins its height back from
+		   spacing, never from 13-14px type (mobile review 2026-10-09). */
+		.hero-lede { margin-top: .5rem; line-height: 1.45; }
 		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: 1rem; }
-		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .55rem; font-size: var(--text-caption); text-align: center; }
+		.hero-copy :global([data-feature-trial-terms]) { margin-top: .6rem; line-height: 1.45; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .55rem; text-align: center; }
 		.closing-actions > * { width: 100%; justify-content: center; }
 		.figure-note { margin-bottom: .45rem; }
 		.shelf-ticket { padding: .8rem; }
-		.ticket-title { margin-top: .7rem; padding-bottom: .75rem; }
-		.equation { margin-top: .75rem; }
+		.ticket-title { margin-top: .5rem; padding-bottom: .5rem; }
+		.equation { margin-top: .5rem; }
 		.ticket-foot { margin-top: .65rem; padding-top: .6rem; }
-		.ticket-title { display: block; }
-		.ticket-title > strong { display: block; margin-top: .5rem; }
+		/* The count sits beside the item's name and wraps under it only when
+		   the line is too narrow (320): the stacked title cost the first
+		   frame 32px once the lede and the trial terms kept their size. */
+		.ticket-title { flex-wrap: wrap; row-gap: .25rem; }
 		.equation { grid-template-columns: 1fr auto 1fr; }
 		.equation > div:last-child { grid-column: 1 / -1; }
 		.stale-scene { grid-template-columns: 1fr; }

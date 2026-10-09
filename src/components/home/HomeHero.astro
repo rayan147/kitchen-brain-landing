@@ -37,8 +37,12 @@ import { heroFilm } from '../../lib/home';
 		</div>
 		<figure class="hero-media" data-hero-media>
 			<video class="hero-film" controls playsinline preload="metadata" poster={heroFilm.poster} width={heroFilm.width} height={heroFilm.height} aria-label={heroFilm.label}>
-				<source src={heroFilm.mp4} type="video/mp4" />
-				<source src={heroFilm.webm} type="video/webm" />
+				<!-- MP4 first, as the owner's Chrome played it (2026-10-07); below 64rem
+				     the 720p pair (6MB) instead of the 1080p one (15.7MB). -->
+				<source src={heroFilm.mp4} type="video/mp4" media={heroFilm.fullFrom} />
+				<source src={heroFilm.mp4720} type="video/mp4" />
+				<source src={heroFilm.webm} type="video/webm" media={heroFilm.fullFrom} />
+				<source src={heroFilm.webm720} type="video/webm" />
 				<a href={heroFilm.mp4}>Download the film (MP4)</a>
 			</video>
 			<figcaption class="home-small mt-3">One sample wedding, from the client's inquiry to the food cost the day after. 1 min 55 s, music only, every word on screen. Captured in CostCook on Oct 7, 2026.</figcaption>
@@ -62,6 +66,15 @@ import { heroFilm } from '../../lib/home';
 	   full top padding read as a 160px gap under it at 1440 (design review).
 	   The hero opens on the tight step instead. */
 	.hero { padding-top: var(--spacing-section-tight); }
+	/* Short screens (a 320x568 phone, any phone on its side): the trial button
+	   ended at 588px on a 568px screen (mobile review 2026-10-09). The
+	   opening tightens so the button lands on the first screen; the header's
+	   Free trial covers the landscape case, where four lines of lede cannot
+	   fit 390px anyway. */
+	@media (max-height: 40rem) {
+		.hero { padding-top: 1.25rem; }
+		.hero-h1 { margin-top: .5rem; }
+	}
 	.hero-grid { display: grid; gap: 3rem; align-items: center; }
 	.hero-h1 {
 		margin-top: 1rem;

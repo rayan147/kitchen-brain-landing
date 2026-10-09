@@ -100,7 +100,7 @@ const payments = eventPayments;
 			<figure class="proof phone anim-enter" style="--enter-delay: 120ms">
 				<figcaption>New inquiry · sample event</figcaption>
 				<div>
-					<img src={proof.inquiry.src} alt={proof.inquiry.alt} width={proof.inquiry.width} height={proof.inquiry.height} decoding="async" style={`width: ${proof.inquiry.width / 2}px`} />
+					<img src={proof.inquiry.src} alt={proof.inquiry.alt} width={proof.inquiry.width} height={proof.inquiry.height} decoding="async" fetchpriority="high" style={`width: ${proof.inquiry.width / 2}px`} />
 				</div>
 			</figure>
 		</div>
@@ -285,9 +285,16 @@ const payments = eventPayments;
 
 	/* The step bar: the app's six steps, in its order, as the page map. */
 	.step-bar { padding-block: 1.5rem; border-top: 1px solid var(--color-hairline); }
-	.step-bar ol { display: grid; gap: .5rem; margin-top: .9rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+	/* Six steps in even rows, 2 then 3 then 6 across: auto-fit wrapped them
+	   4+2 at 768 and 5+1 at 1024, with "Booked" alone (mobile review
+	   2026-10-09). */
+	.step-bar ol { display: grid; gap: .5rem; margin-top: .9rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	@media (min-width: 40rem) { .step-bar ol { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+	@media (min-width: 64rem) { .step-bar ol { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 	.step-bar a { display: flex; align-items: center; gap: .6rem; min-height: 44px; padding: .5rem .8rem; border-top: 2px solid var(--color-hairline-strong); font-weight: 600; color: var(--color-ink); text-decoration: none; }
-	.step-bar a:hover { border-top-color: var(--color-green); }
+	@media (hover: hover) {
+		.step-bar a:hover { border-top-color: var(--color-green); }
+	}
 	.step-bar a:focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
 	.step-bar a span { font-size: var(--text-micro); font-variant-numeric: tabular-nums; color: var(--color-amber-deep); }
 
@@ -322,7 +329,7 @@ const payments = eventPayments;
 
 	.limit-list { display: grid; gap: 1.25rem; margin-top: 2.5rem; max-width: 76ch; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
 	.limit-list > li { padding-top: .9rem; border-top: 1px solid var(--color-hairline-strong); font-size: var(--text-body-sm); line-height: 1.55; color: var(--color-ink-soft); }
-	.coming-note { max-width: 46rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
+	.coming-note { max-width: 40rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
 	.coming-note + .coming-note { margin-top: 1rem; }
 	.coming-title { margin-top: .4rem; font-weight: 700; }
 	.coming-note p:last-child { margin-top: .4rem; color: var(--color-ink-soft); }

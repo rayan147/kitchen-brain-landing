@@ -59,6 +59,9 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 	   drew at 1.5x to 1.95x in the wide track, softer than the row's h3
 	   (design review 2026-10-09). HomeFrame sets --shot-max. */
 	.row-figure :global(.row-shot) { max-width: var(--shot-max, none); margin-inline: auto; }
+	/* One column until 64rem: keep the copy to a readable measure there
+	   (lines ran to 99 characters at 920-1000, mobile review 2026-10-09). */
+	.row-copy { max-width: 40rem; }
 	.more { margin-top: var(--spacing-section-tight); }
 	.more-list { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin-top: .5rem; }
 	@media (min-width: 64rem) {

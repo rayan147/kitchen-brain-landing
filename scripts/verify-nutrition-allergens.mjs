@@ -134,7 +134,8 @@ try {
 	assert(mobile.overflow === 0, `mobile: horizontal overflow is ${mobile.overflow}px`);
 	assert(mobile.heroActionsVisible, 'mobile: a hero action is below the first viewport');
 	assert(mobile.proofStartsInViewport, 'mobile: authentic hero proof starts below the first viewport');
-	assert(mobile.proofSources.includes('/proof/nutrition/nutrition-summary-mobile.png'), 'mobile: art-directed summary proof is missing');
+	// PNG or its WebP (integrations/webp-sources.mjs, 2026-10-09).
+	assert(mobile.proofSources.some((src) => /^\/proof\/nutrition\/nutrition-summary-mobile\.(png|webp)$/.test(src)), 'mobile: art-directed summary proof is missing');
 	await capture('mobile');
 
 	await viewport(320, 844, true);

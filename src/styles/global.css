@@ -67,7 +67,11 @@
 	/* Supporting roles used inside proof records. These are semantic stops, not
 	   route-local guesses: micro data, compact labels, captions, and record
 	   titles repeat across every feature guide. */
-	--text-micro: 0.6875rem;
+	/* 12px floor (mobile review 2026-10-09): at 11px the mono labels that
+	   carry meaning ("Per portion", "Food cost", step numbers) fell under
+	   what a phone reader in a kitchen can read. Same size as label-sm now;
+	   the two roles still differ in case and tracking. */
+	--text-micro: 0.75rem;
 	--text-label-sm: 0.75rem;
 	--text-caption: 0.8125rem;
 	--text-body-sm: 0.875rem;
@@ -77,11 +81,45 @@
 	--text-record: 1.5rem;
 
 	/* Two spacing registers so sections breathe unevenly on purpose. */
-	--spacing-section: clamp(5rem, 3.5rem + 7vw, 9rem);
+	/* Floor 56px, not 80: a band boundary cost 160px of a 568px phone screen
+	   (mobile review 2026-10-09). The slope still reaches 144px at about
+	   1260px, so desktop rhythm is unchanged. */
+	--spacing-section: clamp(3.5rem, 1.625rem + 9.4vw, 9rem);
 	--spacing-section-tight: clamp(3rem, 2rem + 4vw, 5.5rem);
 }
 
 @layer base {
+	/* One page gutter for the content column, the header and the footer.
+	   viewport-fit=cover (Base.astro) lets the page run under a landscape
+	   iPhone's notch, so each side takes the larger of the gutter and the
+	   safe-area inset (mobile review 2026-10-09: 34px gutter vs 47px notch). */
+	:root {
+		--gutter: clamp(1.25rem, 4vw, 3rem);
+		--gutter-left: max(var(--gutter), env(safe-area-inset-left));
+		--gutter-right: max(var(--gutter), env(safe-area-inset-right));
+	}
+
+	/* The wrapper integrations/webp-sources.mjs puts around a lone capture
+	   img: it adds a WebP source and must not add a box. */
+	picture[data-webp] {
+		display: contents;
+	}
+
+	/* Breadcrumb links are often one short word ("Home", "Blog"): give each a
+	   44px square at least, the site's touch floor, on all 21 routes that
+	   carry one (mobile review 2026-10-09: 29-40px wide). */
+	nav[aria-label='Breadcrumb'] a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 2.75rem;
+		/* 44px tall to the finger, its line's height to the layout: padding
+		   grows the hit box and the negative margin takes it back, as
+		   btn-quiet does. */
+		padding-block: 0.75rem;
+		margin-block: -0.75rem;
+	}
+
 	html {
 		scroll-behavior: smooth;
 		/* The canvas the browser shows past the page (overscroll bounce, the
@@ -213,7 +251,8 @@
 	margin-inline: auto;
 	width: 100%;
 	max-width: 72rem;
-	padding-inline: clamp(1.25rem, 4vw, 3rem);
+	padding-left: var(--gutter-left);
+	padding-right: var(--gutter-right);
 }
 
 @layer components {
@@ -323,7 +362,8 @@
 	color: var(--color-ink-soft);
 	font-size: var(--text-caption);
 }
-.shot-pan:focus-visible {
+.shot-pan:focus-visible,
+[data-pan]:focus-visible {
 	outline: 2px solid var(--color-green);
 	outline-offset: -2px;
 }
@@ -342,6 +382,22 @@
 	.shot-pan img {
 		min-width: calc(var(--shot-w, 0px) * 0.8);
 	}
+}
+
+/* A scrolling panel says it scrolls: a soft shade at whichever edge has more
+   content, gone at the ends (the cover gradients scroll with the content,
+   the shades stay put). The phone menu cut off at "Your initial setup" in
+   landscape with nothing saying more was below (mobile review 2026-10-09). */
+.scroll-shadows {
+	background-image:
+		linear-gradient(var(--color-paper) 30%, transparent),
+		linear-gradient(transparent, var(--color-paper) 70%),
+		radial-gradient(farthest-side at 50% 0, color-mix(in oklab, var(--color-ink) 16%, transparent), transparent),
+		radial-gradient(farthest-side at 50% 100%, color-mix(in oklab, var(--color-ink) 16%, transparent), transparent);
+	background-position: top, bottom, top, bottom;
+	background-repeat: no-repeat;
+	background-size: 100% 2.5rem, 100% 2.5rem, 100% 0.9rem, 100% 0.9rem;
+	background-attachment: local, local, scroll, scroll;
 }
 
 /* Letter-spaced small-caps label that opens most sections. */
@@ -368,8 +424,12 @@
 	transition:
 		background-color 150ms ease-out,
 		transform 100ms ease-out;
-	&:hover {
-		background: var(--color-green-deep);
+	/* Hover only where a pointer hovers: on iOS a tapped button kept its
+	   hover colour after the tap (mobile review 2026-10-09). */
+	@media (hover: hover) {
+		&:hover {
+			background: var(--color-green-deep);
+		}
 	}
 	/* The press nudge is motion, so it obeys the same gate every other register
 	   does. Colour feedback on hover/active is not motion and stays. */
@@ -400,8 +460,10 @@
 	   plain utilities sort after @utility blocks. */
 	padding-block: 0.75rem;
 	margin-block: -0.75rem;
-	&:hover {
-		text-decoration-color: var(--color-green);
+	@media (hover: hover) {
+		&:hover {
+			text-decoration-color: var(--color-green);
+		}
 	}
 }
 

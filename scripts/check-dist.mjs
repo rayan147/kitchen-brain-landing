@@ -3,6 +3,7 @@
 // sized by CSS alone, and until the external hashed stylesheet applies
 // it paints at 100% container width — the full-screen logo flash.
 // Runs as postbuild, so `npm run build` (local and Vercel) enforces it.
+import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { homepageStopIds } from './lib/homepage-stops.mjs';
@@ -190,11 +191,19 @@ if (!heroVideo) {
 	}
 }
 const heroSources = [...heroMedia.matchAll(/<source\b[^>]*src="([^"]+)"[^>]*type="([^"]+)"/g)].map((m) => `${m[2]} ${m[1]}`);
-if (heroSources.join(',') !== 'video/mp4 /film/costcook-promo.mp4,video/webm /film/costcook-promo.webm') {
-	console.error(`check-dist: the hero film sources are [${heroSources.join(', ')}]; expected MP4 then WebM`);
+// MP4 before WebM (the owner's Chrome played the MP4, 2026-10-07); each
+// format as 1080p from 64rem and 720p below it (mobile review 2026-10-09).
+const expectedHeroSources = [
+	'video/mp4 /film/costcook-promo.mp4',
+	'video/mp4 /film/costcook-promo-720.mp4',
+	'video/webm /film/costcook-promo.webm',
+	'video/webm /film/costcook-promo-720.webm'
+];
+if (heroSources.join(',') !== expectedHeroSources.join(',')) {
+	console.error(`check-dist: the hero film sources are [${heroSources.join(', ')}]; expected MP4 then WebM, 1080p then 720p`);
 	failed = true;
 }
-for (const file of ['film/costcook-promo.webm', 'film/costcook-promo.mp4', 'film/costcook-promo-poster.jpg']) {
+for (const file of ['film/costcook-promo.webm', 'film/costcook-promo.mp4', 'film/costcook-promo-720.webm', 'film/costcook-promo-720.mp4', 'film/costcook-promo-poster.jpg']) {
 	if (!existsSync(join(dist, file))) {
 		console.error(`check-dist: ${file} did not ship`);
 		failed = true;
@@ -235,7 +244,9 @@ for (const [tag, name] of homeImgs) {
 // 390), then left the swap on 2026-10-09: it shows the phone capture at every
 // width, since the wide one drew 9px labels in the rail's desktop column;
 // the yield row's tomato card did the same.
-const expectedPhone = ['food-cost-breakdown', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox'];
+// confirm-dialog joined on 2026-10-09 (mobile review): its phone source is
+// the dialog's content without its margins, so the sentence reads at 390.
+const expectedPhone = ['confirm-dialog', 'food-cost-breakdown', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox'];
 const phoneSources = [...homeHtml.matchAll(/<source\b[^>]*srcset="\/proof\/home\/([a-z-]+)-phone\.png"[^>]*>/g)];
 if (phoneSources.map((m) => m[1]).join(',') !== expectedPhone.join(',')) {
 	console.error(`check-dist: homepage phone captures are [${phoneSources.map((m) => m[1]).join(', ')}]; expected [${expectedPhone.join(', ')}]`);
@@ -314,6 +325,27 @@ for (const target of menuTargets) {
 		console.error(`check-dist: Features page is missing ${id}`);
 		failed = true;
 	}
+}
+
+// WebP captures (mobile review 2026-10-09). integrations/webp-sources.mjs
+// offers a WebP for every PNG in scripts/webp-manifest.json. A PNG re-shot
+// without `node scripts/make-webp.mjs` would ship beside its old WebP, and
+// every modern browser would show the old screen: fail on any hash mismatch.
+const webpManifest = JSON.parse(readFileSync(new URL('./webp-manifest.json', import.meta.url), 'utf8'));
+for (const [png, hash] of Object.entries(webpManifest)) {
+	const pngPath = join(dist, 'proof', png);
+	const webpPath = pngPath.replace(/\.png$/, '.webp');
+	if (!existsSync(pngPath) || !existsSync(webpPath)) {
+		console.error(`check-dist: proof/${png} or its WebP is missing; run node scripts/make-webp.mjs`);
+		failed = true;
+	} else if (createHash('sha256').update(readFileSync(pngPath)).digest('hex') !== hash) {
+		console.error(`check-dist: proof/${png} changed after its WebP was made; run node scripts/make-webp.mjs`);
+		failed = true;
+	}
+}
+if (!/<source type="image\/webp" srcset="\/proof\/home\/[a-z-]+\.webp">/.test(homeHtml)) {
+	console.error('check-dist: homepage captures carry no WebP source');
+	failed = true;
 }
 
 if (failed) process.exit(1);

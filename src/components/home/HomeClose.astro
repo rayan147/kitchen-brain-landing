@@ -72,7 +72,9 @@ const [priceAmount, pricePer] = launchPlan.displayPrice.split('/');
 	.plan-terms div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; padding-block: .6rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-body-lg); }
 	.plan-terms dt { color: var(--color-ink-soft); }
 	.plan-terms dd { font-weight: 600; }
-	.plan-cta { width: 100%; justify-content: center; white-space: normal; text-align: center; }
+	/* Full width on a phone, capped from tablet up: at 820 it stretched to
+	   714px (mobile review 2026-10-09). */
+	.plan-cta { width: 100%; max-width: 26rem; justify-content: center; white-space: normal; text-align: center; }
 	/* Reading order (review 2026-10-07): copy, then the plan and its primary,
 	   then the quiet links, so on a phone the trial comes before the demo. On
 	   desktop the links sit back under the copy, beside the plan. */

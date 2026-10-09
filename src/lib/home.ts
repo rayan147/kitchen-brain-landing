@@ -30,9 +30,11 @@ export type Shot = {
 /**
  * Where a carried figure sits in its frame, in percent of the PNG, measured
  * from the pixels. The rail draws an amber ring there over the real image; the
- * PNG itself is never edited.
+ * PNG itself is never edited. `small` is the same figure in the shot's phone
+ * source, when that source frames the screen differently.
  */
-export type Focus = { x: number; y: number; w: number; h: number };
+type Box = { x: number; y: number; w: number; h: number };
+export type Focus = Box & { small?: Box };
 
 const shot = (name: string, alt: string, px: [number, number], phone = false): Shot => ({
 	src: `/proof/home/${name}.png`,
@@ -68,6 +70,13 @@ const withPhone = (base: Shot, px: [number, number]): Shot => ({
 export const heroFilm = {
 	webm: '/film/costcook-promo.webm',
 	mp4: '/film/costcook-promo.mp4',
+	// 720p renditions for phones and tablets (mobile review 2026-10-09): the
+	// player is 280-750px wide there, and the 1080p MP4 is 15.7MB on a tap.
+	webm720: '/film/costcook-promo-720.webm',
+	mp4720: '/film/costcook-promo-720.mp4',
+	// The width at which the full-size film is served (the hero goes two
+	// columns here and the player passes 560px).
+	fullFrom: '(min-width: 64rem)',
 	poster: '/film/costcook-promo-poster.jpg',
 	width: 1920,
 	height: 1080,
@@ -199,17 +208,25 @@ export const eventStages = [
 	{
 		id: 'confirm',
 		carries: 'The same menu, quantities and prices locked',
-		focus: [{ x: 8.1, y: 31.9, w: 83.9, h: 21.8 }] as Focus[],
+		// small: the same sentence in the phone crop (72, 84, 836x312 of the PNG).
+		focus: [{ x: 8.1, y: 31.9, w: 83.9, h: 21.8, small: { x: 1, y: 21.8, w: 99, h: 33.3 } }] as Focus[],
 		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
 		tab: 'Confirm order',
 		heading: acceptanceBoundary,
 		// When, as advice, not a rule the app enforces (third chef review: "am I
 		// locked on a guess?").
 		body: 'Wait for the final count, then Confirm. That locks the quantities and prices, and your shopping, prep and pack lists turn into checklists.',
-		shot: shot(
-			'confirm-dialog',
-			'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
-			[992, 476]
+		// The phone source is the dialog's own content without its margins
+		// (mobile review 2026-10-09: the full dialog put its sentence at about
+		// 8px on a 390 phone). It is a crop, not a phone capture, and keeps
+		// every word the alt names: title, sentence and both buttons.
+		shot: withPhone(
+			shot(
+				'confirm-dialog',
+				'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
+				[992, 476]
+			),
+			[836, 312]
 		)
 	},
 	{

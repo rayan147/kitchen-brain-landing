@@ -128,7 +128,7 @@ import SageIcon from '../SageIcon.astro';
 							</div>
 
 							<div class="app-content-grid">
-								<div class="app-table-wrap">
+								<div class="app-table-wrap" data-pan data-pan-hint="Scroll sideways to see the whole table." tabindex="0" role="region" aria-label={`${stop.title}: table`}>
 									<table>
 										<thead><tr>{stop.columns.map((column) => <th scope="col">{column}</th>)}</tr></thead>
 										<tbody>{stop.rows.map((row) => <tr>{row.map((cell, cellIndex) => cellIndex === 0 ? <th scope="row">{cell}</th> : <td data-label={stop.columns[cellIndex]}>{cell}</td>)}</tr>)}</tbody>
@@ -170,7 +170,7 @@ import SageIcon from '../SageIcon.astro';
 		</div>
 	</section>
 
-	<section class="tour-close" aria-labelledby="tour-close-heading">
+	<section class="tour-close" aria-labelledby="tour-close-heading" data-sticky-end>
 		<div class="container-page tour-close-grid">
 			<div>
 				<h2 id="tour-close-heading">Start with one real menu and take it all the way to the back door.</h2>
@@ -306,9 +306,29 @@ import SageIcon from '../SageIcon.astro';
 		});
 
 		select?.addEventListener('change', () => show(Number(select.value)));
-		previous?.addEventListener('click', () => show(current - 1));
+		// Previous and Next sit under the stop. On a phone the stop is about
+		// 1,500px tall, so swapping it in place left the reader at the end of the
+		// new stop (mobile review 2026-10-09). When the top of the tour shell has
+		// scrolled off, bring it back and put focus on the new stop, so the reader
+		// (and a screen reader) starts the stop at its heading. Stops already in
+		// view (desktop) are left alone and focus stays on the button.
+		const shell = root.querySelector<HTMLElement>('.tour-shell');
+		// The scene renders inside a view transition's callback, so focus waits
+		// until the new scene is no longer hidden (a few frames at most).
+		const focusWhenShown = (scene: HTMLElement, frames = 30): void => {
+			if (!scene.hidden) scene.focus({ preventScroll: true });
+			else if (frames > 0) requestAnimationFrame(() => focusWhenShown(scene, frames - 1));
+		};
+		const go = (index: number): void => {
+			const outOfView = !!shell && shell.getBoundingClientRect().top < 0;
+			show(index);
+			if (!outOfView || !shell) return;
+			shell.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+			focusWhenShown(scenes[Math.max(0, Math.min(scenes.length - 1, index))]);
+		};
+		previous?.addEventListener('click', () => go(current - 1));
 		next?.addEventListener('click', () => {
-			if (current < tabs.length - 1) show(current + 1);
+			if (current < tabs.length - 1) go(current + 1);
 			else document.querySelector('#tour-close-heading')?.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'center' });
 		});
 
@@ -345,7 +365,7 @@ import SageIcon from '../SageIcon.astro';
 	.tour-hero-actions, .tour-close-actions { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
 	.tour-ticket { position: relative; width: min(100%, 28rem); justify-self: end; background: var(--color-paper); padding: 1.5rem; box-shadow: var(--shadow-ticket); }
 	.tour-ticket::before { position: absolute; inset: .45rem; border: 1px solid var(--color-ticket-rule); content: ''; pointer-events: none; }
-	.tour-ticket-head { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--color-ticket-rule); padding-bottom: .9rem; color: var(--color-amber-deep); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+	.tour-ticket-head { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--color-ticket-rule); padding-bottom: .9rem; color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 	.tour-ticket > strong { display: block; margin-top: 1.35rem; font-family: var(--font-display); font-size: 1.55rem; line-height: 1.15; }
 	.tour-ticket dl { margin-top: 1rem; }
 	.tour-ticket dl div { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--color-hairline); padding-block: .72rem; }
@@ -371,7 +391,9 @@ import SageIcon from '../SageIcon.astro';
 	.tour-rail-head small { margin-top: .2rem; color: #aebbb2; }
 	.tour-rail [role='tablist'] { padding: .65rem; }
 	.tour-rail button { display: grid; width: 100%; min-height: 3.15rem; grid-template-columns: 1.6rem 1fr; align-items: center; gap: .55rem; border-radius: .45rem; padding: .55rem .65rem; color: #c9d2cb; text-align: left; transition: background-color 150ms ease-out, color 150ms ease-out; }
-	.tour-rail button:hover { background: rgba(255,255,255,.07); color: #fff; }
+	@media (hover: hover) {
+		.tour-rail button:hover { background: rgba(255,255,255,.07); color: #fff; }
+	}
 	.tour-rail button[aria-selected='true'] { background: #e5f1ea; color: #1f3b2d; }
 	.tour-rail button span { font-variant-numeric: tabular-nums; font-size: .75rem; letter-spacing: .08em; }
 	.tour-rail button strong { font-size: var(--text-eyebrow); line-height: 1.25; }
@@ -458,7 +480,9 @@ import SageIcon from '../SageIcon.astro';
 	.tour-coach h4 { max-width: 40ch; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.2; }
 	.tour-coach p { max-width: 68ch; margin-top: .45rem; color: #d7e0da; font-size: var(--text-eyebrow); line-height: 1.5; }
 	.tour-coach a { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; align-self: end; border: 1px solid #769381; border-radius: 999px; padding: .6rem .9rem; color: #fff; font-size: var(--text-eyebrow); font-weight: 700; }
-	.tour-coach a:hover { background: rgba(255,255,255,.08); }
+	@media (hover: hover) {
+		.tour-coach a:hover { background: rgba(255,255,255,.08); }
+	}
 	/* Green on #253a2e is 2.4:1; paper clears the 3:1 focus floor. */
 	.tour-coach :focus-visible { outline-color: var(--color-paper); }
 	.tour-controls { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid #dce3dd; background: #fff; padding: .85rem 1rem; }

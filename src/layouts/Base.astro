@@ -147,7 +147,11 @@ const ogImage = new URL('/og.png', site.url).href;
 			// viewport and with the capture's load, and one ResizeObserver hears
 			// both. Alternative rejected: a resize listener, which misses a lazy
 			// image arriving after the first layout.
-			const pans = document.querySelectorAll<HTMLElement>('.shot-pan');
+			// [data-pan] puts any other sideways scroller (the tour's tables, the
+			// pack comparison on a phone) through the same treatment, with its
+			// own hint in data-pan-hint (mobile review 2026-10-09: neither was
+			// focusable or said that it scrolls).
+			const pans = document.querySelectorAll<HTMLElement>('.shot-pan, [data-pan]');
 			if (pans.length > 0 && 'ResizeObserver' in window) {
 				const sync = (pan: HTMLElement) => {
 					const label = pan.dataset.panLabel ?? pan.getAttribute('aria-label') ?? '';
@@ -164,7 +168,7 @@ const ogImage = new URL('/og.png', site.url).href;
 							const p = document.createElement('p');
 							p.className = 'pan-hint';
 							p.setAttribute('aria-hidden', 'true');
-							p.textContent = 'Scroll sideways to see the whole screen.';
+							p.textContent = pan.dataset.panHint ?? 'Scroll sideways to see the whole screen.';
 							pan.after(p);
 						}
 					} else {
@@ -176,15 +180,15 @@ const ogImage = new URL('/og.png', site.url).href;
 				};
 				const ro = new ResizeObserver((entries) => {
 					for (const entry of entries) {
-						const pan = (entry.target as HTMLElement).closest<HTMLElement>('.shot-pan');
+						const pan = (entry.target as HTMLElement).closest<HTMLElement>('.shot-pan, [data-pan]');
 						if (pan) sync(pan);
 					}
 				});
 				for (const pan of pans) {
 					sync(pan);
 					ro.observe(pan);
-					const img = pan.querySelector('img');
-					if (img) ro.observe(img);
+					const content = pan.querySelector('img, table');
+					if (content) ro.observe(content);
 				}
 			}
 		</script>

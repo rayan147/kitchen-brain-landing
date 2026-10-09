@@ -24,8 +24,12 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
      do not drift apart. Same side padding as container-page, so up to 72rem
      the mark sits on the content's left edge; wider than that the header
      keeps to the left gutter by design, and the footer mark follows it
-     (design review 2026-10-07: they were 3vw against 4vw, 6-10px apart). -->
-<header class="site-header relative mx-auto w-full max-w-[96rem] px-[clamp(1.25rem,4vw,3rem)] flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
+     (design review 2026-10-07: they were 3vw against 4vw, 6-10px apart).
+     z-40 makes the bar its own layer above #main. Without it the full-bleed
+     cream of a [data-opening] intro (/pricing, /compare) painted over the
+     Menu summary on phones: only the bar's links were raised (mobile review
+     2026-10-09). The gutters take the notch inset in landscape. -->
+<header class="site-header relative z-40 mx-auto w-full max-w-[96rem] pl-(--gutter-left) pr-(--gutter-right) flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
 	<!-- One sprite keeps every destination icon on the same 20px grid and
 	     stroke weight. Visible titles and descriptions carry their meaning. -->
 	<svg width="0" height="0" class="absolute overflow-hidden" aria-hidden="true">
@@ -178,7 +182,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 						</summary>
 
 						<div
-							class="absolute inset-x-3 top-full z-40 max-h-[calc(100dvh-6.5rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift lg:inset-x-auto lg:right-auto lg:left-1/2 lg:mt-2 lg:max-h-[calc(100dvh-9rem)] lg:w-[min(50rem,calc(100vw-2.5rem))] lg:-translate-x-1/2"
+							class="absolute inset-x-3 top-full z-40 max-h-[calc(100dvh-6.5rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper scroll-shadows shadow-lift lg:inset-x-auto lg:right-auto lg:left-1/2 lg:mt-2 lg:max-h-[calc(100dvh-9rem)] lg:w-[min(50rem,calc(100vw-2.5rem))] lg:-translate-x-1/2"
 						>
 							<!-- Below lg the panel opens like Menu: under the header, over the
 							     same backdrop, with a Close row (design review 2026-10-07: it was
@@ -221,7 +225,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
 						</summary>
-						<div class="absolute top-full left-1/2 z-40 mt-2 max-h-[calc(100dvh-7rem)] w-[min(52rem,calc(100vw-2.5rem))] -translate-x-1/2 overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift">
+						<div class="absolute top-full left-1/2 z-40 mt-2 max-h-[calc(100dvh-7rem)] w-[min(52rem,calc(100vw-2.5rem))] -translate-x-1/2 overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper scroll-shadows shadow-lift">
 							<BlogMenuContents {path} />
 						</div>
 					</details>
@@ -263,7 +267,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
 						</summary>
-						<div class="absolute inset-x-3 top-full z-40 max-h-[calc(100dvh-6.5rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper shadow-lift sm:left-auto sm:w-[26rem]">
+						<div class="absolute inset-x-3 top-full z-40 max-h-[calc(100dvh-6.5rem)] overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-ticket-rule bg-paper scroll-shadows shadow-lift sm:left-auto sm:w-[26rem]">
 							<div class="flex flex-wrap items-center justify-between gap-x-3 border-b border-ticket-rule bg-cream py-1 pr-1 pl-4">
 								<p class="min-w-0 font-display text-lg font-semibold [overflow-wrap:anywhere]">Navigate CostCook</p>
 								<button type="button" data-menu-close hidden class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-3 text-sm font-semibold text-ink-soft hover:bg-paper hover:text-ink">Close</button>
