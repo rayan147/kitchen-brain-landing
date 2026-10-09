@@ -76,8 +76,8 @@ const faqItems = [
 // Ring boxes in percent of each capture (hero-pricing.png 2208x554,
 // hero-pricing-mobile.png 748x1268): the food cost and the Get to 30% price.
 const priceRings = {
-	wide: [{ x: 33.7, y: 26.5, w: 7.4, h: 14.5 }, { x: 63.4, y: 28.5, w: 35, h: 32 }],
-	small: [{ x: 5.5, y: 38.6, w: 21.5, h: 6 }, { x: 6, y: 71.6, w: 88.5, h: 12.2 }]
+	wide: [{ x: 33.2, y: 25.5, w: 9, h: 16.5 }, { x: 63.4, y: 28.5, w: 35, h: 32 }],
+	small: [{ x: 5, y: 38.2, w: 24, h: 6.8 }, { x: 6, y: 71.6, w: 88.5, h: 12.2 }]
 };
 ---
 
@@ -504,6 +504,8 @@ const priceRings = {
 	.pricing-proof .screenshot-frame { max-width: 1104px; }
 	.confirmed-proof figure { max-width: 944px; }
 	.pricing-proof > :first-child, .confirmed-proof > div { max-width: 62ch; }
+	/* Stacked, the heading leads its own panel (design review 2026-10-09). */
+	.confirmed-proof > div { order: -1; }
 
 	.connected-proof { padding-block: var(--spacing-section-tight); background: var(--color-paper); }
 	.connected-grid { display: grid; gap: 3rem; align-items: center; }
@@ -599,7 +601,7 @@ const priceRings = {
 	   size: the desktop capture squeezed into a tablet column drew 7 to 9px
 	   text (readability review 2026-10-09). */
 	@media (max-width: 63.99rem) {
-		.screenshot-frame img, .confirmed-proof img { max-width: 24.5rem; margin-inline: auto; }
+		.screenshot-frame, .confirmed-proof figure { max-width: 24.5rem; margin-inline: auto; }
 	}
 	/* Same ring as the homepage walk (HomeEventWalk .ring). Considered a
 	   shared Ring component; not used because the rings are four boxes of

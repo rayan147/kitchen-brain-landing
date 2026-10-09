@@ -143,15 +143,20 @@ const videoChapters = [
 				     frame drew 4px text on a phone and named an older sample kitchen
 				     (readability review 2026-10-09). The capture is 2x. -->
 				<div class="shot-pan" tabindex="0" role="region" aria-label="Setup header screenshot">
-					<img
-						src="/proof/sage-setup-header.png"
-						alt="CostCook setup, stage 1 of 5. The header says Set up your kitchen, Harbor & Hearth Catering, stage 1 of 5, saves after each stage, with Ask Sage, Support and Save and exit actions, above stage 1, Identify your kitchen, with its three ticks: Name the kitchen, Set the food-cost target, Add one supplier."
-						width="1550"
-						height="870"
-						style="--shot-w: 775px"
-						loading="lazy"
-						decoding="async"
-					/>
+					<!-- A phone gets the header's buttons alone, so Ask Sage, the
+					     caption's claim, opens in view instead of 270px to the right
+					     (design review 2026-10-09). The alt holds for both crops. -->
+					<picture>
+						<source media="(max-width: 39.99rem)" srcset="/proof/sage-setup-header-phone.png" width="720" height="130" />
+						<img
+							src="/proof/sage-setup-header.png"
+							alt="The CostCook setup screen's header, with Ask Sage beside Support and Save and exit."
+							width="1550"
+							height="870"
+							loading="lazy"
+							decoding="async"
+						/>
+					</picture>
 				</div>
 				<figcaption>Captured setup state. Ask Sage is present in the setup header. <a class="full-size" href="/proof/setup/01-kitchen.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 			</figure>
@@ -322,7 +327,10 @@ const videoChapters = [
 	.setup-section, .proof-section, .faq { background: var(--color-offwhite); }
 	.setup-grid, .proof-grid, .faq-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: center; padding-block: var(--spacing-section); }
 	.setup-capture { min-width: 0; }
-	.setup-capture img { display: block; width: 100%; height: auto; border-top: 4px solid var(--color-green); border-radius: .5rem; box-shadow: var(--shadow-lift); }
+	/* The floor follows the source: 775px for the screen, 360px for the
+	   phone's header crop (set here, since an inline value can't switch). */
+	.setup-capture picture { display: block; }
+	.setup-capture img { --shot-w: 775px; display: block; width: 100%; height: auto; border-top: 4px solid var(--color-green); border-radius: .5rem; box-shadow: var(--shadow-lift); }
 	.setup-capture figcaption, .proof-capture figcaption { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
 	.setup-copy > p, .questions-intro > p, .proof-copy > p:not(.snap), .guardrails-heading > p, .faq-intro > p, .closing p { max-width: 45ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: var(--text-body-lg); line-height: 1.65; }
 	.setup-copy dl { margin-top: 2rem; border-top: 1px solid var(--rule); }
@@ -422,5 +430,8 @@ const videoChapters = [
 
 	@media (prefers-reduced-motion: reduce) {
 		.faq-list summary svg { transition: none; }
+	}
+	@media (max-width: 39.99rem) {
+		.setup-capture img { --shot-w: 360px; }
 	}
 </style>

@@ -391,7 +391,7 @@ const faqItems = [
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
 	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.hero-terms { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
-	.hero-proof { min-width: 0; max-width: 28rem; justify-self: center; }
+	.hero-proof { min-width: 0; max-width: 374px; justify-self: center; }
 	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 	/* App frames match the homepage: 8px corners, --shadow-lift (design review 2026-10-07). */
 	.hero-shot { max-width: 374px; margin-inline: auto; overflow: hidden; border: 1px solid var(--rule); border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
@@ -533,6 +533,6 @@ const faqItems = [
 	   size: the desktop capture squeezed into a tablet column drew 7 to 9px
 	   text (readability review 2026-10-09). */
 	@media (max-width: 63.99rem) {
-		.allergen-window { max-width: 24.5rem; }
+		.allergen-window, .allergen-proof figcaption { max-width: 24.5rem; }
 	}
 </style>

@@ -36,7 +36,7 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 					<a href={row.guide.href} class="home-guide">{row.guide.label}</a>
 				</div>
 				<figure class="row-figure">
-					<HomeFrame shot={row.shot} />
+					<HomeFrame shot={row.shot} class="row-shot" />
 				</figure>
 			</li>
 		))}
@@ -55,6 +55,10 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 	.row { display: grid; gap: 2rem; align-items: center; }
 	.pain { margin-top: .75rem; font-style: italic; }
 	.row-figure { margin: 0; }
+	/* Never past the capture's CSS size: the yield row's tomato card (362px)
+	   drew at 1.5x to 1.95x in the wide track, softer than the row's h3
+	   (design review 2026-10-09). HomeFrame sets --shot-max. */
+	.row-figure :global(.row-shot) { max-width: var(--shot-max, none); margin-inline: auto; }
 	.more { margin-top: var(--spacing-section-tight); }
 	.more-list { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin-top: .5rem; }
 	@media (min-width: 64rem) {

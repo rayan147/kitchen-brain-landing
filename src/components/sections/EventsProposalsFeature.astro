@@ -307,6 +307,8 @@ const payments = eventPayments;
 	/* A capture too wide for its column keeps a readable floor and scrolls
 	   inside its own frame (.shot-pan, global.css). */
 	.proof .shot-pan { justify-content: flex-start; }
+	/* The scroll hint (added by Base.astro) lines up with the full-size link. */
+	.proof :global(.pan-hint) { padding-inline: 1rem; }
 	.book-proof { margin-top: 2.5rem; }
 	.split--capture .proof { max-width: 50rem; }
 	.book-proof img { max-width: min(100%, 45rem); }

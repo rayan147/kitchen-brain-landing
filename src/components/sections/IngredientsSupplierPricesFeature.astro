@@ -418,9 +418,6 @@ const faqItems = [
 	@media (min-width: 720px) {
 		.hero-grid { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
 		.problem-grid, .section-intro, .evidence-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
-		/* The 745px recipe-lines capture needs about 600px to keep its figures at
-		   11px; at 1.1fr it drew them at 10px (readability review 2026-10-09). */
-		.evidence-grid { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); }
 		.story-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.story-nav a { padding-inline: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
 		.story-nav a + a { border-left: 1px solid var(--color-ticket-rule); }
@@ -460,7 +457,13 @@ const faqItems = [
 	/* Below 64rem the frame gets the app's phone capture, held at its own CSS
 	   size: the desktop capture squeezed into a tablet column drew 7 to 9px
 	   text (readability review 2026-10-09). */
+	/* The 745px recipe-lines capture needs about 600px to keep its figures at
+	   11px; at 1.1fr it drew them at 10px (readability review 2026-10-09).
+	   From 64rem only, where the wide capture is shown. */
+	@media (min-width: 64rem) {
+		.evidence-grid { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); }
+	}
 	@media (max-width: 63.99rem) {
-		.screenshot-frame img { max-width: 24.5rem; margin-inline: auto; }
+		.screenshot-frame { max-width: 24.5rem; margin-inline: auto; }
 	}
 </style>
