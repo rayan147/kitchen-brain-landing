@@ -142,6 +142,9 @@ try {
 	const zoomLayout = await evaluate(`(() => { document.documentElement.style.fontSize = '200%'; return new Promise((resolve) => requestAnimationFrame(() => {
 		const viewportWidth = document.documentElement.clientWidth;
 		const escaped = [...document.querySelectorAll('.nutrition-page *')].filter((element) => {
+			// A capture keeps a readable floor and scrolls inside its own frame
+			// (.shot-pan, global.css); the frame, not the capture, must fit.
+			if (element.closest('.shot-pan') && !element.matches('.shot-pan')) return false;
 			const rect = element.getBoundingClientRect();
 			return rect.left < -1 || rect.right > viewportWidth + 1;
 		}).length;

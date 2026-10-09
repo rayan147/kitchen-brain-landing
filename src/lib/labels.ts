@@ -155,7 +155,8 @@ export const labels = {
 		},
 		stock: {
 			src: '/proof/labels/stock-picker.png',
-			width: 2208,
+			// Trimmed at the right edge to the rows' words (capture-labels-proof.mjs).
+			width: 1290,
 			height: 906,
 			alt: 'Label stock settings with five choices: a 30-up sheet, 66 × 25.4 mm, selected; 58 mm and 62 mm continuous rolls; a 2 × 1 in die-cut roll; and Describe your own.'
 		},

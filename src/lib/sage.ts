@@ -112,6 +112,11 @@ export const sage = {
 			height: 1100,
 			alt: 'The same Sage answer on a phone: the Braised Short Rib costs $7.28 per portion, beef short rib $7.00 (96 percent), House Beef Stock $0.20 (3 percent), Mirepoix Base $0.08 (1 percent), each linked to the recipe.'
 		},
+		// Where the phone capture is served: on a phone, and from 64rem up,
+		// where both Sage frames sit in a column 390 to 490px wide and the
+		// 714px desktop capture drew 8px text (readability review 2026-10-09).
+		// The desktop alt holds for both: the same question, answer and lines.
+		mobileMedia: '(max-width: 39.99rem), (min-width: 64rem)',
 		caption:
 			'The wedding’s short rib, $7.28 a portion, broken into the three lines that make it, each linked to the recipe it came from.'
 	}

@@ -279,6 +279,37 @@
 	}
 }
 
+/* READABLE CAPTURES. A screenshot may shrink to fit its column, but never
+   below 0.8x of its own CSS size (half the 2x PNG), where the app's 14px text
+   reads at about 11px. Past that floor it keeps its size and scrolls sideways
+   inside its frame; the page never does. Each capture sets --shot-w to its
+   CSS width (`style="--shot-w: 725px"`), so the floor follows the capture
+   instead of a per-page guess (the readability review of 2026-10-09 measured
+   27 of 49 captures under 11px at 390px against floors of 34rem and 44rem).
+   The frame is a focusable region so a keyboard can scroll it.
+
+   Unlayered on purpose, so Tailwind's layered resets cannot undo it.
+   Considered a ProofShot component; not used
+   because the pages frame captures five different ways (figure, picture,
+   ticket, split, pair) and the force is one shared number, which is data. */
+.shot-pan {
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	/* The frame takes its column's width, never its capture's: without this a
+	   grid or flex parent sized to the floor and pushed the page sideways. */
+	contain: inline-size;
+}
+.shot-pan:focus-visible {
+	outline: 2px solid var(--color-green);
+	outline-offset: -2px;
+}
+/* min-width outranks max-width in CSS, so a page's own `max-width: 100%`
+   shrinks the capture only down to the floor. */
+.shot-pan img {
+	min-width: calc(var(--shot-w, 0px) * 0.8);
+	height: auto;
+}
+
 /* Letter-spaced small-caps label that opens most sections. */
 @utility eyebrow {
 	font-family: var(--font-body);

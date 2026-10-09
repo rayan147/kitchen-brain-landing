@@ -60,5 +60,9 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 	@media (min-width: 64rem) {
 		.row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 4rem; }
 		.row:nth-child(even) .row-copy { order: 2; }
+		/* The frame keeps the wider track when it swaps sides: in the 1fr track
+		   the yield and allergen frames sat at 441px (readability review
+		   2026-10-09). */
+		.row:nth-child(even) { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
 	}
 </style>

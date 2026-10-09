@@ -75,7 +75,7 @@ const videoChapters = [
 				<div class="answer-sheet">
 					<p>Captured Sage answer</p>
 					<picture>
-						<source media="(max-width: 639px)" srcset={sage.proof.mobile.src} />
+						<source media={sage.proof.mobileMedia} srcset={sage.proof.mobile.src} width={sage.proof.mobile.width} height={sage.proof.mobile.height} />
 						<img
 							src={sage.proof.desktop.src}
 							alt={sage.proof.desktop.alt}
@@ -136,14 +136,20 @@ const videoChapters = [
 	<section class="setup-section" aria-labelledby="setup-heading">
 		<div class="container-page setup-grid">
 			<figure class="setup-capture" data-reveal>
-				<img
-					src="/proof/sage-onboarding.png"
-					alt="CostCook setup on the Ingredients stage. The header says Set up your kitchen and Progress saves after each stage, with Ask Sage, Support and Save and exit actions."
-					width="1280"
-					height="720"
-					loading="lazy"
-					decoding="async"
-				/>
+				<!-- Cropped to the header and the stage heading, the two things the
+				     caption and alt name; the whole 1280px window drew 4px text on a
+				     phone (readability review 2026-10-09). The capture is 1x. -->
+				<div class="shot-pan" tabindex="0" role="region" aria-label="Setup header capture, scrolls sideways on a phone">
+					<img
+						src="/proof/sage-onboarding-header.png"
+						alt="CostCook setup on the Ingredients stage. The header says Set up your kitchen and Progress saves after each stage, with Ask Sage, Support and Save and exit actions."
+						width="860"
+						height="330"
+						style="--shot-w: 860px"
+						loading="lazy"
+						decoding="async"
+					/>
+				</div>
 				<figcaption>Captured setup state. Ask Sage is present in the setup header. <a class="full-size" href="/proof/sage-onboarding.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 			</figure>
 			<div class="setup-copy" data-reveal>
@@ -194,7 +200,7 @@ const videoChapters = [
 			<figure class="proof-capture" data-reveal>
 				<p>Where this came from</p>
 				<picture>
-					<source media="(max-width: 639px)" srcset={sage.proof.mobile.src} />
+					<source media={sage.proof.mobileMedia} srcset={sage.proof.mobile.src} width={sage.proof.mobile.width} height={sage.proof.mobile.height} />
 					<img
 						src={sage.proof.desktop.src}
 						alt={sage.proof.desktop.alt}
@@ -288,7 +294,9 @@ const videoChapters = [
 	.setup-slip span { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 	.setup-slip strong { margin-top: 0.55rem; font-family: var(--font-display); font-size: var(--text-record); }
 	.setup-slip small { margin-top: 0.55rem; color: var(--color-ink-soft); line-height: 1.45; }
-	.hero-evidence > figcaption { margin: 1rem 0 0 auto; max-width: 56ch; color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
+	/* The caption starts past the setup slip, which sits over the figure's
+	   bottom-left corner and hid the caption's first words. */
+	.hero-evidence > figcaption { margin: 1rem 0 0 calc(min(56%, 17rem) + 1.5rem); max-width: 56ch; color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
 	.feature-chapters { display: grid; gap: 1px; padding-block: 1px; background: var(--color-hairline); }
 	.feature-chapters a { display: flex; min-height: 5.5rem; flex-direction: column; justify-content: center; padding: 1rem clamp(1rem, 2vw, 1.5rem); background: var(--color-paper); color: var(--color-ink); text-decoration: none; }
 	.feature-chapters strong { font-family: var(--font-display); font-size: var(--text-record-sm); font-weight: 600; }
@@ -372,7 +380,10 @@ const videoChapters = [
 
 	@media (min-width: 900px) {
 		.feature-chapters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-		.hero-grid { grid-template-columns: minmax(0, 0.88fr) minmax(30rem, 1.12fr); }
+		/* Top-aligned: the answer is the phone capture here (sage.ts,
+		   mobileMedia), taller than the copy, and centring pushed Start free
+		   trial below a 768px and an 800px first screen. */
+		.hero-grid { grid-template-columns: minmax(0, 0.88fr) minmax(30rem, 1.12fr); align-items: start; }
 		.video-grid { grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1.28fr); }
 		.setup-grid, .proof-grid { grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr); }
 		.questions-grid, .faq-grid { grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr); }
@@ -395,6 +406,7 @@ const videoChapters = [
 		.feature-chapters { margin-block: 1rem; }
 		.hero-evidence { padding-left: 0; padding-bottom: 5.5rem; }
 		.setup-slip { width: 72%; }
+		.hero-evidence > figcaption { margin-left: 0; padding-bottom: 8rem; }
 		.video-section, .questions, .guardrails, .faq, .setup-section, .proof-section { scroll-margin-top: 5rem; }
 		.video-copy h2, .setup-copy h2, .questions-intro h2, .proof-copy h2, .guardrails-heading h2, .faq-intro h2, .closing h2 { font-size: var(--text-h2); }
 		.answer-facts { grid-template-columns: 1fr; }

@@ -302,7 +302,9 @@ const afterScenes = [
 					<figcaption>Check the recipe amounts and pack prices. Add or correct anything the upload could not read.</figcaption>
 				</figure>
 				<figure class="fd-shot fd-welcome-shot">
-					<img src="/proof/setup/00-welcome.png" width="1572" height="1872" style="max-width:786px" loading="lazy" decoding="async" alt="The welcome screen, headed “Welcome to Harbor & Hearth Catering.” It says that over five short stages the kitchen turns one dish you already cook into a costed order, shows the chain ingredient, dish, menu, order, shop, and notes that you named the kitchen at sign-up so the first stage already has one tick. Then “Two questions so the rest fits your kitchen.” What kind of kitchen do you run: Catering selected, Meal prep, Restaurant with events, Something else. One dish you know well: Roast chicken plate. What do you most want to know, optional: What an event really costs selected, What to buy for a date, Whether a price change hurt me. Two buttons: “Start setup” and “Skip these questions”." />
+					<div class="shot-pan" tabindex="0" role="region" aria-label="Welcome screen capture, scrolls sideways on a phone">
+						<img src="/proof/setup/00-welcome.png" width="1572" height="1872" style="max-width:786px; --shot-w: 786px" loading="lazy" decoding="async" alt="The welcome screen, headed “Welcome to Harbor & Hearth Catering.” It says that over five short stages the kitchen turns one dish you already cook into a costed order, shows the chain ingredient, dish, menu, order, shop, and notes that you named the kitchen at sign-up so the first stage already has one tick. Then “Two questions so the rest fits your kitchen.” What kind of kitchen do you run: Catering selected, Meal prep, Restaurant with events, Something else. One dish you know well: Roast chicken plate. What do you most want to know, optional: What an event really costs selected, What to buy for a date, Whether a price change hurt me. Two buttons: “Start setup” and “Skip these questions”." />
+					</div>
 					<figcaption>The first screen after sign-up. Two questions, and the name of one dish.</figcaption>
 				</figure>
 			</div>
@@ -339,7 +341,9 @@ const afterScenes = [
 						</div>
 						{stage.shots.map((shot) => (
 							<figure class="fd-shot fd-scene-shot">
-								<img src={shot.src} width={shot.width} height={shot.height} style={`max-width:${shot.width / 2}px`} loading="lazy" decoding="async" alt={shot.alt} />
+								<div class="shot-pan" tabindex="0" role="region" aria-label={`Stage ${stage.n}, ${stage.label}: capture, scrolls sideways on a phone`}>
+									<img src={shot.src} width={shot.width} height={shot.height} style={`max-width:${shot.width / 2}px; --shot-w: ${shot.width / 2}px`} loading="lazy" decoding="async" alt={shot.alt} />
+								</div>
 								<figcaption>{shot.caption} <a class="fd-full" href={shot.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 							</figure>
 						))}
@@ -443,7 +447,9 @@ const afterScenes = [
 				</p>
 			</div>
 			<figure class="fd-shot fd-after-shot">
-				<img src="/proof/setup/06-ready.png" width="1376" height="1042" style="max-width:688px" loading="lazy" decoding="async" alt="The completion screen, headed “Your kitchen is ready”. It reads “You said you most wanted to know what an event really costs. The order for Roast chicken plate shows it: the food cost of the event and the share of the price it takes.” Seven ticks: Costing settings, Business profile, 1 supplier, 1 ingredient, Dish: Roast chicken plate, Menu: Roast chicken plate menu, Order for 80 guests. Then “Next: check what you need to buy. Shop consolidates the order by supplier. Prep scales recipes, and Pack checks food and equipment before the vehicle leaves.” Two buttons: “Open shopping list” and “Go to Today”." />
+				<div class="shot-pan" tabindex="0" role="region" aria-label="Completion screen capture, scrolls sideways on a phone">
+					<img src="/proof/setup/06-ready.png" width="1376" height="1042" style="max-width:688px; --shot-w: 688px" loading="lazy" decoding="async" alt="The completion screen, headed “Your kitchen is ready”. It reads “You said you most wanted to know what an event really costs. The order for Roast chicken plate shows it: the food cost of the event and the share of the price it takes.” Seven ticks: Costing settings, Business profile, 1 supplier, 1 ingredient, Dish: Roast chicken plate, Menu: Roast chicken plate menu, Order for 80 guests. Then “Next: check what you need to buy. Shop consolidates the order by supplier. Prep scales recipes, and Pack checks food and equipment before the vehicle leaves.” Two buttons: “Open shopping list” and “Go to Today”." />
+				</div>
 				<figcaption>The completion screen as the app prints it. If you named a goal at the welcome, the first line answers it in your words.</figcaption>
 			</figure>
 			<p class="fd-handoff">The first dish was the hard one. The rest come in the same way: upload, then confirm.</p>
@@ -465,7 +471,9 @@ const afterScenes = [
 								<p class="fd-stage-body">{scene.body}</p>
 							</div>
 							<figure class="fd-shot fd-scene-shot">
-								<img src={scene.shot.src} width={scene.shot.width} height={scene.shot.height} style={`max-width:${scene.shot.width / 2}px`} loading="lazy" decoding="async" alt={scene.shot.alt} />
+								<div class="shot-pan" tabindex="0" role="region" aria-label={`${scene.label}: capture, scrolls sideways on a phone`}>
+									<img src={scene.shot.src} width={scene.shot.width} height={scene.shot.height} style={`max-width:${scene.shot.width / 2}px; --shot-w: ${scene.shot.width / 2}px`} loading="lazy" decoding="async" alt={scene.shot.alt} />
+								</div>
 								<figcaption>{scene.shot.caption} <a class="fd-full" href={scene.shot.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 							</figure>
 						</li>
@@ -808,8 +816,10 @@ const afterScenes = [
 		box-shadow: var(--shadow-lift);
 	}
 
-	/* A 2880px capture shown at 350px leaves its text at 2 to 3 CSS px on a
-	   phone (design review 2026-10-07): the same escape hatch as /events. */
+	/* A 2880px capture shown at 350px left its text at 2 to 3 CSS px on a
+	   phone (design review 2026-10-07). Each capture now keeps a 0.8x floor and
+	   scrolls in its frame (.shot-pan, global.css); full size stays as a
+	   second way in. */
 	.fd-full {
 		display: inline-flex;
 		min-height: 44px;

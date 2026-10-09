@@ -40,13 +40,16 @@ async function settle(page) {
 	await page.waitForTimeout(500);
 }
 
-async function clip(page, locator, name, pad = 0) {
+// maxWidth (CSS px) trims empty space at the right edge: the stock rows run
+// the page's full width with their words in the left half, and a 1104px frame
+// in a 578px column drew them at 7px (readability review 2026-10-09).
+async function clip(page, locator, name, pad = 0, maxWidth = Infinity) {
 	await settle(page);
 	const b = await locator.first().boundingBox();
 	if (!b) throw new Error(`no box for ${name}`);
 	await page.screenshot({
 		path: `${OUT}/${name}.png`,
-		clip: { x: Math.max(0, b.x - pad), y: Math.max(0, b.y - pad), width: b.width + pad * 2, height: b.height + pad * 2 },
+		clip: { x: Math.max(0, b.x - pad), y: Math.max(0, b.y - pad), width: Math.min(b.width + pad * 2, maxWidth), height: b.height + pad * 2 },
 		animations: 'disabled',
 		caret: 'hide'
 	});
@@ -156,7 +159,7 @@ async function fillDialog(page) {
 	await page.goto(APP + '/settings/labels', { waitUntil: 'load' });
 	await page.waitForTimeout(1500);
 	const stock = page.getByRole('radiogroup').first();
-	await clip(page, (await stock.count()) ? stock : page.getByText('30-up sheet').first().locator('xpath=ancestor::fieldset[1]'), 'stock-picker', 8);
+	await clip(page, (await stock.count()) ? stock : page.getByText('30-up sheet').first().locator('xpath=ancestor::fieldset[1]'), 'stock-picker', 8, 645);
 	await ctx.close();
 }
 

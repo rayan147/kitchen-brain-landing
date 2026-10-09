@@ -44,14 +44,7 @@ import { eventStages } from '../../lib/home';
 						<HomeFrame shot={stage.shot} />
 						{'focus' in stage && stage.focus.map((box) => (
 							<span
-								class:list={['ring', { 'ring--wide': 'smallFocus' in stage }]}
-								aria-hidden="true"
-								style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}
-							></span>
-						))}
-						{'smallFocus' in stage && stage.smallFocus.map((box) => (
-							<span
-								class="ring ring--small"
+								class="ring"
 								aria-hidden="true"
 								style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}
 							></span>
@@ -138,13 +131,8 @@ import { eventStages } from '../../lib/home';
 		box-shadow: 0 0 0 4px rgb(185 118 42 / .18);
 		pointer-events: none;
 	}
-	/* A stage with a phone capture (HomeFrame swaps it in below 48rem, the same
-	   query) rings each capture with its own measured boxes. */
-	.ring--small { display: none; }
-	@media (max-width: 47.99rem) {
-		.ring--wide { display: none; }
-		.ring--small { display: block; }
-	}
+	/* Every walk stage shows one capture at every width, so one set of rings
+	   (the deposit's wide/phone pair went on 2026-10-09). */
 	/* The carry line sits on the rail, between this stage and the next. */
 	.carry {
 		position: relative;
