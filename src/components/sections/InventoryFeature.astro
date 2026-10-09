@@ -256,13 +256,13 @@ const faqItems = [
 	.movement-main { padding: clamp(1.2rem, 3vw, 2rem); }
 	.panel-bar { padding-bottom: .8rem; border-bottom: 1px solid var(--color-hairline); }
 	.movement-main ol { margin-top: .8rem; }
-	.movement-main li { display: grid; grid-template-columns: minmax(8.5rem, .8fr) 1fr auto; gap: 1rem; align-items: center; padding-block: .85rem; border-bottom: 1px solid var(--color-hairline); }
+	.movement-main li { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr) auto; gap: 1rem; align-items: center; padding-block: .85rem; border-bottom: 1px solid var(--color-hairline); }
 	.movement-main time { font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.movement-main li span small { display: block; color: var(--color-ink-soft); }
 	.movement-main li b { font-variant-numeric: tabular-nums; }
 	.movement-main li.baseline b { color: var(--color-green-deep); }
 	.movement-main li.out b { color: var(--color-amber-deep); }
-	.movement-total { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1rem; background: var(--color-softgreen); }
+	.movement-total { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1rem; background: var(--color-softgreen); }
 	.movement-total strong { color: var(--color-green-deep); font-variant-numeric: tabular-nums; }
 	.movement-side { display: grid; gap: 1px; }
 	.movement-side > div { padding: 1.25rem; }
@@ -279,7 +279,7 @@ const faqItems = [
 	.gap-equation strong { display: block; margin-top: .25rem; font-size: var(--text-record); font-variant-numeric: tabular-nums; }
 	.gap-equation span { display: block; margin-top: .2rem; font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.gap-result { padding: 1rem; background: var(--color-softgreen); }
-	.buy-line { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1.15rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
+	.buy-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center; padding: 1.15rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
 	.buy-line span small { display: block; color: var(--color-ink-soft); }
 	.buy-line > b { color: var(--color-green-deep); font-size: var(--text-record-sm); }
 	.gap-sheet figcaption { padding: 0 clamp(1rem, 3vw, 1.75rem) 1rem; }
@@ -292,7 +292,7 @@ const faqItems = [
 	.trust-proof-grid { display: grid; gap: 3rem; align-items: center; }
 	.trust-proof-grid > div > p { color: var(--color-ink-muted); }
 	.recovery-list { background: var(--color-paper); color: var(--color-ink); box-shadow: var(--shadow-lift); }
-	.recovery-list > div { display: grid; grid-template-columns: auto 1fr; gap: .5rem 1rem; padding: 1.1rem; border-bottom: 1px solid var(--color-hairline); }
+	.recovery-list > div { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .5rem 1rem; padding: 1.1rem; border-bottom: 1px solid var(--color-hairline); }
 	.recovery-list > div:last-child { border-bottom: 0; }
 	.recovery-list strong { align-self: center; }
 	.recovery-list small { grid-column: 2; color: var(--color-ink-soft); }
@@ -320,6 +320,13 @@ const faqItems = [
 	.closing { border-top: 1px solid var(--color-hairline-strong); background: var(--color-softgreen); }
 	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
 	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
+
+	/* REFLOW AT 200% TEXT (issue #79): a grid with no column template sizes
+	   its one track to its content, so at 200% text on a phone the layout
+	   grew past the screen and its right edge was cut off. One shrinkable
+	   track below the breakpoints; label-and-value rows wrap. */
+	.movement-workspace, .problem-grid, .section-intro, .faq-grid, .closing-grid { grid-template-columns: minmax(0, 1fr); }
+	.ticket-head, .panel-bar, .gap-head { flex-wrap: wrap; }
 
 	@media (min-width: 720px) {
 		.hero-grid { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }

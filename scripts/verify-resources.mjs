@@ -1,10 +1,15 @@
 import { chromium } from 'playwright-core';
 import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 // Considered Strategy; not used because routes and widths are test data;
 // one browser workflow verifies their shared navigation and copy contracts.
 const base = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
+// The tour's stop count comes from src/lib/tour.ts, one `id:` per stop at the
+// list's indent: the typed 13 outlived three new stops (issue #82).
+const tourStopCount = (readFileSync(new URL('../src/lib/tour.ts', import.meta.url), 'utf8').split('export const tourStops')[1] ?? '').match(/^\t\tid: '/gm)?.length ?? 0;
+assert(tourStopCount > 0, 'could not count the tour stops in src/lib/tour.ts');
 const output = 'docs/qa/resources-caterer-2026-09-11';
 const routes = ['/tour/main', '/who-its-for', '/onboarding', '/compare', '/faq', '/contact', '/contact/sent', '/contact/not-sent'];
 const widths = [[1440,900], [1280,800], [1024,768], [768,1024], [390,844]];
@@ -52,8 +57,8 @@ try {
     await page.setViewportSize({width,height});
     await page.goto(base+'/tour/main');
     const tabs=page.getByRole('tab',{includeHidden:true});
-    assert.equal(await tabs.count(),13);
-    for(let i=0;i<13;i++) {
+    assert.equal(await tabs.count(),tourStopCount);
+    for(let i=0;i<tourStopCount;i++) {
       if(await page.getByLabel('Tour stop',{exact:true}).isVisible()) await page.getByLabel('Tour stop',{exact:true}).selectOption({index:i});
       else await tabs.nth(i).click();
       const panel=page.locator('#'+await tabs.nth(i).getAttribute('aria-controls'));
@@ -111,4 +116,4 @@ try {
   await writeFile(`${output}/verification.json`,JSON.stringify({results,failures},null,2));
 }
 assert.deepEqual(failures,[]);
-console.log('Resources verified: 8 routes × 5 widths, 200% text, 13 tour stops, navigation, no-JS and mocked contact recovery/success.');
+console.log(`Resources verified: 8 routes × 5 widths, 200% text, ${tourStopCount} tour stops, navigation, no-JS and mocked contact recovery/success.`);

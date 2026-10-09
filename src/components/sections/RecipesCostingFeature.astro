@@ -638,6 +638,7 @@ const faqItems = [
 	.ingredient-lines li,
 	.cost-lines li {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		gap: 1rem;
 		padding-block: 0.28rem;
@@ -877,7 +878,7 @@ const faqItems = [
 
 	.builder-title {
 		display: grid;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: minmax(0, 1fr) auto;
 		gap: 2rem;
 		padding-block: 1.5rem;
 	}
@@ -901,7 +902,7 @@ const faqItems = [
 
 	.builder-row {
 		display: grid;
-		grid-template-columns: minmax(8rem, 1fr) minmax(4.5rem, 0.35fr) minmax(6rem, 0.6fr);
+		grid-template-columns: minmax(0, 1fr) minmax(0, 0.35fr) minmax(0, 0.6fr);
 		gap: 1rem;
 		align-items: center;
 		padding: 0.85rem;
@@ -945,7 +946,7 @@ const faqItems = [
 
 	.scale-change {
 		display: grid;
-		grid-template-columns: 1fr auto 1fr;
+		grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 		gap: 0.75rem;
 		align-items: center;
 		margin-block: 1.4rem;
@@ -1425,6 +1426,16 @@ const faqItems = [
 		text-decoration-color: var(--color-hairline-strong);
 		text-underline-offset: 4px;
 	}
+
+	/* REFLOW AT 200% TEXT (issue #79). A grid with no column template sizes
+	   its one implicit track to its content's min-content width, so at 200%
+	   text on a phone the hero and the product panels grew past the screen
+	   and the article's overflow-x: clip cut their right edge off. One
+	   shrinkable track below the breakpoints; the media rules below set the
+	   wide layouts. Rows that pair a label and a value wrap instead of
+	   pushing the value out. */
+	.hero-grid, .record-pair, .management-workspace, .management-side { grid-template-columns: minmax(0, 1fr); }
+	.record-head, .panel-bar { flex-wrap: wrap; }
 
 	@media (min-width: 640px) {
 		.product-nav {

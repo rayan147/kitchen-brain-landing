@@ -272,7 +272,7 @@ const faqItems = [
 	.stage-sheet { position: relative; z-index: 1; width: 88%; margin: 6.2rem 0 0 auto; padding: clamp(1rem, 2.8vw, 1.5rem); border-top: 3px solid var(--color-green); background: var(--color-paper); box-shadow: 0 13px 23px color-mix(in srgb, var(--color-ink) 12%, transparent); }
 	.sheet-head, .preview-head, .offer-head { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
 	.sheet-head { padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
-	.stage-row { display: grid; grid-template-columns: minmax(0, 1.15fr) 0.7fr auto; gap: 0.75rem; align-items: center; min-width: 0; padding-block: 0.65rem; border-bottom: 1px solid var(--rule); font-size: var(--text-label-sm); }
+	.stage-row { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.7fr) auto; gap: 0.75rem; align-items: center; min-width: 0; padding-block: 0.65rem; border-bottom: 1px solid var(--rule); font-size: var(--text-label-sm); }
 	.stage-labels { font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-ink-soft); }
 	.stage-row em, .offer-row em { justify-self: end; padding: 0.28rem 0.48rem; font-size: var(--text-micro); font-style: normal; font-weight: 700; white-space: nowrap; }
 	.ready, .apply { background: var(--color-softgreen); color: var(--color-green-deep); }
@@ -335,7 +335,7 @@ const faqItems = [
 	.review-row.labels, .offer-row.labels { font-size: var(--text-micro); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
 	.review-row b, .offer-row b { font-variant-numeric: tabular-nums; }
 	.review-row.flagged { background: var(--color-softamber); }
-	.reconcile { display: grid; grid-template-columns: 1fr auto; gap: 0.3rem 1rem; margin-top: 1.3rem; padding: 1rem; background: var(--color-softgreen); }
+	.reconcile { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.3rem 1rem; margin-top: 1.3rem; padding: 1rem; background: var(--color-softgreen); }
 	.reconcile strong { font-variant-numeric: tabular-nums; }
 	.reconcile em { grid-column: 1 / -1; color: var(--color-green-deep); font-size: var(--text-label-sm); font-style: normal; font-weight: 700; }
 	.invoice-review > figcaption, .offer-review figcaption { color: var(--color-ink-soft); font-size: var(--text-label-sm); line-height: 1.5; }
@@ -395,6 +395,13 @@ const faqItems = [
 	.closing p { max-width: 55ch; margin-top: 1rem; color: var(--color-ink-soft); }
 	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--color-hairline-strong); }
 	.onward a { display: inline-flex; min-height: 44px; align-items: center; }
+
+	/* REFLOW AT 200% TEXT (issue #79): a grid with no column template sizes
+	   its one track to its content, so at 200% text on a phone the layout
+	   grew past the screen and its right edge was cut off. One shrinkable
+	   track below the breakpoints; label-and-value rows wrap. */
+	.hero-grid { grid-template-columns: minmax(0, 1fr); }
+	.sheet-head, .preview-head, .offer-head { flex-wrap: wrap; }
 
 	@media (min-width: 640px) {
 		.product-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }

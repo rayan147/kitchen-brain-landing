@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -226,7 +227,12 @@ try {
 	const desktop = await evaluate(probe);
 	await capture('1440x900');
 
-	assert(desktop.title === 'You do not need to enter your whole walk-in.', `desktop: page identity is "${desktop.title}"`);
+	// The page identity comes from the page's own h1, not a retyped string: the
+	// old one ("You do not need to enter your whole walk-in.") outlived its
+	// copy and failed every run (issue #82).
+	const pageIdentity = readFileSync(new URL('../src/components/sections/OnboardingPage.astro', import.meta.url), 'utf8').match(/<h1 id="fd-heading"[^>]*>([^<]+)<\/h1>/)?.[1].trim();
+	assert(pageIdentity, 'could not read #fd-heading from OnboardingPage.astro');
+	assert(desktop.title === pageIdentity, `desktop: page identity is "${desktop.title}", expected "${pageIdentity}"`);
 	assert(desktop.h1Count === 1, `desktop: found ${desktop.h1Count} h1 elements`);
 	assert(desktop.stages === 5, `desktop: expected 5 stage rows, received ${desktop.stages}`);
 	assert(desktop.ticketStages === 3, `desktop: expected 3 ticket map rows, received ${desktop.ticketStages}`);
