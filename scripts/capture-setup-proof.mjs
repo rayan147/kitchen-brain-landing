@@ -360,20 +360,34 @@ try {
 		await atEachWidth(() => shootBetween('06-ready', /^Your kitchen is ready$/, /^Go to Today$/));
 
 		// Develop (2026-10) moved the next invoice off the Kitchen records hub:
-		// it goes in from the Purchases page's actions. One capture serves
-		// every width: the desktop header is a 1,200px strip whose text cannot
-		// be read at the column's width, while the phone screen shows the same
-		// action with its neighbours. On a phone "Import invoice" sits in the
-		// More menu above the sticky "Log purchase" bar, so the shot opens it
-		// and runs from the page title to the bottom of the screen.
+		// it goes in from the Purchases page's actions. Desktop: the page
+		// header alone, where "Import invoice" sits beside "Log purchase". Phone: the page title to the bottom of the screen,
+		// menu closed, so the sticky "Log purchase" bar and its "More" show.
+		// An open More menu covered half the page and read as left open
+		// (owner review 2026-10-10).
 		await page.goto(`${APP}/purchases`);
 		await page.getByRole('heading', { level: 1, name: 'Purchases' }).waitFor();
-		await page.setViewportSize({ width: 390, height: 844 });
 		await page.waitForLoadState('networkidle');
-		await page.mouse.move(0, 0);
-		await page.getByRole('button', { name: 'More' }).last().click();
-		await page.getByRole('menuitem', { name: /Import invoice/ }).waitFor();
-		await page.waitForTimeout(300);
+		await settle();
+		const h1Box = await page.getByRole('heading', { level: 1, name: 'Purchases' }).boundingBox();
+		const moreBox = await page.getByRole('button', { name: 'More' }).filter({ visible: true }).first().boundingBox();
+		const leadBox = await page.getByText(/^Receipts, food cost and price changes/).first().boundingBox();
+		const desk = { left: h1Box.x, top: Math.min(h1Box.y, moreBox.y), right: moreBox.x + moreBox.width, bottom: leadBox.y + leadBox.height };
+		// 12px sides, not 24: at 0.8x the strip has to fit the 1024 column
+		// (about 942px) or it pans by a few pixels.
+		await page.screenshot({
+			path: `${OUT}07-records.png`,
+			caret: 'hide',
+			animations: 'disabled',
+			clip: { x: desk.left - 12, y: desk.top - 12, width: desk.right - desk.left + 24, height: desk.bottom - desk.top + 32 }
+		});
+		shots.push('07-records');
+		console.log('captured 07-records');
+		await page.setViewportSize({ width: 390, height: 844 });
+		await page.reload();
+		await page.getByRole('heading', { level: 1, name: 'Purchases' }).waitFor();
+		await page.waitForLoadState('networkidle');
+		await settle();
 		const titleTop = await page.evaluate(() => document.querySelector('main h1').getBoundingClientRect().top);
 		// -16, not -28: the tab row's active underline sits just above.
 		const top = Math.max(0, Math.round(titleTop - 16));
@@ -385,7 +399,6 @@ try {
 		});
 		shots.push('07-records-mobile');
 		console.log('captured 07-records-mobile');
-		await page.keyboard.press('Escape');
 		await page.setViewportSize({ width: 1440, height: 900 });
 
 		await page.goto(`${APP}/import`);

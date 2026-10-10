@@ -203,13 +203,12 @@ const afterScenes: readonly {
 				label: 'The next invoice',
 				body: 'Open Purchases, tap “Import invoice” (under “More” on a phone) and confirm the lines; the purchase is logged and your ingredient costs and draft orders update, without rewriting confirmed orders.',
 				shot: {
-					// One phone capture at every width: the desktop header is a
-					// 1,200px strip that no column can show at a readable size.
-					src: '/proof/setup/07-records-mobile.png',
-					width: 780,
-					height: 1440,
-					alt: 'The Purchases page on a phone, headed “Purchases, October 2026, 0 purchases. Receipts, food cost and price changes, month by month.” Its More menu is open over the Food cost card: “Import invoice” first, then Log one item, Log waste, Stock turnover, Shelf check, Sent purchase orders, Receiving follow-up, Supplier invoices and Invoice inbox. At the bottom, a “Log purchase” button and the “More” button.',
-					caption: 'Purchases on a phone, with More open. On a computer “Import invoice” sits beside “Log purchase”.'
+					src: '/proof/setup/07-records.png',
+					width: 2320,
+					height: 204,
+					phone: { src: '/proof/setup/07-records-mobile.png', width: 780, height: 1440 },
+					alt: 'The top of the Purchases page: “Purchases, October 2026, 0 purchases. Receipts, food cost and price changes, month by month.” To the right, three buttons: “Log purchase”, “Import invoice” and “More”. On a phone, the same page shows the Food cost card for October 2026, $0.00 spent so far, and a bar at the foot of the screen with “Log purchase” and “More”.',
+					caption: 'The top of Purchases. “Import invoice” sits beside “Log purchase”; on a phone it is under “More”, in the bar at the foot of the screen.'
 				}
 			},
 			{
@@ -524,7 +523,7 @@ const shotStyle = (shot: Shot) =>
 							<div class="fd-stage-copy">
 								<p class="fd-stage-body">{scene.body}</p>
 							</div>
-							<figure class={`fd-shot fd-scene-shot${scene.shot.phone ? '' : ' fd-phone-only'}`} style={scene.shot.phone ? undefined : shotStyle(scene.shot)}>
+							<figure class="fd-shot fd-scene-shot">
 								<div class="shot-pan" tabindex="0" role="region" aria-label={`${scene.label}, screenshot`}>
 									<picture>
 										{scene.shot.phone && <source media="(min-width: 64rem)" srcset={scene.shot.src} width={scene.shot.width} height={scene.shot.height} />}
@@ -831,33 +830,6 @@ const shotStyle = (shot: Shot) =>
 	@media (min-width: 48rem) {
 		.fd-scene-shot {
 			grid-column: 1 / -1;
-		}
-
-		/* A phone-only capture (Purchases) is 390px wide at every size. Spanning
-		   the row left it pinned to the label column with the rest empty; it
-		   sits under its own text instead. */
-		.fd-scene-shot.fd-phone-only {
-			grid-column: 2;
-		}
-	}
-
-	/* With room beside it, the caption reads next to the phone, at its foot. */
-	@media (min-width: 64rem) {
-		.fd-scene-shot.fd-phone-only {
-			display: flex;
-			gap: 2rem;
-			align-items: flex-end;
-		}
-
-		/* .shot-pan contains its inline size, so in a flex row it has none of
-		   its own: the frame takes the capture's width from the figure. */
-		.fd-scene-shot.fd-phone-only .shot-pan {
-			flex: 0 0 var(--phone-w);
-		}
-
-		.fd-scene-shot.fd-phone-only figcaption {
-			max-width: 18rem;
-			padding-top: 0;
 		}
 	}
 

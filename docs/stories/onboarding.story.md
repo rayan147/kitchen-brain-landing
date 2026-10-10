@@ -325,3 +325,4 @@ Content: `src/components/sections/OnboardingPage.astro` and its shared data/resp
 - Humanize review applied to the changed bodies and captions; the two pinned phrases ("without rewriting confirmed orders", "“check”, never “clear”") kept.
 - Snap line unchanged: a name can tell Sage that butter has milk, not that chicken has none (now the stage-three caption, in the app's own words).
 - Stage three reshot with Sage on a real provider (Google): the card now shows Sage's drafted diet facts ("Sage drafted Animal product: Yes · …") and "Use Sage's answers", with the allergens still open. Alt and caption read the drafted line off the pixels; the snap line stands.
+- The next invoice: Purchases reshot with the More menu closed (owner review: an open menu read as left open). Desktop shows the header, "Import invoice" beside "Log purchase"; phones show the page with "More" in the bar at the foot. Caption says where it is on each.
