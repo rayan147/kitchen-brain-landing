@@ -524,7 +524,7 @@ const shotStyle = (shot: Shot) =>
 							<div class="fd-stage-copy">
 								<p class="fd-stage-body">{scene.body}</p>
 							</div>
-							<figure class="fd-shot fd-scene-shot">
+							<figure class={`fd-shot fd-scene-shot${scene.shot.phone ? '' : ' fd-phone-only'}`} style={scene.shot.phone ? undefined : shotStyle(scene.shot)}>
 								<div class="shot-pan" tabindex="0" role="region" aria-label={`${scene.label}, screenshot`}>
 									<picture>
 										{scene.shot.phone && <source media="(min-width: 64rem)" srcset={scene.shot.src} width={scene.shot.width} height={scene.shot.height} />}
@@ -831,6 +831,33 @@ const shotStyle = (shot: Shot) =>
 	@media (min-width: 48rem) {
 		.fd-scene-shot {
 			grid-column: 1 / -1;
+		}
+
+		/* A phone-only capture (Purchases) is 390px wide at every size. Spanning
+		   the row left it pinned to the label column with the rest empty; it
+		   sits under its own text instead. */
+		.fd-scene-shot.fd-phone-only {
+			grid-column: 2;
+		}
+	}
+
+	/* With room beside it, the caption reads next to the phone, at its foot. */
+	@media (min-width: 64rem) {
+		.fd-scene-shot.fd-phone-only {
+			display: flex;
+			gap: 2rem;
+			align-items: flex-end;
+		}
+
+		/* .shot-pan contains its inline size, so in a flex row it has none of
+		   its own: the frame takes the capture's width from the figure. */
+		.fd-scene-shot.fd-phone-only .shot-pan {
+			flex: 0 0 var(--phone-w);
+		}
+
+		.fd-scene-shot.fd-phone-only figcaption {
+			max-width: 18rem;
+			padding-top: 0;
 		}
 	}
 
