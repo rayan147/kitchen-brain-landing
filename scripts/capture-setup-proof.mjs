@@ -256,7 +256,7 @@ const shootTo = async (name, pattern) => {
  * never ship as picture and the cards render large enough to read on a
  * phone.
  */
-const shootBetween = async (name, topPattern, bottomPattern, bound = null) => {
+const shootBetween = async (name, topPattern, bottomPattern, bound = null, below = 20, above = 28) => {
 	await settle();
 	const [top, bottom] = await boxesFor([topPattern, bottomPattern]);
 	const box = bound
@@ -287,14 +287,14 @@ const shootBetween = async (name, topPattern, bottomPattern, bound = null) => {
 				};
 			}, bound)
 		: top.card;
-	const y = Math.max(0, box.whole ? box.top - 12 : top.leaf.top - 28);
+	const y = Math.max(0, box.whole ? box.top - 12 : top.leaf.top - above);
 	const left = Math.max(0, box.left - 8);
 	const right = Math.min(viewportWidth, box.right + 8);
 	// +40 below the last label: enough to close the card it sits in, not
 	// enough to open the next heading.
 	// Margins that close the card without opening whatever follows it
 	// (2026-10 review: +28/+40 showed the next card's top edge).
-	const end = box.whole ? box.bottom + 12 : bottom.leaf.bottom + 20;
+	const end = box.whole ? box.bottom + 12 : bottom.leaf.bottom + below;
 	await clip(name, { x: left, y, width: right - left, height: end - y });
 };
 
@@ -427,7 +427,7 @@ try {
 		await page.getByRole('radio', { name: 'What an event really costs' }).check();
 		// The first screen after sign-up: two questions, one dish. Part 1 of
 		// the guide shows it so the reader sees the welcome before they meet it.
-		await atEachWidth(() => shootBetween('00-welcome', /^Welcome/, /^Skip these questions$/));
+		await atEachWidth(() => shootBetween('00-welcome', /^Welcome/, /^Skip these questions$/, null, 20, 64));
 		await page.getByRole('button', { name: 'Start setup' }).click();
 	}
 	const resume = page.getByRole('button', { name: 'Continue setup' });
@@ -547,7 +547,7 @@ try {
 	// The ingredient's card: the drafted nutrition match, the allergen chips,
 	// and the way out for the unsure. Bounded by the ingredient's name and
 	// the Skip control, not the whole scrolling page.
-	await atEachWidth(() => shootBetween('03-chips', /^Chicken thigh$/, /^Skip for now$/));
+	await atEachWidth(() => shootBetween('03-chips', /^Chicken thigh$/, /^Skip for now$/, null, 10));
 
 	// Stage 4 — Recipes opens on the same shape: Sage, or by hand. The
 	// recipe card goes in the way the invoice did. Food facts must be
