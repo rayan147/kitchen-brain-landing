@@ -135,9 +135,9 @@ export const faq: readonly FaqGroup[] = [
 			},
 			{
 				id: 'permissions',
-				question: 'Can I give a cook the prep list without showing them the costs?',
+				question: 'Can I choose which screens each teammate sees?',
 				answer: [
-					'No. Owner, Manager and Staff guard certain sensitive actions, but there is no per-screen control, so a cook on Staff can still open recipe costs and Analytics. A little is held back: Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
+					'No. There is no per-screen control or custom role; the role draws the line. A cook on Staff gets orders, prep and pack lists, deliveries and recipes, and CostCook takes costs and margins out of what they see, while Analytics, Sage, setup, imports and the Clients book stay with owners and managers. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every boundary.'
 				],
 				claims: ['RC-44', 'RC-52']
 			},
@@ -145,7 +145,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'roles',
 				question: 'What do Owner, Manager and Staff mean?',
 				answer: [
-					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and approve Sage drafts. Staff use the shared kitchen lists and can open cost screens, including recipe costs and Analytics. Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
+					'The Owner runs billing, the team and kitchen settings, and publishes recipes. Managers see the money: costs, Analytics, Sage, clients and purchasing, and they can finish setup and approve Sage drafts. Staff work from orders, prep and pack lists, deliveries and recipes, and never see costs. When you invite someone, you pick Staff or Manager. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
 				],
 				claims: ['RC-52']
 			},
@@ -322,8 +322,8 @@ export const faq: readonly FaqGroup[] = [
 				id: 'after-setup',
 				question: 'What do I do after setup, and how does my crew get in?',
 				answer: [
-					'Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, ready for you to review before saving.',
-					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens, including recipe costs and Analytics, and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
+					'Setup ends with your first order made and its shopping list one tap away. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, ready for you to review before saving.',
+					'To bring in the crew, open Settings, then Team &amp; access, add their email and pick Staff or Manager. They get a one-time sign-in link and need no password. Staff never see costs, and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
 				],
 				claims: ['RC-38', 'RC-39', 'RC-52']
 			},
