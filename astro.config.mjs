@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import webpSources from './integrations/webp-sources.mjs';
 
 // Still fully static, still no adapter: Vercel serves the dist/ output.
 // The one piece of server behaviour on this site, the contact endpoint, is a
@@ -11,7 +12,8 @@ import sitemap from '@astrojs/sitemap';
 // See the header of api/support.ts.
 export default defineConfig({
 	site: 'https://costcook.io',
-	integrations: [sitemap()],
+	// webpSources runs after the build: each /proof/ capture offers its WebP.
+	integrations: [sitemap(), webpSources()],
 	vite: {
 		plugins: [tailwindcss()],
 		// .gitworktrees/ holds every local worktree of this repo (about 10 GB

@@ -10,7 +10,9 @@ import { launchPlan } from '../lib/site';
   <a href="/onboarding">What to prepare</a> · <a href="/pricing#launch-terms">Plan and team limits</a>
 </p>
 <style>
-  .feature-trial-terms { margin-top: 1rem; max-width: 60ch; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.55; }
+  /* 16px: this line states the price, so it never drops to fine-print size
+     (mobile review 2026-10-09: it was 14px on every guide). */
+  .feature-trial-terms { margin-top: 1rem; max-width: 60ch; color: var(--color-ink-soft); font-size: var(--text-body); line-height: 1.55; }
   /* 44px target, the site's floor (design audit 2026-10-07: these were 24px
      on every guide). Padding grows the hit box and the negative margin keeps
      the line where it was, the same trick as btn-quiet. */

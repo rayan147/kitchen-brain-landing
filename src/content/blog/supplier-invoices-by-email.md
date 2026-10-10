@@ -19,7 +19,7 @@ CostCook gives every kitchen its own invoice address. Anything sent there lands 
 
 ## Before you start
 
-You need to be the owner or a manager. Staff cannot open kitchen settings.
+You need to be the owner. Managers and Staff cannot open kitchen settings.
 
 Have two things open: CostCook, and the last invoice email from each supplier you buy from most. You will want each rep's email address, and you will want to know which invoices come to you instead of to a rep.
 

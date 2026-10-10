@@ -36,7 +36,7 @@ const faqItems = [
 	{
 		question: 'Who can see price moves or approve a shopping-list draft?',
 		answer:
-			'Price moves, order and menu money, spending, and every draft require a manager or owner. Staff can ask about attention, orders, prep, recipe costs and receiving follow-ups. A staff member sees a draft without its buttons: it waits for a manager.'
+			'Only an Owner or Manager. Sage reads the money, so Staff do not get it at all; price moves, spending and every draft stay with the people who see costs.'
 	}
 ] as const;
 
@@ -82,6 +82,7 @@ const videoChapters = [
 							width={sage.proof.desktop.width}
 							height={sage.proof.desktop.height}
 							decoding="async"
+							fetchpriority="high"
 						/>
 					</picture>
 				</div>
@@ -385,7 +386,7 @@ const videoChapters = [
 	.faq-list summary::-webkit-details-marker { display: none; }
 	.faq-list summary svg { flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; transition: transform 160ms ease-out; }
 	.faq-list details[open] summary svg { transform: rotate(180deg); }
-	.faq-list details > p { max-width: 62ch; padding: 0 3rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.65; }
+	.faq-list details > p { max-width: 58ch; padding: 0 3rem 1.35rem 0; color: var(--color-ink-soft); line-height: 1.65; }
 
 	.closing { border-top: 1px solid var(--color-hairline); background: var(--color-softgreen); }
 	.closing-grid { display: grid; gap: 2rem 5rem; align-items: end; padding-block: var(--spacing-section-tight); }

@@ -288,9 +288,11 @@ const faqItems = [
 	@media (max-width: 719px) {
 		.hero-grid { gap: 2rem; padding-block: var(--spacing-section-tight); }
 		.hero h1 { margin-top: .25rem; }
-		.hero-lede { margin-top: .6rem; font-size: var(--text-body-sm); line-height: 1.32; }
+		/* Same sizes as desktop: height comes back from spacing, not from
+		   shrinking the lede and the buttons (mobile review 2026-10-09). */
+		.hero-lede { margin-top: .6rem; }
 		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: 1.5rem; }
-		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .45rem; font-size: var(--text-caption); text-align: center; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .45rem; text-align: center; }
 		.closing-actions > * { width: 100%; justify-content: center; }
 		.figure-note { margin-bottom: .3rem; }
 		.month-sheet { padding: .65rem; }
@@ -299,7 +301,7 @@ const faqItems = [
 		.month-working strong { font-size: var(--text-body-lg); }
 		.month-working .difference { padding-block: .38rem; }
 		.gap-split span { display: block; padding: .45rem .5rem; }
-		.month-sheet figcaption { margin-top: .35rem; font-size: var(--text-micro); }
+		.month-sheet figcaption { margin-top: .35rem; }
 		.gap-scene { grid-template-columns: 1fr; }
 		.gap-mark { justify-self: center; transform: rotate(90deg); }
 		.line-head { display: none; }

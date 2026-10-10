@@ -127,7 +127,7 @@ const decisionFacts = [
 			))
 		}
 
-		<section class="faq-close" aria-labelledby="faq-close-title">
+		<section class="faq-close" aria-labelledby="faq-close-title" data-sticky-end>
 			<div>
 				<h2 id="faq-close-title">Put one real order through it.</h2>
 				<p>
@@ -255,8 +255,10 @@ const decisionFacts = [
 		transition: background-color 150ms ease-out;
 	}
 
-	.decision-ticket dl a:hover {
-		background: var(--color-softamber);
+	@media (hover: hover) {
+		.decision-ticket dl a:hover {
+			background: var(--color-softamber);
+		}
 	}
 
 	.decision-ticket dl div {
@@ -324,9 +326,11 @@ const decisionFacts = [
 		transition: border-color 150ms ease-out, color 150ms ease-out;
 	}
 
-	.question-map a:hover {
-		border-color: var(--color-green);
-		color: var(--color-green-deep);
+	@media (hover: hover) {
+		.question-map a:hover {
+			border-color: var(--color-green);
+			color: var(--color-green-deep);
+		}
 	}
 
 	.question-map small {

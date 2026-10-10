@@ -11,6 +11,17 @@
 // onboarding-owner@e2e.test). Stand it up the way playwright.config.ts's
 // webServer does, then point APP at it.
 //
+// Last run 2026-10-10 against local kitchen-brain develop c90d3b9c2 (owner
+// rule 2026-10-07: shoot from the newest local develop), exported with
+// `git archive`, built with `npm run build:e2e`, served on :4195 with the
+// harness env plus SAGE_ENABLED=enabled, and the business renamed to
+// "Harbor & Hearth Catering" in the scratch DB before the walk so the
+// welcome already says it. Then, against the same DB:
+//
+//   APP=http://localhost:4195 node scripts/capture-setup-proof.mjs
+//   APP=http://localhost:4195 RESUME=after node scripts/capture-setup-proof.mjs
+//   node scripts/make-webp.mjs
+//
 // WHY NOT THE REHEARSAL PNGs. artifacts/onboarding-rehearsal/260814a/ has 18
 // captures of this workflow, and every one shows the SIX-stage sidebar
 // (Costing defaults, Business and suppliers, Ingredients, Recipes, Menu, First
@@ -21,7 +32,8 @@
 // Rules this script keeps, from BRIEF-screenshots and RC-48:
 //   - deviceScaleFactor 2; PNGs are stored at 2x and the page renders them at
 //     half their pixel width
-//   - a 1440 CSS px viewport, the app harness's own discipline
+//   - a 1440 CSS px viewport, the app harness's own discipline, and a 390
+//     one for the phone half of every capture (`-mobile.png`)
 //   - element-bounded clips, never a hand-drawn rectangle, never through a word
 //   - mouse parked at 0,0, active element blurred, animations disabled, caret
 //     hidden, fonts loaded
@@ -36,7 +48,28 @@ import { mkdir } from 'node:fs/promises';
 
 const APP = process.env.APP ?? 'http://localhost:4188';
 const OWNER = 'onboarding-owner@e2e.test';
-const OUT = new URL('../public/proof/setup/', import.meta.url).pathname;
+const OUT = process.env.OUT_DIR ?? new URL('../public/proof/setup/', import.meta.url).pathname;
+
+// Every scene is shot twice in the same walk: at 1440 for the desktop
+// source, and at 390 (a phone) for the img every narrower screen gets, so a
+// phone reads the app's own phone layout at its own size instead of panning
+// across a shrunk desktop capture (mobile review 2026-10-09). One walk,
+// because the walk mutates the fixture and asserts its state.
+const WIDTHS = (process.env.WIDTHS ?? '1440,390').split(',').map(Number);
+let viewportWidth = 1440;
+let suffix = '';
+const atEachWidth = async (shot) => {
+	for (const width of WIDTHS) {
+		viewportWidth = width;
+		suffix = width < 600 ? '-mobile' : '';
+		await page.setViewportSize({ width, height: width < 600 ? 844 : 900 });
+		await page.waitForTimeout(250);
+		await shot();
+	}
+	viewportWidth = 1440;
+	suffix = '';
+	await page.setViewportSize({ width: 1440, height: 900 });
+};
 
 // The same dish, pack and yield the page's arithmetic uses, so a reader who
 // checks the screenshot against the $1.62 trace finds the same numbers.
@@ -91,12 +124,12 @@ const shoot = async (name, locator) => {
 	if (!ALL) return;
 	await settle();
 	await locator.first().screenshot({
-		path: `${OUT}${name}.png`,
+		path: `${OUT}${name}${suffix}.png`,
 		caret: 'hide',
 		animations: 'disabled'
 	});
-	shots.push(name);
-	console.log(`captured ${name}`);
+	shots.push(`${name}${suffix}`);
+	console.log(`captured ${name}${suffix}`);
 };
 
 /**
@@ -118,11 +151,11 @@ const shootClip = async (name, selectors) => {
 		// the copy column alone cut the checklist mid-item.
 		const lowest = (pattern) => {
 			let edge = 0;
-			for (const node of document.querySelectorAll('a, li, p')) {
+			for (const node of document.querySelectorAll('a, li, p, button')) {
 				const text = (node.textContent ?? '').trim();
 				if (!pattern.test(text)) continue;
 				// Deepest match only: an ancestor's box would overshoot.
-				if (node.querySelector('a, li, p')) continue;
+				if (node.querySelector('a, li, p, button')) continue;
 				edge = Math.max(edge, node.getBoundingClientRect().bottom);
 			}
 			return edge;
@@ -130,9 +163,9 @@ const shootClip = async (name, selectors) => {
 		bottom = Math.max(
 			bottom,
 			lowest(/^Menu and first order/),
-			lowest(/^Next:/),
-			// Enough of Sage's stage-aware suggestions to read several.
-			lowest(/^Do I need a supplier to cost a recipe/)
+			lowest(/^Add one supplier/),
+			// Sage's "For this step" suggestions, and no further.
+			lowest(/^What is left to finish setup\?$/)
 		);
 		// Full width on purpose: the Sage panel occupies the right edge, so
 		// there is no empty third left to crop. An earlier version measured
@@ -142,17 +175,17 @@ const shootClip = async (name, selectors) => {
 			// +14, not +28: the Sage suggestions are a continuing list, so the
 			// clip should end just past one card rather than open the next.
 			height: bottom ? bottom + window.scrollY + 14 : document.body.scrollHeight,
-			width: 1440
+			width: window.innerWidth
 		};
 	}, selectors);
 	await page.screenshot({
-		path: `${OUT}${name}.png`,
+		path: `${OUT}${name}${suffix}.png`,
 		caret: 'hide',
 		animations: 'disabled',
 		clip: { x: 0, y: 0, width: bottom.width, height: Math.round(bottom.height) }
 	});
-	shots.push(name);
-	console.log(`captured ${name} (${bottom.width}x${Math.round(bottom.height)} CSS px)`);
+	shots.push(`${name}${suffix}`);
+	console.log(`captured ${name}${suffix} (${bottom.width}x${Math.round(bottom.height)} CSS px)`);
 };
 
 /**
@@ -192,7 +225,7 @@ const boxesFor = (patterns) =>
 
 const clip = async (name, box) => {
 	await page.screenshot({
-		path: `${OUT}${name}.png`,
+		path: `${OUT}${name}${suffix}.png`,
 		caret: 'hide',
 		animations: 'disabled',
 		fullPage: true,
@@ -203,8 +236,8 @@ const clip = async (name, box) => {
 			height: Math.round(box.height)
 		}
 	});
-	shots.push(name);
-	console.log(`captured ${name} (${Math.round(box.width)}x${Math.round(box.height)} CSS px)`);
+	shots.push(`${name}${suffix}`);
+	console.log(`captured ${name}${suffix} (${Math.round(box.width)}x${Math.round(box.height)} CSS px)`);
 };
 
 /** From the top of the page to the bottom of `pattern`'s element, full width. */
@@ -213,7 +246,7 @@ const shootTo = async (name, pattern) => {
 	const [{ leaf }] = await boxesFor([pattern]);
 	// The card the label sits in has its own padding and border below the
 	// text; +36 closes the card without opening whatever follows it.
-	await clip(name, { x: 0, y: 0, width: 1440, height: leaf.bottom + 36 });
+	await clip(name, { x: 0, y: 0, width: viewportWidth, height: leaf.bottom + 36 });
 };
 
 /**
@@ -223,7 +256,7 @@ const shootTo = async (name, pattern) => {
  * never ship as picture and the cards render large enough to read on a
  * phone.
  */
-const shootBetween = async (name, topPattern, bottomPattern, bound = null) => {
+const shootBetween = async (name, topPattern, bottomPattern, bound = null, below = 20, above = 28) => {
 	await settle();
 	const [top, bottom] = await boxesFor([topPattern, bottomPattern]);
 	const box = bound
@@ -254,13 +287,23 @@ const shootBetween = async (name, topPattern, bottomPattern, bound = null) => {
 				};
 			}, bound)
 		: top.card;
-	const y = Math.max(0, (box.whole ? box.top : top.leaf.top) - 28);
+	const y = Math.max(0, box.whole ? box.top - 12 : top.leaf.top - above);
 	const left = Math.max(0, box.left - 8);
-	const right = Math.min(1440, box.right + 8);
+	const right = Math.min(viewportWidth, box.right + 8);
 	// +40 below the last label: enough to close the card it sits in, not
 	// enough to open the next heading.
-	const end = box.whole ? box.bottom + 28 : bottom.leaf.bottom + 40;
+	// Margins that close the card without opening whatever follows it
+	// (2026-10 review: +28/+40 showed the next card's top edge).
+	const end = box.whole ? box.bottom + 12 : bottom.leaf.bottom + below;
 	await clip(name, { x: left, y, width: right - left, height: end - y });
+};
+
+/** A native select or develop's listbox select, whichever the field is. */
+const pick = async (locator, value, option) => {
+	await locator.selectOption(value, { timeout: 1500 }).catch(async () => {
+		await locator.click();
+		await page.getByRole('option', { name: option }).first().click();
+	});
 };
 
 try {
@@ -288,8 +331,8 @@ try {
 	if (process.env.RESUME === 'first-order') {
 		await page.goto(`${APP}/setup?stage=first-order`);
 		await page.getByRole('heading', { level: 1, name: 'Cost your first order' }).waitFor();
-		await page.getByLabel('Guests').fill('80');
-		await shootBetween('05-first-order', /^Order details$/, /^\$1\.59 per portion$/);
+		await page.locator('#guestCount').fill('80');
+		await atEachWidth(() => shootBetween('05-first-order', /^Order details$/, /^\$1\.62 per portion$/));
 		console.log(`\n${shots.length} capture written to public/proof/setup/`);
 		await browser.close();
 		process.exit(0);
@@ -301,31 +344,71 @@ try {
 	// goes), the import box outside setup, and Settings > Team & access.
 	if (process.env.RESUME === 'after') {
 		await page.goto(`${APP}/setup?stage=first-order`);
-		const ready = page.getByRole('heading', { name: 'Your kitchen is ready' });
-		if (!(await ready.isVisible().catch(() => false))) {
+		const made = page.getByRole('heading', { name: 'Your first order is made' });
+		if (!(await made.isVisible().catch(() => false))) {
 			await page.getByRole('heading', { level: 1, name: 'Cost your first order' }).waitFor();
-			await page.getByLabel('Guests').fill('80');
+			await page.locator('#guestCount').fill('80');
+			// Develop (2026-10) asks about guests' allergies before an order
+			// exists; a blank reads the same as nobody asked.
+			await page.getByRole('radio', { name: 'No', exact: true }).check();
 			await page.getByRole('button', { name: 'Create first order' }).click();
-			await ready.waitFor();
+			await page.waitForURL((url) => !url.search.includes('stage=first-order'));
 		}
-		await shootBetween('06-ready', /^Your kitchen is ready$/, /^Go to Today$/);
+		// The completion screen moved behind "See what setup built".
+		await page.goto(`${APP}/setup?complete=1`);
+		await page.getByRole('heading', { name: 'Your kitchen is ready' }).waitFor();
+		await atEachWidth(() => shootBetween('06-ready', /^Your kitchen is ready$/, /^Go to Today$/));
 
-		await page.goto(`${APP}/catalog`);
-		await page.getByRole('heading', { level: 1, name: 'Kitchen records' }).waitFor();
-		// The Purchases card on the hub, down to its own "Import invoice"
-		// link: where the next invoice goes after setup. The card's
-		// description is the anchor because the chain diagram above it also
-		// says "Purchases", and the whole hub is 2,000px tall.
-		await page.getByRole('link', { name: 'Import invoice' }).waitFor();
-		await shootBetween('07-records', /^Import invoice$/, /^Import invoice$/, 'cardof:^Import invoice$');
+		// Develop (2026-10) moved the next invoice off the Kitchen records hub:
+		// it goes in from the Purchases page's actions. One capture serves
+		// every width: the desktop header is a 1,200px strip whose text cannot
+		// be read at the column's width, while the phone screen shows the same
+		// action with its neighbours. On a phone "Import invoice" sits in the
+		// More menu above the sticky "Log purchase" bar, so the shot opens it
+		// and runs from the page title to the bottom of the screen.
+		await page.goto(`${APP}/purchases`);
+		await page.getByRole('heading', { level: 1, name: 'Purchases' }).waitFor();
+		await page.setViewportSize({ width: 390, height: 844 });
+		await page.waitForLoadState('networkidle');
+		await page.mouse.move(0, 0);
+		await page.getByRole('button', { name: 'More' }).last().click();
+		await page.getByRole('menuitem', { name: /Import invoice/ }).waitFor();
+		await page.waitForTimeout(300);
+		const titleTop = await page.evaluate(() => document.querySelector('main h1').getBoundingClientRect().top);
+		// -16, not -28: the tab row's active underline sits just above.
+		const top = Math.max(0, Math.round(titleTop - 16));
+		await page.screenshot({
+			path: `${OUT}07-records-mobile.png`,
+			caret: 'hide',
+			animations: 'disabled',
+			clip: { x: 0, y: top, width: 390, height: 844 - top }
+		});
+		shots.push('07-records-mobile');
+		console.log('captured 07-records-mobile');
+		await page.keyboard.press('Escape');
+		await page.setViewportSize({ width: 1440, height: 900 });
 
 		await page.goto(`${APP}/import`);
 		await page.getByRole('heading', { level: 1, name: 'Import and review' }).waitFor();
-		await shootBetween('08-import', /^Import and review$/, /^Add files or pasted text, then confirm each source type before extraction\.$/, 'main');
+		// Desktop: the "Add documents" card alone, the box itself, at a size
+		// a column can show. Phone: the stacked page down to the review panel.
+		await atEachWidth(() =>
+			suffix
+				? shootBetween('08-import', /^Import and review$/, /^Nothing to read yet\. Add files or pasted text/, 'main')
+				: shootBetween('08-import', /^Add documents$/, /^Add documents$/, 'cardof:^Add documents$')
+		);
 
 		await page.goto(`${APP}/settings/team`);
-		await page.getByRole('heading', { name: 'Invite a teammate' }).waitFor();
-		await shootBetween('09-team', /^Invite a teammate$/, /^Send invitation$/);
+		// Develop (2026-10): "Invite people" takes up to 20 addresses and a
+		// role. One example address is typed (never sent) so the button reads
+		// what a reader will see: "Send 1 invitation".
+		await page.getByRole('heading', { name: 'Invite people' }).waitFor();
+		await page.waitForLoadState('networkidle');
+		const addresses = page.getByRole('combobox', { name: 'Email addresses' });
+		await addresses.fill('maria@harborhearth.example');
+		await addresses.press('Enter');
+		await page.getByRole('button', { name: /^Send 1 invitation$/ }).waitFor();
+		await atEachWidth(() => shootBetween('09-team', /^Invite people$/, /^Send 1 invitation$/, 'cardof:^Invite people$'));
 
 		console.log(`\n${shots.length} captures written to public/proof/setup/`);
 		await browser.close();
@@ -337,12 +420,14 @@ try {
 	await page.goto(`${APP}/setup?stage=kitchen`);
 	const welcome = page.getByRole('heading', { level: 1, name: /^Welcome/ });
 	if (await welcome.isVisible().catch(() => false)) {
+		// The radios are buttons that only answer once the page hydrates.
+		await page.waitForLoadState('networkidle');
 		await page.getByRole('radio', { name: 'Catering' }).check();
 		await page.getByLabel('One dish you know well').fill(DISH);
 		await page.getByRole('radio', { name: 'What an event really costs' }).check();
 		// The first screen after sign-up: two questions, one dish. Part 1 of
 		// the guide shows it so the reader sees the welcome before they meet it.
-		await shootBetween('00-welcome', /^Welcome/, /^Skip these questions$/);
+		await atEachWidth(() => shootBetween('00-welcome', /^Welcome/, /^Skip these questions$/, null, 20, 64));
 		await page.getByRole('button', { name: 'Start setup' }).click();
 	}
 	const resume = page.getByRole('button', { name: 'Continue setup' });
@@ -355,6 +440,9 @@ try {
 	await page.getByLabel('Business name').fill(KITCHEN);
 	await page.getByLabel('Supplier name').fill('Highland Meats');
 	await page.getByLabel('Target food-cost percentage').fill('30');
+	// Develop added a required units choice to stage one (2026-10). US
+	// customary, as every other capture on the site shows.
+	await pick(page.getByLabel('Show weights and volumes in'), 'imperial', 'Pounds, ounces and quarts');
 	await page.getByRole('button', { name: 'Save and continue' }).click();
 	await page.waitForURL(/stage=ingredients/);
 
@@ -371,7 +459,7 @@ try {
 		throw new Error('Ask Sage is not in the setup header; start the app with SAGE_ENABLED=enabled');
 	}
 	await askSage.click();
-	await page.getByText('This stays open beside the screen you are on', { exact: false }).waitFor();
+	await page.getByText('Ask about this step.', { exact: true }).waitFor();
 	// The panel opens scrolled to its newest turn, which starts its intro
 	// mid-sentence ("far. Setup is not finished..."). Resetting right after the
 	// click does not hold: it re-pins to the bottom once the suggestions
@@ -405,7 +493,15 @@ try {
 	// The argument, not the whole form: the five-stage rail, the stage heading,
 	// what it wants, and Sage open beside it. A full-page clip of this screen
 	// is 3,256px tall and unreadable at any width the landing page can give it.
-	await shootClip('01-kitchen', ['[data-ui-role="setup-stage-why"]']);
+	await atEachWidth(async () => {
+		// On a phone Sage opens as a full-screen sheet over the stage, so the
+		// phone shot closes it: the stage is what a phone shows first.
+		if (suffix) {
+			await page.getByRole('button', { name: /^Close/ }).last().click();
+			await page.getByText('Ask about this step.', { exact: true }).waitFor({ state: 'hidden' });
+		}
+		await shootClip('01-kitchen', ['[data-ui-role="setup-stage-why"]']);
+	});
 
 	// Stage 2 — Ingredients. On an empty kitchen the stage opens on three
 	// choices, and the first is the invoice (RC-58). That choice, and the
@@ -414,11 +510,11 @@ try {
 	// reading a list of taps.
 	await page.goto(`${APP}/setup?stage=ingredients`);
 	await page.getByRole('link', { name: /Import an invoice or price sheet/ }).waitFor();
-	await shootBetween('02-choices', /^Add the ingredients for /, /^Best when you know one dish and its pack prices by heart\.$/, 'main');
+	await atEachWidth(() => shootBetween('02-choices', /^Add the ingredients for /, /^Best when you know one dish and its pack prices by heart\.$/, 'main'));
 	await page.getByRole('link', { name: /Import an invoice or price sheet/ }).click();
 	await page.getByRole('heading', { name: 'Import and review' }).waitFor();
 	await page.getByRole('button', { name: 'Choose files', exact: true }).waitFor();
-	await shootBetween('02-dropzone', /^Adding ingredients for setup$/, /^Use a PDF, photo, CSV, DOCX, or pasted text\./, 'main');
+	await atEachWidth(() => shootBetween('02-dropzone', /^Adding ingredients for setup$/, /^Use the invoice PDF or a photo of it\./, 'main'));
 
 	// The dish's one ingredient, entered by hand so stages three and four
 	// have something to open on. The shot above is the door; this is the
@@ -431,7 +527,7 @@ try {
 	await page.getByRole('button', { name: 'Next: add pack and price' }).click();
 	await page.getByLabel('Pack name').fill('10 lb case');
 	await page.getByLabel('Pack contains').fill('10');
-	await page.getByLabel('Unit', { exact: true }).selectOption('lb');
+	await pick(page.getByLabel('Unit', { exact: true }), 'lb', 'Pound (lb)');
 	await page.getByLabel('Pack price (paid)').fill('32.00');
 	await page.getByText('Trim yield and conversions', { exact: true }).click();
 	await page.getByLabel('Default yield').fill('80');
@@ -451,45 +547,70 @@ try {
 	// The ingredient's card: the drafted nutrition match, the allergen chips,
 	// and the way out for the unsure. Bounded by the ingredient's name and
 	// the Skip control, not the whole scrolling page.
-	await shootBetween('03-chips', /^Chicken thigh$/, /^Skip for now$/);
+	await atEachWidth(() => shootBetween('03-chips', /^Chicken thigh$/, /^Skip for now$/, null, 10));
 
 	// Stage 4 — Recipes opens on the same shape: Sage, or by hand. The
 	// recipe card goes in the way the invoice did. Food facts must be
 	// answered first, so confirm the one draft as shown.
-	await page.getByRole('button', { name: /^Confirm all 1 draft as shown$/ }).click();
-	await page.getByText('1 of 1 ingredients complete', { exact: false }).waitFor();
+	// Develop (2026-10): confirming the drafts leaves any allergen Sage could
+	// not tell open, so the walk answers the one ingredient: free from the
+	// nine, which is true of a chicken thigh, then saves it.
+	await page.getByRole('button', { name: /^Confirm all 1 draft( as shown)?$/ }).click();
+	await page.waitForURL(/confirmedFoodFacts=1/);
+	await page.waitForLoadState('networkidle');
+	await page.getByText('Not answered yet', { exact: true }).waitFor();
+	await page.getByRole('button', { name: 'Free from the rest' }).click();
+	await page.waitForTimeout(400);
+	await page.getByRole('button', { name: `Save ${INGREDIENT}` }).click();
+	await page.getByText(/1 of 1 (ingredients complete|saved)/).first().waitFor();
 	await page.goto(`${APP}/setup?stage=recipes`);
 	await page.getByRole('link', { name: /Build with Sage/ }).waitFor();
-	await shootBetween('04-choices', /^Build your first dish$/, /^Best when you know the ingredients and amounts for one dish\.$/, 'main');
+	await atEachWidth(() => shootBetween('04-choices', /^Build your first dish$/, /^Best when you know the ingredients and amounts for one dish\.$/, 'main'));
 
 	// The dish, built by hand so stage five has something to cost: the same
 	// one line the page's $1.62 trace is built from (e2e/setup-wizard.spec.ts
 	// walks these controls).
 	await page.getByRole('button', { name: 'Build the dish by hand' }).click();
 	await page.waitForURL(/\/setup\/recipes\/\d+/);
-	await page.getByLabel('Recipe name').fill(DISH);
-	await page.getByRole('button', { name: 'Save name' }).click();
-	await page.getByText('Name saved', { exact: true }).waitFor();
+	await page.waitForLoadState('networkidle');
+	// Develop (2026-10) names the dish from the welcome answer, so the name
+	// step only runs on a build that still asks for it.
+	const saveName = page.getByRole('button', { name: 'Save name' });
+	if (await saveName.isVisible().catch(() => false)) {
+		await page.getByLabel('Recipe name').fill(DISH);
+		await saveName.click();
+		await page.getByText('Name saved', { exact: true }).waitFor();
+	}
 	const combo = page.getByLabel('Ingredient or sub-recipe');
+	await combo.click();
 	await combo.fill(INGREDIENT);
-	await combo.press('ArrowDown');
-	await combo.press('Enter');
+	await page.getByRole('option', { name: new RegExp(`^${INGREDIENT}`) }).first().click();
 	await page.getByLabel('Quantity', { exact: true }).fill('180');
-	await page.getByLabel('Unit', { exact: true }).selectOption('g');
+	await pick(page.getByLabel('Unit', { exact: true }), 'g', 'Gram (g)');
 	await page.getByRole('button', { name: 'Add line', exact: true }).click();
 	await page.getByText('Line added', { exact: false }).waitFor();
-	await page.getByRole('button', { name: 'Save dish and continue' }).click();
+	// Develop edits a draft of the dish and publishes it on "Check dish and
+	// continue"; older builds said "Save dish and continue".
+	// Develop asks what one portion looks like in the box before the dish
+	// can continue (the pack list reads it).
+	const next = page.getByRole('button', { name: /^(Check|Save) dish and continue$/ });
+	await next.click();
+	const packing = page.getByLabel('Packing description');
+	if (await packing.waitFor({ timeout: 3000 }).then(() => true, () => false)) {
+		await packing.fill('One roast chicken thigh');
+		await next.click();
+	}
 	await page.waitForURL(/stage=first-order/);
 
 	// Stage 5 — Menu and first order: the menu already named after the dish,
 	// a date, a guest count, and the one button.
 	await page.getByRole('heading', { level: 1, name: 'Cost your first order' }).waitFor();
-	await page.getByLabel('Guests').fill('80');
+	await page.locator('#guestCount').fill('80');
 	// The order card down to the dish row: the menu already named after the
 	// dish, the guest count, and the per-portion cost. The button below it is
 	// named in the copy; the whole form is 1,700px tall and unreadable at any
 	// width the page can give it.
-	await shootBetween('05-first-order', /^Order details$/, /^\$1\.59 per portion$/);
+	await atEachWidth(() => shootBetween('05-first-order', /^Order details$/, /^\$1\.62 per portion$/));
 
 	// The stage map, once real progress exists: "N of 5 stages complete".
 	await page.goto(`${APP}/setup`);
@@ -498,6 +619,11 @@ try {
 
 	console.log(`\n${shots.length} captures written to public/proof/setup/`);
 	console.log('The order itself is not created: the completion screen is rendered on the page as a ticket, not shown as a capture.');
+} catch (error) {
+	// Where the walk stopped, so a changed screen can be read, not guessed.
+	await page.screenshot({ path: `${OUT}_failure.png`, fullPage: true }).catch(() => {});
+	console.error(`stopped at ${page.url()}; see ${OUT}_failure.png`);
+	throw error;
 } finally {
 	await browser.close();
 }

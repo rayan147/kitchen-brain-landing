@@ -31,7 +31,7 @@ const workPath = [
 const limits = [
 	'Stock counts and combined reporting across several kitchens.',
 	'Lot tracking for a facility operating under FSMA 204 traceability rules.',
-	'Hiding cost screens from selected teammates. Staff can open recipe costs and Analytics.'
+	'Per-screen permissions or a custom role. Staff never see costs, but you cannot hide one screen from one person.'
 ] as const;
 ---
 
@@ -134,7 +134,7 @@ const limits = [
 		</div>
 	</section>
 
-	<section class="audience-close" aria-labelledby="close-heading">
+	<section class="audience-close" aria-labelledby="close-heading" data-sticky-end>
 		<div class="container-page close-layout">
 			<div>
 				<h2 id="close-heading">Bring one real menu and one guest count.</h2>
@@ -196,7 +196,9 @@ const limits = [
 	.work-path { display: grid; margin-top: 3rem; border-block: 1px solid var(--color-hairline); }
 	.work-path li + li { border-top: 1px solid var(--color-hairline); }
 	.work-path a { display: grid; min-height: 6.5rem; grid-template-columns: 2rem minmax(0, 1fr) auto; align-items: center; gap: .75rem; padding: 1rem .75rem; transition: background-color 150ms ease; }
-	.work-path a:hover { background: var(--color-paper); }
+	@media (hover: hover) {
+		.work-path a:hover { background: var(--color-paper); }
+	}
 	.path-index { color: var(--color-amber-deep); font-family: var(--font-body); font-size: .8rem; }
 	.work-path strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; }
 	.work-path small { grid-column: 2; color: var(--color-ink-soft); }
@@ -224,15 +226,25 @@ const limits = [
 		.ticket-stitch { padding: .75rem; }
 		.ticket-stitch span { width: 1px; height: 100%; border-top: 0; border-left: 1px dashed var(--color-ticket-rule); }
 		.fit-layout, .limits-layout { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(3rem, 8vw, 7rem); }
-		.fit-signals li { grid-template-columns: minmax(10rem, .7fr) minmax(0, 1.3fr); }
-		.work-path { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-		.work-path li + li { border-top: 0; border-left: 1px solid var(--color-hairline); }
+		/* Two by two on a tablet: four across at 768 wrapped "Shop · Prep ·
+		   Pack" onto three lines (mobile review 2026-10-09). */
+		.work-path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.work-path li:nth-child(2) { border-top: 0; }
+		.work-path li:nth-child(even) { border-left: 1px solid var(--color-hairline); }
 		.work-path a { min-height: 10rem; grid-template-columns: 1fr auto; align-content: center; padding: 1.5rem; }
 		.path-index { grid-column: 1 / -1; }
 		.work-path strong { margin-top: .75rem; }
 		.work-path small { grid-column: 1 / -1; margin-top: .25rem; }
 		.work-path svg { grid-column: 2; grid-row: 2; }
 		.close-layout { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+	}
+	/* The signal rows split only once the fit column is wide enough: split
+	   at 48rem inside the already split fit layout, the value column was
+	   about 150px, 21-38 characters a line (mobile review 2026-10-09). */
+	@media (min-width: 64rem) {
+		.fit-signals li { grid-template-columns: minmax(10rem, .7fr) minmax(0, 1.3fr); }
+		.work-path { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+		.work-path li + li { border-top: 0; border-left: 1px solid var(--color-hairline); }
 	}
 	@media (prefers-reduced-motion: reduce) { .service-ticket { animation: none; transform: none; } }
 </style>

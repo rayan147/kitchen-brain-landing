@@ -778,8 +778,10 @@ const faqItems = [
 		transition: background-color 150ms ease-out;
 	}
 
-	.product-nav a:hover {
-		background: var(--color-softgreen);
+	@media (hover: hover) {
+		.product-nav a:hover {
+			background: var(--color-softgreen);
+		}
 	}
 
 	.product-nav span {
@@ -1037,7 +1039,7 @@ const faqItems = [
 	.lifecycle-path { margin-top: clamp(3rem, 6vw, 5rem); padding: clamp(1.25rem, 3vw, 2rem); border-block: 1px solid var(--color-ticket-rule); background: var(--color-cream); }
 	.lifecycle-path ol { display: grid; gap: 1rem; }
 	.lifecycle-path li { padding-top: 1rem; border-top: 1px solid var(--record-rule); }
-	.lifecycle-path li > span { color: var(--color-amber-deep); font-size: .72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+	.lifecycle-path li > span { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; font-variant-numeric: tabular-nums; }
 	.lifecycle-path strong { display: block; margin-top: .4rem; font-family: var(--font-display); font-size: 1.35rem; }
 	.lifecycle-path li p { margin-top: .45rem; color: var(--color-ink-soft); font-size: .84rem; line-height: 1.5; }
 	.lifecycle-path figcaption { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--record-rule); color: var(--color-ink-soft); font-size: .82rem; }

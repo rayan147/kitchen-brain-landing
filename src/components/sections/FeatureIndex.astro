@@ -63,7 +63,9 @@ import { comingDefinition } from '../../lib/availability';
 
 		<div class="mt-6"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><FeatureTrialTerms /></div>
 
-		<ul role="list" class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
+		{/* Five areas two up: the fifth spans both columns instead of sitting
+		    beside an empty cell (mobile review 2026-10-09). */}
+		<ul role="list" class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 sm:[&>li:last-child:nth-child(odd)]:col-span-2">
 			{
 				featureSections.map((entry, i) => (
 					<li class="border-t border-ticket-rule pt-6">

@@ -161,6 +161,7 @@ const faqItems = [
 						width={proofAssets.summary.mobileWidth}
 						height={proofAssets.summary.mobileHeight}
 						decoding="async"
+						fetchpriority="high"
 						data-proof-image
 					/>
 				</div>
@@ -392,7 +393,7 @@ const faqItems = [
 	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.hero-terms { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
 	.hero-proof { min-width: 0; max-width: 374px; justify-self: center; }
-	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 	/* App frames match the homepage: 8px corners, --shadow-lift (design review 2026-10-07). */
 	.hero-shot { max-width: 374px; margin-inline: auto; overflow: hidden; border: 1px solid var(--rule); border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.hero-shot img, .panel-window img, .allergen-window picture, .allergen-window img, .label-window img { display: block; width: 100%; height: auto; }
@@ -408,7 +409,7 @@ const faqItems = [
 	.path-source { grid-row: 1 / 3; align-content: center; background: color-mix(in srgb, var(--color-green) 24%, transparent); }
 	.path-branches { grid-row: 1 / 3; display: grid; align-items: center; }
 	.path-branches i { display: block; height: 1px; background: color-mix(in srgb, white 35%, transparent); }
-	.path-source span, .path-output span { display: block; color: var(--color-amber-light); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+	.path-source span, .path-output span { display: block; color: var(--color-amber-light); font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 	.path-source strong, .path-output strong { display: block; margin-top: 0.45rem; line-height: 1.35; }
 	.path-output.warning { border-color: color-mix(in srgb, var(--color-amber-light) 55%, transparent); }
 	.split-end { padding-bottom: var(--spacing-section-tight); color: var(--color-offwhite); font-family: var(--font-display); font-size: clamp(1.45rem, 2.5vw, 2.2rem); line-height: 1.3; }
@@ -425,7 +426,7 @@ const faqItems = [
 	.product-copy > p, .allergen-heading > p, .print-copy > p, .capabilities-intro > p, .faq-intro > p, .closing p { max-width: 48ch; margin-top: 1.5rem; color: var(--color-ink-soft); font-size: 1.08rem; line-height: 1.75; }
 	.source-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; border-top: 1px solid var(--rule); }
 	.source-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
-	.source-facts dt { color: var(--color-ink-soft); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+	.source-facts dt { color: var(--color-ink-soft); font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 	.source-facts dd { margin-top: 0.35rem; font-weight: 680; line-height: 1.4; }
 	.panel-proof { min-width: 0; }
 	.panel-window { overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); border-radius: .5rem; box-shadow: var(--shadow-lift); }
@@ -440,7 +441,7 @@ const faqItems = [
 	.evidence-chain { display: grid; gap: 0; margin-top: clamp(4rem, 8vw, 7rem); border-block: 1px solid var(--rule); }
 	.evidence-chain li { position: relative; padding: clamp(1.75rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
 	.evidence-chain li:last-child { border-bottom: 0; }
-	.evidence-chain li > span { color: var(--color-amber-deep); font-size: 0.7rem; font-weight: 750; letter-spacing: 0.07em; }
+	.evidence-chain li > span { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 750; letter-spacing: 0.07em; }
 	.evidence-chain h3 { margin-top: 0.8rem; font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: var(--text-h3--line-height); }
 	.evidence-chain p { margin-top: 0.6rem; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
 	.evidence-note { display: grid; gap: 0.8rem; padding-block: var(--spacing-section-tight); }
@@ -469,7 +470,7 @@ const faqItems = [
 	.capability-list summary, .faq-list summary { display: flex; min-height: 72px; cursor: pointer; list-style: none; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1rem; }
 	.capability-list summary::-webkit-details-marker, .faq-list summary::-webkit-details-marker { display: none; }
 	.capability-list summary small, .capability-list summary strong { display: block; }
-	.capability-list summary small { color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; }
+	.capability-list summary small { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; }
 	.capability-list summary strong { margin-top: 0.35rem; font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; }
 	.capability-list summary b { color: var(--color-green-deep); font-size: 1.5rem; font-weight: 400; transition: transform 160ms ease-out; }
 	.capability-list details[open] summary b { transform: rotate(45deg); }

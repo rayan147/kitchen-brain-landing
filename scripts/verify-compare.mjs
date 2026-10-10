@@ -177,7 +177,7 @@ try {
 	await viewport(390, 844, true);
 	await navigate();
 	const phone = await evaluate(`(() => {
-		const cards = [...document.querySelectorAll('ul.sm\\\\:hidden > li')];
+		const cards = [...document.querySelectorAll('ul.lg\\\\:hidden > li')];
 		const tableVisible = [...document.querySelectorAll('table')]
 			.some((t) => t.getBoundingClientRect().width > 0);
 		return {

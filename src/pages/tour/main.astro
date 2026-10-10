@@ -1,4 +1,5 @@
 ---
+import StickyCta from '../../components/StickyCta.astro';
 import Base from '../../layouts/Base.astro';
 import ProductTour from '../../components/sections/ProductTour.astro';
 import { tourSeedKey, tourStops } from '../../lib/tour';
@@ -26,4 +27,5 @@ const directionContract = [
 	directionContract={directionContract}
 >
 	<ProductTour />
+	<StickyCta />
 </Base>

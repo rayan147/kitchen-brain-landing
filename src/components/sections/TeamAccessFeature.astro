@@ -4,49 +4,52 @@ import { cta, demoCta, launchPlan } from '../../lib/site';
 
 // Considered Strategy; not used because roles are a fixed, evidence-backed
 // content table and no behavior is selected or swapped at runtime.
+// Read off local kitchen-brain develop c90d3b9c2 (`src/lib/auth/permissions.ts`
+// ROLE_CAPS, `src/lib/server/auth/route-capabilities.ts`) on 2026-10-10.
+// Owner ruling the same day: the page states develop's roles and ships now.
 const roles = [
 	{
 		name: 'Owner',
 		mark: 'O',
-		summary: 'Manages billing and recipe publishing, archiving and restoration.',
-		workspaceAccess: 'Everything a Manager and Staff member can access.',
-		protectedWork: 'Manage billing; publish, archive and restore recipes; manage Square when that connection is enabled.',
-		boundary: 'Owner-only actions stay with the workspace owner.'
+		summary: 'Runs the account: billing, the team, kitchen settings and recipe publishing.',
+		workspaceAccess: 'Everything a Manager and Staff member can open, plus kitchen settings and billing.',
+		protectedWork: 'Invite people and change their role; manage billing and kitchen settings; publish, archive and restore recipes.',
+		boundary: 'Only the Owner invites, changes roles, or touches billing and settings.'
 	},
 	{
 		name: 'Manager',
 		mark: 'M',
-		summary: 'Manages setup and invitations; approves Sage drafts.',
-		workspaceAccess: 'Everything a Staff member can access.',
-		protectedWork: 'Complete kitchen setup; invite and revoke teammates; ask Sage about price moves and money; approve or discard Sage drafts.',
-		boundary: 'Billing, recipe publishing, archiving and restoration stay with the Owner. Square controls apply only when that connection becomes available.'
+		summary: 'Sees the money: costs, prices, Analytics, Sage, clients and purchasing.',
+		workspaceAccess: 'Everything a Staff member can open, plus costs and margins, Analytics, Sage, and the Clients book with its events.',
+		protectedWork: 'Finish kitchen setup and imports; set prices; book events; edit vendors and purchase orders; approve or discard Sage drafts.',
+		boundary: 'No billing, team or kitchen settings, and no recipe publishing.'
 	},
 	{
 		name: 'Staff',
 		mark: 'S',
-		summary: 'Works from the shared kitchen record without the manager-only Sage or owner-only controls.',
-		workspaceAccess: 'Open the shared kitchen record, including recipe costs and Analytics. Order money and client names on Today, money on the calendar, and the Clients book stay with owners and managers.',
-		protectedWork: 'Use day-to-day kitchen records and ask Sage the questions available to Staff.',
-		boundary: 'Manager- and Owner-only actions remain unavailable.'
+		summary: 'Works the kitchen: orders, prep and pack lists, deliveries and recipes, without the money.',
+		workspaceAccess: 'Orders, prep and pack lists, deliveries, shelf counts, and recipes, ingredients and menus. Costs and margins are taken out of what they see.',
+		protectedWork: 'Edit recipes, ingredients and menus; check in deliveries; count shelves.',
+		boundary: 'No prices, costs, Analytics, Sage, setup, imports, clients or settings.'
 	}
 ] as const;
 
 const faqItems = [
 	{
 		question: 'Can I hide food costs from a cook?',
-		answer: 'No. CostCook does not have per-screen permissions, so a teammate on Staff can open recipe costs and Analytics. The role boundaries protect specific sensitive actions and a few views: Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers.'
+		answer: 'Yes. Invite them as Staff. CostCook takes costs and margins out of what Staff see, and keeps Analytics, Sage, setup, imports and the Clients book to owners and managers.'
 	},
 	{
 		question: 'Can I build a custom role?',
-		answer: 'No. The available roles are Owner, Manager and Staff. There is no permission builder for individual screens, fields or actions.'
+		answer: 'No. The roles are Owner, Manager and Staff. There is no permission builder for single screens, fields or actions.'
 	},
 	{
 		question: 'What role does a new invitation receive?',
-		answer: 'Invited teammates join as Staff today. Invitations are not a self-service path for building a custom manager role.'
+		answer: 'The one you pick when you send it: Staff or Manager. The link works for 7 days, and you can change the role later.'
 	},
 	{
 		question: 'Are restricted actions actually blocked?',
-		answer: 'Yes. CostCook checks your role when you try a restricted action, even if you follow a direct link.'
+		answer: 'Yes. CostCook checks the role on the server when someone opens a screen or tries an action, even from a direct link, and takes cost figures out before a Staff page is sent.'
 	}
 ] as const;
 ---
@@ -61,7 +64,7 @@ const faqItems = [
 				</nav>
 				<h1 id="team-access-heading" class="feature-display">Give your crew their own sign-in.</h1>
 				<p class="hero-lede">Invite your crew by email into the same kitchen account. Below is what Owners, Managers and Staff can each do, from daily prep up to publishing recipes and billing.</p>
-				<p class="hero-constraint"><strong>Before you invite:</strong> Staff can open cost screens, including recipe costs and Analytics, and custom roles are not available.</p>
+				<p class="hero-constraint"><strong>Before you invite:</strong> pick Staff for anyone who should not see costs. Custom roles are not available.</p>
 				<div class="hero-actions">
 					<a href="#role-boundaries" class="btn-quiet">Compare team roles</a>
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
@@ -91,9 +94,9 @@ const faqItems = [
 			</div>
 			<dl class="access-facts" data-reveal>
 				<div><dt>Roles</dt><dd>Owner · Manager · Staff</dd></div>
-				<div><dt>New invitations</dt><dd>Join as Staff today</dd></div>
+				<div><dt>New invitations</dt><dd>Staff or Manager, your pick</dd></div>
 				<div><dt>Enforcement</dt><dd>Checked when you act</dd></div>
-				<div><dt>Cost screens</dt><dd>Visible to everyone on the account</dd></div>
+				<div><dt>Costs and margins</dt><dd>Owner and Manager only</dd></div>
 			</dl>
 		</div>
 	</section>
@@ -123,13 +126,14 @@ const faqItems = [
 		<div class="container-page limit-grid">
 			<div data-reveal>
 				<h2 id="limit-heading">Where it stops.</h2>
-				<p>You cannot hide a screen, show just one field, or build your own role. If a cook needs the prep list but must not be able to open costs, CostCook cannot do that today.</p>
-				<p class="limit-recovery">If hiding costs is essential, CostCook is not the right fit today. If you want to check your setup before deciding, <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel}>book 15 minutes</a>.</p>
+				<p>You cannot hide a single screen, show just one field, or build your own role. The line is the role: Staff never see costs, Managers see the money but not billing, and only you run the team.</p>
+				<p class="limit-recovery">If your crew needs a finer line than that, <a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel}>book 15 minutes</a> before you decide.</p>
 			</div>
 			<div class="limit-ticket" data-reveal>
 				<p>Access check</p>
 				<dl>
 					<div><dt>Actions restricted by role</dt><dd>Yes</dd></div>
+					<div><dt>Costs hidden from Staff</dt><dd>Yes</dd></div>
 					<div><dt>Choose who can open each screen</dt><dd>No</dd></div>
 					<div><dt>Custom roles</dt><dd>No</dd></div>
 				</dl>
@@ -172,16 +176,16 @@ const faqItems = [
 	.hero-constraint { max-width: 48ch; margin-top: 1.25rem; padding-left: 1rem; border-left: 1px solid var(--color-amber); color: var(--color-ink-soft); font-size: var(--text-body); line-height: 1.55; }
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
 	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; text-align: center; }
-	.role-stack { position: relative; min-height: 35rem; }
-	.role-pass { position: absolute; width: min(82%, 25rem); padding: 1.4rem; border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-lift); }
-	.pass-1 { top: 0; right: 0; z-index: 3; }
-	.pass-2 { top: 8.5rem; left: 0; z-index: 2; transform: rotate(-1deg); }
-	.pass-3 { top: 17rem; right: 4%; z-index: 1; transform: rotate(1deg); }
+	/* Phone first (mobile review 2026-10-09): the passes stack as a plain
+	   grid, and the layered, tilted spread is added from 800px. It used to be
+	   the base style, undone below 800px by a max-width block. */
+	.role-stack { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+	.role-pass { position: relative; width: 100%; padding: 1.4rem; overflow-wrap: anywhere; border-top: 1px solid var(--color-green); background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.pass-head { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--rule); color: var(--color-ink-soft); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
 	.pass-head span { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 50%; background: var(--color-softgreen); color: var(--color-green-deep); }
 	.role-pass > strong { display: block; margin-top: 1rem; font-family: var(--font-display); font-size: var(--text-record); }
 	.role-pass > p { max-width: 38ch; margin-top: .5rem; color: var(--color-ink-soft); line-height: 1.5; }
-	.role-stack figcaption { position: absolute; right: 0; bottom: 0; font-family: var(--font-display); font-size: var(--text-record-sm); font-weight: 600; }
+	.role-stack figcaption { margin-top: .5rem; font-family: var(--font-display); font-size: var(--text-record-sm); font-weight: 600; }
 	.shared-record, .faq { background: var(--color-offwhite); }
 	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: var(--text-h2--line-height); letter-spacing: -.02em; text-wrap: balance; }
 	.shared-grid > div > p, .roles-heading > p, .limit-grid > div > p, .faq-grid > div > p, .closing p { max-width: 48ch; margin-top: 1.25rem; color: var(--color-ink-soft); font-size: var(--text-body-lg); line-height: 1.65; }
@@ -205,7 +209,9 @@ const faqItems = [
 	.limit-grid > div > p { color: color-mix(in srgb, var(--color-offwhite) 75%, transparent); }
 	.limit-grid .limit-recovery { color: var(--color-offwhite); font-size: var(--text-body); }
 	.limit-recovery a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-amber-light); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
-	.limit-recovery a:hover { color: var(--color-offwhite); }
+	@media (hover: hover) {
+		.limit-recovery a:hover { color: var(--color-offwhite); }
+	}
 	.limit-ticket { padding: clamp(1.25rem, 3vw, 2rem); border-top: 1px solid var(--color-amber-light); background: var(--color-paper); color: var(--color-ink); box-shadow: 0 18px 38px color-mix(in srgb, var(--color-ink) 28%, transparent); }
 	.limit-ticket > p { color: var(--color-amber-deep); font-size: var(--text-label-sm); font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
 	.limit-ticket dl { margin-top: 1.25rem; border-top: 1px solid var(--rule); }
@@ -222,7 +228,14 @@ const faqItems = [
 	.closing { background: var(--color-cream); }
 	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
 	@media (min-width: 800px) { .hero-grid, .shared-grid, .limit-grid, .faq-grid, .closing-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .role-ledger > section { grid-template-columns: 5fr 6fr; } }
-	@media (max-width: 799px) { .role-stack { min-height: auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; } .role-pass { overflow-wrap: anywhere; } .role-pass { position: relative; inset: auto; width: 100%; transform: none; } .role-stack figcaption { position: static; margin-top: .5rem; } }
+	@media (min-width: 800px) {
+		.role-stack { display: block; min-height: 35rem; }
+		.role-pass { position: absolute; width: min(82%, 25rem); overflow-wrap: normal; }
+		.pass-1 { top: 0; right: 0; z-index: 3; }
+		.pass-2 { top: 8.5rem; left: 0; z-index: 2; transform: rotate(-1deg); }
+		.pass-3 { top: 17rem; right: 4%; z-index: 1; transform: rotate(1deg); }
+		.role-stack figcaption { position: absolute; right: 0; bottom: 0; margin-top: 0; }
+	}
 	@media (max-width: 520px) { h1, h2, h3 { overflow-wrap: anywhere; } .hero-actions, .closing-actions { display: grid; } .hero-actions .btn-primary, .closing-actions .btn-primary { width: 100%; max-width: 100%; padding-inline: 1rem; white-space: normal; overflow-wrap: anywhere; } .access-facts { grid-template-columns: 1fr; } .role-facts div { grid-template-columns: 1fr; } .limit-ticket dl div { display: block; } .limit-ticket dd { margin-top: .25rem; } }
 	@media (prefers-reduced-motion: reduce) { .faq-list summary svg { transition: none; } }
 </style>

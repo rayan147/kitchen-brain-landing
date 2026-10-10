@@ -614,8 +614,8 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Team & access',
 		appArea: 'Settings / Team & access',
 		title: 'Who on the crew can do what.',
-		intro: 'Invite people by email. Owners, Managers and Staff can each do different things, and Staff can open recipe costs and Analytics. Everyone invited joins as Staff.',
-		callout: 'The cook can open the work. Publishing, billing, and approvals still have named owners.',
+		intro: 'Invite people by email as Staff or Manager. Owners, Managers and Staff can each do different things, and Staff never see costs.',
+		callout: 'The cook works the lists without seeing the money. Billing, the team and publishing stay with you.',
 		featureHref: featureMenuHref('team'),
 		metrics: [
 			{ label: 'Owners', value: '1' },
@@ -625,8 +625,9 @@ export const tourStops: readonly TourStop[] = [
 		],
 		columns: ['Sensitive action', 'Owner', 'Manager', 'Staff'],
 		rows: [
+			['See costs and margins', 'Allowed', 'Allowed', 'Not allowed'],
 			['Manage billing', 'Allowed', 'Not allowed', 'Not allowed'],
-			['Invite teammates', 'Allowed', 'Allowed', 'Not allowed'],
+			['Invite teammates', 'Allowed', 'Not allowed', 'Not allowed'],
 			['Publish recipes', 'Allowed', 'Not allowed', 'Not allowed'],
 			['Approve Sage drafts', 'Allowed', 'Allowed', 'Not allowed']
 		],
@@ -636,7 +637,7 @@ export const tourStops: readonly TourStop[] = [
 			lines: [
 				{ label: 'Teammate', value: 'Morgan Lee' },
 				{ label: 'Invited by', value: 'Alex R' },
-				{ label: 'Cost screens', value: 'Visible' },
+				{ label: 'Cost screens', value: 'Hidden' },
 				{ label: 'Custom screen rules', value: 'Not available', tone: 'attention' }
 			],
 			footnote: 'You cannot hide individual screens from selected teammates or create custom roles.'

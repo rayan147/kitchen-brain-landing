@@ -902,12 +902,13 @@ requireText(onboardingSource, 'Go to Today', 'after-setup second action');
 requireText(onboardingSource, 'a photo, a PDF, a spreadsheet, a Word document or pasted text', 'after-setup five doors (RC-38)');
 requireText(onboardingSource, 'quoted back', 'after-setup unreadable-is-not-guessed (RC-39)');
 requireText(onboardingSource, 'without rewriting confirmed orders', 'after-setup later prices boundary (RC-08)');
-// 3c: Settings > Team (RC-52). The role boundary and the Staff-sees-costs
-// caveat travel with the invite claim or the claim comes off.
-requireText(onboardingSource, 'one-time link', 'after-setup invite mechanism (RC-52)');
+// 3c: Settings > Team (RC-52). The roles an invite offers travel with the
+// invite claim or the claim comes off. Develop c90d3b9c2 (2026-10-10): the
+// invite card asks Staff or Manager; the role grid is the Team and Access
+// guide's to state, so this page links there instead of restating it.
+requireText(onboardingSource, 'one-time sign-in link', 'after-setup invite mechanism (RC-52)');
 requireText(onboardingSource, 'No password', 'after-setup no-password boundary (RC-52)');
-requireText(onboardingSource, 'join as Staff', 'after-setup invited role (RC-52)');
-requireText(onboardingSource, 'Staff can open cost screens', 'after-setup Staff-sees-costs caveat (RC-52)');
+requireText(onboardingSource, 'joins as Staff or Manager', 'after-setup invited roles (RC-52)');
 requireText(onboardingSource, '/features/team-and-access', 'after-setup link to the full boundary (RC-52)');
 for (const [pattern, label] of [
 	[/(?<!\bno )(?<!\bnot a )\bcustom roles?\b(?![^.]{0,40}\b(not|no)\b)/i, 'a custom role (RC-52: none exists)'],

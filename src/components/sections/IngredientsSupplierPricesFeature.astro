@@ -196,7 +196,7 @@ const faqItems = [
 				</p>
 			</div>
 
-			<figure class="comparison-table" data-reveal>
+			<figure class="comparison-table" data-reveal data-pan data-pan-hint="Scroll sideways to see both suppliers." tabindex="0" aria-label="Pack comparison: Northline Foods and Market Supply">
 				<div class="comparison-head"><span>Chicken thigh</span><span>Northline Foods</span><span>Market Supply</span></div>
 				{packFacts.map((fact) => (
 					<div class:list={['comparison-row', fact.label === 'Usable cost' && 'result-row']}>
