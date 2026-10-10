@@ -48,7 +48,7 @@ import { mkdir } from 'node:fs/promises';
 
 const APP = process.env.APP ?? 'http://localhost:4188';
 const OWNER = 'onboarding-owner@e2e.test';
-const OUT = process.env.OUT_DIR ?? new URL('../public/proof/setup/', import.meta.url).pathname;
+const OUT = process.env.OUT_DIR ? `${process.env.OUT_DIR.replace(/\/$/, '')}/` : new URL('../public/proof/setup/', import.meta.url).pathname;
 
 // Every scene is shot twice in the same walk: at 1440 for the desktop
 // source, and at 390 (a phone) for the img every narrower screen gets, so a
@@ -556,7 +556,11 @@ try {
 		await page.waitForLoadState('networkidle');
 		console.log('Sage drafted the food facts');
 	} else {
-		console.log('no Sage draft button: this run has no AI provider configured');
+		console.log(
+			(await page.getByText(/^Sage drafted /).count())
+				? 'Sage drafted the food facts on arrival'
+				: 'no Sage draft: this run has no AI provider configured'
+		);
 	}
 	// The ingredient's card: the drafted nutrition match, the allergen chips,
 	// and the way out for the unsure. Bounded by the ingredient's name and
