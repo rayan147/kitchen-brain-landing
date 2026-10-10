@@ -544,6 +544,20 @@ try {
 	await shoot('03-food-facts', page.locator('body'));
 	// The chips: one tap per allergen, and the way out for the unsure.
 	await page.getByRole('button', { name: 'Skip for now' }).first().waitFor();
+	// Sage's draft is asked for, not automatic: "Draft missing food facts with
+	// Sage" runs the model pass (develop c90d3b9c2). It renders only when a
+	// provider is configured, so a keyless run shoots the undrafted card. Run
+	// the app with a real key (IMPORT_AI_PROVIDER unset, the key exported) for
+	// the published capture: the owner's rule is real-provider Sage drafts.
+	const draftWithSage = page.getByRole('button', { name: 'Draft missing food facts with Sage' });
+	if (await draftWithSage.isVisible().catch(() => false)) {
+		await draftWithSage.click();
+		await page.getByText('Drafting food facts…').waitFor({ state: 'hidden', timeout: 120_000 }).catch(() => {});
+		await page.waitForLoadState('networkidle');
+		console.log('Sage drafted the food facts');
+	} else {
+		console.log('no Sage draft button: this run has no AI provider configured');
+	}
 	// The ingredient's card: the drafted nutrition match, the allergen chips,
 	// and the way out for the unsure. Bounded by the ingredient's name and
 	// the Skip control, not the whole scrolling page.
