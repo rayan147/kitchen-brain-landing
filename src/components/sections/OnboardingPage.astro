@@ -96,10 +96,10 @@ const stages: readonly {
 		shots: [{
 			src: '/proof/setup/03-chips.png',
 			width: 1652,
-			height: 1484,
-			phone: { src: '/proof/setup/03-chips-mobile.png', width: 664, height: 2224 },
-			alt: 'One ingredient on the Food facts stage: Chicken thigh, badged “Draft: review needed”. A Nutrition box reads “Sage nutrition estimate: review needed. Estimated from ingredient name, per 100 g edible portion”, with “Change nutrition match” and a Preparation form set to Raw. Under Allergens, nine chips from Crustacean shellfish to Wheat, still to answer, and a “Free from the rest” button. Under Diet facts, “Each is yes, no, or don’t know”: Animal product; Meat, poultry or fish; Pork; Any shellfish; Alcohol. Two buttons close it: “Save Chicken thigh” and “Skip for now”.',
-			caption: 'One ingredient’s card. A name can tell Sage that butter has milk, not that chicken has none, so the allergens wait for you.'
+			height: 1700,
+			phone: { src: '/proof/setup/03-chips-mobile.png', width: 664, height: 2520 },
+			alt: 'One ingredient on the Food facts stage: Chicken thigh, badged “Draft: review needed”. Under it: “Sage drafted Animal product: Yes, Meat, poultry or fish: Yes, Pork: No, Shellfish: No, Alcohol: No. Nothing is recorded until you take it or answer yourself”, and a button, “Use Sage’s answers for Chicken thigh”. A Nutrition box reads “Sage nutrition estimate: review needed. Estimated from ingredient name, per 100 g edible portion”, with “Change nutrition match” and a Preparation form set to Raw. Under Allergens, nine chips from Crustacean shellfish to Wheat, none answered, and a “Free from the rest” button. Under Diet facts, the same five questions, still open until you take Sage’s answers. Two buttons close it: “Save Chicken thigh” and “Skip for now”.',
+			caption: 'One ingredient’s card. Sage drafted the diet facts from the name, and the allergens wait for you: a name can tell Sage that butter has milk, not that chicken has none.'
 		}]
 	},
 	{
@@ -203,13 +203,12 @@ const afterScenes: readonly {
 				label: 'The next invoice',
 				body: 'Open Purchases, tap “Import invoice” (under “More” on a phone) and confirm the lines; the purchase is logged and your ingredient costs and draft orders update, without rewriting confirmed orders.',
 				shot: {
-					// One phone capture at every width: the desktop header is a
-					// 1,200px strip that no column can show at a readable size.
-					src: '/proof/setup/07-records-mobile.png',
-					width: 780,
-					height: 1440,
-					alt: 'The Purchases page on a phone, headed “Purchases, October 2026, 0 purchases. Receipts, food cost and price changes, month by month.” Its More menu is open over the Food cost card: “Import invoice” first, then Log one item, Log waste, Stock turnover, Shelf check, Sent purchase orders, Receiving follow-up, Supplier invoices and Invoice inbox. At the bottom, a “Log purchase” button and the “More” button.',
-					caption: 'Purchases on a phone, with More open. On a computer “Import invoice” sits beside “Log purchase”.'
+					src: '/proof/setup/07-records.png',
+					width: 2320,
+					height: 204,
+					phone: { src: '/proof/setup/07-records-mobile.png', width: 780, height: 1440 },
+					alt: 'The top of the Purchases page: “Purchases, October 2026, 0 purchases. Receipts, food cost and price changes, month by month.” To the right, three buttons: “Log purchase”, “Import invoice” and “More”. On a phone, the same page shows the Food cost card for October 2026, $0.00 spent so far, and a bar at the foot of the screen with “Log purchase” and “More”.',
+					caption: 'The top of Purchases. “Import invoice” sits beside “Log purchase”; on a phone it is under “More”, in the bar at the foot of the screen.'
 				}
 			},
 			{

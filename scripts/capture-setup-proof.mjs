@@ -48,7 +48,7 @@ import { mkdir } from 'node:fs/promises';
 
 const APP = process.env.APP ?? 'http://localhost:4188';
 const OWNER = 'onboarding-owner@e2e.test';
-const OUT = process.env.OUT_DIR ?? new URL('../public/proof/setup/', import.meta.url).pathname;
+const OUT = process.env.OUT_DIR ? `${process.env.OUT_DIR.replace(/\/$/, '')}/` : new URL('../public/proof/setup/', import.meta.url).pathname;
 
 // Every scene is shot twice in the same walk: at 1440 for the desktop
 // source, and at 390 (a phone) for the img every narrower screen gets, so a
@@ -360,20 +360,34 @@ try {
 		await atEachWidth(() => shootBetween('06-ready', /^Your kitchen is ready$/, /^Go to Today$/));
 
 		// Develop (2026-10) moved the next invoice off the Kitchen records hub:
-		// it goes in from the Purchases page's actions. One capture serves
-		// every width: the desktop header is a 1,200px strip whose text cannot
-		// be read at the column's width, while the phone screen shows the same
-		// action with its neighbours. On a phone "Import invoice" sits in the
-		// More menu above the sticky "Log purchase" bar, so the shot opens it
-		// and runs from the page title to the bottom of the screen.
+		// it goes in from the Purchases page's actions. Desktop: the page
+		// header alone, where "Import invoice" sits beside "Log purchase". Phone: the page title to the bottom of the screen,
+		// menu closed, so the sticky "Log purchase" bar and its "More" show.
+		// An open More menu covered half the page and read as left open
+		// (owner review 2026-10-10).
 		await page.goto(`${APP}/purchases`);
 		await page.getByRole('heading', { level: 1, name: 'Purchases' }).waitFor();
-		await page.setViewportSize({ width: 390, height: 844 });
 		await page.waitForLoadState('networkidle');
-		await page.mouse.move(0, 0);
-		await page.getByRole('button', { name: 'More' }).last().click();
-		await page.getByRole('menuitem', { name: /Import invoice/ }).waitFor();
-		await page.waitForTimeout(300);
+		await settle();
+		const h1Box = await page.getByRole('heading', { level: 1, name: 'Purchases' }).boundingBox();
+		const moreBox = await page.getByRole('button', { name: 'More' }).filter({ visible: true }).first().boundingBox();
+		const leadBox = await page.getByText(/^Receipts, food cost and price changes/).first().boundingBox();
+		const desk = { left: h1Box.x, top: Math.min(h1Box.y, moreBox.y), right: moreBox.x + moreBox.width, bottom: leadBox.y + leadBox.height };
+		// 12px sides, not 24: at 0.8x the strip has to fit the 1024 column
+		// (about 942px) or it pans by a few pixels.
+		await page.screenshot({
+			path: `${OUT}07-records.png`,
+			caret: 'hide',
+			animations: 'disabled',
+			clip: { x: desk.left - 12, y: desk.top - 12, width: desk.right - desk.left + 24, height: desk.bottom - desk.top + 32 }
+		});
+		shots.push('07-records');
+		console.log('captured 07-records');
+		await page.setViewportSize({ width: 390, height: 844 });
+		await page.reload();
+		await page.getByRole('heading', { level: 1, name: 'Purchases' }).waitFor();
+		await page.waitForLoadState('networkidle');
+		await settle();
 		const titleTop = await page.evaluate(() => document.querySelector('main h1').getBoundingClientRect().top);
 		// -16, not -28: the tab row's active underline sits just above.
 		const top = Math.max(0, Math.round(titleTop - 16));
@@ -385,7 +399,6 @@ try {
 		});
 		shots.push('07-records-mobile');
 		console.log('captured 07-records-mobile');
-		await page.keyboard.press('Escape');
 		await page.setViewportSize({ width: 1440, height: 900 });
 
 		await page.goto(`${APP}/import`);
@@ -544,6 +557,24 @@ try {
 	await shoot('03-food-facts', page.locator('body'));
 	// The chips: one tap per allergen, and the way out for the unsure.
 	await page.getByRole('button', { name: 'Skip for now' }).first().waitFor();
+	// Sage's draft is asked for, not automatic: "Draft missing food facts with
+	// Sage" runs the model pass (develop c90d3b9c2). It renders only when a
+	// provider is configured, so a keyless run shoots the undrafted card. Run
+	// the app with a real key (IMPORT_AI_PROVIDER unset, the key exported) for
+	// the published capture: the owner's rule is real-provider Sage drafts.
+	const draftWithSage = page.getByRole('button', { name: 'Draft missing food facts with Sage' });
+	if (await draftWithSage.isVisible().catch(() => false)) {
+		await draftWithSage.click();
+		await page.getByText('Drafting food facts…').waitFor({ state: 'hidden', timeout: 120_000 }).catch(() => {});
+		await page.waitForLoadState('networkidle');
+		console.log('Sage drafted the food facts');
+	} else {
+		console.log(
+			(await page.getByText(/^Sage drafted /).count())
+				? 'Sage drafted the food facts on arrival'
+				: 'no Sage draft: this run has no AI provider configured'
+		);
+	}
 	// The ingredient's card: the drafted nutrition match, the allergen chips,
 	// and the way out for the unsure. Bounded by the ingredient's name and
 	// the Skip control, not the whole scrolling page.
