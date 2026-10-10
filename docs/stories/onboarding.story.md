@@ -318,3 +318,9 @@ Content: `src/components/sections/OnboardingPage.astro` and its shared data/resp
 
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - Ounces lead: 6.3 oz (180 g).
+
+## Revision 2026-10-10: reshot from local develop c90d3b9c2, phone captures
+- Every capture reshot from an empty kitchen on local kitchen-brain develop c90d3b9c2, at 1440 and at 390 in one walk. Phones and tablets get the 390 capture at its own size (no sideways panning); 64rem and up get the 1440 one. Purchases ships its phone capture at every width.
+- Copy follows develop: stage one asks for units; stage two adds "Take photo"; stage five asks about guests' allergies and ends on "Your first order is made", with the summary behind "See what setup built"; the next invoice goes in from Purchases ("Import invoice", under "More" on a phone); an invite picks Staff or Manager (RC-52 note in the ledger).
+- Humanize review applied to the changed bodies and captions; the two pinned phrases ("without rewriting confirmed orders", "“check”, never “clear”") kept.
+- Snap line unchanged: a name can tell Sage that butter has milk, not that chicken has none (now the stage-three caption, in the app's own words).
