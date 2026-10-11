@@ -169,3 +169,9 @@ guest $95.00 locked when confirmed, food cost 27.6% against 30%, and the
 app's own "Today's ingredient prices" line ("unchanged since you quoted
 this"). The copy beside it already says this; no words changed. The alt
 names only what the frame shows.
+
+## Revision 2026-10-11: English edit
+- Hero lede ends on what you get ("and see what a portion costs") instead of the scaling claim, which the management section owns.
+- Costing H2 "Catch a cost change before it reaches the quote." is "Follow one case price to the plate."; "usable yield" is "trim yield"; the figure caption drops the line that repeated the intro; the hero record label is "How the chicken line adds up".
+- Menu frame h3 "The frozen quote, next to today's prices.", with its line saying before and after confirm in order.
+- Print scene h3 "Print a sheet that says how old it is." (no longer repeats the pinned H2 that follows). Close: "Bring that dish and follow it from recipe to quote".

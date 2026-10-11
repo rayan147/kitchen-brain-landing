@@ -168,3 +168,9 @@ guest $95.00 locked when confirmed, food cost 27.6% against 30%, and the
 app's own "Today's ingredient prices" line ("unchanged since you quoted
 this"). The copy beside it already says this; no words changed. The alt
 names only what the frame shows.
+
+## Revision 2026-10-11: English edit
+- Hero lede ends in two short sentences: "Check the food cost first. Confirming locks the quote and the kitchen plan together."
+- Quotes intro cut to one sentence ("A new event starts as a draft, and the food cost shows while you set it up."); the "Confirmation freezes" bullet removed (the lock was said four times).
+- "these screens" is "this screen"; the garden-wedding caption and the Shop/Prep/Pack caption drop lines repeated beside them; count label "shipped capabilities" like the sister pages.
+- Held for the owner: hero default price vs capture, the film note, the H2 twin, FAQ and caption changes.

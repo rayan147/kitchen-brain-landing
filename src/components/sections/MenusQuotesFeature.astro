@@ -98,7 +98,7 @@ const priceRings = {
 					<span>Menus and quotes</span>
 				</nav>
 				<h1 id="menus-quotes-heading" class="feature-display">Build your menu. Check the price per guest.</h1>
-				<p class="hero-lede">Pick the dishes and how much of each goes on a plate. Add the date, the head count and your price. Look at the food cost before you confirm, because confirming locks the quote and the kitchen plan together.</p>
+				<p class="hero-lede">Pick the dishes and how much of each goes on a plate. Add the date, the head count and your price. Check the food cost first. Confirming locks the quote and the kitchen plan together.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -234,7 +234,7 @@ const priceRings = {
 						<small>Counts stay fixed when guest count changes.</small>
 					</div>
 				</div>
-				<figcaption>The product tour’s garden wedding, a different menu from the one above. Four of its seven dishes are shown; all seven cost $8.29 a guest, 29.6% of $28.00. At the kitchen’s 30% target, $1,491.38 ÷ 180 ÷ 0.30 = $27.62 a guest. Equipment counts are fixed; they do not scale with guests.</figcaption>
+				<figcaption>The product tour’s garden wedding, a different menu from the one above. Four of its seven dishes are shown; all seven cost $8.29 a guest, 29.6% of $28.00. At the kitchen’s 30% target, $1,491.38 ÷ 180 ÷ 0.30 = $27.62 a guest.</figcaption>
 			</figure>
 
 			<div class="feature-scenes" data-reveal>
@@ -250,8 +250,7 @@ const priceRings = {
 			<div class="section-intro" data-reveal>
 				<h2 id="catering-quotes-heading">Know what the quote costs you before you confirm it.</h2>
 				<p>
-					A new event starts with a menu, a date, a head count and a price. You see the food cost
-					while it is still a draft. When you confirm, the plan and the money lock together.
+					A new event starts as a draft, and the food cost shows while you set it up.
 				</p>
 			</div>
 			<p class="proposal-bridge" data-proposal-bridge data-reveal>
@@ -272,13 +271,12 @@ const priceRings = {
 				<div class="proof-copy" data-reveal>
 					<h3>$68 a head, at 39.6% food cost.</h3>
 					<p>
-						For the 180-guest summer wedding in these screens, $68 per guest puts food cost at 39.6%. The same panel
+						For the 180-guest summer wedding in this screen, $68 per guest puts food cost at 39.6%. The same panel
 						names $89.78 as the price that would meet the 30% target.
 					</p>
 					<ul role="list">
 						<li>The order price can override the menu default.</li>
 						<li>Guest-count changes update the draft estimate.</li>
-						<li>Confirmation freezes the agreed plan and money.</li>
 					</ul>
 				</div>
 				<figure class="screenshot-frame" data-reveal>
@@ -344,7 +342,7 @@ const priceRings = {
 				</ol>
 				<div class="branch-rule" aria-hidden="true"></div>
 				<ul role="list"><li>Shop</li><li>Prep</li><li>Pack</li></ul>
-				<figcaption>One confirmed event feeds all three. Nobody rebuilds the menu or the head count.</figcaption>
+				<figcaption>Nobody rebuilds the menu or the head count.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -353,7 +351,7 @@ const priceRings = {
 		<div class="container-page">
 			<div class="capability-heading" data-reveal>
 				<div><h2 id="capabilities-heading">What is in Menus & Quotes.</h2><p>Only what ships today for building, pricing and confirming a job.</p></div>
-				<p class="count"><strong>{capabilityCount}</strong><span>relevant capabilities</span></p>
+				<p class="count"><strong>{capabilityCount}</strong><span>shipped capabilities</span></p>
 			</div>
 			<div class="disclosures">
 				{capabilityGroups.map((group) => (
