@@ -20,7 +20,7 @@ const movements = [
 const trustStates = [
 	{ ingredient: 'Chicken thigh', quantity: '55 lb', state: 'Fresh', note: 'Recent count. It can cut the buy.', tone: 'fresh' },
 	{ ingredient: 'Baby spinach', quantity: '18 lb', state: 'Stale', note: 'Shown so you know. Count again before you rely on it.', tone: 'stale' },
-	{ ingredient: 'Olive oil', quantity: '—', state: 'Never counted', note: 'Nothing guessed. The buy stays as it was.', tone: 'missing' }
+	{ ingredient: 'Olive oil', quantity: 'No count', state: 'Never counted', note: 'Nothing guessed. The buy stays as it was.', tone: 'missing' }
 ] as const;
 
 // Considered Strategy; not used because the FAQ and evidence rows vary as
@@ -42,7 +42,7 @@ const faqItems = [
 			'No. Only trusted on-hand quantity reduces estimated buying. A stale or unsupported estimate can remain visible for context, but it is not allowed to quietly subtract from the buy.'
 	},
 	{
-		question: 'Does a par level automatically add food to the shopping list?',
+		question: 'Does a par level add food to the shopping list?',
 		answer: `Yes, when you build the kitchen shopping list. A par level can mark an ingredient below par, at or above par, unevaluable, or without a par. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy. The shopping list on one order is separate and covers that order.`
 	},
 	{
@@ -105,13 +105,13 @@ const faqItems = [
 	</section>
 
 	<nav class="story-nav container-page" aria-label="On this page">
-		<a href="#count-and-trust"><span>Record a stock count</span><small>Record a physical count and see when it was taken.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#count-and-trust"><span>Record a stock count</span><small>Count the shelf. The date stays with the number.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
 		<a href="#plan-the-gap"><span>Work out what to buy</span><small>Use current stock to reduce buying, with manual changes kept separate.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
 	</nav>
 
 	<section id="count-and-trust" class="product-section count-chapter" aria-labelledby="count-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="count-heading">Count it once. Then deliveries, packing and waste move the number.</h2><p>After a physical count, recorded purchases add to it. Logged waste and finished packing take away. The dated history shows how you got to today’s number.</p></div>
+			<div class="section-intro"><h2 id="count-heading">Count it once. Then deliveries, packing and waste move the number.</h2><p>The dated history shows each change, so you can see how you got to today’s number.</p></div>
 
 			<figure class="movement-workspace">
 				<div class="movement-main">
@@ -128,11 +128,11 @@ const faqItems = [
 					<div><span>Shelf value</span><strong>$128.70</strong><small>Illustrative value as of Sep 1</small></div>
 					<div><span>Unit cost at count</span><strong>$2.34 / lb</strong><small>Frozen at count time</small></div>
 				</div>
-				<figcaption>Illustrative movement history built only from shipped inventory behavior.</figcaption>
+				<figcaption>Illustrative movement history.</figcaption>
 			</figure>
 
 			<div class="feature-scenes">
-				<article><h3>Every count is kept.</h3><p>Each count is saved with its date. What came in, got used or got thrown out after that date is how you get today’s quantity.</p></article>
+				<article><h3>Every count is kept.</h3><p>Each count is saved with its date. A later count or correction adds a record; it does not erase the old one.</p></article>
 				<article><h3>You can see how old the count is.</h3><p>Fresh, Stale or Never counted sits right next to the quantity, where you see it before you plan.</p></article>
 				<article><h3>History keeps its old price.</h3><p>The pack cost freezes at count time, so a later correction does not rewrite what the shelf was worth then.</p></article>
 			</div>
@@ -141,7 +141,7 @@ const faqItems = [
 
 	<section id="plan-the-gap" class="product-section gap-chapter" aria-labelledby="gap-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="gap-heading">Use recent counts to work out what to buy.</h2><p>Start with what the next orders need. A recent count can take some off the buy. A stale count, or a number with nothing behind it, cannot. Overriding the list is still your call, made separately.</p></div>
+			<div class="section-intro"><h2 id="gap-heading">Use recent counts to work out what to buy.</h2><p>Start with what the next orders need, then take off the stock a recent count backs up. Change any quantity yourself; your change stays separate.</p></div>
 
 			<figure class="gap-sheet">
 				<div class="gap-head"><span>Chicken thigh · next jobs</span><span>Illustrative gap</span></div>
@@ -169,7 +169,7 @@ const faqItems = [
 
 	<section class="trust-proof" aria-labelledby="trust-proof-heading">
 		<div class="container-page trust-proof-grid">
-			<div><h2 id="trust-proof-heading">Never counted means nothing gets guessed.</h2><p>When there is not enough to go on, the status says what is missing and the buy stays as it was. The fix is simple: go count it.</p></div>
+			<div><h2 id="trust-proof-heading">Never counted means nothing gets guessed.</h2><p>When there is not enough to go on, the status says what is missing and the buy stays as it was. The fix: go count it.</p></div>
 			<div class="recovery-list">
 				<div><span class="state fresh">Fresh</span><strong>Use to reduce buying</strong><small>A recent count, plus the changes since, backs this number up.</small></div>
 				<div><span class="state stale">Stale</span><strong>Count again</strong><small>Keep the old quantity visible, but do not subtract it.</small></div>

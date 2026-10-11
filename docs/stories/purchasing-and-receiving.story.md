@@ -157,3 +157,9 @@ Owner: make the site read like a chef wrote it. Copy only.
   the walk-in.", the closing heading, the FAQ (the queued-before-send and
   safe-to-retry sentences are pinned), the illustrative figcaptions, the
   capability list.
+
+## Revision 2026-10-11: English edit
+- One verb for the receiving step, "save" (as in the meta description, /faq and /compare); one name for shortages, "follow-up list" (the app's word). Mock-up button "Log received" (the app's label on the PO receiving screen).
+- Receive H2 "The order you sent is the checklist at the door." Recovery H2 covers a failed email too: "When an order or a delivery goes wrong, there is a way back."
+- PO caption in plain words ("If the email fails, the same PO stays on record, ready to retry."); FAQ intro "What people ask before the next truck pulls in."; "it offers" is "CostCook offers".
+- Pinned FAQ lifecycle sentences untouched.

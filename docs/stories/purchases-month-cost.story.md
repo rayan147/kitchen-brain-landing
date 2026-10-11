@@ -153,3 +153,8 @@ Owner: make the site read like a chef wrote it. Copy only.
   and figcaption, the FAQ, the capability list, and the limits: a late
   purchase keeps its date, a correction keeps its reason, turnover waits for
   trusted counts.
+
+## Revision 2026-10-11: English edit
+- Month-close body teaches the figure's labels (Should have cost, Did cost, logged waste, Unaccounted gap) instead of telling the month math a third time.
+- Recovery body cut to "Each warning says what happened and what to do next."
+- "Purchase ledger" is "Purchases"; the problem figure's "Needs review" is "Still to explain" so the import label means one thing; turnover FAQ drops "rails" and "manufacture"; chapter-nav and FAQ intro in plain words.

@@ -103,8 +103,8 @@ const faqItems = [
 					<div class="sheet-head"><span>Details to review</span><span>Awaiting your review</span></div>
 					<div class="stage-row stage-labels"><span>Item</span><span>Source</span><span>State</span></div>
 					<div class="stage-row"><strong>Chicken thigh</strong><span>Invoice</span><em class="ready">Ready to review</em></div>
-					<div class="stage-row"><strong>Roma tomato</strong><span>Price list</span><em class="check">Check pack</em></div>
-					<div class="stage-row"><strong>Unreadable line</strong><span>Invoice</span><em class="check">Check the original</em></div>
+					<div class="stage-row"><strong>Roma tomato</strong><span>Price list</span><em class="check">Needs review</em></div>
+					<div class="stage-row"><strong>Unreadable line</strong><span>Invoice</span><em class="check">Needs review</em></div>
 					<div class="confirm-gate"><span>You confirm</span><strong>then save price changes</strong></div>
 				</div>
 				<div class="flow-key" aria-label="Upload the source, review the details, then confirm">
@@ -136,13 +136,13 @@ const faqItems = [
 	</section>
 
 	<nav class="product-nav container-page" aria-label="On this page">
-		<a href="#invoice-import"><span>Invoice import</span><small>Check the purchase, its lines, and its total before posting.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
-		<a href="#price-list-import"><span>Price-list import</span><small>Apply or skip supplier offers without inventing a purchase.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#invoice-import"><span>Invoice import</span><small>Check the lines and the total before you save.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#price-list-import"><span>Price-list import</span><small>Apply or skip each price. A price list never becomes a purchase.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
 	</nav>
 
 	<section class="common-rule" aria-labelledby="common-rule-heading">
 		<div class="container-page common-grid">
-			<div data-reveal><h2 id="common-rule-heading">Nothing lands in your catalog until you check it.</h2><p>A photo, a PDF, a spreadsheet, a Word file or pasted text all go to the same review. None of it touches your real catalog until you finish.</p></div>
+			<div data-reveal><h2 id="common-rule-heading">Nothing lands in your catalog until you check it.</h2><p>A photo, a PDF, a spreadsheet, a Word file or pasted text all go to the same review.</p></div>
 			<ol class="queue-path" data-reveal>
 				<li><span>1</span><strong>Bring in the source</strong><small>Keep the original attached.</small></li>
 				<li><span>2</span><strong>Read and match</strong><small>Check names, units and prices.</small></li>
@@ -155,8 +155,8 @@ const faqItems = [
 	<section id="invoice-import" class="product-section invoice-import" aria-labelledby="invoice-heading">
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
-				<h2 id="invoice-heading">An invoice waits for a proper check.</h2>
-				<p>An invoice says what came off the truck, when, and what the supplier charged for it. Look at all of it together before it goes into your purchases.</p>
+				<h2 id="invoice-heading">Check every invoice line, and the total.</h2>
+				<p>An invoice says what came off the truck, when, and what it cost. In Purchases, tap “Import invoice” and add the photo or PDF. Check the lines and the total, then tap “Import invoice and update costs”.</p>
 			</div>
 
 			<figure class="invoice-review" data-reveal>
@@ -180,8 +180,8 @@ const faqItems = [
 
 			<div class="feature-scenes">
 				<article data-reveal><h3>Keep the source in view.</h3><p>The photo or PDF sits beside the rows awaiting review, so when a unit looks off, you check the paper, not your memory.</p></article>
-				<article data-reveal><h3>Add it up before you save.</h3><p>The invoice total sits next to the sum of its lines. If it looks like a duplicate, you see the warning before you save.</p></article>
-				<article data-reveal><h3>Saved once is saved.</h3><p>Save the same import twice and you get back the receipt you already have. Ingredient prices follow the purchase date, so an older invoice does not overwrite a newer price.</p></article>
+				<article data-reveal><h3>Add it up before you save.</h3><p>The invoice total sits next to the sum of its lines, so you can see whether they match before you save.</p></article>
+				<article data-reveal><h3>Saved once is saved.</h3><p>A duplicate invoice is flagged. Save the same import twice anyway and you get back the receipt you already have.</p></article>
 			</div>
 	</div>
 	</section>
@@ -190,7 +190,7 @@ const faqItems = [
 		<div class="container-page">
 			<div class="section-intro" data-reveal>
 				<h2 id="price-list-heading">Take the prices you want off the list.</h2>
-				<p>Go down it a row at a time. Apply what you want and skip what you don’t. If a pack size changed, it stops you for a closer look.</p>
+				<p>Go down it a row at a time. Apply what you want and skip what you don’t.</p>
 			</div>
 
 			<figure class="offer-review" data-reveal>
@@ -206,7 +206,7 @@ const faqItems = [
 			<p class="snap" data-reveal>A price list is an offer. An invoice is what happened. CostCook keeps the difference.</p>
 			<div class="feature-scenes">
 				<article data-reveal><h3>Tell it which column is which.</h3><p>When a supplier’s spreadsheet has odd columns, you say which one holds what before importing. It shows you any columns it skipped.</p></article>
-				<article data-reveal><h3>When a match is a guess, it says so.</h3><p>You check the ingredient matches it is unsure of. Once you confirm a supplier’s name for something, it can remember it for next time.</p></article>
+				<article data-reveal><h3>When a match is a guess, it says so.</h3><p>You check the ingredient matches it is unsure of. Once you confirm a supplier’s name for something, CostCook can remember it next time.</p></article>
 				<article data-reveal><h3>No sneaky pack changes.</h3><p>A new pack size does not slide through as if only the price moved. That row stops until you decide.</p></article>
 			</div>
 		</div>
@@ -214,10 +214,10 @@ const faqItems = [
 
 	<section class="exceptions" aria-labelledby="exceptions-heading">
 		<div class="container-page exceptions-grid">
-			<div data-reveal><h2 id="exceptions-heading">The awkward rows stay awkward on screen.</h2><p>A row it could not read, could not match, has seen before or whose pack changed: nobody has to guess it into place.</p></div>
+			<div data-reveal><h2 id="exceptions-heading">The awkward rows stay awkward on screen.</h2><p>Four kinds of row wait for you. Nobody has to guess them into place.</p></div>
 			<ul class="exception-list" role="list" data-reveal>
 				<li><strong>Unreadable</strong><span>The source text is quoted back beside the row awaiting review.</span><em>Correct or leave waiting</em></li>
-				<li><strong>Unmatched</strong><span>You see the possible matches, and how unsure it is.</span><em>Choose or add</em></li>
+				<li><strong>Unmatched</strong><span>You see the possible matches, and how unsure CostCook is.</span><em>Choose or add</em></li>
 				<li><strong>Duplicate</strong><span>The existing invoice and receipt help you avoid saving the purchase twice.</span><em>Open the existing record</em></li>
 				<li><strong>Pack changed</strong><span>The new pack is not treated as a simple price update.</span><em>Review the unit</em></li>
 			</ul>
