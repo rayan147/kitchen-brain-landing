@@ -219,3 +219,9 @@ ever asked it."), so the pass only breaks up two long chains. Copy only.
   reason to look at an ingredient, not a promise about a guest.", the three
   outcomes, the five diets, the limits list, the illustrative-example
   caption, FAQ answers.
+
+## Revision 2026-10-11: English edit
+- Coverage body cut to two sentences, without repeating its heading or the snap below it.
+- Close: "The cook reads the answer off the pack list" (the answer prints on the lists, not the pan).
+- Catalog paragraph tightened to two sentences; recipes link label "Recipes & food costing" as on the sister pages.
+- Held for the owner: the clear-result FAQ wording ("a reason to serve").

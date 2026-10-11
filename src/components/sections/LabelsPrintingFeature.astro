@@ -40,7 +40,7 @@ const faqItems = [
 	{
 		question: 'What does it print on?',
 		answer:
-			'A 30-up sticker sheet on an office printer, a 58 or 62 mm continuous thermal roll, a 2 by 1 inch die-cut roll, or any stock you measure yourself. The kitchen chooses once in Settings. The sticker preview is sized in millimetres, so what you see is the printed size.'
+			'A 30-up sticker sheet on an office printer, a 58 or 62 mm continuous thermal roll, a 2 by 1 inch die-cut roll, or any stock you measure yourself. The kitchen chooses once in Settings. The sticker preview is sized in millimeters, so what you see is the printed size.'
 	},
 	{
 		question: 'Does it send labels straight to a label printer?',
@@ -121,7 +121,7 @@ const faqItems = [
 						</picture>
 					</div>
 					<figcaption class="mt-3 max-w-[68ch] text-sm text-ink-soft">
-						{labels.proof.caption} On a phone or tablet, the finished sticker stands in so its type stays legible.
+						{labels.proof.caption} On a phone or tablet you see the finished sticker; open the full dialog below.
 						<a href={labels.proof.dialog.src} class="btn-quiet mt-2 w-fit" data-full-proof-link>Open full label-dialog capture</a>
 					</figcaption>
 				</figure>
@@ -173,9 +173,7 @@ const faqItems = [
 					/>
 				</div>
 				<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
-					Sized in millimeters in the dialog, so the preview is the printed size. No allergen
-					data on this recipe, so the sticker prints no allergen line, and the preview says a
-					blank label is not an all-clear.
+					Sized in millimeters in the dialog, so the preview is the printed size. Every ingredient in this recipe was reviewed and none reported an allergen, so no allergen line prints, and the preview still says a blank label is not an all-clear.
 					<a href={labels.proof.sticker.src} class="btn-quiet mt-2 w-fit" data-full-proof-link>Open full sticker preview</a>
 				</figcaption>
 			</figure>
@@ -186,7 +184,7 @@ const faqItems = [
 		<div class="container-page py-section">
 			<div class="grid gap-12 lg:grid-cols-[2fr_1fr] lg:items-start lg:gap-16">
 				<figure data-reveal>
-					<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">THE PRINT VIEW · 2 OF 2 · REPRINTABLE</p>
+					<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">THE PRINT VIEW · REPRINTABLE</p>
 					<div class="shot-pan mt-3 border border-hairline bg-paper p-2 shadow-ticket sm:p-3" tabindex="0" role="region" aria-label="Print view screenshot">
 						<img
 							src={labels.proof.print.src}
@@ -200,8 +198,7 @@ const faqItems = [
 						/>
 					</div>
 					<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
-						The print view opens your browser’s print dialog. These are the exact labels that were
-						recorded; a reprint reproduces them unchanged even if the recipe changes later.
+						The print view opens your browser’s print dialog.
 						<a href={labels.proof.print.src} class="btn-quiet mt-2 w-fit" data-full-proof-link>Open full print-sheet capture</a>
 					</figcaption>
 				</figure>
@@ -228,7 +225,7 @@ const faqItems = [
 		<div class="grid gap-12 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
 			<div class="max-w-3xl" data-reveal>
 				<p class="eyebrow">What it prints on</p>
-				<h2 id="stock-heading" class="mt-4 text-h2 font-semibold">Chosen once in Settings, so nobody is asked at 5 a.m.</h2>
+				<h2 id="stock-heading" class="mt-4 text-h2 font-semibold">Label stock is set once in Settings, so nobody is asked at 5 a.m.</h2>
 				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
 					Sheet, continuous roll or die-cut roll, the label says the same thing. Only the size
 					and shape change, measured in millimeters and not tied to any brand.

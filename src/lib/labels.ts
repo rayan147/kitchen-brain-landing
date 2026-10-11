@@ -47,7 +47,7 @@ export const labelsAvailability = {
 	featureLead: labelsAreComing ? 'Coming; not included today.' : 'In the app today.',
 	pageSentence: labelsAreComing
 		? 'Not included in the CostCook subscription you would start today. This feature remains marked Coming until that changes.'
-		: 'In the CostCook subscription you would start today.',
+		: 'Yes. It is in the CostCook subscription you would start today.',
 	featureDetail: labelsAreComing
 		? 'Tap Label on the pack list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints. This is a preview of the planned workflow. Kitchen date labels are not included in the subscription today.'
 		: 'Tap Label on the pack list, choose how the batch is stored, settle a use-by date the app never guesses, count the containers, and print through the browser onto sticker sheets or thermal rolls. What the sticker said is frozen on the record for reprints.',
@@ -85,7 +85,7 @@ export const labels = {
 	verified: { sha: 'c01bf751', branch: 'sandbox/demo', on: '2026-08-29' },
 	href: '/features/labels-and-printing',
 	/** The app's own words for the one hard thing, from the dialog. */
-	tagline: 'Choose the storage condition and how many containers, then print. Nothing prints until you choose.',
+	tagline: 'Nothing prints until you say how the food is stored.',
 	/** What a cook does, in the order the dialog asks. Each traces to a route or module named above. */
 	steps: [
 		{
@@ -110,7 +110,7 @@ export const labels = {
 		},
 		{
 			lead: 'Print, and it is on the record.',
-			detail: 'The print opens your browser’s print dialog on stock the kitchen chose once in Settings. What the sticker said is frozen at that moment, so a soaked one reprints unchanged even if the recipe has moved since.'
+			detail: 'The print opens your browser’s print dialog on stock the kitchen chose once in Settings, and what the sticker said goes on the record.'
 		}
 	],
 	/** The media the sticker is sized for. Millimetres, so the preview is the printed size. */

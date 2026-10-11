@@ -81,7 +81,7 @@ const evidenceSteps = [
 	},
 	{
 		title: 'The pack list shows it',
-		detail: 'Allergen badges ride along to pack-out, where somebody actually needs the answer.'
+		detail: 'Allergen badges go on the pack list, where the person loading the van needs the answer.'
 	}
 ] as const;
 
@@ -138,7 +138,7 @@ const faqItems = [
 					<span>Nutrition facts &amp; allergens</span>
 				</nav>
 				<h1 id="nutrition-feature-heading">Check nutrition and allergens from your recipe.</h1>
-				<p class="hero-lede">Match each ingredient to a nutrient source and check its allergens. You see nutrition per portion, what is still missing, and a label that will not print until nothing is. Whether the food suits a given guest is still your kitchen’s call to review.</p>
+				<p class="hero-lede">Match each ingredient to a nutrient source and check its allergens. You see nutrition per portion, what is still missing, and a label that will not print until every line has a confirmed source. Whether the food suits a given guest is still your kitchen’s call to review.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -231,7 +231,7 @@ const faqItems = [
 					     with the lines no source reports left as a dash (develop
 					     7a7e407d9, 2026-10-07). -->
 					Four ingredients, each with its own source, added up. Seven lines no source reports show a dash, not a zero, and the dish stays a draft until they are filled.
-					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full Nutrition Facts panel</a>
+					<a href={proofAssets.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full Nutrition Facts panel</a>
 				</figcaption>
 			</figure>
 		</div>
@@ -262,7 +262,7 @@ const faqItems = [
 			</div>
 			<figcaption>
 				Milk is on the Parmesan and the butter, so it is on the dish. Vegetarian stays a question until someone answers it.
-				<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open allergen evidence in full capture</a>
+				<a href={proofAssets.allergens.desktop} target="_blank" rel="noopener" data-full-proof-link>Open allergen evidence in full capture</a>
 			</figcaption>
 		</figure>
 		<ol class="container-page evidence-chain" aria-label="Allergen evidence path">
@@ -276,7 +276,7 @@ const faqItems = [
 		</ol>
 		<div class="container-page evidence-note" data-reveal>
 			<strong>Not reviewed stays on screen.</strong>
-			<p>A fact from the curated catalog can help. A matching name never makes up food-safety data. If a chef overrides a tag, they write down why, and no screen makes an allergen-free claim.</p>
+			<p>A matching name never makes up food-safety data. A chef who overrides a tag writes down why, and no screen makes an allergen-free claim.</p>
 		</div>
 	</section>
 
@@ -318,7 +318,7 @@ const faqItems = [
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
 			<div class="capabilities-intro" data-reveal>
-				<h2 id="capabilities-heading">{capabilityCount} things it does today, and none of the safety claims it cannot back up.</h2>
+				<h2 id="capabilities-heading">{capabilityCount} things it does today, and what it will not claim.</h2>
 				<p>Open either list for every detail.</p>
 				<div class="boundary-list">
 					<h3>Four boundaries stay in view</h3>
