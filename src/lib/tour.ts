@@ -172,6 +172,51 @@ export const tourStops: readonly TourStop[] = [
 		}
 	},
 	{
+		/* RC-61, RC-63, RC-65, added 2026-09-27 with the capability's feature
+		   page. Moved 2026-10-11 (owner-approved, tour F21) to sit right after the
+		   menu stop, so the tour runs in kitchen order: price, propose, book, then
+		   buy and prep. The tour no longer mirrors the Features dropdown columns;
+		   only the set of stops must match it (checked below). Same illustrative world as the
+		   menu stop (Garden wedding supper, 180 guests at $28.00). The deposit
+		   is paid by card from an email link, or recorded by hand. */
+		id: 'events-proposals',
+		featureId: 'events',
+		label: 'Events & proposals',
+		appArea: 'Events / Garden wedding supper',
+		title: 'Send the proposal. Book it once it is signed and the deposit is in.',
+		intro: 'Take the inquiry and send the priced proposal to the client’s phone. Book the event once the agreement is signed and the deposit is in. Confirm order comes later, when the kitchen plan is ready.',
+		callout: acceptanceBoundary,
+		featureHref: featureMenuHref('events'),
+		metrics: [
+			{ label: 'Guests', value: '180' },
+			{ label: 'Price per guest', value: '$28.00' },
+			{ label: 'Proposal total', value: '$5,040.00' },
+			{ label: 'Client decision', value: 'Accepted', tone: 'good' }
+		],
+		columns: ['Step', 'Where it stands', 'What happened'],
+		rows: [
+			[eventStep.inquiry, 'Captured', 'Date first, details later'],
+			[eventStep.proposal, 'Sent', 'Link open for 7 days'],
+			[eventStep.decision, 'Accepted', 'On their phone, no login'],
+			[eventStep.agreement, 'Complete', 'Accepted proposal attached'],
+			[eventStep.booked, 'Not yet', 'Waits on the deposit']
+		],
+		aside: {
+			title: 'Deposit',
+			// Card payment for event deposits is live (owner ruling 2026-10-06,
+			// src/lib/event-payments.ts); this aside said Coming and contradicted
+			// /compare and /faq (chef audit 2026-10-07).
+			status: 'Card, by email link',
+			lines: [
+				{ label: 'Asked for', value: '$1,000.00' },
+				{ label: 'Received', value: '$0.00', tone: 'attention' },
+				{ label: 'Paid by', value: 'Card, from the email link' },
+				{ label: 'Or record by hand', value: depositMethodsCapital }
+			],
+			footnote: 'Illustrative tour values. The client pays the deposit by card from an email link; you can still record a payment by hand.'
+		}
+	},
+	{
 		id: 'ingredients-prices',
 		featureId: 'ingredients',
 		label: 'Ingredients & supplier prices',
@@ -391,50 +436,6 @@ export const tourStops: readonly TourStop[] = [
 		}
 	},
 	{
-		/* RC-61, RC-63, RC-65, added 2026-09-27 with the capability's feature
-		   page. It opens the Run the event column, as it does in the Features
-		   dropdown: the event starts at the inquiry, and the order stop after it
-		   is what Confirm order hands the kitchen. Same illustrative world as the
-		   menu stop (Garden wedding supper, 180 guests at $28.00). The deposit
-		   is paid by card from an email link, or recorded by hand. */
-		id: 'events-proposals',
-		featureId: 'events',
-		label: 'Events & proposals',
-		appArea: 'Events / Garden wedding supper',
-		title: 'Send the proposal. Book it once it is signed and the deposit is in.',
-		intro: 'Take the inquiry and send the priced proposal to the client’s phone. Book the event once the agreement is signed and the deposit is in. Confirm order comes later, when the kitchen plan is ready.',
-		callout: acceptanceBoundary,
-		featureHref: featureMenuHref('events'),
-		metrics: [
-			{ label: 'Guests', value: '180' },
-			{ label: 'Price per guest', value: '$28.00' },
-			{ label: 'Proposal total', value: '$5,040.00' },
-			{ label: 'Client decision', value: 'Accepted', tone: 'good' }
-		],
-		columns: ['Step', 'Where it stands', 'What happened'],
-		rows: [
-			[eventStep.inquiry, 'Captured', 'Date first, details later'],
-			[eventStep.proposal, 'Sent', 'Link open for 7 days'],
-			[eventStep.decision, 'Accepted', 'On their phone, no login'],
-			[eventStep.agreement, 'Complete', 'Accepted proposal attached'],
-			[eventStep.booked, 'Not yet', 'Waits on the deposit']
-		],
-		aside: {
-			title: 'Deposit',
-			// Card payment for event deposits is live (owner ruling 2026-10-06,
-			// src/lib/event-payments.ts); this aside said Coming and contradicted
-			// /compare and /faq (chef audit 2026-10-07).
-			status: 'Card, by email link',
-			lines: [
-				{ label: 'Asked for', value: '$1,000.00' },
-				{ label: 'Received', value: '$0.00', tone: 'attention' },
-				{ label: 'Paid by', value: 'Card, from the email link' },
-				{ label: 'Or record by hand', value: depositMethodsCapital }
-			],
-			footnote: 'Illustrative tour values. The client pays the deposit by card from an email link; you can still record a payment by hand.'
-		}
-	},
-	{
 		/* Added 2026-10-08 with the Features menu item. Settings labels from
 		   kitchen-brain local develop 7a7e407d9 (src/lib/ordering-guide.ts). */
 		id: 'online-ordering',
@@ -459,7 +460,7 @@ export const tourStops: readonly TourStop[] = [
 			['Put on your website', 'Websites that will show it', '1 website']
 		],
 		aside: {
-			title: 'Newest request',
+			title: 'Newest request: office lunch',
 			status: 'Waiting on you',
 			lines: [
 				{ label: 'Guests', value: '40' },

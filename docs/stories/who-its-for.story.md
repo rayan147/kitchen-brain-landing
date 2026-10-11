@@ -164,3 +164,7 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 - Plan heading "When the job changes before you confirm, the plan changes with it." (Confirm order freezes the plan on develop); the plan body ends "Confirm order locks the quantities and prices once the final count is in." instead of "Regular service keeps its own rhythm next to it."
 - Ticket sub-line "No guest count to plan"; path notes "Price it per guest." and "Planned cost against what you spent."; close names CostCook.
 - Resources menu blurb (site.ts, every page): "Check whether CostCook fits your kitchen, and where it stops."
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- Limit 1 leads with the real limit: "Several kitchens on one subscription, with stock counts and reporting combined across them."
+- Work path step 2 is "Proposal + deposit" (/features/events-and-proposals, "The client says yes and pays."), replacing Recipes; still four steps.

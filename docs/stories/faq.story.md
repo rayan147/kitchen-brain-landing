@@ -183,3 +183,13 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 - #restaurant carries the job "from the inquiry and the proposal" and drops "you still belong here" (claims add RC-61, RC-63).
 - Long sentences split in #labels, #setup, #permissions, #sage, #guest-restrictions (dietary.faq); #ordering lede active ("Your booking rules decide what approval does.").
 - #labels points to #label-printing by link instead of "see the next answer"; #card no longer repeats #trial; "day 16" everywhere; "the owner" (not workspace or verified owner); #after-setup drops the third "Staff never see costs".
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- #frozen full fix: "No, not the price you sent. A sent proposal is fixed; changing it means sending the client a new one. The food cost behind it keeps following your ingredient prices until you press Confirm order..." New ledger row RC-75 (sent proposal is immutable, develop 4f46543cf proposals/public.ts:103-106, service.ts:337) cited with RC-03, RC-07, RC-08, RC-63.
+- New 39th answer #booked, "When is the event actually booked?": When you press Book the event; the client's yes books nothing; Book the event waits on the signed agreement and the deposit; Confirm order comes later. Pins moved from 38 to 39 in check-faq-page.mjs (and #booked added to the stable anchors) and verify-faq.mjs; FAQPage structured data counts from the data.
+- #event-payments, #ordering and #margin moved to the head of "How the work moves" (anchors unchanged; topic map counts read from the data: Fit 12, How 13).
+- #who leads with caterers and restaurants that cater, the inquiry and the proposal, and points meal prep to /who-its-for (claims add RC-61, RC-63).
+- Close: "Give your first dish about fifteen minutes. Then bring a menu and a guest count you already quoted..." (matches the homepage first-dish line).
+- #phone drops the JavaScript-off sentence; RC-54's no-JavaScript half still shows on /features (team-and-connections "Works without JavaScript.").
+- Ledger RC-61 now says Book the event is the booking and Confirm order comes later.
+- Tracker note (P3-13): the 2026-09-27 event card payment entry above is stale: #event-payments reads eventPayments.faq ("Yes. ...") and now sits at the head of the how chapter, not in the money chapter.

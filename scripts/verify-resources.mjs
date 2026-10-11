@@ -87,13 +87,13 @@ try {
   await page.getByLabel('Email for the reply',{exact:true}).fill('caterer@example.test');
   await page.getByLabel('What can I help with?',{exact:true}).fill('Can I start with my existing recipe spreadsheet?');
   await page.getByRole('button',{name:'Send question',exact:true}).click();
-  await page.getByText('Your message could not be sent. Your draft is still here, so please try again.',{exact:true}).waitFor();
+  await page.getByText('Your message could not be sent. Your draft is still here. Try again, or email rayan@costcook.io.',{exact:true}).waitFor();
   check((await page.getByLabel('What can I help with?',{exact:true}).inputValue()).includes('spreadsheet'),'failed send retains draft');
   await page.screenshot({path:`${output}/contact-error.png`});
   await context.unroute('**/api/support');
   await context.route('**/api/support',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true})}));
   await page.getByRole('button',{name:'Send question',exact:true}).click();
-  await page.getByText('Question sent. Rayan will reply to caterer@example.test.',{exact:true}).waitFor();
+  await page.getByText('Question sent. I will reply to caterer@example.test.',{exact:true}).waitFor();
   await page.screenshot({path:`${output}/contact-success.png`});
   await dialog.waitFor({state:'hidden'});
   check(await open.evaluate(el=>el===document.activeElement),'contact returns focus');

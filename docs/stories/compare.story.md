@@ -179,3 +179,7 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 - Hero dates the hedge in place: "read off their own pricing pages on {VERIFIED_ON}".
 - Four rules: rule 1 names Confirm order ("Once you press Confirm order, the order's plan and costing freeze"); rule 2 states its rule (anything short stays in view until you follow it up); rule 4 says what the month does not know (only logged waste is called waste; the rest of the gap stays a gap). Intro drops "not four more checkmarks".
 - Rows: the deposit row no longer repeats the card-payment row; Sage row drops "is available now" beside its Yes; offline row drops the no-JavaScript sentence.
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- H1 "Compare CostCook, Parsley, meez and a spreadsheet, job by job." (title tag unchanged; no script pinned the old H1).
+- The product-tour link now sits after the dated source line, so the legend and its evidence stay together.

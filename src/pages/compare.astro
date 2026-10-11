@@ -71,7 +71,7 @@ const legend = [
 	<section class="container-page py-section" aria-labelledby="compare-title">
 		<div class="max-w-3xl" data-opening>
 			<h1 id="compare-title" class="text-display font-semibold [overflow-wrap:anywhere]">
-				Compare CostCook, Parsley, meez and spreadsheets.
+				Compare CostCook, Parsley, meez and a spreadsheet, job by job.
 			</h1>
 			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">
 				The real question is which one holds up when the count changes on a Thursday
@@ -156,17 +156,19 @@ const legend = [
 					</div>
 				))}
 			</dl>
-			<p class="mt-5">
-				<!-- The one moving proof on the site. A reader deciding between three
-				     products off a table has no way to see any of them run, and this
-				     page had no link to the footage at all. -->
-				<a href={featuresMenu.tourHref} class="btn-quiet">{featuresMenu.tourLabel}</a>
-			</p>
 			<p class="mt-5 max-w-[58ch] text-ink-soft">
 				Their columns were read from{' '}
 				<a href={competitors[0].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">Parsley&rsquo;s pricing page</a>{' '}and{' '}
 				<a href={competitors[1].href} target="_blank" rel="noopener noreferrer" class="btn-quiet">meez&rsquo;s pricing page</a>{' '}on {VERIFIED_ON}. Prices and tiers move. If you spot a row that has gone stale,
 				<a href="/contact" class="btn-quiet">tell Rayan which row needs checking</a>.
+			</p>
+			<p class="mt-5">
+				<!-- The one moving proof on the site. A reader deciding between three
+				     products off a table has no way to see any of them run, and this
+				     page had no link to the footage at all. It sits after the dated
+				     source line (owner-approved 2026-10-11), so the legend and its
+				     evidence stay together. -->
+				<a href={featuresMenu.tourHref} class="btn-quiet">{featuresMenu.tourLabel}</a>
 			</p>
 		</div>
 

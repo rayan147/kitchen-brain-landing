@@ -195,3 +195,9 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 - Hero lede names the quote and the proposal and drops "Start wherever you like"; workspace H2 "One wedding, stop by stop"; one "sample" fewer.
 - Stop 10: intro "arrive in Orders already priced, and you approve or decline them"; footnote explains the Pay in full case the aside shows.
 - Footnotes and lines tightened: stop 1 drops "preview", stop 2 "Confirm order locks these prices.", stop 11 "from the order you confirmed", stop 12 drops the repeated "stays in view", stop 15 intro "Managers see costs and approve Sage drafts; Staff do neither.", stop 7 cell "Tree nuts · the bride", stop 6 intro reordered.
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- F5: each stop's coach (callout and intro) now comes right after the page head in the markup, so on phones it is read before the metrics and row cards. Above 1100px the stop is a grid that puts the coach text back at the foot beside "Read the feature guide"; the moved block holds no focusable element, so focus order is unchanged.
+- F21: Events & proposals moved to stop 3, right after Menus & quotes, so the tour runs price, propose, book, then buy and prep. First stays recipes, last stays Sage; the stop comment no longer claims to mirror the Features dropdown columns (only the set of stops is checked).
+- F22: the ordering aside is titled "Newest request: office lunch".
+- verify-resources stop screenshots re-taken in the new order.

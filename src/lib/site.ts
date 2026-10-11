@@ -1,4 +1,6 @@
 // story: docs/stories/homepage-caterer-fixes.story.md
+import { founderEmail } from './founder-email';
+
 /**
  * Single source of truth for owner-supplied values.
  * Every TODO below must be swapped before real traffic — the QA issue's
@@ -7,7 +9,7 @@
 export const site = {
 	name: 'CostCook',
 	url: 'https://costcook.io',
-	email: 'rayan@costcook.io',
+	email: founderEmail,
 	phone: '973-870-6309',
 	phoneHref: 'tel:+19738706309',
 	/* Full name, because it signs the provenance section: a page whose pitch is

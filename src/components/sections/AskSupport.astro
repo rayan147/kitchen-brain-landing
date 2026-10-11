@@ -49,7 +49,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 		<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
 			<path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
 		</svg>
-		<span>Sent. I reply to <strong data-support-receipt-email></strong>, usually the same day.</span>
+		<span>Sent. I reply to <strong data-support-receipt-email></strong>.</span>
 	</p>
 
 	<!-- The dialog is a plain container until script promotes it. Without
@@ -57,7 +57,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 	<div class="ask-panel" id="ask-form" data-support-panel>
 		<div class="ask-ticket">
 			<p class="ask-eyebrow">ASK RAYAN · REPLY BY EMAIL</p>
-			<h3 class="ask-title">Ask about your kitchen</h3>
+			<h2 class="ask-title">Ask about your kitchen</h2>
 			<p class="ask-lede">
 				Tell me what you are trying to fix. This goes straight to my inbox and I reply to the
 				address you leave here.
@@ -93,7 +93,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 						placeholder="you@yourkitchen.com"
 						aria-describedby="support-email-help"
 					/>
-					<p id="support-email-help" class="ask-help">Rayan replies to this address, so check it is right.</p>
+					<p id="support-email-help" class="ask-help">I reply to this address, so check it is right.</p>
 				</div>
 
 				<div class="ask-field">
@@ -150,6 +150,8 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 </div>
 
 <script>
+	import { SUPPORT_FAILED_MESSAGE } from '../../lib/support';
+
 	/**
 	 * Bundled, never is:inline: the CSP in vercel.json is script-src 'self' with
 	 * no 'unsafe-inline', so an inline script would be refused by the browser.
@@ -290,7 +292,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 					status.dataset.tone = 'error';
 					status.textContent =
 						result.message ??
-						'Your message could not be sent. Your draft is still here, so please try again.';
+						SUPPORT_FAILED_MESSAGE;
 					return;
 				}
 
@@ -304,7 +306,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 				form.hidden = true;
 				confirmPanel.hidden = false;
 				dialog.dataset.state = 'acknowledged';
-				confirmText.textContent = `Question sent. Rayan will reply to ${sentTo}.`;
+				confirmText.textContent = `Question sent. I will reply to ${sentTo}.`;
 
 				// The receipt is written now, not on the way out, so it is already
 				// on the page behind the dialog whichever way this box closes.
@@ -327,7 +329,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('Question 
 			} catch {
 				status.dataset.tone = 'error';
 				status.textContent =
-					'Your message could not be sent. Your draft is still here, so please try again.';
+					SUPPORT_FAILED_MESSAGE;
 			} finally {
 				// Only meaningful on the error path; the success path has already
 				// returned and replaced the form with the acknowledgement.

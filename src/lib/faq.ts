@@ -113,9 +113,9 @@ export const faq: readonly FaqGroup[] = [
 				id: 'who',
 				question: 'Who is this for?',
 				answer: [
-					'Catering and meal prep run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. Start with one recipe. When the next event comes in, give it a menu and a guest count and plan it from there.'
+					'Caterers, and restaurants that cater, run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. Start with one dish. When the next inquiry comes in, build its menu, send the proposal, and plan the job from there. Meal-prep kitchens fit too; <a href="/who-its-for">who it is for</a> says how.'
 				],
-				claims: ['RC-01', 'RC-03', 'RC-44']
+				claims: ['RC-01', 'RC-03', 'RC-44', 'RC-61', 'RC-63']
 			},
 			{
 				id: 'restaurant',
@@ -183,12 +183,6 @@ export const faq: readonly FaqGroup[] = [
 				claims: ['RC-47']
 			},
 			{
-				id: 'event-payments',
-				question: 'Can clients pay the event deposit by card?',
-				answer: [eventPayments.faq],
-				claims: ['RC-65']
-			},
-			{
 				id: 'sage',
 				icon: 'sage',
 				question: 'What is Sage?',
@@ -205,6 +199,18 @@ export const faq: readonly FaqGroup[] = [
 					'No. Square, QuickBooks and an API for your own connections are marked Coming. They are not in the trial or the subscription, and I am not promising a date. If you cannot run without them, look at the <a href="/compare">comparison page</a> first.'
 				],
 				claims: ['RC-35', 'RC-45', 'RC-46']
+			}
+		]
+	},
+	{
+		id: 'how',
+		title: 'How the work moves',
+		entries: [
+			{
+				id: 'event-payments',
+				question: 'Can clients pay the event deposit by card?',
+				answer: [eventPayments.faq],
+				claims: ['RC-65']
 			},
 			{
 				id: 'ordering',
@@ -219,13 +225,7 @@ export const faq: readonly FaqGroup[] = [
 					'It tells you food cost: the theoretical food cost of an event, the food-cost percentage against a target you set, and the selling price that would meet that target. Labor and overhead are not in it. Where the event totals and recipe pricing show a food-only gross margin, it is the price less food cost, not your business margin after labor and overhead.'
 				],
 				claims: ['RC-04', 'RC-05', 'RC-30']
-			}
-		]
-	},
-	{
-		id: 'how',
-		title: 'How the work moves',
-		entries: [
+			},
 			{
 				id: 'quote',
 				question: 'How does a proposal get its food cost?',
@@ -235,12 +235,22 @@ export const faq: readonly FaqGroup[] = [
 				claims: ['RC-03', 'RC-04', 'RC-06', 'RC-61']
 			},
 			{
+				/* Added 2026-10-11, owner-approved (the 39th answer). The site's event
+				   story books the job with Book the event, and no answer said so. */
+				id: 'booked',
+				question: 'When is the event actually booked?',
+				answer: [
+					'When you press Book the event. The client’s yes on the proposal books nothing; Book the event waits on the signed agreement and the deposit. Confirm order comes later and locks the kitchen’s quantities and prices.'
+				],
+				claims: ['RC-61', 'RC-63', 'RC-64', 'RC-65']
+			},
+			{
 				id: 'frozen',
 				question: 'If a supplier price changes after I quote, does my quote change?',
 				answer: [
-					'Your food cost does, until you press Confirm order. Confirming an order freezes its plan, its costing inputs and its money. Later prices update your catalog and any draft orders, and the confirmed order shows you quoted-versus-today so you can see the drift, but nothing rewrites it.'
+					'No, not the price you sent. A sent proposal is fixed; changing it means sending the client a new one. The food cost behind it keeps following your ingredient prices until you press Confirm order, which freezes the plan, its costing inputs and its money. After that, new prices update your catalog and any draft orders, and the confirmed order shows you quoted-versus-today so you can see the drift, but nothing rewrites it.'
 				],
-				claims: ['RC-03', 'RC-07', 'RC-08']
+				claims: ['RC-03', 'RC-07', 'RC-08', 'RC-63', 'RC-75']
 			},
 			{
 				id: 'guests',
@@ -355,7 +365,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'phone',
 				question: 'Does it work on a phone in a walk-in with one bar?',
 				answer: [
-					'Previously loaded order pages remain readable with no signal and show when they were cached, so open the order before you walk into the cooler. A page you had not loaded shows the offline fallback instead, and actions that write data need a connection. With signal, the core pages come from the server and still read with JavaScript off.'
+					'Previously loaded order pages remain readable with no signal and show when they were cached, so open the order before you walk into the cooler. A page you had not loaded shows the offline fallback instead, and actions that write data need a connection.'
 				],
 				claims: ['RC-54']
 			},
