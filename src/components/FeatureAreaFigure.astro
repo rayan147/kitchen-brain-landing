@@ -52,12 +52,12 @@ const costingPath = [
 	{ op: 'times the guest count', tag: 'EVENT', label: 'The food cost the quote gets judged against.' }
 ];
 
-// Four doors, one queue, and a gate. The gate is the whole argument.
+// Five doors, one queue, and a gate. The gate is the whole argument.
 const intakeFlow = [
 	{
-		tag: 'FOUR DOORS',
+		tag: 'FIVE DOORS',
 		gate: false,
-		label: 'A photograph, a PDF or a doc, a spreadsheet, pasted text. The queue does not care which it was.'
+		label: 'A photo, a PDF, a spreadsheet, a Word document or pasted text. The queue does not care which it was.'
 	},
 	{
 		tag: 'ONE QUEUE',
@@ -129,8 +129,8 @@ const nutrientCount = 15;
 		<figure class="mt-12" data-reveal>
 			<div class="border-y border-ticket-rule bg-paper px-5 py-8 sm:px-8">
 				<p class="sr-only">
-					How a price gets in, in four steps. Four doors: a photograph, a PDF or a
-					document, a spreadsheet, or pasted text. One queue, where it is read and matched
+					How a price gets in, in four steps. Five doors: a photo, a PDF, a spreadsheet,
+					a Word document or pasted text. One queue, where it is read and matched
 					against the ingredients you already have, with nothing saved. Then you confirm:
 					a list of differences to look at, with whatever could not be made out quoted
 					back as it appeared. Only then, your prices, and only the lines you said yes to.
@@ -168,8 +168,8 @@ const nutrientCount = 15;
 				</ol>
 			</div>
 			<figcaption class="mt-4 max-w-[66ch] text-sm text-ink-soft">
-				<strong class="font-semibold text-ink">The gate in the middle is the point.</strong>{' '}
-				Everything to the left of it is a proposal. Reading the paper is the fast part;
+				<strong class="font-semibold text-ink">You confirm. That step is the point.</strong>{' '}
+				Everything before it is a suggestion. Reading the paper is the fast part;
 				saying yes to it stays yours.
 			</figcaption>
 		</figure>
@@ -220,9 +220,8 @@ const nutrientCount = 15;
 				</div>
 			</div>
 			<figcaption class="mt-4 max-w-[66ch] text-sm text-ink-soft">
-				<strong class="font-semibold text-ink">The numbers ship, and so does the paper. The browser does the printing.</strong>{' '}
-				Drawing the difference is more honest than a badge, because a badge is the thing a
-				reader skips.
+				<strong class="font-semibold text-ink">The numbers and the paper are both in the app today.</strong>{' '}
+				Your browser does the printing.
 			</figcaption>
 		</figure>
 	)

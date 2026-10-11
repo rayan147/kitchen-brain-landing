@@ -23,3 +23,8 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 ## Claim correction · 2026-09-27 (what Staff can open)
 
 - [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+## Revision 2026-10-11: English edit
+- Area blurb and meta description name Sage and say "connections marked Coming" (was "the connections being built").
+- Lede drops the offline sentence; it stays on the page in "Read saved pages without signal." Roles wording kept verbatim (2026-10-10 ruling).
+- Integrations: the closing "Until they land, nothing in CostCook reads from or writes to your books or your till." is cut; the group line and the Coming rows already say it.

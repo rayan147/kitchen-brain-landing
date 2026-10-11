@@ -18,3 +18,8 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - Taking orders reads "In the app today", not "Available now".
+
+## Revision 2026-10-11: English edit
+- Group title "Opens on what needs attention." is "The home screen opens on what needs attention."
+- Orders kicker "Orders, the event" is "Orders, shop, prep & pack" (two kickers no longer both say event).
+- Lede left as is: the proposed event-first lede ("book the yes with Confirm order") conflicts with the events page edit that separates Book the event from Confirm order; held for the owner.

@@ -102,9 +102,9 @@ export const SECTION_META: Readonly<
 	'Team, and what it connects to': {
 		// story: docs/stories/features-team-and-connections-caterer.story.md
 		slug: 'team-and-connections',
-		blurb: 'Who can change what, how a new kitchen gets started, and the connections being built.',
+		blurb: 'Who can change what, how a new kitchen gets started, Sage, and the connections marked Coming.',
 		wall: 'You need the crew ready for Saturday, without spending the week learning new software.',
-		lede: 'Set up the kitchen, invite your crew as Staff or Managers, and see what each role can do. Staff work the lists without seeing costs. An order page you already opened still reads with no signal, but you need to reconnect to change anything. Connections marked Coming are not included today.'
+		lede: 'Set up the kitchen, invite your crew as Staff or Managers, and see what each role can do. Staff work the lists without seeing costs. Connections marked Coming are not included today.'
 	}
 };
 
@@ -189,7 +189,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'today',
 		section: 'The day itself',
 		kicker: 'Today, the home screen',
-		title: 'Opens on what needs attention.',
+		title: 'The home screen opens on what needs attention.',
 		items: [
 			{ lead: 'Attention first.', detail: 'Orders, guests, and deliveries up top. When nothing needs you, it says all clear.' },
 			{ lead: 'Ranked tasks.', detail: 'Each attention item opens the exact screen that fixes it.' },
@@ -262,7 +262,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	{
 		id: 'orders',
 		section: 'The day itself',
-		kicker: 'Orders, the event',
+		kicker: 'Orders, shop, prep & pack',
 		title: 'One order, from the price to the pack-out.',
 		items: [
 			{ lead: 'Costed before commitment.', detail: 'A new order is a menu, a date, guests, and a price, estimated live as you set it up.' },

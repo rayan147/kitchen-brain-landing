@@ -117,3 +117,6 @@
 - [x] 9 Scene: A phone at the prep bench between services.
 - [x] 10 Connection: You throughout; choose a task, inspect what it does, read limits, decide.
 - [x] 11 Revision: Built pages, shared consumers, status wording, five responsive widths and 320px/200% text verified. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+## Revision 2026-10-11: English edit
+- Cut the closing line "Until they land, nothing in CostCook reads from or writes to your books or your till." Square and QuickBooks were already said not to work three times on the team page.
