@@ -319,6 +319,21 @@ eye sees: "what it costs per guest, with a bar for its share of the total".
 Steps 6 and 11 re-checked: every alt names only what its capture shows; no new
 claim in copy.
 
+### Revision 2026-10-10: search-result title
+
+- **Step 1 — Idea [x]:** Dana, an independent caterer, wants software that
+  carries an inquiry through the kitchen closeout, but a generic brand name
+  alone does not tell her what the search result offers.
+- **Step 2 — Character [x]:** Her want is to find relevant catering software;
+  her need is to judge the whole event workflow quickly. The wound and habit
+  remain the late food-cost discovery and the separate tools recorded above.
+- **Step 3 — Plot [x]:** The search result is a door into the existing story:
+  "catering software" names the tool, and "inquiry to closeout" states the
+  journey that the page proves. The page's 12 beats and seven scenes stay as
+  mapped above.
+- **Step 11 — Revision [x]:** The metadata title is now “Catering software
+  from inquiry to closeout | CostCook.” It adds one clear product category,
+  makes no new capability or outcome claim, and leaves the H1 and CTA intact.
 ### Revision 2026-10-11 (10): English edit for speed
 
 An editor's audit (english-elite-editor) read the page as the phone reader

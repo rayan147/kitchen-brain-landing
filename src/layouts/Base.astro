@@ -18,6 +18,10 @@ type Props = {
 	description?: string;
 	/** Root-relative route ('/features') so canonical/og:url stay per-page. */
 	path?: string;
+	/** Utility pages remain available after a no-JavaScript form submission. */
+	indexable?: boolean;
+	/** JSON-LD for a route's verified entity, emitted in the document head. */
+	structuredData?: string;
 	/** Optional surface contract emitted as the first body child for design review. */
 	directionContract?: string;
 	/**
@@ -35,15 +39,18 @@ const {
 	title = site.title,
 	description = site.description,
 	path = '/',
+	indexable = true,
+	structuredData,
 	directionContract,
 	headerTone = 'cream'
 } = Astro.props;
-// Slash form so canonical/og:url agree byte-for-byte with the sitemap.
+// Considered Strategy; not used because every public route has one fixed
+// canonical URL form. Vercel redirects the trailing-slash variant to it.
 const canonical = new URL(path, site.url).href;
 // stage.costcook.io builds the release branch with PUBLIC_NOINDEX=1 (the app
 // repo's ADR 0010). Canonical already names costcook.io; this keeps the stage
 // copy out of the index entirely.
-const noindex = import.meta.env.PUBLIC_NOINDEX === '1';
+const robots = import.meta.env.PUBLIC_NOINDEX === '1' ? 'noindex, nofollow' : !indexable ? 'noindex' : undefined;
 const ogImage = new URL('/og.png', site.url).href;
 ---
 
@@ -55,7 +62,8 @@ const ogImage = new URL('/og.png', site.url).href;
 		<meta name="description" content={description} />
 		<title>{title}</title>
 		<link rel="canonical" href={canonical} />
-		{noindex && <meta name="robots" content="noindex, nofollow" />}
+		{robots && <meta name="robots" content={robots} />}
+		{structuredData && <script type="application/ld+json" set:html={structuredData} is:inline></script>}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />

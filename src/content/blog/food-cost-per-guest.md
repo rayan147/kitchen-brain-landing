@@ -2,6 +2,7 @@
 title: "How to calculate food cost per guest for a catering event"
 description: "Work from total ingredient cost to food cost per guest, food-cost percentage, and the selling price needed to meet your target."
 publishedDate: 2026-07-02
+updatedDate: 2026-10-11
 category: Costing & pricing
 menuGroup: Cost the work
 menuIcon: calculator
@@ -45,6 +46,14 @@ $4,847.96 ÷ $12,240.00 ≈ 39.6% food cost
 ```
 
 $68 sounds like a nice round number. The food says otherwise: 39.6 cents of every dollar this event brings in is already spoken for by ingredients.
+
+<!-- Considered Visitor; not used because this shared capture has one fixed size and caption. -->
+<figure class="blog-shot">
+  <picture>
+    <img src="/proof/outcome-quote.png" width="512" height="316" loading="lazy" decoding="async" style="--phone-w: 256px; --desk-w: 256px" alt="CostCook's food-cost target panel flags 39.6% food cost as Critical, 9.6 percentage points over target. It says packaging, rentals, staff, and food cooked over the guarantee are outside this food-only number.">
+  </picture>
+  <figcaption>Captured order target: the 39.6% food-cost warning names what the figure leaves out.</figcaption>
+</figure>
 
 ## Compare it with the target
 

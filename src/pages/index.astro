@@ -7,6 +7,19 @@ import HomeFrontOfHouse from '../components/home/HomeFrontOfHouse.astro';
 import HomeSage from '../components/home/HomeSage.astro';
 import HomeClose from '../components/home/HomeClose.astro';
 import StickyCta from '../components/StickyCta.astro';
+import { site } from '../lib/site';
+
+// Considered Builder; not used because this is one fixed, factual organization
+// record. A builder would hide the few properties the homepage can verify.
+const organizationJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${site.url}/#organization`,
+  name: site.name,
+  url: site.url,
+  logo: new URL('/brand/costcook-icon.svg', site.url).href,
+  founder: { '@type': 'Person', name: site.founderName }
+});
 ---
 <!-- story: docs/stories/homepage-redesign-2026-10.story.md -->
 <!-- Layout rules: docs/superpowers/specs/2026-10-06-homepage-redesign-layout.md.
@@ -14,7 +27,7 @@ import StickyCta from '../components/StickyCta.astro';
      and soft amber. Considered Composite; not used because this is a fixed
      editorial sequence with no recursive behavior. No application routes
      change. -->
-<Base headerTone="cream">
+<Base headerTone="cream" structuredData={organizationJsonLd}>
   <HomeHero />
   <HomeEventWalk />
   <HomeKitchen />
