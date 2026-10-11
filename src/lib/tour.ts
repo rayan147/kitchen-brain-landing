@@ -615,7 +615,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Team & access',
 		appArea: 'Settings / Team & access',
 		title: 'Who on the crew can do what.',
-		intro: 'Invite people by email as Staff or Manager. Managers see costs and approve Sage drafts; Staff do neither.',
+		intro: 'Invite people by email as Staff or Manager. Managers see costs and use Sage; Staff do neither.',
 		callout: 'The cook works the lists without seeing the money. Billing, the team and publishing stay with you.',
 		featureHref: featureMenuHref('team'),
 		metrics: [

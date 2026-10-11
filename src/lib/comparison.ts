@@ -491,7 +491,7 @@ export const comparison: RowGroup[] = [
 				label: 'Role-aware sensitive actions',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Owner, Manager and Staff have different permissions for billing, the team, recipe publishing and Sage approvals, and Staff never see costs, Analytics or the Clients book.',
+				note: 'Owner, Manager and Staff have different permissions for billing, the team, recipe publishing and Sage, and Staff never see costs, Analytics or the Clients book.',
 				parsley: 'Business, $379',
 				meez: 'Starter, $24'
 			},

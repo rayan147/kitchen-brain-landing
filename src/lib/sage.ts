@@ -78,7 +78,7 @@ export const sage = {
 	onboarding: {
 		entry: 'Open Ask Sage from the setup header.',
 		context:
-			'Starting questions follow the setup stage and the records entered so far, so an empty kitchen is not prompted to ask about orders it does not have.',
+			'Starting questions follow your setup stage and what you have entered, so an empty kitchen is not asked about orders it does not have.',
 		return:
 			'Progress saves after each setup stage, and Back to setup returns to the unfinished stage.'
 	},
@@ -90,29 +90,29 @@ export const sage = {
 		{ ask: 'Which ingredients are below par?', does: 'Reads trusted inventory counts and names ingredients below the par you set.' },
 		{ ask: 'Why does this dish cost what it costs?', does: 'Walks the recipe line by line, with each line’s share of the plate.' },
 		{ ask: 'Find the chicken recipes', does: 'Searches recipes by name and the ingredients they use.' },
-		{ ask: 'Which recipes contain sesame?', does: 'Finds recipes carrying a reviewed allergen through their ingredients.' },
+		{ ask: 'Which recipes contain sesame?', does: 'Finds the recipes whose ingredients carry a reviewed allergen.' },
 		{ ask: 'What is the nutrition for this recipe?', does: 'Shows recipe nutrition and tells you which nutrient values or unit conversions are missing.' },
 		{ ask: 'Which prices went up?', does: 'Reads the purchase ledger for price moves and says how many purchases the move rests on.' },
 		{ ask: 'What came up short in receiving?', does: 'Lists the open receiving follow-ups, without the supplier’s contact details.' },
 		{ ask: 'What is left in setup?', does: 'Reads setup progress and points to the unfinished stage.' },
 		{ ask: 'Prepare the shopping list', does: 'Drafts the kitchen’s list, or one order’s. You see what it creates and what it does not touch, then you approve or discard it.' },
-		{ ask: 'Change Saturday’s draft to 32 guests', does: 'Drafts the guest-count change on a draft order. The price per guest holds and the total follows once you approve.' }
+		{ ask: 'Change Saturday’s draft order to 32 guests', does: 'Drafts the guest-count change on a draft order. The price per guest holds and the total follows once you approve.' }
 	],
 	/** The homepage introduces the breadth without repeating the full diligence list. */
 	homepageGroups: [
 		{ name: 'Run the shift', detail: 'Attention, orders, prep and receiving follow-ups for a date.' },
 		{ name: 'Check a recipe', detail: 'Search, cost, nutrition and reviewed allergen facts.' },
 		{ name: 'Check stock and buying', detail: 'Below-par ingredients and recent price moves.' },
-		{ name: 'Finish setup', detail: 'Progress and the unfinished stage, for owners and managers.' },
-		{ name: 'Prepare one change', detail: 'A draft shopping list or guest-count change, for an owner or manager to approve.' }
+		{ name: 'Finish setup', detail: 'Progress and the unfinished stage.' },
+		{ name: 'Prepare one change', detail: 'A draft shopping list or guest-count change, for you to approve.' }
 	],
 	/** Read off the code, not the prompt. Each is enforced in a test. */
 	guardrails: [
 		{ lead: 'Every number has a source.', detail: 'Links are built by the app, so an answer cannot cite a record it did not read.' },
-		{ lead: 'It never changes a record on its own.', detail: 'It does not send, buy, reprice or adjust anything. A draft waits for an owner or manager to approve it.' },
+		{ lead: 'It never changes a record on its own.', detail: 'It does not send, buy, reprice or adjust anything. Before an approved draft is saved, CostCook checks the records again.' },
 		{ lead: 'It cannot reach another kitchen.', detail: 'Sage can only use records in the kitchen account you are signed into.' },
 		{ lead: 'It is for owners and managers.', detail: 'Staff cannot open Sage. The costs and price moves it reads stay with the people who see the money.' },
-		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.' },
+		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is marked incomplete.' },
 		{ lead: 'It runs on a fixed allowance.', detail: 'Sage warns you before its credits run out. If they do, the rest of CostCook keeps working.' }
 	],
 	proof: {
@@ -137,7 +137,7 @@ export const sage = {
 		// The desktop alt holds for both: the same question, answer and lines.
 		mobileMedia: '(max-width: 39.99rem), (min-width: 64rem)',
 		caption:
-			'The wedding’s short rib, $7.28 a portion, broken into the three lines that make it, each linked to the recipe it came from.'
+			'The answer as Sage shows it, in a sample kitchen. Captured in CostCook on Oct 7, 2026.'
 	}
 } as const;
 
@@ -163,7 +163,7 @@ export const sageFilm = {
 	width: 1920,
 	height: 1080,
 	label: 'Sage film, 28 seconds: a question, the answer with its records, and the credit allowance',
-	length: '28 s',
+	length: '28 seconds',
 	capturedOn: 'Oct 11, 2026',
 	transcript: [
 		'Ask Sage beside the screen you are working on.',

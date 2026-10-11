@@ -16,7 +16,7 @@ const faqItems = [
 	{
 		question: 'How does Sage help during setup?',
 		answer:
-			'Ask Sage opens from the setup header with starting questions for your stage. Back to setup returns you to the stage you left, with your progress saved.'
+			'Ask Sage opens from the setup header with starting questions for your stage. Back to setup returns you to the unfinished stage, with your progress saved.'
 	},
 	{
 		question: 'What can I ask Sage?',
@@ -31,17 +31,17 @@ const faqItems = [
 	{
 		question: 'What happens when the evidence is missing?',
 		answer:
-			'Sage names the missing evidence or an incomplete check instead of filling the gap with a confident number. The answer remains useful because it tells you what the record still needs.'
+			'Sage names the missing evidence or an incomplete check instead of filling the gap with a confident number. The answer still helps: it tells you what the record needs.'
 	},
 	{
 		question: 'Is there a limit on Sage?',
 		answer:
-			`Yes, a monthly one: ${sageAllowanceLine}. Sage warns you in its panel once 80% are used. If they run out, Sage waits for the reset and every other screen keeps working.`
+			`Yes: ${sageAllowanceLine}. You cannot buy more. Sage warns you in its panel once 80% of them are used. If they run out, Sage waits for the reset and every other screen keeps working.`
 	},
 	{
-		question: 'Who can see price moves or approve a shopping-list draft?',
+		question: 'Can my staff use Sage?',
 		answer:
-			'Only an owner or manager. Staff do not get Sage at all, because it reads the money. Price moves, spending and every draft stay with the people who see costs.'
+			'No. Only an owner or manager can open Sage, because it reads the money.'
 	}
 ] as const;
 
@@ -62,7 +62,7 @@ const faqItems = [
 					<div><strong>Sage</strong><p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p></div>
 				</div>
 				<h1 id="sage-feature-heading" class="feature-display">Ask Sage about your kitchen.</h1>
-				<p class="hero-lede">Ask about your recipes, your stock and what things cost, even before setup is done. You can check the records behind every answer. If it drafts a shopping list, an owner or manager approves it.</p>
+				<p class="hero-lede">Ask about your recipes, your stock and what things cost, even before setup is done. You can check the records behind every answer. If it drafts a shopping list, you approve it.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href="#sage-allowance" class="btn-quiet">What it costs to run</a>
@@ -94,22 +94,23 @@ const faqItems = [
 
 
 	<nav class="feature-chapters container-page" aria-label="On this page">
-		<a href="#sage-jobs"><strong>Questions Sage can answer</strong><span>From Saturday’s prep to a guest-count change.</span></a>
-		<a href="#sage-guardrails"><strong>Sources and approval</strong><span>What it reads, what it drafts, and what stays your call.</span></a>
-		<a href="#sage-allowance"><strong>What it costs to run</strong><span>The monthly credits, and what happens when they run out.</span></a>
+		<a href="#sage-jobs"><strong>Questions you can ask</strong><span>From Saturday’s prep to a guest-count change.</span></a>
+		<a href="#sage-guardrails"><strong>Where Sage stops</strong><span>What it reads, what it drafts, and what stays your call.</span></a>
+		<a href="#sage-allowance"><strong>Its monthly credits</strong><span>How many, the warning, and what happens when they run out.</span></a>
 	</nav>
 
 	<section class="proof-section" aria-labelledby="proof-heading">
 		<div class="container-page proof-grid">
 			<div class="proof-copy" data-reveal>
 				<h2 id="proof-heading">The number arrives with its record.</h2>
-				<p>The film’s answer, held still so you can read every line. The question is plain: why does the short rib cost what it costs?</p>
+				<p>One answer, held still so you can read every line: why does the short rib cost what it costs?</p>
 				<dl class="answer-facts">
 					<div><dt>Cost per portion</dt><dd>$7.28</dd></div>
 					<div><dt>Biggest line</dt><dd>Beef short rib, $7.00 (96%)</dd></div>
 					<div><dt>Evidence</dt><dd>3 cited lines</dd></div>
 					<div><dt>Source</dt><dd>Recipe · Braised Short Rib</dd></div>
 				</dl>
+				<p class="snap-setup">When a line has no record behind it, Sage says so instead of filling the gap.</p>
 				<p class="snap">A missing number is an answer, too.</p>
 			</div>
 			<figure class="proof-capture" data-reveal>
@@ -132,7 +133,7 @@ const faqItems = [
 		<div class="container-page questions-grid">
 			<div class="questions-intro" data-reveal>
 				<h2 id="questions-heading">Questions you can ask. A shopping list you can approve.</h2>
-				<p>Owners and managers can ask any of these. Sage pulls the records that matter and shows you what it found.</p>
+				<p>Sage is for owners and managers. It pulls the records that matter and shows you what it found.</p>
 			</div>
 			<ol class="question-list">
 				{sage.abilities.map((ability, index) => (
@@ -190,7 +191,7 @@ const faqItems = [
 	<section id="sage-guardrails" class="guardrails" aria-labelledby="guardrails-heading">
 		<div class="container-page">
 			<div class="guardrails-heading" data-reveal>
-				<h2 id="guardrails-heading">You can see exactly where it stops.</h2>
+				<h2 id="guardrails-heading">You can see exactly where Sage stops.</h2>
 				<p>Answering a question changes nothing. A draft stays a draft until an owner or manager approves it.</p>
 			</div>
 			<div class="approval-path" data-reveal aria-label={`${spellCapital(sageReadToolCount, { compound: true })} tools read records, ${spell(sageDraftKinds.length)} kinds of draft can be prepared, and a person approves`}>
@@ -213,9 +214,9 @@ const faqItems = [
 				<h2 id="allowance-heading">What it costs to run.</h2>
 				<p class="allowance-line">{sageAllowanceLine}.</p>
 				<p>
-					The credits come with the plan. No meter runs on top of them. Once 80% of the month’s
-					are used, the Sage panel says so, and the billing page shows the count and the day they
-					reset. If they run out, Sage waits for the reset. Every other screen keeps working.
+					The credits come with the plan. There is no meter, and you cannot buy more. The billing
+					page shows the count and the day they reset. Once 80% of them are used, the Sage panel
+					says so. If they run out, Sage waits for the reset. Every other screen keeps working.
 				</p>
 			</div>
 			<figure class="allowance-capture" data-reveal>
@@ -236,7 +237,7 @@ const faqItems = [
 		<div class="container-page faq-grid">
 			<div class="faq-intro" data-reveal>
 				<h2 id="faq-heading">Questions owners ask first.</h2>
-				<p>Is it live, what can it change, and who sees the money.</p>
+				<p>Is it live, what can it change, what does it cost, and who sees the money.</p>
 			</div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
@@ -329,6 +330,7 @@ const faqItems = [
 	.answer-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
 	.answer-facts dt { color: var(--color-ink-soft); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 	.answer-facts dd { margin-top: 0.35rem; font-size: var(--text-body-lg); font-weight: 700; font-variant-numeric: tabular-nums; }
+	.snap-setup { max-width: 45ch; margin-top: 1.5rem; color: var(--color-ink-soft); line-height: 1.6; }
 	.snap { margin-top: 2rem; padding-top: 1.4rem; border-top: 3px solid var(--color-amber-deep); font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.15; }
 	/* Shown at a quarter of its pixels on a phone: let it open full-size. */
 	.full-size { display: inline-flex; min-height: 44px; align-items: center; font-size: var(--text-body-sm); font-weight: 600; color: var(--color-green-deep); text-decoration: underline; }

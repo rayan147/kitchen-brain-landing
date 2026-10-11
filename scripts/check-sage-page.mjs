@@ -31,7 +31,7 @@ const required = [
 	'A missing number is an answer, too.',
 	'id="faq-heading"',
 	'Is Sage available now?',
-	'Who can see price moves or approve a shopping-list draft?',
+	'Can my staff use Sage?',
 	'Ask the next question. Keep the final say.'
 ];
 

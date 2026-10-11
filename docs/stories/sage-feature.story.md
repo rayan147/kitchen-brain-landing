@@ -245,3 +245,10 @@ credits each paid month, 300 during the free trial"; the daily guard stays off.
   - **Removed:** the separate dark video section and its four chapter times (the film is the hero now); the caption track (captions are burned in, as on the homepage film); `scripts/sage-video/assemble.mjs`.
   - **Checks:** build, check, test:support, video tests (74), and the verify-sage, feature-family and feature-parity runs all pass.
   - **Final image:** the close is unchanged: "Ask the next question. Keep the final say."
+- [x] 11 Final English pass (owner: "fix all"): 22 findings applied. FAQ 7 is now
+  "Can my staff use Sage?" (staff have no Sage at all; the check pin moved with it),
+  the allowance paragraph says plainly "you cannot buy more" (no top-up on develop),
+  the hero says "you approve it" (only owners and managers open Sage), the snap
+  line gets its setup sentence, and the chapter nav uses the section headings
+  (kept: the feature family requires it). Cross-page: /compare and the tour no
+  longer imply staff use Sage.
