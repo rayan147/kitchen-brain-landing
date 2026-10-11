@@ -7,20 +7,26 @@ import { DROPOFF } from "../src/film-dropoff";
 import { filmFramesList } from "../src/film-model";
 import { ManifestSchema } from "../src/manifest";
 import { DropoffManifestSchema } from "../src/manifest-dropoff";
+import { SAGE } from "../src/film-sage";
+import { SageManifestSchema } from "../src/manifest-sage";
 import { frameProblems, sourceCounts } from "../src/render-guard";
 
-// FILM=dropoff checks the office lunch; the default is the wedding.
-const dropoff = process.env.FILM === "dropoff";
-const film = dropoff ? DROPOFF : WEDDING;
+// FILM=dropoff checks the office lunch, FILM=sage the Sage film; the default
+// is the wedding.
+const which = process.env.FILM;
+const dropoff = which === "dropoff";
+const sage = which === "sage";
+const film = dropoff ? DROPOFF : sage ? SAGE : WEDDING;
 const out = resolve(import.meta.dirname, "../public", film.framesDir);
 const json: unknown = JSON.parse(
   await readFile(resolve(out, "manifest.json"), "utf8"),
 );
-const manifest = dropoff
-  ? (({ appSha, ...m }) => ({ ...m, developCommit: appSha }))(
-      DropoffManifestSchema.parse(json),
-    )
-  : ManifestSchema.parse(json);
+const manifest =
+  dropoff || sage
+    ? (({ appSha, ...m }) => ({ ...m, developCommit: appSha }))(
+        (dropoff ? DropoffManifestSchema : SageManifestSchema).parse(json),
+      )
+    : ManifestSchema.parse(json);
 const filmFrames = filmFramesList(film);
 const problems = frameProblems(
   filmFrames,

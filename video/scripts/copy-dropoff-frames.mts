@@ -1,8 +1,11 @@
 // Pulls the office lunch's capture run (public/proof/film-dropoff, copied from
-// scripts/capture-film.mjs with FILM=dropoff) into public/frames-dropoff, with
+// scripts/capture-film.mjs with FILM=dropoff) into public/frames-dropoff, or
+// with FILM=sage the Sage film's (public/proof/film-sage, from
+// scripts/capture-sage-film.mjs) into public/frames-sage, with
 // the end card's price and trial read from the landing's src/lib/site.ts. It
 // clears that folder's PNGs first, so a frame from an older run cannot survive.
 // Only frames the capture record lists are copied. Run: npm run frames:dropoff
+// or npm run frames:sage
 import {
   copyFile,
   mkdir,
@@ -14,10 +17,15 @@ import {
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { DropoffManifestSchema } from "../src/manifest-dropoff";
+import { SageManifestSchema } from "../src/manifest-sage";
 
 const root = resolve(import.meta.dirname, "..");
-const out = resolve(root, "public/frames-dropoff");
-const source = resolve(root, "../public/proof/film-dropoff");
+const sage = process.env.FILM === "sage";
+const out = resolve(root, sage ? "public/frames-sage" : "public/frames-dropoff");
+const source = resolve(
+  root,
+  sage ? "../public/proof/film-sage" : "../public/proof/film-dropoff",
+);
 
 const site = await readFile(resolve(root, "../src/lib/site.ts"), "utf8");
 const displayPrice = site.match(
@@ -43,7 +51,7 @@ for (const f of captured.frames ?? []) {
   await copyFile(resolve(source, f), resolve(out, f));
   copied.push(f);
 }
-const manifest = DropoffManifestSchema.parse({
+const manifest = (sage ? SageManifestSchema : DropoffManifestSchema).parse({
   ...captured,
   displayPrice,
   trialDays,

@@ -1,0 +1,42 @@
+{
+  "allowanceNote": "Sage has used 1,640 of 2,000 credits. They reset on Wed Oct 28.",
+  "billingLine": "Sage: 1,640 of 2,000 credits used. Resets Wed Oct 28.",
+  "used": "1,640",
+  "periodCredits": "2,000",
+  "trialCredits": "300",
+  "resetsOn": "Wed Oct 28",
+  "answerCost": "$7.28",
+  "displayPrice": "$49/month",
+  "trialDays": "15",
+  "appSha": "9bd986496",
+  "capturedOn": "2026-10-11",
+  "frames": [
+    "panel-ask-desktop.png",
+    "answer-desktop.png",
+    "answer-mobile.png",
+    "panel-note-desktop.png",
+    "billing-usage-desktop.png"
+  ],
+  "frameSources": {
+    "panel-ask-desktop.png": {
+      "host": "local demo world",
+      "app": "9bd986496"
+    },
+    "panel-note-desktop.png": {
+      "host": "local demo world",
+      "app": "9bd986496"
+    },
+    "billing-usage-desktop.png": {
+      "host": "local demo world",
+      "app": "9bd986496"
+    },
+    "answer-desktop.png": {
+      "host": "local keyed world",
+      "app": "7a7e407d9"
+    },
+    "answer-mobile.png": {
+      "host": "local keyed world",
+      "app": "7a7e407d9"
+    }
+  }
+}

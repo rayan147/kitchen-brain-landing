@@ -7,11 +7,15 @@ import { WEDDING } from "../src/film";
 import { DROPOFF } from "../src/film-dropoff";
 import { ManifestSchema } from "../src/manifest";
 import { DropoffManifestSchema } from "../src/manifest-dropoff";
+import { SAGE } from "../src/film-sage";
+import { SageManifestSchema } from "../src/manifest-sage";
 import { toVttOf } from "../src/vtt";
 
-// FILM=dropoff writes out/dropoff.vtt; the default is the wedding's promo.vtt.
+// FILM=dropoff writes out/dropoff.vtt, FILM=sage out/sage.vtt; the default is
+// the wedding's promo.vtt.
 const dropoff = process.env.FILM === "dropoff";
-const film = dropoff ? DROPOFF : WEDDING;
+const sage = process.env.FILM === "sage";
+const film = dropoff ? DROPOFF : sage ? SAGE : WEDDING;
 
 const root = resolve(import.meta.dirname, "..");
 const json: unknown = JSON.parse(
@@ -22,8 +26,10 @@ const json: unknown = JSON.parse(
 );
 const manifest = dropoff
   ? DropoffManifestSchema.parse(json)
-  : ManifestSchema.parse(json);
-const name = dropoff ? "dropoff.vtt" : "promo.vtt";
+  : sage
+    ? SageManifestSchema.parse(json)
+    : ManifestSchema.parse(json);
+const name = dropoff ? "dropoff.vtt" : sage ? "sage.vtt" : "promo.vtt";
 await mkdir(resolve(root, "out"), { recursive: true });
 await writeFile(resolve(root, "out", name), toVttOf(film, manifest));
 console.log(`wrote out/${name}`);

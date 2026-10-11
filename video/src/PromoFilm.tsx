@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import { interpolate, staticFile, useVideoConfig } from "remotion";
 import { WEDDING } from "./film";
 import { DROPOFF } from "./film-dropoff";
+import { SAGE } from "./film-sage";
 import { FADE_FRAMES, totalFramesOf, type Film } from "./film-model";
 import { Scene } from "./Scene";
 
@@ -52,3 +53,4 @@ export const FilmComposition: React.FC<{ film: Film }> = ({ film }) => {
 
 export const PromoFilm: React.FC = () => <FilmComposition film={WEDDING} />;
 export const DropoffFilm: React.FC = () => <FilmComposition film={DROPOFF} />;
+export const SageFilm: React.FC = () => <FilmComposition film={SAGE} />;

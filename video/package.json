@@ -37,6 +37,8 @@
 		"frames": "tsx scripts/copy-frames.mts",
 		"frames:dropoff": "tsx scripts/copy-dropoff-frames.mts",
 		"render:dropoff": "FILM=dropoff npm run render:check && remotion render DropoffFilm out/dropoff.mp4",
+		"frames:sage": "FILM=sage tsx scripts/copy-dropoff-frames.mts",
+		"render:sage": "FILM=sage npm run render:check && remotion render SageFilm out/sage.mp4",
 		"vtt": "tsx scripts/write-vtt.mts"
 	}
 }
