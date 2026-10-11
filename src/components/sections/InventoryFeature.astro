@@ -157,7 +157,6 @@ const faqItems = [
 			</figure>
 
 			<div class="trust-board">
-				<div class="trust-head"><h3>Each count status gets its own answer.</h3><p>You can see a quantity and still not trust it enough to change the buy.</p></div>
 				<ul role="list">
 					{trustStates.map((item) => (
 						<li><span><strong>{item.ingredient}</strong><small>{item.note}</small></span><b>{item.quantity}</b><em class:list={['state', item.tone]}>{item.state}</em></li>
@@ -284,7 +283,6 @@ const faqItems = [
 	.buy-line > b { color: var(--color-green-deep); font-size: var(--text-record-sm); }
 	.gap-sheet figcaption { padding: 0 clamp(1rem, 3vw, 1.75rem) 1rem; }
 	.trust-board { display: grid; gap: 2rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
-	.trust-head p { margin-top: .6rem; color: var(--color-ink-soft); }
 	.trust-board li { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; padding-block: .9rem; border-bottom: 1px solid var(--color-ticket-rule); }
 	.trust-board li span small { display: block; max-width: 45ch; color: var(--color-ink-soft); }
 	.trust-board li > b { font-variant-numeric: tabular-nums; }

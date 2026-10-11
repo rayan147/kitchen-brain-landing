@@ -166,3 +166,6 @@ example caption (68 lb, 55 lb, 13 lb, one 20 lb case) are unchanged.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Par FAQ: "not compared until it is counted" replaces "unevaluable" (the app shows "Count it to compare.").
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Trust board keeps its three example rows but drops its h3/p ("Each count status gets its own answer."); the trust-proof section right after it carries the explanation.

@@ -182,3 +182,6 @@ the video chapters, FAQ, alt text and captions are unchanged.
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Proof section matches its capture: the short-rib question, $7.28 per portion, beef short rib $7.00 (96%), 3 cited lines, Recipe · Braised Short Rib (cucumber facts retired).
 - Role pair in running text is "an owner or manager" (the app's form), here and on the homepage, /features, /faq, /compare and the tour.
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- The Sage capture and caption appear once, in the hero. The proof section keeps its facts and snap and points to "the answer at the top of this page"; its grid is one column.

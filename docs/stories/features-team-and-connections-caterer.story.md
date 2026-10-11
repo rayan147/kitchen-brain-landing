@@ -31,3 +31,8 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Integrations: QuickBooks line is "not in the app you would start today" (it is built and flag-gated; Coming stands per the 2026-09-27 ruling; ledger RC-45 note 2026-10-11).
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Integrations now renders before the page close ("Four other areas" and the demo line), through a default slot in FeatureSection.
+- Integrations' three cards (five doors, review, unreadable) cut; the getting-prices-in figure and import items carry them.
+- Vendor item: "Contacts, how you order from each vendor, and what you actually buy from each."

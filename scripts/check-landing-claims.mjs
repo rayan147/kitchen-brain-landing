@@ -219,7 +219,7 @@ if (/one restaurant on a fixed daily menu|shape is wrong for you|tool built for 
 // carries them all; the connections section moved to the one area whose name
 // promises it. If the hub ever starts listing items again it is the old wall.
 requireText(featuresPage, '<FeatureIndex />', 'features hub composition');
-requireText(featureAreaPage, '<FeatureSection entry={entry} />', 'feature area composition');
+requireText(featureAreaPage, '<FeatureSection entry={entry}>', 'feature area composition');
 requireText(featureAreaPage, 'getStaticPaths', 'feature area routes are generated per section');
 requireText(featureAreaPage, '<Integrations />', 'connections render on an area page');
 requireText(siteSource, "href: '/features'", 'features page nav link');

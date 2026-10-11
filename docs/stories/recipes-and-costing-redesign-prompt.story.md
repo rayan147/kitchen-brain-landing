@@ -178,3 +178,6 @@ names only what the frame shows.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - FAQ "trim yield" (glossary term); items "Lines that add up.", "Price to target.", "Menus in use stay put.".
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Recipes disclosure title "From private draft to the sheet the kitchen cooks from." (it no longer prints the H2 snap line twice).

@@ -123,3 +123,7 @@
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - QuickBooks line no longer says "planned and has not been built"; source comment corrected (built, flag-gated on develop 4f46543cf, Coming by ruling).
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Placement: the section sits inside the team-and-connections area page, before its close, instead of after it.
+- The three-card grid (Five doors in / Review before saving / What it could not read) is cut. The H2 and lede answer the connectors question alone; the Square and QuickBooks block follows. The scene list above that names the cards is superseded by this note.

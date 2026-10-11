@@ -165,3 +165,6 @@ Owner: make the site read like a chef wrote it. Copy only.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Capability leads "Total against the lines." and "Supplier names, remembered." (selection Set updated with them); hero mock-up's matched row shows the app state "Matched" (was "Ready to review").
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Item "The original stays visible.": "The photo or PDF sits beside the rows while you review them."

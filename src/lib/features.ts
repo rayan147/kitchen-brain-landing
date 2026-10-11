@@ -229,7 +229,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		id: 'recipes',
 		section: 'Recipes and costing',
 		kicker: 'Recipes',
-		title: 'A sauce is one recipe, even in five dishes.',
+		title: 'From private draft to the sheet the kitchen cooks from.',
 		items: [
 			{ lead: 'One-screen builder.', detail: 'Type, pick, next line. Autocomplete stays under your thumb.' },
 			{ lead: 'Live pricing.', detail: 'Set the selling price and the food-cost percent moves as you type, with a nudge when you are over target.' },
@@ -308,28 +308,6 @@ export const featureGroups: readonly FeatureGroup[] = [
 		]
 	},
 	{
-		id: 'ledger',
-		section: 'Getting prices in',
-		kicker: 'Purchases & month cost',
-		title: 'What the month should have cost, and did.',
-		items: [
-			{ lead: 'Four ways to record purchases.', detail: 'Manual entry, invoice import, order log, and receiving, each entry tagged with its source.' },
-			{ lead: 'Batch entry.', detail: 'Enter a whole invoice, check its total and save all its lines together.' },
-			{ lead: 'Quick log.', detail: 'Or record a single purchase in seconds.' },
-			{ lead: 'Corrections, not edits.', detail: 'Add or subtract an amount and give a reason. The original purchase stays in the history.' },
-			{ lead: 'Cost as of date.', detail: 'Current cost follows the purchase date, not the order you typed things in.' },
-			{ lead: 'Prices that moved.', detail: 'See which prices rose or fell over the dates you choose, with a percentage change and a link to the purchases.' },
-			{ lead: 'Monthly cost comparison.', detail: 'Compare ingredient use calculated from orders with purchase spending. Any unexplained difference stays separate from logged waste.' },
-			{ lead: 'Waste, valued.', detail: 'Logged waste explains part of the difference using the cost saved with that waste record.' },
-			{ lead: 'Stock turnover, when counts support it.', detail: 'Stock turnover is shown only when a trusted count is available at each end of the period.' },
-			{ lead: 'Purchases needing attention.', detail: 'Find orders waiting for your action or already sent. Open a sent purchase order to record its delivery.' },
-			{ lead: 'Filter purchase history.', detail: 'Filter purchases by ingredient and date. Longer results continue on the next page.' },
-			// RC-70, 2026-09-27. Analytics has no page of its own; it answers the
-			// same month question from the numbers side, so it lives here.
-			{ lead: 'Analytics.', detail: 'Overview says whether this week is on track, What to charge gives the price per guest that reaches your target, and Month review compares the month\u2019s plan with purchases.' }
-		]
-	},
-	{
 		id: 'inventory',
 		section: 'The day itself',
 		kicker: 'Inventory',
@@ -361,7 +339,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Spreadsheets with different columns.', detail: 'Check which columns hold names, pack sizes and prices before importing. You can see which columns will be ignored.' },
 			{ lead: 'Recipe CSVs too.', detail: 'Review the recipe columns before importing. Unreadable rows are shown for you to check.' },
 			{ lead: 'Word documents.', detail: 'Import text from a Word document without copying it into another file first.' },
-			{ lead: 'The original stays visible.', detail: 'The photo or PDF sits beside the rows awaiting review while you review. Discard really deletes it.' },
+			{ lead: 'The original stays visible.', detail: 'The photo or PDF sits beside the rows while you review them. Discard really deletes it.' },
 			{ lead: 'No duplicate save.', detail: 'Saving the same import twice returns the existing receipt instead of adding duplicate purchases.' },
 			{ lead: 'Unreadable means unread.', detail: 'Unreadable text stays beside the suggested details so you can correct it against the source.' },
 			{ lead: 'Match supplier names.', detail: 'Suggested matches can connect a supplier’s “Roma tomatoes” to your “Tomato, Roma” ingredient.' },
@@ -386,6 +364,28 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'What became of each email.', detail: 'The Invoice inbox says Invoice, Statement, Duplicate, Held as spam and more, with the reason.' },
 			{ lead: 'Nothing counts unchecked.', detail: 'An emailed invoice opens in the same review as an upload.' },
 			{ lead: 'A new address when junk starts.', detail: `The old one keeps working for ${spell(inboxLimits.graceDays)} days, or stop it now.` }
+		]
+	},
+	{
+		id: 'ledger',
+		section: 'Getting prices in',
+		kicker: 'Purchases & month cost',
+		title: 'What the month should have cost, and did.',
+		items: [
+			{ lead: 'Four ways to record purchases.', detail: 'Manual entry, invoice import, order log, and receiving, each entry tagged with its source.' },
+			{ lead: 'Batch entry.', detail: 'Enter a whole invoice, check its total and save all its lines together.' },
+			{ lead: 'Quick log.', detail: 'Or record a single purchase in seconds.' },
+			{ lead: 'Corrections, not edits.', detail: 'Add or subtract an amount and give a reason. The original purchase stays in the history.' },
+			{ lead: 'Cost as of date.', detail: 'Current cost follows the purchase date, not the order you typed things in.' },
+			{ lead: 'Prices that moved.', detail: 'See which prices rose or fell over the dates you choose, with a percentage change and a link to the purchases.' },
+			{ lead: 'Monthly cost comparison.', detail: 'Compare ingredient use calculated from orders with purchase spending. Any unexplained difference stays separate from logged waste.' },
+			{ lead: 'Waste, valued.', detail: 'Logged waste explains part of the difference using the cost saved with that waste record.' },
+			{ lead: 'Stock turnover, when counts support it.', detail: 'Stock turnover is shown only when a trusted count is available at each end of the period.' },
+			{ lead: 'Purchases needing attention.', detail: 'Find orders waiting for your action or already sent. Open a sent purchase order to record its delivery.' },
+			{ lead: 'Filter purchase history.', detail: 'Filter purchases by ingredient and date. Longer results continue on the next page.' },
+			// RC-70, 2026-09-27. Analytics has no page of its own; it answers the
+			// same month question from the numbers side, so it lives here.
+			{ lead: 'Analytics.', detail: 'Overview says whether this week is on track, What to charge gives the price per guest that reaches your target, and Month review compares the month\u2019s plan with purchases.' }
 		]
 	},
 	{
@@ -478,7 +478,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Settings that need attention.', detail: 'Settings are grouped by task and show where a decision is needed.' },
 			{ lead: 'Preview costing changes.', detail: 'Costing settings preview their impact and name which menus go over target before you save.' },
 			{ lead: 'Business details on purchase orders.', detail: 'Business name, reply-to, phone, and delivery address feed straight onto purchase orders.' },
-			{ lead: 'Vendor manager.', detail: 'Contacts, per-vendor purchasing method, and insight into what you actually buy from each.' },
+			{ lead: 'Vendor manager.', detail: 'Contacts, how you order from each vendor, and what you actually buy from each.' },
 			{ lead: 'Metric or imperial.', detail: 'Choose metric or US units for your kitchen.' },
 			{ lead: 'Invite by email.', detail: 'Send an email invitation as Staff or Manager. Invitations expire, and you can revoke them.' },
 			{ lead: 'Three team roles.', detail: 'Owner, Manager and Staff. Staff work orders, prep, deliveries and recipes without seeing costs, Analytics, Sage or the Clients book; custom roles are not available.' },

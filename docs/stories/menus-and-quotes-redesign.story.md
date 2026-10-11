@@ -178,3 +178,8 @@ names only what the frame shows.
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Hero ledger default price $95.00 / guest (the capture's menu price; $68 is the order's own price); evidence note points to the captured 180-guest event, not a film.
 - FAQ "the target you set" (was "configured target"); menu items "Price to target." and "Menus in use stay put.".
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Problem H2: "The count changed in an email. The quote did not." (no longer a twin of the Recipes H2).
+- Confirmed-quote frame gets a caption (the caption freeze lifted for this one): "Captured from CostCook: a different sample wedding, 150 guests at $95.00, after it was confirmed."
+- FAQ "What does confirming save?" no longer repeats the next answer: "..., and the same locked event feeds Shop, Prep and Pack."

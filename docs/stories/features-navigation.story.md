@@ -198,3 +198,7 @@ definition are unchanged.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Hub proof link is the site's product tour (featuresMenu.tourLabel / tourHref, /tour/main) instead of "Watch the 2:53 product tour" to a missing #demo anchor; same on /compare. Pins in check-landing-claims.mjs moved to the new source.
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- FeatureSection takes a default slot before the sibling close; only team-and-connections fills it (Integrations). Pin in check-landing-claims.mjs now requires '<FeatureSection entry={entry}>'.
+- Getting-prices-in hub card mono line now reads in the new group order (import first, month cost last).

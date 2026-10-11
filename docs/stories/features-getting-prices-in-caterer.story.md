@@ -23,3 +23,7 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Import items: "Total against the lines." (was "Invoices that check themselves."), "Supplier names, remembered." (was "It learns your names."), "Each one is queued and tracked." (no "workspace").
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Group order: import and invoice email come before month cost (the ledger group moved after inbox), so the first H2 after the upload wall, lede and figure is about the upload. The hub card's mono line follows the new order.
+- Import item: "The photo or PDF sits beside the rows while you review them."
