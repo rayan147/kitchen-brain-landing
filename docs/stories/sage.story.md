@@ -176,3 +176,6 @@ Cut the old generic chat-bubble symbol, rejected a robot face and sparkle, kept 
 
 ## Revision 2026-10-11: English edit
 - sage.ts abilities drop the per-item "Managers and owners only."; the role guardrail is "It is for Owners and Managers." (Staff cannot open Sage, RC-52 note); "It does not send, buy, reprice or adjust anything."; "If it stops, the rest of CostCook keeps working." See sage-feature.story.md.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Role pair lowercase, owner first ("for owners and managers", "an owner or manager").

@@ -90,7 +90,7 @@ export const SECTION_META: Readonly<
 		slug: 'the-day-itself',
 		blurb: 'The event, the shopping, the prep, the pack, and what actually came through the back door.',
 		wall: 'It is five in the morning, your hands are wet, and the sheet taped to the hotel pan has to be right. There is no second trip to the store.',
-		lede: 'Confirm the menu and the head count and you get your shopping, prep and pack lists. When the truck comes, check it against the orders you sent. Anything short stays in view until you follow it up.'
+		lede: 'Take the inquiry and send the proposal. Book the event once the agreement is signed and the deposit is in. Confirm order then locks the menu and head count and gives you your shopping, prep and pack lists. When the truck comes, check it against the orders you sent. Anything short stays in view until you follow it up.'
 	},
 	'Compliance and labels': {
 		// story: docs/stories/features-compliance-and-labels-caterer.story.md
@@ -142,8 +142,10 @@ export const featureGroups: readonly FeatureGroup[] = [
 		   Production rows only (docs/research/2026-09-27-app-inventory.yaml A-01
 		   to A-16, B-01 to B-09, C-14). The one-page proposal builder's charge
 		   lines, choice groups and payment terms (A-05, A-17, RC-62) are behind
-		   the deploy gate and are not described here. The deposit is recorded by
-		   hand in production: the verbs for it are ask, record and track. */
+		   the deploy gate and are not described here. Since the 2026-10-06 owner
+		   ruling the client can pay the deposit by card from an email link
+		   (src/lib/event-payments.ts); the kitchen can still record what arrives by
+		   hand. The client pays; the kitchen asks, records and tracks. */
 		id: 'events',
 		section: 'The day itself',
 		kicker: 'Events & proposals',
@@ -157,7 +159,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Remind, extend, withdraw.', detail: 'Send a reminder, extend the link, withdraw the offer, or update it when they ask for changes.' },
 			{ lead: 'The agreement.', detail: 'Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.' },
 			{ lead: 'Kitchen draft.', detail: 'Prepare the kitchen draft from their yes; it holds no day and draws no crew until you book the event.' },
-			{ lead: 'Deposit, tracked.', detail: `Ask for a deposit and record what arrives as ${depositMethods}, against what you asked for.` },
+			{ lead: 'Deposit, tracked.', detail: `Ask for a deposit. The client pays it by card from an email link, or you record what arrives as ${depositMethods}, against what you asked for.` },
 			{ lead: 'Confirm order is the booking.', detail: 'Confirm order freezes quantities and prices, and the event reads This event is booked.' },
 			{ lead: 'Calendar and the day’s room.', detail: 'The calendar counts orders and vans against the limits you set for each day, and an order says whether its day has room.' },
 			{ lead: 'Clients.', detail: 'Each client keeps contacts, venues with access notes, and their events and orders, for owners and managers.' }
@@ -175,7 +177,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Two kinds of yield.', detail: 'Trim loss and cooking loss are separate numbers, and each recipe line says which state its quantity means.' },
 			{ lead: 'Byproduct credit.', detail: 'Bones and trim you use elsewhere credit back against the ingredient’s usable cost.' },
 			{ lead: 'Missing prices are named.', detail: 'Uncostable lines are listed, and partial totals say what is missing instead of showing zero.' },
-			{ lead: 'Lines that reconcile.', detail: 'Every line’s cost contribution adds up to the total. No silent remainder.' },
+			{ lead: 'Lines that add up.', detail: 'Every line’s cost contribution adds up to the total. No silent remainder.' },
 			{ lead: 'Misc is its own line.', detail: 'Miscellaneous cost is visible and applied once, never buried in a dish.' },
 			{ lead: 'Tap-to-see arithmetic.', detail: 'Any plate cost or food-cost percent opens the math behind it.' },
 			{ lead: 'Consistent target warnings.', detail: 'Over target reads the same words on every screen.' },
@@ -252,9 +254,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		title: 'What each guest gets, priced.',
 		items: [
 			{ lead: 'Menu workspace.', detail: 'Dishes, portions per guest, and price, saved in one piece.' },
-			{ lead: 'Self-pricing.', detail: 'Cost per guest against selling price, plus the price that would hit your target.' },
+			{ lead: 'Price to target.', detail: 'Cost per guest against selling price, plus the price that would hit your target.' },
 			{ lead: 'Equipment templates.', detail: 'Each menu carries its equipment counts. Chafers times three stays times three regardless of guests.' },
-			{ lead: 'Used-by guards.', detail: 'A menu that orders still use will not delete out from under them.' },
+			{ lead: 'Menus in use stay put.', detail: 'A menu that orders still use will not delete out from under them.' },
 			{ lead: 'Overridable pricing.', detail: 'The menu’s per-guest price is the default an order can override.' },
 			{ lead: 'Into the proposal.', detail: 'Start an event from a saved menu and its dishes and food cost come with it into the proposal the client sees.' }
 		]
@@ -300,7 +302,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Receiving follows sending.', detail: 'A sent PO creates its receiving checklist for you.' },
 			{ lead: 'Deliveries as they are.', detail: 'Short, over, substituted, missing, and unexpected lines each have their own handling.' },
 			{ lead: 'All-or-nothing posting.', detail: 'Committing a delivery writes real purchases, and current prices update from what actually arrived.' },
-			{ lead: 'Automatic rebuy list.', detail: 'Short and missing lines become a durable follow-up list with handled and reopen states.' },
+			{ lead: 'Follow-up list.', detail: 'Short and missing lines become a durable follow-up list with handled and reopen states.' },
 			{ lead: 'Receive from the purchase order.', detail: 'Receive against any sent purchase order from its own screen.' },
 			{ lead: 'Retryable sends.', detail: 'A failed PO send can be retried, with the failure kept on record.' }
 		]
@@ -347,13 +349,13 @@ export const featureGroups: readonly FeatureGroup[] = [
 		kicker: 'Document import',
 		title: 'Upload the paperwork, check it against the original, then save.',
 		items: [
-			{ lead: 'Upload or paste.', detail: 'Drop files, paste text, or photograph paper. The workspace queues and tracks each one.' },
+			{ lead: 'Upload or paste.', detail: 'Drop files, paste text, or photograph paper. Each one is queued and tracked.' },
 			{ lead: 'Check the document type.', detail: 'Check how the document was identified. Change its type, replace an unreadable file or leave it out.' },
 			{ lead: 'Check names and units.', detail: 'Review the names, quantities and units read from the document before they are saved.' },
 			{ lead: 'Suggested exact matches.', detail: 'Only when name and unit are certain and the match is exact. Everything doubtful is one human tap.' },
 			{ lead: 'Review before saving.', detail: 'Imports live outside your real catalog until you confirm them.' },
 			{ lead: 'Keep recipe links when importing again.', detail: 'Recipe imports are checked before saving. Importing an updated recipe keeps its existing menu links.' },
-			{ lead: 'Invoices that check themselves.', detail: 'Compare the invoice total with the sum of its lines. Duplicate invoices are flagged.' },
+			{ lead: 'Total against the lines.', detail: 'Compare the invoice total with the sum of its lines. Duplicate invoices are flagged.' },
 			{ lead: 'Price sheets, row by row.', detail: 'Apply or skip each line. A pack-size change refuses to apply silently. A sheet is an asking price, never a purchase.' },
 			{ lead: 'Check every imported row.', detail: 'Review possible duplicates and uncertain matches. Imported rows need the same details as manually entered ones.' },
 			{ lead: 'Spreadsheets with different columns.', detail: 'Check which columns hold names, pack sizes and prices before importing. You can see which columns will be ignored.' },
@@ -363,7 +365,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'No duplicate save.', detail: 'Saving the same import twice returns the existing receipt instead of adding duplicate purchases.' },
 			{ lead: 'Unreadable means unread.', detail: 'Unreadable text stays beside the suggested details so you can correct it against the source.' },
 			{ lead: 'Match supplier names.', detail: 'Suggested matches can connect a supplier’s “Roma tomatoes” to your “Tomato, Roma” ingredient.' },
-			{ lead: 'It learns your names.', detail: 'Confirmed supplier names can be remembered for your kitchen’s next import.' },
+			{ lead: 'Supplier names, remembered.', detail: 'Confirmed supplier names can be remembered for your kitchen’s next import.' },
 			{ lead: 'Repeat matching without duplicates.', detail: 'Refreshing ingredient matches does not create duplicate ingredient records.' },
 			{ lead: 'Batch imports tested.', detail: 'Tested with 120-item order guides and 20-invoice batches that stay together.' }
 		]
@@ -532,9 +534,9 @@ export const featureGroups: readonly FeatureGroup[] = [
 		status: SAGE_STATUS === 'yes' ? 'available' : 'in-development',
 		items: [
 			{ lead: 'Ask during setup.', detail: 'Setup keeps an Ask Sage entry, offers questions that fit the stage and records entered so far, and gives you a direct route back.' },
-			{ lead: `${spellCapital(sageReadToolCount, { compound: true })} read-only tools, ${spell(sageDraftKinds.length)} drafts.`, detail: `Ask about the shift, orders, recipes, stock, buying or setup. Sage can also draft ${sageDraftKindsOr}, for a manager or owner to approve.` },
+			{ lead: `${spellCapital(sageReadToolCount, { compound: true })} read-only tools, ${spell(sageDraftKinds.length)} drafts.`, detail: `Ask about the shift, orders, recipes, stock, buying or setup. Sage can also draft ${sageDraftKindsOr}, for an owner or manager to approve.` },
 			{ lead: 'Sources under the answer.', detail: 'Each answer shows the records and checks behind its numbers, and says when evidence is missing.' },
-			{ lead: 'A draft is not a change.', detail: 'Answers read your records. Nothing changes until an Owner or Manager approves the draft, and the records are checked again before saving.' }
+			{ lead: 'A draft is not a change.', detail: 'Answers read your records. Nothing changes until an owner or manager approves the draft, and the records are checked again before saving.' }
 		]
 	},
 	{

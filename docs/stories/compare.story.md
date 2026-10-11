@@ -170,3 +170,6 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 - "Competitor entries describe their cited pricing pages...; they are not hands-on product tests" became "read off their own pricing pages on the date below, not from using their software." Same boundary, plainer.
 - Slogan and consultant headings went plain: "Start with the tradeoff" is "The short version"; "Read each cell literally" is "How to read a cell"; "Four rules built for event work" is "Four rules for when the event changes"; the close is "Bring one real menu and get your answer."
 - Two row notes lost "review the extracted records" phrasing (invoice scanning, receiving).
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Proof link is "Take the product tour" to /tour/main (was a broken #demo link to a 2:53 film); Sage row says "an owner or manager".

@@ -195,3 +195,6 @@ definition are unchanged.
 - Lede no longer says the features are "below" or repeats Coming: "The {featureCount} available features are sorted by kitchen job into the areas below." The guide sentence after the snap line is cut (it is said again above the guides list); "shipped features" is "available features" to match the lede.
 - Area cards: compliance blurb names guests' restrictions instead of "calculated or settled"; team blurb names Sage and says "connections marked Coming"; the day-itself kicker is "Orders, shop, prep & pack" (was "Orders, the event").
 - Kept: "Watch the 2:53 product tour" link (pinned; owner call O1).
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Hub proof link is the site's product tour (featuresMenu.tourLabel / tourHref, /tour/main) instead of "Watch the 2:53 product tour" to a missing #demo anchor; same on /compare. Pins in check-landing-claims.mjs moved to the new source.

@@ -20,3 +20,6 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 - Import figure counts five doors, matching Integrations and onboarding: "A photo, a PDF, a spreadsheet, a Word document or pasted text." (visible tag and sr-only description changed together).
 - Figure caption: "You confirm. That step is the point. Everything before it is a suggestion." replaces "the gate in the middle" / "to the left of it is a proposal" (wrong at phone width; "proposal" names the client document). Snap line kept.
 - Sibling blurbs for compliance and team changed with the hub cards.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Import items: "Total against the lines." (was "Invoices that check themselves."), "Supplier names, remembered." (was "It learns your names."), "Each one is queued and tracked." (no "workspace").

@@ -174,3 +174,7 @@ names only what the frame shows.
 - Quotes intro cut to one sentence ("A new event starts as a draft, and the food cost shows while you set it up."); the "Confirmation freezes" bullet removed (the lock was said four times).
 - "these screens" is "this screen"; the garden-wedding caption and the Shop/Prep/Pack caption drop lines repeated beside them; count label "shipped capabilities" like the sister pages.
 - Held for the owner: hero default price vs capture, the film note, the H2 twin, FAQ and caption changes.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Hero ledger default price $95.00 / guest (the capture's menu price; $68 is the order's own price); evidence note points to the captured 180-guest event, not a film.
+- FAQ "the target you set" (was "configured target"); menu items "Price to target." and "Menus in use stay put.".

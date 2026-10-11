@@ -136,3 +136,6 @@ spam, Let it through, Stop the old address now) are unchanged.
 - Setup H2 "Three cards, one settings page." is "Tell your reps once. Forward the rest from Gmail."; its intro and card 01 say what they point at ("send the message to each rep", "nobody forwarding them").
 - Review step drops "Until you do, it changes no cost." ahead of the snap that says it better.
 - Caps limit punctuated as two sentences (pinned figures kept); inbox note uses "use Change what this email is".
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Limit: the email's own text is read only when nothing is attached and the invoice is written out in it with a total.

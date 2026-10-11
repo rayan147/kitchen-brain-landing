@@ -17,8 +17,10 @@ import { comparison } from '../../lib/comparison';
 // EVIDENCE. Five doors is RC-38, read on sandbox/demo: the import dropzone
 // accepts JPEG, PNG, WebP, PDF, CSV, XLSX and DOCX, with a paste control
 // beside it. Staged-until-confirmed is RC-09. The unreadable note is RC-39.
-// Square and QuickBooks are RC-45. QuickBooks is genuinely unbuilt. Square is
-// NOT: sandbox/demo carries the provider, catalog mapping, settings screens,
+// Square and QuickBooks are RC-45. QuickBooks is built and flag-gated on
+// kitchen-brain develop 4f46543cf (FEATURE_QUICKBOOKS_INTEGRATION_ENABLED; the
+// sandbox-only lock is gone), and stays Coming by the 2026-09-27 owner ruling
+// (ledger RC-45 note, 2026-10-11). Square is built too: sandbox/demo carries the provider, catalog mapping, settings screens,
 // the OAuth callback and the webhook, all of it behind
 // integrationExecutionAllowed(businessId, 'square_integration',
 // env.FEATURE_SQUARE_INTEGRATION_ENABLED), which defaults off. "Coming" is
@@ -88,7 +90,7 @@ const comingRows = comparison
 									Coming
 								</span>
 							</div>
-							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.label === 'Point of sale' ? 'Square is not available today. You cannot send menus to your till or bring sales into CostCook through this connection.' : 'QuickBooks Online is planned and has not been built. CostCook does not sync your purchases or accounts with it today.'}</p>
+							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.label === 'Point of sale' ? 'Square is not available today. You cannot send menus to your till or bring sales into CostCook through this connection.' : 'QuickBooks Online is not in the app you would start today, so CostCook does not sync your purchases or accounts with it.'}</p>
 						</li>
 					))
 				}

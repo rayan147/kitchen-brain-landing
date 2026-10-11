@@ -84,15 +84,15 @@ export const sage = {
 		{ name: 'Run the shift', detail: 'Attention, orders, prep and receiving follow-ups for a date.' },
 		{ name: 'Check a recipe', detail: 'Search, cost, nutrition and reviewed allergen facts.' },
 		{ name: 'Check stock and buying', detail: 'Below-par ingredients and recent price moves.' },
-		{ name: 'Finish setup', detail: 'Progress and the unfinished stage, for managers and owners.' },
-		{ name: 'Prepare one change', detail: 'A draft shopping list or guest-count change, for a manager or owner to approve.' }
+		{ name: 'Finish setup', detail: 'Progress and the unfinished stage, for owners and managers.' },
+		{ name: 'Prepare one change', detail: 'A draft shopping list or guest-count change, for an owner or manager to approve.' }
 	],
 	/** Read off the code, not the prompt. Each is enforced in a test. */
 	guardrails: [
 		{ lead: 'Every number has a source.', detail: 'Links are built by the app, so an answer cannot cite a record it did not read.' },
-		{ lead: 'It never changes a record on its own.', detail: 'It does not send, buy, reprice or adjust anything. A draft waits for an Owner or Manager to approve it.' },
+		{ lead: 'It never changes a record on its own.', detail: 'It does not send, buy, reprice or adjust anything. A draft waits for an owner or manager to approve it.' },
 		{ lead: 'It cannot reach another kitchen.', detail: 'Sage can only use records in the kitchen account you are signed into.' },
-		{ lead: 'It is for Owners and Managers.', detail: 'Staff cannot open Sage. The costs and price moves it reads stay with the people who see the money.' },
+		{ lead: 'It is for owners and managers.', detail: 'Staff cannot open Sage. The costs and price moves it reads stay with the people who see the money.' },
 		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.' },
 		{ lead: 'It has limits, and a stop.', detail: 'Sage has answer time limits and a daily usage cap. If it stops, the rest of CostCook keeps working.' }
 	],

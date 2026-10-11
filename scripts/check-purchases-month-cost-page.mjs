@@ -13,7 +13,7 @@ const required = [
 	'id="features-ledger"',
 	'aria-label="On this page"',
 	'id="faq-heading"',
-	'What does the month verdict compare?',
+	'What does the month review compare?',
 	'Close the month with the known and unknown parts still visible.',
 	'month-close-explain-the-gap',
 	'docs/stories/purchases-month-cost.story.md'

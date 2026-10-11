@@ -163,3 +163,6 @@ example caption (68 lb, 55 lb, 13 lb, one 20 lb case) are unchanged.
 ## Revision 2026-10-11: English edit
 - Count and gap bodies no longer retell the movement math or the stale rule stated just after them; "Every count is kept." now says a later count adds a record and does not erase the old one.
 - FAQ question drops "automatically"; the em dash used as a quantity is "No count"; caption drops "built only from shipped inventory behavior"; "The fix: go count it."
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Par FAQ: "not compared until it is counted" replaces "unevaluable" (the app shows "Count it to compare.").

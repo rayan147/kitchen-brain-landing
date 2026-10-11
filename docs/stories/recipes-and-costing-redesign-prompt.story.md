@@ -175,3 +175,6 @@ names only what the frame shows.
 - Costing H2 "Catch a cost change before it reaches the quote." is "Follow one case price to the plate."; "usable yield" is "trim yield"; the figure caption drops the line that repeated the intro; the hero record label is "How the chicken line adds up".
 - Menu frame h3 "The frozen quote, next to today's prices.", with its line saying before and after confirm in order.
 - Print scene h3 "Print a sheet that says how old it is." (no longer repeats the pinned H2 that follows). Close: "Bring that dish and follow it from recipe to quote".
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- FAQ "trim yield" (glossary term); items "Lines that add up.", "Price to target.", "Menus in use stay put.".

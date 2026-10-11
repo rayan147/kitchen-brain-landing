@@ -111,6 +111,11 @@ page's boundary, which is why nothing else on the page is allowed to be the
 snap: the rendered example ("Conflict. Pesto: walnuts (contains). bride, Tree
 nuts") is proof, not the line.
 
+Updated 2026-10-11: the page carries two lines the guard pins, and both are
+the app's own (guards.ts). "CostCook detects, it never certifies." is the
+boundary snap; "Unknown is never clear." is the coverage line. They do
+different jobs, so both stay.
+
 ## Step 9 — Bringing a Scene to Life
 
 Two rooms. The first is a phone at a prep bench on a Tuesday, a booking arriving
@@ -225,3 +230,6 @@ ever asked it."), so the pass only breaks up two long chains. Copy only.
 - Close: "The cook reads the answer off the pack list" (the answer prints on the lists, not the pan).
 - Catalog paragraph tightened to two sentences; recipes link label "Recipes & food costing" as on the sister pages.
 - Held for the owner: the clear-result FAQ wording ("a reason to serve").
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Clear-result FAQ: "It is never a promise to a guest: your kitchen must still check the food and its preparation." (replaces "a reason to serve"). Step 8 now names both pinned lines.

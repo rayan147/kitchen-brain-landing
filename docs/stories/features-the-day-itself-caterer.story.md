@@ -23,3 +23,8 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 - Group title "Opens on what needs attention." is "The home screen opens on what needs attention."
 - Orders kicker "Orders, the event" is "Orders, shop, prep & pack" (two kickers no longer both say event).
 - Lede left as is: the proposed event-first lede ("book the yes with Confirm order") conflicts with the events page edit that separates Book the event from Confirm order; held for the owner.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Lede, consistent with the events page: "Take the inquiry and send the proposal. Book the event once the agreement is signed and the deposit is in. Confirm order then locks the menu and head count and gives you your shopping, prep and pack lists..."
+- Deposit item: the client pays by card from an email link, or you record what arrives (2026-10-06 ruling); stale "recorded by hand" comment rewritten.
+- Purchasing item lead "Follow-up list." (the app's word).

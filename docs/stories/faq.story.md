@@ -173,3 +173,6 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 - Hero: "Check the trial, cancellation, setup and product limits" became "Straight answers on the money, the fit, and the catch." The topic map says "Jump to a topic"; the four chapter lines say it the way the reader would ("how to walk away", "who picks up when you write").
 - Answers that read like a manual got a cook's word order: shopping ("A stock or a mirepoix shows up as a batch to make"), receiving ("what actually came off the truck"), multi-event, prices in, catalog, recipes in, phone ("open the order before you walk into the cooler"), Sage during setup, Square and QuickBooks ("I am not promising a date"), the card question ("Because the trial is the subscription").
 - Snap answer unchanged: "The guest count."
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Labels answer names the prep list; Sage answer says "an owner or manager".

@@ -178,3 +178,7 @@ the video chapters, FAQ, alt text and captions are unchanged.
 - Setup labels match their lines ("Open it from setup", "Keep your place"); "half-built kitchen"; setup caption names what the capture shows.
 - FAQ heading "Questions owners ask first." with intro "Is it live, what can it change, and who sees the money."; FAQ 1, 2 and 6 shortened; guardrails 2 and 6 say who does what.
 - Held for the owner: the proof section's cucumber figures vs the short-rib capture, the repeated capture, the sitewide role-pair form.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Proof section matches its capture: the short-rib question, $7.28 per portion, beef short rib $7.00 (96%), 3 cited lines, Recipe · Braised Short Rib (cucumber facts retired).
+- Role pair in running text is "an owner or manager" (the app's form), here and on the homepage, /features, /faq, /compare and the tour.

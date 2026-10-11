@@ -14,7 +14,7 @@ const roles = [
 		summary: 'Runs the account: billing, the team, kitchen settings and recipe publishing.',
 		workspaceAccess: 'Everything a Manager and Staff member can open, plus kitchen settings and billing.',
 		protectedWork: 'Invite people and change their role; manage billing and kitchen settings; publish, archive and restore recipes.',
-		boundary: 'Only the Owner invites, changes roles, or touches billing and settings.'
+		boundary: 'Nothing in the account is closed to the Owner.'
 	},
 	{
 		name: 'Manager',
@@ -45,7 +45,7 @@ const faqItems = [
 	},
 	{
 		question: 'What role does a new teammate get?',
-		answer: 'The one you pick when you send it: Staff or Manager. The link works for 7 days, and you can change the role later.'
+		answer: 'The one you pick when you send it: Staff or Manager. The link signs them in once, with no password. It works for 7 days, and you can change the role later.'
 	},
 	{
 		question: 'Are restricted actions actually blocked?',
@@ -66,8 +66,8 @@ const faqItems = [
 				<p class="hero-lede">Invite your crew by email into the same kitchen account. Each person gets one of three roles: Owner, Manager or Staff. The role decides what they see and what they can change.</p>
 				<p class="hero-constraint"><strong>Before you invite:</strong> pick Staff for anyone who should not see costs. Custom roles are not available.</p>
 				<div class="hero-actions">
-					<a href="#role-boundaries" class="btn-quiet">Compare team roles</a>
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href="#role-boundaries" class="btn-quiet">Compare team roles</a>
 				</div>
 				<FeatureTrialTerms />
 				<p class="hero-constraint">{launchPlan.crewTerms}</p>
@@ -112,9 +112,9 @@ const faqItems = [
 					<section data-reveal aria-labelledby={`role-${role.name.toLowerCase()}`}>
 						<header><span aria-hidden="true">{role.mark}</span><h3 id={`role-${role.name.toLowerCase()}`}>{role.name}</h3></header>
 						<dl class="role-facts">
-							<div><dt>Workspace access</dt><dd>{role.workspaceAccess}</dd></div>
-							<div><dt>Protected work</dt><dd>{role.protectedWork}</dd></div>
-							<div><dt>Boundary</dt><dd>{role.boundary}</dd></div>
+							<div><dt>Can open</dt><dd>{role.workspaceAccess}</dd></div>
+							<div><dt>Can do</dt><dd>{role.protectedWork}</dd></div>
+							<div><dt>Cannot</dt><dd>{role.boundary}</dd></div>
 						</dl>
 					</section>
 				))}

@@ -675,7 +675,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Inventory area', value: 'Walk-in 1' },
 				{ label: 'Drafts waiting', value: '0', tone: 'good' }
 			],
-			footnote: 'Sage drafts wait for a manager or owner to approve.'
+			footnote: 'Sage drafts wait for an owner or manager to approve.'
 		}
 	}
 ];

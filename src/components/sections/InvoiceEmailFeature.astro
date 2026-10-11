@@ -43,7 +43,7 @@ const inboxFilters = ['All email', 'Invoices and credits', 'Not imported', 'Held
 
 // Where it stops. One sentence each, each one a line of kitchen-brain code.
 const limits = [
-	'It reads PDFs and phone photos attached to the email, or the email’s own text when nothing is attached; a spreadsheet or Word file is listed as not read.',
+	'It reads PDFs and phone photos attached to the email. With nothing attached, it reads the email itself only when the invoice is written out in it with a total. A spreadsheet or Word file is listed as not read.',
 	`Past ${inboxLimits.emailsPerDay} emails in a day, the rest are not read. Scans are read up to ${inboxLimits.pagesReadPerDay} pages a day.`,
 	'Statements, order confirmations and promotions are listed with a reason and not imported, unless you change what the email is.',
 	'Gmail forwarding is not on until you enter Gmail’s confirmation code in Gmail.',

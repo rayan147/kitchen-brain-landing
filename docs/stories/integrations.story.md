@@ -120,3 +120,6 @@
 
 ## Revision 2026-10-11: English edit
 - Cut the closing line "Until they land, nothing in CostCook reads from or writes to your books or your till." Square and QuickBooks were already said not to work three times on the team page.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- QuickBooks line no longer says "planned and has not been built"; source comment corrected (built, flag-gated on develop 4f46543cf, Coming by ruling).

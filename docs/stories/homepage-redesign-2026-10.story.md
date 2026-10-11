@@ -348,3 +348,6 @@ the boundary line. No claim added; every figure and qualifier kept.
 Kept by the editor's ruling: the H1, the hero lede, the inquiry step, "It never
 slips in as zero.", the Sage band, the founder line, and the snap line, "Buy
 for what survives the knife." Steps 6, 10 and 11 re-checked.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Import band: "It remembers the names you confirm." (was "It learns your names for things."). Sage band: "until an owner or manager approves".

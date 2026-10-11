@@ -14,7 +14,7 @@ const invoiceLeads = new Set([
 	'Check the document type.',
 	'Check names and units.',
 	'Review before saving.',
-	'Invoices that check themselves.',
+	'Total against the lines.',
 	'The original stays visible.',
 	'No duplicate save.',
 	'Unreadable means unread.'
@@ -25,7 +25,7 @@ const priceListLeads = new Set([
 	'Spreadsheets with different columns.',
 	'Word documents.',
 	'Match supplier names.',
-	'It learns your names.',
+	'Supplier names, remembered.',
 	'Batch imports tested.'
 ]);
 const invoiceItems = importGroup.items.filter((item) => invoiceLeads.has(item.lead));
@@ -102,7 +102,7 @@ const faqItems = [
 				<div class="stage-sheet">
 					<div class="sheet-head"><span>Details to review</span><span>Awaiting your review</span></div>
 					<div class="stage-row stage-labels"><span>Item</span><span>Source</span><span>State</span></div>
-					<div class="stage-row"><strong>Chicken thigh</strong><span>Invoice</span><em class="ready">Ready to review</em></div>
+					<div class="stage-row"><strong>Chicken thigh</strong><span>Invoice</span><em class="ready">Matched</em></div>
 					<div class="stage-row"><strong>Roma tomato</strong><span>Price list</span><em class="check">Needs review</em></div>
 					<div class="stage-row"><strong>Unreadable line</strong><span>Invoice</span><em class="check">Needs review</em></div>
 					<div class="confirm-gate"><span>You confirm</span><strong>then save price changes</strong></div>

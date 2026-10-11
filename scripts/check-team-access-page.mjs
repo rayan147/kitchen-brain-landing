@@ -22,8 +22,8 @@ const required = [
 	// Develop c90d3b9c2 (owner ruling 2026-10-10): Staff never see costs.
 	'pick Staff for anyone who should not see costs',
 	'Costs hidden from Staff',
-	'Workspace access',
-	'Protected work',
+	'Can open',
+	'Can do',
 	'The line is the role:',
 	'aria-current="page"',
 	'class="container-page onward feature-onward"',
@@ -36,9 +36,9 @@ if (missing.length > 0) throw new Error(`Team & Access build is missing: ${missi
 if ((html.match(/data-team-disclosure/g) ?? []).length !== 4) {
 	throw new Error('Team & Access must render four FAQ disclosures.');
 }
-if ((html.match(/<dt[^>]*>Workspace access<\/dt>/g) ?? []).length !== 3
-	|| (html.match(/<dt[^>]*>Protected work<\/dt>/g) ?? []).length !== 3
-	|| (html.match(/<dt[^>]*>Boundary<\/dt>/g) ?? []).length !== 3) {
+if ((html.match(/<dt[^>]*>Can open<\/dt>/g) ?? []).length !== 3
+	|| (html.match(/<dt[^>]*>Can do<\/dt>/g) ?? []).length !== 3
+	|| (html.match(/<dt[^>]*>Cannot<\/dt>/g) ?? []).length !== 3) {
 	throw new Error('Team & Access must compare every role with the same three semantic facts.');
 }
 // The homepage stopped being a stop called #access on 2026-09-09 and became a

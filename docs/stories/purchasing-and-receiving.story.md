@@ -163,3 +163,6 @@ Owner: make the site read like a chef wrote it. Copy only.
 - Receive H2 "The order you sent is the checklist at the door." Recovery H2 covers a failed email too: "When an order or a delivery goes wrong, there is a way back."
 - PO caption in plain words ("If the email fails, the same PO stays on record, ready to retry."); FAQ intro "What people ask before the next truck pulls in."; "it offers" is "CostCook offers".
 - Pinned FAQ lifecycle sentences untouched.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Capability lead "Follow-up list." (was "Automatic rebuy list.").

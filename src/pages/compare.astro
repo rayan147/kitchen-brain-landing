@@ -5,7 +5,7 @@ import FeatureTrialTerms from '../components/FeatureTrialTerms.astro';
 import { comparison, competitors, costcookNo, NOT_LISTED, sheetWork, VERIFIED_ON } from '../lib/comparison';
 import { spell } from '../lib/words';
 import CellMark from '../components/CellMark.astro';
-import { cta, demoCta, launchPlan } from '../lib/site';
+import { cta, demoCta, featuresMenu, launchPlan } from '../lib/site';
 import { comingDefinition } from '../lib/availability';
 import ComparisonCapabilityLabel from '../components/ComparisonCapabilityLabel.astro';
 
@@ -160,7 +160,7 @@ const legend = [
 				<!-- The one moving proof on the site. A reader deciding between three
 				     products off a table has no way to see any of them run, and this
 				     page had no link to the footage at all. -->
-				<a href="/#demo" class="btn-quiet">Watch the 2:53 product tour</a>
+				<a href={featuresMenu.tourHref} class="btn-quiet">{featuresMenu.tourLabel}</a>
 			</p>
 			<p class="mt-5 max-w-[58ch] text-ink-soft">
 				Their columns were read from{' '}

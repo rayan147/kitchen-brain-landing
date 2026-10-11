@@ -177,3 +177,6 @@ or RC-52 boundaries).
 - Roles intro: "Each role builds on the one below it. Staff get the kitchen work. Managers add the money. The Owner adds the team, billing, settings and recipe publishing." Close: "Billing and the team stay with you. Costs stay with you and your Managers."
 - Pass label "CostCook sign-in"; Staff access list unnested; FAQ intro, FAQ 1 and FAQ 3 question in plain words; onward link "Recipes & food costing"; meta description leads with "Staff never see costs".
 - Held for the owner: the dt labels (pinned), the Owner boundary line, the hero action order.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Role facts labelled "Can open / Can do / Cannot" (pins updated); Owner row "Nothing in the account is closed to the Owner."; hero puts the primary action first; FAQ 3 adds that the link signs them in once, with no password.

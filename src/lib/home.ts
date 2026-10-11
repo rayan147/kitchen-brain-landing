@@ -301,7 +301,7 @@ export const kitchenRows = [
 		eyebrow: 'Invoices and price sheets',
 		pain: 'You’re not typing 400 ingredients into one more system.',
 		heading: 'Upload the invoice. Confirm what it read.',
-		body: 'It takes invoices and price sheets, even a spreadsheet or a Word file. Lines it matched wait for you to confirm them. The rest are flagged Needs review. It learns your names for things.',
+		body: 'It takes invoices and price sheets, even a spreadsheet or a Word file. Lines it matched wait for you to confirm them. The rest are flagged Needs review. It remembers the names you confirm.',
 		shot: withPhone(
 			shot(
 				'import-review',

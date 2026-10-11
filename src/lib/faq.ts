@@ -193,7 +193,7 @@ export const faq: readonly FaqGroup[] = [
 				icon: 'sage',
 				question: 'What is Sage?',
 				answer: [
-					`An assistant inside CostCook with ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. Every answer shows where its numbers came from. It can prepare ${spell(sageDraftKinds.length)} kinds of draft (${sageDraftKindsAnd}), and nothing changes until a manager or owner approves the draft. It cannot reach another kitchen and it never changes a record on its own.`,
+					`An assistant inside CostCook with ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. Every answer shows where its numbers came from. It can prepare ${spell(sageDraftKinds.length)} kinds of draft (${sageDraftKindsAnd}), and nothing changes until an owner or manager approves the draft. It cannot reach another kitchen and it never changes a record on its own.`,
 					'Sage is available now, and it is there during setup too. The questions it starts you on depend on the setup stage you are in and what you have entered so far, and Back to setup takes you to the stage you left unfinished. See the <a href="/features/sage">Sage feature guide and video</a>.'
 				],
 				claims: ['RC-46', 'RC-49']

@@ -68,11 +68,11 @@ export const labelsAvailability = {
 		: 'Choose storage, settle the use-by date, print one numbered label per container through the browser, and keep the frozen record for reprints. No direct printer connection.',
 	faqStatus: labelsAreComing
 		? [
-				'Coming; not included in your trial or subscription. In the preview, tap Label on the pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.',
+				'Coming; not included in your trial or subscription. In the preview, tap Label on the prep or pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.',
 				'It is not included in the launch subscription. There is no direct connection to a label printer; the output is the browser print dialog.'
 			]
 		: [
-				'Yes. Tap Label on the pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.',
+				'Yes. Tap Label on the prep or pack list, a recipe, or an ingredient; choose the storage condition; settle the use-by date yourself; count the containers; and print through your browser onto measured sheet or roll stock. The recorded label is frozen for reprints.',
 				'There is no direct connection to a label printer; the output is the browser print dialog.'
 			],
 	homepageTradeoff: labelsAreComing
@@ -90,7 +90,7 @@ export const labels = {
 	steps: [
 		{
 			lead: 'Tap Label where the food is.',
-			detail: 'On the pack list, a recipe or an ingredient. Each opens the same label form so you can review the same details before printing.'
+			detail: 'On the prep list once a dish is done, the pack list, a recipe or an ingredient. Each opens the same label form, so you review the same details before printing.'
 		},
 		{
 			lead: 'Say how it is stored.',

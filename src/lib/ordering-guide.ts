@@ -104,7 +104,7 @@ export const paymentChoices = [
 	},
 	{
 		label: 'You collect it',
-		detail: 'Invoice, check, cash or ACH. The client gets an approval email, and you record the payment on the order. New sites start on this one.'
+		detail: 'Your own invoice, a check, cash or ACH. The client gets an approval email, and you record the payment on the order. New sites start on this one.'
 	}
 ] as const;
 

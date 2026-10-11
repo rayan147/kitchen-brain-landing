@@ -57,3 +57,7 @@ Ordering site (read 2026-10-08).
 - Website section opens on the three steps and the reassurance that the hard one goes to whoever looks after your site.
 - #after: Booking rules come straight after approve or decline; the Approving requests note moves below the rules; the You collect it line no longer repeats its card ("Picked You collect it in Setup? The client gets an approval email instead of a pay link.").
 - Snippet note drops the third "touches nothing else on your page"; the Stripe limit says "CostCook won't save cards"; the second way in is "Or a form on your own website." (ordering.ts, this page only).
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Hero: the card link is for when "you take cards through CostCook". You collect it: "Your own invoice, a check, cash or ACH."
+- Test order: "press Go live", then "cancel it in Orders" (the app's own instruction).

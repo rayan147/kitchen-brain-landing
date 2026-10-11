@@ -185,3 +185,6 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 - Intros lost the parallel-list rhythm and words like "resolve", "extracted rows", "inspect": the invoice "sits next to the lines read off it"; the delivery's short line "stays in view until somebody deals with it".
 - The slogan triplet "One guest count. Three lists. No second round of typing." became "Type the guest count once. All three lists come off it." Offline meaning unchanged (opened pages read without signal, check-offs need a connection).
 - Snap line unchanged: "At 180 guests, one dollar per head is a $180 decision."
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Sage footnote: "wait for an owner or manager to approve".

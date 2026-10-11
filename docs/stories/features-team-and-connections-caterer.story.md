@@ -28,3 +28,6 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 - Area blurb and meta description name Sage and say "connections marked Coming" (was "the connections being built").
 - Lede drops the offline sentence; it stays on the page in "Read saved pages without signal." Roles wording kept verbatim (2026-10-10 ruling).
 - Integrations: the closing "Until they land, nothing in CostCook reads from or writes to your books or your till." is cut; the group line and the Coming rows already say it.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Integrations: QuickBooks line is "not in the app you would start today" (it is built and flag-gated; Coming stands per the 2026-09-27 ruling; ledger RC-45 note 2026-10-11).

@@ -1,5 +1,6 @@
 ---
 import FeatureTrialTerms from "../FeatureTrialTerms.astro";
+import { featuresMenu } from '../../lib/site';
 import { featureSections, featureCount, inDevelopmentFeatureGroups, featureMenuSections, featureMenuHref } from '../../lib/features';
 import { spellCapital } from '../../lib/words';
 import { cta, demoCta } from '../../lib/site';
@@ -57,7 +58,7 @@ import { comingDefinition } from '../../lib/availability';
 				None of that is counted in the {featureCount} available features.
 			</p>
 			<p class="mt-6">
-				<a href="/#demo" class="btn-quiet">Watch the 2:53 product tour</a>
+				<a href={featuresMenu.tourHref} class="btn-quiet">{featuresMenu.tourLabel}</a>
 			</p>
 		</div>
 

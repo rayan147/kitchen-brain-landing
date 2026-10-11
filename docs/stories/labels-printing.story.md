@@ -157,3 +157,6 @@ pass is light and copy only.
 - The soaked-sticker snap is left to the record section: step 06 and the print caption no longer spend it first. Tagline: "Nothing prints until you say how the food is stored."
 - Availability FAQ answer opens "Yes."; stock H2 has a subject ("Label stock is set once in Settings..."); "millimeters"; "THE PRINT VIEW · REPRINTABLE"; phone note tells the reader to open the full dialog.
 - Held for the owner: Label action on Prep (H1 vs step 1) and printer-integration status.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Step 1 and the FAQ status name the prep list (Label appears once a dish's prep is done); faqStatus change also reaches /faq.
