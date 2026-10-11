@@ -158,3 +158,9 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 - Fit-signal bodies: "price to defend" is "a price you have to stand behind"; "Regular service stays regular" is "Your regular service runs the way it always has."
 - Limits intro: "does not support these three requirements... compare the alternatives" became "does not do these three. If you cannot work without one of them, look at the other options before you start a trial."
 - Known, not caused here: verify-who-its-for still expects the old heading "The work decides whether CostCook fits." and fails at baseline.
+
+## Revision 2026-10-11: English edit
+- Lede answers the H1 first and names the current product: "Yes, if your menus change and you buy for a date and a guest count. In one kitchen, CostCook takes each job from the price the client says yes to through the shopping, the prep and the pack."
+- Plan heading "When the job changes before you confirm, the plan changes with it." (Confirm order freezes the plan on develop); the plan body ends "Confirm order locks the quantities and prices once the final count is in." instead of "Regular service keeps its own rhythm next to it."
+- Ticket sub-line "No guest count to plan"; path notes "Price it per guest." and "Planned cost against what you spent."; close names CostCook.
+- Resources menu blurb (site.ts, every page): "Check whether CostCook fits your kitchen, and where it stops."

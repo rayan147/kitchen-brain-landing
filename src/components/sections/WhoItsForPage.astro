@@ -22,10 +22,10 @@ const fitSignals = [
 ] as const;
 
 const workPath = [
-	{ label: 'Menu + guests', href: '/features/menus-and-quotes', note: 'Set the dated plan.' },
+	{ label: 'Menu + guests', href: '/features/menus-and-quotes', note: 'Price it per guest.' },
 	{ label: 'Recipes', href: '/features/recipes-and-costing', note: 'Scale the food.' },
 	{ label: 'Shop · Prep · Pack', href: '/features/order-shop-prep-pack', note: 'Buy it, cook it, load it.' },
-	{ label: 'Purchases + cost', href: '/features/purchases-and-month-cost', note: 'See what was spent.' }
+	{ label: 'Purchases + cost', href: '/features/purchases-and-month-cost', note: 'Planned cost against what you spent.' }
 ] as const;
 
 const limits = [
@@ -45,7 +45,7 @@ const limits = [
 				</nav>
 				<h1 id="audience-heading">Is CostCook right for your kitchen?</h1>
 				<p class="hero-lede">
-					If your menus change and you buy for a date and a guest count, you are in the right place. CostCook takes one kitchen from the recipe through the shopping, the prep and the pack.
+					Yes, if your menus change and you buy for a date and a guest count. In one kitchen, CostCook takes each job from the price the client says yes to through the shopping, the prep and the pack.
 				</p>
 				<div class="hero-actions">
 					<a href="#fit-test" class="btn-quiet">See if it fits your work</a>
@@ -63,7 +63,7 @@ const limits = [
 						<span>Tuesday</span>
 						<h2>Regular service</h2>
 						<p>House menu</p>
-						<small>Your regular service</small>
+						<small>No guest count to plan</small>
 					</div>
 					<div class="ticket-stitch" aria-hidden="true"><span></span></div>
 					<div class="service-plan event">
@@ -97,10 +97,10 @@ const limits = [
 	<section class="work-together" aria-labelledby="work-heading">
 		<div class="container-page">
 			<div class="section-copy">
-				<h2 id="work-heading">When the job changes, the plan changes with it.</h2>
+				<h2 id="work-heading">When the job changes before you confirm, the plan changes with it.</h2>
 				<p>
 					One dated plan runs through the recipe quantities, the shopping, prep and pack,
-					the purchasing and the food cost. Regular service keeps its own rhythm next to it.
+					the purchasing and the food cost. Confirm order locks the quantities and prices once the final count is in.
 				</p>
 			</div>
 			<ol class="work-path">
@@ -138,7 +138,7 @@ const limits = [
 		<div class="container-page close-layout">
 			<div>
 				<h2 id="close-heading">Bring one real menu and one guest count.</h2>
-				<p>Put your next job through it and see whether it holds up.</p>
+				<p>Put your next job through CostCook and see whether it holds up.</p>
 			</div>
 			<!-- Considered Composite; not used because this is a fixed pair of
                  content groups. Bounded columns keep billing text from shrinking the heading. -->

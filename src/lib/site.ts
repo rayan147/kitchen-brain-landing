@@ -162,7 +162,7 @@ const resourceNav = [
 		header: 'resources',
 		group: 'See it work',
 		icon: 'audience',
-		description: 'Check the kitchens, events, and working styles CostCook fits.'
+		description: 'Check whether CostCook fits your kitchen, and where it stops.'
 	},
 	{
 		label: 'Your initial setup',
