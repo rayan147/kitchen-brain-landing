@@ -107,7 +107,10 @@ try {
 				faqCount: document.querySelectorAll('[data-sage-disclosure]').length,
 				abilityCount: document.querySelectorAll('.question-list > li').length,
 				videoSources: video ? [...video.querySelectorAll('source')].map((source) => source.getAttribute('type')) : [],
-				videoTrack: video?.querySelector('track')?.getAttribute('src'),
+				videoTrack: video?.querySelector('track')?.getAttribute('src') ?? null,
+				filmInHero: Boolean(document.querySelector('.hero video')),
+				videoWidth: video?.getBoundingClientRect().width ?? 0,
+				transcriptLines: document.querySelectorAll('.film-transcript li').length,
 				scrollWidth: document.documentElement.scrollWidth,
 				innerWidth,
 				bodyHeight: document.body.scrollHeight
@@ -117,9 +120,14 @@ try {
 		if (state.h1 !== 'Ask Sage about your kitchen.') throw new Error(`${width}: wrong H1`);
 		if (state.status !== 'In the app today') throw new Error(`${width}: availability drifted`);
 		// 13 since 2026-09-27: the guest-count draft joined the list (RC-49, 23818c8).
-		if (state.faqCount !== 6 || state.abilityCount !== 13) throw new Error(`${width}: list count drifted`);
-		if (state.videoSources.join(',') !== 'video/webm,video/mp4') throw new Error(`${width}: video fallbacks drifted`);
-		if (state.videoTrack !== '/proof/sage-walkthrough.vtt') throw new Error(`${width}: caption track drifted`);
+		// 7 FAQs since 2026-10-11: "Is there a limit on Sage?" joined with the allowance.
+		if (state.faqCount !== 7 || state.abilityCount !== 13) throw new Error(`${width}: list count drifted`);
+		// MP4 first, as on the homepage film; captions are burned in, so no track.
+		if (state.videoSources.join(',') !== 'video/mp4,video/webm') throw new Error(`${width}: video fallbacks drifted`);
+		if (state.videoTrack !== null) throw new Error(`${width}: a caption track doubles the burned-in captions`);
+		if (!state.filmInHero) throw new Error(`${width}: the film is not in the hero`);
+		if (state.transcriptLines !== 5) throw new Error(`${width}: transcript has ${state.transcriptLines} lines, the film 5 captions`);
+		if (state.videoWidth < 280) throw new Error(`${width}: the film draws ${Math.round(state.videoWidth)}px wide`);
 		if (state.scrollWidth !== state.innerWidth) throw new Error(`${width}: horizontal overflow ${state.scrollWidth}/${state.innerWidth}`);
 
 		if (width === 1440 || width === 390) {

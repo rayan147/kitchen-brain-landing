@@ -73,7 +73,7 @@ const SCENES: Record<(typeof SAGE_ORDER)[number], FilmScene> = {
         to: 5,
         layout: "screen",
         frames: ["panel-note-desktop.png"],
-        caption: "Sage tells you once, well before the month's credits run out.",
+        caption: "Sage warns you once 80% of the month’s credits are used.",
         ring: { x: 68.5, y: 10.5, width: 31, height: 10 },
         focus: { x: 100, y: 0, scale: 1.12 },
       },

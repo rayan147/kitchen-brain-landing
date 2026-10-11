@@ -4,7 +4,8 @@
 // docs/stories/sage-feature.story.md
 //
 //   APP=http://localhost:4193 node scripts/capture-sage-proof.mjs
-//   node scripts/sage-video/assemble.mjs      # rebuilds the walkthrough
+//   The walkthrough is the Remotion film now: scripts/capture-sage-film.mjs,
+//   then video/ `npm run frames:sage` and `npm run render:sage`.
 //
 // Sage answers need SAGE_ENABLED and a provider key, so this runs against the
 // keyed world (the owner starts it; this script never sees a key). Sage words

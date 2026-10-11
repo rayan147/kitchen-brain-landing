@@ -185,3 +185,63 @@ the video chapters, FAQ, alt text and captions are unchanged.
 
 ## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
 - The Sage capture and caption appear once, in the hero. The proof section keeps its facts and snap and points to "the answer at the top of this page"; its grid is one column.
+
+## Revision 2026-10-11: the film leads, and the page says what Sage costs to run
+
+Owner, 2026-10-11: rebuild the Sage video in Remotion so it matches the other
+films, add the credit allowance, put the film first, and rework the page around it.
+Allowance wording follows kitchen-brain develop (owner ruling): "2,000 Sage
+credits each paid month, 300 during the free trial"; the daily guard stays off.
+
+- [x] 1 Idea: A chef-owner who wants a straight answer about their own kitchen
+  between services, but won't trust an assistant whose numbers they can't check
+  or whose running cost they can't see.
+- [x] 2 Character: **Want:** one plain question instead of four tabs. **Need:**
+  each number tied to its record, the final say on any change, and a cost that
+  can't run away. **Wound:** a confident number that turned out stale, and a
+  software bill that grew with use. **Flaw:** won't ask at all, or believes a
+  smooth sentence without checking it.
+- [x] 3 Plot: (1) Opening: Saturday on the books, a cost question, records in four
+  places. (2) Theme: the useful answer is the one you can check. (3) Set-up: the
+  kitchen's records already hold the answer. (4) Catalyst: Ask Sage, beside the
+  screen you're on (the film's first frame). (5) Debate: will it show its sources?
+  Will it change things? What does it cost? (6) Break into Two: the short rib
+  answer, $7.28, line by line. (7) B Story: the chef stays the authority; Sage
+  reads and drafts. (8) Fun and Games: the questions it can answer. (9) Midpoint:
+  the answer arrives with its record. (10) Bad Guys: roles, missing evidence,
+  drafts, setup gaps. (11) All Is Lost: an unbounded assistant is a faster risk
+  and an open-ended bill. (12) Finale/Final Image: a fixed allowance, a warning
+  before it runs out, every screen still working; ask the next question, keep the
+  final say.
+- [x] 4 Scenes: (1) Hero with the film, beats 1–6, a claim → a watched answer.
+  (2) The sourced answer as a still you can read on a phone, beat 9, sentence →
+  record. (3) Questions, beat 8, vague → exact. (4) During setup, beats 3–5, stuck →
+  ask and return. (5) Where it stops, beats 7, 10, speed → boundaries. (6) What it
+  costs to run (new), beat 11, open-ended → fixed and announced. (7) FAQ, beats
+  5 and 10. (8) Close, beat 12. The chapter nav and the separate video section go:
+  the film now opens the page.
+- **Film (video/src/film-sage.ts):** ask → answer → links and no changes → the
+  allowance note → the two allowances → end card. About 28 seconds; every figure
+  is a manifest string the app printed.
+- [x] 5 Voices: Reader: "what does it cost me?", "can it run up a bill?", "show me
+  where that number came from". Product: calm and exact; the allowance is said
+  in the app's own words ("Resets Wed Oct 28").
+- [x] 6 Dialogue: hero, claim → a watched answer; proof, sentence → record;
+  allowance, open-ended bill → a fixed amount said up front, with the kitchen
+  still working when it runs out.
+- [x] 7 Sorkin: intention, get a straight answer now; obstacle, can't check
+  it, can't see what it costs. The H1 stays (pinned); the quiet link beside the
+  trial now reads "What it costs to run", the objection the film ends on.
+- [x] 8 Snap: unchanged, "A missing number is an answer, too." The allowance
+  section's line is the plain number, not a second snap.
+- [x] 9 Setting: the film opens on Today with the Sage panel beside the day's
+  events: the screen an owner has open mid-shift.
+- [x] 10 Connecting: you throughout. The film's last caption is the allowance,
+  and the page's quiet hero link goes there. The proof still picks up "the
+  film's answer"; the guardrail list's last rule hands off to the allowance section.
+- [x] 11 Revise: english-elite-editor and humanize-reviewer passes applied.
+  - **Changes:** the allowance section opens on "The credits come with the plan. No meter runs on top of them."; "most" became the app's 80%, in the film caption too (re-rendered); the guardrail no longer repeats the numbers; the FAQ no longer repeats the section; the figcaption names both capture dates (Oct 7 answer, Oct 11 panel and billing).
+  - **Refused:** "no daily cap" (false: a 600-a-day guard exists, kept off the page by the owner, not denied).
+  - **Removed:** the separate dark video section and its four chapter times (the film is the hero now); the caption track (captions are burned in, as on the homepage film); `scripts/sage-video/assemble.mjs`.
+  - **Checks:** build, check, test:support, video tests (74), and the verify-sage, feature-family and feature-parity runs all pass.
+  - **Final image:** the close is unchanged: "Ask the next question. Keep the final say."

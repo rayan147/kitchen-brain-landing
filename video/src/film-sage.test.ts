@@ -20,7 +20,31 @@ const manifest = SageManifestSchema.parse({
 });
 const captions = SAGE_ORDER.flatMap((id) => captionsOf(SAGE, id, manifest));
 
+// The landing's own Sage data, read as text: the page and the film must say
+// the same allowance and the same words.
+const siteSage = readFileSync(
+  resolve(import.meta.dirname, "../../src/lib/sage.ts"),
+  "utf8",
+);
+const siteNumber = (key: string) =>
+  Number(siteSage.match(new RegExp(`${key}: (\\d+)`))?.[1]).toLocaleString(
+    "en-US",
+  );
+const transcriptBlock = siteSage.match(/transcript: \[([\s\S]*?)\]/)?.[1] ?? "";
+const transcript = [...transcriptBlock.matchAll(/^\s*['"](.+)['"],?$/gm)].map(
+  (m) => m[1],
+);
+
 describe("the Sage film", () => {
+  it("carries the same allowance as the page's src/lib/sage.ts", () => {
+    expect(manifest.periodCredits).toBe(siteNumber("periodCredits"));
+    expect(manifest.trialCredits).toBe(siteNumber("trialCredits"));
+  });
+
+  it("matches the page's transcript word for word", () => {
+    expect(transcript).toEqual(captions);
+  });
+
   it("resolves every caption from the capture record", () => {
     expect(captions.join(" ")).not.toMatch(/[{}]|undefined/);
   });
@@ -48,7 +72,8 @@ describe("the Sage film", () => {
   });
 
   it("ends on the end card", () => {
-    const last = SAGE.scenes[SAGE_ORDER[SAGE_ORDER.length - 1]].beats.at(-1);
+    const beats = SAGE.scenes[SAGE_ORDER[SAGE_ORDER.length - 1]].beats;
+    const last = beats[beats.length - 1];
     expect(last?.layout).toBe("end");
   });
 });

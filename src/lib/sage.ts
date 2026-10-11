@@ -43,6 +43,23 @@ export const sageDraftKinds = [
 	'a guest-count change on a draft order'
 ] as const;
 
+/**
+ * Sage's allowance, from kitchen-brain develop (src/lib/server/sage/config.ts:
+ * SAGE_PERIOD_CREDITS, SAGE_TRIAL_CREDITS; 9bd986496). The owner ruled on
+ * 2026-10-11 that the site follows develop here, before production has it. The
+ * period is the kitchen's billing period, monthly at the launch price. The
+ * day-burst guard is real but stays off the page (owner). The Sage film's
+ * manifest carries the same two numbers as the app printed them, and
+ * video/src/film-sage.test.ts fails if they and these drift apart.
+ */
+export const sageAllowance = {
+	periodCredits: 2000,
+	trialCredits: 300
+} as const;
+
+/** "2,000 Sage credits each paid month, 300 during the free trial" (owner wording, 2026-10-11). */
+export const sageAllowanceLine = `${sageAllowance.periodCredits.toLocaleString('en-US')} Sage credits each paid month, ${sageAllowance.trialCredits.toLocaleString('en-US')} during the free trial`;
+
 /** "The kitchen shopping list, one order’s shopping list, and a guest-count change on a draft order". */
 export const sageDraftKindsAnd = new Intl.ListFormat('en', { type: 'conjunction' }).format(sageDraftKinds);
 /** The same three, as alternatives: "..., or a guest-count change on a draft order". */
@@ -94,7 +111,7 @@ export const sage = {
 		{ lead: 'It cannot reach another kitchen.', detail: 'Sage can only use records in the kitchen account you are signed into.' },
 		{ lead: 'It is for owners and managers.', detail: 'Staff cannot open Sage. The costs and price moves it reads stay with the people who see the money.' },
 		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.' },
-		{ lead: 'It has limits, and a stop.', detail: 'Sage has answer time limits and a daily usage cap. If it stops, the rest of CostCook keeps working.' }
+		{ lead: 'It runs on a fixed allowance.', detail: 'Sage warns you before its credits run out. If they do, the rest of CostCook keeps working.' }
 	],
 	proof: {
 		// Re-shot on local develop 7a7e407d9, 2026-10-07, in the wedding's sample
@@ -126,3 +143,39 @@ export const sage = {
 // "In the app today", not "Available now": the badge reads as a fact, not a sales
 // line (chef audit 2026-10-07). Same word on labels, invoice email, ordering.
 export const sageStatusWord = SAGE_STATUS === 'yes' ? 'In the app today' : 'Coming';
+
+/**
+ * The Sage film (video/src/film-sage.ts, rendered 2026-10-11), the page's
+ * hero. Music and burned-in captions, like the homepage film, so there is no
+ * caption track to double them; the transcript under the player carries the
+ * same words, and video/src/film-sage.test.ts fails if a caption and its line
+ * here differ. Frames: a demo world of kitchen-brain develop 9bd986496 (the
+ * panel, the note, billing) and the 2026-10-07 answer still (7a7e407d9).
+ */
+export const sageFilm = {
+	mp4: '/proof/sage-walkthrough.mp4',
+	webm: '/proof/sage-walkthrough.webm',
+	// The film's opening frame (12), before its first caption: nothing sits
+	// under the native control bar, as with the homepage film's poster.
+	poster: '/proof/sage-walkthrough-poster.jpg',
+	width: 1920,
+	height: 1080,
+	label: 'Sage film, 28 seconds: a question, the answer with its records, and the credit allowance',
+	length: '28 s',
+	capturedOn: 'Oct 11, 2026',
+	transcript: [
+		'Ask Sage beside the screen you are working on.',
+		'It answers from your records: $7.28 a portion, and why.',
+		'Every line links to its record. Sage changes nothing on its own.',
+		'Sage warns you once 80% of the month’s credits are used.',
+		'2,000 Sage credits each paid month, 300 during the free trial.'
+	]
+} as const;
+
+/** The allowance note as the Sage panel prints it, cropped from the film's frame. */
+export const sageAllowanceProof = {
+	src: '/proof/sage-allowance-note.png',
+	width: 838,
+	height: 340,
+	alt: 'The Sage panel with an amber note at the top: “Sage has used 1,640 of 2,000 credits. They reset on Wed Oct 28.”'
+} as const;
