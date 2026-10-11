@@ -28,7 +28,7 @@ const roles = [
 		name: 'Staff',
 		mark: 'S',
 		summary: 'Works the kitchen: orders, prep and pack lists, deliveries and recipes, without the money.',
-		workspaceAccess: 'Orders, prep and pack lists, deliveries, shelf counts, and recipes, ingredients and menus. Costs and margins are taken out of what they see.',
+		workspaceAccess: 'Orders, prep and pack lists, deliveries and shelf counts, plus recipes, ingredients and menus. Costs and margins are taken out of what they see.',
 		protectedWork: 'Edit recipes, ingredients and menus; check in deliveries; count shelves.',
 		boundary: 'No prices, costs, Analytics, Sage, setup, imports, clients or settings.'
 	}
@@ -37,14 +37,14 @@ const roles = [
 const faqItems = [
 	{
 		question: 'Can I hide food costs from a cook?',
-		answer: 'Yes. Invite them as Staff. CostCook takes costs and margins out of what Staff see, and keeps Analytics, Sage, setup, imports and the Clients book to owners and managers.'
+		answer: 'Yes. Invite them as Staff. CostCook takes costs and margins out of what Staff see. Analytics, Sage, setup, imports and the Clients book stay with Owners and Managers.'
 	},
 	{
 		question: 'Can I build a custom role?',
 		answer: 'No. The roles are Owner, Manager and Staff. There is no permission builder for single screens, fields or actions.'
 	},
 	{
-		question: 'What role does a new invitation receive?',
+		question: 'What role does a new teammate get?',
 		answer: 'The one you pick when you send it: Staff or Manager. The link works for 7 days, and you can change the role later.'
 	},
 	{
@@ -63,7 +63,7 @@ const faqItems = [
 					<a href="/features">Every feature</a><span aria-hidden="true">/</span><span aria-current="page">Team &amp; access</span>
 				</nav>
 				<h1 id="team-access-heading" class="feature-display">Give your crew their own sign-in.</h1>
-				<p class="hero-lede">Invite your crew by email into the same kitchen account. Below is what Owners, Managers and Staff can each do, from daily prep up to publishing recipes and billing.</p>
+				<p class="hero-lede">Invite your crew by email into the same kitchen account. Each person gets one of three roles: Owner, Manager or Staff. The role decides what they see and what they can change.</p>
 				<p class="hero-constraint"><strong>Before you invite:</strong> pick Staff for anyone who should not see costs. Custom roles are not available.</p>
 				<div class="hero-actions">
 					<a href="#role-boundaries" class="btn-quiet">Compare team roles</a>
@@ -76,7 +76,7 @@ const faqItems = [
 			<figure class="role-stack anim-enter" style="--enter-delay: 120ms">
 				{roles.map((role, index) => (
 					<div class:list={['role-pass', `pass-${index + 1}`]}>
-						<div class="pass-head"><span>{role.mark}</span><small>CostCook workspace</small></div>
+						<div class="pass-head"><span>{role.mark}</span><small>CostCook sign-in</small></div>
 						<strong>{role.name}</strong>
 						<p>{role.summary}</p>
 					</div>
@@ -89,13 +89,13 @@ const faqItems = [
 	<section class="shared-record" aria-labelledby="shared-heading">
 		<div class="container-page shared-grid">
 			<div data-reveal>
-				<h2 id="shared-heading">Everyone signs in as themselves.</h2>
-				<p>Invite people to your kitchen account by email. CostCook checks their role when they try something only an Owner or Manager can do.</p>
+				<h2 id="shared-heading">The role is checked on every screen.</h2>
+				<p>Each person signs in with their own email, so CostCook knows who is asking. It checks their role whenever they open a screen or try an action.</p>
 			</div>
 			<dl class="access-facts" data-reveal>
 				<div><dt>Roles</dt><dd>Owner · Manager · Staff</dd></div>
 				<div><dt>New invitations</dt><dd>Staff or Manager, your pick</dd></div>
-				<div><dt>Enforcement</dt><dd>Checked when you act</dd></div>
+				<div><dt>Enforcement</dt><dd>Every screen and action</dd></div>
 				<div><dt>Costs and margins</dt><dd>Owner and Manager only</dd></div>
 			</dl>
 		</div>
@@ -105,7 +105,7 @@ const faqItems = [
 		<div class="container-page">
 			<div class="roles-heading" data-reveal>
 				<h2 id="roles-heading">What each role adds.</h2>
-				<p>Staff work from the shared kitchen records. Managers get the management jobs below on top of that. Owners get all of it, plus the Owner jobs.</p>
+				<p>Each role builds on the one below it. Staff get the kitchen work. Managers add the money. The Owner adds the team, billing, settings and recipe publishing.</p>
 			</div>
 			<div class="role-ledger">
 				{roles.map((role) => (
@@ -144,7 +144,7 @@ const faqItems = [
 
 	<section id="team-questions" class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
-			<div data-reveal><h2 id="faq-heading">Questions to settle first.</h2><p>Before you add your team: who sees costs, how invites work, and where roles stop.</p></div>
+			<div data-reveal><h2 id="faq-heading">Questions to settle first.</h2><p>Who sees costs, how invites work, and where roles stop.</p></div>
 			<div class="faq-list">
 				{faqItems.map((item) => (
 					<details data-reveal data-team-disclosure><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>
@@ -155,10 +155,10 @@ const faqItems = [
 
 	<section class="closing" aria-labelledby="closing-heading">
 		<div class="container-page closing-grid" data-reveal>
-			<div><h2 id="closing-heading">Invite the crew knowing what they can see and do.</h2><p>Bring the people who run your week into one kitchen account. The touchy jobs, like billing and approvals, stay with the roles that should have them.</p></div>
+			<div><h2 id="closing-heading">Invite the crew knowing what they can see and do.</h2><p>Bring the people who run your week into one kitchen account. Billing and the team stay with you. Costs stay with you and your Managers.</p></div>
 			<div class="closing-actions"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a></div>
 		</div>
-		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/sage">Sage</a><a href="/features/recipes-and-costing">Recipes &amp; costing</a><a href="/features">Every CostCook feature</a></nav>
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides"><a href="/features/sage">Sage</a><a href="/features/recipes-and-costing">Recipes &amp; food costing</a><a href="/features">Every CostCook feature</a></nav>
 	</section>
 </article>
 

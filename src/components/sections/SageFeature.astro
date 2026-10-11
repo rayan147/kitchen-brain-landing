@@ -11,22 +11,22 @@ const faqItems = [
 	{
 		question: 'Is Sage available now?',
 		answer:
-			'Yes. Sage is available inside CostCook. You can reach it from the app navigation and, while setup is unfinished, from the setup header.'
+			'Yes. Open it from the app navigation, or from the setup header while setup is unfinished.'
 	},
 	{
 		question: 'How does Sage help during setup?',
 		answer:
-			'Your setup progress saves after each stage. Ask Sage opens the assistant with starting questions that fit the stage and the records entered so far. Back to setup returns you to the unfinished stage.'
+			'Ask Sage opens from the setup header with starting questions for your stage. Back to setup returns you to the stage you left, with your progress saved.'
 	},
 	{
 		question: 'What can I ask Sage?',
 		answer:
-			`Sage has ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. It can also prepare ${spell(sageDraftKinds.length)} kinds of draft for an owner or manager to approve: ${sageDraftKindsAnd}.`
+			`Sage has ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. It can also prepare ${spell(sageDraftKinds.length)} kinds of draft for an Owner or Manager to approve: ${sageDraftKindsAnd}.`
 	},
 	{
 		question: 'Can Sage change my kitchen records?',
 		answer:
-			'Not on its own. Its tools read records, and a draft changes nothing. An owner or manager approves or discards each draft, and CostCook checks the underlying records again before an approved draft is saved. If they moved, nothing is written.'
+			'Not on its own. Its tools read records, and a draft changes nothing. An Owner or Manager approves or discards each draft, and CostCook checks the underlying records again before an approved draft is saved. If they changed, nothing is saved.'
 	},
 	{
 		question: 'What happens when the evidence is missing?',
@@ -36,7 +36,7 @@ const faqItems = [
 	{
 		question: 'Who can see price moves or approve a shopping-list draft?',
 		answer:
-			'Only an Owner or Manager. Sage reads the money, so Staff do not get it at all; price moves, spending and every draft stay with the people who see costs.'
+			'Only an Owner or Manager. Staff do not get Sage at all, because it reads the money. Price moves, spending and every draft stay with the people who see costs.'
 	}
 ] as const;
 
@@ -98,7 +98,7 @@ const videoChapters = [
 
 	<nav class="feature-chapters container-page" aria-label="On this page">
 		<a href="#watch-sage"><strong>Watch Sage work</strong><span>Setup, the source and the sign-off, in 20 seconds.</span></a>
-		<a href="#sage-jobs"><strong>Questions Sage can answer</strong><span>The exact questions it can answer.</span></a>
+		<a href="#sage-jobs"><strong>Questions Sage can answer</strong><span>From Saturday’s prep to a guest-count change.</span></a>
 		<a href="#sage-guardrails"><strong>Sources and approval</strong><span>What it reads, what it drafts, and what stays your call.</span></a>
 	</nav>
 
@@ -161,18 +161,18 @@ const videoChapters = [
 						/>
 					</picture>
 				</div>
-				<figcaption>Captured setup state. Ask Sage is present in the setup header. <a class="full-size" href="/proof/setup/01-kitchen.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
+				<figcaption>Captured from the setup screen: Ask Sage sits beside Support and Save and exit. <a class="full-size" href="/proof/setup/01-kitchen.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a></figcaption>
 			</figure>
 			<div class="setup-copy" data-reveal>
 				<h2 id="setup-heading">Ask before the kitchen is fully set up.</h2>
 				<p>
-					Sage does not pretend a half-built catalog is finished. It works from what you have
+					Sage does not pretend a half-built kitchen is finished. It works from what you have
 					entered so far, tells you what is still missing, and keeps the way back to setup in view.
 				</p>
 				<dl>
-					<div><dt>Leave without losing your place</dt><dd>{sage.onboarding.entry}</dd></div>
+					<div><dt>Open it from setup</dt><dd>{sage.onboarding.entry}</dd></div>
 					<div><dt>Ask a question that fits</dt><dd>{sage.onboarding.context}</dd></div>
-					<div><dt>Return to the work</dt><dd>{sage.onboarding.return}</dd></div>
+					<div><dt>Keep your place</dt><dd>{sage.onboarding.return}</dd></div>
 				</dl>
 			</div>
 		</div>
@@ -182,7 +182,7 @@ const videoChapters = [
 		<div class="container-page questions-grid">
 			<div class="questions-intro" data-reveal>
 				<h2 id="questions-heading">Questions you can ask. A shopping list you can approve.</h2>
-				<p>Ask about any of these. Sage pulls the records that matter and shows you what it found.</p>
+				<p>Owners and Managers can ask any of these. Sage pulls the records that matter and shows you what it found.</p>
 			</div>
 			<ol class="question-list">
 				{sage.abilities.map((ability, index) => (
@@ -230,12 +230,12 @@ const videoChapters = [
 		<div class="container-page">
 			<div class="guardrails-heading" data-reveal>
 				<h2 id="guardrails-heading">You can see exactly where it stops.</h2>
-				<p>Answering a question changes nothing. A draft stays a draft until a manager or owner approves it.</p>
+				<p>Answering a question changes nothing. A draft stays a draft until an Owner or Manager approves it.</p>
 			</div>
 			<div class="approval-path" data-reveal aria-label={`${spellCapital(sageReadToolCount, { compound: true })} tools read records, ${spell(sageDraftKinds.length)} kinds of draft can be prepared, and a person approves`}>
-				<div><span>22 tools</span><strong>Read records</strong></div>
+				<div><span>{sageReadToolCount} tools</span><strong>Read records</strong></div>
 				<i aria-hidden="true"></i>
-				<div><span>3 drafts</span><strong>Prepares a draft</strong></div>
+				<div><span>{sageDraftKinds.length} kinds of draft</span><strong>Wait for approval</strong></div>
 				<i aria-hidden="true"></i>
 				<div class="person"><span>You</span><strong>Approve or discard</strong></div>
 			</div>
@@ -250,8 +250,8 @@ const videoChapters = [
 	<section class="faq" aria-labelledby="faq-heading">
 		<div class="container-page faq-grid">
 			<div class="faq-intro" data-reveal>
-				<h2 id="faq-heading">Frequently asked questions</h2>
-				<p>What owners want to know before they ask it anything.</p>
+				<h2 id="faq-heading">Questions owners ask first.</h2>
+				<p>Is it live, what can it change, and who sees the money.</p>
 			</div>
 			<div class="faq-list">
 				{faqItems.map((item) => (

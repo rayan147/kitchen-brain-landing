@@ -170,3 +170,10 @@ or RC-52 boundaries).
 - Invites pick Staff or Manager; only the Owner invites, changes roles, or touches billing and settings. Managers carry the money (costs, Analytics, Sage, clients, purchasing, setup).
 - What still stops: no single-screen control, no field-level control, no custom role. "The line is the role" carries that limit.
 - Snap line: "The line is the role: Staff never see costs, Managers see the money but not billing, and only you run the team."
+
+## Revision 2026-10-11: English edit
+- Hero lede names the three roles and says the role decides what they see and change (no "Below is what...").
+- Second H2 "The role is checked on every screen.", with the FAQ 4 fact (checked when someone opens a screen or tries an action); enforcement fact "Every screen and action".
+- Roles intro: "Each role builds on the one below it. Staff get the kitchen work. Managers add the money. The Owner adds the team, billing, settings and recipe publishing." Close: "Billing and the team stay with you. Costs stay with you and your Managers."
+- Pass label "CostCook sign-in"; Staff access list unnested; FAQ intro, FAQ 1 and FAQ 3 question in plain words; onward link "Recipes & food costing"; meta description leads with "Staff never see costs".
+- Held for the owner: the dt labels (pinned), the Owner boundary line, the hero action order.

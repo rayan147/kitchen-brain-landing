@@ -170,3 +170,11 @@ the video chapters, FAQ, alt text and captions are unchanged.
   "Questions you can ask. A shopping list you can approve.", the snap line,
   the closing heading, "In the app today", read-only over your records,
   drafts only, approval by a manager or owner.
+
+## Revision 2026-10-11: English edit
+- Role boundary stated once, per the RC-52 note (develop c90d3b9c2, Staff no Sage): the abilities intro says "Owners and Managers can ask any of these", the four "Managers and owners only." tags are gone, and the guardrail is "It is for Owners and Managers. Staff cannot open Sage." (replaces "redacted for staff in a shared thread").
+- One form for the role pair on this page: "an Owner or Manager". FAQ 4 ends "If they changed, nothing is saved."
+- Approval strip reads its counts from sage.ts ("{sageReadToolCount} tools", "{sageDraftKinds.length} kinds of draft / Wait for approval").
+- Setup labels match their lines ("Open it from setup", "Keep your place"); "half-built kitchen"; setup caption names what the capture shows.
+- FAQ heading "Questions owners ask first." with intro "Is it live, what can it change, and who sees the money."; FAQ 1, 2 and 6 shortened; guardrails 2 and 6 say who does what.
+- Held for the owner: the proof section's cucumber figures vs the short-rib capture, the repeated capture, the sitewide role-pair form.
