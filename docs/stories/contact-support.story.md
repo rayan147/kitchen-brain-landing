@@ -154,3 +154,21 @@ Content: `src/pages/contact.astro` and its shared data/response states.
 - [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
 - [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
 - [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.
+
+## Revision 2026-10-08: chef voice pass
+- Owner: humanize the copy so a chef could have written it. Copy only; the form's labels, buttons, error and confirmation messages (pinned by verify-resources and the endpoint tests) and the sensitive-information line are unchanged.
+- Lede no longer guesses a pronoun for Rayan: "The answer comes back by email, usually the same day, and you do not need a trial to ask."
+- "What helps me answer" uses the reader's words: "how many are on the crew", "where it is going wrong".
+- /contact/sent opens "Sent. Your question is with me."; /contact/not-sent opens "That did not go through." and says "nothing reached me", matching /demo/not-sent's first-person honesty.
+
+## Revision 2026-10-11: English edit
+- Question box: eyebrow "ASK RAYAN · REPLY BY EMAIL" names who "I" is; the email help says the useful thing ("Rayan replies to this address, so check it is right."); the confirmation note no longer repeats its title ("Nothing else to do. Watch that inbox for the reply.").
+- The in-app note is split in two: "...use Contact support inside the app instead. Your account email and the screen you are on go with the message, so I know which kitchen you are."
+- Aside list adds "a proposal" to where it is going wrong. /contact/sent opens its body with "This is Rayan."
+- Not changed, held for the owner: "goes straight to my inbox", "usually the same day", the no-JS "go back to the form" and "try once more" line, the failure message, the voice choice, the h1.
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- Failure message (F4): "Your message could not be sent. Your draft is still here. Try again, or email rayan@costcook.io." Built once in support.ts from the founder address (new src/lib/founder-email.ts, which site.email also reads, because the serverless function cannot load site.ts); both client fallbacks use the constant; verify-resources pin updated.
+- One voice (F5): the box speaks as "I" throughout: "I reply to this address, so check it is right." and "Question sent. I will reply to …" (verify-resources pin updated). The eyebrow "ASK RAYAN" names who "I" is.
+- No-JS outline (F11): the box title is an h2, so the outline no longer jumps from h1 to h3.
+- Owner answers: "goes straight to my inbox" is true and stays. "Usually the same day" now appears once on /contact (the lede); the receipt reads "Sent. I reply to …". /contact/sent keeps its one mention.

@@ -20,7 +20,7 @@ const movements = [
 const trustStates = [
 	{ ingredient: 'Chicken thigh', quantity: '55 lb', state: 'Fresh', note: 'Recent count. It can cut the buy.', tone: 'fresh' },
 	{ ingredient: 'Baby spinach', quantity: '18 lb', state: 'Stale', note: 'Shown so you know. Count again before you rely on it.', tone: 'stale' },
-	{ ingredient: 'Olive oil', quantity: '—', state: 'Never counted', note: 'Nothing guessed. The buy stays as it was.', tone: 'missing' }
+	{ ingredient: 'Olive oil', quantity: 'No count', state: 'Never counted', note: 'Nothing guessed. The buy stays as it was.', tone: 'missing' }
 ] as const;
 
 // Considered Strategy; not used because the FAQ and evidence rows vary as
@@ -42,8 +42,8 @@ const faqItems = [
 			'No. Only trusted on-hand quantity reduces estimated buying. A stale or unsupported estimate can remain visible for context, but it is not allowed to quietly subtract from the buy.'
 	},
 	{
-		question: 'Does a par level automatically add food to the shopping list?',
-		answer: `Yes, when you build the kitchen shopping list. A par level can mark an ingredient below par, at or above par, unevaluable, or without a par. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy. The shopping list on one order is separate and covers that order.`
+		question: 'Does a par level add food to the shopping list?',
+		answer: `Yes, when you build the kitchen shopping list. A par level can mark an ingredient below par, at or above par, not compared until it is counted, or without a par. Inventory > Build shopping list builds what to buy for confirmed events and your par, by supplier. Only a recent count is taken off the buy. The shopping list on one order is separate and covers that order.`
 	},
 	{
 		question: 'What happens when a count is corrected later?',
@@ -105,13 +105,13 @@ const faqItems = [
 	</section>
 
 	<nav class="story-nav container-page" aria-label="On this page">
-		<a href="#count-and-trust"><span>Record a stock count</span><small>Record a physical count and see when it was taken.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#count-and-trust"><span>Record a stock count</span><small>Count the shelf. The date stays with the number.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
 		<a href="#plan-the-gap"><span>Work out what to buy</span><small>Use current stock to reduce buying, with manual changes kept separate.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
 	</nav>
 
 	<section id="count-and-trust" class="product-section count-chapter" aria-labelledby="count-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="count-heading">Count it once. Then deliveries, packing and waste move the number.</h2><p>After a physical count, recorded purchases add to it. Logged waste and finished packing take away. The dated history shows how you got to today’s number.</p></div>
+			<div class="section-intro"><h2 id="count-heading">Count it once. Then deliveries, packing and waste move the number.</h2><p>The dated history shows each change, so you can see how you got to today’s number.</p></div>
 
 			<figure class="movement-workspace">
 				<div class="movement-main">
@@ -128,11 +128,11 @@ const faqItems = [
 					<div><span>Shelf value</span><strong>$128.70</strong><small>Illustrative value as of Sep 1</small></div>
 					<div><span>Unit cost at count</span><strong>$2.34 / lb</strong><small>Frozen at count time</small></div>
 				</div>
-				<figcaption>Illustrative movement history built only from shipped inventory behavior.</figcaption>
+				<figcaption>Illustrative movement history.</figcaption>
 			</figure>
 
 			<div class="feature-scenes">
-				<article><h3>Every count is kept.</h3><p>Each count is saved with its date. What came in, got used or got thrown out after that date is how you get today’s quantity.</p></article>
+				<article><h3>Every count is kept.</h3><p>Each count is saved with its date. A later count or correction adds a record; it does not erase the old one.</p></article>
 				<article><h3>You can see how old the count is.</h3><p>Fresh, Stale or Never counted sits right next to the quantity, where you see it before you plan.</p></article>
 				<article><h3>History keeps its old price.</h3><p>The pack cost freezes at count time, so a later correction does not rewrite what the shelf was worth then.</p></article>
 			</div>
@@ -141,7 +141,7 @@ const faqItems = [
 
 	<section id="plan-the-gap" class="product-section gap-chapter" aria-labelledby="gap-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="gap-heading">Use recent counts to work out what to buy.</h2><p>Start with what the next orders need. A recent count can take some off the buy. A stale count, or a number with nothing behind it, cannot. Overriding the list is still your call, made separately.</p></div>
+			<div class="section-intro"><h2 id="gap-heading">Use recent counts to work out what to buy.</h2><p>Start with what the next orders need, then take off the stock a recent count backs up. Change any quantity yourself; your change stays separate.</p></div>
 
 			<figure class="gap-sheet">
 				<div class="gap-head"><span>Chicken thigh · next jobs</span><span>Illustrative gap</span></div>
@@ -157,7 +157,6 @@ const faqItems = [
 			</figure>
 
 			<div class="trust-board">
-				<div class="trust-head"><h3>Each count status gets its own answer.</h3><p>You can see a quantity and still not trust it enough to change the buy.</p></div>
 				<ul role="list">
 					{trustStates.map((item) => (
 						<li><span><strong>{item.ingredient}</strong><small>{item.note}</small></span><b>{item.quantity}</b><em class:list={['state', item.tone]}>{item.state}</em></li>
@@ -169,7 +168,7 @@ const faqItems = [
 
 	<section class="trust-proof" aria-labelledby="trust-proof-heading">
 		<div class="container-page trust-proof-grid">
-			<div><h2 id="trust-proof-heading">Never counted means nothing gets guessed.</h2><p>When there is not enough to go on, the status says what is missing and the buy stays as it was. The fix is simple: go count it.</p></div>
+			<div><h2 id="trust-proof-heading">Never counted means nothing gets guessed.</h2><p>When there is not enough to go on, the status says what is missing and the buy stays as it was. The fix: go count it.</p></div>
 			<div class="recovery-list">
 				<div><span class="state fresh">Fresh</span><strong>Use to reduce buying</strong><small>A recent count, plus the changes since, backs this number up.</small></div>
 				<div><span class="state stale">Stale</span><strong>Count again</strong><small>Keep the old quantity visible, but do not subtract it.</small></div>
@@ -256,13 +255,13 @@ const faqItems = [
 	.movement-main { padding: clamp(1.2rem, 3vw, 2rem); }
 	.panel-bar { padding-bottom: .8rem; border-bottom: 1px solid var(--color-hairline); }
 	.movement-main ol { margin-top: .8rem; }
-	.movement-main li { display: grid; grid-template-columns: minmax(8.5rem, .8fr) 1fr auto; gap: 1rem; align-items: center; padding-block: .85rem; border-bottom: 1px solid var(--color-hairline); }
+	.movement-main li { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr) auto; gap: 1rem; align-items: center; padding-block: .85rem; border-bottom: 1px solid var(--color-hairline); }
 	.movement-main time { font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.movement-main li span small { display: block; color: var(--color-ink-soft); }
 	.movement-main li b { font-variant-numeric: tabular-nums; }
 	.movement-main li.baseline b { color: var(--color-green-deep); }
 	.movement-main li.out b { color: var(--color-amber-deep); }
-	.movement-total { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1rem; background: var(--color-softgreen); }
+	.movement-total { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1rem; background: var(--color-softgreen); }
 	.movement-total strong { color: var(--color-green-deep); font-variant-numeric: tabular-nums; }
 	.movement-side { display: grid; gap: 1px; }
 	.movement-side > div { padding: 1.25rem; }
@@ -279,12 +278,11 @@ const faqItems = [
 	.gap-equation strong { display: block; margin-top: .25rem; font-size: var(--text-record); font-variant-numeric: tabular-nums; }
 	.gap-equation span { display: block; margin-top: .2rem; font-size: var(--text-label-sm); color: var(--color-ink-soft); }
 	.gap-result { padding: 1rem; background: var(--color-softgreen); }
-	.buy-line { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1.15rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
+	.buy-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center; padding: 1.15rem clamp(1rem, 3vw, 1.75rem); border-top: 2px solid var(--color-green); }
 	.buy-line span small { display: block; color: var(--color-ink-soft); }
 	.buy-line > b { color: var(--color-green-deep); font-size: var(--text-record-sm); }
 	.gap-sheet figcaption { padding: 0 clamp(1rem, 3vw, 1.75rem) 1rem; }
 	.trust-board { display: grid; gap: 2rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
-	.trust-head p { margin-top: .6rem; color: var(--color-ink-soft); }
 	.trust-board li { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; padding-block: .9rem; border-bottom: 1px solid var(--color-ticket-rule); }
 	.trust-board li span small { display: block; max-width: 45ch; color: var(--color-ink-soft); }
 	.trust-board li > b { font-variant-numeric: tabular-nums; }
@@ -292,7 +290,7 @@ const faqItems = [
 	.trust-proof-grid { display: grid; gap: 3rem; align-items: center; }
 	.trust-proof-grid > div > p { color: var(--color-ink-muted); }
 	.recovery-list { background: var(--color-paper); color: var(--color-ink); box-shadow: var(--shadow-lift); }
-	.recovery-list > div { display: grid; grid-template-columns: auto 1fr; gap: .5rem 1rem; padding: 1.1rem; border-bottom: 1px solid var(--color-hairline); }
+	.recovery-list > div { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .5rem 1rem; padding: 1.1rem; border-bottom: 1px solid var(--color-hairline); }
 	.recovery-list > div:last-child { border-bottom: 0; }
 	.recovery-list strong { align-self: center; }
 	.recovery-list small { grid-column: 2; color: var(--color-ink-soft); }
@@ -321,6 +319,13 @@ const faqItems = [
 	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
 	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
 
+	/* REFLOW AT 200% TEXT (issue #79): a grid with no column template sizes
+	   its one track to its content, so at 200% text on a phone the layout
+	   grew past the screen and its right edge was cut off. One shrinkable
+	   track below the breakpoints; label-and-value rows wrap. */
+	.movement-workspace, .problem-grid, .section-intro, .faq-grid, .closing-grid { grid-template-columns: minmax(0, 1fr); }
+	.ticket-head, .panel-bar, .gap-head { flex-wrap: wrap; }
+
 	@media (min-width: 720px) {
 		.hero-grid { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
 		.problem-grid, .section-intro, .trust-proof-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
@@ -340,17 +345,23 @@ const faqItems = [
 		   computed result together; the longer evidence continues below. */
 		.hero-grid { gap: 1rem; padding-block: 1.25rem 2rem; }
 		.hero h1 { margin-top: .25rem; }
-		.hero-lede { margin-top: .7rem; font-size: var(--text-body-sm); line-height: 1.38; }
+		/* The lede and both actions keep their desktop size: phones are where
+		   this page is read, so the first frame wins its height back from
+		   spacing, never from 13-14px type (mobile review 2026-10-09). */
+		.hero-lede { margin-top: .5rem; line-height: 1.45; }
 		.hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: 1rem; }
-		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .55rem; font-size: var(--text-caption); text-align: center; }
+		.hero-copy :global([data-feature-trial-terms]) { margin-top: .6rem; line-height: 1.45; }
+		.hero-actions > * { width: 100%; min-height: 44px; justify-content: center; padding: .7rem .55rem; text-align: center; }
 		.closing-actions > * { width: 100%; justify-content: center; }
 		.figure-note { margin-bottom: .45rem; }
 		.shelf-ticket { padding: .8rem; }
-		.ticket-title { margin-top: .7rem; padding-bottom: .75rem; }
-		.equation { margin-top: .75rem; }
+		.ticket-title { margin-top: .5rem; padding-bottom: .5rem; }
+		.equation { margin-top: .5rem; }
 		.ticket-foot { margin-top: .65rem; padding-top: .6rem; }
-		.ticket-title { display: block; }
-		.ticket-title > strong { display: block; margin-top: .5rem; }
+		/* The count sits beside the item's name and wraps under it only when
+		   the line is too narrow (320): the stacked title cost the first
+		   frame 32px once the lede and the trial terms kept their size. */
+		.ticket-title { flex-wrap: wrap; row-gap: .25rem; }
 		.equation { grid-template-columns: 1fr auto 1fr; }
 		.equation > div:last-child { grid-column: 1 / -1; }
 		.stale-scene { grid-template-columns: 1fr; }

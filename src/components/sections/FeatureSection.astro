@@ -106,10 +106,18 @@ const siblings = featureSections.filter((other) => other.slug !== entry.slug);
 								))}
 							</ul>
 						)}
+						{group.guide && group.status !== 'in-development' && (
+							<a href={group.guide.href} class="mt-4 inline-flex min-h-11 items-center font-semibold text-green-deep underline decoration-ticket-rule decoration-1 underline-offset-4 hover:decoration-ink">{group.guide.label}</a>
+						)}
 					</div>
 				))
 			}
 		</div>
+
+		{/* Considered a named-slot Template Method; not used because one area page
+		   adds one block (connections, owner-approved 2026-10-11) and a default slot
+		   before the close is the whole seam. */}
+		<slot />
 
 		<div class="mt-16 border-t border-ticket-rule pt-8">
 			<h2 class="text-h3 font-semibold">

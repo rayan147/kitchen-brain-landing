@@ -99,3 +99,5 @@ Hurry becomes attention; a case count becomes a line check; a confusing substitu
 - Removed any claim that software can judge food quality or allergen suitability.
 - Recalculated the reading time at 200 words per minute.
 - **Final image:** The driver leaves; the shelf shows what is actually there and tomorrow's cook is not surprised.
+
+**Revision 2026-10-08: chef voice pass.** Receiving paragraphs shortened and made blunter ("Receiving isn't one yes or no."); description rewritten. Figures, the cited textbook link and the closing outcome block unchanged. Why: owner asked that the site read like a working chef wrote it, not AI.

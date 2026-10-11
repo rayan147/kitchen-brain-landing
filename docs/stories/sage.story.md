@@ -173,3 +173,9 @@ Cut the old generic chat-bubble symbol, rejected a robot face and sparkle, kept 
 ## Claim correction · 2026-09-27 (Sage tools and drafts)
 
 - [x] 11 Revision: Sage now has 22 read-only tools and 3 draft kinds (the kitchen shopping list, one order's shopping list, a guest-count change on a draft order); nothing changes until a manager or owner approves the draft. "Eleven checks", "one proposal" and "shopping-list proposal" were stale, and "proposal" now names the client document, so Sage's output is called a draft everywhere. Beats, point of view and snap line unchanged. Gap report S1, S10, W2; ledger RC-46, RC-49.
+
+## Revision 2026-10-11: English edit
+- sage.ts abilities drop the per-item "Managers and owners only."; the role guardrail is "It is for Owners and Managers." (Staff cannot open Sage, RC-52 note); "It does not send, buy, reprice or adjust anything."; "If it stops, the rest of CostCook keeps working." See sage-feature.story.md.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Role pair lowercase, owner first ("for owners and managers", "an owner or manager").

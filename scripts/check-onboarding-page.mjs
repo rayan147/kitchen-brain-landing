@@ -97,8 +97,29 @@ for (const tag of sceneShots) {
 		failures.push(`${src} declares ${declaredOf('width')}x${declaredOf('height')} but the PNG is ${w}x${h}`);
 	}
 }
+// The desktop half of each capture is a <source media="(min-width: 64rem)">
+// beside the phone img (mobile review 2026-10-09). Its declared size must
+// match its PNG too, or the box jumps when the desktop source loads.
+for (const tag of html.match(/<source\b[^>]*srcset="\/proof\/setup\/[^"]+\.png"[^>]*>/g) ?? []) {
+	const src = tag.match(/srcset="([^"]+)"/)[1];
+	if (!/media="\(min-width: 64rem\)"/.test(tag)) failures.push(`${src}: desktop source must start at 64rem`);
+	let bytes = null;
+	try {
+		bytes = readFileSync(new URL(`../public${src}`, import.meta.url));
+	} catch {
+		failures.push(`missing public${src}`);
+	}
+	if (!bytes) continue;
+	const declaredOf = (attribute) => Number(tag.match(new RegExp(`${attribute}="(\\d+)"`))?.[1] ?? 0);
+	if (declaredOf('width') !== bytes.readUInt32BE(16) || declaredOf('height') !== bytes.readUInt32BE(20)) {
+		failures.push(`${src} source declares ${declaredOf('width')}x${declaredOf('height')} but the PNG differs`);
+	}
+}
 for (const src of ['00-welcome', '02-choices', '02-dropzone', '03-chips', '04-choices', '05-first-order', '06-ready', '07-records', '08-import', '09-team']) {
-	if (!html.includes(`/proof/setup/${src}.png`)) failures.push(`scene capture ${src} is missing`);
+	// Either half counts: Purchases (07) ships its phone capture at every width.
+	if (!html.includes(`/proof/setup/${src}.png`) && !html.includes(`/proof/setup/${src}-mobile.png`)) {
+		failures.push(`scene capture ${src} is missing`);
+	}
 }
 // RC-58: the three choices stage two opens on and the two at stage four, by
 // the app's own labels, with the upload control and the staging gate they
@@ -145,7 +166,12 @@ if ((html.match(/<th scope="col"/g) ?? []).length !== 3) {
 // RC-48: the setup capture. Stored at 2x, rendered at half its pixel width or
 // narrower, and its alt read off the pixels. A figure with no alt, or one
 // rendered at full pixel width, is the failure this catches.
-const shot = html.match(/<img\b[^>]*\/proof\/setup\/01-kitchen\.png[^>]*>/)?.[0] ?? '';
+// Stage one ships as a picture: the desktop PNG in a <source>, the phone
+// capture as the img that carries the alt and the lazy load.
+const shotSource = html.match(/<source\b[^>]*srcset="\/proof\/setup\/01-kitchen\.png"[^>]*>/)?.[0] ?? '';
+const shot = shotSource
+	? (html.slice(html.indexOf(shotSource)).match(/<img\b[^>]*\/proof\/setup\/01-kitchen-mobile\.png[^>]*>/)?.[0] ?? '')
+	: '';
 if (!shot) failures.push('missing the setup capture (RC-48)');
 const shotAlt = shot.match(/alt="([^"]*)"/)?.[1] ?? '';
 if (shotAlt.length < 60) failures.push(`setup capture alt is too thin to read off the pixels: "${shotAlt}"`);
@@ -175,7 +201,7 @@ try {
 }
 const pngWidth = png ? png.readUInt32BE(16) : 0;
 const pngHeight = png ? png.readUInt32BE(20) : 0;
-const declared = (attribute) => Number(shot.match(new RegExp(`${attribute}="(\\d+)"`))?.[1] ?? 0);
+const declared = (attribute) => Number(shotSource.match(new RegExp(`${attribute}="(\\d+)"`))?.[1] ?? 0);
 if (png && (declared('width') !== pngWidth || declared('height') !== pngHeight)) {
 	failures.push(
 		`setup capture declares ${declared('width')}x${declared('height')} but the PNG is ${pngWidth}x${pngHeight}`
@@ -216,11 +242,12 @@ for (const [text, label] of [
 	['Your kitchen is ready', 'completion heading'],
 	['Open shopping list', 'completion first action'],
 	['Go to Today', 'completion second action'],
+	['See what setup built', 'the door from stage five to the summary'],
 	['pasted text', 'the five doors (RC-38)'],
 	['quoted back', 'unreadable-is-not-guessed (RC-39)'],
-	['one-time link', 'invite mechanism (RC-52)'],
-	['join as Staff', 'invited role (RC-52)'],
-	['Staff can open cost screens', 'Staff-sees-costs caveat (RC-52)'],
+	['one-time sign-in link', 'invite mechanism (RC-52)'],
+	// Develop c90d3b9c2 (2026-10-10): an invitation picks Staff or Manager.
+	['joins as Staff or Manager', 'invited roles (RC-52)'],
 	['href="/features/team-and-access"', 'link to the Team and Access guide'],
 	['id="after-menu"', 'menu track anchor'],
 	['id="after-crew"', 'crew track anchor']

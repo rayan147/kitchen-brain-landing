@@ -18,6 +18,10 @@ type Props = {
 	description?: string;
 	/** Root-relative route ('/features') so canonical/og:url stay per-page. */
 	path?: string;
+	/** Utility pages remain available after a no-JavaScript form submission. */
+	indexable?: boolean;
+	/** JSON-LD for a route's verified entity, emitted in the document head. */
+	structuredData?: string;
 	/** Optional surface contract emitted as the first body child for design review. */
 	directionContract?: string;
 	/**
@@ -35,15 +39,18 @@ const {
 	title = site.title,
 	description = site.description,
 	path = '/',
+	indexable = true,
+	structuredData,
 	directionContract,
 	headerTone = 'cream'
 } = Astro.props;
-// Slash form so canonical/og:url agree byte-for-byte with the sitemap.
+// Considered Strategy; not used because every public route has one fixed
+// canonical URL form. Vercel redirects the trailing-slash variant to it.
 const canonical = new URL(path, site.url).href;
 // stage.costcook.io builds the release branch with PUBLIC_NOINDEX=1 (the app
 // repo's ADR 0010). Canonical already names costcook.io; this keeps the stage
 // copy out of the index entirely.
-const noindex = import.meta.env.PUBLIC_NOINDEX === '1';
+const robots = import.meta.env.PUBLIC_NOINDEX === '1' ? 'noindex, nofollow' : !indexable ? 'noindex' : undefined;
 const ogImage = new URL('/og.png', site.url).href;
 ---
 
@@ -55,7 +62,8 @@ const ogImage = new URL('/og.png', site.url).href;
 		<meta name="description" content={description} />
 		<title>{title}</title>
 		<link rel="canonical" href={canonical} />
-		{noindex && <meta name="robots" content="noindex, nofollow" />}
+		{robots && <meta name="robots" content={robots} />}
+		{structuredData && <script type="application/ld+json" set:html={structuredData} is:inline></script>}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -132,6 +140,63 @@ const ogImage = new URL('/og.png', site.url).href;
 						el.classList.add('reveal-pending');
 						io.observe(el);
 					}
+				}
+			}
+		</script>
+
+		<script>
+			// Screenshot frames (.shot-pan, global.css) are a named, focusable
+			// region only while they scroll: a phone, or a tablet with a wide
+			// capture. On a desktop the capture fits and the frame was a dead tab
+			// stop with a name about scrolling (accessibility review 2026-10-09).
+			// The HTML ships every frame focusable, so without JavaScript each one
+			// can still be scrolled from the keyboard.
+			// Pattern: Observer. Why: a frame's scroll state changes with the
+			// viewport and with the capture's load, and one ResizeObserver hears
+			// both. Alternative rejected: a resize listener, which misses a lazy
+			// image arriving after the first layout.
+			// [data-pan] puts any other sideways scroller (the tour's tables, the
+			// pack comparison on a phone) through the same treatment, with its
+			// own hint in data-pan-hint (mobile review 2026-10-09: neither was
+			// focusable or said that it scrolls).
+			const pans = document.querySelectorAll<HTMLElement>('.shot-pan, [data-pan]');
+			if (pans.length > 0 && 'ResizeObserver' in window) {
+				const sync = (pan: HTMLElement) => {
+					const label = pan.dataset.panLabel ?? pan.getAttribute('aria-label') ?? '';
+					pan.dataset.panLabel = label;
+					const hint = pan.nextElementSibling?.classList.contains('pan-hint') ? pan.nextElementSibling : null;
+					if (pan.scrollWidth > pan.clientWidth + 1) {
+						pan.setAttribute('tabindex', '0');
+						pan.setAttribute('role', 'region');
+						if (label) pan.setAttribute('aria-label', label);
+						// A touch scrollbar is invisible, so the frame says it
+						// scrolls (design review 2026-10-09). Hidden from AT: the
+						// region itself is focusable and scrolls by keyboard.
+						if (!hint) {
+							const p = document.createElement('p');
+							p.className = 'pan-hint';
+							p.setAttribute('aria-hidden', 'true');
+							p.textContent = pan.dataset.panHint ?? 'Scroll sideways to see the whole screen.';
+							pan.after(p);
+						}
+					} else {
+						pan.removeAttribute('tabindex');
+						pan.removeAttribute('role');
+						pan.removeAttribute('aria-label');
+						hint?.remove();
+					}
+				};
+				const ro = new ResizeObserver((entries) => {
+					for (const entry of entries) {
+						const pan = (entry.target as HTMLElement).closest<HTMLElement>('.shot-pan, [data-pan]');
+						if (pan) sync(pan);
+					}
+				});
+				for (const pan of pans) {
+					sync(pan);
+					ro.observe(pan);
+					const content = pan.querySelector('img, table');
+					if (content) ro.observe(content);
 				}
 			}
 		</script>

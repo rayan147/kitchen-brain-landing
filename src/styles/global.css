@@ -67,7 +67,11 @@
 	/* Supporting roles used inside proof records. These are semantic stops, not
 	   route-local guesses: micro data, compact labels, captions, and record
 	   titles repeat across every feature guide. */
-	--text-micro: 0.6875rem;
+	/* 12px floor (mobile review 2026-10-09): at 11px the mono labels that
+	   carry meaning ("Per portion", "Food cost", step numbers) fell under
+	   what a phone reader in a kitchen can read. Same size as label-sm now;
+	   the two roles still differ in case and tracking. */
+	--text-micro: 0.75rem;
 	--text-label-sm: 0.75rem;
 	--text-caption: 0.8125rem;
 	--text-body-sm: 0.875rem;
@@ -77,11 +81,45 @@
 	--text-record: 1.5rem;
 
 	/* Two spacing registers so sections breathe unevenly on purpose. */
-	--spacing-section: clamp(5rem, 3.5rem + 7vw, 9rem);
+	/* Floor 56px, not 80: a band boundary cost 160px of a 568px phone screen
+	   (mobile review 2026-10-09). The slope still reaches 144px at about
+	   1260px, so desktop rhythm is unchanged. */
+	--spacing-section: clamp(3.5rem, 1.625rem + 9.4vw, 9rem);
 	--spacing-section-tight: clamp(3rem, 2rem + 4vw, 5.5rem);
 }
 
 @layer base {
+	/* One page gutter for the content column, the header and the footer.
+	   viewport-fit=cover (Base.astro) lets the page run under a landscape
+	   iPhone's notch, so each side takes the larger of the gutter and the
+	   safe-area inset (mobile review 2026-10-09: 34px gutter vs 47px notch). */
+	:root {
+		--gutter: clamp(1.25rem, 4vw, 3rem);
+		--gutter-left: max(var(--gutter), env(safe-area-inset-left));
+		--gutter-right: max(var(--gutter), env(safe-area-inset-right));
+	}
+
+	/* The wrapper integrations/webp-sources.mjs puts around a lone capture
+	   img: it adds a WebP source and must not add a box. */
+	picture[data-webp] {
+		display: contents;
+	}
+
+	/* Breadcrumb links are often one short word ("Home", "Blog"): give each a
+	   44px square at least, the site's touch floor, on all 21 routes that
+	   carry one (mobile review 2026-10-09: 29-40px wide). */
+	nav[aria-label='Breadcrumb'] a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 2.75rem;
+		/* 44px tall to the finger, its line's height to the layout: padding
+		   grows the hit box and the negative margin takes it back, as
+		   btn-quiet does. */
+		padding-block: 0.75rem;
+		margin-block: -0.75rem;
+	}
+
 	html {
 		scroll-behavior: smooth;
 		/* The canvas the browser shows past the page (overscroll bounce, the
@@ -213,7 +251,8 @@
 	margin-inline: auto;
 	width: 100%;
 	max-width: 72rem;
-	padding-inline: clamp(1.25rem, 4vw, 3rem);
+	padding-left: var(--gutter-left);
+	padding-right: var(--gutter-right);
 }
 
 @layer components {
@@ -279,6 +318,88 @@
 	}
 }
 
+/* REFLOW AT 200% TEXT (issue #79). On a phone, anything inside the page may
+   shrink below its content's widest word or row. A grid track or flex row
+   otherwise grows to its content's min-content width, and at 200% text on a
+   320px or 390px screen hero copy, buttons and the illustrative panels ran
+   past the screen, where the articles' overflow-x: clip cut them off with no
+   scrollbar (WCAG 1.4.10). :where() keeps this at zero specificity, so any
+   explicit min-width (the screenshot floor below) still wins. Blocks only:
+   a figure such as $18,420 or an icon keeps its own width, so it moves to a
+   new line whole instead of breaking. At 100% text
+   nothing changed: full-page captures of 32 routes at 390 matched before and
+   after. Considered fixing each page's grids one by one; not used because
+   eight pages held over twenty such rows, and the next one written would
+   repeat the bug. */
+@media (max-width: 47.99rem) {
+	main :where(div, section, article, aside, header, footer, nav, figure, figcaption, ul, ol, li, dl, dt, dd, p, h1, h2, h3, h4, blockquote, details, summary, form, fieldset, picture) {
+		min-width: 0;
+	}
+}
+
+/* READABLE CAPTURES. A screenshot may shrink to fit its column, but never
+   below 0.8x of its own CSS size (half the 2x PNG), where the app's 14px text
+   reads at about 11px. Past that floor it keeps its size and scrolls sideways
+   inside its frame; the page never does. Each capture sets --shot-w to its
+   CSS width (`style="--shot-w: 725px"`), so the floor follows the capture
+   instead of a per-page guess (the readability review of 2026-10-09 measured
+   27 of 49 captures under 11px at 390px against floors of 34rem and 44rem).
+   The frame is a focusable region so a keyboard can scroll it.
+
+   Unlayered on purpose, so Tailwind's layered resets cannot undo it.
+   Considered a ProofShot component; not used
+   because the pages frame captures five different ways (figure, picture,
+   ticket, split, pair) and the force is one shared number, which is data. */
+.shot-pan {
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	/* The frame takes its column's width, never its capture's: without this a
+	   grid or flex parent sized to the floor and pushed the page sideways. */
+	contain: inline-size;
+}
+.pan-hint {
+	margin-top: 0.5rem;
+	color: var(--color-ink-soft);
+	font-size: var(--text-caption);
+}
+.shot-pan:focus-visible,
+[data-pan]:focus-visible {
+	outline: 2px solid var(--color-green);
+	outline-offset: -2px;
+}
+/* min-width outranks max-width in CSS, so a page's own `max-width: 100%`
+   shrinks the capture only down to the floor. Up to 80rem: at 1024 the
+   two-up layouts left captures at 0.65x to 0.78x (design review
+   2026-10-09). From 80rem the columns hold most captures at the floor, and
+   the two whole-window captures wider than the 1056px column (events
+   workspace, onboarding stage 1) fit it at about 0.75x rather than scroll.
+   Where a frame does scroll, Base.astro adds the line under it that says
+   so, since a touch scrollbar is invisible. */
+.shot-pan img {
+	height: auto;
+}
+@media (max-width: 79.99rem) {
+	.shot-pan img {
+		min-width: calc(var(--shot-w, 0px) * 0.8);
+	}
+}
+
+/* A scrolling panel says it scrolls: a soft shade at whichever edge has more
+   content, gone at the ends (the cover gradients scroll with the content,
+   the shades stay put). The phone menu cut off at "Your initial setup" in
+   landscape with nothing saying more was below (mobile review 2026-10-09). */
+.scroll-shadows {
+	background-image:
+		linear-gradient(var(--color-paper) 30%, transparent),
+		linear-gradient(transparent, var(--color-paper) 70%),
+		radial-gradient(farthest-side at 50% 0, color-mix(in oklab, var(--color-ink) 16%, transparent), transparent),
+		radial-gradient(farthest-side at 50% 100%, color-mix(in oklab, var(--color-ink) 16%, transparent), transparent);
+	background-position: top, bottom, top, bottom;
+	background-repeat: no-repeat;
+	background-size: 100% 2.5rem, 100% 2.5rem, 100% 0.9rem, 100% 0.9rem;
+	background-attachment: local, local, scroll, scroll;
+}
+
 /* Letter-spaced small-caps label that opens most sections. */
 @utility eyebrow {
 	font-family: var(--font-body);
@@ -303,8 +424,12 @@
 	transition:
 		background-color 150ms ease-out,
 		transform 100ms ease-out;
-	&:hover {
-		background: var(--color-green-deep);
+	/* Hover only where a pointer hovers: on iOS a tapped button kept its
+	   hover colour after the tap (mobile review 2026-10-09). */
+	@media (hover: hover) {
+		&:hover {
+			background: var(--color-green-deep);
+		}
 	}
 	/* The press nudge is motion, so it obeys the same gate every other register
 	   does. Colour feedback on hover/active is not motion and stays. */
@@ -335,8 +460,10 @@
 	   plain utilities sort after @utility blocks. */
 	padding-block: 0.75rem;
 	margin-block: -0.75rem;
-	&:hover {
-		text-decoration-color: var(--color-green);
+	@media (hover: hover) {
+		&:hover {
+			text-decoration-color: var(--color-green);
+		}
 	}
 }
 

@@ -158,3 +158,26 @@ illustrative figures and every screenshot caption and alt text are unchanged.
   kitchen view is read-only; earlier published versions stay readable;
   archive and restore never erase published history; a missing price is
   named, never zero.
+
+### Revision 2026-10-08: the quote frame from local develop
+
+The confirmed-quote frame was `/demo-poster.jpg`, a still from the retired
+demo video (180 guests at $68, a cursor, a burned-in caption). It is now
+`/proof/order-price-today.png` (scripts/capture-price-today-proof.mjs): the
+Nair & Castellano wedding, confirmed on local develop 7a7e407d9, price a
+guest $95.00 locked when confirmed, food cost 27.6% against 30%, and the
+app's own "Today's ingredient prices" line ("unchanged since you quoted
+this"). The copy beside it already says this; no words changed. The alt
+names only what the frame shows.
+
+## Revision 2026-10-11: English edit
+- Hero lede ends on what you get ("and see what a portion costs") instead of the scaling claim, which the management section owns.
+- Costing H2 "Catch a cost change before it reaches the quote." is "Follow one case price to the plate."; "usable yield" is "trim yield"; the figure caption drops the line that repeated the intro; the hero record label is "How the chicken line adds up".
+- Menu frame h3 "The frozen quote, next to today's prices.", with its line saying before and after confirm in order.
+- Print scene h3 "Print a sheet that says how old it is." (no longer repeats the pinned H2 that follows). Close: "Bring that dish and follow it from recipe to quote".
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- FAQ "trim yield" (glossary term); items "Lines that add up.", "Price to target.", "Menus in use stay put.".
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Recipes disclosure title "From private draft to the sheet the kitchen cooks from." (it no longer prints the H2 snap line twice).

@@ -90,7 +90,7 @@ export const nutrition = {
 		// but the two caps on the thing we do. RC-60, src/lib/dietary.ts.
 		`${dietary.boundary} ${dietary.notClaimed[1]}`,
 		'The ingredient statement is in recipe order, not a regulatory weight order.',
-		'A label printer integration is being built and carries no date. Today the sheet prints from the browser.'
+		'The sheet prints from your browser. A direct connection to a label printer is not built and has no date.'
 	],
 	proof: {
 		panel: {

@@ -73,28 +73,28 @@ export const sage = {
 		{ ask: 'Find the chicken recipes', does: 'Searches recipes by name and the ingredients they use.' },
 		{ ask: 'Which recipes contain sesame?', does: 'Finds recipes carrying a reviewed allergen through their ingredients.' },
 		{ ask: 'What is the nutrition for this recipe?', does: 'Shows recipe nutrition and tells you which nutrient values or unit conversions are missing.' },
-		{ ask: 'Which prices went up?', does: 'Reads the purchase ledger for price moves and says how many purchases the move rests on. Managers and owners only.' },
+		{ ask: 'Which prices went up?', does: 'Reads the purchase ledger for price moves and says how many purchases the move rests on.' },
 		{ ask: 'What came up short in receiving?', does: 'Lists the open receiving follow-ups, without the supplier’s contact details.' },
-		{ ask: 'What is left in setup?', does: 'Reads setup progress and points to the unfinished stage. Managers and owners only.' },
-		{ ask: 'Prepare the shopping list', does: 'Drafts the kitchen’s list, or one order’s. You see what it creates and what it does not touch, then you approve or discard it. Managers and owners only.' },
-		{ ask: 'Change Saturday’s draft to 32 guests', does: 'Drafts the guest-count change on a draft order. The price per guest holds and the total follows once you approve. Managers and owners only.' }
+		{ ask: 'What is left in setup?', does: 'Reads setup progress and points to the unfinished stage.' },
+		{ ask: 'Prepare the shopping list', does: 'Drafts the kitchen’s list, or one order’s. You see what it creates and what it does not touch, then you approve or discard it.' },
+		{ ask: 'Change Saturday’s draft to 32 guests', does: 'Drafts the guest-count change on a draft order. The price per guest holds and the total follows once you approve.' }
 	],
 	/** The homepage introduces the breadth without repeating the full diligence list. */
 	homepageGroups: [
 		{ name: 'Run the shift', detail: 'Attention, orders, prep and receiving follow-ups for a date.' },
 		{ name: 'Check a recipe', detail: 'Search, cost, nutrition and reviewed allergen facts.' },
 		{ name: 'Check stock and buying', detail: 'Below-par ingredients and recent price moves.' },
-		{ name: 'Finish setup', detail: 'Progress and the unfinished stage, for managers and owners.' },
-		{ name: 'Prepare one change', detail: 'A draft shopping list or guest-count change, for a manager or owner to approve.' }
+		{ name: 'Finish setup', detail: 'Progress and the unfinished stage, for owners and managers.' },
+		{ name: 'Prepare one change', detail: 'A draft shopping list or guest-count change, for an owner or manager to approve.' }
 	],
 	/** Read off the code, not the prompt. Each is enforced in a test. */
 	guardrails: [
 		{ lead: 'Every number has a source.', detail: 'Links are built by the app, so an answer cannot cite a record it did not read.' },
-		{ lead: 'It never changes a record on its own.', detail: 'Nothing sends, buys, reprices or adjusts. A draft waits for a manager or owner to approve it.' },
+		{ lead: 'It never changes a record on its own.', detail: 'It does not send, buy, reprice or adjust anything. A draft waits for an owner or manager to approve it.' },
 		{ lead: 'It cannot reach another kitchen.', detail: 'Sage can only use records in the kitchen account you are signed into.' },
-		{ lead: 'It reads what your role can read.', detail: 'Price moves are for managers and owners. An answer built on them is redacted for staff in a shared thread.' },
+		{ lead: 'It is for owners and managers.', detail: 'Staff cannot open Sage. The costs and price moves it reads stay with the people who see the money.' },
 		{ lead: 'It says when evidence is missing.', detail: 'Each line is marked as from your records, calculated, Sage’s read, or missing evidence. A check that did not complete is named as one.' },
-		{ lead: 'It has limits, and a stop.', detail: 'Sage has answer time limits and a daily usage cap. If it stops, you can continue working in the rest of CostCook.' }
+		{ lead: 'It has limits, and a stop.', detail: 'Sage has answer time limits and a daily usage cap. If it stops, the rest of CostCook keeps working.' }
 	],
 	proof: {
 		// Re-shot on local develop 7a7e407d9, 2026-10-07, in the wedding's sample
@@ -112,6 +112,11 @@ export const sage = {
 			height: 1100,
 			alt: 'The same Sage answer on a phone: the Braised Short Rib costs $7.28 per portion, beef short rib $7.00 (96 percent), House Beef Stock $0.20 (3 percent), Mirepoix Base $0.08 (1 percent), each linked to the recipe.'
 		},
+		// Where the phone capture is served: on a phone, and from 64rem up,
+		// where both Sage frames sit in a column 390 to 490px wide and the
+		// 714px desktop capture drew 8px text (readability review 2026-10-09).
+		// The desktop alt holds for both: the same question, answer and lines.
+		mobileMedia: '(max-width: 39.99rem), (min-width: 64rem)',
 		caption:
 			'The wedding’s short rib, $7.28 a portion, broken into the three lines that make it, each linked to the recipe it came from.'
 	}

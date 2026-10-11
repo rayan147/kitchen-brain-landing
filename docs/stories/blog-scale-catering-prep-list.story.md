@@ -99,3 +99,5 @@ Guest count becomes portion requirement; a fraction becomes a deliberate batch; 
 - Removed the suggestion that every recipe must be rounded; the operating unit determines it.
 - Kept recipe batches distinct from two-batch kettle runs and recalculated the reading time at 200 words per minute.
 - **Final image:** Tomorrow's board shows four full kettle runs and three planned spare portions, not a mystery fraction.
+
+**Revision 2026-10-08: chef voice pass.** Buffer, batch, kettle and shopping paragraphs said the way a cook would; heading "Give the crew the executable plan" is now "Give the crew a plan they can cook". Pinned "eight complete batches" sentence and all figures unchanged. Why: owner asked that the site read like a working chef wrote it, not AI.

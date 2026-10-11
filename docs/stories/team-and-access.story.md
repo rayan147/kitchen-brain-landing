@@ -163,3 +163,20 @@ or RC-52 boundaries).
 - **Caption:** "Each role sees what its job needs." implied hidden screens,
   which the page says do not exist; it is now "Three roles, one kitchen
   account."
+
+## Revision 2026-10-10: develop's roles, Staff without the money
+- Owner ruling 2026-10-10: the page states local kitchen-brain develop c90d3b9c2's roles and ships now (`permissions.ts` ROLE_CAPS; role commit 58bebd7f5 is not on kitchen-brain main yet).
+- The turn flips. The old wall, "a cook who needs the prep list can still open costs, so CostCook may not fit", is gone: Staff work orders, prep, deliveries and recipes, and costs and margins are stripped before their pages are sent. The hero constraint now tells the reader to pick Staff for anyone who should not see costs.
+- Invites pick Staff or Manager; only the Owner invites, changes roles, or touches billing and settings. Managers carry the money (costs, Analytics, Sage, clients, purchasing, setup).
+- What still stops: no single-screen control, no field-level control, no custom role. "The line is the role" carries that limit.
+- Snap line: "The line is the role: Staff never see costs, Managers see the money but not billing, and only you run the team."
+
+## Revision 2026-10-11: English edit
+- Hero lede names the three roles and says the role decides what they see and change (no "Below is what...").
+- Second H2 "The role is checked on every screen.", with the FAQ 4 fact (checked when someone opens a screen or tries an action); enforcement fact "Every screen and action".
+- Roles intro: "Each role builds on the one below it. Staff get the kitchen work. Managers add the money. The Owner adds the team, billing, settings and recipe publishing." Close: "Billing and the team stay with you. Costs stay with you and your Managers."
+- Pass label "CostCook sign-in"; Staff access list unnested; FAQ intro, FAQ 1 and FAQ 3 question in plain words; onward link "Recipes & food costing"; meta description leads with "Staff never see costs".
+- Held for the owner: the dt labels (pinned), the Owner boundary line, the hero action order.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Role facts labelled "Can open / Can do / Cannot" (pins updated); Owner row "Nothing in the account is closed to the Owner."; hero puts the primary action first; FAQ 3 adds that the link signs them in once, with no password.

@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -41,7 +42,11 @@ try {
 	let messageId = 0;
 	const pending = new Map();
 	const pageErrors = [];
-	const failedRequests = [];
+	// The page identity comes from the page's own h1, not a retyped string: the
+// old one ("The work decides whether CostCook fits.") outlived its copy.
+const pageIdentity = readFileSync(new URL('../src/components/sections/WhoItsForPage.astro', import.meta.url), 'utf8').match(/<h1 id="audience-heading"[^>]*>([^<]+)<\/h1>/)?.[1].trim();
+if (!pageIdentity) throw new Error('could not read the h1 from WhoItsForPage.astro');
+const failedRequests = [];
 	socket.addEventListener('message', (event) => {
 		const message = JSON.parse(event.data);
 		if (message.id) {
@@ -53,7 +58,8 @@ try {
 			return;
 		}
 		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
-		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400) {
+		// The analytics script only exists on Vercel; every other check ignores it.
+		if (message.method === 'Network.responseReceived' && message.params.response.status >= 400 && !message.params.response.url.includes('/_vercel/insights/script.js')) {
 			failedRequests.push(`${message.params.response.status} ${message.params.response.url}`);
 		}
 	});
@@ -107,7 +113,9 @@ try {
 			title: document.querySelector('h1')?.textContent.trim(),
 			overflow: document.documentElement.scrollWidth - innerWidth,
 			minTarget: Math.min(...actions.map((action) => action.getBoundingClientRect().height)),
-			activeNav: document.querySelector('a[href="/who-its-for"][aria-current="page"]')?.textContent.trim(),
+			// The Resources menu entry carries a description after the label, so
+			// match the label at the start of any current link.
+			activeNav: [...document.querySelectorAll('a[href="/who-its-for"][aria-current="page"]')].map((a) => a.textContent.trim()).find((text) => text.startsWith("Who it's for")) ? "Who it's for" : undefined,
 			fitSignals: document.querySelectorAll('.fit-signals li').length,
 			workSteps: document.querySelectorAll('.work-path li').length,
 			limits: document.querySelectorAll('.limits-ticket li').length,
@@ -115,7 +123,7 @@ try {
 			contract: document.documentElement.innerHTML.includes('who-its-for-work-fit')
 		};
 	})()`);
-	assert(desktop.title?.startsWith('The work decides whether CostCook fits.'), 'desktop: page identity is missing');
+	assert(desktop.title === pageIdentity, `desktop: page identity is "${desktop.title}", expected "${pageIdentity}"`);
 	assert(desktop.overflow === 0, `desktop: horizontal overflow is ${desktop.overflow}px`);
 	assert(desktop.minTarget >= 44, `desktop: smallest route action is ${desktop.minTarget}px`);
 	assert(desktop.activeNav === "Who it's for", 'desktop: navigation tab is not active');
@@ -174,7 +182,7 @@ try {
 		fitSignals: document.querySelectorAll('.fit-signals li').length,
 		limits: document.querySelectorAll('.limits-ticket li').length
 	}))()`);
-	assert(noScript.heading?.startsWith('The work decides whether CostCook fits.'), 'no JavaScript: page identity is missing');
+	assert(noScript.heading === pageIdentity, `no JavaScript: page identity is "${noScript.heading}"`);
 	assert(noScript.fitSignals === 4, 'no JavaScript: fit signals are missing');
 	assert(noScript.limits === 3, 'no JavaScript: limits are missing');
 	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);

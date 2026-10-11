@@ -15,3 +15,15 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 - [x] 9 Scene: A phone at the prep bench between services.
 - [x] 10 Connection: You throughout; choose a task, inspect what it does, read limits, decide.
 - [x] 11 Revision: Built pages, shared consumers, status wording, five responsive widths and 320px/200% text verified. Report: `docs/qa/features-caterer-2026-09-11/report.md`.
+
+## Revision 2026-10-11: English edit
+- Import figure counts five doors, matching Integrations and onboarding: "A photo, a PDF, a spreadsheet, a Word document or pasted text." (visible tag and sr-only description changed together).
+- Figure caption: "You confirm. That step is the point. Everything before it is a suggestion." replaces "the gate in the middle" / "to the left of it is a proposal" (wrong at phone width; "proposal" names the client document). Snap line kept.
+- Sibling blurbs for compliance and team changed with the hub cards.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Import items: "Total against the lines." (was "Invoices that check themselves."), "Supplier names, remembered." (was "It learns your names."), "Each one is queued and tracked." (no "workspace").
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Group order: import and invoice email come before month cost (the ledger group moved after inbox), so the first H2 after the upload wall, lede and figure is about the upload. The hub card's mono line follows the new order.
+- Import item: "The photo or PDF sits beside the rows while you review them."

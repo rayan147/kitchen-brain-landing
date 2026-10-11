@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import OnlineOrderingFeature from '../../components/sections/OnlineOrderingFeature.astro';
+import { orderingRoute, orderingSeoDescription } from '../../lib/ordering';
+
+// Considered Strategy; not used because this route is one deliberate editorial
+// composition selected at build time, not a runtime-swappable layout family.
+const directionContract = [
+	'THESIS: The client fills in the order on your page or your own website; you approve, and their payment confirms it.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, the snippet on a tilted ticket with placeholders, the app’s tab names and Go live blockers read from src/lib/ordering-guide.ts.',
+	'STORY: The office-lunch film, two ways in, the web person pastes the snippet, four tabs then Go live, a request is not a booking until the payment.',
+	'FIRST VIEWPORT: Headline, the one-line promise, the status line with the settings path, actions, and the film.',
+	'FORM: Utility composition matching the feature family; two Setup captures from local develop, the website tab as text because a local capture prints localhost and a site id.',
+	'FINISH: The page guard checks the film, captions and transcript, the four tabs, the Go live list, the snap line, and that no working site id is printed.'
+].join(' ');
+---
+
+<Base
+	title="Online ordering for caterers | CostCook"
+	description={orderingSeoDescription}
+	path={orderingRoute}
+	directionContract={directionContract}
+>
+	<OnlineOrderingFeature />
+</Base>

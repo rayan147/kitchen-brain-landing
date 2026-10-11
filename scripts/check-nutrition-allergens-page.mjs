@@ -24,7 +24,8 @@ const required = [
 	'Print label switches on',
 	'Contains: milk',
 	'A blank row beats a made-up zero.',
-	'/proof/nutrition/nutrition-summary-wide.png',
+	// The hero shows the phone summary at every width (readability review
+	// 2026-10-09); the wide strip is kept on disk for the capture script only.
 	'/proof/nutrition/nutrition-summary-mobile.png',
 	'/proof/nutrition/nutrition-facts-panel.png',
 	'/proof/nutrition/allergen-review-wide.png',

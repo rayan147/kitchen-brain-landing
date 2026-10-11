@@ -3,7 +3,7 @@
 ## My story
 
 - **Piece:** Resource route explaining what setup asks for, where it leaves you, and how the rest of the kitchen comes in (`/onboarding`)
-- **Title / headline:** You do not need to enter your whole walk-in
+- **Title / headline:** Start by costing one dish. (Updated 2026-10-11 to the pinned H1; the original working headline was "You do not need to enter your whole walk-in".)
 - **My hero's name:** The owner-caterer with the trial page open in one tab, not pressing Start, who has a second question behind the first: and then what?
 - **Content file(s):** `src/pages/onboarding.astro`, `src/components/sections/OnboardingPage.astro`
 
@@ -83,7 +83,7 @@
 
 - **Intention:** Find out whether this is worth one evening.
 - **Obstacle:** She believes she has to enter everything before it does anything.
-- **Headline:** You do not need to enter your whole walk-in.
+- **Headline:** Start by costing one dish. (Pinned H1. The earlier "You do not need to enter your whole walk-in." is now the hero lede's job: upload one invoice and one recipe, then confirm.)
 - **Subhead:** Setup asks for one dish you already cook and takes about fifteen minutes. Its ingredients come off one invoice and one recipe, uploaded as a photo or a PDF, and you confirm what CostCook read. Four stages in, it prints that dish's plate cost with the arithmetic beside it. This page shows every screen, then says what comes after, and how the rest of your kitchen gets in.
   ("You do not type its ingredients in" was cut in code review: RC-58 forbids saying typing is gone, and the guard now fails on "do not type" too.)
   (The subhead first read "Five stages later it prints that dish's plate cost",
@@ -93,7 +93,9 @@
 
 ### Step 8 — Cool Talk: the one snap line
 
-> A $32 case of thighs, 80% of it surviving the knife, 180 g on the plate: $1.62. Check it on paper. We would rather you did.
+> A $32 case of thighs, 80% usable after trim, 6.3 oz (180 g) on the plate, plus 2% misc: $1.62. Check it on paper. We would rather you did.
+
+(Updated 2026-10-11 to the line the page ships. This is the page's one snap line. The butter-and-chicken caption on stage three is a sharp caption, not a second snap.)
 
 ### Step 9 — Bringing a Scene to Life
 
@@ -318,3 +320,21 @@ Content: `src/components/sections/OnboardingPage.astro` and its shared data/resp
 
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - Ounces lead: 6.3 oz (180 g).
+
+## Revision 2026-10-10: reshot from local develop c90d3b9c2, phone captures
+- Every capture reshot from an empty kitchen on local kitchen-brain develop c90d3b9c2, at 1440 and at 390 in one walk. Phones and tablets get the 390 capture at its own size (no sideways panning); 64rem and up get the 1440 one. Purchases ships its phone capture at every width.
+- Copy follows develop: stage one asks for units; stage two adds "Take photo"; stage five asks about guests' allergies and ends on "Your first order is made", with the summary behind "See what setup built" [corrected 2026-10-11: "Create first order" lands on the summary "Your kitchen is ready"; "Your first order is made" shows only when stage five is reopened]; the next invoice goes in from Purchases ("Import invoice", under "More" on a phone); an invite picks Staff or Manager (RC-52 note in the ledger).
+- Humanize review applied to the changed bodies and captions; the two pinned phrases ("without rewriting confirmed orders", "“check”, never “clear”") kept.
+- Snap line unchanged: a name can tell Sage that butter has milk, not that chicken has none (now the stage-three caption, in the app's own words).
+- Stage three reshot with Sage on a real provider (Google): the card now shows Sage's drafted diet facts ("Sage drafted Animal product: Yes · …") and "Use Sage's answers", with the allergens still open. Alt and caption read the drafted line off the pixels; the snap line stands.
+- The next invoice: Purchases reshot with the More menu closed (owner review: an open menu read as left open). Desktop shows the header, "Import invoice" beside "Log purchase"; phones show the page with "More" in the bar at the foot. Caption says where it is on each.
+
+## Revision 2026-10-11: English edit
+- Hero lede carries the upload-then-confirm relief above the phone fold: "Upload one supplier invoice and one recipe, a photo or a PDF of each, and confirm what CostCook reads." Duration qualifier kept verbatim.
+- Part 3 names the screen stage five actually lands on (kitchen-brain develop 4f46543cf, setup createOrder redirects to the completion summary): "Stage five ends on “Your kitchen is ready.”"; "See what setup built" is described as the way back to that summary; the capture caption reads "Where “Create first order” lands."
+- Headings say their point alone: Part 1 "Have one invoice and one recipe within reach."; Part 2 "Five stages for one dish. At two of them, you can upload a photo or a file."; the number "How a 10 lb case at $32 becomes a $1.62 plate." (the paragraph that repeated the snap is gone); guards "Four mistakes, and what setup does with each."
+- Smaller cuts: "nothing is claimed", "before you type a thing", the dropzone caption's repeated gate, throat-clearing lines; "Last tick:" for the done key; "Your phone, or a computer."; pronouns pointed ("The welcome questions take a minute").
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- Stage two adds the app's own qualifier: confirm the supplier, packs and prices on "Review extracted records"; anything CostCook could not read, you type (develop SetupIngredientsStage.svelte).
+- Tracker pass (O-5): the headline fields now name the pinned H1 "Start by costing one dish."; Step 8 quotes the snap line as it ships, and the butter-and-chicken line is named a caption, not a second snap; the 2026-10-10 entry's landing screen is corrected to "Your kitchen is ready".

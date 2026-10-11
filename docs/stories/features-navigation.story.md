@@ -184,3 +184,34 @@ definition are unchanged.
   against the orders you sent. Anything short stays in view until you follow
   it up." Team: "An order page you already opened still reads with no signal,
   but you need to reconnect to change anything." Meanings held.
+
+## Revision 2026-10-08: chef voice pass (the rest of the site)
+- Pricing: eyebrow "Priced by the kitchen", heading "One price for the kitchen, however big the crew.", lede and Stripe line in plain words ("Stripe takes your card, charges $0 today..."). Figures still read from site.ts; "feature groups contain work marked Coming" is pinned and kept.
+- Area hub group titles that were slogans or triplets: "Upload the paperwork. Review the details. Save your changes." is "Upload the paperwork, check it against the original, then save."; "Price it, confirm it, run it." is "One order, from the price to the pack-out."; "The shelf, computed, never guessed." is "What is on the shelf, worked out from a real count."; "Find kitchen settings and team access in one place." is "Kitchen settings, and who on the team can do what." Per-feature item lines kept as the feature pages settled them.
+- Connections: "The reason there is no long list of connectors here is that..." is "There is no long list of connectors here because...".
+
+## Revision 2026-10-11: English edit (hub)
+- H1 "Find the tools for your next catering job." is "Every feature, area by area.", echoing the homepage link that brings the reader here.
+- Lede no longer says the features are "below" or repeats Coming: "The {featureCount} available features are sorted by kitchen job into the areas below." The guide sentence after the snap line is cut (it is said again above the guides list); "shipped features" is "available features" to match the lede.
+- Area cards: compliance blurb names guests' restrictions instead of "calculated or settled"; team blurb names Sage and says "connections marked Coming"; the day-itself kicker is "Orders, shop, prep & pack" (was "Orders, the event").
+- Kept: "Watch the 2:53 product tour" link (pinned; owner call O1).
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Hub proof link is the site's product tour (featuresMenu.tourLabel / tourHref, /tour/main) instead of "Watch the 2:53 product tour" to a missing #demo anchor; same on /compare. Pins in check-landing-claims.mjs moved to the new source.
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- FeatureSection takes a default slot before the sibling close; only team-and-connections fills it (Integrations). Pin in check-landing-claims.mjs now requires '<FeatureSection entry={entry}>'.
+- Getting-prices-in hub card mono line now reads in the new group order (import first, month cost last).
+
+### Revision 2026-10-11: the booking item
+
+The day-itself list said "Confirm order is the booking" and that the event
+then reads "This event is booked." Neither is true on kitchen-brain develop
+4f46543cf: Book the event is the commercial commitment (BookEvent.svelte),
+waits on the signed agreement and the deposit, and the event header reads
+Booked; Confirm order only freezes quantities and prices. The item now says
+"Book the event books it." and puts Confirm order after it, matching the
+area lede and the homepage.
+
+## Revision 2026-10-11: English edit (booking fact)
+- Features menu line for Events (every page): "Take the inquiry, send the proposal, and book once it is signed and the deposit is in." (was "book the yes with Confirm order").

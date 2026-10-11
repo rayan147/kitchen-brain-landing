@@ -113,6 +113,10 @@ try {
 	// 1. The summary: the draft banner, the four headline values, lines filled.
 	for (const [p, name] of [[page, 'wide'], [mpage, 'mobile']]) {
 		await openTab(p, 'nutrition');
+		// The phone's sticky app bar sat over the banner's first lines in the
+		// 2026-10-07 frame, hiding the words the alt names (readability review
+		// 2026-10-09); hide it as section 3 does.
+		if (name === 'mobile') await p.evaluate(() => { for (const e of document.querySelectorAll('*')) { const cs = getComputedStyle(e); if (cs.position === 'fixed' || cs.position === 'sticky') e.style.visibility = 'hidden'; } });
 		const banner = p.getByText('Draft estimate. Not ready to print.', { exact: true }).first();
 		const filled = p.getByText('Label lines filled', { exact: true }).first();
 		const top = await banner.evaluate((el) => { let n = el; while (n.parentElement && n.getBoundingClientRect().width < 330) n = n.parentElement; const r = n.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, r: r.right + scrollX }; });

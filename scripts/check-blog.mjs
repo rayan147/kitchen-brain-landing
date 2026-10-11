@@ -40,12 +40,22 @@ const expectedPosts = [
 	'expected-vs-actual-food-cost',
 	'scale-catering-prep-list',
 	'review-supplier-invoice',
-	// RC-73: the setup guide publishes only with the feature (src/lib/blog.ts).
-	...(invoiceEmailLive ? [setupGuideSlug] : [])
+	'catering-event-first-call-to-closeout',
+	// RC-73: the invoice email guides publish only with the feature (src/lib/blog.ts).
+	...(invoiceEmailLive ? [setupGuideSlug, 'supplier-credit-memo-by-email'] : []),
+	// The ordering guides publish with online ordering, which check-landing-claims
+	// pins at 'yes' (RC-59); the owner lifted the pay-link hold on 2026-10-08.
+	'take-catering-orders-online',
+	'catering-order-form-on-your-website',
+	// Four guides read off kitchen-brain develop 66d0703fe on 2026-10-10.
+	'guest-allergy-menu-check',
+	'catering-deposit-without-chasing',
+	'should-staff-see-food-costs',
+	'catering-food-labels'
 ];
 // The menu spells the published count (BlogMenuContents, spellCapital), so the
 // pin follows the list above instead of a typed word.
-const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen'];
+const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
 requireText(indexHtml, `${countWords[expectedPosts.length - 10]} worked guides. The assumptions stay beside the arithmetic.`, 'Blog menu evidence boundary');
 // While invoice email is Coming, its setup guide must not be built or linked.
 if (!invoiceEmailLive) {
@@ -113,10 +123,45 @@ for (const [slug, text, label] of [
 	['scale-catering-prep-list', 'eight complete batches', 'batch and equipment-run boundary'],
 	['expected-vs-actual-food-cost', 'Attributed food cost =', 'event attribution boundary'],
 	['supplier-price-changes', 'The risk starts when a draft quote still carries the old cost.', 'draft quote risk'],
+	// Book the event and Confirm order are two steps at app 7a7e407d9.
+	['catering-event-first-call-to-closeout', 'Their yes books nothing. The signed agreement and the deposit do', 'acceptance boundary'],
+	['catering-event-first-call-to-closeout', 'Book the event</strong> is its own step', 'booking before Confirm order'],
+	...(invoiceEmailLive
+		? [['supplier-credit-memo-by-email', 'It adds no purchases and changes no prices.', 'credit never moves a price']]
+		: []),
+	// RC-59: approval is not confirmation; the film's own figure, labelled as its kitchen.
+	['take-catering-orders-online', 'It isn’t booked until you approve it', 'approval boundary'],
+	['take-catering-orders-online', 'pays $1,273.08 by card', 'film figure'],
+	['catering-order-form-on-your-website', 'Your web person pastes two lines. You never touch the code.', 'snap line'],
+	['catering-order-form-on-your-website', 'Not taking online orders right now.', 'not-live troubleshooting'],
+	// The four 2026-10-10 guides each keep the boundary the app draws.
+	['guest-allergy-menu-check', 'Unknown is never clear.', 'unknown is never clear'],
+	['guest-allergy-menu-check', 'A conflict doesn’t stop you, and that’s deliberate', 'conflicts warn, never block'],
+	['catering-deposit-without-chasing', 'CostCook won’t book on the yes alone.', 'acceptance is not booking'],
+	['catering-deposit-without-chasing', 'The deposit is asked for by hand.', 'no automatic deposit reminder'],
+	['should-staff-see-food-costs', 'A cook needs to know it’s four cases. Not that it’s $219.', 'snap line'],
+	['should-staff-see-food-costs', 'Only the owner can invite.', 'owner-only invites'],
+	['catering-food-labels', 'CostCook won’t print a blank allergen line over an ingredient nobody checked.', 'unreviewed is printed'],
+	['catering-food-labels', 'it isn’t a claim of retail-label compliance', 'no compliance claim'],
 ]) {
 	requireText(readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'), text, `${slug} ${label}`);
 }
 
+// How-to guides carry their app captures as sized figures
+// (integrations/blog-figures.mjs): a step with no screenshot, or an image
+// without width and height, is a guide that stopped showing the app.
+for (const [slug, figures] of [['food-cost-per-guest', 1], ['catering-food-labels', 7], ['guest-allergy-menu-check', 8], ['catering-deposit-without-chasing', 10], ['should-staff-see-food-costs', 8]]) {
+	const html = readFileSync(join(blogRoot, slug, 'index.html'), 'utf8');
+	const shots = [...html.matchAll(/<figure class="blog-shot">[\s\S]*?<\/figure>/g)].map((m) => m[0]);
+	if (shots.length !== figures) failures.push(`${slug} has ${shots.length} app captures; expected ${figures}`);
+	for (const shot of shots) {
+		const img = shot.match(/<img\b[^>]*>/)?.[0] ?? '';
+		if (!/\swidth="\d+"/.test(img) || !/\sheight="\d+"/.test(img) || !/\salt="[^"]{20,}"/.test(img)) {
+			failures.push(`${slug}: a capture is missing its width, height or alt text`);
+		}
+		if (!/<figcaption>/.test(shot)) failures.push(`${slug}: a capture has no caption`);
+	}
+}
 if (builtPosts.length !== expectedPosts.length) {
 	failures.push(`expected ${expectedPosts.length} article routes, received ${builtPosts.length}`);
 }

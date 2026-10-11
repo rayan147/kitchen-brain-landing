@@ -98,3 +98,5 @@ emailed, the code entered, the test in the inbox).
   labels instead.
 - The close hands off to the feature page with `featureHref`, and to the
   existing invoice review guide for what to check once it arrives.
+
+**Revision 2026-10-08: chef voice pass.** Light pass only: one line ("The page says plainly what the address can and can't do"). The post already read in a chef's voice and quotes the app's own labels, which stay verbatim; RC-73 wording guard still passes. Why: owner asked that the site read like a working chef wrote it, not AI.

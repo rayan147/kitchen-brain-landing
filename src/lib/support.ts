@@ -15,6 +15,12 @@
  * and the wire shape is pinned by verify-contact.mjs on this side.
  */
 
+// The .js specifier is required: api/support.ts imports this file as a real ES
+// module on Vercel, so its own imports must resolve literally (see api/support.ts).
+// founder-email.ts, not site.ts: site.ts reads import.meta.env, which a plain
+// Node module does not have.
+import { founderEmail } from './founder-email.js';
+
 export const SUPPORT_EMAIL = 'support@costcook.io';
 export const SUPPORT_MESSAGE_MIN_LENGTH = 10;
 export const SUPPORT_MESSAGE_MAX_LENGTH = 4_000;
@@ -38,8 +44,9 @@ export type SupportResponse = {
  */
 export const SUPPORT_INVALID_MESSAGE =
 	'Add your email and a message of at least 10 characters, then send again.';
-export const SUPPORT_FAILED_MESSAGE =
-	'Your message could not be sent. Your draft is still here, so please try again.';
+// Owner-approved 2026-10-11 (contact F4): the failure names a way out, the
+// founder's address (site.email reads the same constant), as plain text (status.textContent holds no link).
+export const SUPPORT_FAILED_MESSAGE = `Your message could not be sent. Your draft is still here. Try again, or email ${founderEmail}.`;
 
 /**
  * Deliberately permissive: one @, something either side, no spaces, a dot in

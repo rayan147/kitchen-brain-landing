@@ -153,3 +153,13 @@ capability list, figure notes and alt text are unchanged.
   lines) each stay distinct and point to the next step.
 
 - **Follow-up (features pass):** the capabilities heading reads "What is in ..." instead of "Everything in ...". At 200% text on a 320px phone, "Everything" at display size did not fit the column (verify-feature-parity caught it on Recipes & Costing), so every guide now uses the shorter words.
+
+## Revision 2026-10-11: English edit
+- Hero lede: "that one plan: what to buy, what to prep and what goes on the van. Each list gets checked off on its own." Source section opens "When you confirm the order, ...".
+- Pack intro says what ships: "Pack lists the food and the equipment, carries the allergen badges". Recovery body drops "keeps what is safe".
+- Shelf-check FAQ opens "Yes." and drops "Order-scoped"; same-order FAQ no longer restates the freeze.
+- Captions and chapter-nav in plain words; the duplicate "Open the full shipped list" line is gone; FAQ intro "From the first buy line to the last pan in the van."
+
+
+## Revision 2026-10-11: English edit (booking and reopen facts)
+- "Honest reopen." item: "Reopening drops the frozen prices and goes back to today’s. Once purchasing starts, reopening is refused." (kitchen-brain develop 4f46543cf, orders/repository.ts reopenOrder drops the snapshot; matches faq.ts). Renders here via the orders group.

@@ -72,7 +72,7 @@ const faqItems = [
 					<span>Ingredients and supplier prices</span>
 				</nav>
 				<h1 id="ingredients-prices-heading" class="feature-display">Compare supplier prices by what you can use.</h1>
-				<p class="hero-lede">Put in the case price, the pack size and the trim yield for one ingredient. Compare suppliers by what you can actually use, per pound, kilo or each, and see which recipes a price change hits.</p>
+				<p class="hero-lede">Put in the case price, the pack size and the trim yield for one ingredient. Compare suppliers per usable pound, kilo or item, and see which recipes a price change hits.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -122,8 +122,8 @@ const faqItems = [
 			<div data-reveal>
 				<h2 id="problem-heading">The old price still looks right.</h2>
 				<p>
-					The invoice went up and the case size changed, but your spreadsheet still has the old
-					number. By the time the food cost looks wrong, you may have already quoted it to a client.
+					The invoice went up, but your spreadsheet still has the old number. By the time the food
+					cost looks wrong, you may have already quoted the job to a client.
 				</p>
 			</div>
 			<figure class="price-drift" data-reveal>
@@ -153,8 +153,8 @@ const faqItems = [
 			<div class="section-intro" data-reveal>
 				<h2 id="ingredient-records-heading">Set up the ingredient once. Every recipe uses it.</h2>
 				<p>
-					Start from scratch, from a USDA reference or from a purchase. The buying unit, trim
-					yield, conversions, suppliers, allergens, storage area and par level all live on it.
+					The buying unit, trim yield, conversions, suppliers, allergens, storage area and par
+					level all live on the ingredient.
 				</p>
 			</div>
 
@@ -179,7 +179,7 @@ const faqItems = [
 			</figure>
 
 			<div class="feature-scenes">
-				<article><h3>Add it where you run into it.</h3><p>Create an ingredient from the catalog, from a purchase, or inside the recipe you are already building.</p></article>
+				<article><h3>Add it where you run into it.</h3><p>Start from scratch, from the USDA reference or from a purchase. Or add it inside the recipe you are already building.</p></article>
 				<article><h3>Keep purchased and usable separate.</h3><p>Both costs sit side by side. Trim and cooking loss show as numbers you can see, never buried in the price.</p></article>
 				<article><h3>See what still needs a price.</h3><p>The ingredient list shows which items can be costed and which still need a price or unit conversion.</p></article>
 			</div>
@@ -189,14 +189,14 @@ const faqItems = [
 	<section id="supplier-prices" class="product-section supplier-chapter" aria-labelledby="supplier-prices-heading">
 		<div class="container-page">
 			<div class="section-intro supplier-intro" data-reveal>
-				<h2 id="supplier-prices-heading">A cheaper case can cost you more.</h2>
+				<h2 id="supplier-prices-heading">Put both cases on the same pound.</h2>
 				<p>
 					Pack size and yield change the math. Each offer comes down to the same usable unit and
 					keeps its source and date. Then you pick the price you want to use.
 				</p>
 			</div>
 
-			<figure class="comparison-table" data-reveal>
+			<figure class="comparison-table" data-reveal data-pan data-pan-hint="Scroll sideways to see both suppliers." tabindex="0" aria-label="Pack comparison: Northline Foods and Market Supply">
 				<div class="comparison-head"><span>Chicken thigh</span><span>Northline Foods</span><span>Market Supply</span></div>
 				{packFacts.map((fact) => (
 					<div class:list={['comparison-row', fact.label === 'Usable cost' && 'result-row']}>
@@ -245,8 +245,8 @@ const faqItems = [
 			</div>
 			<figure class="screenshot-frame" data-reveal>
 				<picture>
-					<source media="(max-width: 639px)" srcset="/proof/yield-lines-mobile.png" />
-					<img src="/proof/yield-lines.png" width="1490" height="1042" loading="lazy" decoding="async" alt="CostCook recipe lines for a Greek salad: bell pepper 0.25 each at 82% yield, cucumber 0.3 each at 90%, and Roma tomato 2.1 oz at 91% yield, 2.3 oz to buy, 12% of cost, $0.17. Roma tomato is opened: 2.1 oz usable quantity, trim yield 91%, required as purchased 2.1 oz ÷ 0.91 = 2.3 oz, a 25 lb case at $29.14, line cost $0.17, and the recorded purchase it came from." />
+					<source media="(max-width: 63.99rem)" srcset="/proof/yield-lines-mobile.png" width="748" height="1102" />
+					<img src="/proof/yield-lines.png" width="1490" height="1042" loading="lazy" decoding="async" alt="A CostCook recipe line, Roma tomato: 2.1 oz at 91% yield, 2.3 oz to buy, 12% of cost, $0.17. Opened, it shows its working: 2.1 oz usable quantity, trim yield 91%, required as purchased 2.1 oz ÷ 0.91 = 2.3 oz, a 25 lb case at $29.14, line cost $0.17, and the recorded purchase it came from." />
 				</picture>
 				<figcaption>Real CostCook interface: each ingredient carries its working into the recipe.</figcaption>
 			</figure>
@@ -415,6 +415,17 @@ const faqItems = [
 	.closing-grid { display: grid; gap: 2rem; align-items: center; padding-block: var(--spacing-section-tight); }
 	.onward { padding-block: 1.4rem; border-top: 1px solid var(--color-hairline-strong); }
 
+	/* REFLOW AT 200% TEXT (issue #79). A grid with no column template sizes
+	   its one implicit track to its content's min-content width, so at 200%
+	   text on a phone the hero and the product panels grew past the screen
+	   and the article's overflow-x: clip cut their right edge off. One
+	   shrinkable track below the breakpoints; the media rules below set the
+	   wide layouts. Rows that pair a label and a value wrap instead of
+	   pushing the value out. */
+	.hero-grid, .ingredient-workspace, .workspace-side, .problem-grid, .section-intro, .evidence-grid, .capabilities-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, 1fr); }
+	.record-head, .panel-bar, .ingredient-title { flex-wrap: wrap; }
+	.ingredient-title > *, .workspace-title > *, .source-line > * { min-width: 0; overflow-wrap: anywhere; }
+
 	@media (min-width: 720px) {
 		.hero-grid { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
 		.problem-grid, .section-intro, .evidence-grid, .faq-grid, .closing-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
@@ -453,5 +464,17 @@ const faqItems = [
 
 	@media (prefers-reduced-motion: reduce) {
 		.capabilities summary svg, .faq summary svg { transition: none; }
+	}
+	/* Below 64rem the frame gets the app's phone capture, held at its own CSS
+	   size: the desktop capture squeezed into a tablet column drew 7 to 9px
+	   text (readability review 2026-10-09). */
+	/* The 745px recipe-lines capture needs about 600px to keep its figures at
+	   11px; at 1.1fr it drew them at 10px (readability review 2026-10-09).
+	   From 64rem only, where the wide capture is shown. */
+	@media (min-width: 64rem) {
+		.evidence-grid { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); }
+	}
+	@media (max-width: 63.99rem) {
+		.screenshot-frame { max-width: 24.5rem; margin-inline: auto; }
 	}
 </style>

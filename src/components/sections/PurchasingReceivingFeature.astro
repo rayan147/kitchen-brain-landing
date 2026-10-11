@@ -14,8 +14,8 @@ const deliveryLines = [
 
 const recoveryStates = [
 	{ label: 'Send failed', action: 'Retry the same PO', note: 'The failure stays on the record.' },
-	{ label: 'Short or missing', action: 'Keep it on the rebuy list', note: 'Mark handled or reopen it later.' },
-	{ label: 'Unexpected line', action: 'Review before posting', note: 'Something you never ordered does not sneak in as a purchase.' }
+	{ label: 'Short or missing', action: 'Keep it on the follow-up list', note: 'Mark handled or reopen it later.' },
+	{ label: 'Unexpected line', action: 'Review before saving', note: 'Something you never ordered does not sneak in as a purchase.' }
 ] as const;
 
 // Considered Strategy; not used because these FAQ and evidence rows are static
@@ -39,7 +39,7 @@ const faqItems = [
 	},
 	{
 		question: 'When do ingredient prices change?',
-		answer: 'Committing the delivery posts the real purchases and updates current prices from what actually arrived. The posting is all-or-nothing.'
+		answer: 'Saving the delivery records the purchases and updates current prices from what actually arrived. Every line saves together, or none does.'
 	}
 ] as const;
 ---
@@ -51,7 +51,7 @@ const faqItems = [
 			<div class="hero-copy">
 				<nav aria-label="Breadcrumb" class="breadcrumb"><a href="/features">Every feature</a><span aria-hidden="true">/</span><span>Purchasing & receiving</span></nav>
 				<h1 id="purchasing-heading">Check the delivery against the order you sent.</h1>
-				<p class="hero-lede">Look over one purchase order per supplier. When the truck shows up, put in what actually came and what it cost, then save the delivery. Anything short stays on the list until you deal with it.</p>
+				<p class="hero-lede">Look over one purchase order per supplier. When the truck shows up, put in what came and what it cost, then save the delivery. Anything short stays on a follow-up list until you deal with it.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -89,12 +89,12 @@ const faqItems = [
 
 	<nav class="story-nav container-page" aria-label="On this page">
 		<a href="#send-the-order"><span>Send what you reviewed</span><small>One stable PO per supplier, with the exact message visible.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
-		<a href="#receive-the-delivery"><span>Post what arrived</span><small>Receive from the same lines and keep every variance actionable.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
+		<a href="#receive-the-delivery"><span>Save what arrived</span><small>Check in against the lines you sent. Anything short stays on a follow-up list.</small><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" /></svg></a>
 	</nav>
 
 	<section id="send-the-order" class="product-section send-section" aria-labelledby="send-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="send-heading">Start with the order the supplier actually got.</h2><p>When you confirm an event, it offers a purchase order for each supplier. Read the exact email before it goes, print the PO, or mark that you handled it yourself.</p></div>
+			<div class="section-intro"><h2 id="send-heading">Start with the order the supplier actually got.</h2><p>When you confirm an event, CostCook offers a purchase order for each supplier. Read the exact email before it goes, print the PO, or mark that you handled it yourself.</p></div>
 			<figure class="po-sheet">
 				<div class="po-main">
 					<div class="panel-bar"><span>Purchase order PO-1048</span><span>Review before sending</span></div>
@@ -107,34 +107,34 @@ const faqItems = [
 					<div class="po-row"><span>Olive oil · 1 gal tin</span><b>2 tins</b></div>
 				</div>
 				<div class="po-actions"><span>Available handoffs</span><ul role="list"><li>Email supplier</li><li>Print PO</li><li>Handled by me</li></ul></div>
-				<figcaption>Illustrative purchase order. The record starts queued before email is attempted; a failed send stays on the record and remains retryable.</figcaption>
+				<figcaption>Illustrative purchase order. If the email fails, the same PO stays on record, ready to retry.</figcaption>
 			</figure>
 		</div>
 	</section>
 
 	<section id="receive-the-delivery" class="product-section receive-section" aria-labelledby="receive-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="receive-heading">Once it is sent, those same lines are ready at the door.</h2><p>Send the PO and the receiving checklist is already built. At the back door you change ordered to arrived. Nobody rebuilds it from the delivery slip.</p></div>
+			<div class="section-intro"><h2 id="receive-heading">The order you sent is the checklist at the door.</h2><p>Sending the PO builds the receiving checklist. At the back door you change ordered to arrived. Nobody rebuilds it from the delivery slip.</p></div>
 			<figure class="receiving-board">
 				<div class="receiving-head"><span>Receive PO-1048 · Northline Foods</span><span>Illustrative delivery</span></div>
 				<div class="line-head"><span>Ingredient</span><span>Ordered</span><span>Arrived</span><span>Price / case</span><span>State</span></div>
 				{deliveryLines.map((line) => <div class="receiving-line"><strong>{line.item}</strong><span class="quantity"><small>Ordered</small>{line.ordered}</span><span class="quantity"><small>Arrived</small>{line.received}</span><span class="price"><small>Price / case</small><span class="price-values" aria-hidden="true"><s>{line.orderedPrice}</s><b>→</b>{line.receivedPrice}</span><span class="sr-only">{line.orderedPrice} ordered, {line.receivedPrice} received per case</span></span><em class:list={['status', line.tone]}>{line.state}</em></div>)}
-				<div class="post-bar"><span><strong>Ready to post</strong><small>3 lines · 1 follow-up</small></span><b>Post received delivery</b></div>
-				<figcaption>Illustrative receiving checklist. The arrow runs from the ordered case price to the received case price; posting carries the received value forward.</figcaption>
+				<div class="post-bar"><span><strong>Ready to save</strong><small>3 lines · 1 follow-up</small></span><b>Log received</b></div>
+				<figcaption>Illustrative receiving checklist. The arrow runs from the ordered case price to the received case price; saving keeps the received price.</figcaption>
 			</figure>
 		</div>
 	</section>
 
 	<section class="posting-proof" aria-labelledby="posting-heading">
 		<div class="container-page posting-grid">
-			<div><h2 id="posting-heading">What actually came in is what gets recorded.</h2><p>Save the checked delivery once. Its quantities and prices go into your purchases and your ingredient prices together. Anything still short stays on the follow-up list.</p></div>
-			<div class="posting-record"><span>After posting · illustrative</span><div><small>Purchases recorded</small><strong>3 lines · $643.20</strong></div><div><small>Current pack price</small><strong>$46.80 / case</strong></div><div><small>Rebuy list</small><strong>1 case open</strong></div></div>
+			<div><h2 id="posting-heading">What actually came in is what gets recorded.</h2><p>Save the checked delivery. Its quantities and prices go into your purchases and your ingredient prices together. Anything still short stays on the follow-up list.</p></div>
+			<div class="posting-record"><span>After saving · illustrative</span><div><small>Purchases recorded</small><strong>3 lines · $643.20</strong></div><div><small>Current pack price</small><strong>$46.80 / case</strong></div><div><small>Follow-up list</small><strong>1 case open</strong></div></div>
 		</div>
 	</section>
 
 	<section class="recovery" aria-labelledby="recovery-heading">
 		<div class="container-page recovery-grid">
-			<div><h2 id="recovery-heading">When something goes wrong at the door, there is a way back.</h2><p>A failed send, a short line and a surprise item each get their own warning. Each one says what happened and what you can do next.</p></div>
+			<div><h2 id="recovery-heading">When an order or a delivery goes wrong, there is a way back.</h2><p>A failed send, a short line and a surprise item each get their own warning, with what happened and what to do next.</p></div>
 			<div class="recovery-list">{recoveryStates.map((state) => <div><span class="status review">{state.label}</span><strong>{state.action}</strong><small>{state.note}</small></div>)}</div>
 		</div>
 	</section>
@@ -147,7 +147,7 @@ const faqItems = [
 	</section>
 
 	<section class="faq" aria-labelledby="faq-heading">
-		<div class="container-page faq-grid"><div><h2 id="faq-heading">Frequently asked questions</h2><p>The practical questions behind moving a supplier order through the back door without losing the differences.</p></div><div class="faq-list">{faqItems.map((item) => <details><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>)}</div></div>
+		<div class="container-page faq-grid"><div><h2 id="faq-heading">Frequently asked questions</h2><p>What people ask before the next truck pulls in.</p></div><div class="faq-list">{faqItems.map((item) => <details><summary><span>{item.question}</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7l6 6 6-6" /></svg></summary><p>{item.answer}</p></details>)}</div></div>
 	</section>
 
 	<section class="closing" aria-labelledby="closing-heading">

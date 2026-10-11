@@ -159,3 +159,13 @@ example caption (68 lb, 55 lb, 13 lb, one 20 lb case) are unchanged.
   estimated before the first count; overriding the list stays a separate
   call; the count's unit cost freezes at count time.
 - **Story pointer added** to InventoryFeature.astro.
+
+## Revision 2026-10-11: English edit
+- Count and gap bodies no longer retell the movement math or the stale rule stated just after them; "Every count is kept." now says a later count adds a record and does not erase the old one.
+- FAQ question drops "automatically"; the em dash used as a quantity is "No count"; caption drops "built only from shipped inventory behavior"; "The fix: go count it."
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Par FAQ: "not compared until it is counted" replaces "unevaluable" (the app shows "Count it to compare.").
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Trust board keeps its three example rows but drops its h3/p ("Each count status gets its own answer."); the trust-proof section right after it carries the explanation.

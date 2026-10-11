@@ -1,4 +1,5 @@
 ---
+import StickyCta from '../components/StickyCta.astro';
 import Base from '../layouts/Base.astro';
 import FaqPage from '../components/sections/FaqPage.astro';
 import { faq, faqCount } from '../lib/faq';
@@ -35,4 +36,5 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <Base title="CostCook questions, answered plainly" description={description} path="/faq" directionContract={directionContract}>
 	<script type="application/ld+json" is:inline set:html={jsonLd} />
 	<FaqPage />
+	<StickyCta />
 </Base>

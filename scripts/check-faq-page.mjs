@@ -24,12 +24,13 @@ for (const [text, label] of [
 
 const entryCount = (html.match(/data-faq-entry/g) ?? []).length;
 // 38 since 2026-09-27: the event-payments answer (RC-65), which since
-// 2026-10-06 reads src/lib/event-payments.ts (shipped).
-if (entryCount !== 38) failures.push(`expected 38 FAQ answers, received ${entryCount}`);
+// 2026-10-06 reads src/lib/event-payments.ts (shipped). 39 since 2026-10-11:
+// #booked, owner-approved (Book the event books it; Confirm order comes later).
+if (entryCount !== 39) failures.push(`expected 39 FAQ answers, received ${entryCount}`);
 
 if (faqMarkup.includes('<details')) failures.push('FAQ answers must remain open; found a details disclosure');
 
-for (const id of ['trial', 'cancel', 'guests', 'phone', 'demo', 'guest-restrictions', 'event-payments']) {
+for (const id of ['trial', 'cancel', 'guests', 'phone', 'demo', 'guest-restrictions', 'event-payments', 'booked']) {
 	requireText(`id="${id}"`, `stable #${id} deep link`);
 }
 
@@ -50,4 +51,4 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log('FAQ page contract passed: 38 open answers, stable anchors, decision ticket, snap answer, and structured data.');
+console.log('FAQ page contract passed: 39 open answers, stable anchors, decision ticket, snap answer, and structured data.');

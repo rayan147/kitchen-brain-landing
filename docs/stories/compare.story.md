@@ -163,3 +163,23 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - The "Not listed" legend adds "ask them before you decide".
+
+## Revision 2026-10-08: chef voice pass
+- Owner: the site should read like a working chef-owner wrote it, not like AI. Copy only. No cell's verdict, competitor tier, price, date or hedge changed; the RC-57 spreadsheet legend line and the No-row sheet notes are pinned and kept.
+- Lede: "You are choosing what your kitchen can rely on when..." became "The real question is which one holds up when the count changes on a Thursday and the truck is due Friday morning."
+- "Competitor entries describe their cited pricing pages...; they are not hands-on product tests" became "read off their own pricing pages on the date below, not from using their software." Same boundary, plainer.
+- Slogan and consultant headings went plain: "Start with the tradeoff" is "The short version"; "Read each cell literally" is "How to read a cell"; "Four rules built for event work" is "Four rules for when the event changes"; the close is "Bring one real menu and get your answer."
+- Two row notes lost "review the extracted records" phrasing (invoice scanning, receiving).
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Proof link is "Take the product tour" to /tour/main (was a broken #demo link to a 2:53 film); Sage row says "an owner or manager".
+
+## Revision 2026-10-11: English edit
+- The short version names the event front half: "one kitchen sells events and needs its inquiries, proposals, deposits, recipes, food cost, prep and buying to keep up..." The plan price leaves the box (the price section is next) and the close (the trial terms line carries it).
+- Hero dates the hedge in place: "read off their own pricing pages on {VERIFIED_ON}".
+- Four rules: rule 1 names Confirm order ("Once you press Confirm order, the order's plan and costing freeze"); rule 2 states its rule (anything short stays in view until you follow it up); rule 4 says what the month does not know (only logged waste is called waste; the rest of the gap stays a gap). Intro drops "not four more checkmarks".
+- Rows: the deposit row no longer repeats the card-payment row; Sage row drops "is available now" beside its Yes; offline row drops the no-JavaScript sentence.
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- H1 "Compare CostCook, Parsley, meez and a spreadsheet, job by job." (title tag unchanged; no script pinned the old H1).
+- The product-tour link now sits after the dated source line, so the legend and its evidence stay together.

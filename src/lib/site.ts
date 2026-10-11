@@ -1,4 +1,6 @@
 // story: docs/stories/homepage-caterer-fixes.story.md
+import { founderEmail } from './founder-email';
+
 /**
  * Single source of truth for owner-supplied values.
  * Every TODO below must be swapped before real traffic — the QA issue's
@@ -7,7 +9,7 @@
 export const site = {
 	name: 'CostCook',
 	url: 'https://costcook.io',
-	email: 'rayan@costcook.io',
+	email: founderEmail,
 	phone: '973-870-6309',
 	phoneHref: 'tel:+19738706309',
 	/* Full name, because it signs the provenance section: a page whose pitch is
@@ -16,8 +18,9 @@ export const site = {
 	   ("Contact Rayan") on purpose. That is the chef-to-chef voice, and it is
 	   the register a reader replies in. */
 	founderName: 'Rayan Ramirez',
-	// ≤60 chars so Google doesn't truncate the audience qualifier.
-	title: 'CostCook: catering from first inquiry to closeout',
+	// Lead with the buyer's product category, then the workflow CostCook covers.
+	// story: docs/stories/homepage-redesign-2026-10.story.md
+	title: 'Catering software from inquiry to closeout | CostCook',
 	description:
 		'Take the inquiry, send a priced proposal the client accepts on their phone, then build shopping, prep and pack lists from the same menu and guest count.'
 } as const;
@@ -161,7 +164,7 @@ const resourceNav = [
 		header: 'resources',
 		group: 'See it work',
 		icon: 'audience',
-		description: 'Check the kitchens, events, and working styles CostCook fits.'
+		description: 'Check whether CostCook fits your kitchen, and where it stops.'
 	},
 	{
 		label: 'Your initial setup',

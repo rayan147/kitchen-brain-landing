@@ -219,7 +219,7 @@ if (/one restaurant on a fixed daily menu|shape is wrong for you|tool built for 
 // carries them all; the connections section moved to the one area whose name
 // promises it. If the hub ever starts listing items again it is the old wall.
 requireText(featuresPage, '<FeatureIndex />', 'features hub composition');
-requireText(featureAreaPage, '<FeatureSection entry={entry} />', 'feature area composition');
+requireText(featureAreaPage, '<FeatureSection entry={entry}>', 'feature area composition');
 requireText(featureAreaPage, 'getStaticPaths', 'feature area routes are generated per section');
 requireText(featureAreaPage, '<Integrations />', 'connections render on an area page');
 requireText(siteSource, "href: '/features'", 'features page nav link');
@@ -589,8 +589,8 @@ requireText(pricingSource, 'href="/compare"', 'pricing links to the comparison')
 // D1: the one piece of moving proof, reachable from the two pages that ask a
 // reader to judge capability off a list. Same literal as the hero, which the
 // assembler prints and which has drifted twice.
-requireText(featureIndexSource, 'Watch the 2:53 product tour', 'features page proof link');
-requireText(comparePage, 'Watch the 2:53 product tour', 'comparison page proof link');
+requireText(featureIndexSource, 'href={featuresMenu.tourHref} class="btn-quiet">{featuresMenu.tourLabel}</a>', 'features page proof link');
+requireText(comparePage, 'href={featuresMenu.tourHref} class="btn-quiet">{featuresMenu.tourLabel}</a>', 'comparison page proof link');
 
 // B3: the five area slugs are PUBLIC URLS and are typed, not derived from the
 // headings. Deriving them would mean any reworded heading silently 404s every
@@ -686,7 +686,7 @@ if (/CostCook has not claimed your request was sent/.test(demoRequestSource)) {
 	failures.push('demo page still says it has not sent the request, which is no longer true');
 }
 requireText(demoRequestSource, 'docs/stories/request-demo.story.md', 'demo story pointer');
-requireText(publicCopy, 'Watch the 2:53 product tour', 'hero proof link');
+requireText(publicCopy, 'featuresMenu.tourLabel', 'hero proof link');
 requireText(heroSource, 'launchPlan.displayPrice', 'homepage launch price');
 // Every row that exists, not a number somebody remembered. The bound was 33
 // while the ledger already carried RC-34 and RC-35, so two rows were shipping
@@ -902,12 +902,13 @@ requireText(onboardingSource, 'Go to Today', 'after-setup second action');
 requireText(onboardingSource, 'a photo, a PDF, a spreadsheet, a Word document or pasted text', 'after-setup five doors (RC-38)');
 requireText(onboardingSource, 'quoted back', 'after-setup unreadable-is-not-guessed (RC-39)');
 requireText(onboardingSource, 'without rewriting confirmed orders', 'after-setup later prices boundary (RC-08)');
-// 3c: Settings > Team (RC-52). The role boundary and the Staff-sees-costs
-// caveat travel with the invite claim or the claim comes off.
-requireText(onboardingSource, 'one-time link', 'after-setup invite mechanism (RC-52)');
+// 3c: Settings > Team (RC-52). The roles an invite offers travel with the
+// invite claim or the claim comes off. Develop c90d3b9c2 (2026-10-10): the
+// invite card asks Staff or Manager; the role grid is the Team and Access
+// guide's to state, so this page links there instead of restating it.
+requireText(onboardingSource, 'one-time sign-in link', 'after-setup invite mechanism (RC-52)');
 requireText(onboardingSource, 'No password', 'after-setup no-password boundary (RC-52)');
-requireText(onboardingSource, 'join as Staff', 'after-setup invited role (RC-52)');
-requireText(onboardingSource, 'Staff can open cost screens', 'after-setup Staff-sees-costs caveat (RC-52)');
+requireText(onboardingSource, 'joins as Staff or Manager', 'after-setup invited roles (RC-52)');
 requireText(onboardingSource, '/features/team-and-access', 'after-setup link to the full boundary (RC-52)');
 for (const [pattern, label] of [
 	[/(?<!\bno )(?<!\bnot a )\bcustom roles?\b(?![^.]{0,40}\b(not|no)\b)/i, 'a custom role (RC-52: none exists)'],
@@ -1021,9 +1022,9 @@ const forbiddenClaims = [
 	[/\bfree while/i, 'unapproved pricing promise'],
 	[/\beverything downstream re-reads/i, 'confirmed-order repricing implication'],
 	[/\bhandles it automatically\b/i, 'unqualified automation promise'],
-	// A booked event's deposit is recorded by hand in production (inventory A-14),
-	// and customer invoices are an unbuilt PRD (front-of-house 06). Both patterns
-	// live in scripts/lib/money-claims.mjs, shared with the built events page.
+	// The deposit wording (inventory A-14, RC-65) lives in
+	// scripts/lib/money-claims.mjs, shared with the built events page. The
+	// client invoicing guard there was retired by the owner ruling of 2026-10-08.
 	...moneyClaims,
 	// RC-49. The assistant's model and provider are configuration, not claims,
 	// and the default has never been evaluated on the marketed branch.
@@ -1214,7 +1215,7 @@ requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], 'Signed on paper?
 	// day with a priced menu, and its frame says so.
 	if (/\b(you approve|tap approve|press approve|click approve)\b/i.test(text)) failures.push('film two: nobody approved the lunch by hand');
 	requireText(film, 'Nobody typed the order twice or chased the money.', 'film two snap line');
-	if (!/^\| RC-75 \|.*APPLIED/m.test(ledger)) failures.push('film two: RC-75 (ordering site to paid order) has no APPLIED ledger row');
+	if (!/^\| RC-76 \|.*APPLIED/m.test(ledger)) failures.push('film two: RC-76 (ordering site to paid order) has no APPLIED ledger row');
 	if (/\$\d|\d+(\.\d+)?%/.test(text)) failures.push('film two: a figure is typed into a caption; use a {token} from the manifest');
 	const manifest = JSON.parse(await read('public/proof/film-dropoff/manifest.json'));
 	// "under your target" is only true while the closeout share is under it.

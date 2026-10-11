@@ -14,6 +14,7 @@
 
 import { eventPayments } from './event-payments';
 import { acceptanceBoundary, agreementLine } from './events';
+import { orderingRoute } from './ordering';
 
 export type Shot = {
 	src: string;
@@ -29,9 +30,11 @@ export type Shot = {
 /**
  * Where a carried figure sits in its frame, in percent of the PNG, measured
  * from the pixels. The rail draws an amber ring there over the real image; the
- * PNG itself is never edited.
+ * PNG itself is never edited. `small` is the same figure in the shot's phone
+ * source, when that source frames the screen differently.
  */
-export type Focus = { x: number; y: number; w: number; h: number };
+type Box = { x: number; y: number; w: number; h: number };
+export type Focus = Box & { small?: Box };
 
 const shot = (name: string, alt: string, px: [number, number], phone = false): Shot => ({
 	src: `/proof/home/${name}.png`,
@@ -41,7 +44,10 @@ const shot = (name: string, alt: string, px: [number, number], phone = false): S
 	phone
 });
 
-/** Adds the phone capture `<name>-phone.png` (2x, 390 viewport) to a shot. */
+/**
+ * Adds the phone source `<name>-phone.png` to a shot: a 2x capture at a 390
+ * viewport, or (confirm-dialog only) the wide capture without its margins.
+ */
 const withPhone = (base: Shot, px: [number, number]): Shot => ({
 	...base,
 	small: {
@@ -67,6 +73,13 @@ const withPhone = (base: Shot, px: [number, number]): Shot => ({
 export const heroFilm = {
 	webm: '/film/costcook-promo.webm',
 	mp4: '/film/costcook-promo.mp4',
+	// 720p renditions for phones and tablets (mobile review 2026-10-09): the
+	// player is 280-750px wide there, and the 1080p MP4 is 15.7MB on a tap.
+	webm720: '/film/costcook-promo-720.webm',
+	mp4720: '/film/costcook-promo-720.mp4',
+	// The width at which the full-size film is served (the hero goes two
+	// columns here and the player passes 560px).
+	fullFrom: '(min-width: 64rem)',
 	poster: '/film/costcook-promo-poster.jpg',
 	width: 1920,
 	height: 1080,
@@ -157,7 +170,7 @@ export const eventStages = [
 	},
 	{
 		id: 'proposal',
-		carries: '$14,250.00 accepted, asked as $3,500.00 now and $10,750.00 later',
+		carries: '$14,250.00 accepted: $3,500.00 due now, $10,750.00 later',
 		focus: [{ x: 3.1, y: 26.2, w: 93.8, h: 17.5 }] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Proposal',
@@ -175,45 +188,52 @@ export const eventStages = [
 		// Not "booked": booking waits on the signed agreement as well as the
 		// deposit (Book the event, app 7a7e407d9).
 		carries: 'The Nair & Castellano wedding, deposit paid',
+		// The phone capture at every width (readability review 2026-10-09): the
+		// wide one drew 6px labels at 390px and 9px in the rail's 490px column
+		// at 1440. Rings measured from the phone capture's pixels.
 		focus: [
-			{ x: 1.6, y: 12, w: 23.5, h: 17.6 },
-			{ x: 78.3, y: 66.4, w: 20, h: 9.3 }
-		] as Focus[],
-		// The same two figures on the phone capture (design review 2026-10-07:
-		// the wide frame drew 6px labels at 390px). Measured from its pixels.
-		smallFocus: [
 			{ x: 1.1, y: 9, w: 97.9, h: 28.9 },
 			{ x: 59.8, y: 71.4, w: 39.1, h: 8.5 }
 		] as Focus[],
-		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
-		tab: 'Deposit',
-		heading: 'The deposit comes in by card.',
+		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
+		tab: 'Agreement and deposit',
+		// The boundary sits on the step where the signature and the deposit
+		// happen (English edit 2026-10-11): on the Confirm order step a phone
+		// reader took confirming to be the booking, which it never is.
+		heading: acceptanceBoundary,
 		// The signature lives here, not in the client's yes (RC-64: claimable,
-		// not capturable, so it is a sentence without a frame).
+		// not capturable, so it is a sentence without a frame). Agreement first,
+		// in the heading's own order.
 		body: `${agreementLine} ${eventPayments.homepage}`,
-		shot: withPhone(
-			shot(
-				'payment-schedule',
-				'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
-				[1466, 772]
-			),
-			[748, 850]
+		shot: shot(
+			'payment-schedule-phone',
+			'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
+			[748, 850],
+			true
 		)
 	},
 	{
 		id: 'confirm',
 		carries: 'The same menu, quantities and prices locked',
-		focus: [{ x: 8.1, y: 31.9, w: 83.9, h: 21.8 }] as Focus[],
-		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
+		// small: the same sentence in the phone crop (72, 84, 836x312 of the PNG).
+		focus: [{ x: 8.1, y: 31.9, w: 83.9, h: 21.8, small: { x: 1, y: 21.8, w: 99, h: 33.3 } }] as Focus[],
+		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Confirm order',
-		heading: acceptanceBoundary,
 		// When, as advice, not a rule the app enforces (third chef review: "am I
 		// locked on a guess?").
-		body: 'Wait for the final count, then Confirm. That locks the quantities and prices, and your shopping, prep and pack lists turn into checklists.',
-		shot: shot(
-			'confirm-dialog',
-			'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
-			[992, 476]
+		heading: 'Wait for the final count, then Confirm.',
+		body: 'That locks the quantities and prices, and your shopping, prep and pack lists turn into checklists.',
+		// The phone source is the dialog's own content without its margins
+		// (mobile review 2026-10-09: the full dialog put its sentence at about
+		// 8px on a 390 phone). It is a crop, not a phone capture, and keeps
+		// every word the alt names: title, sentence and both buttons.
+		shot: withPhone(
+			shot(
+				'confirm-dialog',
+				'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
+				[992, 476]
+			),
+			[836, 312]
 		)
 	},
 	{
@@ -221,7 +241,7 @@ export const eventStages = [
 		guide: { href: '/features/order-shop-prep-pack', label: 'How orders, shop, prep and pack work' },
 		tab: 'Shop / Prep',
 		heading: 'Then you shop and prep off the same menu.',
-		body: 'You buy by supplier, in whole packs. Prep runs in order, bases before the dishes that use them, scaled to the head count, and you check it off on your phone.',
+		body: 'You buy by supplier, in whole packs. Prep runs in order, bases before the dishes that use them, scaled to the head count. You check it off on your phone.',
 		// The shopping list, not the prep sheet (second chef review 2026-10-07):
 		// the kitchen is set to US units and the Shop tab buys in them, while
 		// the prep sheet prints each recipe in the units it was written in
@@ -246,12 +266,12 @@ export const kitchenRows = [
 		eyebrow: 'Food cost',
 		pain: 'You quote $95 a head and find out if you made money when the month closes.',
 		heading: 'See the food cost before you quote.',
-		body: 'Every dish shows what it costs per guest and its share of the total. If a price is missing, it tells you which one. It never slips in as zero.',
+		body: 'Every dish shows what it costs per guest, with a bar for its share of the total. If a price is missing, it tells you which one. It never slips in as zero.',
 		shot: withPhone(
 			shot(
 				'food-cost-breakdown',
 				'Dishes per guest with each one’s share of cost: Braised Short Rib, two portions, $14.56; Wild Mushroom Polenta, about 240 g a portion, $2.93; Creamed Spinach, half a portion, $2.91; Focaccia and Whipped Goat Cheese $2.56.',
-				[1880, 808]
+				[1200, 1322]
 			),
 			[780, 1384]
 		)
@@ -265,14 +285,13 @@ export const kitchenRows = [
 		pain: 'The recipe says what goes on the plate. You buy exactly that and you are short at 5 a.m.',
 		heading: 'Buy for what survives the knife.',
 		body: 'Each recipe line carries its trim yield. 60 g of Roma tomato in the recipe at 91% yield means you buy 66 g.',
-		shot: withPhone(
-			shot(
-				'yield-lines',
-				'A recipe line with its yield and the amount to buy: Roma tomato, 60 g used at 91% yield, buy 66 g.',
-				[1540, 874]
-			),
-			// Cropped to the tomato line: the cucumber's 0.3 each rounded to the
-			// same 0.3 to buy, so the yield did nothing on screen (third chef review).
+		// The tomato card at every width (readability review 2026-10-09): the
+		// six-column table drew 8px text in this row's column at 1440. Cropped
+		// to the tomato line: the cucumber's 0.3 each rounded to the same 0.3 to
+		// buy, so the yield did nothing on screen (third chef review).
+		shot: shot(
+			'yield-lines-phone',
+			'A recipe line with its yield and the amount to buy: Roma tomato, 60 g used at 91% yield, buy 66 g.',
 			[724, 514]
 		)
 	},
@@ -282,12 +301,12 @@ export const kitchenRows = [
 		eyebrow: 'Invoices and price sheets',
 		pain: 'You’re not typing 400 ingredients into one more system.',
 		heading: 'Upload the invoice. Confirm what it read.',
-		body: 'It takes invoices and price sheets, even a spreadsheet or a Word file. Lines it matched wait for your OK. The rest get flagged for you to look at. And it learns your names for things.',
+		body: 'It takes invoices and price sheets, even a spreadsheet or a Word file. Lines it matched wait for you to confirm them. The rest are flagged Needs review. It remembers the names you confirm.',
 		shot: withPhone(
 			shot(
 				'import-review',
 				'Import review of a sample produce invoice: 7 products, 2 flagged Needs review and listed first, 4 matched to ingredients, 1 ready to create.',
-				[2336, 968]
+				[1200, 1296]
 			),
 			[780, 1536]
 		)
@@ -303,7 +322,7 @@ export const kitchenRows = [
 			shot(
 				'allergens-labels',
 				'Pack list for 150 guests: six dishes, each with its allergens (Contains: Milk; Contains: Milk, Wheat and May contain: Egg, Sesame, Soy; No listed allergens) and a Label button.',
-				[1360, 1212]
+				[1200, 1818]
 			),
 			[780, 1902]
 		)
@@ -313,18 +332,19 @@ export const kitchenRows = [
 export const frontOfHouse = [
 	{
 		id: 'ordering',
+		guide: { href: orderingRoute, label: 'How online ordering works' },
 		heading: 'Online ordering',
 		// "Confirm" is the event walk's word for booking, so this row says
 		// "approve" and "pay" (third chef review 2026-10-07).
 		// The widget is Settings > Integrations > Ordering site > Put on your
 		// website: one script tag, a sandboxed frame (develop 7a7e407d9). The
 		// frame is that widget in a sample page for the sample kitchen.
-		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request. They pay by card.',
+		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request. Your booking rules decide whether they pay by card up front, and which requests come to you as an inquiry to price.',
 		shot: withPhone(
 			shot(
 				'ordering-site',
 				'The ordering widget on a caterer’s own website: under the kitchen’s Order catering heading, CostCook’s order form for Harbor & Hearth Catering with a 20 guest minimum, 72 hours notice, pickup or delivery, the steps Menu to Review, and the Coastal Dinner at $93.00 a guest.',
-				[2496, 2136]
+				[1200, 1926]
 			),
 			[780, 2866]
 		)
@@ -332,15 +352,15 @@ export const frontOfHouse = [
 	{
 		id: 'invoice-email',
 		guide: { href: '/features/invoice-email', label: 'How invoice email works' },
-		heading: 'Invoices by email',
+		heading: 'Supplier invoices by email',
 		body: 'Suppliers email invoices to your kitchen’s own private address. You can see what happened to each one, and none of it counts until you confirm it.',
 		shot: withPhone(
 			shot(
 				'invoice-inbox',
-				'Invoice inbox: a credit memo for returned flour, CM-3104, waiting in review, to come off your cost once confirmed; and invoices HF-3102 and HF-3103 from a new sender, waiting in review with a note to check the sender before confirming.',
-				[1568, 770]
+				'Invoice inbox: invoices HF-3102 and HF-3103 held, not read, because the address they came from is not on your list, with Let this one through; and Harbor Foods invoice HF-3106 from its approved address, waiting in review, counting once you confirm it.',
+				[1184, 1198]
 			),
-			[760, 770]
+			[780, 1254]
 		)
 	}
 ] as const;

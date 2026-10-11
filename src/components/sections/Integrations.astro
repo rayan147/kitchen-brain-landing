@@ -14,11 +14,15 @@ import { comparison } from '../../lib/comparison';
 // sends. So that goes first and the two in-flight connectors go second, where
 // they read as additions rather than as the answer.
 //
-// EVIDENCE. Five doors is RC-38, read on sandbox/demo: the import dropzone
-// accepts JPEG, PNG, WebP, PDF, CSV, XLSX and DOCX, with a paste control
-// beside it. Staged-until-confirmed is RC-09. The unreadable note is RC-39.
-// Square and QuickBooks are RC-45. QuickBooks is genuinely unbuilt. Square is
-// NOT: sandbox/demo carries the provider, catalog mapping, settings screens,
+// EVIDENCE. The one-queue lede rests on RC-38 (the import dropzone accepts
+// JPEG, PNG, WebP, PDF, CSV, XLSX and DOCX, with a paste control beside it)
+// and RC-09 (staged until confirmed). The three cards that restated the
+// getting-prices-in figure (five doors, review, unreadable) were cut,
+// owner-approved 2026-10-11; the figure and the import items carry them.
+// Square and QuickBooks are RC-45. QuickBooks is built and flag-gated on
+// kitchen-brain develop 4f46543cf (FEATURE_QUICKBOOKS_INTEGRATION_ENABLED; the
+// sandbox-only lock is gone), and stays Coming by the 2026-09-27 owner ruling
+// (ledger RC-45 note, 2026-10-11). Square is built too: sandbox/demo carries the provider, catalog mapping, settings screens,
 // the OAuth callback and the webhook, all of it behind
 // integrationExecutionAllowed(businessId, 'square_integration',
 // env.FEATURE_SQUARE_INTEGRATION_ENABLED), which defaults off. "Coming" is
@@ -36,44 +40,21 @@ const comingRows = comparison
 ---
 
 <!-- story: docs/stories/integrations.story.md -->
-<section id="connections" class="border-t border-hairline" aria-labelledby="connections-heading">
-	<div class="container-page py-section">
+<section id="connections" class="mt-16 border-t border-ticket-rule pt-8" aria-labelledby="connections-heading">
+	<div>
 		<div class="max-w-3xl">
 			<p class="eyebrow">What it connects to</p>
 			<h2 id="connections-heading" class="mt-4 text-h2 font-semibold">
 				Your supplier does not have to be plugged in. CostCook reads the paper.
 			</h2>
 			<p class="mt-5 max-w-[62ch] text-lede text-ink-soft">
-				The reason there is no long list of connectors here is that prices get in
-				without one. An order guide, a price sheet, an invoice, or a photograph of a
+				There is no long list of connectors here because prices get in without
+				one. An order guide, a price sheet, an invoice, or a photograph of a
 				delivery slip taken on the loading dock all go through the same queue.
 			</p>
 		</div>
 
-		<div class="mt-10 grid gap-8 border-y border-ticket-rule py-8 sm:grid-cols-3">
-			<div>
-				<h3 class="font-semibold">Five doors in</h3>
-				<p class="mt-2 text-sm leading-relaxed text-ink-soft">
-					A photo, a PDF, a spreadsheet, a Word document, or text you paste. Every one
-					lands in the same review.
-				</p>
-			</div>
-			<div>
-				<h3 class="font-semibold">Review before saving</h3>
-				<p class="mt-2 text-sm leading-relaxed text-ink-soft">
-					What comes out sits outside your catalog until you confirm it. Nothing
-					reaches a plate cost that you have not seen.
-				</p>
-			</div>
-			<div>
-				<h3 class="font-semibold">What it could not read</h3>
-				<p class="mt-2 text-sm leading-relaxed text-ink-soft">
-					Anything unreadable is quoted back to you word for word, beside the suggested details, so you can check it against the original.
-				</p>
-			</div>
-		</div>
-
-		<div class="mt-12 max-w-3xl">
+		<div class="mt-10 max-w-3xl">
 			<h3 class="text-h3 font-semibold">Square and QuickBooks are not available yet</h3>
 			<p class="mt-4 max-w-[62ch] text-ink-soft">
 				Neither connection is included in the subscription today. No release date has been announced.
@@ -88,15 +69,11 @@ const comingRows = comparison
 									Coming
 								</span>
 							</div>
-							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.label === 'Point of sale' ? 'Square is not available today. You cannot send menus to your till or bring sales into CostCook through this connection.' : 'QuickBooks Online is planned and has not been built. CostCook does not sync your purchases or accounts with it today.'}</p>
+							<p class="mt-2 max-w-[62ch] text-ink-soft">{row.label === 'Point of sale' ? 'Square is not available today. You cannot send menus to your till or bring sales into CostCook through this connection.' : 'QuickBooks Online is not in the app you would start today, so CostCook does not sync your purchases or accounts with it.'}</p>
 						</li>
 					))
 				}
 			</ul>
-			<p class="mt-6 max-w-[62ch] text-sm text-ink-soft">
-				Until they land, nothing in CostCook reads from or writes to your books or your
-				till.
-			</p>
 		</div>
 	</div>
 </section>

@@ -56,7 +56,7 @@ for (const pattern of forbidden) {
 if ((html.match(/data-labels-disclosure/g) ?? []).length !== 6) throw new Error('Labels page must render six FAQ disclosures.');
 if ((html.match(/data-full-proof-link/g) ?? []).length !== 4) throw new Error('Every labels proof must have a full-size link.');
 if (html.includes('Six taps at the bench')) throw new Error('Labels page must not claim an unverified tap count.');
-if (!html.includes('<picture>') || !html.includes('(min-width: 40rem)')) throw new Error('Labels hero must art-direct one responsive proof request.');
+if (!html.includes('<picture>') || !html.includes('(min-width: 64rem)')) throw new Error('Labels hero must art-direct one responsive proof request.');
 if (!comparisonSource.includes('labelsAvailability.verdict') || !faqSource.includes('labelsAvailability.faqStatus')) {
 	throw new Error('Labels availability has drifted away from its shared source.');
 }

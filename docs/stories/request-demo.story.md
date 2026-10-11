@@ -134,3 +134,10 @@ was to the ending and not to the argument.
 - **Final Image (the CTA sentence):** Sent. Now take your 15 minutes.
 
 **Snap line:** “Bring the menu you would otherwise price twice.”
+
+## Revision 2026-10-08: chef voice pass
+- Owner: humanize the copy so a chef could have written it. Copy only; form labels, option values, status messages and the send/booking truth lines are unchanged.
+- The agenda heading "A working session, not a feature parade." was the "X, not Y" tic; it is now "Fifteen minutes on your job." (pin in scripts/check-demo-page.mjs updated in the same edit; pure wording).
+- Lede and path: "Tell Rayan what you have coming up"; "See it connected / Decide with the work visible" became "Watch it run / Then decide"; "the workflow you asked to see" became "whatever part you asked to see".
+- Step one's sales-queue line says it plainly: "Nobody is sorting you into a sales queue."
+- Snap line unchanged: "Bring the menu you would otherwise price twice."

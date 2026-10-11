@@ -7,8 +7,11 @@
  * Rule 2: every band uses the same padding (--spacing-section) and the page
  *   uses four type sizes only: --text-display (the h1), --text-h2 (band and row
  *   headings), --text-body-lg (every sentence) and --text-eyebrow (eyebrows,
- *   tab labels, captions). The shared tokens are read, never redefined, because
- *   the feature pages use them too.
+ *   tab labels). Amended 2026-10-09 (mobile review): captions, the trial
+ *   terms and the guide links moved from the eyebrow's 13px to --text-body
+ *   (16px), because the price line read as fine print on a phone. The
+ *   shared tokens are read, never redefined, because the feature pages use
+ *   them too.
  * Rule 3: the band opens with an amber eyebrow, a Fraunces heading and one
  *   sentence; its frame or rows go in the slot.
  *
@@ -57,6 +60,8 @@ const headingId = `${id}-heading`;
 		font-weight: 700;
 		letter-spacing: .08em;
 		text-transform: uppercase;
+		/* "A CHEF" sat alone on line two at 320 (mobile review 2026-10-09). */
+		text-wrap: balance;
 	}
 	.home-h2 {
 		margin-top: .75rem;
@@ -81,13 +86,18 @@ const headingId = `${id}-heading`;
 		font-size: var(--text-body-lg);
 		line-height: 1.6;
 	}
-	/* Captions and the trial line share the eyebrow's size: still four sizes. */
-	.home-small { color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
+	/* Captions and the trial line: 16px, the body floor. They sat at the
+	   eyebrow's 13px, which put the one line that states the price ("$0 until
+	   day 16") at caption size on a phone (mobile review 2026-10-09). Still
+	   four sizes: the eyebrow keeps 13px for its uppercase label alone. */
+	.home-small { color: var(--color-ink-soft); font-size: var(--text-body); line-height: 1.5; }
 	/* Rule 1: the hand-off keeps its link, not its dashed rule. */
 	.home-band .home-handoff { border-top: 0; padding-top: 0; }
 	/* A quiet link to the feature guide for the band or row it sits under. */
-	.home-guide { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: .5rem; color: var(--color-green-deep); font-size: var(--text-eyebrow); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
-	.home-guide:hover { color: var(--color-ink); }
+	.home-guide { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: .5rem; color: var(--color-green-deep); font-size: var(--text-body); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+	@media (hover: hover) {
+		.home-guide:hover { color: var(--color-ink); }
+	}
 	.band-head { max-width: 46rem; }
 	.band-lede { margin-top: 1rem; }
 	/* Rule 6: one frame for every screenshot. Flat, 8px radius, one shadow, no tilt. */

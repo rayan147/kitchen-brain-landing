@@ -161,3 +161,11 @@ screenshot caption and alt text are unchanged.
 - **Meaning held:** every offer keeps its source and date; trim and cooking
   loss stay visible; the price-change impact on recipes is shown before you
   adopt it.
+
+## Revision 2026-10-11: English edit
+- Problem paragraph no longer claims a case-size change the figure does not show: "The invoice went up, but your spreadsheet still has the old number... quoted the job to a client."
+- The ways to add an ingredient are listed once, in scene 1, with "the USDA reference" (not "catalog"); the intro just says what lives on the ingredient.
+- Hero lede: "Compare suppliers per usable pound, kilo or item".
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Supplier H2 "Put both cases on the same pound." (the old head was not proven by its own table; figures unchanged).

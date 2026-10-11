@@ -43,8 +43,8 @@ const inboxFilters = ['All email', 'Invoices and credits', 'Not imported', 'Held
 
 // Where it stops. One sentence each, each one a line of kitchen-brain code.
 const limits = [
-	'It reads PDFs and phone photos attached to the email, or the email’s own text when nothing is attached; a spreadsheet or Word file is listed as not read.',
-	`Past ${inboxLimits.emailsPerDay} emails in a day the rest are not read, and scans are read up to ${inboxLimits.pagesReadPerDay} pages a day.`,
+	'It reads PDFs and phone photos attached to the email. With nothing attached, it reads the email itself only when the invoice is written out in it with a total. A spreadsheet or Word file is listed as not read.',
+	`Past ${inboxLimits.emailsPerDay} emails in a day, the rest are not read. Scans are read up to ${inboxLimits.pagesReadPerDay} pages a day.`,
 	'Statements, order confirmations and promotions are listed with a reason and not imported, unless you change what the email is.',
 	'Gmail forwarding is not on until you enter Gmail’s confirmation code in Gmail.',
 	'Only an owner or a manager can open Settings > Invoice email.'
@@ -89,15 +89,15 @@ const limits = [
 	<section id="setup" class="product-section" aria-labelledby="setup-heading">
 		<div class="container-page">
 			<div class="section-head" data-reveal>
-				<h2 id="setup-heading">Three cards, one settings page.</h2>
+				<h2 id="setup-heading">Tell your reps once. Forward the rest from Gmail.</h2>
 				{availability.setupWarning && <p class="setup-warning" data-invoice-email-setup-warning>{availability.setupWarning}</p>}
-				<p>Settings &gt; Invoice email puts them in the order you will need them: the suppliers first, then your Gmail, then the rare day the address gets junk.</p>
+				<p>It is all on Settings &gt; Invoice email: your suppliers first, then your Gmail, then the rare day the address gets junk.</p>
 			</div>
 			<ol role="list" class="setup-cards">
 				<li data-reveal>
 					<p class="ticket-label">01</p>
 					<h3>Ask your suppliers to send invoices here</h3>
-					<p>Copy Your invoice address and the Message for your sales rep, and send it to each rep, so invoices arrive with nobody touching them.</p>
+					<p>Copy Your invoice address and the Message for your sales rep, and send the message to each rep. Their invoices then arrive with nobody forwarding them.</p>
 				</li>
 				<li data-reveal style="--reveal-delay: 60ms">
 					<p class="ticket-label">02</p>
@@ -133,7 +133,7 @@ const limits = [
 					</div>
 				))}
 			</dl>
-			<p class="section-note" data-reveal>If the inbox got one wrong, Change what this email is reads it again as what you picked. Anything Held as spam has Let it through.</p>
+			<p class="section-note" data-reveal>If the inbox got one wrong, use Change what this email is, and it is read again as what you picked. Anything Held as spam has Let it through.</p>
 			<p class="handoff">Next: Review.</p>
 		</div>
 	</section>
@@ -143,7 +143,7 @@ const limits = [
 			<div data-reveal>
 				<h2 id="review-heading">An emailed invoice opens in the same review as an upload.</h2>
 				<p>The inbox marks a New sender when the address is not one of your suppliers yet, and warns you when the sender could not be verified. The review tells you who sent it.</p>
-				<p>Check the lines, the pack sizes and the total against the original, then confirm. Until you do, it changes no cost.</p>
+				<p>Check the lines, the pack sizes and the total against the original, then confirm.</p>
 				<p class="snap" data-invoice-email-snap>Nothing counts until you check it, so the worst a stranger can do is add to your review list.</p>
 			</div>
 			<div class="review-links" data-reveal>

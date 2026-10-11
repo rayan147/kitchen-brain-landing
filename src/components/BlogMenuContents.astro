@@ -13,6 +13,8 @@ const groups = ['Cost the work', 'Plan and buy'] as const;
 
 // Considered Composite; not used because this menu has two fixed groups of
 // article leaves. Recursive navigation nodes would obscure a flat reading order.
+// The count sentence was written for the word, so it opts in to spelling past
+// twelve (src/lib/words.ts); check-blog.mjs pins the same word.
 ---
 
 <!-- story: docs/stories/features-navigation.story.md -->
@@ -71,5 +73,5 @@ const groups = ['Cost the work', 'Plan and buy'] as const;
 			<path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 		</svg>
 	</a>
-	<p class="text-xs text-ink-soft">{spellCapital(posts.length)} worked guides. The assumptions stay beside the arithmetic.</p>
+	<p class="text-xs text-ink-soft">{spellCapital(posts.length, { compound: true })} worked guides. The assumptions stay beside the arithmetic.</p>
 </div>

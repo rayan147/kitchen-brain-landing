@@ -59,7 +59,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'trial',
 				question: 'What does the trial actually cost?',
 				answer: [
-					`Nothing for ${days} days. Stripe takes a card when you start and charges $0 during the trial. On day sixteen billing begins at ${price} per kitchen unless you cancelled first.`
+					`Nothing for ${days} days. Stripe takes a card when you start and charges $0 during the trial. On day 16, billing begins at ${price} per kitchen unless you have cancelled.`
 				],
 				claims: ['RC-34']
 			},
@@ -67,7 +67,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'card',
 				question: 'Why a card up front?',
 				answer: [
-					'The trial starts a subscription that bills automatically on day 16 unless you cancel first. Stripe handles your card details; you pay $0 during the trial.'
+					'Because the trial is the subscription. Stripe holds the card, and the subscription bills automatically on day 16 unless you cancel first.'
 				],
 				claims: ['RC-34']
 			},
@@ -75,7 +75,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'cancel',
 				question: 'How do I cancel?',
 				answer: [
-					'The workspace owner cancels from Settings, then Billing, through Stripe. No email to me, no notice period, no talking anyone out of it. Cancel inside the trial and nothing is ever charged.'
+					'The owner cancels from Settings, then Billing, through Stripe. No email to me, no notice period, no talking anyone out of it. Cancel inside the trial and nothing is ever charged.'
 				],
 				claims: ['RC-34']
 			},
@@ -83,7 +83,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'price',
 				question: `Is ${price} the price, or a promotion?`,
 				answer: [
-					`${price} is the launch price and it will not stay there. When it moves it moves for kitchens that sign up after, never for yours. The price you start on is the price you keep.`
+					`${price} is the launch price and it will not stay there. When it moves, it moves for kitchens that sign up after, never for yours. The price you start on is the price you keep.`
 				],
 				claims: ['RC-34']
 			},
@@ -91,7 +91,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'seats',
 				question: 'Do I pay per person?',
 				answer: [
-					`No. The subscription is per kitchen, not per teammate. The verified owner manages billing and invites the crew. ${launchPlan.crewTerms}`
+					`No. The subscription is per kitchen, not per teammate. The owner manages billing and invites the crew. ${launchPlan.crewTerms}`
 				],
 				claims: ['RC-34']
 			},
@@ -113,17 +113,17 @@ export const faq: readonly FaqGroup[] = [
 				id: 'who',
 				question: 'Who is this for?',
 				answer: [
-					'Catering and meal prep run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. You can start with one recipe, then use a menu and guest count to plan an event.'
+					'Caterers, and restaurants that cater, run by an owner-operator with a small crew. You price jobs that change, you buy for dates rather than a steady week, and nobody down the hall owns the spreadsheet. Start with one dish. When the next inquiry comes in, build its menu, send the proposal, and plan the job from there. Meal-prep kitchens fit too; <a href="/who-its-for">who it is for</a> says how.'
 				],
-				claims: ['RC-01', 'RC-03', 'RC-44']
+				claims: ['RC-01', 'RC-03', 'RC-44', 'RC-61', 'RC-63']
 			},
 			{
 				id: 'restaurant',
 				question: 'I run a restaurant. Will CostCook fit?',
 				answer: [
-					'Yes, for the part of your business that moves by event, menu, date, and guest count: catering, special dinners, and other changing menus. CostCook carries that plan through recipe costing, shopping, prep, pack, purchasing, and food cost. You can run regular restaurant service alongside that work and still belong here. The <a href="/compare">comparison page</a> shows the product limits that may still matter to you.'
+					'Yes, for the part of your business that comes with a date and a guest count: catering, special dinners, a menu that keeps changing. CostCook carries that job from the inquiry and the proposal through recipe costing, shopping, prep, pack, purchasing and food cost. Your regular service can keep running the way it does. The <a href="/compare">comparison page</a> lists the limits that might still matter to you.'
 				],
-				claims: ['RC-01', 'RC-03', 'RC-21', 'RC-22', 'RC-24', 'RC-25', 'RC-26', 'RC-30', 'RC-40', 'RC-44']
+				claims: ['RC-01', 'RC-03', 'RC-21', 'RC-22', 'RC-24', 'RC-25', 'RC-26', 'RC-30', 'RC-40', 'RC-44', 'RC-61', 'RC-63']
 			},
 			{
 				id: 'locations',
@@ -135,9 +135,9 @@ export const faq: readonly FaqGroup[] = [
 			},
 			{
 				id: 'permissions',
-				question: 'Can I give a cook the prep list without showing them the costs?',
+				question: 'Can I choose which screens each teammate sees?',
 				answer: [
-					'No. Owner, Manager and Staff protect specific sensitive actions, but there is no per-screen control, so a cook on Staff can still open recipe costs and Analytics. A little is held back: Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every current boundary.'
+					'No. There is no per-screen control or custom role; the role draws the line. A cook on Staff gets orders, prep and pack lists, deliveries and recipes, with costs and margins taken out. Analytics, Sage, setup, imports and the Clients book stay with owners and managers. The <a href="/features/team-and-access">Team &amp; Access guide</a> names every boundary.'
 				],
 				claims: ['RC-44', 'RC-52']
 			},
@@ -145,7 +145,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'roles',
 				question: 'What do Owner, Manager and Staff mean?',
 				answer: [
-					'The Owner manages billing and publishes recipes. Owners and Managers can handle setup, invite teammates and approve Sage drafts. Staff use the shared kitchen lists and can open cost screens, including recipe costs and Analytics. Staff do not see order money or client names on Today, the calendar leaves money out for Staff, and Clients is for owners and managers. Invitations join as Staff today. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
+					'The Owner runs billing, the team and kitchen settings, and publishes recipes. Managers see the money: costs, Analytics, Sage, clients and purchasing, and they can finish setup and approve Sage drafts. Staff work from orders, prep and pack lists, deliveries and recipes, and never see costs. When you invite someone, you pick Staff or Manager. See the <a href="/features/team-and-access">team role comparison</a> for each action.'
 				],
 				claims: ['RC-52']
 			},
@@ -159,7 +159,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'labels',
 				question: 'Does it do nutrition labels?',
 				answer: [
-					'As a calculated estimate, yes. The fifteen nutrients an FDA panel carries are computed per recipe, per portion, from USDA FoodData Central records you match to each ingredient, and a recipe says plainly when a value is missing rather than counting it as zero. Once every ingredient source is confirmed and no line is blank, Print label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line for your browser to print onto label stock; until then the recipe calls it a draft estimate and will not print it. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
+					'As a calculated estimate, yes. The fifteen nutrients an FDA panel carries are computed per recipe and per portion, from the USDA FoodData Central record you match to each ingredient. When a value is missing, the recipe says so instead of counting it as zero. Once every ingredient source is confirmed and no line is blank, Print label on the recipe makes a sheet with the panel, the ingredient statement and the allergen line, and your browser prints it onto label stock. Until then the recipe calls it a draft estimate and will not print it. The sheet says it is a calculated estimate, not a retail-label compliance claim.',
 					labelsAvailability.nutritionFaqCrosslink
 				],
 				claims: ['RC-42', 'RC-47', 'RC-50']
@@ -183,18 +183,12 @@ export const faq: readonly FaqGroup[] = [
 				claims: ['RC-47']
 			},
 			{
-				id: 'event-payments',
-				question: 'Can clients pay the event deposit by card?',
-				answer: [eventPayments.faq],
-				claims: ['RC-65']
-			},
-			{
 				id: 'sage',
 				icon: 'sage',
 				question: 'What is Sage?',
 				answer: [
-					`An assistant inside CostCook with ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. Every answer shows where its numbers came from. It can prepare ${spell(sageDraftKinds.length)} kinds of draft (${sageDraftKindsAnd}), and nothing changes until a manager or owner approves the draft. It cannot reach another kitchen and it never changes a record on its own.`,
-					'Sage is available now and stays within reach during setup. Its starting questions follow the setup stage and the records entered so far, and a Back to setup action returns you to the unfinished stage. See the <a href="/features/sage">Sage feature guide and video</a>.'
+					`An assistant inside CostCook with ${spell(sageReadToolCount, { compound: true })} read-only tools across the shift, orders, recipes, stock, buying and setup. Every answer shows where its numbers came from. It can prepare ${spell(sageDraftKinds.length)} kinds of draft (${sageDraftKindsAnd}). Nothing changes until an owner or manager approves the draft. It cannot reach another kitchen and it never changes a record on its own.`,
+					'Sage is available now, and it is there during setup too. The questions it starts you on depend on the setup stage you are in and what you have entered so far, and Back to setup takes you to the stage you left unfinished. See the <a href="/features/sage">Sage feature guide and video</a>.'
 				],
 				claims: ['RC-46', 'RC-49']
 			},
@@ -202,9 +196,21 @@ export const faq: readonly FaqGroup[] = [
 				id: 'integrations',
 				question: 'Does it connect to Square or QuickBooks?',
 				answer: [
-					'No. Square, QuickBooks and an API for custom connections are marked Coming and are not available in your trial or subscription. No release date is promised. Check the <a href="/compare">comparison page</a> if these connections are essential.'
+					'No. Square, QuickBooks and an API for your own connections are marked Coming. They are not in the trial or the subscription, and I am not promising a date. If you cannot run without them, look at the <a href="/compare">comparison page</a> first.'
 				],
 				claims: ['RC-35', 'RC-45', 'RC-46']
+			}
+		]
+	},
+	{
+		id: 'how',
+		title: 'How the work moves',
+		entries: [
+			{
+				id: 'event-payments',
+				question: 'Can clients pay the event deposit by card?',
+				answer: [eventPayments.faq],
+				claims: ['RC-65']
 			},
 			{
 				id: 'ordering',
@@ -219,28 +225,32 @@ export const faq: readonly FaqGroup[] = [
 					'It tells you food cost: the theoretical food cost of an event, the food-cost percentage against a target you set, and the selling price that would meet that target. Labor and overhead are not in it. Where the event totals and recipe pricing show a food-only gross margin, it is the price less food cost, not your business margin after labor and overhead.'
 				],
 				claims: ['RC-04', 'RC-05', 'RC-30']
-			}
-		]
-	},
-	{
-		id: 'how',
-		title: 'How the work moves',
-		entries: [
+			},
 			{
 				id: 'quote',
 				question: 'How does a proposal get its food cost?',
 				answer: [
-					'Build the event menu from your costed recipes or a saved menu, and the menu and service step shows the food cost before the proposal goes to the client. For a job you take by phone without a proposal, a draft order shows revenue, theoretical food cost, food cost per guest and the percentage against your target. While either is a draft, those numbers follow your current ingredient prices.'
+					'From your costed recipes. Build the event menu from them or from a saved menu, and the menu and service step shows its food cost before the proposal goes to the client. For a job you take by phone without a proposal, a draft order shows revenue, theoretical food cost, food cost per guest and the percentage against your target. Until you press Confirm order, those numbers follow your current ingredient prices.'
 				],
 				claims: ['RC-03', 'RC-04', 'RC-06', 'RC-61']
+			},
+			{
+				/* Added 2026-10-11, owner-approved (the 39th answer). The site's event
+				   story books the job with Book the event, and no answer said so. */
+				id: 'booked',
+				question: 'When is the event actually booked?',
+				answer: [
+					'When you press Book the event. The client’s yes on the proposal books nothing; Book the event waits on the signed agreement and the deposit. Confirm order comes later and locks the kitchen’s quantities and prices.'
+				],
+				claims: ['RC-61', 'RC-63', 'RC-64', 'RC-65']
 			},
 			{
 				id: 'frozen',
 				question: 'If a supplier price changes after I quote, does my quote change?',
 				answer: [
-					'No. Confirming an order freezes its plan, its costing inputs and its money. Later prices update your catalog and any draft orders, and the confirmed event shows you quoted-versus-today so you can see the drift, but nothing rewrites it.'
+					'No, not the price you sent. A sent proposal is fixed; changing it means sending the client a new one. The food cost behind it keeps following your ingredient prices until you press Confirm order, which freezes the plan, its costing inputs and its money. After that, new prices update your catalog and any draft orders, and the confirmed order shows you quoted-versus-today so you can see the drift, but nothing rewrites it.'
 				],
-				claims: ['RC-07', 'RC-08']
+				claims: ['RC-03', 'RC-07', 'RC-08', 'RC-63', 'RC-75']
 			},
 			{
 				id: 'guests',
@@ -259,7 +269,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'shopping',
 				question: 'What does the shopping list look like?',
 				answer: [
-					'Grouped by supplier, rounded to the whole packs you actually buy, with a supplier subtotal. Sub-recipes like a stock or a mirepoix are treated as batches to make rather than things to shop for, and a recent, trusted stock count reduces the buying; missing or stale counts do not.'
+					'Grouped by supplier, rounded to the whole packs you actually buy, with a subtotal for each supplier. A stock or a mirepoix shows up as a batch to make, not something to shop for. A recent count you trust takes stock off the buy. A missing or stale count does not.'
 				],
 				claims: ['RC-18', 'RC-22']
 			},
@@ -267,7 +277,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'orders',
 				question: 'Does it send the purchase orders?',
 				answer: [
-					'Yes, when you say so. Confirming an order contacts no supplier. When you are ready, press Order from suppliers and pick, for each supplier, email, print or handle it yourself, or choose I’ll shop it myself. Each purchase order has its own number, in whole packs. Email is email: the app records the send, and I do not promise delivery into anyone’s inbox.'
+					'Yes, when you say so. Confirming an order contacts no supplier. When you are ready, press Order from suppliers and pick Email, Print or I’ll buy it for each supplier, or choose I’ll shop it myself. Each purchase order has its own number, in whole packs. Email is email: the app records the send, and I do not promise delivery into anyone’s inbox.'
 				],
 				claims: ['RC-26', 'RC-33']
 			},
@@ -275,7 +285,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'receiving',
 				question: 'What happens when the truck is short?',
 				answer: [
-					'Receiving records what the delivery actually was against what you ordered: full, over, short, substituted, missing, or unexpected, with the received value beside the ordered value. Review the quantities and prices, then save the delivery.'
+					'You mark the line short, and it stays in view until you follow it up. Check what actually came off the truck against what you ordered: full, over, short, substituted, missing or unexpected, with the received value next to the ordered value. Look over the quantities and prices, then save the delivery.'
 				],
 				claims: ['RC-27', 'RC-37']
 			},
@@ -283,7 +293,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'price-back',
 				question: 'How does the price I paid get back into my costing?',
 				answer: [
-					'The newest qualifying purchase, by purchase date, can become the current price of that ingredient, with the receiving it came from on record. It moves future costing and draft orders. It never rewrites a confirmed event.'
+					'The newest qualifying purchase, by purchase date, can become the current price of that ingredient, with the receiving it came from on record. It moves future costing and draft orders. It never rewrites a confirmed order.'
 				],
 				claims: ['RC-08', 'RC-28']
 			},
@@ -291,7 +301,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'multi-event',
 				question: 'Can I shop and prep for several events at once?',
 				answer: [
-					'Yes, for the planning. Two to twelve events can be created together and open a combined Shop, Prep and Pack workspace that totals the shopping and the prep across all of them, with the pack list keeping a column per event. Confirming, freezing prices and sending purchase orders all stay per order; the combined run does not confirm or buy.'
+					'Yes, for the planning. Create two to twelve events together and they open one Shop, Prep and Pack workspace. The shopping and the prep are totaled across all of them, and the pack list keeps a column for each event. Confirming, freezing prices and sending purchase orders still happen one order at a time. The combined run does not confirm or buy anything.'
 				],
 				claims: ['RC-36']
 			},
@@ -313,7 +323,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'setup',
 				question: 'What does setup actually involve?',
 				answer: [
-					'One dish you already cook, not your whole walk-in. A skippable welcome asks what kind of kitchen you run and the name of that dish, then five stages ask for the next thing the dish needs: your kitchen and one supplier, the dish’s ingredients and their pack prices, their food facts, the dish itself, then a menu with a date and a guest count.',
+					'One dish you already cook, not your whole walk-in. A skippable welcome asks what kind of kitchen you run and the name of that dish. Then five stages ask for what the dish needs next: your kitchen and one supplier, the dish’s ingredients and their pack prices, their food facts, the dish itself, then a menu with a date and a guest count.',
 					'It ends on that dish’s plate cost with the arithmetic beside it, and a shopping list in whole packs. <a href="/onboarding">See the five stages, the number they end on, and what comes after</a>.'
 				],
 				claims: ['RC-10', 'RC-14', 'RC-55']
@@ -322,8 +332,8 @@ export const faq: readonly FaqGroup[] = [
 				id: 'after-setup',
 				question: 'What do I do after setup, and how does my crew get in?',
 				answer: [
-					'Setup ends on a screen that says your kitchen is ready and offers the shopping list for your first order. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, ready for you to review before saving.',
-					'To bring in the crew, open Settings, then Team, and type an email address. They receive a one-time link, need no password, and join as Staff. Staff can open cost screens, including recipe costs and Analytics, and there is no custom role. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
+					'Setup ends with your first order made and its shopping list one tap away. The next dishes come in through the same doors as the first: a photo, a PDF, a spreadsheet, a Word document or pasted text, ready for you to review before saving.',
+					'To bring in the crew, open Settings, then Team &amp; access, add their email and pick Staff or Manager. They get a one-time sign-in link and need no password. <a href="/onboarding#after-crew">See the after-setup part of the guide</a>.'
 				],
 				claims: ['RC-38', 'RC-39', 'RC-52']
 			},
@@ -331,7 +341,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'prices-in',
 				question: 'How do my supplier prices get in?',
 				answer: [
-					'Photograph the price list, drop in the PDF or the Word document, upload the spreadsheet, or paste the text. Review the supplier, ingredients, pack sizes and prices before saving. Nothing changes your costing until you save the reviewed records, and whatever could not be read is quoted back as it appeared rather than guessed. Keying an awkward invoice in by hand is still a supported way to do it.'
+					'Photograph the price list, drop in the PDF or the Word document, upload the spreadsheet, or paste the text. Check the supplier, the ingredients, the pack sizes and the prices before you save. Nothing changes your costing until you save, and anything it could not read comes back exactly as it appeared, not guessed at. You can still key an awkward invoice in by hand.'
 				],
 				claims: ['RC-09', 'RC-26', 'RC-38', 'RC-39']
 			},
@@ -339,7 +349,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'catalog',
 				question: 'Do I have to type every ingredient?',
 				answer: [
-					'No. CostCook includes roughly 1,500 ingredient names and supplier abbreviations to help match your paperwork. You still enter or import your own pack sizes and prices.'
+					'No. CostCook comes with roughly 1,500 ingredient names and supplier abbreviations, so your paperwork has something to match against. Your own pack sizes and prices you still enter or import.'
 				],
 				claims: ['RC-41']
 			},
@@ -347,7 +357,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'recipes-in',
 				question: 'How do my recipes get in?',
 				answer: [
-					'Upload a photo, PDF, spreadsheet or document, or paste the recipe text. Review the draft before saving it. Recipes can carry sub-recipes and a trim yield on each line, and the yield moves how much you buy as well as what the plate costs.'
+					'Upload a photo, PDF, spreadsheet or document, or paste the recipe text, and look the draft over before you save it. A recipe can carry sub-recipes and a trim yield on each line, and the yield changes how much you buy as well as what the plate costs.'
 				],
 				claims: ['RC-16', 'RC-19', 'RC-38']
 			},
@@ -355,7 +365,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'phone',
 				question: 'Does it work on a phone in a walk-in with one bar?',
 				answer: [
-					'Previously loaded order pages remain readable with no signal and show when they were cached. A page you did not load before going offline shows the offline fallback, and actions that write data need a connection. With a connection, core pages are server-rendered and remain readable with JavaScript off.'
+					'Previously loaded order pages remain readable with no signal and show when they were cached, so open the order before you walk into the cooler. A page you had not loaded shows the offline fallback instead, and actions that write data need a connection.'
 				],
 				claims: ['RC-54']
 			},

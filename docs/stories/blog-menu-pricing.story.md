@@ -11,3 +11,5 @@
 - **Life:** A quote is open and three calculators return three different answers.
 - **Connection:** The chosen target hands off to recipe and menu costing.
 - **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — exposed the unrounded per-guest cost, marked the rounded target price as approximate, and recalculated the reading time at 200 words per minute.
+
+**Revision 2026-10-08: chef voice pass.** Intro, the decision-aid paragraph and the close de-consulted ("That number helps you decide. It doesn't decide for you."); description rewritten. Snap, every figure and every formula unchanged. Why: owner asked that the site read like a working chef wrote it, not AI.

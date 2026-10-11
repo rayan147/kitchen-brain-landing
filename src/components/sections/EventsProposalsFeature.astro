@@ -37,7 +37,7 @@
  */
 import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
-import { eventPayments } from '../../lib/event-payments';
+import { eventInvoice, eventPayments } from '../../lib/event-payments';
 import { eventProof as proof } from '../../lib/proof';
 import { acceptanceBoundary, depositMethods, eventSteps, type EventStepName } from '../../lib/events';
 
@@ -61,7 +61,9 @@ const pipelineTabs = ['Needs attention', 'Booked · coming up', 'In pipeline', '
 const limits = [
 	'A kitchen draft holds one service, so an event with a lunch and a dinner is booked by hand for now.',
 	'Confirm order checks the day’s room, not whether the agreement is signed or the deposit has arrived.',
-	'There is no customer invoice in CostCook.',
+	// Was "There is no customer invoice in CostCook." until the owner ruling of
+	// 2026-10-08; the invoice is described beside Payments below.
+	eventInvoice.onlineOrders,
 	'Nothing is tracked after Packed: no delivery step, no drivers and no staffing roster.',
 	'Clients is for owners and managers, and a client’s page shows no money.'
 ] as const;
@@ -98,7 +100,7 @@ const payments = eventPayments;
 			<figure class="proof phone anim-enter" style="--enter-delay: 120ms">
 				<figcaption>New inquiry · sample event</figcaption>
 				<div>
-					<img src={proof.inquiry.src} alt={proof.inquiry.alt} width={proof.inquiry.width} height={proof.inquiry.height} decoding="async" style={`width: ${proof.inquiry.width / 2}px`} />
+					<img src={proof.inquiry.src} alt={proof.inquiry.alt} width={proof.inquiry.width} height={proof.inquiry.height} decoding="async" fetchpriority="high" style={`width: ${proof.inquiry.width / 2}px`} />
 				</div>
 			</figure>
 		</div>
@@ -119,7 +121,7 @@ const payments = eventPayments;
 		<div class="container-page">
 			<div class="section-head" data-reveal>
 				<h2 id="inquiry-heading">Save the inquiry before the stock comes off.</h2>
-				<p>Tap + New inquiry mid-prep, tick Date not decided yet if it is, and name who follows up and when.</p>
+				<p>Tap + New inquiry mid-prep. No date yet? Tick Date not decided yet. Then name who follows up and when.</p>
 			</div>
 			<ul role="list" class="chip-row" aria-label="The four tabs on Events">
 				{pipelineTabs.map((tab) => <li>{tab}</li>)}
@@ -127,8 +129,8 @@ const payments = eventPayments;
 			<p class="section-note" data-reveal>Then set the menu and service from your costed recipes, a saved menu or a past event. The food cost sits right beside it while you build.</p>
 			<figure class="proof wide" data-reveal>
 				<figcaption>The event page · sample event</figcaption>
-				<div class="scroll" tabindex="0" role="region" aria-label="Event page capture, scrolls sideways on a phone">
-					<img src={proof.workspace.src} alt={proof.workspace.alt} width={proof.workspace.width} height={proof.workspace.height} loading="lazy" decoding="async" />
+				<div class="shot-pan" tabindex="0" role="region" aria-label="Event page screenshot">
+					<img src={proof.workspace.src} alt={proof.workspace.alt} width={proof.workspace.width} height={proof.workspace.height} loading="lazy" decoding="async" style={`--shot-w: ${proof.workspace.width / 2}px`} />
 				</div>
 				<a class="full-size" href={proof.workspace.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
 			</figure>
@@ -156,19 +158,19 @@ const payments = eventPayments;
 	</section>
 
 	<section id="agreement" class="product-section" aria-labelledby="agreement-heading">
-		<div class="container-page split">
+		<div class="container-page split split--capture">
 			<div data-reveal>
 				<h2 id="agreement-heading">The agreement and the deposit stay on the event.</h2>
-				<p>Start from your own saved contract template. The accepted proposal goes on as Schedule A. Send it for e-signature, or keep a copy signed on paper.</p>
+				<p>Start from your own saved contract template. The accepted proposal goes on as Schedule A. Send the agreement for e-signature, or keep a copy signed on paper.</p>
 				<p data-events-money>The client pays by card from an email link, or you record it by hand, as {depositMethods}, and the event shows what you asked for and what came in.</p>
 			</div>
 			<figure class="proof panel" data-reveal>
 				<figcaption>Ask for a deposit · sample event</figcaption>
-				<div>
+				<div class="shot-pan" tabindex="0" role="region" aria-label="Deposit screenshot">
 					<!-- The panel now carries the deposit and the balance with their
 					     amounts at the right edge, so it is shown whole, not cropped to
 					     its left 300 px (re-shot 2026-10-07 from app 7a7e407d9). -->
-					<img src={proof.deposit.src} alt={proof.deposit.alt} width={proof.deposit.width} height={proof.deposit.height} loading="lazy" decoding="async" style={`width: ${proof.deposit.width / 2}px`} />
+					<img src={proof.deposit.src} alt={proof.deposit.alt} width={proof.deposit.width} height={proof.deposit.height} loading="lazy" decoding="async" style={`width: ${proof.deposit.width / 2}px; --shot-w: ${proof.deposit.width / 2}px`} />
 				</div>
 			</figure>
 		</div>
@@ -179,26 +181,26 @@ const payments = eventPayments;
 		<div class="container-page">
 			<div class="section-head" data-reveal>
 				<h2 id="booked-heading">Book it when the agreement is signed and the deposit is in.</h2>
-				<p>From their yes you prepare the kitchen draft. It holds no day and pulls no crew until you confirm the order. Book the event tells you what is still missing. Book anyway and it asks why, and your reason stays on the event.</p>
+				<p>Book the event tells you what is still missing. Book anyway and it asks why, and your reason stays on the event. From their yes you also prepare the kitchen draft. It holds no day and pulls no crew until you confirm the order.</p>
 			</div>
 			<figure class="proof panel book-proof" data-reveal>
 				<figcaption>Book the event · sample event</figcaption>
-				<div>
-					<img src={proof.book.src} alt={proof.book.alt} width={proof.book.width} height={proof.book.height} loading="lazy" decoding="async" style={`width: ${proof.book.width / 2}px`} />
+				<div class="shot-pan" tabindex="0" role="region" aria-label="Book the event screenshot">
+					<img src={proof.book.src} alt={proof.book.alt} width={proof.book.width} height={proof.book.height} loading="lazy" decoding="async" style={`width: ${proof.book.width / 2}px; --shot-w: ${proof.book.width / 2}px`} />
 				</div>
 				<a class="full-size" href={proof.book.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
 			</figure>
 			<div class="booked-pair">
 				<figure class="proof panel" data-reveal>
 					<figcaption>Kitchen draft · sample event</figcaption>
-					<div class="scroll" tabindex="0" role="region" aria-label="Kitchen draft capture, scrolls sideways on a phone">
-						<img src={proof.draft.src} alt={proof.draft.alt} width={proof.draft.width} height={proof.draft.height} loading="lazy" decoding="async" style={`width: ${proof.draft.width / 2}px`} />
+					<div class="shot-pan" tabindex="0" role="region" aria-label="Kitchen draft screenshot">
+						<img src={proof.draft.src} alt={proof.draft.alt} width={proof.draft.width} height={proof.draft.height} loading="lazy" decoding="async" style={`width: ${proof.draft.width / 2}px; --shot-w: ${proof.draft.width / 2}px`} />
 					</div>
 				</figure>
 				<figure class="proof panel" data-reveal>
 					<figcaption>Confirm order · sample event</figcaption>
-					<div>
-						<img src={proof.confirm.src} alt={proof.confirm.alt} width={proof.confirm.width} height={proof.confirm.height} loading="lazy" decoding="async" style={`width: ${proof.confirm.width / 2}px`} />
+					<div class="shot-pan" tabindex="0" role="region" aria-label="Confirm order screenshot">
+						<img src={proof.confirm.src} alt={proof.confirm.alt} width={proof.confirm.width} height={proof.confirm.height} loading="lazy" decoding="async" style={`width: ${proof.confirm.width / 2}px; --shot-w: ${proof.confirm.width / 2}px`} />
 					</div>
 				</figure>
 			</div>
@@ -206,8 +208,8 @@ const payments = eventPayments;
 			<p class="section-note" data-reveal>The calendar counts each day’s orders and vans against the limits you set, and an order tells you whether its day has room.</p>
 			<figure class="proof wide" data-reveal>
 				<figcaption>The calendar, week view · sample event</figcaption>
-				<div class="scroll" tabindex="0" role="region" aria-label="Calendar capture, scrolls sideways on a phone">
-					<img src={proof.calendar.src} alt={proof.calendar.alt} width={proof.calendar.width} height={proof.calendar.height} loading="lazy" decoding="async" />
+				<div class="shot-pan" tabindex="0" role="region" aria-label="Calendar screenshot">
+					<img src={proof.calendar.src} alt={proof.calendar.alt} width={proof.calendar.width} height={proof.calendar.height} loading="lazy" decoding="async" style={`--shot-w: ${proof.calendar.width / 2}px`} />
 				</div>
 				<a class="full-size" href={proof.calendar.src} target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
 			</figure>
@@ -217,7 +219,7 @@ const payments = eventPayments;
 	<section id="clients" class="product-section soft" aria-labelledby="clients-heading">
 		<div class="container-page"><div class="section-head" data-reveal>
 			<h2 id="clients-heading">Type the client once.</h2>
-			<p>A client saved from the inquiry lands in Clients, with contacts, venues and access notes like a gate code, and their events and orders grouped as Upcoming, No date yet and Past.</p>
+			<p>A client saved from the inquiry lands in Clients, with contacts, venues and access notes like a gate code. Their events and orders are grouped as Upcoming, No date yet and Past.</p>
 			<p>When they call again, Start an order for this client carries those details onto the new order.</p>
 		</div></div>
 	</section>
@@ -225,7 +227,7 @@ const payments = eventPayments;
 	<section id="limits" class="product-section" aria-labelledby="limits-heading">
 		<div class="container-page">
 			<div class="section-head" data-reveal>
-				<h2 id="limits-heading">How the client pays, and where it stops.</h2>
+				<h2 id="limits-heading">Where it stops, and how the client pays.</h2>
 			</div>
 			<ul role="list" class="limit-list">
 				{limits.map((line) => <li data-events-limit data-reveal>{line}</li>)}
@@ -234,6 +236,11 @@ const payments = eventPayments;
 				<p class="ticket-label">Payments</p>
 				<p class="coming-title">{payments.title}</p>
 				<p>{payments.homepage}</p>
+			</div>
+			<div class="coming-note" data-events-invoice data-reveal>
+				<p class="ticket-label">Invoice</p>
+				<p class="coming-title">{eventInvoice.title}</p>
+				<p>{eventInvoice.body}</p>
 			</div>
 		</div>
 	</section>
@@ -278,9 +285,16 @@ const payments = eventPayments;
 
 	/* The step bar: the app's six steps, in its order, as the page map. */
 	.step-bar { padding-block: 1.5rem; border-top: 1px solid var(--color-hairline); }
-	.step-bar ol { display: grid; gap: .5rem; margin-top: .9rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+	/* Six steps in even rows, 2 then 3 then 6 across: auto-fit wrapped them
+	   4+2 at 768 and 5+1 at 1024, with "Booked" alone (mobile review
+	   2026-10-09). */
+	.step-bar ol { display: grid; gap: .5rem; margin-top: .9rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	@media (min-width: 40rem) { .step-bar ol { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+	@media (min-width: 64rem) { .step-bar ol { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 	.step-bar a { display: flex; align-items: center; gap: .6rem; min-height: 44px; padding: .5rem .8rem; border-top: 2px solid var(--color-hairline-strong); font-weight: 600; color: var(--color-ink); text-decoration: none; }
-	.step-bar a:hover { border-top-color: var(--color-green); }
+	@media (hover: hover) {
+		.step-bar a:hover { border-top-color: var(--color-green); }
+	}
 	.step-bar a:focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
 	.step-bar a span { font-size: var(--text-micro); font-variant-numeric: tabular-nums; color: var(--color-amber-deep); }
 
@@ -297,18 +311,13 @@ const payments = eventPayments;
 	.proof img { height: auto; max-width: 100%; }
 	.proof.wide { margin-top: 2.5rem; }
 	.proof.wide img { width: 100%; }
-	/* A wide desktop frame shrunk to a phone is unreadable, so under 48rem it
-	   keeps a readable minimum width and scrolls inside its own frame. The page
-	   itself never scrolls sideways; the frame is a focusable region so a
-	   keyboard can scroll it too. */
-	.proof .scroll { justify-content: flex-start; overflow-x: auto; }
-	.proof .scroll:focus-visible { outline: 2px solid var(--color-green); outline-offset: -2px; }
-	.proof.wide .scroll img { min-width: 44rem; }
-	.proof.panel .scroll img { min-width: 34rem; max-width: none; }
-	@media (min-width: 48rem) {
-		.proof.panel .scroll img { min-width: 0; max-width: 100%; }
-	}
+	/* A capture too wide for its column keeps a readable floor and scrolls
+	   inside its own frame (.shot-pan, global.css). */
+	.proof .shot-pan { justify-content: flex-start; }
+	/* The scroll hint (added by Base.astro) lines up with the full-size link. */
+	.proof :global(.pan-hint) { padding-inline: 1rem; }
 	.book-proof { margin-top: 2.5rem; }
+	.split--capture .proof { max-width: 50rem; }
 	.book-proof img { max-width: min(100%, 45rem); }
 	.full-size { display: inline-flex; min-height: 44px; align-items: center; padding-inline: 1rem; font-size: var(--text-body-sm); font-weight: 600; color: var(--color-green-deep); text-decoration: underline; }
 	.booked-pair { display: grid; gap: 1.5rem; margin-top: 2.5rem; align-items: start; }
@@ -320,7 +329,8 @@ const payments = eventPayments;
 
 	.limit-list { display: grid; gap: 1.25rem; margin-top: 2.5rem; max-width: 76ch; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
 	.limit-list > li { padding-top: .9rem; border-top: 1px solid var(--color-hairline-strong); font-size: var(--text-body-sm); line-height: 1.55; color: var(--color-ink-soft); }
-	.coming-note { max-width: 46rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
+	.coming-note { max-width: 40rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); }
+	.coming-note + .coming-note { margin-top: 1rem; }
 	.coming-title { margin-top: .4rem; font-weight: 700; }
 	.coming-note p:last-child { margin-top: .4rem; color: var(--color-ink-soft); }
 
@@ -331,6 +341,10 @@ const payments = eventPayments;
 		.hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
 		.split { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: start; }
 		.closing-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
-		.booked-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+		/* The deposit panel (725px) and the kitchen draft beside the confirm
+		   dialog do not fit two-up above their 0.8x floor, so they stack under
+		   the copy instead of shrinking to 6 to 9px text (readability review
+		   2026-10-09). */
+		.split.split--capture { grid-template-columns: minmax(0, 1fr); }
 	}
 </style>

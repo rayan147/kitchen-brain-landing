@@ -157,3 +157,33 @@ alt text are unchanged (the H1 and closing heading are pinned).
   stays frozen beside today's cost.
 
 - **Follow-up (features pass):** the capabilities heading reads "What is in ..." instead of "Everything in ...". At 200% text on a 320px phone, "Everything" at display size did not fit the column (verify-feature-parity caught it on Recipes & Costing), so every guide now uses the shorter words.
+
+### Revision 2026-10-08: the quote frame from local develop
+
+The confirmed-quote frame was `/demo-poster.jpg`, a still from the retired
+demo video (180 guests at $68, a cursor, a burned-in caption). It is now
+`/proof/order-price-today.png` (scripts/capture-price-today-proof.mjs): the
+Nair & Castellano wedding, confirmed on local develop 7a7e407d9, price a
+guest $95.00 locked when confirmed, food cost 27.6% against 30%, and the
+app's own "Today's ingredient prices" line ("unchanged since you quoted
+this"). The copy beside it already says this; no words changed. The alt
+names only what the frame shows.
+
+## Revision 2026-10-11: English edit
+- Hero lede ends in two short sentences: "Check the food cost first. Confirming locks the quote and the kitchen plan together."
+- Quotes intro cut to one sentence ("A new event starts as a draft, and the food cost shows while you set it up."); the "Confirmation freezes" bullet removed (the lock was said four times).
+- "these screens" is "this screen"; the garden-wedding caption and the Shop/Prep/Pack caption drop lines repeated beside them; count label "shipped capabilities" like the sister pages.
+- Held for the owner: hero default price vs capture, the film note, the H2 twin, FAQ and caption changes.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Hero ledger default price $95.00 / guest (the capture's menu price; $68 is the order's own price); evidence note points to the captured 180-guest event, not a film.
+- FAQ "the target you set" (was "configured target"); menu items "Price to target." and "Menus in use stay put.".
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Problem H2: "The count changed in an email. The quote did not." (no longer a twin of the Recipes H2).
+- Confirmed-quote frame gets a caption (the caption freeze lifted for this one): "Captured from CostCook: a different sample wedding, 150 guests at $95.00, after it was confirmed."
+- FAQ "What does confirming save?" no longer repeats the next answer: "..., and the same locked event feeds Shop, Prep and Pack."
+
+
+## Revision 2026-10-11: English edit (booking and reopen facts)
+- "Honest reopen." item: "Reopening drops the frozen prices and goes back to today’s. Once purchasing starts, reopening is refused." (kitchen-brain develop 4f46543cf, orders/repository.ts reopenOrder drops the snapshot; matches faq.ts). Renders here via the orders group.

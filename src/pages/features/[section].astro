@@ -28,6 +28,7 @@ const showsConnections = entry.slug === 'team-and-connections';
 	description={entry.blurb}
 	path={`/features/${entry.slug}`}
 >
-	<FeatureSection entry={entry} />
-	{showsConnections && <Integrations />}
+	<FeatureSection entry={entry}>
+		{showsConnections && <Integrations />}
+	</FeatureSection>
 </Base>

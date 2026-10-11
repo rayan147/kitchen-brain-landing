@@ -210,6 +210,20 @@ try {
 		await send('Emulation.setDeviceMetricsOverride', { width: 320, height: 844, deviceScaleFactor: 1, mobile: true });
 		const overflow = await evaluate(`(() => { document.documentElement.style.fontSize = '200%'; return new Promise((resolve) => requestAnimationFrame(() => resolve(document.documentElement.scrollWidth - innerWidth))); })()`);
 		assert(overflow === 0, `${route} at 320px with 200% text: horizontal overflow is ${overflow}px`);
+		// Page scroll width alone misses text an ancestor's overflow-x: clip
+		// cuts off (issue #79: hero copy and buttons past the edge read as no
+		// overflow). Count text that ends past the viewport outside any frame
+		// that scrolls, and outside visually hidden (screen-reader-only) text.
+		const clipped = await evaluate(`(() => {
+			const width = document.documentElement.clientWidth;
+			const scrolls = (el) => { for (let a = el; a && a !== document.body; a = a.parentElement) { const cs = getComputedStyle(a); if (a !== el && /^(auto|scroll)$/.test(cs.overflowX)) return true; if (cs.clipPath !== 'none' || cs.clip !== 'auto') return true; } return false; };
+			return [...document.querySelectorAll('main *')].filter((el) => {
+				if (el.children.length || !el.textContent.trim()) return false;
+				const rect = el.getBoundingClientRect();
+				return rect.width > 0 && rect.right > width + 1 && getComputedStyle(el).visibility !== 'hidden' && !scrolls(el);
+			}).slice(0, 3).map((el) => el.textContent.trim().slice(0, 40));
+		})()`);
+		assert(clipped.length === 0, `${route} at 320px with 200% text: text ends past the screen: ${clipped.join(' | ')}`);
 	}
 
 	assert(pageErrors.length === 0, `browser exceptions: ${pageErrors.join(', ')}`);
@@ -231,4 +245,4 @@ if (failures.length > 0) {
 	console.error(`Feature-family browser verification failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
 }
-console.log('Site spacing verification passed: 25 routes, five viewports, specialist hero rhythm, and 200% text at 320px.');
+console.log('Site spacing verification passed: 25 routes, five viewports, specialist hero rhythm, and 200% text at 320px with nothing clipped.');

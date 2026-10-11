@@ -183,3 +183,12 @@ CTA, number, alt text or screenshot caption changed.
   claim"), the printed-contents list, FAQ and capability items. "A name match
   never invents food-safety data" is now "A matching name never makes up
   food-safety data", the same boundary.
+
+## Revision 2026-10-11: English edit
+- Proof links fixed: "Open allergen evidence in full capture" opens the allergen capture and "Open full Nutrition Facts panel" opens the panel (labels unchanged).
+- Hero lede: "a label that will not print until every line has a confirmed source."
+- Capabilities H2: "and what it will not claim."; evidence note drops "can help"; pack-out item "Allergen badges go on the pack list, where the person loading the van needs the answer."
+- Held for the owner: the label-printer status wording.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Label printer status, three places: "There is no direct connection to a label printer" / "not built and has no date" (matches the labels page).

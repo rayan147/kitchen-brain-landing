@@ -1,5 +1,6 @@
 ---
 import FeatureTrialTerms from "../FeatureTrialTerms.astro";
+import { featuresMenu } from '../../lib/site';
 import { featureSections, featureCount, inDevelopmentFeatureGroups, featureMenuSections, featureMenuHref } from '../../lib/features';
 import { spellCapital } from '../../lib/words';
 import { cta, demoCta } from '../../lib/site';
@@ -44,26 +45,28 @@ import { comingDefinition } from '../../lib/availability';
 		<div class="max-w-3xl" data-reveal>
 			<p class="eyebrow">Explore by kitchen task</p>
 			<h1 id="features-hub-heading" class="mt-4 text-display font-semibold break-words">
-				Find the tools for your next catering job.
+				Every feature, area by area.
 			</h1>
 			<p class="mt-5 max-w-[66ch] text-lede text-ink-soft">
-				Recipes, food cost, supplier prices, event lists. The {featureCount} available features below are sorted by kitchen job, and anything still being built is marked Coming.
+				Recipes, food cost, supplier prices, event lists. The {featureCount} available features are sorted by kitchen job into the areas below.
 			</p>
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
-				Start with the part of your week that eats the most time. Each guide shows what you put in, what you get back, and where it stops.
+				Start with the part of your week that eats the most time.
 			</p>
 			<p class="mt-4 max-w-[66ch] text-ink-soft">
 				{spellCapital(inDevelopmentFeatureGroups.length)} feature groups below contain work marked Coming. {comingDefinition}{' '}
-				None of that is counted in the {featureCount} shipped features.
+				None of that is counted in the {featureCount} available features.
 			</p>
 			<p class="mt-6">
-				<a href="/#demo" class="btn-quiet">Watch the 2:53 product tour</a>
+				<a href={featuresMenu.tourHref} class="btn-quiet">{featuresMenu.tourLabel}</a>
 			</p>
 		</div>
 
 		<div class="mt-6"><a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a><FeatureTrialTerms /></div>
 
-		<ul role="list" class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
+		{/* Five areas two up: the fifth spans both columns instead of sitting
+		    beside an empty cell (mobile review 2026-10-09). */}
+		<ul role="list" class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 sm:[&>li:last-child:nth-child(odd)]:col-span-2">
 			{
 				featureSections.map((entry, i) => (
 					<li class="border-t border-ticket-rule pt-6">

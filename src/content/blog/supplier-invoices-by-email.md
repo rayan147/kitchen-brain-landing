@@ -1,7 +1,7 @@
 ---
 title: "How to get supplier invoices emailed straight into CostCook"
 description: "Give your sales reps one address, forward the rest from Gmail, and check that the first invoice arrived and waits in review."
-publishedDate: 2026-09-28
+publishedDate: 2026-09-10
 category: Buying & suppliers
 menuGroup: Plan and buy
 menuIcon: invoice
@@ -19,7 +19,7 @@ CostCook gives every kitchen its own invoice address. Anything sent there lands 
 
 ## Before you start
 
-You need to be the owner or a manager. Staff cannot open kitchen settings.
+You need to be the owner. Managers and Staff cannot open kitchen settings.
 
 Have two things open: CostCook, and the last invoice email from each supplier you buy from most. You will want each rep's email address, and you will want to know which invoices come to you instead of to a rep.
 
@@ -29,7 +29,7 @@ In CostCook, open **Settings**, then **Invoice email**. Purchases may also show 
 
 The first card, **Ask your suppliers to send invoices here**, shows **Your invoice address**. It starts with `invoices-`, then sixteen letters and numbers. That code is the whole key to your kitchen's mail, so it says nothing about your business and cannot be guessed.
 
-The page is honest about what the address can do: "Invoices sent to this address wait in review. Nothing counts until you check it, so the worst a stranger can do is add to your review list."
+The page says plainly what the address can and can't do: "Invoices sent to this address wait in review. Nothing counts until you check it, so the worst a stranger can do is add to your review list."
 
 ## Step 2: Send your sales rep the message
 

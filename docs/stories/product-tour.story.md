@@ -178,3 +178,26 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 - The competing chicken offer is Coastal Meats, so Northline stays the guides' supplier.
 - The bride is the tree-nut allergy (as on the guards guide); the gluten-free conflict is two guests.
 - The month scene reviews July, the month that has closed by Aug 28, with the app's "Should have cost" / "Did cost" labels.
+
+## Revision 2026-10-08: chef voice pass
+- Owner: the site should read like a working chef-owner wrote it, not like AI. Copy only; every figure, status word, boundary and pinned phrase kept ("Follow one event from quote to pack list.", "Each stop follows its public status.", "Revenue after food cost").
+- Stop titles that read as instructions to a software user became things a cook says: "Keep the buying facts attached to the ingredient" is now "What you pay for chicken lives on the chicken"; "See what each team role can do" is now "Who on the crew can do what".
+- Intros lost the parallel-list rhythm and words like "resolve", "extracted rows", "inspect": the invoice "sits next to the lines read off it"; the delivery's short line "stays in view until somebody deals with it".
+- The slogan triplet "One guest count. Three lists. No second round of typing." became "Type the guest count once. All three lists come off it." Offline meaning unchanged (opened pages read without signal, check-offs need a connection).
+- Snap line unchanged: "At 180 guests, one dollar per head is a $180 decision."
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Sage footnote: "wait for an owner or manager to approve".
+
+## Revision 2026-10-11: English edit
+- Stop 9 agrees with its callout: title "Send the proposal. Book it once it is signed and the deposit is in."; intro books the event after the signed agreement and the deposit, with Confirm order later; the Booked step row reads "Not yet · Waits on the deposit" (kitchen-brain develop 4f46543cf, BookEvent.svelte).
+- Stop 8 title: the cook chooses "the storage and the use-by" (allergens come from the recipe). Stop 1 callout: "The same chicken thigh..." (not "the same 12 lb").
+- Hero lede names the quote and the proposal and drops "Start wherever you like"; workspace H2 "One wedding, stop by stop"; one "sample" fewer.
+- Stop 10: intro "arrive in Orders already priced, and you approve or decline them"; footnote explains the Pay in full case the aside shows.
+- Footnotes and lines tightened: stop 1 drops "preview", stop 2 "Confirm order locks these prices.", stop 11 "from the order you confirmed", stop 12 drops the repeated "stays in view", stop 15 intro "Managers see costs and approve Sage drafts; Staff do neither.", stop 7 cell "Tree nuts · the bride", stop 6 intro reordered.
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- F5: each stop's coach (callout and intro) now comes right after the page head in the markup, so on phones it is read before the metrics and row cards. Above 1100px the stop is a grid that puts the coach text back at the foot beside "Read the feature guide"; the moved block holds no focusable element, so focus order is unchanged.
+- F21: Events & proposals moved to stop 3, right after Menus & quotes, so the tour runs price, propose, book, then buy and prep. First stays recipes, last stays Sage; the stop comment no longer claims to mirror the Features dropdown columns (only the set of stops is checked).
+- F22: the ordering aside is titled "Newest request: office lunch".
+- verify-resources stop screenshots re-taken in the new order.

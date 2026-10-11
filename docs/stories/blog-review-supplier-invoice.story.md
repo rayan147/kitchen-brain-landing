@@ -99,3 +99,5 @@ An extracted line becomes a staged claim; shorthand becomes a pack; a case price
 - Removed any promise that OCR confidence proves business meaning.
 - Recalculated the reading time at 200 words per minute.
 - **Final image:** The invoice remains beside the new price, and the next recipe cost has a source you can inspect.
+
+**Revision 2026-10-08: chef voice pass.** Opening, staging, identity, conversion and close paragraphs plainer ("Reading the line takes a second. Working out what it means is the job."). OCR snap and all figures unchanged. Why: owner asked that the site read like a working chef wrote it, not AI.

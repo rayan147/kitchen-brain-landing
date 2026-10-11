@@ -40,10 +40,9 @@ const capabilityCount = capabilityGroups.reduce((total, group) => total + group.
 // assets for one verified capture, not interchangeable image-rendering behavior.
 const proofAssets = {
 	summary: {
-		desktop: '/proof/nutrition/nutrition-summary-wide.png',
+		// The page shows the phone summary at every width; the wide strip stays
+		// on disk for capture-nutrition-proof.mjs only.
 		mobile: '/proof/nutrition/nutrition-summary-mobile.png',
-		desktopWidth: 2304,
-		desktopHeight: 472,
 		mobileWidth: 748,
 		mobileHeight: 1132
 	},
@@ -82,7 +81,7 @@ const evidenceSteps = [
 	},
 	{
 		title: 'The pack list shows it',
-		detail: 'Allergen badges ride along to pack-out, where somebody actually needs the answer.'
+		detail: 'Allergen badges go on the pack list, where the person loading the van needs the answer.'
 	}
 ] as const;
 
@@ -123,7 +122,7 @@ const faqItems = [
 	{
 		question: 'Can I print a nutrition label today?',
 		answer:
-			'Yes, once the dish is complete. Preview label shows the panel any time. Print label switches on when every ingredient source is confirmed and no label line is blank, and your browser puts the sheet on label stock. Until then the recipe calls it a draft estimate and will not print it. A direct label-printer integration is still in development and carries no release date.'
+			'Yes, once the dish is complete. Preview label shows the panel any time. Print label switches on when every ingredient source is confirmed and no label line is blank, and your browser puts the sheet on label stock. Until then the recipe calls it a draft estimate and will not print it. A direct connection to a label printer is not built and has no date.'
 	}
 ] as const;
 ---
@@ -139,7 +138,7 @@ const faqItems = [
 					<span>Nutrition facts &amp; allergens</span>
 				</nav>
 				<h1 id="nutrition-feature-heading">Check nutrition and allergens from your recipe.</h1>
-				<p class="hero-lede">Match each ingredient to a nutrient source and check its allergens. You see nutrition per portion, what is still missing, and a label that will not print until nothing is. Whether the food suits a given guest is still your kitchen’s call to review.</p>
+				<p class="hero-lede">Match each ingredient to a nutrient source and check its allergens. You see nutrition per portion, what is still missing, and a label that will not print until every line has a confirmed source. Whether the food suits a given guest is still your kitchen’s call to review.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
@@ -151,17 +150,20 @@ const faqItems = [
 			<figure class="hero-proof anim-enter" style="--enter-delay: 120ms">
 				<p class="capture-label">Captured CostCook recipe</p>
 				<div class="hero-shot">
-					<picture>
-						<source media="(max-width: 47.999rem)" srcset={proofAssets.summary.mobile} width={proofAssets.summary.mobileWidth} height={proofAssets.summary.mobileHeight} />
-						<img
-							src={proofAssets.summary.desktop}
-							alt="CostCook Nutrition summary for Wild Mushroom Polenta, one 240 g portion, marked Draft estimate. Not ready to print, with 7 label lines blank because no source reports them: 530 calories, 19 g fat, 18 g protein, 77 g carbs, each a draft from unconfirmed sources, and 8 of 15 label lines filled."
-							width={proofAssets.summary.desktopWidth}
-							height={proofAssets.summary.desktopHeight}
-							decoding="async"
-							data-proof-image
-						/>
-					</picture>
+					<!-- The phone summary at every width: the wide strip, 1152px of
+					     cards in a 647px column, drew its banner at 7px (readability
+					     review 2026-10-09). The alt names only what this frame shows (the dish
+					     and portion are in the caption); re-shot without the sticky app bar
+					     over the banner. -->
+					<img
+						src={proofAssets.summary.mobile}
+						alt="CostCook Nutrition summary, marked Draft estimate. Not ready to print, with 7 label lines blank because no source reports them: 530 calories, 19 g fat, 18 g protein, 77 g carbs, each a draft from unconfirmed sources, and 8 of 15 label lines filled."
+						width={proofAssets.summary.mobileWidth}
+						height={proofAssets.summary.mobileHeight}
+						decoding="async"
+						fetchpriority="high"
+						data-proof-image
+					/>
 				</div>
 				<figcaption>
 					Wild Mushroom Polenta from the sample wedding menu, one 240 g portion. A draft, and the screen says so before it shows a number.
@@ -229,7 +231,7 @@ const faqItems = [
 					     with the lines no source reports left as a dash (develop
 					     7a7e407d9, 2026-10-07). -->
 					Four ingredients, each with its own source, added up. Seven lines no source reports show a dash, not a zero, and the dish stays a draft until they are filled.
-					<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full Nutrition Facts panel</a>
+					<a href={proofAssets.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open full Nutrition Facts panel</a>
 				</figcaption>
 			</figure>
 		</div>
@@ -246,10 +248,10 @@ const faqItems = [
 		<figure class="container-page allergen-proof" data-reveal>
 			<div class="allergen-window">
 				<picture>
-					<source media="(max-width: 47.999rem)" srcset={proofAssets.allergens.mobile} width={proofAssets.allergens.mobileWidth} height={proofAssets.allergens.mobileHeight} />
+					<source media="(max-width: 63.99rem)" srcset={proofAssets.allergens.mobile} width={proofAssets.allergens.mobileWidth} height={proofAssets.allergens.mobileHeight} />
 					<img
 						src={proofAssets.allergens.desktop}
-						alt="Allergens and dietary for Wild Mushroom Polenta: allergens reviewed on all 4 ingredients, Parmesan and unsalted butter marked Contains: milk, polenta and cremini mushroom reviewed; vegetarian, vegan, halal and kosher not reviewed yet on any ingredient, so each needs a check; gluten-free yes on all four."
+						alt="Allergens and dietary: Parmesan and unsalted butter each marked Contains: milk and gluten-free yes, with vegetarian, vegan, halal and kosher not reviewed yet, so each needs a check."
 						width={proofAssets.allergens.desktopWidth}
 						height={proofAssets.allergens.desktopHeight}
 						loading="lazy"
@@ -260,7 +262,7 @@ const faqItems = [
 			</div>
 			<figcaption>
 				Milk is on the Parmesan and the butter, so it is on the dish. Vegetarian stays a question until someone answers it.
-				<a href={nutrition.proof.panel.src} target="_blank" rel="noopener" data-full-proof-link>Open allergen evidence in full capture</a>
+				<a href={proofAssets.allergens.desktop} target="_blank" rel="noopener" data-full-proof-link>Open allergen evidence in full capture</a>
 			</figcaption>
 		</figure>
 		<ol class="container-page evidence-chain" aria-label="Allergen evidence path">
@@ -274,7 +276,7 @@ const faqItems = [
 		</ol>
 		<div class="container-page evidence-note" data-reveal>
 			<strong>Not reviewed stays on screen.</strong>
-			<p>A fact from the curated catalog can help. A matching name never makes up food-safety data. If a chef overrides a tag, they write down why, and no screen makes an allergen-free claim.</p>
+			<p>A matching name never makes up food-safety data. A chef who overrides a tag writes down why, and no screen makes an allergen-free claim.</p>
 		</div>
 	</section>
 
@@ -283,9 +285,7 @@ const faqItems = [
 			<div class="print-copy" data-reveal>
 				<h2 id="print-heading">The label prints its own limits.</h2>
 				<p>
-					Preview label shows the panel as it stands right now. Print label switches on once every
-					source is confirmed and no line is blank, and your browser prints the sheet onto label
-					stock. Sending it straight to a label printer is marked for later.
+					Preview label shows the panel as it stands. Print label switches on once every source is confirmed and no line is blank, and your browser prints the sheet onto label stock. There is no direct connection to a label printer.
 				</p>
 				<ul role="list">
 					{printedContents.map((item) => <li>{item}</li>)}
@@ -293,8 +293,9 @@ const faqItems = [
 				<p class="snap">A blank row beats a made-up zero.</p>
 			</div>
 			<figure class="label-proof" data-reveal>
-				<div class="label-window">
+				<div class="label-window shot-pan" tabindex="0" role="region" aria-label="Preview label screenshot">
 					<img
+						style={`--shot-w: ${proofAssets.label.width / 2}px`}
 						src={proofAssets.label.src}
 						alt="Preview label for Wild Mushroom Polenta, marked Draft estimate. Not ready to print: Harbor and Hearth Catering, the dish name, the Nutrition Facts panel with a dash on seven lines, the ingredients Polenta, Mushroom, cremini, Parmesan, block, Butter, unsalted, and Print label switched off."
 						width={proofAssets.label.width}
@@ -315,7 +316,7 @@ const faqItems = [
 	<section class="capabilities" aria-labelledby="capabilities-heading">
 		<div class="container-page capabilities-grid">
 			<div class="capabilities-intro" data-reveal>
-				<h2 id="capabilities-heading">{capabilityCount} things it does today, and none of the safety claims it cannot back up.</h2>
+				<h2 id="capabilities-heading">{capabilityCount} things it does today, and what it will not claim.</h2>
 				<p>Open either list for every detail.</p>
 				<div class="boundary-list">
 					<h3>Four boundaries stay in view</h3>
@@ -389,11 +390,11 @@ const faqItems = [
 	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
 	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; }
 	.hero-terms { margin-top: 0.8rem; color: var(--color-ink-soft); font-size: var(--text-eyebrow); line-height: 1.5; }
-	.hero-proof { min-width: 0; }
-	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+	.hero-proof { min-width: 0; max-width: 374px; justify-self: center; }
+	.capture-label { padding: 0.75rem 1rem; border-bottom: 1px solid var(--rule); background: var(--color-paper); color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 	/* App frames match the homepage: 8px corners, --shadow-lift (design review 2026-10-07). */
-	.hero-shot { overflow: hidden; border: 1px solid var(--rule); border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
-	.hero-shot picture, .hero-shot img, .panel-window img, .allergen-window picture, .allergen-window img, .label-window img { display: block; width: 100%; height: auto; }
+	.hero-shot { max-width: 374px; margin-inline: auto; overflow: hidden; border: 1px solid var(--rule); border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
+	.hero-shot img, .panel-window img, .allergen-window picture, .allergen-window img, .label-window img { display: block; width: 100%; height: auto; }
 	.hero-proof figcaption, .panel-proof figcaption, .allergen-proof figcaption, .label-proof figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.55rem 1.25rem; margin-top: 1rem; color: var(--color-ink-soft); font-size: 0.82rem; line-height: 1.55; }
 	.hero-proof figcaption a, .panel-proof figcaption a, .allergen-proof figcaption a, .label-proof figcaption a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 700; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
 
@@ -406,7 +407,7 @@ const faqItems = [
 	.path-source { grid-row: 1 / 3; align-content: center; background: color-mix(in srgb, var(--color-green) 24%, transparent); }
 	.path-branches { grid-row: 1 / 3; display: grid; align-items: center; }
 	.path-branches i { display: block; height: 1px; background: color-mix(in srgb, white 35%, transparent); }
-	.path-source span, .path-output span { display: block; color: var(--color-amber-light); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+	.path-source span, .path-output span { display: block; color: var(--color-amber-light); font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 	.path-source strong, .path-output strong { display: block; margin-top: 0.45rem; line-height: 1.35; }
 	.path-output.warning { border-color: color-mix(in srgb, var(--color-amber-light) 55%, transparent); }
 	.split-end { padding-bottom: var(--spacing-section-tight); color: var(--color-offwhite); font-family: var(--font-display); font-size: clamp(1.45rem, 2.5vw, 2.2rem); line-height: 1.3; }
@@ -423,7 +424,7 @@ const faqItems = [
 	.product-copy > p, .allergen-heading > p, .print-copy > p, .capabilities-intro > p, .faq-intro > p, .closing p { max-width: 48ch; margin-top: 1.5rem; color: var(--color-ink-soft); font-size: 1.08rem; line-height: 1.75; }
 	.source-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; border-top: 1px solid var(--rule); }
 	.source-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); }
-	.source-facts dt { color: var(--color-ink-soft); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+	.source-facts dt { color: var(--color-ink-soft); font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 	.source-facts dd { margin-top: 0.35rem; font-weight: 680; line-height: 1.4; }
 	.panel-proof { min-width: 0; }
 	.panel-window { overflow: hidden; border-top: 0.3rem solid var(--color-green); background: var(--color-paper); border-radius: .5rem; box-shadow: var(--shadow-lift); }
@@ -431,12 +432,14 @@ const faqItems = [
 	.allergens { background: var(--color-softgreen); }
 	.allergen-heading { display: grid; gap: 2.5rem; padding-top: var(--spacing-section); }
 	.allergen-proof { margin-top: clamp(4rem, 8vw, 7rem); }
-	.allergen-window { max-width: 48rem; margin-inline: auto; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); border-radius: .5rem; box-shadow: var(--shadow-lift); }
-	.allergen-proof figcaption { max-width: 48rem; margin-inline: auto; }
+	/* Up to the capture's own CSS size (1160px): at 48rem its table text
+	   was 8 to 10px (readability review 2026-10-09). */
+	.allergen-window { max-width: 72.5rem; margin-inline: auto; overflow: hidden; border-top: 0.3rem solid var(--color-amber-deep); background: var(--color-paper); border-radius: .5rem; box-shadow: var(--shadow-lift); }
+	.allergen-proof figcaption { max-width: 72.5rem; margin-inline: auto; }
 	.evidence-chain { display: grid; gap: 0; margin-top: clamp(4rem, 8vw, 7rem); border-block: 1px solid var(--rule); }
 	.evidence-chain li { position: relative; padding: clamp(1.75rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
 	.evidence-chain li:last-child { border-bottom: 0; }
-	.evidence-chain li > span { color: var(--color-amber-deep); font-size: 0.7rem; font-weight: 750; letter-spacing: 0.07em; }
+	.evidence-chain li > span { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 750; letter-spacing: 0.07em; }
 	.evidence-chain h3 { margin-top: 0.8rem; font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: var(--text-h3--line-height); }
 	.evidence-chain p { margin-top: 0.6rem; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
 	.evidence-note { display: grid; gap: 0.8rem; padding-block: var(--spacing-section-tight); }
@@ -450,7 +453,10 @@ const faqItems = [
 	.print-copy li { padding-block: 0.75rem; border-bottom: 1px solid var(--rule); line-height: 1.45; }
 	.snap { margin-top: 2.5rem; color: var(--color-green-deep); font-family: var(--font-display); font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 600; line-height: 1.15; }
 	.label-proof { width: min(100%, 36rem); justify-self: center; }
-	.label-window { overflow: hidden; border-top: 0.3rem solid var(--color-ink); background: white; border-radius: .5rem; box-shadow: var(--shadow-lift); }
+	/* overflow-x auto, not hidden: the label is a .shot-pan, and this scoped
+	   rule outranks the global one, so hidden clipped the label's right third
+	   on a phone with no way to scroll to it (code review 2026-10-09). */
+	.label-window { overflow-x: auto; overflow-y: hidden; border-top: 0.3rem solid var(--color-ink); background: white; border-radius: .5rem; box-shadow: var(--shadow-lift); }
 
 	.capabilities { background: var(--color-cream); }
 	.capabilities-grid { display: grid; gap: clamp(3rem, 7vw, 7rem); align-items: start; padding-block: var(--spacing-section); }
@@ -462,7 +468,7 @@ const faqItems = [
 	.capability-list summary, .faq-list summary { display: flex; min-height: 72px; cursor: pointer; list-style: none; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1rem; }
 	.capability-list summary::-webkit-details-marker, .faq-list summary::-webkit-details-marker { display: none; }
 	.capability-list summary small, .capability-list summary strong { display: block; }
-	.capability-list summary small { color: var(--color-amber-deep); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; }
+	.capability-list summary small { color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; }
 	.capability-list summary strong { margin-top: 0.35rem; font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; }
 	.capability-list summary b { color: var(--color-green-deep); font-size: 1.5rem; font-weight: 400; transition: transform 160ms ease-out; }
 	.capability-list details[open] summary b { transform: rotate(45deg); }
@@ -521,5 +527,11 @@ const faqItems = [
 
 	@media (prefers-reduced-motion: reduce) {
 		.capability-list summary b, .faq-list summary svg { transition: none; }
+	}
+	/* Below 64rem the frame gets the app's phone capture, held at its own CSS
+	   size: the desktop capture squeezed into a tablet column drew 7 to 9px
+	   text (readability review 2026-10-09). */
+	@media (max-width: 63.99rem) {
+		.allergen-window, .allergen-proof figcaption { max-width: 24.5rem; }
 	}
 </style>

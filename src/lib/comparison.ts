@@ -56,7 +56,7 @@ import { SAGE_STATUS, sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } fro
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
 import { eventPayments } from './event-payments';
-import { acceptanceBoundary, depositMethods } from './events';
+import { acceptanceBoundary } from './events';
 import { dietary, allergenCount, allergenCountCapital } from './dietary';
 import { spell } from './words';
 
@@ -242,7 +242,7 @@ export const comparison: RowGroup[] = [
 				label: 'Invoice scanning',
 				sheet: 'key',
 				costcook: 'yes',
-				note: 'Upload a photo, PDF, spreadsheet or Word document, or paste text. Review the extracted records before saving.',
+				note: 'Upload a photo, PDF, spreadsheet or Word document, or paste text. You look over what it read before anything saves.',
 				parsley: '$69/month add-on; also listed in Enterprise',
 				meez: 'Premium, $199'
 			},
@@ -298,7 +298,7 @@ export const comparison: RowGroup[] = [
 				label: 'Event deposits tracked',
 				sheet: 'key',
 				costcook: 'yes',
-				note: `What you asked for against what came in, paid by card from an email link or recorded by hand, as ${depositMethods}.`,
+				note: 'What you asked for against what came in.',
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},
@@ -369,7 +369,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'key',
 				sheetNote: 'What arrived comes back in by hand, against the order you sent.',
 				costcook: 'yes',
-				note: 'Record what arrived, review quantities and prices, then save the delivery to record the purchase.',
+				note: 'Mark what arrived, look over the quantities and prices, then save the delivery and the purchase is recorded.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},
@@ -491,7 +491,7 @@ export const comparison: RowGroup[] = [
 				label: 'Role-aware sensitive actions',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Owner, Manager and Staff have different permissions for billing, team setup, recipe publishing and Sage approvals. Staff can open recipe costs and Analytics; order money, client names on Today and the Clients book are kept to owners and managers.',
+				note: 'Owner, Manager and Staff have different permissions for billing, the team, recipe publishing and Sage approvals, and Staff never see costs, Analytics or the Clients book.',
 				parsley: 'Business, $379',
 				meez: 'Starter, $24'
 			},
@@ -500,7 +500,7 @@ export const comparison: RowGroup[] = [
 				sheet: 'build',
 				sheetNote: 'CostCook does not support this. In a spreadsheet, you would build and check it yourself.',
 				costcook: 'no',
-				note: 'No custom roles or per-screen permission grid. A teammate on Staff can open recipe costs and Analytics.',
+				note: 'No custom roles or per-screen permission grid. The role draws the line: Staff never see costs.',
 				parsley: 'Business, $379',
 				meez: NOT_LISTED
 			},
@@ -550,7 +550,7 @@ export const comparison: RowGroup[] = [
 				icon: 'sage',
 				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
 				costcook: SAGE_STATUS,
-				note: `Sage is available now. It reads your records with ${spell(sageReadToolCount, { compound: true })} read-only tools, shows its sources, helps during setup and can prepare ${spell(sageDraftKinds.length)} kinds of draft for a manager or owner to approve: ${sageDraftKindsAnd}.`,
+				note: `Sage reads your records with ${spell(sageReadToolCount, { compound: true })} read-only tools, shows its sources, helps during setup and can prepare ${spell(sageDraftKinds.length)} kinds of draft for an owner or manager to approve: ${sageDraftKindsAnd}.`,
 				parsley: NOT_LISTED,
 				meez: 'Enterprise, custom'
 			},
@@ -558,7 +558,7 @@ export const comparison: RowGroup[] = [
 				label: 'Read previously loaded orders offline',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Previously loaded order pages stay readable offline and show when they were saved. Reconnect to make changes. With a connection, core pages remain readable without JavaScript.',
+				note: 'Previously loaded order pages stay readable offline and show when they were saved. Reconnect to make changes.',
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			}

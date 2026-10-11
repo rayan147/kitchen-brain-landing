@@ -3,7 +3,9 @@
  * One screenshot frame (rule 6). When the shot has a phone capture, a phone
  * gets that instead: the app's own phone layout of the same screen, captured
  * whole, never a column crop (a crop narrow enough to read drops the figures
- * the alt names). The alt is written to be true of both captures. The design
+ * the alt names). The one exception is the confirm dialog (2026-10-09): its
+ * phone source trims the dialog's margins only, and keeps every word the alt
+ * names. The alt is written to be true of both sources. The design
  * review (2026-10-07) measured the wide tables at 0.3x to 0.5x on a 390px
  * phone, about 5 to 8px text.
  *
@@ -21,8 +23,8 @@ const { shot, class: className } = Astro.props;
 {shot.small ? (
 	<picture>
 		<source media="(max-width: 47.99rem)" srcset={shot.small.src} width={shot.small.width} height={shot.small.height} />
-		<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" class:list={['home-shot', className]} />
+		<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} style={`--shot-max: ${shot.width}px`} loading="lazy" decoding="async" class:list={['home-shot', className]} />
 	</picture>
 ) : (
-	<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" class:list={['home-shot', className]} />
+	<img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} style={`--shot-max: ${shot.width}px`} loading="lazy" decoding="async" class:list={['home-shot', className]} />
 )}

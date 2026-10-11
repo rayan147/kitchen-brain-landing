@@ -167,3 +167,29 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 
 ## Revision 2026-10-07 (chef review of the sub-routes)
 - Guest-change answer: reopen works until you create a purchase order or start receiving, and it refreshes quantities and prices (the app's rule).
+
+## Revision 2026-10-08: chef voice pass
+- Owner: the site should read like a working chef-owner wrote it, not like AI. Copy only; every answer keeps its yes, no or limit exactly, and every pinned phrase stays ("charges $0 during the trial", "Previously loaded order pages remain readable with no signal", "actions that write data need a connection", "Cancel before day 16", the event-payments lines).
+- Hero: "Check the trial, cancellation, setup and product limits" became "Straight answers on the money, the fit, and the catch." The topic map says "Jump to a topic"; the four chapter lines say it the way the reader would ("how to walk away", "who picks up when you write").
+- Answers that read like a manual got a cook's word order: shopping ("A stock or a mirepoix shows up as a batch to make"), receiving ("what actually came off the truck"), multi-event, prices in, catalog, recipes in, phone ("open the order before you walk into the cooler"), Sage during setup, Square and QuickBooks ("I am not promising a date"), the card question ("Because the trial is the subscription").
+- Snap answer unchanged: "The guest count."
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Labels answer names the prep list; Sage answer says "an owner or manager".
+
+## Revision 2026-10-11: English edit
+- #frozen no longer skips the gap before Confirm order: "Your food cost does, until you press Confirm order. Confirming an order freezes..." (the confirmed order, not event; claims add RC-03). #quote leads with "From your costed recipes." and uses "Until you press Confirm order".
+- #receiving answers the short truck first: "You mark the line short, and it stays in view until you follow it up." #orders uses the app's labels: Email, Print or I'll buy it, or I'll shop it myself (kitchen-brain develop supplier-orders.ts).
+- #restaurant carries the job "from the inquiry and the proposal" and drops "you still belong here" (claims add RC-61, RC-63).
+- Long sentences split in #labels, #setup, #permissions, #sage, #guest-restrictions (dietary.faq); #ordering lede active ("Your booking rules decide what approval does.").
+- #labels points to #label-printing by link instead of "see the next answer"; #card no longer repeats #trial; "day 16" everywhere; "the owner" (not workspace or verified owner); #after-setup drops the third "Staff never see costs".
+
+## Revision 2026-10-11: owner-approved 2026-10-11 changes
+- #frozen full fix: "No, not the price you sent. A sent proposal is fixed; changing it means sending the client a new one. The food cost behind it keeps following your ingredient prices until you press Confirm order..." New ledger row RC-75 (sent proposal is immutable, develop 4f46543cf proposals/public.ts:103-106, service.ts:337) cited with RC-03, RC-07, RC-08, RC-63.
+- New 39th answer #booked, "When is the event actually booked?": When you press Book the event; the client's yes books nothing; Book the event waits on the signed agreement and the deposit; Confirm order comes later. Pins moved from 38 to 39 in check-faq-page.mjs (and #booked added to the stable anchors) and verify-faq.mjs; FAQPage structured data counts from the data.
+- #event-payments, #ordering and #margin moved to the head of "How the work moves" (anchors unchanged; topic map counts read from the data: Fit 12, How 13).
+- #who leads with caterers and restaurants that cater, the inquiry and the proposal, and points meal prep to /who-its-for (claims add RC-61, RC-63).
+- Close: "Give your first dish about fifteen minutes. Then bring a menu and a guest count you already quoted..." (matches the homepage first-dish line).
+- #phone drops the JavaScript-off sentence; RC-54's no-JavaScript half still shows on /features (team-and-connections "Works without JavaScript.").
+- Ledger RC-61 now says Book the event is the booking and Confirm order comes later.
+- Tracker note (P3-13): the 2026-09-27 event card payment entry above is stale: #event-payments reads eventPayments.faq ("Yes. ...") and now sits at the head of the how chapter, not in the money chapter.

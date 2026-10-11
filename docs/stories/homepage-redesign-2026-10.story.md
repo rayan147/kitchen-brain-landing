@@ -299,3 +299,70 @@ alt text, film transcript or link changed.
   you choose, reminder with a pay link three days before if still owed).
   `agreementLine` renders only here; `eventPayments.homepage` is also the
   events guide's Payments note, whose contract still passes.
+
+### Revision 2026-10-08 (9): the invoice inbox from local develop
+
+The last test.app frame is gone. Scene 5's inbox now shows what develop does
+with mail: two Harbor Foods invoices from an address the kitchen never
+approved sit held and unread ("Held: sender not on your list"), and HF-3106
+from the approved billing address waits in review until the cook confirms it.
+The section's line ("none of it counts until you confirm it") already says
+this; the held card shows the other half without a word added. Steps 6 and 11
+re-checked: the alt names only what both captures show, no new claim in copy.
+
+
+**Revision 2026-10-09 (readable captures).** The food cost, import, allergens,
+ordering and invoice frames were re-shot at the width the page shows them, so
+the cook reads each at 1:1 instead of squinting at 6 to 8px. At that width the
+menu's table loses its column heads, so the food-cost line now names what the
+eye sees: "what it costs per guest, with a bar for its share of the total".
+Steps 6 and 11 re-checked: every alt names only what its capture shows; no new
+claim in copy.
+
+### Revision 2026-10-10: search-result title
+
+- **Step 1 — Idea [x]:** Dana, an independent caterer, wants software that
+  carries an inquiry through the kitchen closeout, but a generic brand name
+  alone does not tell her what the search result offers.
+- **Step 2 — Character [x]:** Her want is to find relevant catering software;
+  her need is to judge the whole event workflow quickly. The wound and habit
+  remain the late food-cost discovery and the separate tools recorded above.
+- **Step 3 — Plot [x]:** The search result is a door into the existing story:
+  "catering software" names the tool, and "inquiry to closeout" states the
+  journey that the page proves. The page's 12 beats and seven scenes stay as
+  mapped above.
+- **Step 11 — Revision [x]:** The metadata title is now “Catering software
+  from inquiry to closeout | CostCook.” It adds one clear product category,
+  makes no new capability or outcome claim, and leaves the H1 and CTA intact.
+### Revision 2026-10-11 (10): English edit for speed
+
+An editor's audit (english-elite-editor) read the page as the phone reader
+does. The owner took the misread, slow-reader and polish findings, and moved
+the boundary line. No claim added; every figure and qualifier kept.
+
+- **Misreads.** The invoice card is "Supplier invoices by email" (a caterer's
+  invoices are the ones they send), and the band's eyebrow is "Client orders,
+  supplier invoices", not "Front of house".
+- **Said once.** The front-of-house lede says the two facts in two short
+  sentences; the cards carry the rest, and the inquiry route moved into the
+  ordering card ("which requests come to you as an inquiry to price",
+  ordering.ts). The walk's lede drops "Here is one wedding", which repeated
+  the eyebrow and the H2. The plan card's under-button line says $0 and cancel
+  once; "One kitchen per plan" went (the card says "per kitchen").
+- **The boundary moved (owner, 2026-10-11).** "Their yes books nothing. The
+  signed agreement and the deposit do." now heads step 03, renamed "Agreement
+  and deposit", where both happen. Step 04 is headed "Wait for the final count,
+  then Confirm.", so Confirm order no longer reads as the booking. The "What booked
+  means" guide link moved with it to step 03.
+- **One verb.** The import row says "wait for you to confirm them" and "Needs
+  review" (the app's label); "OK" is gone from the page.
+- **Polish.** "The recipes behind your proposal", "$3,500.00 due now", a full
+  stop in the prep step, and "Rather click through it yourself?" for the
+  click-through tour.
+
+Kept by the editor's ruling: the H1, the hero lede, the inquiry step, "It never
+slips in as zero.", the Sage band, the founder line, and the snap line, "Buy
+for what survives the knife." Steps 6, 10 and 11 re-checked.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Import band: "It remembers the names you confirm." (was "It learns your names for things."). Sage band: "until an owner or manager approves".

@@ -139,8 +139,9 @@ try {
 	}))()`);
 	assert(mobile.overflow === 0, `mobile: horizontal overflow is ${mobile.overflow}px`);
 	assert(mobile.proofTop < 844, `mobile: proof starts at ${mobile.proofTop}px`);
-	assert(mobile.proofSource === '/proof/labels/sticker.png', `mobile: hero source is ${mobile.proofSource}`);
-	assert(!responseUrls.some((url) => url.includes('/proof/labels/dialog-wide.png')), 'mobile: hero downloaded the desktop proof asset');
+	// PNG or its WebP (integrations/webp-sources.mjs, 2026-10-09).
+	assert(/^\/proof\/labels\/sticker\.(png|webp)$/.test(mobile.proofSource), `mobile: hero source is ${mobile.proofSource}`);
+	assert(!responseUrls.some((url) => /\/proof\/labels\/dialog-wide\.(png|webp)/.test(url)), 'mobile: hero downloaded the desktop proof asset');
 	await capture('mobile');
 
 	await viewport(320, 844, true);
@@ -148,6 +149,11 @@ try {
 	const zoom = await evaluate(`(() => { document.documentElement.style.fontSize = '200%'; return new Promise((resolve) => requestAnimationFrame(() => {
 		const width = document.documentElement.clientWidth;
 		const escaped = [...document.querySelectorAll('#features-labels *')].filter((element) => {
+			// A capture keeps a readable floor and scrolls inside its own frame
+			// (.shot-pan, global.css); the frame, not the capture, must fit. Only
+			// the image is exempt, and only in a frame that really scrolls.
+			const pan = element.closest('.shot-pan');
+			if (pan && pan !== element && element.matches('img, picture, source') && /^(auto|scroll)$/.test(getComputedStyle(pan).overflowX)) return false;
 			const rect = element.getBoundingClientRect();
 			return rect.left < -1 || rect.right > width + 1;
 		}).length;

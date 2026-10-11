@@ -47,7 +47,7 @@ const outcomeTone: Record<string, string> = {
 const faqItems = [
 	{
 		q: 'Does a clear result mean the dish is fine to serve?',
-		a: 'It means every ingredient in the dish was reviewed and none of them says otherwise. It is a reason to serve, not a promise about a guest. No screen in CostCook makes an allergen-free claim.'
+		a: 'It means every ingredient in the dish was reviewed and none of them says otherwise. It is never a promise to a guest: your kitchen must still check the food and its preparation. No screen in CostCook makes an allergen-free claim.'
 	},
 	{
 		q: 'Why can halal and kosher only ever come back as a check?',
@@ -193,10 +193,7 @@ const faqItems = [
 			<div data-reveal>
 				<h2 id="coverage-heading">A quiet screen should mean somebody looked.</h2>
 				<p>
-					Look at what nobody has reviewed yet. An ingredient nobody has
-					reviewed is never counted as clear, and the order shows how many are still
-					outstanding, right where you can see it. Silence here is not an all-clear.
-					The count tells you how much of the answer is still missing.
+					An ingredient nobody has reviewed is never counted as clear. The order shows how many are still outstanding, so you can see how much of the answer is missing.
 				</p>
 				<p class="coverage-snap">Unknown is never clear.</p>
 			</div>
@@ -230,11 +227,7 @@ const faqItems = [
 		<div class="container-page section-head" data-reveal>
 			<h2 id="book-heading">Find recipes by diet before building the menu.</h2>
 			<p>
-				A client asks which of your dishes are vegan while you are mid-prep. Each recipe
-				carries its own dietary characteristics, with the reason beside each one. The
-				catalog filters the book by diet and tells you how many recipes it held back
-				because they could only be a check. And the allergen matrix prints every recipe
-				against every allergen, for the pass or the front of house.
+				A client asks which of your dishes are vegan while you are mid-prep. Each recipe carries its dietary characteristics with the reason beside each, and the catalog filters the book by diet, saying how many recipes it held back because they could only be a check. The allergen matrix prints every recipe against every allergen, for the pass or the front of house.
 			</p>
 			<p class="matrix-legend">
 				<span>C</span> contains <span>M</span> may contain <span>X</span> cross-contact
@@ -265,9 +258,7 @@ const faqItems = [
 			<div>
 				<h2 id="closing-heading">Put Saturday&rsquo;s request on the order.</h2>
 				<p>
-					Bring one event and the dietary requests you received. The cook
-					reads the answer off the pan, and the text thread stays on your phone, where it
-					belongs.
+					Bring one event and the dietary requests you received. The cook reads the answer off the pack list, and the text thread stays on your phone, where it belongs.
 				</p>
 			</div>
 			<div class="closing-actions">
@@ -277,7 +268,7 @@ const faqItems = [
 		</div>
 		<nav class="container-page onward feature-onward" aria-label="Related feature guides">
 			<a href="/features/nutrition-facts-and-allergens">Nutrition facts &amp; allergens</a>
-			<a href="/features/recipes-and-costing">Recipes &amp; costing</a>
+			<a href="/features/recipes-and-costing">Recipes &amp; food costing</a>
 			<a href="/features">Every CostCook feature</a>
 		</nav>
 	</section>

@@ -2,7 +2,7 @@ import type { Film, FilmScene } from "./film-model";
 import { DropoffManifestSchema } from "./manifest-dropoff";
 
 // story: docs/stories/promo-dropoff.story.md
-// claim: RC-75 in docs/release-claim-ledger.md
+// claim: RC-76 in docs/release-claim-ledger.md
 // The second film: a weekday office lunch ordered on the kitchen's ordering
 // site (order 59 on test, 2026-10-07/08). No proposal, no contract: the client
 // orders, the order approves itself on a clear day with a priced menu, the

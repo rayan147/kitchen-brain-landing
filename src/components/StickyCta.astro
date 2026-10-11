@@ -8,11 +8,23 @@
  * hero's own primary ([data-hero-cta]) has scrolled off the top, and hides
  * again once #start is in view, so exactly one primary is in reach from the
  * hero to the close. It never shows while the hero's button is on screen,
- * never over the close, and never above md.
+ * never over the close, and never at lg and up.
  *
  * ONE ACTION, SAME WORDS. It renders cta.label from site.ts like every other
  * primary, so the page still opens, middles and closes on one action and the
  * claim check's F1 rule holds by construction.
+ *
+ * WIDENED 2026-10-09 (mobile review):
+ * - Shown up to lg, not md: from 768 to 1023 the homepage is one column and
+ *   16,000px long with no persistent trial button.
+ * - Used on the long single-column pages too (/faq, /who-its-for, the tour),
+ *   where the first in-page primary sat about 15,000px down on /faq. A page
+ *   without a hero primary shows the bar after one screen of scrolling, and
+ *   [data-sticky-end] (the page's close) hides it, as #start does on /.
+ * - The line wraps beside the button instead of pushing it to a second row,
+ *   so the bar is one 64px row at 320 (it was 92px, 16% of a 568px screen).
+ * - While the bar shows, scroll-padding-bottom keeps a focused or anchored
+ *   element clear of it (WCAG 2.4.11).
  *
  * JS OFF: it stays hidden. It is a convenience duplicate of a link that exists
  * three times in the document, so hiding it costs a no-JS reader nothing
@@ -29,13 +41,13 @@ import { cta, launchPlan } from '../lib/site';
 <div
 	hidden
 	data-sticky-cta
-	class="fixed inset-x-0 bottom-0 z-30 border-t border-ticket-rule bg-cream/95 px-[clamp(1rem,4vw,1.5rem)] py-2.5 shadow-ticket backdrop-blur-sm md:hidden"
+	class="fixed inset-x-0 bottom-0 z-30 border-t border-ticket-rule bg-cream/95 px-[clamp(1rem,4vw,1.5rem)] py-2.5 shadow-ticket backdrop-blur-sm lg:hidden"
 	style="padding-bottom: max(0.625rem, env(safe-area-inset-bottom))"
 >
 	<!-- Wraps at 200% text: the button used to keep its one line and run off the
 	     right edge (design review 2026-10-07). -->
 	<div class="mx-auto flex max-w-lg flex-wrap items-center justify-between gap-x-3 gap-y-2">
-		<p class="text-sm leading-snug text-ink-soft">
+		<p class="min-w-0 flex-[1_1_7.5rem] text-sm leading-snug text-ink-soft">
 			<strong class="font-semibold text-ink">{launchPlan.trialDays} days free.</strong> Charged $0 today.
 		</p>
 		<a
@@ -43,7 +55,7 @@ import { cta, launchPlan } from '../lib/site';
 			target={cta.target}
 			rel={cta.rel}
 			aria-label={cta.ariaLabel}
-			class="btn-primary min-h-11 max-w-full justify-center px-4 py-2.5 text-center text-sm"
+			class="btn-primary min-h-11 max-w-full shrink-0 justify-center px-4 py-2.5 text-center text-sm"
 		>
 			{cta.label}
 		</a>
@@ -53,8 +65,8 @@ import { cta, launchPlan } from '../lib/site';
 <script>
 	const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
 	const heroCta = document.querySelector<HTMLElement>('[data-hero-cta]');
-	const start = document.getElementById('start');
-	if (bar && heroCta && start) {
+	const end = document.querySelector<HTMLElement>('[data-sticky-end]') ?? document.getElementById('start');
+	if (bar && end) {
 		// A scroll listener, not an IntersectionObserver. The observer only fires
 		// on threshold crossings, so an anchor jump from above the demo to below
 		// it (the hand-off links, the tour link, a deep link) skips the crossing
@@ -62,9 +74,13 @@ import { cta, launchPlan } from '../lib/site';
 		let queued = false;
 		const update = () => {
 			queued = false;
-			const pastHeroCta = heroCta.getBoundingClientRect().bottom < 0;
-			const reachedClose = start.getBoundingClientRect().top < window.innerHeight;
-			bar.hidden = !(pastHeroCta && !reachedClose);
+			const pastHeroCta = heroCta ? heroCta.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight;
+			const reachedClose = end.getBoundingClientRect().top < window.innerHeight;
+			const hidden = !(pastHeroCta && !reachedClose);
+			if (bar.hidden !== hidden) {
+				bar.hidden = hidden;
+				document.documentElement.style.scrollPaddingBottom = hidden || !bar.offsetHeight ? '' : `${bar.offsetHeight + 16}px`;
+			}
 		};
 		const schedule = () => {
 			if (!queued) {

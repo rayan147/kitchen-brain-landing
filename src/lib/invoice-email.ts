@@ -85,7 +85,7 @@ export const invoiceEmailAvailability = {
 	/** Follows the status word on the feature page, so it does not repeat it. */
 	pageSentence: invoiceEmailIsComing
 		? 'It is built, and it is not receiving email for trial kitchens yet, so keep uploading invoices until this line changes.'
-		: 'In the CostCook subscription you would start today.',
+		: 'Included in the CostCook subscription. Find it under Settings > Invoice email.',
 	/** Heads the setup cards while Coming: Settings already shows an address. */
 	setupWarning: invoiceEmailIsComing
 		? 'Not yet: Settings shows an address, but it is not receiving email, so do not give it to suppliers. Keep uploading invoices as a photo or PDF until this page says Available now.'

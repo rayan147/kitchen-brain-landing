@@ -156,3 +156,15 @@ Owner: make the site read like a chef wrote it. Copy only.
   nothing reaches the catalog before review, a pack change stops the row,
   an older invoice does not overwrite a newer price, confirmed supplier names
   "can be remembered" (not "learns").
+
+## Revision 2026-10-11: English edit
+- Hero mock-up badges use the app's label "Needs review" (was "Check pack", "Check the original").
+- Invoice section names the app's buttons: "In Purchases, tap “Import invoice” and add the photo or PDF. Check the lines and the total, then tap “Import invoice and update costs”." (labels on kitchen-brain main ed6ff5f01). H2 "Check every invoice line, and the total."
+- One claim per scene: totals vs lines in "Add it up", duplicates in "Saved once"; the purchase-date rule stays in FAQ 6. The common-rule body, the price-list body and the exceptions body no longer repeat their headings or the list below.
+- "it can remember it" is "CostCook can remember it next time"; "how unsure it is" is "how unsure CostCook is"; chapter-nav lines in plain words.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Capability leads "Total against the lines." and "Supplier names, remembered." (selection Set updated with them); hero mock-up's matched row shows the app state "Matched" (was "Ready to review").
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Item "The original stays visible.": "The photo or PDF sits beside the rows while you review them."

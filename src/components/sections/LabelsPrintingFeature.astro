@@ -40,7 +40,7 @@ const faqItems = [
 	{
 		question: 'What does it print on?',
 		answer:
-			'A 30-up sticker sheet on an office printer, a 58 or 62 mm continuous thermal roll, a 2 by 1 inch die-cut roll, or any stock you measure yourself. The kitchen chooses once in Settings. The sticker preview is sized in millimetres, so what you see is the printed size.'
+			'A 30-up sticker sheet on an office printer, a 58 or 62 mm continuous thermal roll, a 2 by 1 inch die-cut roll, or any stock you measure yourself. The kitchen chooses once in Settings. The sticker preview is sized in millimeters, so what you see is the printed size.'
 	},
 	{
 		question: 'Does it send labels straight to a label printer?',
@@ -106,9 +106,9 @@ const faqItems = [
 						LABEL PREVIEW
 					</p>
 					<div class="mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2">
-						{/* One responsive request: phones show the legible sticker instead of downloading the wide dialog too. */}
+						{/* One responsive request: phones and tablets show the legible sticker instead of downloading the wide dialog too. The dialog waits for 64rem, where it reads at 0.8x or more; from 40rem it drew its 14px text at 9px on a 768px tablet (issue #80). */}
 						<picture>
-							<source media="(min-width: 40rem)" srcset={labels.proof.dialog.src} width={labels.proof.dialog.width} height={labels.proof.dialog.height} />
+							<source media="(min-width: 64rem)" srcset={labels.proof.dialog.src} width={labels.proof.dialog.width} height={labels.proof.dialog.height} />
 							<img
 								src={labels.proof.sticker.src}
 								alt={labels.proof.heroAlt}
@@ -116,12 +116,12 @@ const faqItems = [
 								height={labels.proof.sticker.height}
 								decoding="async"
 								fetchpriority="high"
-								class="mx-auto h-auto w-full max-w-[261px] sm:max-w-[1040px]"
+								class="mx-auto h-auto w-full max-w-[261px] lg:max-w-[1040px]"
 							/>
 						</picture>
 					</div>
 					<figcaption class="mt-3 max-w-[68ch] text-sm text-ink-soft">
-						{labels.proof.caption} On a phone, the finished sticker stands in so its type stays legible.
+						{labels.proof.caption} On a phone or tablet you see the finished sticker; open the full dialog below.
 						<a href={labels.proof.dialog.src} class="btn-quiet mt-2 w-fit" data-full-proof-link>Open full label-dialog capture</a>
 					</figcaption>
 				</figure>
@@ -173,9 +173,7 @@ const faqItems = [
 					/>
 				</div>
 				<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
-					Sized in millimeters in the dialog, so the preview is the printed size. No allergen
-					data on this recipe, so the sticker prints no allergen line, and the preview says a
-					blank label is not an all-clear.
+					Sized in millimeters in the dialog, so the preview is the printed size. Every ingredient in this recipe was reviewed and none reported an allergen, so no allergen line prints, and the preview still says a blank label is not an all-clear.
 					<a href={labels.proof.sticker.src} class="btn-quiet mt-2 w-fit" data-full-proof-link>Open full sticker preview</a>
 				</figcaption>
 			</figure>
@@ -184,10 +182,10 @@ const faqItems = [
 
 	<section id="the-record" class="border-t border-hairline bg-cream" aria-labelledby="record-heading">
 		<div class="container-page py-section">
-			<div class="grid gap-12 lg:grid-cols-[7fr_5fr] lg:items-start lg:gap-16">
+			<div class="grid gap-12 lg:grid-cols-[2fr_1fr] lg:items-start lg:gap-16">
 				<figure data-reveal>
-					<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">THE PRINT VIEW · 2 OF 2 · REPRINTABLE</p>
-					<div class="mt-3 border border-hairline bg-paper p-2 shadow-ticket sm:p-3">
+					<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">THE PRINT VIEW · REPRINTABLE</p>
+					<div class="shot-pan mt-3 border border-hairline bg-paper p-2 shadow-ticket sm:p-3" tabindex="0" role="region" aria-label="Print view screenshot">
 						<img
 							src={labels.proof.print.src}
 							alt={labels.proof.print.alt}
@@ -195,13 +193,12 @@ const faqItems = [
 							height={labels.proof.print.height}
 							loading="lazy"
 							decoding="async"
-							style={`width: ${labels.proof.print.width / 2}px; max-width: 100%`}
+							style={`width: ${labels.proof.print.width / 2}px; max-width: 100%; --shot-w: ${labels.proof.print.width / 2}px`}
 							class="mx-auto h-auto"
 						/>
 					</div>
 					<figcaption class="mt-3 max-w-[60ch] text-sm text-ink-soft">
-						The print view opens your browser’s print dialog. These are the exact labels that were
-						recorded; a reprint reproduces them unchanged even if the recipe changes later.
+						The print view opens your browser’s print dialog.
 						<a href={labels.proof.print.src} class="btn-quiet mt-2 w-fit" data-full-proof-link>Open full print-sheet capture</a>
 					</figcaption>
 				</figure>
@@ -228,7 +225,7 @@ const faqItems = [
 		<div class="grid gap-12 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
 			<div class="max-w-3xl" data-reveal>
 				<p class="eyebrow">What it prints on</p>
-				<h2 id="stock-heading" class="mt-4 text-h2 font-semibold">Chosen once in Settings, so nobody is asked at 5 a.m.</h2>
+				<h2 id="stock-heading" class="mt-4 text-h2 font-semibold">Label stock is set once in Settings, so nobody is asked at 5 a.m.</h2>
 				<p class="mt-5 max-w-[60ch] text-lede text-ink-soft">
 					Sheet, continuous roll or die-cut roll, the label says the same thing. Only the size
 					and shape change, measured in millimeters and not tied to any brand.
@@ -249,7 +246,7 @@ const faqItems = [
 			</div>
 			<figure data-reveal>
 				<p class="font-mono text-eyebrow font-semibold tracking-wide text-amber-deep">SETTINGS · LABELS AND PRINTING</p>
-				<div class="mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2">
+				<div class="shot-pan mt-3 border border-hairline bg-paper p-1 shadow-ticket sm:p-2" tabindex="0" role="region" aria-label="Label stock screenshot">
 					<img
 						src={labels.proof.stock.src}
 						alt={labels.proof.stock.alt}
@@ -257,7 +254,7 @@ const faqItems = [
 						height={labels.proof.stock.height}
 						loading="lazy"
 						decoding="async"
-						style={`width: ${labels.proof.stock.width / 2}px; max-width: 100%`}
+						style={`width: ${labels.proof.stock.width / 2}px; max-width: 100%; --shot-w: ${labels.proof.stock.width / 2}px`}
 						class="mx-auto h-auto"
 					/>
 				</div>
@@ -289,7 +286,7 @@ const faqItems = [
 							<span class="mr-3 hidden font-mono text-eyebrow text-amber-deep group-open:inline">−</span>
 							{item.question}
 						</summary>
-						<p class="max-w-[66ch] pb-4 text-ink-soft">{item.answer}</p>
+						<p class="max-w-[58ch] pb-4 text-ink-soft">{item.answer}</p>
 					</details>
 				))
 			}

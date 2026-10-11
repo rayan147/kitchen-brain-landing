@@ -45,7 +45,7 @@ const faqItems = [
 	{
 		question: 'How does CostCook calculate a catering quote?',
 		answer:
-			'A draft combines a menu, date, guest count, and price. CostCook computes the food cost per guest and food-cost percentage, then shows the price that would meet the configured target before you confirm.'
+			'A draft combines a menu, date, guest count, and price. CostCook computes the food cost per guest and food-cost percentage, then shows the price that would meet the target you set before you confirm.'
 	},
 	{
 		question: 'How does the client see the price?',
@@ -60,7 +60,7 @@ const faqItems = [
 	{
 		question: 'What happens when I confirm a quote?',
 		answer:
-			'Confirming saves the event plan, calculations and quoted price together. Later ingredient prices do not rewrite the quote you gave.'
+			'Confirming saves the event plan, calculations and quoted price together, and the same locked event feeds Shop, Prep and Pack.'
 	},
 	{
 		question: 'Will later ingredient prices change the quote I already gave?',
@@ -73,6 +73,12 @@ const faqItems = [
 			'You can reopen while preserving the frozen prices, and the screen says that clearly. Once purchasing has started, reopening is refused so completed work is not invalidated.'
 	}
 ] as const;
+// Ring boxes in percent of each capture (hero-pricing.png 2208x554,
+// hero-pricing-mobile.png 748x1268): the food cost and the Get to 30% price.
+const priceRings = {
+	wide: [{ x: 33.2, y: 25.5, w: 9, h: 16.5 }, { x: 63.4, y: 28.5, w: 35, h: 32 }],
+	small: [{ x: 5, y: 38.2, w: 24, h: 6.8 }, { x: 6, y: 71.6, w: 88.5, h: 12.2 }]
+};
 ---
 
 <!-- story: docs/stories/menus-and-quotes-redesign.story.md -->
@@ -92,7 +98,7 @@ const faqItems = [
 					<span>Menus and quotes</span>
 				</nav>
 				<h1 id="menus-quotes-heading" class="feature-display">Build your menu. Check the price per guest.</h1>
-				<p class="hero-lede">Pick the dishes and how much of each goes on a plate. Add the date, the head count and your price. Look at the food cost before you confirm, because confirming locks the quote and the kitchen plan together.</p>
+				<p class="hero-lede">Pick the dishes and how much of each goes on a plate. Add the date, the head count and your price. Check the food cost first. Confirming locks the quote and the kitchen plan together.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">
 						{cta.label}
@@ -124,7 +130,7 @@ const faqItems = [
 							<li><span>Lemon tart</span><strong>1 slice</strong></li>
 						</ul>
 						<dl class="ledger-summary">
-							<div><dt>Default price</dt><dd>$68.00 / guest</dd></div>
+							<div><dt>Default price</dt><dd>$95.00 / guest</dd></div>
 							<div><dt>Equipment</dt><dd>3 chafers</dd></div>
 						</dl>
 					</div>
@@ -145,7 +151,7 @@ const faqItems = [
 						</div>
 					</div>
 				</div>
-				<p class="evidence-note">The film’s sample event. The dishes shown are examples, not its cost breakdown. Food cost excludes labor, rentals, tax and profit.</p>
+				<p class="evidence-note">Figures from the 180-guest sample event captured further down this page. The dishes shown are examples, not its cost breakdown. Food cost excludes labor, rentals, tax and profit.</p>
 			</figure>
 		</div>
 	</section>
@@ -153,7 +159,7 @@ const faqItems = [
 	<section class="handoff-problem" aria-labelledby="handoff-heading">
 		<div class="container-page problem-grid">
 			<div data-reveal>
-				<h2 id="handoff-heading">Right now the job lives in three places.</h2>
+				<h2 id="handoff-heading">The count changed in an email. The quote did not.</h2>
 				<p>
 					The dishes are in a menu document. The revised count is in an email. The number you
 					plan to send is in a spreadsheet. Copying between them works fine, right up until one of them changes.
@@ -228,7 +234,7 @@ const faqItems = [
 						<small>Counts stay fixed when guest count changes.</small>
 					</div>
 				</div>
-				<figcaption>The product tour’s garden wedding, a different menu from the one above. Four of its seven dishes are shown; all seven cost $8.29 a guest, 29.6% of $28.00. At the kitchen’s 30% target, $1,491.38 ÷ 180 ÷ 0.30 = $27.62 a guest. Equipment counts are fixed; they do not scale with guests.</figcaption>
+				<figcaption>The product tour’s garden wedding, a different menu from the one above. Four of its seven dishes are shown; all seven cost $8.29 a guest, 29.6% of $28.00. At the kitchen’s 30% target, $1,491.38 ÷ 180 ÷ 0.30 = $27.62 a guest.</figcaption>
 			</figure>
 
 			<div class="feature-scenes" data-reveal>
@@ -244,8 +250,7 @@ const faqItems = [
 			<div class="section-intro" data-reveal>
 				<h2 id="catering-quotes-heading">Know what the quote costs you before you confirm it.</h2>
 				<p>
-					A new event starts with a menu, a date, a head count and a price. You see the food cost
-					while it is still a draft. When you confirm, the plan and the money lock together.
+					A new event starts as a draft, and the food cost shows while you set it up.
 				</p>
 			</div>
 			<p class="proposal-bridge" data-proposal-bridge data-reveal>
@@ -266,41 +271,51 @@ const faqItems = [
 				<div class="proof-copy" data-reveal>
 					<h3>$68 a head, at 39.6% food cost.</h3>
 					<p>
-						For the 180-guest summer wedding in these screens, $68 per guest puts food cost at 39.6%. The same panel
+						For the 180-guest summer wedding in this screen, $68 per guest puts food cost at 39.6%. The same panel
 						names $89.78 as the price that would meet the 30% target.
 					</p>
 					<ul role="list">
 						<li>The order price can override the menu default.</li>
 						<li>Guest-count changes update the draft estimate.</li>
-						<li>Confirmation freezes the agreed plan and money.</li>
 					</ul>
 				</div>
 				<figure class="screenshot-frame" data-reveal>
-					<picture>
-						<source media="(max-width: 639px)" srcset="/proof/hero-pricing-mobile.png" />
-						<img
-							src="/proof/hero-pricing.png"
-							width="2208"
-							height="554"
-							loading="lazy"
-							decoding="async"
-							alt="CostCook order price panel for 180 guests at $68.00 a guest, $27.00 below the menu’s $95.00. Food cost 39.6% against a 30% target: sales $12,240.00, food $4,847.95 ($26.93 a guest), food margin $7,392.05. Get to 30%: charge $89.78 a guest, $16,160.40 total, or use the menu price, $95.00, 28.4%, within target."
-						/>
-					</picture>
+					<!-- Amber rings on the two figures the copy names, 39.6% and the
+					     $89.78 that meets the target, measured from each capture's
+					     pixels; one set per source, switched at the same 64rem. -->
+					<div class="ringed">
+						<picture>
+							<source media="(max-width: 63.99rem)" srcset="/proof/hero-pricing-mobile.png" width="748" height="1268" />
+							<img
+								src="/proof/hero-pricing.png"
+								width="2208"
+								height="554"
+								loading="lazy"
+								decoding="async"
+								alt="CostCook order price panel for 180 guests at $68.00 a guest, $27.00 below the menu’s $95.00. Food cost 39.6% against a 30% target: sales $12,240.00, food $4,847.95 ($26.93 a guest), food margin $7,392.05. Get to 30%: charge $89.78 a guest, $16,160.40 total, or use the menu price, $95.00, 28.4%, within target."
+							/>
+						</picture>
+						{priceRings.wide.map((box) => <span class="price-ring price-ring--wide" aria-hidden="true" style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}></span>)}
+						{priceRings.small.map((box) => <span class="price-ring price-ring--small" aria-hidden="true" style={`left:${box.x}%;top:${box.y}%;width:${box.w}%;height:${box.h}%`}></span>)}
+					</div>
 					<figcaption>Captured from CostCook, sample event.</figcaption>
 				</figure>
 			</div>
 
 			<div class="confirmed-proof" data-reveal>
 				<figure>
-					<img
-						src="/demo-poster.jpg"
-						width="1600"
-						height="1000"
-						loading="lazy"
-						decoding="async"
-						alt="Confirmed CostCook event showing 180 guests at $68 per guest, quoted food cost of $26.93 per guest, current food cost of $27.13, and Shop, Prep, and Pack tabs below."
-					/>
+					<picture>
+						<source media="(max-width: 63.99rem)" srcset="/proof/order-price-today-mobile.png" width="780" height="1358" />
+						<img
+							src="/proof/order-price-today.png"
+							width="1888"
+							height="722"
+							loading="lazy"
+							decoding="async"
+							alt="A confirmed wedding order for 150 guests, prices locked: $95.00 a guest, locked when confirmed; food cost 27.6% against a 30% target, food $26.18 a guest; and today's ingredient prices, unchanged since it was quoted."
+						/>
+					</picture>
+					<figcaption>Captured from CostCook: a different sample wedding, 150 guests at $95.00, after it was confirmed.</figcaption>
 				</figure>
 				<div>
 					<h3>The agreed number stays put.</h3>
@@ -328,7 +343,7 @@ const faqItems = [
 				</ol>
 				<div class="branch-rule" aria-hidden="true"></div>
 				<ul role="list"><li>Shop</li><li>Prep</li><li>Pack</li></ul>
-				<figcaption>One confirmed event feeds all three. Nobody rebuilds the menu or the head count.</figcaption>
+				<figcaption>Nobody rebuilds the menu or the head count.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -337,7 +352,7 @@ const faqItems = [
 		<div class="container-page">
 			<div class="capability-heading" data-reveal>
 				<div><h2 id="capabilities-heading">What is in Menus & Quotes.</h2><p>Only what ships today for building, pricing and confirming a job.</p></div>
-				<p class="count"><strong>{capabilityCount}</strong><span>relevant capabilities</span></p>
+				<p class="count"><strong>{capabilityCount}</strong><span>shipped capabilities</span></p>
 			</div>
 			<div class="disclosures">
 				{capabilityGroups.map((group) => (
@@ -442,7 +457,7 @@ const faqItems = [
 	.workspace-main, .price-check, .equipment-sheet { border-radius: .5rem; background: var(--color-paper); box-shadow: var(--shadow-lift); }
 	.workspace-main { min-width: 0; padding: clamp(1rem, 3vw, 1.75rem); }
 	.workspace-bar { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--color-hairline); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
-	.workspace-title { display: grid; grid-template-columns: 1fr auto; gap: 2rem; padding-block: 1.5rem; }
+	.workspace-title { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; padding-block: 1.5rem; }
 	.workspace-title small { display: block; font-size: var(--text-micro); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-soft); }
 	.workspace-title strong { display: block; margin-top: 0.25rem; font-family: var(--font-display); font-size: var(--text-record-sm); }
 	.menu-row { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(6rem, 0.35fr) minmax(4rem, 0.25fr); gap: 1rem; align-items: center; padding: 0.8rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-caption); }
@@ -481,6 +496,15 @@ const faqItems = [
 	.screenshot-frame figcaption { margin-top: 0.7rem; }
 	.confirmed-proof { display: grid; gap: 2.5rem; align-items: center; margin-top: clamp(3.5rem, 7vw, 6rem); padding-top: clamp(3rem, 5vw, 4rem); border-top: 1px solid var(--color-ticket-rule); }
 	.confirmed-proof figure { overflow: hidden; }
+	/* Both price panels stack under or over their copy at every width. Beside
+	   it, at 1.4fr of the row, the 1104px and 944px captures drew their figures
+	   at 9 to 10px (readability review 2026-10-09); stacked, each shows at up
+	   to its own CSS size. */
+	.pricing-proof .screenshot-frame { max-width: 1104px; }
+	.confirmed-proof figure { max-width: 944px; }
+	.pricing-proof > :first-child, .confirmed-proof > div { max-width: 62ch; }
+	/* Stacked, the heading leads its own panel (design review 2026-10-09). */
+	.confirmed-proof > div { order: -1; }
 
 	.connected-proof { padding-block: var(--spacing-section-tight); background: var(--color-paper); }
 	.connected-grid { display: grid; gap: 3rem; align-items: center; }
@@ -527,6 +551,16 @@ const faqItems = [
 	.onward { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--color-hairline-strong); }
 	.onward a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-green-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 4px; }
 
+	/* REFLOW AT 200% TEXT (issue #79). A grid with no column template sizes
+	   its one implicit track to its content's min-content width, so at 200%
+	   text on a phone the hero and the product panels grew past the screen
+	   and the article's overflow-x: clip cut their right edge off. One
+	   shrinkable track below the breakpoints; the media rules below set the
+	   wide layouts. Rows that pair a label and a value wrap instead of
+	   pushing the value out. */
+	.hero-grid, .record-pair, .menu-workspace, .workspace-side { grid-template-columns: minmax(0, 1fr); }
+	.record-head, .workspace-bar { flex-wrap: wrap; }
+
 	@media (min-width: 640px) {
 		.product-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.product-nav a + a { border-top: 0; border-left: 1px solid var(--color-ticket-rule); }
@@ -542,8 +576,6 @@ const faqItems = [
 		.section-intro { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
 		.menu-workspace { grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr); }
 		.menu-workspace > figcaption { grid-column: 1 / -1; }
-		.pricing-proof { grid-template-columns: minmax(15rem, 0.6fr) minmax(0, 1.4fr); }
-		.confirmed-proof { grid-template-columns: minmax(0, 1.4fr) minmax(15rem, 0.6fr); }
 		.faq-grid { grid-template-columns: minmax(15rem, 0.65fr) minmax(0, 1.35fr); align-items: start; }
 		.closing-grid { grid-template-columns: 1fr auto; }
 	}
@@ -573,5 +605,23 @@ const faqItems = [
 
 	@media (prefers-reduced-motion: reduce) {
 		.product-nav a, .disclosures summary svg, .faq-list summary svg { transition: none; }
+	}
+	/* Below 64rem the frame gets the app's phone capture, held at its own CSS
+	   size: the desktop capture squeezed into a tablet column drew 7 to 9px
+	   text (readability review 2026-10-09). */
+	@media (max-width: 63.99rem) {
+		.screenshot-frame, .confirmed-proof figure { max-width: 24.5rem; margin-inline: auto; }
+	}
+	/* Same ring as the homepage walk (HomeEventWalk .ring). Considered a
+	   shared Ring component; not used because the rings are four boxes of
+	   data on one frame here, and a component would own one style rule. */
+	.ringed { position: relative; }
+	.ringed picture { display: block; }
+	.price-ring { position: absolute; border: 2px solid var(--color-amber); border-radius: 8px; box-shadow: 0 0 0 4px rgb(185 118 42 / .18); pointer-events: none; }
+	.price-ring--small { display: none; }
+	@media (max-width: 63.99rem) {
+		.pricing-proof .ringed { max-width: 24.5rem; margin-inline: auto; }
+		.price-ring--wide { display: none; }
+		.price-ring--small { display: block; }
 	}
 </style>

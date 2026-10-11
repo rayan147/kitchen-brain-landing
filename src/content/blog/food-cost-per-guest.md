@@ -1,7 +1,8 @@
 ---
 title: "How to calculate food cost per guest for a catering event"
 description: "Work from total ingredient cost to food cost per guest, food-cost percentage, and the selling price needed to meet your target."
-publishedDate: 2026-09-03
+publishedDate: 2026-07-02
+updatedDate: 2026-10-11
 category: Costing & pricing
 menuGroup: Cost the work
 menuIcon: calculator
@@ -13,7 +14,7 @@ featureLabel: See menus and quotes in CostCook
 ---
 <!-- story: docs/stories/blog-food-cost-per-guest.story.md -->
 
-A customer asks for a price per head. The tempting answer is the number you charged last time. The useful answer starts somewhere else: what this menu costs for this guest count, using the prices you have now.
+A client wants a price per head. The easy answer is whatever you charged last time. The right one starts with what this menu costs, for this head count, at the prices you are paying now.
 
 ## Start with four numbers
 
@@ -44,7 +45,15 @@ $4,847.96 ÷ 180 ≈ $26.93 food cost per guest
 $4,847.96 ÷ $12,240.00 ≈ 39.6% food cost
 ```
 
-The $68 price sounds tidy. The food says something less tidy: 39.6 cents of every dollar of event revenue shown here is already assigned to ingredients.
+$68 sounds like a nice round number. The food says otherwise: 39.6 cents of every dollar this event brings in is already spoken for by ingredients.
+
+<!-- Considered Visitor; not used because this shared capture has one fixed size and caption. -->
+<figure class="blog-shot">
+  <picture>
+    <img src="/proof/outcome-quote.png" width="512" height="316" loading="lazy" decoding="async" style="--phone-w: 256px; --desk-w: 256px" alt="CostCook's food-cost target panel flags 39.6% food cost as Critical, 9.6 percentage points over target. It says packaging, rentals, staff, and food cooked over the guarantee are outside this food-only number.">
+  </picture>
+  <figcaption>Captured order target: the 39.6% food-cost warning names what the figure leaves out.</figcaption>
+</figure>
 
 ## Compare it with the target
 
@@ -56,7 +65,7 @@ Required price per guest = food cost per guest ÷ target percentage
 $26.9331 ÷ 0.30 ≈ $89.78 per guest
 ```
 
-That does not make $89.78 the correct market price. It tells you what the menu and target imply. You still have to decide whether to change the selling price, change the menu, accept a different target, or decline the work.
+That doesn't make $89.78 the price your market will pay. It's what this menu and that target add up to. From there it's your call: raise the price, change the menu, live with a different target, or pass on the job.
 
 ## Check the assumptions before you quote
 
@@ -67,8 +76,8 @@ That does not make $89.78 the correct market price. It tells you what the menu a
 - Are packaging, rentals, labor, delivery, and overhead handled somewhere outside the food number?
 - Will the quoted price be preserved if supplier prices change later?
 
-A round price can still make a crooked quote. The point of food cost per guest is not to produce a prettier number. It is to put the food, the target, and the customer price in the same decision.
+A round price can still be a crooked quote. Food cost per guest isn't there to make the number look better. It's there so the food, your target and the client's price are all in front of you when you decide.
 
 ## What to carry into the next quote
 
-Keep the menu, guest count, ingredient cost, target, and selling price together. When one changes, recalculate the same three numbers before you say yes.
+Keep the menu, the count, the ingredient cost, the target and the price together. When one of them moves, run the same three numbers again before you say yes.

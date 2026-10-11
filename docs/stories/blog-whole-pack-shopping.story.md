@@ -11,3 +11,5 @@
 - **Life:** The order deadline is close and the prep sheet is still written in cups.
 - **Connection:** The buy list hands off to purchase orders and receiving.
 - **Revision:** ☒ Idea ☒ Character ☒ Plot ☒ Scenes ☒ Voice ☒ Dialogue ☒ Headline ☒ Snap ☒ Life ☒ Connection ☒ Finish — corrected the pack count to match the worked equation and recalculated the reading time at 200 words per minute.
+
+**Revision 2026-10-08: chef voice pass.** Intro, overage, combining onions, the 28 lb paragraph, on-hand stock and the close rewritten in kitchen voice; description rewritten. Pinned snap "You cannot order 3.3 sealed cases." and all figures unchanged. Why: owner asked that the site read like a working chef wrote it, not AI.

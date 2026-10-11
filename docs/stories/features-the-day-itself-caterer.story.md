@@ -18,3 +18,20 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 
 ### Revision 2026-10-07: chef audit of the feature and resource routes
 - Taking orders reads "In the app today", not "Available now".
+
+## Revision 2026-10-11: English edit
+- Group title "Opens on what needs attention." is "The home screen opens on what needs attention."
+- Orders kicker "Orders, the event" is "Orders, shop, prep & pack" (two kickers no longer both say event).
+- Lede left as is: the proposed event-first lede ("book the yes with Confirm order") conflicts with the events page edit that separates Book the event from Confirm order; held for the owner.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Lede, consistent with the events page: "Take the inquiry and send the proposal. Book the event once the agreement is signed and the deposit is in. Confirm order then locks the menu and head count and gives you your shopping, prep and pack lists..."
+- Deposit item: the client pays by card from an email link, or you record what arrives (2026-10-06 ruling); stale "recorded by hand" comment rewritten.
+- Purchasing item lead "Follow-up list." (the app's word).
+
+## Revision 2026-10-11: the booking item
+- Events item "Confirm order is the booking." is "Book the event books it.": Book the event waits on the signed agreement and the deposit, and the event then reads Booked; Confirm order comes later and freezes quantities and prices (kitchen-brain develop 4f46543cf, BookEvent.svelte, EventHeader.svelte). "This event is booked" is not an app string. Matches the lede and the events page.
+
+
+## Revision 2026-10-11: English edit (booking and reopen facts)
+- "Honest reopen." item: "Reopening drops the frozen prices and goes back to today’s. Once purchasing starts, reopening is refused." (kitchen-brain develop 4f46543cf, orders/repository.ts reopenOrder drops the snapshot; matches faq.ts). Renders here via the orders group.

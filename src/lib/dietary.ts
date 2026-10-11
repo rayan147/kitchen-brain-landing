@@ -80,7 +80,7 @@ export const dietary = {
 	comparisonNote:
 		`Five diets and the ${allergenCount} major US allergens, judged from confirmed ingredient facts on every dish of an order, and printed on the prep and pack lists. It detects and never certifies: halal and kosher cap at check, and an unreviewed ingredient is never clear.`,
 	faq:
-		'Yes. Record who is eating on the order, by allergen or by diet, and every dish is judged against them from the ingredient facts your kitchen confirmed. Vegetarian, vegan, halal, kosher and gluten-free. Each dish comes back conflict, check or clear, with the ingredient named, and the answer prints on the prep and pack lists. It detects, it never certifies: halal and kosher can only ever be a check, because slaughter and certification are facts the app cannot see, and an ingredient nobody reviewed is never counted as clear.',
+		'Yes. Record who is eating on the order, by allergen or by diet, and every dish is judged against them from the ingredient facts your kitchen confirmed. Vegetarian, vegan, halal, kosher and gluten-free. Each dish comes back conflict, check or clear, with the ingredient named, and the answer prints on the prep and pack lists. It detects, it never certifies. Halal and kosher can only ever be a check, because slaughter and certification are facts the app cannot see. An ingredient nobody reviewed is never counted as clear.',
 
 	/** The sentence every surface hangs on. One line, the product's own. */
 	boundary: 'CostCook detects, it never certifies.',

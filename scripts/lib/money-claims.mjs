@@ -1,12 +1,16 @@
 /**
- * The two money claims the landing site may not make, shared by the source
+ * The money claim the landing site may not make, shared by the source
  * scan (check-landing-claims.mjs) and the built events page contract
  * (check-events-proposals-page.mjs), so the two cannot drift apart again.
  *
  * WHAT THEY GUARD. An EVENT deposit is recorded by hand in production
  * (inventory A-14, RC-65); card payment for it is being built
- * (feat/client-payment-booking-loop) and is a Coming plan. And there is no
- * client or customer invoice in CostCook (front-of-house PRD 06, unbuilt).
+ * (feat/client-payment-booking-loop) and is a Coming plan.
+ *
+ * RETIRED 2026-10-08: the client invoicing claim. The owner ruled the customer
+ * invoice live (Issue invoice and Send invoice on the order's Money tab,
+ * kitchen-brain develop 185451a1b), so "send the client their invoice" is now
+ * true copy. Its words live in src/lib/event-payments.ts (eventInvoice).
  *
  * WHAT THEY DO NOT GUARD. Storefront online ordering is live (RC-59): there the
  * client pays through the kitchen's own Stripe account, and copy like "the
@@ -29,15 +33,8 @@ export const eventDepositClaim = new RegExp(
 	'i'
 );
 
-export const clientInvoiceClaim = new RegExp(
-	String.raw`\b(?:send|sends|sending|sent)\s+(?:the\s+|a\s+|your\s+)?(?:clients?|customers?)\s+(?:an\s+|the\s+)?invoices?\b` +
-		String.raw`|\binvoic\w*\s+(?:to\s+)?(?:your\s+)?(?:clients?|customers?)\b`,
-	'i'
-);
-
 export const moneyClaims = [
-	[eventDepositClaim, 'event deposit collection claim (RC-65: the client pays from an email link; CostCook never collects, takes or charges)'],
-	[clientInvoiceClaim, 'client invoicing claim (front-of-house PRD 06 is unbuilt)']
+	[eventDepositClaim, 'event deposit collection claim (RC-65: the client pays from an email link; CostCook never collects, takes or charges)']
 ];
 
 // SELF-TEST, run on import: a widened pattern that stops catching the old
@@ -56,11 +53,7 @@ const mustMatch = [
 	[eventDepositClaim, 'charging your client a deposit'],
 	[eventDepositClaim, 'got paid on the deposit'],
 	[eventDepositClaim, 'accepted the deposit'],
-	[eventDepositClaim, 'deposits were taken'],
-	[clientInvoiceClaim, 'send the client an invoice'],
-	[clientInvoiceClaim, 'send clients an invoice'],
-	[clientInvoiceClaim, 'invoice your clients from the event'],
-	[clientInvoiceClaim, 'invoicing to customers']
+	[eventDepositClaim, 'deposits were taken']
 ];
 const mustNotMatch = [
 	[eventDepositClaim, 'You record the deposit by hand, as a check, cash, a transfer or your own card processor'],
@@ -68,9 +61,7 @@ const mustNotMatch = [
 	[eventDepositClaim, 'Track the deposit, then press Confirm order'],
 	[eventDepositClaim, 'the client pays through your own Stripe account to hold your date'],
 	[eventDepositClaim, 'They accept it or ask for changes. The deposit is recorded by hand.'],
-	[clientInvoiceClaim, 'There is no customer invoice in CostCook.'],
-	[clientInvoiceClaim, 'one reminder per balance, and no client invoices.'],
-	[clientInvoiceClaim, 'Photograph the supplier invoice']
+	[eventDepositClaim, 'Issue invoice makes a numbered invoice, and what they have already paid comes off it']
 ];
 for (const [pattern, text] of mustMatch) {
 	if (!pattern.test(text)) throw new Error(`money-claims self-test: ${pattern} no longer catches "${text}"`);

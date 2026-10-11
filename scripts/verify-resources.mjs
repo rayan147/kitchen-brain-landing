@@ -1,10 +1,15 @@
 import { chromium } from 'playwright-core';
 import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 // Considered Strategy; not used because routes and widths are test data;
 // one browser workflow verifies their shared navigation and copy contracts.
 const base = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
+// The tour's stop count comes from src/lib/tour.ts, one `id:` per stop at the
+// list's indent: the typed 13 outlived three new stops (issue #82).
+const tourStopCount = (readFileSync(new URL('../src/lib/tour.ts', import.meta.url), 'utf8').split('export const tourStops')[1] ?? '').match(/^\t\tid: '/gm)?.length ?? 0;
+assert(tourStopCount > 0, 'could not count the tour stops in src/lib/tour.ts');
 const output = 'docs/qa/resources-caterer-2026-09-11';
 const routes = ['/tour/main', '/who-its-for', '/onboarding', '/compare', '/faq', '/contact', '/contact/sent', '/contact/not-sent'];
 const widths = [[1440,900], [1280,800], [1024,768], [768,1024], [390,844]];
@@ -52,8 +57,8 @@ try {
     await page.setViewportSize({width,height});
     await page.goto(base+'/tour/main');
     const tabs=page.getByRole('tab',{includeHidden:true});
-    assert.equal(await tabs.count(),13);
-    for(let i=0;i<13;i++) {
+    assert.equal(await tabs.count(),tourStopCount);
+    for(let i=0;i<tourStopCount;i++) {
       if(await page.getByLabel('Tour stop',{exact:true}).isVisible()) await page.getByLabel('Tour stop',{exact:true}).selectOption({index:i});
       else await tabs.nth(i).click();
       const panel=page.locator('#'+await tabs.nth(i).getAttribute('aria-controls'));
@@ -82,13 +87,13 @@ try {
   await page.getByLabel('Email for the reply',{exact:true}).fill('caterer@example.test');
   await page.getByLabel('What can I help with?',{exact:true}).fill('Can I start with my existing recipe spreadsheet?');
   await page.getByRole('button',{name:'Send question',exact:true}).click();
-  await page.getByText('Your message could not be sent. Your draft is still here, so please try again.',{exact:true}).waitFor();
+  await page.getByText('Your message could not be sent. Your draft is still here. Try again, or email rayan@costcook.io.',{exact:true}).waitFor();
   check((await page.getByLabel('What can I help with?',{exact:true}).inputValue()).includes('spreadsheet'),'failed send retains draft');
   await page.screenshot({path:`${output}/contact-error.png`});
   await context.unroute('**/api/support');
   await context.route('**/api/support',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true})}));
   await page.getByRole('button',{name:'Send question',exact:true}).click();
-  await page.getByText('Question sent. Rayan will reply to caterer@example.test.',{exact:true}).waitFor();
+  await page.getByText('Question sent. I will reply to caterer@example.test.',{exact:true}).waitFor();
   await page.screenshot({path:`${output}/contact-success.png`});
   await dialog.waitFor({state:'hidden'});
   check(await open.evaluate(el=>el===document.activeElement),'contact returns focus');
@@ -111,4 +116,4 @@ try {
   await writeFile(`${output}/verification.json`,JSON.stringify({results,failures},null,2));
 }
 assert.deepEqual(failures,[]);
-console.log('Resources verified: 8 routes × 5 widths, 200% text, 13 tour stops, navigation, no-JS and mocked contact recovery/success.');
+console.log(`Resources verified: 8 routes × 5 widths, 200% text, ${tourStopCount} tour stops, navigation, no-JS and mocked contact recovery/success.`);

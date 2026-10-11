@@ -23,3 +23,16 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 ## Claim correction · 2026-09-27 (what Staff can open)
 
 - [x] 11 Revision: "All can open cost screens" and "everyone can open the costs" overstated it. Staff can open recipe costs and Analytics, but Today leaves out order money and client names for Staff, the calendar leaves money out for Staff, and Clients is for owners and managers (kitchen-brain today-work.ts:34-40, calendar/+page.server.ts:31). The no-per-screen-control boundary and the pinned "No." answers stand. Gap report S7.
+
+## Revision 2026-10-11: English edit
+- Area blurb and meta description name Sage and say "connections marked Coming" (was "the connections being built").
+- Lede drops the offline sentence; it stays on the page in "Read saved pages without signal." Roles wording kept verbatim (2026-10-10 ruling).
+- Integrations: the closing "Until they land, nothing in CostCook reads from or writes to your books or your till." is cut; the group line and the Coming rows already say it.
+
+## Revision 2026-10-11: settled facts from the owner-call check
+- Integrations: QuickBooks line is "not in the app you would start today" (it is built and flag-gated; Coming stands per the 2026-09-27 ruling; ledger RC-45 note 2026-10-11).
+
+## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
+- Integrations now renders before the page close ("Four other areas" and the demo line), through a default slot in FeatureSection.
+- Integrations' three cards (five doors, review, unreadable) cut; the getting-prices-in figure and import items carry them.
+- Vendor item: "Contacts, how you order from each vendor, and what you actually buy from each."
