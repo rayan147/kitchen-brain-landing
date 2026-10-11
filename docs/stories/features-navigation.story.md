@@ -202,3 +202,13 @@ definition are unchanged.
 ## Revision 2026-10-11: owner-approved 2026-10-11 structure and wording
 - FeatureSection takes a default slot before the sibling close; only team-and-connections fills it (Integrations). Pin in check-landing-claims.mjs now requires '<FeatureSection entry={entry}>'.
 - Getting-prices-in hub card mono line now reads in the new group order (import first, month cost last).
+
+### Revision 2026-10-11: the booking item
+
+The day-itself list said "Confirm order is the booking" and that the event
+then reads "This event is booked." Neither is true on kitchen-brain develop
+4f46543cf: Book the event is the commercial commitment (BookEvent.svelte),
+waits on the signed agreement and the deposit, and the event header reads
+Booked; Confirm order only freezes quantities and prices. The item now says
+"Book the event books it." and puts Confirm order after it, matching the
+area lede and the homepage.

@@ -28,3 +28,6 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 - Lede, consistent with the events page: "Take the inquiry and send the proposal. Book the event once the agreement is signed and the deposit is in. Confirm order then locks the menu and head count and gives you your shopping, prep and pack lists..."
 - Deposit item: the client pays by card from an email link, or you record what arrives (2026-10-06 ruling); stale "recorded by hand" comment rewritten.
 - Purchasing item lead "Follow-up list." (the app's word).
+
+## Revision 2026-10-11: the booking item
+- Events item "Confirm order is the booking." is "Book the event books it.": Book the event waits on the signed agreement and the deposit, and the event then reads Booked; Confirm order comes later and freezes quantities and prices (kitchen-brain develop 4f46543cf, BookEvent.svelte, EventHeader.svelte). "This event is booked" is not an app string. Matches the lede and the events page.

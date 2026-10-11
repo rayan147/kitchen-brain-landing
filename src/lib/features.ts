@@ -160,7 +160,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'The agreement.', detail: 'Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.' },
 			{ lead: 'Kitchen draft.', detail: 'Prepare the kitchen draft from their yes; it holds no day and draws no crew until you book the event.' },
 			{ lead: 'Deposit, tracked.', detail: `Ask for a deposit. The client pays it by card from an email link, or you record what arrives as ${depositMethods}, against what you asked for.` },
-			{ lead: 'Confirm order is the booking.', detail: 'Confirm order freezes quantities and prices, and the event reads This event is booked.' },
+			{ lead: 'Book the event books it.', detail: 'Book the event waits on the signed agreement and the deposit, and the event then reads Booked. Confirm order comes later and freezes quantities and prices.' },
 			{ lead: 'Calendar and the day’s room.', detail: 'The calendar counts orders and vans against the limits you set for each day, and an order says whether its day has room.' },
 			{ lead: 'Clients.', detail: 'Each client keeps contacts, venues with access notes, and their events and orders, for owners and managers.' }
 		]
