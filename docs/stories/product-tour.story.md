@@ -188,3 +188,10 @@ Copy and story beats unchanged. Trial terms were moved below the button row and 
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Sage footnote: "wait for an owner or manager to approve".
+
+## Revision 2026-10-11: English edit
+- Stop 9 agrees with its callout: title "Send the proposal. Book it once it is signed and the deposit is in."; intro books the event after the signed agreement and the deposit, with Confirm order later; the Booked step row reads "Not yet · Waits on the deposit" (kitchen-brain develop 4f46543cf, BookEvent.svelte).
+- Stop 8 title: the cook chooses "the storage and the use-by" (allergens come from the recipe). Stop 1 callout: "The same chicken thigh..." (not "the same 12 lb").
+- Hero lede names the quote and the proposal and drops "Start wherever you like"; workspace H2 "One wedding, stop by stop"; one "sample" fewer.
+- Stop 10: intro "arrive in Orders already priced, and you approve or decline them"; footnote explains the Pay in full case the aside shows.
+- Footnotes and lines tightened: stop 1 drops "preview", stop 2 "Confirm order locks these prices.", stop 11 "from the order you confirmed", stop 12 drops the repeated "stays in view", stop 15 intro "Managers see costs and approve Sage drafts; Staff do neither.", stop 7 cell "Tree nuts · the bride", stop 6 intro reordered.

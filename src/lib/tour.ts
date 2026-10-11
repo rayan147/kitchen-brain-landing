@@ -108,7 +108,7 @@ export const tourStops: readonly TourStop[] = [
 		appArea: 'Recipes / Herb roast chicken',
 		title: 'The recipe you cook, with what it costs on the same page.',
 		intro: 'Open the dish and follow the price from the case you bought, through the trim, down to one portion.',
-		callout: 'The same 12 lb of chicken is in the recipe, on the purchase order and at the back door.',
+		callout: 'The same chicken thigh is in the recipe, on the purchase order and at the back door.',
 		featureHref: featureMenuHref('math'),
 		metrics: [
 			{ label: 'Recipe cost', value: formatCurrency(tourRecipeCostingProof.recipeCost) },
@@ -134,7 +134,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Plate share', value: formatCurrency(tourRecipeCostingProof.chickenPlateShare) },
 				{ label: 'Missing prices', value: 'None', tone: 'good' }
 			],
-			footnote: '$64.69 ÷ 24 portions = $2.70. At a $9.00 selling price, food cost is 30.0%. Food only; labor and overhead are extra. This tour table is a preview.'
+			footnote: '$64.69 ÷ 24 portions = $2.70. At a $9.00 selling price, food cost is 30.0%. Food only; labor and overhead are extra.'
 		}
 	},
 	{
@@ -168,7 +168,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Target food cost', value: '30.0%' },
 				{ label: 'Room to target', value: '0.4 pts', tone: 'good' }
 			],
-			footnote: 'Four of the menu’s seven dishes are shown; the food cost covers all seven. $1,491.38 food cost ÷ $5,040 revenue = 29.6%. The kitchen’s 30% target leaves 0.4 percentage points. Revenue after food cost still needs to cover labor, overhead and profit. Confirming preserves this quote.'
+			footnote: 'Four of the menu’s seven dishes are shown; the food cost covers all seven. $1,491.38 food cost ÷ $5,040 revenue = 29.6%. The kitchen’s 30% target leaves 0.4 percentage points. Revenue after food cost still needs to cover labor, overhead and profit. Confirm order locks these prices.'
 		}
 	},
 	{
@@ -284,7 +284,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Nutrition facts & allergens',
 		appArea: 'Recipes / Herb roast chicken / Nutrition',
 		title: 'Nutrition and allergens, on the recipe.',
-		intro: 'See the nutrition estimate per portion, check where each ingredient’s numbers came from and its allergens, then print from the recipe in CostCook.',
+		intro: 'See the nutrition estimate per portion, check each ingredient’s allergens and where its numbers came from, then print from the recipe in CostCook.',
 		callout: 'A blank nutrient stays blank. It never becomes a made-up zero.',
 		featureHref: featureMenuHref('nutrition'),
 		metrics: [
@@ -341,7 +341,7 @@ export const tourStops: readonly TourStop[] = [
 			['Rosemary focaccia', 'Gluten-free · 2 guests', 'Conflict', 'Bread flour (contains wheat)'],
 			['Herb roast chicken', 'Halal', 'Check', 'Meat depends on the source'],
 			// The bride is the tree-nut allergy, as on the guards guide.
-			['Charred market vegetables', 'bride, Tree nuts', 'Clear', 'Every ingredient reviewed'],
+			['Charred market vegetables', 'Tree nuts · the bride', 'Clear', 'Every ingredient reviewed'],
 			['Citrus salad', 'Vegan', 'Check', '2 ingredients not reviewed']
 		],
 		aside: {
@@ -361,7 +361,7 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'labels',
 		label: 'Labels & printing',
 		appArea: 'Prep / Garden wedding supper / Labels',
-		title: 'Choose the date and allergen facts before a sticker prints.',
+		title: 'Choose the storage and the use-by before a sticker prints.',
 		intro: 'Labels start from the prep list. The cook sets the storage and the use-by, and CostCook keeps what each sticker said so a reprint matches.',
 		callout: 'A label can repeat the date you chose. It cannot choose a food-safety date for you.',
 		featureHref: featureMenuHref('labels', labelsAvailability.isComing),
@@ -401,8 +401,8 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'events',
 		label: 'Events & proposals',
 		appArea: 'Events / Garden wedding supper',
-		title: 'Send the proposal, then book the yes.',
-		intro: 'Take the inquiry, send the priced proposal to the client’s phone, and when they accept, press Confirm order.',
+		title: 'Send the proposal. Book it once it is signed and the deposit is in.',
+		intro: 'Take the inquiry and send the priced proposal to the client’s phone. Book the event once the agreement is signed and the deposit is in. Confirm order comes later, when the kitchen plan is ready.',
 		callout: acceptanceBoundary,
 		featureHref: featureMenuHref('events'),
 		metrics: [
@@ -417,7 +417,7 @@ export const tourStops: readonly TourStop[] = [
 			[eventStep.proposal, 'Sent', 'Link open for 7 days'],
 			[eventStep.decision, 'Accepted', 'On their phone, no login'],
 			[eventStep.agreement, 'Complete', 'Accepted proposal attached'],
-			[eventStep.booked, 'Confirm order', 'Quantities and prices frozen']
+			[eventStep.booked, 'Not yet', 'Waits on the deposit']
 		],
 		aside: {
 			title: 'Deposit',
@@ -442,7 +442,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Online ordering',
 		appArea: 'Settings / Ordering site',
 		title: 'Let clients order from your own website.',
-		intro: 'Put your menus on an ordering page of your own, or paste the snippet into the website you already have. Requests land in Orders priced, and you approve them.',
+		intro: 'Put your menus on an ordering page of your own, or paste the snippet into the website you already have. Requests arrive in Orders already priced, and you approve or decline them.',
 		callout: 'The form only shows on the websites you list.',
 		featureHref: featureMenuHref('ordering'),
 		metrics: [
@@ -467,7 +467,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Booking rule', value: 'Pay in full' },
 				{ label: 'Next', value: 'Approve or decline', tone: 'attention' }
 			],
-			footnote: 'Illustrative tour values. If your booking rules take no online payment, approving confirms the order.'
+			footnote: 'Illustrative tour values. On Pay in full, approving emails the client a pay link, and their payment confirms the order. With no online payment, approving confirms it.'
 		}
 	},
 	{
@@ -475,7 +475,7 @@ export const tourStops: readonly TourStop[] = [
 		featureId: 'orders',
 		label: 'Orders, shop, prep & pack',
 		appArea: 'Orders / Garden wedding supper',
-		title: 'Run shop, prep, and pack from the quote you confirmed.',
+		title: 'Run shop, prep and pack from the order you confirmed.',
 		intro: 'Confirm the order and you work from shopping, prep and pack lists for 180 guests. A page you already opened still reads with no signal; you need to reconnect to save check-offs.',
 		callout: 'Type the guest count once. All three lists come off it.',
 		featureHref: featureMenuHref('orders'),
@@ -536,7 +536,7 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Follow-up line', value: 'Chicken thigh', tone: 'attention' },
 				{ label: 'Unexpected items', value: 'None', tone: 'good' }
 			],
-			footnote: 'Four of 12 delivery lines are shown. Save the delivery once you have checked it, and the purchases are recorded and the prices that qualify update. Anything short stays in view until you follow it up.'
+			footnote: 'Four of 12 delivery lines are shown. Save the delivery once you have checked it, and the purchases are recorded and the prices that qualify update.'
 		}
 	},
 	{
@@ -614,7 +614,7 @@ export const tourStops: readonly TourStop[] = [
 		label: 'Team & access',
 		appArea: 'Settings / Team & access',
 		title: 'Who on the crew can do what.',
-		intro: 'Invite people by email as Staff or Manager. Owners, Managers and Staff can each do different things, and Staff never see costs.',
+		intro: 'Invite people by email as Staff or Manager. Managers see costs and approve Sage drafts; Staff do neither.',
 		callout: 'The cook works the lists without seeing the money. Billing, the team and publishing stay with you.',
 		featureHref: featureMenuHref('team'),
 		metrics: [
