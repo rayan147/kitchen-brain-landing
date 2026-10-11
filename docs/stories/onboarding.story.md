@@ -326,3 +326,9 @@ Content: `src/components/sections/OnboardingPage.astro` and its shared data/resp
 - Snap line unchanged: a name can tell Sage that butter has milk, not that chicken has none (now the stage-three caption, in the app's own words).
 - Stage three reshot with Sage on a real provider (Google): the card now shows Sage's drafted diet facts ("Sage drafted Animal product: Yes · …") and "Use Sage's answers", with the allergens still open. Alt and caption read the drafted line off the pixels; the snap line stands.
 - The next invoice: Purchases reshot with the More menu closed (owner review: an open menu read as left open). Desktop shows the header, "Import invoice" beside "Log purchase"; phones show the page with "More" in the bar at the foot. Caption says where it is on each.
+
+## Revision 2026-10-11: English edit
+- Hero lede carries the upload-then-confirm relief above the phone fold: "Upload one supplier invoice and one recipe, a photo or a PDF of each, and confirm what CostCook reads." Duration qualifier kept verbatim.
+- Part 3 names the screen stage five actually lands on (kitchen-brain develop 4f46543cf, setup createOrder redirects to the completion summary): "Stage five ends on “Your kitchen is ready.”"; "See what setup built" is described as the way back to that summary; the capture caption reads "Where “Create first order” lands."
+- Headings say their point alone: Part 1 "Have one invoice and one recipe within reach."; Part 2 "Five stages for one dish. At two of them, you can upload a photo or a file."; the number "How a 10 lb case at $32 becomes a $1.62 plate." (the paragraph that repeated the snap is gone); guards "Four mistakes, and what setup does with each."
+- Smaller cuts: "nothing is claimed", "before you type a thing", the dropzone caption's repeated gate, throat-clearing lines; "Last tick:" for the done key; "Your phone, or a computer."; pronouns pointed ("The welcome questions take a minute").

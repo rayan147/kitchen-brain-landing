@@ -24,7 +24,7 @@ const haveReady = [
 		body: 'The card, a photo of the card, a PDF, a link to it, or the text. It does not need to be tidy.'
 	},
 	{
-		lead: 'Your phone, or the laptop you are reading this on.',
+		lead: 'Your phone, or a computer.',
 		body: 'Setup works on either. The photo can come straight off the phone.'
 	}
 ] as const;
@@ -56,7 +56,7 @@ const stages: readonly {
 	{
 		n: '1',
 		label: 'Kitchen and suppliers',
-		body: 'Name the supplier you buy the most from, pick pounds or kilos, check the food-cost target, and tap “Save and continue”; the invoice adds the rest of the supplier’s details.',
+		body: 'Name the supplier you buy the most from, pick pounds or kilos, check the food-cost target, and tap “Save and continue”; the invoice at stage two adds the rest of the supplier’s details.',
 		done: 'Add one supplier',
 		shots: [{
 			src: '/proof/setup/01-kitchen.png',
@@ -85,13 +85,13 @@ const stages: readonly {
 			height: 1616,
 			phone: { src: '/proof/setup/02-dropzone-mobile.png', width: 780, height: 1666 },
 			alt: 'The import screen behind that first card. A bar reads “Adding ingredients for setup. Review the document here, then return to build your first recipe” with a “Back to Ingredients” button. Under “Import and review”, a card headed “Add documents” asks “What are you bringing in?” with Recipe, Price sheet, Ingredient list and Invoice, and Invoice picked: “What you paid for a delivery. It updates your costs.” A dashed box holds a “Take photo” button and a “Choose files” button, and under it: “Use the invoice PDF or a photo of it. Every detected record stays in review until you approve it.”',
-			caption: 'Behind the first card. “Take photo” opens the camera on a phone, and nothing goes in until you approve it.'
+			caption: 'Behind the first card. On a phone, “Take photo” opens the camera.'
 		}]
 	},
 	{
 		n: '3',
 		label: 'Food facts',
-		body: 'Sage drafts what it can tell from each ingredient’s name and leaves the rest to you; answer the rest, or tap “Skip for now” and any order using that ingredient reads “check”, never “clear”.',
+		body: 'Sage drafts what it can tell from each ingredient’s name and leaves the rest to you; answer it, or tap “Skip for now” and any order using that ingredient reads “check”, never “clear”.',
 		done: 'Review each ingredient or leave it marked for checking',
 		shots: [{
 			src: '/proof/setup/03-chips.png',
@@ -105,7 +105,7 @@ const stages: readonly {
 	{
 		n: '4',
 		label: 'Recipes',
-		body: 'Tap “Build with Sage”, then “Take photo” or “Choose files” for the recipe card, and go through Sage’s draft, ingredients and amounts first, then the food cost per portion.',
+		body: 'Tap “Build with Sage”, then “Take photo” or “Choose files” for the recipe card, and check Sage’s draft: the ingredients and amounts first, then the food cost per portion.',
 		done: 'Check the plate cost',
 		shots: [{
 			src: '/proof/setup/04-choices.png',
@@ -127,7 +127,7 @@ const stages: readonly {
 			height: 1284,
 			phone: { src: '/proof/setup/05-first-order-mobile.png', width: 748, height: 1612 },
 			alt: 'The order card on stage five, headed “Order details: Set the event information and choose what will be served. This is event 1.” Under Event information: a “Client or event” field, an “Event date” field reading “Choose a date”, and “Guests” filled in with 80. Under Menu: “One portion per guest. Rename it here, or on the menu later.” The Menu name reads “Roast chicken plate menu”, and under “Dish on the menu” a ticked row reads “Roast chicken plate, $1.62 per portion”. On a computer a Live quote card sits beside it: Revenue not set, Food cost $129.39, Food cost per guest $1.62, Selling price not set, Charge at least $5.40 per guest, Estimated whole packs to buy $128.00.',
-			caption: 'Stage five. Your dish’s cost is there before you type a thing: $1.62 a guest, the $1.59 portion plus your 2% miscellaneous cost. All that’s left is the date, the guest count and the allergy question.'
+			caption: 'Stage five. Your dish’s cost is already there: $1.62 a guest, the $1.59 portion plus your 2% miscellaneous cost.'
 		}]
 	}
 ];
@@ -175,7 +175,7 @@ const guards = [
 	'Leave a pack price blank and the ingredient does not go on. The screen says what it needs and puts your cursor in the field.',
 	'Ask for 2 cups of something sold by weight and it stops, and it names the fix: pick a weight unit, or give the ingredient a density.',
 	'Press “Start over” by mistake and your ingredients, recipes, menus and orders stay. Only the guide’s progress resets.',
-	'Lose the wifi mid-save and nothing is written and nothing is claimed. What you typed is still on screen, and the same button retries.'
+	'Lose the wifi mid-save and nothing is written. What you typed is still on screen, and the same button retries.'
 ] as const;
 
 /**
@@ -263,7 +263,7 @@ const readyShot: Shot = {
 	height: 1116,
 	phone: { src: '/proof/setup/06-ready-mobile.png', width: 748, height: 1458 },
 	alt: 'The setup summary, headed “Your kitchen is ready”. It reads “You said you most wanted to know what an event really costs. For the order for Roast chicken plate, the food comes to $129.39.” A box: Order for Roast chicken plate, 80 guests, Food cost $129.39. Five ticks: 1 supplier, 1 ingredient, Dish: Roast chicken plate, Menu: Roast chicken plate menu, Order for 80 guests. Then “Next: your shopping list. What to buy for this order, sorted by supplier, in whole packs. The order stays a draft, with prices updating, until you confirm it on the order page.” Two buttons: “Open shopping list” and “Go to Today”.',
-	caption: 'The summary behind “See what setup built”. If you named a goal at the welcome, the first line answers it in your words.'
+	caption: 'Where “Create first order” lands. If you named a goal at the welcome, the first line answers it in your words.'
 };
 
 /** The phone capture below 64rem, the desktop one from 64rem (scoped CSS). */
@@ -282,7 +282,7 @@ const shotStyle = (shot: Shot) =>
 				</nav>
 
 				<h1 id="fd-heading" class="feature-display">Start by costing one dish.</h1>
-				<p class="fd-lede">Start with one recipe and current supplier prices. Allow about fifteen minutes for a first dish; checking missing details can take longer. Follow five stages to its food cost and your first order.</p>
+				<p class="fd-lede">Upload one supplier invoice and one recipe, a photo or a PDF of each, and confirm what CostCook reads. Allow about fifteen minutes for a first dish; checking missing details can take longer. Five stages take that dish to its food cost and your first order.</p>
 				<div class="fd-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href="#the-number" class="btn-quiet">See the example food cost</a>
@@ -308,7 +308,7 @@ const shotStyle = (shot: Shot) =>
 						</li>
 					))}
 				</ol>
-				<figcaption>Pick the question you came with. Each part ends with one next step.</figcaption>
+				<figcaption>Jump to the part you need. Each one ends on a next step.</figcaption>
 			</figure>
 		</div>
 	</section>
@@ -317,7 +317,7 @@ const shotStyle = (shot: Shot) =>
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow fd-part-label">Part 1 of 3 &middot; Before you start</p>
-				<h2 id="fd-before-heading">Have one recipe and its supplier prices ready.</h2>
+				<h2 id="fd-before-heading">Have one invoice and one recipe within reach.</h2>
 				<p>
 					You have done this before. The last tool wanted your whole catalog typed in before it
 					would do anything, and the half-filled spreadsheet is still on the desktop.
@@ -343,7 +343,7 @@ const shotStyle = (shot: Shot) =>
 							</li>
 						))}
 					</ol>
-					<figcaption>Check the recipe amounts and pack prices. Add or correct anything the upload could not read.</figcaption>
+					<figcaption>That is all you need in hand. Not the catalog, not the walk-in.</figcaption>
 				</figure>
 				<figure class="fd-shot fd-welcome-shot">
 					<div class="shot-pan" tabindex="0" role="region" aria-label="Welcome screen screenshot">
@@ -360,7 +360,7 @@ const shotStyle = (shot: Shot) =>
 					During sign-up, you name your kitchen and enter the card for your trial. Name the dish at the
 					welcome, and every screen after says its name back to you.
 				</p>
-				<p class="fd-handoff">Those answers take a minute. These five stages are the work.</p>
+				<p class="fd-handoff">The welcome questions take a minute. The five stages are the work.</p>
 			</div>
 		</div>
 	</section>
@@ -369,10 +369,9 @@ const shotStyle = (shot: Shot) =>
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow fd-part-label">Part 2 of 3 &middot; The five stages</p>
-				<h2 id="fd-stages-heading">Five stages is one dish&rsquo;s worth of facts, and two of them are uploads.</h2>
+				<h2 id="fd-stages-heading">Five stages for one dish. At two of them, you can upload a photo or a file.</h2>
 				<p>
-					Each stage asks for the next thing that one dish needs, and nothing else. Here is
-					each one as you will meet it.
+					Each stage asks for the next thing that one dish needs, and nothing else.
 				</p>
 			</div>
 			<ol class="fd-stage-list" role="list">
@@ -384,7 +383,7 @@ const shotStyle = (shot: Shot) =>
 						</p>
 						<div class="fd-stage-copy">
 							<p class="fd-stage-body">{stage.body}</p>
-							<p class="fd-stage-done"><span class="fd-stage-done-k">Done when</span> {stage.done}.</p>
+							<p class="fd-stage-done"><span class="fd-stage-done-k">Last tick:</span> {stage.done}.</p>
 						</div>
 						{stage.shots.map((shot) => (
 							<figure class="fd-shot fd-scene-shot">
@@ -420,10 +419,7 @@ const shotStyle = (shot: Shot) =>
 		<div class="container-page fd-number-layout" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow">The number</p>
-				<h2 id="fd-number-heading">Example: one ingredient costed from its case price.</h2>
-				<p>
-					6.3 oz (180 g) of chicken thigh, bought at $32.00 for a 10 lb case, 80% of it surviving the trim.
-				</p>
+				<h2 id="fd-number-heading">How a 10 lb case at $32 becomes a $1.62 plate.</h2>
 				<p class="fd-snap">
 					A $32 case of thighs, 80% usable after trim, 6.3 oz (180 g) on the plate, plus 2% misc: $1.62. Check it
 					on paper. We would rather you did.
@@ -431,7 +427,7 @@ const shotStyle = (shot: Shot) =>
 			</div>
 
 			<figure class="fd-maths" aria-labelledby="fd-maths-title">
-				<p id="fd-maths-title" class="fd-maths-title">Plate cost, as the screen prints it</p>
+				<p id="fd-maths-title" class="fd-maths-title">Plate cost, step by step</p>
 				<div
 					class="fd-maths-scroll"
 					tabindex="0"
@@ -476,13 +472,12 @@ const shotStyle = (shot: Shot) =>
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow">What it refuses to do</p>
-				<h2 id="fd-guards-heading">A number you can check is only half of it.</h2>
-				<p>The other half is what happens when you get something wrong.</p>
+				<h2 id="fd-guards-heading">Four mistakes, and what setup does with each.</h2>
 			</div>
 			<ul class="fd-guards" role="list">
 				{guards.map((guard) => <li>{guard}</li>)}
 			</ul>
-			<p class="fd-handoff">After stage five, open your first shopping list or add the next dish.</p>
+			<p class="fd-handoff">Back to stage five, and the screen it ends on.</p>
 		</div>
 	</section>
 
@@ -490,10 +485,10 @@ const shotStyle = (shot: Shot) =>
 		<div class="container-page" data-reveal>
 			<div class="fd-prose">
 				<p class="eyebrow fd-part-label">Part 3 of 3 &middot; After setup</p>
-				<h2 id="fd-after-heading">Stage five ends on &ldquo;Your first order is made.&rdquo; Tap &ldquo;Open shopping list&rdquo;.</h2>
+				<h2 id="fd-after-heading">Stage five ends on &ldquo;Your kitchen is ready.&rdquo; Tap &ldquo;Open shopping list&rdquo;.</h2>
 				<p>
 					That is tonight&rsquo;s next step, and where the <a href="/tour/main">product tour</a> picks up.
-					&ldquo;See what setup built&rdquo; opens the summary below.
+					Open stage five again later and &ldquo;See what setup built&rdquo; brings this summary back.
 				</p>
 			</div>
 			<figure class="fd-shot fd-after-shot">
@@ -553,7 +548,7 @@ const shotStyle = (shot: Shot) =>
 				<h2 id="fd-close-heading">Check one dish’s cost. Then add your next recipe and invite the crew.</h2>
 				<p>
 					The alternative is another season where the number in your head and the number on the
-					invoice are two different numbers, and the crew works from a text message.
+					invoice disagree, and the crew works from a text message.
 				</p>
 				<p class="fd-final">One dish, and you will know. Then they will too.</p>
 				<div class="fd-actions">
