@@ -136,12 +136,12 @@ for (const [slug, text, label] of [
 	['catering-order-form-on-your-website', 'Not taking online orders right now.', 'not-live troubleshooting'],
 	// The four 2026-10-10 guides each keep the boundary the app draws.
 	['guest-allergy-menu-check', 'Unknown is never clear.', 'unknown is never clear'],
-	['guest-allergy-menu-check', 'A real conflict doesn’t stop you.', 'conflicts warn, never block'],
+	['guest-allergy-menu-check', 'A conflict doesn’t stop you, and that’s deliberate', 'conflicts warn, never block'],
 	['catering-deposit-without-chasing', 'CostCook won’t book on the yes alone.', 'acceptance is not booking'],
 	['catering-deposit-without-chasing', 'The deposit is asked for by hand.', 'no automatic deposit reminder'],
 	['should-staff-see-food-costs', 'A cook needs to know it’s four cases. Not that it’s $219.', 'snap line'],
-	['should-staff-see-food-costs', 'Only the Owner invites.', 'owner-only invites'],
-	['catering-food-labels', 'That warning is CostCook refusing to print a blank allergen line it can’t stand behind.', 'unreviewed is printed'],
+	['should-staff-see-food-costs', 'Only the owner can invite.', 'owner-only invites'],
+	['catering-food-labels', 'CostCook won’t print a blank allergen line over an ingredient nobody checked.', 'unreviewed is printed'],
 	['catering-food-labels', 'it isn’t a claim of retail-label compliance', 'no compliance claim'],
 ]) {
 	requireText(readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'), text, `${slug} ${label}`);
@@ -150,7 +150,7 @@ for (const [slug, text, label] of [
 // How-to guides carry their app captures as sized figures
 // (integrations/blog-figures.mjs): a step with no screenshot, or an image
 // without width and height, is a guide that stopped showing the app.
-for (const [slug, figures] of [['catering-food-labels', 7]]) {
+for (const [slug, figures] of [['catering-food-labels', 7], ['guest-allergy-menu-check', 8], ['catering-deposit-without-chasing', 10], ['should-staff-see-food-costs', 8]]) {
 	const html = readFileSync(join(blogRoot, slug, 'index.html'), 'utf8');
 	const shots = [...html.matchAll(/<figure class="blog-shot">[\s\S]*?<\/figure>/g)].map((m) => m[0]);
 	if (shots.length !== figures) failures.push(`${slug} has ${shots.length} app captures; expected ${figures}`);
