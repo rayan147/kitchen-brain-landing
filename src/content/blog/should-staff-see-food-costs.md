@@ -19,7 +19,7 @@ You don't want her doing the math on the fundraiser. She knows what the chicken 
 
 Most owners solve this by keeping the cooks out of the software. Then the prep list lives on a whiteboard, and the whiteboard is wrong. A cook needs to know it's four cases. Not that it's $219.
 
-Here's how to bring a cook in as **Staff**, and what she sees once she's there.
+Bringing a cook in as **Staff** takes one invitation, and what she sees after that is below.
 
 ## Step 1: Invite her as Staff
 
@@ -45,7 +45,7 @@ And here's the same order on her phone.
 
 ![The same order as Staff sees it: the same title, date, guests and menu, then straight to the tabs Shop, Prep 0 of 19, Pack 0 of 5 and Details. "Nothing on this list has been counted yet." A Count shelf items button. Baldor, 2 items: Arugula, need 3.9 lb, 2 × 3 lb clamshell; Mushroom, cremini, need 7.1 lb, 1 × 10 lb case. No prices anywhere.](/proof/blog/should-staff-see-food-costs/04-staff-order-mobile.png "Staff's view: what to buy and how much, and no dollar figure.")
 
-No price card, no food cost, no total on the **Shop** tab. She gets the quantities, the packs and **Count shelf items**. Prices, costs and margins are taken out on the server before the page reaches her phone, so there's no hidden column to switch back on.
+The **Shop** tab has no price card and no food cost. She gets the quantities, the packs and **Count shelf items**. Prices, costs and margins are taken out on the server before the page reaches her phone, so there's no hidden column to switch back on.
 
 The recipe works the same way. You see the plate cost.
 
@@ -71,20 +71,14 @@ The bottom of the page shows the whole line in one table.
 
 ![Who can do what, Owner, Manager and Staff. Orders, prep and pack lists: all three. Check in deliveries, shelf counts: all three. See costs and margins: Owner and Manager, not Staff. Recipes, ingredients, menus: all three. Vendors and purchase orders: Owner and Manager, Staff can view. Settings: Owner only. Billing and team: Owner only.](/proof/blog/should-staff-see-food-costs/09-who-can-do-what-mobile.png "Three roles, and the line between them is costs.")
 
-There's no grid of custom permissions to fiddle with. If someone should see costs, they're a Manager. If they shouldn't, they're Staff.
+There's no grid of custom permissions to fiddle with. Anyone who should see costs is a Manager; everyone else is Staff.
 
 ## Who gets Manager
 
 Hand out Manager the way you'd hand out the office key: to whoever orders when you're not there, or prices a quote while you're on a job. And only to someone you'd trust to read the month's food cost and keep it to themselves.
 
-Receiving is shared, but not all of it. Staff record what came off the truck, by quantity. Committing the delivery and logging what was paid takes a Manager or you.
-
-Everyone else is Staff, with everything they need to cook from.
-
 ## Check the invites
 
-- Your cooks are Staff: quantities, recipes and lists, never prices.
+- Your cooks are Staff: quantities, recipes and lists, without the costs.
 - Your managers can open costs, vendors and purchase orders, and you're fine with that.
 - You know where **Change role** and **Remove from kitchen** are.
-
-Tuesday your lead cook checks the fundraiser's list from her phone, 7.1 pounds of cremini, and the price of anything stays your business.

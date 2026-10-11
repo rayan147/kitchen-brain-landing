@@ -7,17 +7,17 @@ menuGroup: Plan and buy
 menuIcon: allergen
 featured: false
 order: 16
-readMinutes: 6
+readMinutes: 7
 featureHref: /features/guest-restrictions-and-dietary-guards
 featureLabel: See guest restrictions and dietary guards
 ---
 <!-- story: docs/stories/blog-guest-allergy-menu-check.story.md -->
 
-The planner forwards one line from the bride's sister: "My husband can't have sesame. Is that OK?" You run the menu in your head. Chicken shawarma, no. Greek salad, no. Hummus, yes, obviously, it's tahini. So you swap the hummus and write back "We've got him."
+The planner forwards one line from the bride's sister: "My husband can't have sesame. Is that OK?" You run the menu in your head. Greek salad, no. Couscous, no. Hummus, yes, obviously, it's tahini. So you swap the hummus and write back "We've got him."
 
 Then the focaccia arrives from the bakery with "may contain sesame" on the box, and nobody read the box.
 
-Reading by dish name catches the hummus and misses the bread. Here's how to check the whole menu against one guest in CostCook: the Lindqvist wedding, 120 guests on the Mediterranean Spread, one guest at table 4 who can't have sesame.
+Checking it in CostCook: the Lindqvist wedding, 120 guests on the Mediterranean Spread, one guest at table 4 who can't have sesame.
 
 ## Step 1: Open the order and find Before you confirm
 
@@ -25,7 +25,7 @@ Every draft order has a checklist at the top. Two of its items are about this: *
 
 ![The order's checklist: "Before you confirm · 1 of 5 done. Confirming locks quantities and prices, and starts shopping, prep and pack." Date set is done. Fix the price shows 36.6% food cost, over 30%. Review allergens shows None reviewed on 6 dishes. Add the customer is optional. Guest restrictions shows Not declared · add or mark none. The Confirm order button is greyed out.](/proof/blog/guest-allergy-menu-check/01-checklist-mobile.png "Six dishes, none reviewed for allergens, and nobody's said yet who's eating.")
 
-**Confirm order** stays greyed out until the allergens are reviewed, among other things. That's on purpose.
+**Confirm order** stays greyed out until the allergens are reviewed. **Guest restrictions** doesn't hold it back, so it's easy to skip. Don't.
 
 ## Step 2: Put the guest on the order
 
@@ -39,13 +39,13 @@ Tap **Add restriction**. If nobody at the event has a restriction, tap **None de
 
 Back on the order, **What to look at** now checks every dish against sesame.
 
-![What to look at: "table 4, bride's brother-in-law: Sesame". In green: "No conflicts with the guests' restrictions · 28 ingredients unreviewed". Below it in amber: "Check: 28 ingredients not reviewed for allergens". Then: "Read from today's catalog. Confirming the order freezes this reading."](/proof/blog/guest-allergy-menu-check/03-checks-before-mobile.png "No conflicts found, because nothing has been checked yet. The amber line is the one to read.")
+![What to look at: "table 4, bride's brother-in-law: Sesame". In green: "No conflicts with the guests' restrictions · 28 ingredients unreviewed". Below it in amber: "Check: 28 ingredients not reviewed for allergens". Then: "Read from today's catalog. Confirming the order freezes this reading."](/proof/blog/guest-allergy-menu-check/03-checks-before-mobile.png "No conflicts found, because nothing has been checked yet. Go by the amber line.")
 
-Read both lines. "No conflicts" in green means nothing on file contains sesame yet. Nothing is on file. The amber line under it is the truth: 28 ingredients haven't been checked. Unknown is never clear.
+"No conflicts" in green only means nothing on file contains sesame, and nothing is on file yet. The amber line says 28 ingredients haven't been checked. Go by that one. Unknown is never clear.
 
 ## Step 4: Answer each ingredient from its package
 
-Open each ingredient's **Allergens** page with the package or the supplier's spec sheet in your hand. Each of the nine allergens gets one answer: **Contains**, **May contain**, **Cross-contact**, **Free from**, or **Not checked** if you haven't seen it.
+Open the order's **Pack** tab and tap **Review 28 ingredients** to get the list, then open each ingredient's **Allergens** page with the package or the supplier's spec sheet in your hand. Each of the nine allergens gets one answer: **Contains**, **May contain**, **Cross-contact**, **Free from**, or **Not checked** if you haven't seen it.
 
 The tahini is the easy one.
 
@@ -55,26 +55,30 @@ The focaccia is the one you'd miss. The bakery's spec sheet says it's made on a 
 
 ![The allergens page for Focaccia sheet. Sesame is set to May contain, with the source "Bakery spec sheet, read Oct 10". The Draft with Sage button sits above the rows.](/proof/blog/guest-allergy-menu-check/05-focaccia-mobile.png "Focaccia: sesame, May contain, from the bakery's spec sheet.")
 
-When you save, CostCook asks where you checked, so the next person knows the answer came from a label and not a guess.
+When you save, CostCook asks where you checked, so the next person sees the answer came from a label.
 
 **Draft with Sage** can suggest answers from an ingredient's name. It only ever suggests contains or may contain, never free from, and nothing is saved until you take it. A name can tell you tahini has sesame. It can't tell you what else the bakery runs on that line.
 
 ## Step 5: Open View dish checks
 
-With every ingredient answered, the order knows. Tap **View dish checks**.
+Once every ingredient is answered, tap **View dish checks**.
 
-![What to look at, now in red: "1 conflict with the guests' restrictions · 1 unresolved check". View dish checks is open. Focaccia and Whipped Goat Cheese: "Check: Focaccia sheet (may contain) · table 4, bride's brother-in-law: Sesame". Hummus and Crudité: "Conflict: Tahini (contains) · table 4, bride's brother-in-law: Sesame". Each dish has an Open recipe link.](/proof/blog/guest-allergy-menu-check/06-checks-after-mobile.png "The hummus is a conflict. The focaccia is a check. Both name the ingredient that decided it.")
+![What to look at, now in red: "1 conflict with the guests' restrictions · 1 unresolved check". View dish checks is open. Focaccia and Whipped Goat Cheese: "Check: Focaccia sheet (may contain) · table 4, bride's brother-in-law: Sesame". Hummus and Crudité: "Conflict: Tahini (contains) · table 4, bride's brother-in-law: Sesame". Each dish has an Open recipe link.](/proof/blog/guest-allergy-menu-check/06-checks-after-mobile.png "Hummus is a conflict, focaccia is a check, and each names the ingredient.")
 
-- **Conflict** means an ingredient is confirmed to contain it. The hummus has tahini through its sauce. Take it off his plate.
-- **Check** means CostCook can't say yes or no: may contain, cross-contact, or not answered. The focaccia needs a decision from you, and probably a different roll for table 4.
+- **Conflict** means an ingredient is confirmed to contain it. The hummus has tahini through its sauce.
+- **Check** means CostCook can't say yes or no: may contain, cross-contact, or not answered. The focaccia needs a decision from you.
+
+On a spread like this, the hummus and the bread sit on a shared table with shared spoons, so pulling them off his plate isn't enough. Plate his meal separately in the kitchen, label it for table 4, and write what he's getting in the restriction's **Who** note, where the cook will see it.
 
 ## Step 6: Confirm, knowing what you're confirming
 
-Fix whatever else the checklist asks (here it was the price), then tap **Confirm order**. A conflict doesn't stop you, and that's deliberate: his plate may already be planned around it. The dialog lists it so you can't miss it.
+Fix whatever else the checklist asks (here it was the price), then tap **Confirm order**. A conflict doesn't stop you, and that's deliberate: his plate may already be planned around it. The dialog lists the conflict so you can't miss it.
 
 ![The Confirm order? dialog for Lindqvist wedding: 120 guests, revenue $5,704.80, food cost $1,711.42. A red box: "Guest restriction conflict to review. Conflict · Hummus and Crudité: Tahini (contains) · table 4, bride's brother-in-law: Sesame. Confirming records these checks with the order. Review the dishes before serving." Buttons: Confirm and Keep editing.](/proof/blog/guest-allergy-menu-check/07-confirm-dialog-mobile.png "The conflict, named, right above the Confirm button.")
 
-After you confirm, the order keeps the reading it was confirmed with, and the prep sheet carries the same checks to the cook.
+The dialog lists conflicts only. The focaccia check isn't repeated there, so settle it in Step 5.
+
+After you confirm, the order keeps the reading it was confirmed with, and the prep page shows the same checks to the cook, with table 4's name on them.
 
 ![What to look at after confirming: the same conflict and check, and at the foot "Checked at confirm · Sun, Oct 11" with a Re-check button.](/proof/blog/guest-allergy-menu-check/08-checked-at-confirm-mobile.png "Frozen at confirm. Re-check if a supplier changes something.")
 
@@ -82,13 +86,13 @@ If the bakery sends a new spec sheet next week, update the focaccia and tap **Re
 
 An owner can still use **Confirm anyway** to get past the checklist. It skips every open check on the order, not just this one, so use it knowing that.
 
-CostCook doesn't see your cutting boards, and it can't promise a guest anything. CostCook detects, it never certifies. The promise to table 4 is still yours.
+CostCook doesn't see your cutting boards and can't promise a guest anything. CostCook detects, it never certifies. What you tell table 4 is on you.
 
 ## Before you answer the planner
 
 - He's on the order: **Allergy**, **Sesame**, one guest, with a note saying where he's sitting.
 - Every ingredient on the menu was answered from a package or a spec sheet.
-- Every conflict is off his plate, and every check has a decision.
-- The prep sheet shows the cook which plate is his.
+- His meal is plated separately, and the **Who** note says what he's getting.
+- The cook has seen the checks on the prep page.
 
-Then write back "We've got him." This time you'll know about the focaccia.
+Then write back "We've got him."

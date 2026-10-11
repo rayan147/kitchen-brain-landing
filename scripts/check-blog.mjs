@@ -141,7 +141,7 @@ for (const [slug, text, label] of [
 	['catering-deposit-without-chasing', 'The deposit is asked for by hand.', 'no automatic deposit reminder'],
 	['should-staff-see-food-costs', 'A cook needs to know it’s four cases. Not that it’s $219.', 'snap line'],
 	['should-staff-see-food-costs', 'Only the owner can invite.', 'owner-only invites'],
-	['catering-food-labels', 'That warning is CostCook refusing to print a blank allergen line it can’t stand behind.', 'unreviewed is printed'],
+	['catering-food-labels', 'CostCook won’t print a blank allergen line over an ingredient nobody checked.', 'unreviewed is printed'],
 	['catering-food-labels', 'it isn’t a claim of retail-label compliance', 'no compliance claim'],
 ]) {
 	requireText(readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'), text, `${slug} ${label}`);

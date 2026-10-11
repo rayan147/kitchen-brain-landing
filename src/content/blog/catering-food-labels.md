@@ -26,7 +26,7 @@ A label is the note you leave the next cook, from the person who made it.
 5. **What it contains.** The allergens, in capitals, where nobody can miss them.
 6. **What it's for**, and **who made it**, so there's someone to ask.
 
-The allergen line is the one that keeps someone out of the hospital, and it has to come from the recipe, not from memory. Here's how to print one in CostCook, using the Wild Mushroom Polenta for a 29-guest fundraiser on Tuesday.
+The allergen line is the one that keeps someone out of the hospital, and it has to come from the recipe, not from memory. Printing one in CostCook, with the Wild Mushroom Polenta for a 29-guest fundraiser on Tuesday:
 
 ## Step 1: Open the order's Pack page
 
@@ -34,7 +34,7 @@ Open the order and tap **Pack**. Before you print anything, look at the top of t
 
 ![The Pack page for the Ishikawa fundraiser, #765, Tue Oct 13, 29 guests, Confirmed. A warning reads: Labels will say "allergens not reviewed" on 5 dishes. 16 ingredients across the menu haven't been checked. Review them before printing labels for guests. Below it, a button: Review 16 ingredients.](/proof/blog/catering-food-labels/01-pack-warning-mobile.png "If an ingredient's allergens were never answered, the label says so instead of printing a blank.")
 
-That warning is CostCook refusing to print a blank allergen line it can't stand behind. If you print now, those labels say how many ingredients weren't reviewed. Better to answer them first.
+CostCook won't print a blank allergen line over an ingredient nobody checked. If you print now, those labels say how many ingredients weren't reviewed. Better to answer them first.
 
 ## Step 2: Answer each ingredient from its package
 
@@ -44,7 +44,7 @@ Tap **Review allergens** under the dish, or **Review 16 ingredients** for the wh
 
 **Draft with Sage** can suggest answers from the ingredient's name, but free from is your call, made with the package in front of you.
 
-When you save, CostCook asks where you checked. Write it down: next month someone will want to know.
+When you save, CostCook asks where you checked. Write it down for whoever checks next month.
 
 ![A save bar: "9 changes · where did you check it?", with the note "Package label, read Oct 10". Below: "Saved with the rows you changed. After saving, all 9 are answered, so recipes treat Parmesan, block as checked." Buttons: Discard and Save 9 changes.](/proof/blog/catering-food-labels/02-ingredient-allergens-save-mobile.png "Saving needs a note saying where the answer came from.")
 
@@ -87,6 +87,8 @@ Use by = Oct 10 + 7 − 1 days
 
 The common mistake is counting from the day after. That's an eighth day nobody planned for.
 
+The made date on the label is the day you print it. Print labels the day you make the food; if you're labelling yesterday's batch, set the use-by date yourself with **Change shelf life**.
+
 ## Step 6: Say how many containers, and print
 
 One label per container, not per portion. The polenta goes out in two hotel pans, so that's two labels, numbered 1 of 2 and 2 of 2.
@@ -108,4 +110,4 @@ CostCook's recipe **Nutrition label** gives you a calculated Nutrition Facts pan
 - The use-by date counts the day it was made as day 1.
 - One label per container, numbered.
 
-Tomorrow the cook reaches for the pan that says WILD MUSHROOM POLENTA, USE BY OCT 16, CONTAINS: MILK, and doesn't have to ask anybody.
+Tomorrow the cook reaches for the pan that says Wild Mushroom Polenta, USE BY OCT 16, CONTAINS: MILK, and doesn't have to ask anybody.
