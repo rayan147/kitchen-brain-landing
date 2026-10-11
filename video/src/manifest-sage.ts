@@ -12,6 +12,8 @@ export const SageManifestSchema = z.object({
   used: credits,
   periodCredits: credits,
   trialCredits: credits,
+  // The panel's note threshold, from allowance.ts NOTICE_SHARE.
+  noticeAt: z.string().regex(/^\d{1,3}%$/),
   resetsOn: z.string().min(1),
   answerCost: z.string().regex(/^\$\d+\.\d{2}$/),
   displayPrice: z.string().min(1),

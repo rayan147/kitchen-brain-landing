@@ -39,6 +39,7 @@ describe("the Sage film", () => {
   it("carries the same allowance as the page's src/lib/sage.ts", () => {
     expect(manifest.periodCredits).toBe(siteNumber("periodCredits"));
     expect(manifest.trialCredits).toBe(siteNumber("trialCredits"));
+    expect(siteSage).toContain(`noticeAt: '${manifest.noticeAt}'`);
   });
 
   it("matches the page's transcript word for word", () => {

@@ -39,6 +39,10 @@ const FORBIDDEN = [/Kitchen Brain/i, /Maple & Main/, /\bE2E\b/, /fixture/i, /loc
 // The allowance sizes, read from the commit the world was built from, so the
 // film's "2,000" and "300" are the app's numbers, not typed ones.
 const config = execFileSync('git', ['-C', KB_REPO, 'show', `${APP_SHA}:src/lib/server/sage/config.ts`], { encoding: 'utf8' });
+// The share at which the panel's note appears, from allowance.ts at the same commit.
+const allowanceSource = execFileSync('git', ['-C', KB_REPO, 'show', `${APP_SHA}:src/lib/server/sage/allowance.ts`], { encoding: 'utf8' });
+const noticeShare = Number(allowanceSource.match(/const NOTICE_SHARE = ([\d.]+);/)?.[1]);
+if (!noticeShare) throw new Error(`NOTICE_SHARE not found in allowance.ts at ${APP_SHA}`);
 const constant = (name) => {
 	const raw = config.match(new RegExp(`export const ${name} = ([\\d_]+);`))?.[1];
 	if (!raw) throw new Error(`${name} not found in config.ts at ${APP_SHA}`);
@@ -124,6 +128,7 @@ const manifest = {
 	used,
 	periodCredits: credits,
 	trialCredits: constant('SAGE_TRIAL_CREDITS'),
+	noticeAt: `${Math.round(noticeShare * 100)}%`,
 	resetsOn,
 	// What the 2026-10-07 answer printed (docs/stories/sage-feature.story.md).
 	answerCost: '$7.28',

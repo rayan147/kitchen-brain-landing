@@ -20,6 +20,7 @@ import { DropoffManifestSchema } from "../src/manifest-dropoff";
 import { SageManifestSchema } from "../src/manifest-sage";
 
 const root = resolve(import.meta.dirname, "..");
+// Considered a lookup like render-check.mts; not used: two folders, one flag.
 const sage = process.env.FILM === "sage";
 const out = resolve(root, sage ? "public/frames-sage" : "public/frames-dropoff");
 const source = resolve(

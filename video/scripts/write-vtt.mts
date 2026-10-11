@@ -12,10 +12,14 @@ import { SageManifestSchema } from "../src/manifest-sage";
 import { toVttOf } from "../src/vtt";
 
 // FILM=dropoff writes out/dropoff.vtt, FILM=sage out/sage.vtt; the default is
-// the wedding's promo.vtt.
-const dropoff = process.env.FILM === "dropoff";
-const sage = process.env.FILM === "sage";
-const film = dropoff ? DROPOFF : sage ? SAGE : WEDDING;
+// the wedding's promo.vtt. A lookup, as in render-check.mts: the films differ
+// only in data.
+const FILMS = {
+  dropoff: { film: DROPOFF, schema: DropoffManifestSchema, name: "dropoff.vtt" },
+  sage: { film: SAGE, schema: SageManifestSchema, name: "sage.vtt" },
+} as const;
+const picked = FILMS[process.env.FILM as keyof typeof FILMS];
+const film = picked?.film ?? WEDDING;
 
 const root = resolve(import.meta.dirname, "..");
 const json: unknown = JSON.parse(
@@ -24,12 +28,8 @@ const json: unknown = JSON.parse(
     "utf8",
   ),
 );
-const manifest = dropoff
-  ? DropoffManifestSchema.parse(json)
-  : sage
-    ? SageManifestSchema.parse(json)
-    : ManifestSchema.parse(json);
-const name = dropoff ? "dropoff.vtt" : sage ? "sage.vtt" : "promo.vtt";
+const manifest = picked ? picked.schema.parse(json) : ManifestSchema.parse(json);
+const name = picked?.name ?? "promo.vtt";
 await mkdir(resolve(root, "out"), { recursive: true });
 await writeFile(resolve(root, "out", name), toVttOf(film, manifest));
 console.log(`wrote out/${name}`);

@@ -54,7 +54,9 @@ export const sageDraftKinds = [
  */
 export const sageAllowance = {
 	periodCredits: 2000,
-	trialCredits: 300
+	trialCredits: 300,
+	/** The share used at which the Sage panel's note appears (allowance.ts NOTICE_SHARE = 0.8). */
+	noticeAt: '80%'
 } as const;
 
 /** "2,000 Sage credits each paid month, 300 during the free trial" (owner wording, 2026-10-11). */

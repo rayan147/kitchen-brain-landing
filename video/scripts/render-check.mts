@@ -12,21 +12,23 @@ import { SageManifestSchema } from "../src/manifest-sage";
 import { frameProblems, sourceCounts } from "../src/render-guard";
 
 // FILM=dropoff checks the office lunch, FILM=sage the Sage film; the default
-// is the wedding.
-const which = process.env.FILM;
-const dropoff = which === "dropoff";
-const sage = which === "sage";
-const film = dropoff ? DROPOFF : sage ? SAGE : WEDDING;
+// is the wedding. Considered Strategy (a checker per film); not used because
+// the films differ only in their table and schema, which is data: a lookup.
+const FILMS = {
+  dropoff: { film: DROPOFF, schema: DropoffManifestSchema },
+  sage: { film: SAGE, schema: SageManifestSchema },
+} as const;
+const picked = FILMS[process.env.FILM as keyof typeof FILMS];
+const film = picked?.film ?? WEDDING;
 const out = resolve(import.meta.dirname, "../public", film.framesDir);
 const json: unknown = JSON.parse(
   await readFile(resolve(out, "manifest.json"), "utf8"),
 );
-const manifest =
-  dropoff || sage
-    ? (({ appSha, ...m }) => ({ ...m, developCommit: appSha }))(
-        (dropoff ? DropoffManifestSchema : SageManifestSchema).parse(json),
-      )
-    : ManifestSchema.parse(json);
+const manifest = picked
+  ? (({ appSha, ...m }) => ({ ...m, developCommit: appSha }))(
+      picked.schema.parse(json),
+    )
+  : ManifestSchema.parse(json);
 const filmFrames = filmFramesList(film);
 const problems = frameProblems(
   filmFrames,
