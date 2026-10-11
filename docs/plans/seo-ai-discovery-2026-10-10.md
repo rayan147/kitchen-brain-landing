@@ -61,3 +61,12 @@ After a few weeks, prioritize the largest verified constraint: crawl/index failu
 2. Reconcile live deployment versus `develop` so implementation starts from the actual published state.
 3. Implement and verify canonical/sitemap/utility-page cleanup.
 4. Choose the target market and query family from owner direction plus measured queries, then begin the page/content work.
+
+## Implementation status — 2026-10-10
+
+- The implementation branch now starts from `origin/develop` at `119df4a` and includes its 19 published guides. The production deployment checked on 2026-10-10 was `origin/main` at `1615d5e`. The branch carries only SEO changes relative to the current develop base.
+- Phase 1 code is implemented: Vercel redirects trailing-slash variants to the slashless URLs already used by internal links; sitemap URLs match those canonicals; four form outcome routes are excluded from the sitemap and carry `noindex` while remaining usable. `scripts/check-seo.mjs` runs after every build.
+- The first Phase 2 change is implemented: the homepage title names catering software, and factual `Organization` data identifies the brand and founder. `SoftwareApplication` rich-result markup is deferred because Google requires a real rating or review and the repo has no approved one.
+- Production and `PUBLIC_NOINDEX=1` staging builds passed. `npm run check`, homepage browser verification, contact browser verification, and demo browser verification passed. The browser checks covered phone layouts, 200% text, reduced motion, focus, and no-JavaScript paths. The route exclusion rule is shared by sitemap generation and the build guard; the guard also rejects sitemap URLs without built indexable pages. The production redirect behavior still needs a live post-deployment check.
+- Phase 0 search baselines remain unavailable: no connected Google Search Console or Bing Webmaster account is exposed here. Vercel's project API reports `web_analytics_not_enabled`, even though the site loads its analytics script in production. A Google Search Console connection has been suggested; no account action has been taken.
+- Phases 3–4 depend on a selected market/query family and real search/conversion data. The current US-English independent-caterer target remains a provisional assumption.
