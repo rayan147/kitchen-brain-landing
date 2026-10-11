@@ -334,3 +334,32 @@ claim in copy.
 - **Step 11 — Revision [x]:** The metadata title is now “Catering software
   from inquiry to closeout | CostCook.” It adds one clear product category,
   makes no new capability or outcome claim, and leaves the H1 and CTA intact.
+### Revision 2026-10-11 (10): English edit for speed
+
+An editor's audit (english-elite-editor) read the page as the phone reader
+does. The owner took the misread, slow-reader and polish findings, and moved
+the boundary line. No claim added; every figure and qualifier kept.
+
+- **Misreads.** The invoice card is "Supplier invoices by email" (a caterer's
+  invoices are the ones they send), and the band's eyebrow is "Client orders,
+  supplier invoices", not "Front of house".
+- **Said once.** The front-of-house lede says the two facts in two short
+  sentences; the cards carry the rest, and the inquiry route moved into the
+  ordering card ("which requests come to you as an inquiry to price",
+  ordering.ts). The walk's lede drops "Here is one wedding", which repeated
+  the eyebrow and the H2. The plan card's under-button line says $0 and cancel
+  once; "One kitchen per plan" went (the card says "per kitchen").
+- **The boundary moved (owner, 2026-10-11).** "Their yes books nothing. The
+  signed agreement and the deposit do." now heads step 03, renamed "Agreement
+  and deposit", where both happen. Step 04 is headed "Wait for the final count,
+  then Confirm.", so Confirm order no longer reads as the booking. The "What booked
+  means" guide link moved with it to step 03.
+- **One verb.** The import row says "wait for you to confirm them" and "Needs
+  review" (the app's label); "OK" is gone from the page.
+- **Polish.** "The recipes behind your proposal", "$3,500.00 due now", a full
+  stop in the prep step, and "Rather click through it yourself?" for the
+  click-through tour.
+
+Kept by the editor's ruling: the H1, the hero lede, the inquiry step, "It never
+slips in as zero.", the Sage band, the founder line, and the snap line, "Buy
+for what survives the knife." Steps 6, 10 and 11 re-checked.

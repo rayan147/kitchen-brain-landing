@@ -170,7 +170,7 @@ export const eventStages = [
 	},
 	{
 		id: 'proposal',
-		carries: '$14,250.00 accepted, asked as $3,500.00 now and $10,750.00 later',
+		carries: '$14,250.00 accepted: $3,500.00 due now, $10,750.00 later',
 		focus: [{ x: 3.1, y: 26.2, w: 93.8, h: 17.5 }] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Proposal',
@@ -195,11 +195,15 @@ export const eventStages = [
 			{ x: 1.1, y: 9, w: 97.9, h: 28.9 },
 			{ x: 59.8, y: 71.4, w: 39.1, h: 8.5 }
 		] as Focus[],
-		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
-		tab: 'Deposit',
-		heading: 'The deposit comes in by card.',
+		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
+		tab: 'Agreement and deposit',
+		// The boundary sits on the step where the signature and the deposit
+		// happen (English edit 2026-10-11): on the Confirm order step a phone
+		// reader took confirming to be the booking, which it never is.
+		heading: acceptanceBoundary,
 		// The signature lives here, not in the client's yes (RC-64: claimable,
-		// not capturable, so it is a sentence without a frame).
+		// not capturable, so it is a sentence without a frame). Agreement first,
+		// in the heading's own order.
 		body: `${agreementLine} ${eventPayments.homepage}`,
 		shot: shot(
 			'payment-schedule-phone',
@@ -213,12 +217,12 @@ export const eventStages = [
 		carries: 'The same menu, quantities and prices locked',
 		// small: the same sentence in the phone crop (72, 84, 836x312 of the PNG).
 		focus: [{ x: 8.1, y: 31.9, w: 83.9, h: 21.8, small: { x: 1, y: 21.8, w: 99, h: 33.3 } }] as Focus[],
-		guide: { href: '/features/events-and-proposals#booked', label: 'What booked means' },
+		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Confirm order',
-		heading: acceptanceBoundary,
 		// When, as advice, not a rule the app enforces (third chef review: "am I
 		// locked on a guess?").
-		body: 'Wait for the final count, then Confirm. That locks the quantities and prices, and your shopping, prep and pack lists turn into checklists.',
+		heading: 'Wait for the final count, then Confirm.',
+		body: 'That locks the quantities and prices, and your shopping, prep and pack lists turn into checklists.',
 		// The phone source is the dialog's own content without its margins
 		// (mobile review 2026-10-09: the full dialog put its sentence at about
 		// 8px on a 390 phone). It is a crop, not a phone capture, and keeps
@@ -237,7 +241,7 @@ export const eventStages = [
 		guide: { href: '/features/order-shop-prep-pack', label: 'How orders, shop, prep and pack work' },
 		tab: 'Shop / Prep',
 		heading: 'Then you shop and prep off the same menu.',
-		body: 'You buy by supplier, in whole packs. Prep runs in order, bases before the dishes that use them, scaled to the head count, and you check it off on your phone.',
+		body: 'You buy by supplier, in whole packs. Prep runs in order, bases before the dishes that use them, scaled to the head count. You check it off on your phone.',
 		// The shopping list, not the prep sheet (second chef review 2026-10-07):
 		// the kitchen is set to US units and the Shop tab buys in them, while
 		// the prep sheet prints each recipe in the units it was written in
@@ -297,7 +301,7 @@ export const kitchenRows = [
 		eyebrow: 'Invoices and price sheets',
 		pain: 'You’re not typing 400 ingredients into one more system.',
 		heading: 'Upload the invoice. Confirm what it read.',
-		body: 'It takes invoices and price sheets, even a spreadsheet or a Word file. Lines it matched wait for your OK. The rest get flagged for you to look at. And it learns your names for things.',
+		body: 'It takes invoices and price sheets, even a spreadsheet or a Word file. Lines it matched wait for you to confirm them. The rest are flagged Needs review. It learns your names for things.',
 		shot: withPhone(
 			shot(
 				'import-review',
@@ -335,7 +339,7 @@ export const frontOfHouse = [
 		// The widget is Settings > Integrations > Ordering site > Put on your
 		// website: one script tag, a sandboxed frame (develop 7a7e407d9). The
 		// frame is that widget in a sample page for the sample kitchen.
-		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request, and your booking rules decide whether they pay by card up front.',
+		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request. Your booking rules decide whether they pay by card up front, and which requests come to you as an inquiry to price.',
 		shot: withPhone(
 			shot(
 				'ordering-site',
@@ -348,7 +352,7 @@ export const frontOfHouse = [
 	{
 		id: 'invoice-email',
 		guide: { href: '/features/invoice-email', label: 'How invoice email works' },
-		heading: 'Invoices by email',
+		heading: 'Supplier invoices by email',
 		body: 'Suppliers email invoices to your kitchen’s own private address. You can see what happened to each one, and none of it counts until you confirm it.',
 		shot: withPhone(
 			shot(
