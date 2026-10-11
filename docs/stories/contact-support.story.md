@@ -160,3 +160,9 @@ Content: `src/pages/contact.astro` and its shared data/response states.
 - Lede no longer guesses a pronoun for Rayan: "The answer comes back by email, usually the same day, and you do not need a trial to ask."
 - "What helps me answer" uses the reader's words: "how many are on the crew", "where it is going wrong".
 - /contact/sent opens "Sent. Your question is with me."; /contact/not-sent opens "That did not go through." and says "nothing reached me", matching /demo/not-sent's first-person honesty.
+
+## Revision 2026-10-11: English edit
+- Question box: eyebrow "ASK RAYAN · REPLY BY EMAIL" names who "I" is; the email help says the useful thing ("Rayan replies to this address, so check it is right."); the confirmation note no longer repeats its title ("Nothing else to do. Watch that inbox for the reply.").
+- The in-app note is split in two: "...use Contact support inside the app instead. Your account email and the screen you are on go with the message, so I know which kitchen you are."
+- Aside list adds "a proposal" to where it is going wrong. /contact/sent opens its body with "This is Rayan."
+- Not changed, held for the owner: "goes straight to my inbox", "usually the same day", the no-JS "go back to the form" and "try once more" line, the failure message, the voice choice, the h1.
