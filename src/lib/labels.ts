@@ -59,7 +59,7 @@ export const labelsAvailability = {
 		: 'Nutrition facts are computed per recipe out of the ingredients you already entered. Once every source is confirmed and no line is blank, they print from the recipe as a sheet for label stock. Every dish on an order is checked against who is eating it. Kitchen date and allergen labels ask you to settle the storage and use-by facts before the browser prints them.',
 	nutritionFaqCrosslink: labelsAreComing
 		? 'Kitchen date labels are a separate feature marked Coming and are not included today; see the next answer.'
-		: 'Kitchen date labels are a separate feature; see the next answer.',
+		: 'Kitchen date labels are a separate feature; see <a href="#label-printing">the kitchen labels answer</a>.',
 	seoDescription: labelsAreComing
 		? 'Date and allergen labels from the pack list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record. Coming; not included in the subscription today.'
 		: 'Date and allergen labels from the pack list: storage condition, a use-by date the cook settles, one label per container, printed through the browser and frozen on the record.',

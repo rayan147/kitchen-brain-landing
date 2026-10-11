@@ -176,3 +176,10 @@ Content: `src/lib/faq.ts` and its shared data/response states.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Labels answer names the prep list; Sage answer says "an owner or manager".
+
+## Revision 2026-10-11: English edit
+- #frozen no longer skips the gap before Confirm order: "Your food cost does, until you press Confirm order. Confirming an order freezes..." (the confirmed order, not event; claims add RC-03). #quote leads with "From your costed recipes." and uses "Until you press Confirm order".
+- #receiving answers the short truck first: "You mark the line short, and it stays in view until you follow it up." #orders uses the app's labels: Email, Print or I'll buy it, or I'll shop it myself (kitchen-brain develop supplier-orders.ts).
+- #restaurant carries the job "from the inquiry and the proposal" and drops "you still belong here" (claims add RC-61, RC-63).
+- Long sentences split in #labels, #setup, #permissions, #sage, #guest-restrictions (dietary.faq); #ordering lede active ("Your booking rules decide what approval does.").
+- #labels points to #label-printing by link instead of "see the next answer"; #card no longer repeats #trial; "day 16" everywhere; "the owner" (not workspace or verified owner); #after-setup drops the third "Staff never see costs".
