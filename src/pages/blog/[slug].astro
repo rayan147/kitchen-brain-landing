@@ -161,6 +161,35 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		text-underline-offset: 4px;
 	}
 
+	/* A guide step's app capture (integrations/blog-figures.mjs). Stored at
+	   device scale 2 and never drawn above half its pixel width; the frame is
+	   the homepage capture frame (8px radius, lift), not a phone mockup. */
+	.article-body :global(figure.blog-shot) {
+		margin-block: 1.75rem 2rem;
+	}
+
+	.article-body :global(figure.blog-shot img) {
+		display: block;
+		width: 100%;
+		max-width: var(--phone-w);
+		height: auto;
+		border: 1px solid var(--color-ticket-rule);
+		border-radius: 0.5rem;
+		box-shadow: var(--shadow-lift);
+	}
+
+	.article-body :global(figure.blog-shot figcaption) {
+		max-width: 40rem;
+		padding-top: 0.75rem;
+		font-size: var(--text-body-sm);
+		line-height: 1.5;
+		color: var(--color-ink-soft);
+	}
+
+	@media (min-width: 64rem) {
+		.article-body :global(figure.blog-shot img) { max-width: min(100%, var(--desk-w)); }
+	}
+
 	@media (max-width: 1023px) {
 		.article-body :global(h2) { scroll-margin-top: 1rem; }
 	}

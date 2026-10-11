@@ -46,11 +46,16 @@ const expectedPosts = [
 	// The ordering guides publish with online ordering, which check-landing-claims
 	// pins at 'yes' (RC-59); the owner lifted the pay-link hold on 2026-10-08.
 	'take-catering-orders-online',
-	'catering-order-form-on-your-website'
+	'catering-order-form-on-your-website',
+	// Four guides read off kitchen-brain develop 66d0703fe on 2026-10-10.
+	'guest-allergy-menu-check',
+	'catering-deposit-without-chasing',
+	'should-staff-see-food-costs',
+	'catering-food-labels'
 ];
 // The menu spells the published count (BlogMenuContents, spellCapital), so the
 // pin follows the list above instead of a typed word.
-const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
+const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
 requireText(indexHtml, `${countWords[expectedPosts.length - 10]} worked guides. The assumptions stay beside the arithmetic.`, 'Blog menu evidence boundary');
 // While invoice email is Coming, its setup guide must not be built or linked.
 if (!invoiceEmailLive) {
@@ -129,10 +134,34 @@ for (const [slug, text, label] of [
 	['take-catering-orders-online', 'pays $1,273.08 by card', 'film figure'],
 	['catering-order-form-on-your-website', 'Your web person pastes two lines. You never touch the code.', 'snap line'],
 	['catering-order-form-on-your-website', 'Not taking online orders right now.', 'not-live troubleshooting'],
+	// The four 2026-10-10 guides each keep the boundary the app draws.
+	['guest-allergy-menu-check', 'Unknown is never clear.', 'unknown is never clear'],
+	['guest-allergy-menu-check', 'A real conflict doesn’t stop you.', 'conflicts warn, never block'],
+	['catering-deposit-without-chasing', 'CostCook won’t book on the yes alone.', 'acceptance is not booking'],
+	['catering-deposit-without-chasing', 'The deposit is asked for by hand.', 'no automatic deposit reminder'],
+	['should-staff-see-food-costs', 'A cook needs to know it’s four cases. Not that it’s $219.', 'snap line'],
+	['should-staff-see-food-costs', 'Only the Owner invites.', 'owner-only invites'],
+	['catering-food-labels', 'That warning is CostCook refusing to print a blank allergen line it can’t stand behind.', 'unreviewed is printed'],
+	['catering-food-labels', 'it isn’t a claim of retail-label compliance', 'no compliance claim'],
 ]) {
 	requireText(readFileSync(join(blogRoot, slug, 'index.html'), 'utf8'), text, `${slug} ${label}`);
 }
 
+// How-to guides carry their app captures as sized figures
+// (integrations/blog-figures.mjs): a step with no screenshot, or an image
+// without width and height, is a guide that stopped showing the app.
+for (const [slug, figures] of [['catering-food-labels', 7]]) {
+	const html = readFileSync(join(blogRoot, slug, 'index.html'), 'utf8');
+	const shots = [...html.matchAll(/<figure class="blog-shot">[\s\S]*?<\/figure>/g)].map((m) => m[0]);
+	if (shots.length !== figures) failures.push(`${slug} has ${shots.length} app captures; expected ${figures}`);
+	for (const shot of shots) {
+		const img = shot.match(/<img\b[^>]*>/)?.[0] ?? '';
+		if (!/\swidth="\d+"/.test(img) || !/\sheight="\d+"/.test(img) || !/\salt="[^"]{20,}"/.test(img)) {
+			failures.push(`${slug}: a capture is missing its width, height or alt text`);
+		}
+		if (!/<figcaption>/.test(shot)) failures.push(`${slug}: a capture has no caption`);
+	}
+}
 if (builtPosts.length !== expectedPosts.length) {
 	failures.push(`expected ${expectedPosts.length} article routes, received ${builtPosts.length}`);
 }
