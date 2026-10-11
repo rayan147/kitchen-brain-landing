@@ -183,3 +183,6 @@ guard in `scripts/lib/money-claims.mjs` is retired. QuickBooks stays out.
 - Agreement: "Send the agreement for e-signature" (was "Send it", which read as the proposal).
 - Invoice note (event-payments.ts) tightened from 79 to 69 words, every fact kept.
 - Limits heading: "Where it stops, and how the client pays." Clients line split in two.
+
+## Revision 2026-10-11: English edit (booking fact)
+- Meta description ends "...keep the agreement and the deposit on the event, then Book the event. Confirm order comes later." (was "book it with Confirm order"; BookEvent.svelte on develop 4f46543cf is the commitment).

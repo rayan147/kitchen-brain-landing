@@ -183,3 +183,7 @@ names only what the frame shows.
 - Problem H2: "The count changed in an email. The quote did not." (no longer a twin of the Recipes H2).
 - Confirmed-quote frame gets a caption (the caption freeze lifted for this one): "Captured from CostCook: a different sample wedding, 150 guests at $95.00, after it was confirmed."
 - FAQ "What does confirming save?" no longer repeats the next answer: "..., and the same locked event feeds Shop, Prep and Pack."
+
+
+## Revision 2026-10-11: English edit (booking and reopen facts)
+- "Honest reopen." item: "Reopening drops the frozen prices and goes back to today’s. Once purchasing starts, reopening is refused." (kitchen-brain develop 4f46543cf, orders/repository.ts reopenOrder drops the snapshot; matches faq.ts). Renders here via the orders group.

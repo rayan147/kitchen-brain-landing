@@ -31,3 +31,7 @@ Source: `src/lib/features.ts`, `src/components/sections/FeatureSection.astro`; r
 
 ## Revision 2026-10-11: the booking item
 - Events item "Confirm order is the booking." is "Book the event books it.": Book the event waits on the signed agreement and the deposit, and the event then reads Booked; Confirm order comes later and freezes quantities and prices (kitchen-brain develop 4f46543cf, BookEvent.svelte, EventHeader.svelte). "This event is booked" is not an app string. Matches the lede and the events page.
+
+
+## Revision 2026-10-11: English edit (booking and reopen facts)
+- "Honest reopen." item: "Reopening drops the frozen prices and goes back to today’s. Once purchasing starts, reopening is refused." (kitchen-brain develop 4f46543cf, orders/repository.ts reopenOrder drops the snapshot; matches faq.ts). Renders here via the orders group.

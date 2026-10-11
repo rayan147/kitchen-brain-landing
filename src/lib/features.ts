@@ -271,7 +271,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'Three tabs, one plan.', detail: 'Shop, Prep, and Pack all read the same computed plan.' },
 			{ lead: 'Pinned money bar.', detail: 'The numbers stay on screen while you work, and guest-count changes autosave quietly.' },
 			{ lead: 'Confirm freezes everything.', detail: 'Confirmation saves the plan, calculations and quoted price together. Later price changes do not rewrite that quote.' },
-			{ lead: 'Honest reopen.', detail: 'Reopening keeps the frozen prices and says so. Once purchasing starts, reopening is refused.' },
+			{ lead: 'Honest reopen.', detail: 'Reopening drops the frozen prices and goes back to today’s. Once purchasing starts, reopening is refused.' },
 			{ lead: 'Clean duplication.', detail: 'Copy an event into one draft. A double-tap cannot make two.' },
 			{ lead: 'Shelf check.', detail: 'Enter the ingredients and prepared batches you have on hand for this order.' },
 			{ lead: 'Buy math shown.', detail: 'Every buy line can show need, on hand, pack size, and packs.' },
@@ -689,7 +689,7 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 			// inquiry (RC-61). Shipped group, so no chip.
 			{
 				label: 'Events & proposals',
-				description: 'Take the inquiry, send the proposal, book the yes with Confirm order.',
+				description: 'Take the inquiry, send the proposal, and book once it is signed and the deposit is in.',
 				featureId: 'events',
 				icon: 'orders'
 			},

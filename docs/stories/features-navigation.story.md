@@ -212,3 +212,6 @@ waits on the signed agreement and the deposit, and the event header reads
 Booked; Confirm order only freezes quantities and prices. The item now says
 "Book the event books it." and puts Confirm order after it, matching the
 area lede and the homepage.
+
+## Revision 2026-10-11: English edit (booking fact)
+- Features menu line for Events (every page): "Take the inquiry, send the proposal, and book once it is signed and the deposit is in." (was "book the yes with Confirm order").
