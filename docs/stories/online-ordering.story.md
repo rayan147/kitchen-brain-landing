@@ -51,3 +51,9 @@ Ordering site (read 2026-10-08).
   scroll inside their frame on a phone with an Open full-size link; side by
   side they shrank to about 70% and the owner found them hard to read.
   Close: "Put one menu on it and send yourself an order."
+
+## Revision 2026-10-11: English edit
+- Hero lede: "The request comes in priced." (no longer repeats the H1). Status line: "Find it under Settings > Integrations > Ordering site."
+- Website section opens on the three steps and the reassurance that the hard one goes to whoever looks after your site.
+- #after: Booking rules come straight after approve or decline; the Approving requests note moves below the rules; the You collect it line no longer repeats its card ("Picked You collect it in Setup? The client gets an approval email instead of a pay link.").
+- Snippet note drops the third "touches nothing else on your page"; the Stripe limit says "CostCook won't save cards"; the second way in is "Or a form on your own website." (ordering.ts, this page only).

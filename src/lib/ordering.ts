@@ -97,7 +97,7 @@ export const ordering = {
 			detail: 'A hosted ordering page on its own address, separate from the app. The client needs no login.'
 		},
 		{
-			lead: 'Or a piece of a site you already have.',
+			lead: 'Or a form on your own website.',
 			detail: 'One small script that mounts a sandboxed frame. It is under 12 KiB and pulls in nothing else.'
 		}
 	],

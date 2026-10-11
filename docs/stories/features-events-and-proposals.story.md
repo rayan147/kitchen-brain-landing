@@ -176,3 +176,10 @@ Invoice note sits beside Payments in `src/lib/event-payments.ts`'s words
 `CustomerInvoiceCard.svelte`, `SendInvoiceAction.svelte`, `routes/invoice`,
 `receivables/invoice-pay.ts`, `receivables/read.ts`. The client invoicing
 guard in `scripts/lib/money-claims.mjs` is retired. QuickBooks stays out.
+
+## Revision 2026-10-11: English edit
+- #booked reordered to match its heading: Book the event (what is still missing, book anyway and give a reason) comes first, then the kitchen draft and Confirm order. No claim added.
+- Inquiry line split: "Tap + New inquiry mid-prep. No date yet? Tick Date not decided yet. Then name who follows up and when." (The proposed visible chip label was not added; it is a layout change.)
+- Agreement: "Send the agreement for e-signature" (was "Send it", which read as the proposal).
+- Invoice note (event-payments.ts) tightened from 79 to 69 words, every fact kept.
+- Limits heading: "Where it stops, and how the client pays." Clients line split in two.

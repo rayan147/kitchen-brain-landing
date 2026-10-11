@@ -109,3 +109,6 @@
 - [x] 7 Headline: "Online orders: the client requests, you approve, their payment confirms." Subhead: Available now.
 - [x] 8 Snap: kept, reworded to the new truth: it arrives awaiting kitchen confirmation, and you approve or decline.
 - [x] 11 Revision: ORDERING_STATUS is yes after the owner ruling of 2026-09-27 (FEATURE_ORDERING_INTEGRATION_ENABLED on as the deployment default). "Built, not deployed" and "Stripe is a handoff" were removed. Limits stated plainly: nothing is charged at request; approval is not confirmation; 72-hour payment window; one balance reminder with a pay link; card payment for online orders only, no saved cards, no automatic refunds, no client invoices; custom requests become inquiries. "Client", not "customer", in every rewritten line. Gap report S9, W9; RC-59.
+
+## Revision 2026-10-11: English edit
+- `ordering.modes[1].lead` "Or a piece of a site you already have." is "Or a form on your own website." (renders on /features/online-ordering; see online-ordering.story.md).

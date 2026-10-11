@@ -46,11 +46,11 @@ const snippet = [
 				<h1 id="ordering-heading" class="feature-display">The client fills in the order. You approve it.</h1>
 				<p class="hero-lede">
 					Put your menus on an ordering page of your own, or on the website you already have.
-					The request comes in priced and you approve it. If your booking rules ask for money up
+					The request comes in priced. If your booking rules ask for money up
 					front, the client pays by card from a link.
 				</p>
 				<p class="status-line" data-ordering-status={availability.verdict}>
-					<span class="status-word">{availability.word}</span> Settings &gt; Integrations &gt; Ordering site.
+					<span class="status-word">{availability.word}</span> Find it under Settings &gt; Integrations &gt; Ordering site.
 				</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
@@ -103,7 +103,7 @@ const snippet = [
 			<div>
 				<div class="section-head" data-reveal>
 					<h2 id="website-heading">Put the order form on your website.</h2>
-					<p>It’s on the last tab, <strong>Put on your website</strong>. Your link and the snippet show up there once Setup has your name. Then there are three steps, and the hard one goes to whoever looks after your site.</p>
+					<p>Three steps, on the last tab, <strong>Put on your website</strong>. The hard one goes to whoever looks after your site. Your link and the snippet show up there once Setup has your name.</p>
 				</div>
 				<ol role="list" class="steps">
 					<li data-reveal>
@@ -127,7 +127,7 @@ const snippet = [
 			<figure class="ticket" data-reveal data-ordering-snippet>
 				<figcaption>Snippet for your web person · the app writes it</figcaption>
 				<pre><code>{snippet}</code></pre>
-				<p class="ticket-foot">A sample with blanks: use <strong>Copy snippet</strong> in the app for the real one. The script is under 12 KB, adds its own small stylesheet and the form in a sealed frame, and touches nothing else on your page.</p>
+				<p class="ticket-foot">A sample with blanks: use <strong>Copy snippet</strong> in the app for the real one. The script is under 12 KB and adds its own small stylesheet and the form, in a sealed frame.</p>
 				<p class="snap" data-ordering-snap>Your web person pastes two lines. You never touch the code.</p>
 			</figure>
 		</div>
@@ -200,8 +200,7 @@ const snippet = [
 		<div class="container-page split">
 			<div data-reveal>
 				<h2 id="after-heading">What they pay up front is your call.</h2>
-				<p>The request lands in Orders waiting on you. Approve it or decline it. Under Settings &gt; Booking, <strong>Approving requests</strong> can let clear ones through on their own; it’s off until you turn it on.</p>
-				<p>What happens when you approve is set by your <strong>Booking rules</strong>, on the same page:</p>
+				<p>The request lands in Orders waiting on you. Approve it or decline it. What approving does is set by your <strong>Booking rules</strong>, under Settings &gt; Booking:</p>
 				<dl class="choices">
 					{bookingRuleOutcomes.map((rule) => (
 						<div data-ordering-rule={rule.label}>
@@ -210,7 +209,8 @@ const snippet = [
 						</div>
 					))}
 				</dl>
-				<p>Collecting it yourself? Pick <strong>You collect it</strong> in Setup. The client gets an approval email instead of a pay link, and you record the payment on the order.</p>
+				<p><strong>Approving requests</strong>, on the same page, can let clear ones through on their own. It’s off until you turn it on.</p>
+				<p>Picked <strong>You collect it</strong> in Setup? The client gets an approval email instead of a pay link.</p>
 				<p>A request for something bespoke, like staff on site or rentals, takes no money. It comes to you to price, and you can move it to an inquiry.</p>
 			</div>
 			<ul role="list" class="limit-list" aria-label="Where it stops">

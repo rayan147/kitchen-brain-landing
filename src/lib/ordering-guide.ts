@@ -117,7 +117,7 @@ export const orderingLimits = [
 	'The pay link goes by email. A client who leaves only a phone number is sent nothing, so add their email to the order before you approve it.',
 	'When money is due, the client has 72 hours to pay, or you have 72 hours to record what you collected. If nothing is paid or recorded, the day opens back up and the order goes back to waiting on you.',
 	'The price never comes from the client’s screen. CostCook works out every amount after the request arrives, from what you published.',
-	'Card payments go into your own Stripe account. It won’t save cards or refund on its own.',
+	'Card payments go into your own Stripe account. CostCook won’t save cards or refund on its own.',
 	'The form shows only on the websites you list, and it can’t read or change anything else on your page.'
 ] as const;
 
