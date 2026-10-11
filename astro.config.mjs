@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import webpSources from './integrations/webp-sources.mjs';
 import { satteri } from '@astrojs/markdown-satteri';
 import blogFigures from './integrations/blog-figures.mjs';
+import { isNonIndexablePath } from './src/lib/seo-routes.mjs';
 
 // Still fully static, still no adapter: Vercel serves the dist/ output.
 // The one piece of server behaviour on this site, the contact endpoint, is a
@@ -22,7 +23,7 @@ export default defineConfig({
 			// Algorithm: one pass over Astro's generated URLs. Why: sitemap entries
 			// grow with published pages. Complexity: O(n) URLs, O(1) extra space.
 			// Alternative rejected: a second pass over the generated XML.
-			filter: (page) => !/^\/(contact|demo)\/(sent|not-sent)\/?$/.test(new URL(page).pathname),
+			filter: (page) => !isNonIndexablePath(new URL(page).pathname),
 			serialize(item) {
 				const url = new URL(item.url);
 				if (url.pathname !== '/') url.pathname = url.pathname.replace(/\/$/, '');
