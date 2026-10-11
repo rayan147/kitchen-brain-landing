@@ -56,7 +56,7 @@ import { SAGE_STATUS, sageDraftKinds, sageDraftKindsAnd, sageReadToolCount } fro
 import { labelsAvailability } from './labels';
 import { comingPlans } from './coming-plans';
 import { eventPayments } from './event-payments';
-import { acceptanceBoundary, depositMethods } from './events';
+import { acceptanceBoundary } from './events';
 import { dietary, allergenCount, allergenCountCapital } from './dietary';
 import { spell } from './words';
 
@@ -298,7 +298,7 @@ export const comparison: RowGroup[] = [
 				label: 'Event deposits tracked',
 				sheet: 'key',
 				costcook: 'yes',
-				note: `What you asked for against what came in, paid by card from an email link or recorded by hand, as ${depositMethods}.`,
+				note: 'What you asked for against what came in.',
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			},
@@ -550,7 +550,7 @@ export const comparison: RowGroup[] = [
 				icon: 'sage',
 				// Read from src/lib/sage.ts, the one place the word may change (RC-49).
 				costcook: SAGE_STATUS,
-				note: `Sage is available now. It reads your records with ${spell(sageReadToolCount, { compound: true })} read-only tools, shows its sources, helps during setup and can prepare ${spell(sageDraftKinds.length)} kinds of draft for an owner or manager to approve: ${sageDraftKindsAnd}.`,
+				note: `Sage reads your records with ${spell(sageReadToolCount, { compound: true })} read-only tools, shows its sources, helps during setup and can prepare ${spell(sageDraftKinds.length)} kinds of draft for an owner or manager to approve: ${sageDraftKindsAnd}.`,
 				parsley: NOT_LISTED,
 				meez: 'Enterprise, custom'
 			},
@@ -558,7 +558,7 @@ export const comparison: RowGroup[] = [
 				label: 'Read previously loaded orders offline',
 				sheet: 'build',
 				costcook: 'yes',
-				note: 'Previously loaded order pages stay readable offline and show when they were saved. Reconnect to make changes. With a connection, core pages remain readable without JavaScript.',
+				note: 'Previously loaded order pages stay readable offline and show when they were saved. Reconnect to make changes.',
 				parsley: NOT_LISTED,
 				meez: NOT_LISTED
 			}

@@ -78,7 +78,7 @@ const legend = [
 				and the truck is due Friday morning.
 			</p>
 			<p class="mt-5 max-w-[62ch] text-ink-soft">
-				Below is what each one does, where CostCook stops, and what each costs a month. The Parsley and meez columns are read off their own pricing pages on the date below, not from using their software.
+				Below is what each one does, where CostCook stops, and what each costs a month. The Parsley and meez columns were read off their own pricing pages on {VERIFIED_ON}, not from using their software.
 			</p>
 			<!-- The spreadsheet column, 2026-09-05 (RC-57). Most kitchens reading this
 			     page are costing on a sheet today, and it was the one option the table
@@ -95,8 +95,8 @@ const legend = [
 				<div class="md:pr-10">
 					<h3 class="text-base font-semibold font-body">CostCook fits the job when</h3>
 					<p class="mt-3 max-w-[52ch] text-ink-soft">
-						one kitchen needs its recipes, food cost, prep, buying, receiving and stock to
-						keep up with an event that keeps changing. It is one {launchPlan.displayPrice} plan.
+						one kitchen sells events and needs its inquiries, proposals, deposits, recipes,
+						food cost, prep and buying to keep up with an event that keeps changing.
 					</p>
 				</div>
 				<div class="border-t border-ticket-rule pt-8 md:border-t-0 md:border-l md:pt-0 md:pl-10">
@@ -290,19 +290,18 @@ const legend = [
 		<div class="mt-16 max-w-[62ch] border-t border-ticket-rule pt-8">
 			<h2 class="text-h3 font-semibold">Four rules for when the event changes</h2>
 			<p class="mt-4 text-ink-soft">
-				Each one is a place where software that guesses has burned a caterer. They are
-				about how the work behaves, and they are not four more checkmarks.
+				Each one is a place where software that guesses has burned a caterer.
 			</p>
 			<ul role="list" class="mt-5 space-y-4 text-ink-soft">
 				<li>
 					<span class="font-semibold text-ink">A confirmed quote stays confirmed.</span> Once
-					you confirm an event, its plan and its costing freeze. Prices that move next
+					you press Confirm order, the order&rsquo;s plan and costing freeze. Prices that move next
 					week move the next quote, never the one you already gave someone.
 				</li>
 				<li>
 					<span class="font-semibold text-ink">Receiving is the order you sent.</span> The
-					checklist shows what you ordered. Review what arrived, then save it to record
-					the purchase and update eligible ingredient prices.
+					checklist starts from what you ordered, and anything short stays in view until
+					you follow it up. Saving the delivery records the purchase and updates eligible ingredient prices.
 				</li>
 				<li>
 					<span class="font-semibold text-ink">A missing price stops the costing.</span> It
@@ -310,9 +309,9 @@ const legend = [
 					price of the beef.
 				</li>
 				<li>
-					<span class="font-semibold text-ink">The month says what it does not know.</span> What
-					the month should have cost, against what you actually spent, with the gap
-					between them named rather than blamed on waste.
+					<span class="font-semibold text-ink">The month says what it does not know.</span> It sets
+					what the food should have cost against what you actually spent. Only the waste you
+					log is called waste. The rest of the gap stays a gap.
 				</li>
 			</ul>
 		</div>
@@ -320,7 +319,7 @@ const legend = [
 		<div class="mt-14 border-t border-ticket-rule pt-8">
 			<h2 class="text-h2 font-semibold">Bring one real menu and get your answer.</h2>
 			<p class="mt-4 max-w-[58ch] text-ink-soft">
-				{launchPlan.trialDays} days free, then {launchPlan.displayPrice}. If a row marked
+				If a row marked
 				No is the one you need, one of the others may be the better buy,
 				and I would rather you knew that now than after a month. Start with the next
 				menu you need to cost.
