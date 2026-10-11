@@ -105,3 +105,5 @@ An owner-caterer who wants tomorrow’s cook to grab the right container, but th
 - **Final image:** Tomorrow’s cook reaches for the container that says LEMON TAHINI DRESSING, USE BY OCT 19, CONTAINS: SESAME.
 
 **Revision 2026-10-10: reviews applied.** Owner-caterer review: "a blank line is never an all-clear" was wrong for a fully reviewed recipe (labels.ts prints a blank when every ingredient was reviewed and none contains anything), so the guide now says a blank never hides an unreviewed ingredient; the 2 × 1 in stock is a die-cut roll, not thermal; the guest-facing section now says the major allergens have to be declared. Humanize review: the three same-shape sentences, "A label isn't decoration" and "Don't mix them up" rewritten; checklist renamed "In the walk-in".
+
+**Revision: step-by-step guide with app captures.** Rebuilt as a step-by-step how-to on 2026-10-10 with seven phone captures (Ishikawa fundraiser, Wild Mushroom Polenta): the Pack warning, Parmesan's allergen page and save note, the reviewed dish row, storage and shelf life, the sticker (made Oct 10, use by Oct 16), containers and print.
