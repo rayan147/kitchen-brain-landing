@@ -15,7 +15,22 @@ import blogFigures from './integrations/blog-figures.mjs';
 export default defineConfig({
 	site: 'https://costcook.io',
 	// webpSources runs after the build: each /proof/ capture offers its WebP.
-	integrations: [sitemap(), webpSources()],
+	integrations: [
+		sitemap({
+			// Considered Strategy; not used because the preferred URL form is one
+			// deployment rule, not behavior selected at runtime.
+			// Algorithm: one pass over Astro's generated URLs. Why: sitemap entries
+			// grow with published pages. Complexity: O(n) URLs, O(1) extra space.
+			// Alternative rejected: a second pass over the generated XML.
+			filter: (page) => !/^\/(contact|demo)\/(sent|not-sent)\/?$/.test(new URL(page).pathname),
+			serialize(item) {
+				const url = new URL(item.url);
+				if (url.pathname !== '/') url.pathname = url.pathname.replace(/\/$/, '');
+				return { ...item, url: url.href };
+			}
+		}),
+		webpSources()
+	],
 	// Blog guides: a markdown image of an app capture becomes a sized figure.
 	// satteri() keeps Astro 7's default processor and its defaults (GFM,
 	// smart punctuation); only the hast plugin is added.

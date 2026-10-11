@@ -16,8 +16,9 @@ export const site = {
 	   ("Contact Rayan") on purpose. That is the chef-to-chef voice, and it is
 	   the register a reader replies in. */
 	founderName: 'Rayan Ramirez',
-	// ≤60 chars so Google doesn't truncate the audience qualifier.
-	title: 'CostCook: catering from first inquiry to closeout',
+	// Lead with the buyer's product category, then the workflow CostCook covers.
+	// story: docs/stories/homepage-redesign-2026-10.story.md
+	title: 'Catering software from inquiry to closeout | CostCook',
 	description:
 		'Take the inquiry, send a priced proposal the client accepts on their phone, then build shopping, prep and pack lists from the same menu and guest count.'
 } as const;
