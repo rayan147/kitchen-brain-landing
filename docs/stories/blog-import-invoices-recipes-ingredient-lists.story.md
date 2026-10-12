@@ -134,3 +134,16 @@ The shoot taught the guide four facts, now in the steps:
 - After Add all you land on Ingredients.
 - An invoice pack mismatch offers "Use N packs".
 - Recipe units come from a list (g, oz, lb, ml, tbsp…), so the guide no longer lists only five.
+
+## Revision 2026-10-12 (4): better screenshots
+
+Owner: "we need to do a better job with the screenshots." What changed, matching the house style of the other guides (tight component crops, no page background):
+- 37 shots, each cropped to the one card or control the step names (was full-width page slices up to 2,438 px tall).
+- The control to press is ringed in amber (#b9762a, the site's amber token), so every step shows where to tap.
+- Consistent data: the pasted list is what the review shows (Leek, Canola oil). The "already have" warning moved to its own tip. Invoice GV-4476 is used for the review, and GV-4475's result shows a real cost change (Russet potato). The recipe is Mushroom chicken marsala, showing a close match (Cremini mushrooms → Mushroom, cremini), a new ingredient (Porcini powder, 1 lb bag, $38.00) and an unclear unit (Shallot, "1 knob").
+- New shots for steps that had none: Extract sources, the matched invoice lines, the final import button, the plate cost.
+- Error shots cropped to the message only.
+
+App defects seen while shooting (kitchen-brain, not this site):
+- Recipe import, Create new: clicking the already-selected "Volume" clears it, and the unit hint reads "this ingredient is measured by undefined. Pick a undefined unit such as undefined".
+- /ingredients/import at 390 px: the "Header must be exactly" message doesn't wrap and runs off screen.
