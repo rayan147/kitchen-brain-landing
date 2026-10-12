@@ -118,3 +118,19 @@ Owner: "this needs to be a guided blog, a how to … no one understands this." T
 - Limits and undo are separate reference sections at the end.
 
 Steps 1, 2 and 11 still hold: hero = the owner importing; want = everything in and costed; the one snap line stays as the app's "an ingredient with no price can't be costed" (now in the fix column). Every label was re-checked on main ed6ff5f01 and develop 6450d7c54, adding "Extract sources", "Review", "Add document to queue".
+
+## Revision 2026-10-12 (3): screenshots at every step
+
+Owner: "use screenshots to show it as well", and for the troubleshooting rows "even more". 28 captures at 390 px under `public/proof/blog/import-invoices-recipes-ingredient-lists/`: 19 for the steps (Part 1: 01–06, Part 2: 07–12, Part 3: 13–19), and 9 for the troubleshooting section, which became one sub-heading per problem with the app's own message on screen.
+
+Source: local build of kitchen-brain develop 9bd986496 (import code matches 6450d7c54 apart from two mapper subtitles), Harbor & Hearth sample kitchen, at localhost only. Its reader is the fixed test reader, so the honest limits are:
+- The ingredient rows (Yellow onion, Olive oil) are the test reader's sample rows.
+- The invoices were PDFs generated for the shoot, read by the app's own rules reader.
+- The recipe came in through Map recipe columns, a rules reader, so its lines are real.
+- The "Couldn't read" note was written into the sample database to show the notice, and its caption says "Example note."
+
+The shoot taught the guide four facts, now in the steps:
+- With one document the review opens by itself.
+- After Add all you land on Ingredients.
+- An invoice pack mismatch offers "Use N packs".
+- Recipe units come from a list (g, oz, lb, ml, tbsp…), so the guide no longer lists only five.
