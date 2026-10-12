@@ -7,22 +7,15 @@ type Props = {
 
 const { path } = Astro.props;
 
-// Considered Composite; not used because these are two fixed columns of leaf
-// destinations and one closing row. The variation is flat navigation data,
-// not a recursive tree.
-//
-// TWO COLUMNS AND A PERSON (owner, 2026-10-12: "organize the resources
-// dropdown better"). Three columns held 3, 2 and 1 links, so Contact sat alone
-// in a mostly empty column and the footer line said nothing a link didn't.
-// Now: what you can watch or prepare, what helps you decide, and below them
-// the person to ask when neither answers it.
-const columns = resourcesMenu.groups.filter((group) => group !== resourcesMenu.personGroup);
-const people = resourcesMenu.items.filter((item) => item.group === resourcesMenu.personGroup);
+// Considered Composite; not used because these are three fixed groups of leaf
+// destinations. The variation is flat navigation data, not a recursive tree.
+
+
 ---
 
 <!-- story: docs/stories/resources-navigation.story.md -->
-<div class="grid lg:grid-cols-2">
-	{columns.map((group, groupIndex) => (
+<div class="grid lg:grid-cols-3">
+	{resourcesMenu.groups.map((group, groupIndex) => (
 		<section
 			aria-labelledby={`resources-menu-group-${groupIndex}`}
 			class:list={[
@@ -65,36 +58,7 @@ const people = resourcesMenu.items.filter((item) => item.group === resourcesMenu
 	))}
 </div>
 
-<section aria-labelledby="resources-menu-person" class="border-t border-ticket-rule bg-cream p-3 sm:px-4">
-	<p id="resources-menu-person" class="sr-only">{resourcesMenu.personGroup}</p>
-	<ul role="list">
-		{people.map((item) => (
-			<li>
-				<a
-					href={item.href}
-					aria-current={path === item.href ? 'page' : undefined}
-					class="grid min-h-11 grid-cols-[1.25rem_minmax(0,1fr)] gap-3 rounded-md px-3 py-2.5 transition-colors duration-150 hover:bg-paper"
-				>
-					<svg
-						width="20"
-						height="20"
-						viewBox="0 0 20 20"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="mt-0.5 text-amber-deep"
-						aria-hidden="true"
-					>
-						<use href={`#resource-menu-${item.icon}`} />
-					</svg>
-					<span class="min-w-0">
-						<span class="block text-sm font-semibold leading-snug text-ink">{item.label}</span>
-						<span class="mt-1 block text-xs leading-snug text-ink-soft">{item.description}</span>
-					</span>
-				</a>
-			</li>
-		))}
-	</ul>
-</section>
+<div class="border-t border-ticket-rule bg-cream px-6 py-4">
+	<!-- Describe the decision instead of making the reader interpret a path count. -->
+	<p class="text-xs text-ink-soft">Choose a guide, check the limits, or ask Rayan.</p>
+</div>
