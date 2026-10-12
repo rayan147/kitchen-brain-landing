@@ -51,7 +51,7 @@ From here the event says it is waiting on the customer. You can **Send a reminde
 
 The client opens the link without making an account. They read the proposal and press **Accept proposal**, or **Ask for changes** if the menu or the count needs another look. Changes come back to you, and you update the offer and send it again.
 
-The proposal page tells them **Nothing is charged today.** Their yes books nothing. The signed agreement and the deposit do, so a "sure, sounds great" can't lock a Saturday you might need for a client who pays.
+The proposal page tells them **Nothing is charged today.** Their yes alone does not book the event. **Book the event** checks the agreement and deposit, or records why you chose to proceed without them. A client's acceptance stays separate from your decision to hold the date.
 
 ## 5. The agreement, with the proposal attached
 

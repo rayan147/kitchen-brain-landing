@@ -24,9 +24,9 @@ import { cardPaymentsRoute, printersAvailability, quickbooksAvailability, square
 export const SECTIONS = [
 	'Recipes and costing',
 	'Getting prices in',
-	'The day itself',
+	'Events and kitchen work',
 	'Compliance and labels',
-	'Team, and what it connects to'
+	'Team and connections'
 ] as const;
 
 export type Section = (typeof SECTIONS)[number];
@@ -86,7 +86,7 @@ export const SECTION_META: Readonly<
 		wall: 'The new price list arrived as a photograph of a printout. Keying it in is an evening you do not have. Not keying it in means quoting off last month.',
 		lede: 'Upload the supplier’s paperwork, hold what it suggests up against the original, and fix anything that looks off. Nothing reaches your ingredient costs until you confirm it.'
 	},
-	'The day itself': {
+	'Events and kitchen work': {
 		// story: docs/stories/features-the-day-itself-caterer.story.md
 		slug: 'the-day-itself',
 		blurb: 'The event, the shopping, the prep, the pack, and what actually came through the back door.',
@@ -100,7 +100,7 @@ export const SECTION_META: Readonly<
 		wall: 'Somebody asks for the numbers on a dish. Roughly is not an answer, and neither is a figure you worked out once and cannot show your working for.',
 		lede: labelsAvailability.sectionLede
 	},
-	'Team, and what it connects to': {
+	'Team and connections': {
 		// story: docs/stories/features-team-and-connections-caterer.story.md
 		slug: 'team-and-connections',
 		blurb: 'Who can change what, how a new kitchen gets started, Sage, and the connections marked Coming.',
@@ -137,7 +137,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		/* RC-61, RC-63 to RC-67, 2026-09-27. FIRST in the file because the site
 		   went event-first that day: this is the front half of every job, and the
 		   rest of this list is what happens after Confirm order. It reads under
-		   'The day itself' because the five section names are the /compare row
+		   'Events and kitchen work' because the five section names are the /compare row
 		   groups verbatim and a sixth section would split both pages.
 
 		   Production rows only (docs/research/2026-09-27-app-inventory.yaml A-01
@@ -148,7 +148,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		   (src/lib/event-payments.ts); the kitchen can still record what arrives by
 		   hand. The client pays; the kitchen asks, records and tracks. */
 		id: 'events',
-		section: 'The day itself',
+		section: 'Events and kitchen work',
 		kicker: 'Events & proposals',
 		title: 'From the first call to Confirm order, on one event.',
 		items: [
@@ -159,7 +159,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 			{ lead: 'The client decides on their phone.', detail: 'They open the link with no login and press Accept proposal or Ask for changes.' },
 			{ lead: 'Remind, extend, withdraw.', detail: 'Send a reminder, extend the link, withdraw the offer, or update it when they ask for changes.' },
 			{ lead: 'The agreement.', detail: 'Start from your saved contract template, attach the accepted proposal as Schedule A, and send it for e-signature or keep a copy signed on paper.' },
-			{ lead: 'Kitchen draft.', detail: 'Prepare the kitchen draft from their yes; it holds no day and draws no crew until you book the event.' },
+			{ lead: 'Kitchen draft.', detail: 'Prepare it after the client accepts. Booking records the event commitment; the draft does not join the day’s kitchen work or draw crew until you confirm the order.' },
 			{ lead: 'Deposit, tracked.', detail: `Ask for a deposit. The client pays it by card from an email link, or you record what arrives as ${depositMethods}, against what you asked for.` },
 			{ lead: 'Book the event books it.', detail: 'Book the event waits on the signed agreement and the deposit, and the event then reads Booked. Confirm order comes later and freezes quantities and prices.' },
 			{ lead: 'Calendar and the day’s room.', detail: 'The calendar counts orders and vans against the limits you set for each day, and an order says whether its day has room.' },
@@ -190,7 +190,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'today',
-		section: 'The day itself',
+		section: 'Events and kitchen work',
 		kicker: 'Today, the home screen',
 		title: 'The home screen opens on what needs attention.',
 		items: [
@@ -264,7 +264,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'orders',
-		section: 'The day itself',
+		section: 'Events and kitchen work',
 		kicker: 'Orders, shop, prep & pack',
 		title: 'One order, from the price to the pack-out.',
 		items: [
@@ -293,7 +293,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'purchasing',
-		section: 'The day itself',
+		section: 'Events and kitchen work',
 		kicker: 'Purchase orders & receiving',
 		title: 'What you send, and what actually arrives.',
 		items: [
@@ -310,7 +310,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'inventory',
-		section: 'The day itself',
+		section: 'Events and kitchen work',
 		kicker: 'Inventory',
 		title: 'What is on the shelf, worked out from a real count.',
 		items: [
@@ -391,7 +391,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'ordering',
-		section: 'The day itself',
+		section: 'Events and kitchen work',
 		kicker: 'Taking orders',
 		title: 'Online orders: the client requests, you approve, their payment confirms.',
 		// Status is read from src/lib/ordering.ts, the one place it may change
@@ -472,7 +472,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'team',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'Team & settings',
 		title: 'Kitchen settings, and who on the team can do what.',
 		items: [
@@ -489,7 +489,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'setup',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'Setup',
 		title: 'From empty to a costed first order.',
 		items: [
@@ -501,7 +501,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'reliability',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'Sign-in & reliability',
 		title: 'Built for wet hands and thin signal.',
 		items: [
@@ -517,7 +517,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'api',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'Ordering integrations',
 		title: 'External ordering connections.',
 		status: 'in-development',
@@ -528,7 +528,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	{
 		id: 'assistant',
 		icon: 'sage',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'Sage, the in-app assistant',
 		title: 'Sage, answering from your own numbers.',
 		// Status is read from src/lib/sage.ts, the one place it may change (RC-49).
@@ -546,7 +546,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		   claimed on the events and online ordering pages; this group is where the
 		   connection itself is listed. */
 		id: 'payments',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'Card payments',
 		title: 'Card payments, through your own Stripe account.',
 		items: [
@@ -561,7 +561,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		   can point the two Coming items at two places, and so each can ship on
 		   its own day. Status reads src/lib/connections.ts. */
 		id: 'square',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'Square',
 		title: 'Square, for the counter.',
 		status: squareAvailability.isComing ? 'in-development' : 'available',
@@ -571,7 +571,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 	},
 	{
 		id: 'quickbooks',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'QuickBooks Online',
 		title: 'QuickBooks Online, for the books.',
 		status: quickbooksAvailability.isComing ? 'in-development' : 'available',
@@ -584,7 +584,7 @@ export const featureGroups: readonly FeatureGroup[] = [
 		   built: see src/lib/connections.ts. Labels print through the browser
 		   today (the labels group, RC-35). */
 		id: 'printers',
-		section: 'Team, and what it connects to',
+		section: 'Team and connections',
 		kicker: 'Label printers',
 		title: 'Label printers, connected directly.',
 		status: printersAvailability.isComing ? 'in-development' : 'available',

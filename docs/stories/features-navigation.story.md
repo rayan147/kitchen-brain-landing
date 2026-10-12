@@ -232,3 +232,9 @@ area lede and the homepage.
 
 ## Revision 2026-10-11: English edit (booking fact)
 - Features menu line for Events (every page): "Take the inquiry, send the proposal, and book once it is signed and the deposit is in." (was "book the yes with Confirm order").
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The shared area headings now read "Events and kitchen work" and "Team and connections" on feature pages and comparison tables. Existing URLs stay stable.

@@ -160,3 +160,9 @@ pass is light and copy only.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Step 1 and the FAQ status name the prep list (Label appears once a dish's prep is done); faqStatus change also reaches /faq.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The stock heading now says to set label stock in Settings before service, without implying it can never be changed.

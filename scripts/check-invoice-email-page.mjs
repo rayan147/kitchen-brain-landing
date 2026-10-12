@@ -50,8 +50,8 @@ if (!live && !prose.includes('so do not give it to suppliers')) fail('the setup 
 const guideLinked = html.includes(`href="/blog/${setupGuideSlug}"`);
 if (live !== guideLinked) fail(live ? 'the setup guide link is missing' : 'the page links a setup guide that is not published');
 
-if (!prose.includes('Nothing counts until you check it, so the worst a stranger can do is add to your review list.')) {
-	fail('the snap line (the app’s own sentence) is gone');
+if (!prose.includes('An unfamiliar sender’s email cannot change your costs until you review and confirm it.')) {
+	fail('the sender approval boundary is gone');
 }
 if (!prose.includes('An emailed invoice opens in the same review as an upload.')) fail('the review boundary heading is gone');
 // Every outcome the data lists, read from src/lib/invoice-email.ts.

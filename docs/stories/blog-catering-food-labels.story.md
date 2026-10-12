@@ -109,3 +109,9 @@ An owner-caterer who wants tomorrow’s cook to grab the right container, but th
 **Revision: step-by-step guide with app captures.** Rebuilt as a step-by-step how-to on 2026-10-10 with seven phone captures (Ishikawa fundraiser, Wild Mushroom Polenta): the Pack warning, Parmesan's allergen page and save note, the reviewed dish row, storage and shelf life, the sticker (made Oct 10, use by Oct 16), containers and print.
 
 **Revision, second review pass.** Second review pass (2026-10-11). Owner-caterer: the made date is the print date (LabelForm madeAt: today), so print the day you make it or set the use-by yourself; the closing quotes the sticker as printed (dish name in title case). Humanize: the opener and the warning line reworked.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The allergen sentence now asks the crew to verify the recipe and ingredient sources without implying a printed label guarantees safety.

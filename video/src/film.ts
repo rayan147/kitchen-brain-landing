@@ -50,7 +50,8 @@ export const SCENE_ORDER = [
 ] as const;
 export type SceneId = (typeof SCENE_ORDER)[number];
 
-export const TITLE = "Know what the job makes before you cook it.";
+// Considered Strategy; not used because this film's captions are fixed editorial data, not interchangeable behavior.
+export const TITLE = "Know the food cost before you quote the job.";
 
 // Rings and focus points are measured off the frames of the 2026-10-07 walk
 // of the Nair & Castellano wedding on local develop (percent of each frame's
@@ -184,7 +185,7 @@ export const FILM: Record<SceneId, FilmScene> = {
         to: 19,
         layout: "screen",
         frames: ["events-book-event-desktop.png"],
-        caption: "A yes is not a booking. Signed and paid is.",
+        caption: "Signed and paid. Now book the event.",
         ring: { x: 1.5, y: 28, width: 97, height: 30 },
       },
       {

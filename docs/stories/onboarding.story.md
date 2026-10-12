@@ -338,3 +338,9 @@ Content: `src/components/sections/OnboardingPage.astro` and its shared data/resp
 ## Revision 2026-10-11: owner-approved 2026-10-11 changes
 - Stage two adds the app's own qualifier: confirm the supplier, packs and prices on "Review extracted records"; anything CostCook could not read, you type (develop SetupIngredientsStage.svelte).
 - Tracker pass (O-5): the headline fields now name the pinned H1 "Start by costing one dish."; Step 8 quotes the snap line as it ships, and the butter-and-chicken line is named a caption, not a second snap; the 2026-10-10 entry's landing screen is corrected to "Your kitchen is ready".
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The first-screen preparation now offers document upload or manual entry, matching the five-stage setup path and retaining the qualified fifteen-minute estimate.

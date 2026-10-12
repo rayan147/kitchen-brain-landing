@@ -209,7 +209,7 @@ for (const file of ['film/costcook-promo.webm', 'film/costcook-promo.mp4', 'film
 		failed = true;
 	}
 }
-if (!/<details\b[^>]*hero-transcript[\s\S]*Signed and paid is\.[\s\S]*<\/details>/.test(heroMedia)) {
+if (!/<details\b[^>]*hero-transcript[\s\S]*Signed and paid\. Now book the event\.[\s\S]*<\/details>/.test(heroMedia)) {
 	console.error('check-dist: the hero film needs its transcript beside it');
 	failed = true;
 }

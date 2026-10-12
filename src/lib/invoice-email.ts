@@ -59,7 +59,7 @@ export const inboxLimits = {
  */
 export const inboxOutcomes = [
 	{ label: 'Invoice', reason: 'Waiting in review. It counts once you confirm it.' },
-	{ label: 'Credit memo', reason: 'Waiting in review. Once confirmed, it comes off your cost.' },
+	{ label: 'Credit memo', reason: 'Waiting in review. Once confirmed, it appears as a separate credit below monthly food spend.' },
 	{ label: 'Statement', reason: 'Kept, not imported. It repeats invoices you already have.' },
 	{ label: 'Order confirmation', reason: 'Nothing to import. The invoice comes later.' },
 	{ label: 'Duplicate', reason: 'Same invoice as one you already have, so it was not added again.' },
@@ -92,9 +92,9 @@ export const invoiceEmailAvailability = {
 		: null,
 	featureLead: invoiceEmailIsComing ? 'Coming; not receiving email yet.' : 'A private address for invoices.',
 	featureDetail: invoiceEmailIsComing
-		? 'Each kitchen will get a private invoice address for suppliers to send to or for you to forward to from Gmail. Every email will wait in review. Until it is receiving email, upload invoices as a photo or PDF.'
+		? 'Each kitchen will get a private invoice address for suppliers to send to or for you to forward to from Gmail. The inbox will show what happened to each email. Until it is receiving email, upload invoices as a photo or PDF.'
 		: 'Suppliers send invoices to your kitchen’s private address, or you forward them from Gmail. Each email shows what became of it, and an invoice waits in review until you confirm it.',
 	seoDescription: invoiceEmailIsComing
-		? 'A private invoice address for each kitchen: suppliers email invoices, you forward from Gmail, and every one waits in review before it touches your costs. Coming; not receiving email yet.'
-		: 'A private invoice address for each kitchen: suppliers email invoices, you forward from Gmail, and every one waits in review before it touches your costs.'
+		? 'A private invoice address for each kitchen: suppliers email invoices, you forward from Gmail, and the inbox shows each email’s status. Coming; not receiving email yet.'
+		: 'A private invoice address for each kitchen: suppliers email invoices, you forward from Gmail, and the inbox shows each email’s status before any invoice changes costs.'
 } as const;

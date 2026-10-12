@@ -104,3 +104,9 @@ Owner request: printing as Coming. A direct connection to a label printer is pla
 - A real account connects on kitchen-brain origin/main, with the flag on in production.
 - Re-read the four steps against that build; update `src/lib/connections.ts` and RC-45/RC-78 in the same commit.
 - The guide's captures are shot (see its tracker).
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The closing action makes Stripe conditional on card payments and invoice email conditional on receiving supplier mail.

@@ -17,7 +17,7 @@ Tuesday's delivery came in one case of chicken short. You marked it at the door,
 
 The easy move is to knock $139.60 off the chicken line somewhere. Then chicken looks cheap for a week, and the next quote goes out priced on a case that never existed. A credit fixes what you paid. It says nothing about what chicken costs.
 
-CostCook keeps those two apart. This guide follows one credit memo from the rep's email to the line where it lands.
+CostCook shows the credit separately below monthly food spend. It does not change the ingredient price, recipe cost or event cost. This guide follows one credit memo from the rep's email to that line.
 
 ## Send it to the same address as the invoices
 

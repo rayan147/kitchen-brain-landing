@@ -18,7 +18,7 @@ for (const [text, label] of [
 	['Prepare your demo', 'form identity'],
 	['Start with the job.', 'kitchen step'],
 	['Now name the person bringing it.', 'contact step'],
-	['Sent. Now take your 15 minutes.', 'sent-and-booking state'],
+	['Request sent. Choose a 15-minute time.', 'request sent before booking'],
 	['Fifteen minutes on your job.', 'bounded agenda'],
 	['Not ready for a call?', 'self-serve recovery'],
 	['request-demo-working-session', 'emitted direction contract'],

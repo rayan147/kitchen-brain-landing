@@ -187,3 +187,9 @@ names only what the frame shows.
 
 ## Revision 2026-10-11: English edit (booking and reopen facts)
 - "Honest reopen." item: "Reopening drops the frozen prices and goes back to today’s. Once purchasing starts, reopening is refused." (kitchen-brain develop 4f46543cf, orders/repository.ts reopenOrder drops the snapshot; matches faq.ts). Renders here via the orders group.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The reopen answer now says the frozen snapshot is discarded and current menu prices and quantities return, matching the app action; it warns the reader to check before confirming again.

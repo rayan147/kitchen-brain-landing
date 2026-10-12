@@ -84,7 +84,7 @@ export const heroFilm = {
 	width: 1920,
 	height: 1080,
 	label: 'CostCook film, 1 minute 55 seconds: one sample wedding from inquiry to the day after',
-	opening: 'Know what the job makes before you cook it.',
+	opening: 'Know the food cost before you quote the job.',
 	chapters: [
 		{
 			question: null,
@@ -108,7 +108,7 @@ export const heroFilm = {
 				'Deposit $3,500.00, paid by card from the link.',
 				'The balance, $10,750.00, is due Wed, Dec 9.',
 				'Signed on paper? Upload the copy. It stays with the event.',
-				'A yes is not a booking. Signed and paid is.',
+				'Signed and paid. Now book the event.',
 				'Booked.'
 			]
 		},

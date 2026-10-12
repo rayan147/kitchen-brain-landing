@@ -51,8 +51,8 @@ for (const [pattern, label] of moneyClaims) {
 }
 
 // The acceptance boundary.
-if (!html.includes('Their yes books nothing. The signed agreement and the deposit do.')) {
-	fail('the "their yes books nothing" boundary is gone');
+if (!html.includes('Their yes is not a booking. Book the event checks the agreement and deposit, or records why you proceeded without them.')) {
+	fail('the client-acceptance versus booking boundary is gone');
 }
 
 // The six steps, in the app's order, and no seventh.
