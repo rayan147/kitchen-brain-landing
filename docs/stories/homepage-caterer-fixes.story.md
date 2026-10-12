@@ -15,3 +15,9 @@ Content: homepage composition, hero, optional proof, section copy, shared launch
 | 9 Scene | Phone between services; no mandatory call; recipe and price evidence needed before first dish. | [x] |
 | 10 Connection | One event proof leads to optional watch/read, then the facts that make its numbers trustworthy and the final trial decision. | [x] |
 | 11 Revision | Keep food-only exclusions, owner-approved approximate fifteen minutes, review and typing boundaries. No new permanent teammate entitlement without owner input. Native disclosures retain no-JS access and reader choice across widths. | [x] |
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same owner-caterer, purchase decision and page order still apply.
+- [x] Steps 5–10: Pricing remains direct and the existing claim evidence and trial handoff stay in place.
+- [x] Step 11: The Coming section now says "Not available yet" rather than implying those features are excluded from the price only as paid add-ons. The availability sentence directly below still explains trial and subscription scope.

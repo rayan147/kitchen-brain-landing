@@ -141,3 +141,9 @@ was to the ending and not to the argument.
 - Lede and path: "Tell Rayan what you have coming up"; "See it connected / Decide with the work visible" became "Watch it run / Then decide"; "the workflow you asked to see" became "whatever part you asked to see".
 - Step one's sales-queue line says it plainly: "Nobody is sorting you into a sales queue."
 - Snap line unchanged: "Bring the menu you would otherwise price twice."
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: Both scripted and no-script success states now say the request was sent and ask the reader to choose a time. The failure page offers direct contact without guaranteeing a fallback service will work.

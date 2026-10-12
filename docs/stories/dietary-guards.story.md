@@ -233,3 +233,9 @@ ever asked it."), so the pass only breaks up two long chains. Copy only.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Clear-result FAQ: "It is never a promise to a guest: your kitchen must still check the food and its preparation." (replaces "a reason to serve"). Step 8 now names both pinned lines.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The quoted request now names guests with celiac disease, a halal meal, and a tree nut allergy plainly; the review boundary remains unchanged.

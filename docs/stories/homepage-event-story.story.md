@@ -158,3 +158,9 @@ not as the page's snap.)
 
 ## Revision 2026-10-07 (boundary line)
 - The shared line under the client's yes now reads "Their yes books nothing. The signed agreement and the deposit do." In the owner's chosen app (local develop 7a7e407d9) Book the event is its own step; Confirm order no longer books. The homepage's own steps still need a pass against that app.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The shared acceptance line now names Book the event as a separate action and includes the recorded-reason exception, preserving the six-step story.

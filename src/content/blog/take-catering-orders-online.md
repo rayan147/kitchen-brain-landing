@@ -43,7 +43,7 @@ Then **Approve** or **Decline**. Decline asks for one line the client will read,
 
 ## Pick the booking rule for the job
 
-What approving does is set in **Settings > Booking**, under **Booking rules**. Rules are checked top to bottom, and the first one that fits a request decides. A new account starts with two: anything bespoke comes to you to price, and everything else uses the first of these three.
+What approving does is set in **Settings > Booking**, under **Booking rules**. Rules are checked top to bottom, and the first one that fits a request decides. A new account starts with two rules: bespoke requests come to you for pricing; all other requests use the fixed-menu payment choice already set on the ordering site. You can change that choice to one of these three:
 
 - **Fixed menu: no online payment.** Approving confirms the order. Use it for the office you've fed for two years, where you already have your own way of billing them.
 - **Fixed menu: pay in full.** Approving asks the client for the whole amount, and their payment confirms the order. Use it for a new client and a small job. Lunch for 40 is a small job.
@@ -59,7 +59,7 @@ This is the order from our online ordering film, an example kitchen that takes c
 
 1. The client orders lunch for 40 on the kitchen's site and sees the price before anyone calls.
 2. It arrives priced. Its food cost, counting misc (the percentage the kitchen adds for small extras), is 29.3% of the price.
-3. It was a fixed-menu request on a clear day, so it approved itself. The kitchen could still have declined it.
+3. It was a fixed-menu request on a clear day, so it approved itself. The kitchen could still have declined it before the client paid.
 4. The client gets the pay link and pays $1,273.08 by card.
 5. Shopping is in whole packs, by supplier, for 40. Each supplier gets only its own lines.
 6. The next day the food came in $2.47 over plan: 29.1% of the price for the food alone. The 29.3% at step 2 also counted misc, so the two aren't the same measure. Both are under the kitchen's 30% target.

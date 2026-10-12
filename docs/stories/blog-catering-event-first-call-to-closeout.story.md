@@ -106,3 +106,9 @@ gains Issue invoice and Send invoice on the draft's Money tab, read off
 kitchen-brain develop 185451a1b (`CustomerInvoiceCard.svelte`,
 `SendInvoiceAction.svelte`, `routes/invoice`, `receivables/invoice-pay.ts`).
 The QuickBooks line on the card stays out (Coming here).
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same caterer, event, obstacle, beats and guide sections still carry the story.
+- [x] Steps 5–10: The established kitchen voice, point of view and scene order remain intact.
+- [x] Step 11: Client acceptance is now explicitly separate from the caterer's Book the event action. The sentence includes the recorded-reason path for booking without a signed agreement or deposit.

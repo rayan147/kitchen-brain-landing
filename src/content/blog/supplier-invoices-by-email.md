@@ -15,7 +15,7 @@ featureLabel: See how invoice email works
 
 Your produce supplier emails a PDF on Tuesday. The dairy rep sends one on Thursday to your personal Gmail. The broadline supplier emails the office address nobody checks. Every one of those invoices already arrived by email. The work is getting each one to the place where it gets checked, before the next quote goes out on last month's prices.
 
-CostCook gives every kitchen its own invoice address. Anything sent there lands in Purchases, waits in review, and changes nothing until you confirm it. This guide sets it up once, in about fifteen minutes, and then checks that it worked.
+CostCook gives every kitchen its own invoice address. The Invoice inbox shows what happened to each email. An invoice waits for your review and changes no costs until you confirm it. This guide sets it up once, in about fifteen minutes, and then checks that it worked.
 
 ## Before you start
 
@@ -27,9 +27,9 @@ Have two things open: CostCook, and the last invoice email from each supplier yo
 
 In CostCook, open **Settings**, then **Invoice email**. Purchases may also show a tip, **Set up invoice email**, that goes to the same page.
 
-The first card, **Ask your suppliers to send invoices here**, shows **Your invoice address**. It starts with `invoices-`, then sixteen letters and numbers. That code is the whole key to your kitchen's mail, so it says nothing about your business and cannot be guessed.
+The first card, **Ask your suppliers to send invoices here**, shows **Your invoice address**. It starts with `invoices-`, then sixteen letters and numbers. The code does not reveal your business name. Keep the address for the suppliers and forwarding rules you trust.
 
-The page says plainly what the address can and can't do: "Invoices sent to this address wait in review. Nothing counts until you check it, so the worst a stranger can do is add to your review list."
+The page says plainly what the address can and can't do: incoming mail appears in the Invoice inbox with its status, and an invoice cannot change costs until you review and confirm it.
 
 ## Step 2: Send your sales rep the message
 

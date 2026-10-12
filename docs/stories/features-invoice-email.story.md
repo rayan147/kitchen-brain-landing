@@ -139,3 +139,9 @@ spam, Let it through, Stop the old address now) are unchanged.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Limit: the email's own text is read only when nothing is attached and the invoice is written out in it with a total.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The lede and boundary now distinguish inbox status from invoice review, including held and unread mail; only a confirmed invoice can change costs. Credit memo wording names its separate place below monthly food spend.

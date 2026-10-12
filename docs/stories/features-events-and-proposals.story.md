@@ -186,3 +186,9 @@ guard in `scripts/lib/money-claims.mjs` is retired. QuickBooks stays out.
 
 ## Revision 2026-10-11: English edit (booking fact)
 - Meta description ends "...keep the agreement and the deposit on the event, then Book the event. Confirm order comes later." (was "book it with Confirm order"; BookEvent.svelte on develop 4f46543cf is the commitment).
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The opening now distinguishes one event record from its later kitchen order. The Book section distinguishes a tentative draft, booking the event, and Confirm order. The shared acceptance line names the Book anyway reason path.
