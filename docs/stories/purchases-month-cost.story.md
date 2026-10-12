@@ -161,3 +161,5 @@ Owner: make the site read like a chef wrote it. Copy only.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - FAQ question "What does the month review compare?" (the app's name, Month review); pin in check-purchases-month-cost-page.mjs updated.
+
+- 2026-10-12 revision (RC-90): the bridge now matches the app's Reconcile page, which takes the shelf change out first. The illustrative $715 is $130 more on the shelf, $286 logged waste and $299 unaccounted (was $286 + $429, which left inventory out). The problem section says food still on the shelf is part of the difference.
