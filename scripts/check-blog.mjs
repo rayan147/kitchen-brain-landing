@@ -162,7 +162,7 @@ for (const [slug, text, label] of [
 // How-to guides carry their app captures as sized figures
 // (integrations/blog-figures.mjs): a step with no screenshot, or an image
 // without width and height, is a guide that stopped showing the app.
-for (const [slug, figures] of [['food-cost-per-guest', 1], ['catering-food-labels', 7], ['guest-allergy-menu-check', 8], ['catering-deposit-without-chasing', 10], ['should-staff-see-food-costs', 8]]) {
+for (const [slug, figures] of [['food-cost-per-guest', 1], ['catering-food-labels', 7], ['guest-allergy-menu-check', 8], ['catering-deposit-without-chasing', 10], ['should-staff-see-food-costs', 8], ['import-invoices-recipes-ingredient-lists', 28]]) {
 	const html = readFileSync(join(blogRoot, slug, 'index.html'), 'utf8');
 	const shots = [...html.matchAll(/<figure class="blog-shot">[\s\S]*?<\/figure>/g)].map((m) => m[0]);
 	if (shots.length !== figures) failures.push(`${slug} has ${shots.length} app captures; expected ${figures}`);
