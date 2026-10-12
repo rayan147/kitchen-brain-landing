@@ -180,9 +180,10 @@ try {
 			const panel = details.querySelector('summary + div');
 			const rect = panel.getBoundingClientRect();
 			resolve({
-				articleLinks: details.querySelectorAll('a[href^="/blog/"]').length,
-				icons: details.querySelectorAll('a[href^="/blog/"] svg').length,
-				descriptions: details.querySelectorAll('a[href^="/blog/"] span span + span').length,
+				articleLinks: details.querySelectorAll('section a[href^="/blog/"]').length,
+				topics: details.querySelectorAll('section[aria-labelledby^="blog-menu-"]').length,
+				newest: Boolean(details.querySelector('[data-blog-menu-newest]')),
+				fitsWithoutScroll: panel.scrollHeight <= panel.clientHeight,
 				hasOverview: Boolean(details.querySelector('a[href="/blog"]')),
 				featuresClosed: !features.open,
 				left: rect.left,
@@ -192,8 +193,10 @@ try {
 		});
 	}))()`);
 	assert(blog.articleLinks === blogArticleCount, `desktop Blog: expected ${blogArticleCount} article links, received ${blog.articleLinks}`);
-	assert(blog.icons === blogArticleCount, `desktop Blog: expected ${blogArticleCount} icons, received ${blog.icons}`);
-	assert(blog.descriptions === blogArticleCount, `desktop Blog: expected ${blogArticleCount} descriptions, received ${blog.descriptions}`);
+	// Topics, short names, one screen (BlogMenuContents.astro, 2026-10-12).
+	assert(blog.topics === 4, `desktop Blog: expected the index's 4 topics, received ${blog.topics}`);
+	assert(blog.newest, 'desktop Blog: the newest post is not called out');
+	assert(blog.fitsWithoutScroll, 'desktop Blog: the panel scrolls at this height');
 	assert(blog.hasOverview, 'desktop Blog: overview link is missing');
 	assert(blog.featuresClosed, 'desktop Blog: opening it did not close Features');
 	assert(blog.left >= 0 && blog.right <= blog.innerWidth, 'desktop Blog: panel leaves the viewport');

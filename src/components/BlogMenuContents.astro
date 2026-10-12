@@ -9,56 +9,58 @@ type Props = {
 
 const { path } = Astro.props;
 const posts = await getPublishedPosts();
-const groups = ['Cost the work', 'Plan and buy'] as const;
 
-// Considered Composite; not used because this menu has two fixed groups of
-// article leaves. Recursive navigation nodes would obscure a flat reading order.
+// TOPICS, SHORT NAMES, ONE SCREEN (owner, 2026-10-12: "organize the Blog
+// dropdown better"). It listed every post with its full title and description
+// in two loose groups, two screens tall and growing by one a week. Now it uses
+// the blog index's four topics, each post's short menuTitle, and three columns
+// sized for the post counts (the two smaller topics share one). The newest
+// post leads, because a post goes out every Thursday.
+//
+// Considered Composite; not used because this is one fixed level of topic
+// headings over article links. The column layout is data in blogMenu.columns.
 // The count sentence was written for the word, so it opts in to spelling past
 // twelve (src/lib/words.ts); check-blog.mjs pins the same word.
+const newest = posts.reduce((latest, post) => (post.data.publishedDate > latest.data.publishedDate ? post : latest), posts[0]);
+const newestDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(newest.data.publishedDate);
+const slug = (topic: string) => topic.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 ---
 
 <!-- story: docs/stories/features-navigation.story.md -->
-<div class="grid lg:grid-cols-2">
-	{groups.map((group, groupIndex) => (
-		<section
-			aria-labelledby={`blog-menu-group-${groupIndex}`}
-			class:list={[
-				'p-3 sm:p-4',
-				groupIndex > 0 && 'border-t border-ticket-rule lg:border-t-0 lg:border-l'
-			]}
-		>
-			<p id={`blog-menu-group-${groupIndex}`} class="px-3 pt-1 pb-2 text-sm font-semibold text-ink">{group}</p>
-			<ul role="list">
-				{posts.filter((post) => post.data.menuGroup === group).map((post) => (
-					<li>
-						<a
-							href={`/blog/${post.id}`}
-							aria-current={path === `/blog/${post.id}` ? 'page' : undefined}
-							class="grid min-h-11 grid-cols-[1.25rem_minmax(0,1fr)] gap-3 rounded-md px-3 py-2.5 transition-colors duration-150 hover:bg-cream"
-						>
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 20 20"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="1.5"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="mt-0.5 text-amber-deep"
-								aria-hidden="true"
-							>
-								<use href={`#blog-menu-${post.data.menuIcon}`} />
-							</svg>
-							<span class="min-w-0">
-								<span class="block text-sm font-semibold leading-snug text-ink">{post.data.title}</span>
-								<span class="mt-1 block text-xs leading-snug text-ink-soft">{post.data.description}</span>
-							</span>
-						</a>
-					</li>
-				))}
-			</ul>
-		</section>
+<div class="border-b border-ticket-rule px-6 py-1.5">
+	<a
+		href={`/blog/${newest.id}`}
+		aria-current={path === `/blog/${newest.id}` ? 'page' : undefined}
+		class="group inline-flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1"
+		data-blog-menu-newest
+	>
+		<span class="font-mono text-xs font-semibold tracking-wide text-amber-deep uppercase">New · {newestDate}</span>
+		<span class="text-sm font-semibold text-ink underline decoration-ticket-rule underline-offset-4 group-hover:decoration-green">{newest.data.title}</span>
+	</a>
+</div>
+
+<div class="grid lg:grid-cols-3">
+	{blogMenu.columns.map((topics, columnIndex) => (
+		<div class:list={['p-3 sm:p-4', columnIndex > 0 && 'border-t border-ticket-rule lg:border-t-0 lg:border-l']}>
+			{topics.map((topic) => (
+				<section aria-labelledby={`blog-menu-${slug(topic)}`} class="[&+&]:mt-4">
+					<p id={`blog-menu-${slug(topic)}`} class="px-3 pt-1 pb-1 text-sm font-semibold text-ink">{topic}</p>
+					<ul role="list">
+						{posts.filter((post) => post.data.category === topic).map((post) => (
+							<li>
+								<a
+									href={`/blog/${post.id}`}
+									aria-current={path === `/blog/${post.id}` ? 'page' : undefined}
+									class="flex min-h-11 items-center rounded-md px-3 py-1.5 text-sm leading-snug text-ink-soft transition-colors duration-150 hover:bg-cream hover:text-ink aria-[current=page]:font-semibold aria-[current=page]:text-ink"
+								>
+									{post.data.menuTitle}
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			))}
+		</div>
 	))}
 </div>
 

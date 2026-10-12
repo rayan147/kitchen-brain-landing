@@ -1,5 +1,6 @@
 ---
 title: "Square and CostCook: what sold at the counter, and what it cost to make"
+menuTitle: "Square counter sales and food cost"
 description: "Publish the dishes you pick to your Square register, and the register's sales come back with today's recipe cost beside them. One Saturday market stall, step by step in CostCook."
 publishedDate: 2026-10-12
 category: Costing & pricing

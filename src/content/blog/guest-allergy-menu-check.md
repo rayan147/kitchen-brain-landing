@@ -1,5 +1,6 @@
 ---
 title: "How to check a catering menu for a guest's allergy"
+menuTitle: "Check a menu for a guest’s allergy"
 description: "A guest can't have sesame. Put the restriction on the order, answer each ingredient from its package, and read what CostCook flags before you confirm. One wedding for 120, step by step."
 publishedDate: 2026-09-10
 category: Running the event

@@ -1,5 +1,6 @@
 ---
 title: "The delivery arrived wrong. What should you check before accepting it?"
+menuTitle: "The delivery arrived wrong"
 description: "Check the purchase order, the cases at the door and the invoice line by line, so a short or a substitute doesn’t end up as your stock count."
 publishedDate: 2026-07-09
 category: Buying & suppliers
