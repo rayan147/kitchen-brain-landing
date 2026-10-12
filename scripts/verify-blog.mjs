@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { scheduledSlugs } from './lib/blog-schedule.mjs';
 import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
 import { heldGuideSlugs } from './lib/connections.mjs';
 
@@ -21,6 +22,8 @@ const articleSlugs = (await readdir(new URL('../src/content/blog', import.meta.u
 if (!invoiceEmailLive) articleSlugs.splice(articleSlugs.indexOf(setupGuideSlug), 1);
 // RC-78: a Coming connector's guide is held, so it is not in the menu or the index.
 for (const slug of heldGuideSlugs) articleSlugs.splice(articleSlugs.indexOf(slug), 1);
+// One a week (src/lib/blog.ts): a post waiting for its Thursday has no route yet.
+for (const slug of scheduledSlugs) if (articleSlugs.includes(slug)) articleSlugs.splice(articleSlugs.indexOf(slug), 1);
 const postCount = articleSlugs.length;
 
 const profile = await mkdtemp(join(tmpdir(), 'costcook-blog-'));
