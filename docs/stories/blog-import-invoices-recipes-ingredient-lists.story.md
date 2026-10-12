@@ -2,8 +2,8 @@
 
 ## My story
 
-- **Piece:** Blog guide (how-to)
-- **Title / headline:** Import invoices, recipes and ingredient lists into CostCook: what each needs, and in what order
+- **Piece:** How-to guide (task steps, not a story)
+- **Title / headline:** How to import your ingredients, invoices and recipes into CostCook
 - **My hero's name:** The owner of Harbor & Hearth Catering, in their first week on CostCook
 - **Content file(s):** `src/content/blog/import-invoices-recipes-ingredient-lists.md`
 - **Evidence:** RC-79 in `docs/release-claim-ledger.md` (kitchen-brain main ed6ff5f01 and develop 6450d7c54, read 2026-10-12)
@@ -105,3 +105,16 @@ Second person throughout. Before you start → order → three imports in that o
 - The spreadsheet-invoice trap moved to the top of the invoice section; the order heading now states the order ("Ingredients first, recipes last") with the list first.
 - Pronouns fixed ("CostCook" for the reader), limits split into photos and other files, title and description tightened, US spelling.
 - Kept "Save changes keeps one row's edits for later" (the app's wording) and described the bulk-answer button rather than quoting it, since its label carries a count.
+
+## Revision 2026-10-12 (2): rewritten as a how-to
+
+Owner: "this needs to be a guided blog, a how to … no one understands this." The story framing (Harbor & Hearth's first week, the binder scene, Friday's final image) is gone. Practice applied, from the Google developer documentation style guide (procedures), Diátaxis (how-to guides are task steps with explanation kept out) and Shopify's import help (template, then upload, review, confirm, then troubleshooting):
+
+- Task title that starts "How to". The opening says what you'll have at the end, then the three parts in order.
+- "Before you start" lists what you need.
+- Each part is numbered steps, one action each, with the app's exact button in bold and what you'll see.
+- Tips sit outside the steps. The optional template route is its own sub-procedure.
+- An "If something goes wrong" table pairs the app's exact messages with the fix.
+- Limits and undo are separate reference sections at the end.
+
+Steps 1, 2 and 11 still hold: hero = the owner importing; want = everything in and costed; the one snap line stays as the app's "an ingredient with no price can't be costed" (now in the fix column). Every label was re-checked on main ed6ff5f01 and develop 6450d7c54, adding "Extract sources", "Review", "Add document to queue".
