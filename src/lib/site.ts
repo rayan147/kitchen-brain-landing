@@ -159,20 +159,22 @@ const resourceNav = [
 		description: 'See a sample wedding go from recipe costs to shopping and prep.'
 	},
 	{
-		label: 'Who it\'s for',
-		href: '/who-its-for',
-		header: 'resources',
-		group: 'See it work',
-		icon: 'audience',
-		description: 'Check whether CostCook fits your kitchen, and where it stops.'
-	},
-	{
 		label: 'Your initial setup',
 		href: '/onboarding',
 		header: 'resources',
 		group: 'See it work',
 		icon: 'dish',
 		description: 'See what to prepare, the five setup stages, and how to invite your crew.'
+	},
+	{
+		label: 'Who it\'s for',
+		href: '/who-its-for',
+		header: 'resources',
+		// A fit check is a decision, not a demo (owner, 2026-10-12: "organize the
+		// resources dropdown better"); it leads the decision column.
+		group: 'Make the decision',
+		icon: 'audience',
+		description: 'Check whether CostCook fits your kitchen, and where it stops.'
 	},
 	{
 		label: 'How we compare',
@@ -215,8 +217,11 @@ export const nav: readonly { label: string; href: string; header: 'direct' | 'bl
 export const resourcesMenu = {
 	label: 'Resources',
 	// Starts with the visible word, so speech input can say what it sees.
-	ariaLabel: 'Resources: tour, fit, setup, comparisons and contact',
+	ariaLabel: 'Resources: tour, setup, fit, comparisons, answers and contact',
 	groups: ['See it work', 'Make the decision', 'Talk to us'] as const,
+	// The dropdown shows the first two as columns and the person as its
+	// closing row (ResourcesMenuContents.astro); footer and Menu list all three.
+	personGroup: 'Talk to us',
 	items: resourceNav
 } as const;
 

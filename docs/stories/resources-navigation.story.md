@@ -113,3 +113,11 @@ Content: `src/lib/site.ts` and its shared data/response states.
 - [x] 9 — Scene: Phone beside the prep list, crew waiting for the next service; attention is limited, not competence.
 - [x] 10 — Connection: Reader-focused guide prose; founder voice explicitly identifies Rayan where he answers. Entry → evidence → constraints → action.
 - [x] 11 — Revision: Rendered copy, units, navigation and recovery verified. Build and claim checks pass; eight routes at five widths, 200% text, thirteen tour stops, no-JS fallback and mocked contact failure/retry/success pass. Evidence: `docs/qa/resources-caterer-2026-09-11/report.md`.
+
+## Revision 2026-10-12: two columns and a person
+
+Owner: "organize the resources dropdown better." The three columns held 3, 2 and 1 links, so Contact sat alone in a mostly empty column and the closing line ("Choose a guide, check the limits, or ask Rayan.") only restated the links.
+- **See it work:** Product tour, Your initial setup (what you can watch or prepare).
+- **Make the decision:** Who it's for, How we compare, FAQ (fit first, then the comparison, then the answers). Who it's for moved here because it's a fit check, not a demo.
+- **Talk to us:** Contact became the panel's closing row on the cream strip, in place of the closing line.
+- The panel narrowed from 54rem to 40rem. The footer and the phone Menu read the same groups, so they follow the new order.
