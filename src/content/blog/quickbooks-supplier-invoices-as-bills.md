@@ -1,5 +1,6 @@
 ---
 title: "Send supplier invoices to QuickBooks without typing them twice"
+menuTitle: "Supplier invoices to QuickBooks"
 description: "You already checked the invoice line by line in CostCook. Send it to QuickBooks Online as a bill, matched to the right vendor and account, and stop retyping it on Sunday night. Step by step, with one supplier."
 publishedDate: 2026-10-12
 category: Buying & suppliers

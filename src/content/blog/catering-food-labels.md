@@ -1,5 +1,6 @@
 ---
 title: "How to print food labels for a catering order"
+menuTitle: "Print food labels"
 description: "What goes on a kitchen label, and how to print one in CostCook: answer the allergens from the package, pick how it's stored, count the use-by date, print. One dish from one order, step by step."
 publishedDate: 2026-10-01
 category: Recipes & yield

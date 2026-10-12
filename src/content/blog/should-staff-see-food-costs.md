@@ -1,5 +1,6 @@
 ---
 title: "How to give your kitchen staff the app without your food costs"
+menuTitle: "Staff in the app, costs hidden"
 description: "Your cooks need the quantities, not the prices. Invite them as Staff, see the same order through their eyes, and know what Managers get instead. Step by step in CostCook."
 publishedDate: 2026-09-24
 category: Costing & pricing

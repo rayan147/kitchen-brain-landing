@@ -224,7 +224,10 @@ export const blogMenu = {
 	label: 'Blog',
 	href: '/blog',
 	overviewLabel: 'Read every guide',
-	ariaLabel: 'Blog guides, broken down by kitchen question'
+	ariaLabel: 'Blog guides, by topic',
+	// The blog index's four topics in three columns: the two smaller topics
+	// share the first, so the columns stay close in length as posts arrive.
+	columns: [['Costing & pricing', 'Recipes & yield'], ['Running the event'], ['Buying & suppliers']]
 } as const;
 
 // No aria-label: the button's name is its visible word, so a speech-input

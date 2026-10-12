@@ -1,5 +1,6 @@
 ---
 title: "How to turn a catering menu into a shopping list in whole packs"
+menuTitle: "A shopping list in whole packs"
 description: "Add up what the recipes need, turn it into the packs your supplier sells, round up on purpose, and keep the extra where you can see it."
 publishedDate: 2026-06-25
 category: Buying & suppliers

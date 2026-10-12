@@ -1,5 +1,6 @@
 ---
 title: "Catering menu pricing: margin, markup, and food-cost target"
+menuTitle: "Margin vs markup on a menu"
 description: "The three percentages people mix up when they price a catering menu, each one worked from the same food cost."
 publishedDate: 2026-06-04
 category: Costing & pricing

@@ -1,5 +1,6 @@
 ---
 title: "The client added 40 guests. What actually needs to change?"
+menuTitle: "The client added 40 guests"
 description: "Sort what grows with the head count from what rounds to whole packs and what stays fixed, then look at the quote again."
 publishedDate: 2026-06-18
 category: Running the event

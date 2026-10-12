@@ -1,5 +1,6 @@
 ---
 title: "How to calculate food cost per guest for a catering event"
+menuTitle: "Food cost per guest"
 description: "Work from total ingredient cost to food cost per guest, food-cost percentage, and the selling price needed to meet your target."
 publishedDate: 2026-05-28
 updatedDate: 2026-10-11

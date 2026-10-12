@@ -1,5 +1,6 @@
 ---
 title: "How to take catering orders online, and approve them before anyone pays"
+menuTitle: "Take catering orders online"
 description: "What the client sees on their phone, what lands in Orders, which booking rule fits which job, and one office lunch for 40 from the order to the food cost."
 publishedDate: 2026-08-27
 category: Running the event
