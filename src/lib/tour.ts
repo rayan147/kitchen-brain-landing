@@ -3,7 +3,7 @@ import { featureMenuHref, featureMenuSections } from './features';
 import { labelsAvailability } from './labels';
 import { inboxLimits, invoiceEmailAvailability } from './invoice-email';
 import { acceptanceBoundary, depositMethodsCapital, eventStep } from './events';
-import { quickbooksAvailability, squareAvailability } from './connections';
+import { printersAvailability, quickbooksAvailability, squareAvailability } from './connections';
 
 export const tourSeedKey = 'product-tour-connected-event';
 
@@ -757,6 +757,43 @@ export const tourStops: readonly TourStop[] = [
 			footnote: quickbooksAvailability.isComing
 				? 'Illustrative. QuickBooks Online is marked Coming: it is built and being tested, and you cannot connect a company yet.'
 				: 'Illustrative. Paid or unpaid is read back from QuickBooks.'
+		}
+	},
+	{
+		/* Added 2026-10-12. Planned, not built (src/lib/connections.ts): the
+		   screen is the label print that works today, and the aside says what
+		   the planned connection would change. */
+		id: 'printers',
+		featureId: 'printers',
+		label: 'Label printers',
+		appArea: 'Labels / Print',
+		title: 'Labels print from your browser today. Straight to the printer is planned.',
+		intro: 'Today a label batch opens the print dialog and goes to sticker sheets or a thermal roll. A direct connection to a label printer, with no dialog, is planned and not built.',
+		callout: 'For now, every label prints through the browser’s print dialog.',
+		featureHref: featureMenuHref('printers', printersAvailability.isComing),
+		metrics: [
+			{ label: 'Direct to printer', value: printersAvailability.word, tone: printersAvailability.isComing ? 'attention' : 'good' },
+			{ label: 'Prints today', value: 'Browser dialog', tone: 'good' },
+			{ label: 'Labels in batch', value: '6' },
+			{ label: 'Printer brand', value: 'Not tied to one' }
+		],
+		columns: ['Label', 'Storage', 'Use by', 'Container'],
+		rows: [
+			['Herb roast chicken', 'Refrigerated', 'Mon, Dec 21', '1 of 3'],
+			['Herb roast chicken', 'Refrigerated', 'Mon, Dec 21', '2 of 3'],
+			['Herb roast chicken', 'Refrigerated', 'Mon, Dec 21', '3 of 3'],
+			['Lemon focaccia', 'Room temperature', 'Sun, Dec 20', '1 of 3']
+		],
+		aside: {
+			title: 'Label printers',
+			status: printersAvailability.word,
+			lines: [
+				{ label: 'How it prints today', value: 'Browser print dialog' },
+				{ label: 'Direct connection', value: 'Planned, not built', tone: 'attention' },
+				{ label: 'Date', value: 'None given' },
+				{ label: 'Stock', value: 'Set once in Settings' }
+			],
+			footnote: 'Illustrative batch. Four of six labels are shown. Direct printing is planned; it is not in the app today.'
 		}
 	},
 	{

@@ -26,6 +26,8 @@ import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
 import { invoiceEmailAvailability } from '../../lib/invoice-email';
 import {
+	printers,
+	printersAvailability,
 	quickbooks,
 	quickbooksAvailability,
 	square,
@@ -72,13 +74,15 @@ const ticketLines = [
 	{ name: 'Invoice email', word: invoiceEmailAvailability.word, coming: invoiceEmailAvailability.isComing },
 	{ name: 'E-signature for the agreement', word: 'In the app today', coming: false },
 	{ name: 'Square', word: squareAvailability.word, coming: squareAvailability.isComing },
-	{ name: 'QuickBooks Online', word: quickbooksAvailability.word, coming: quickbooksAvailability.isComing }
+	{ name: 'QuickBooks Online', word: quickbooksAvailability.word, coming: quickbooksAvailability.isComing },
+	{ name: 'Label printers, direct', word: printersAvailability.word, coming: printersAvailability.isComing }
 ];
 
 const chapters = [
 	{ href: '#working-today', label: 'Working today' },
 	{ href: '#square', label: 'Square' },
 	{ href: '#quickbooks', label: 'QuickBooks Online' },
+	{ href: '#printers', label: 'Label printers' },
 	{ href: '#integrations-faq', label: 'Questions' }
 ] as const;
 
@@ -212,10 +216,31 @@ const faqs = [
 				{!connector.availability.isComing && (
 					<p class="guide-link"><a href={connector.guide.href} data-connector-guide={connector.id}>{connector.guide.label}</a></p>
 				)}
-				<p class="handoff">{index === 0 ? 'Next: QuickBooks Online.' : 'Next: questions.'}</p>
+				<p class="handoff">{index === 0 ? 'Next: QuickBooks Online.' : 'Next: label printers.'}</p>
 			</div>
 		</section>
 	))}
+
+	<section id="printers" class="product-section soft" aria-labelledby="printers-heading" data-connector="printers" data-connector-status={printersAvailability.verdict}>
+		<div class="container-page split boundary">
+			<div data-reveal>
+				<div class="connector-title">
+					<h2 id="printers-heading">Label printers, connected directly.</h2>
+					{printersAvailability.isComing && <span class="chip">Coming</span>}
+				</div>
+				<p>{printers.today}</p>
+				<p class="setup-warning">{printers.planned}</p>
+			</div>
+			<div class="does-not" data-reveal>
+				<p class="ticket-label">Today</p>
+				<ul role="list">
+					<li>{printers.boundary}</li>
+					<li><a href="/features/labels-and-printing">Labels &amp; printing</a></li>
+				</ul>
+			</div>
+		</div>
+		<p class="container-page handoff printers-handoff">Next: questions.</p>
+	</section>
 
 	<section id="integrations-faq" class="product-section" aria-labelledby="faq-heading">
 		<div class="container-page">
@@ -314,6 +339,10 @@ const faqs = [
 	.does-not ul { margin-top: .5rem; }
 	.does-not li { padding-block: .6rem; border-top: 1px dashed var(--color-ticket-rule); font-size: var(--text-body-sm); color: var(--color-ink-soft); }
 	.does-not li:first-child { border-top: 0; }
+	.does-not a { display: inline-flex; min-height: 44px; align-items: center; font-weight: 600; color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 4px; }
+	#printers .setup-warning { padding: .75rem 1rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); color: var(--color-ink); font-weight: 600; }
+	#printers .boundary { margin-top: 0; }
+	.printers-handoff { padding-bottom: 0; }
 
 	.faq-list { margin-top: 2rem; max-width: 70ch; }
 	.faq { border-top: 1px solid var(--color-hairline-strong); }

@@ -46,6 +46,18 @@ for (const guide of connectorGuides) {
 	if (!menuItem) fail(`${guide.connector}: the Features menu has no item for it`);
 	else if (guide.live === menuItem.includes('Coming')) fail(`${guide.connector}: the menu chip disagrees with src/lib/connections.ts`);
 }
+// Label printers: planned, not built (src/lib/connections.ts). It may never
+// read as built or being tested, and it has no guide.
+const printersWord = readFileSync(new URL('../src/lib/connections.ts', import.meta.url), 'utf8').match(/PRINTERS_STATUS = '(\w+)'/)?.[1];
+const printersStatus = html.match(/data-connector="printers" data-connector-status="(\w+)"/)?.[1];
+if (printersStatus !== printersWord) fail(`printers: section reads ${printersStatus}; src/lib/connections.ts says ${printersWord}`);
+if (printersWord !== 'yes') {
+	if (!prose.includes('is planned. It is not built yet, and there is no date.')) fail('printers: the planned-not-built sentence changed');
+	const printersSection = decode(html.slice(html.indexOf('id="printers"'), html.indexOf('id="integrations-faq"')));
+	if (/being tested|is built|built and/i.test(printersSection)) fail('printers: reads as built');
+	if (/\b(Zebra|Brother|Dymo|Rollo|Epson)\b/.test(prose)) fail('printers: names a printer brand');
+}
+
 const anyComing = connectorGuides.some((guide) => !guide.live);
 if (anyComing !== html.includes('data-integrations-status="coming"')) fail('the first-screen Coming line does not match the two words');
 if (anyComing && !prose.includes('can’t connect a real account yet')) fail('the Coming status sentence changed');

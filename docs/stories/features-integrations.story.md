@@ -95,6 +95,10 @@ Cut: logos, a roadmap, every name of an unbuilt connector, the develop-only cust
 
 All 22 findings applied. The connector warning no longer reuses the /compare note ("does not import its sales" sat above "Sales come back"); it now reads "You can't connect … today, and there is no date. Here is what it does in testing." The lede and status line merged so the first screen says Coming once. The link from /features/team-and-connections says "where Square and QuickBooks stand", not "will do". The tour's Square callout quotes the app verbatim. In the QuickBooks guide the reader, not CostCook, is the subject who sends; the paid read-back replaces "works one way"; the short case is handled once, as a vendor credit (re-check against the app before publishing).
 
+## Revision — Label printers as planned (2026-10-12)
+
+Owner request: printing as Coming. A direct connection to a label printer is planned and not built (only the browser and a simulator exist in kitchen-brain develop), so it is worded as planned, never as built or being tested, with no brand and no guide. It is the column's fifth item and the page's last section before the questions, and its tour stop shows the browser print that works today. Labels & printing in Build and price is unchanged.
+
 ## Gate before a connector flips to 'yes'
 
 - A real account connects on kitchen-brain origin/main, with the flag on in production.

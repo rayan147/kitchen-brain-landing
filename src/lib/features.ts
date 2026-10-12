@@ -7,7 +7,7 @@ import { orderingAvailability, orderingRoute } from './ordering';
 import { allergenCount } from './dietary';
 import { depositMethods } from './events';
 import { inboxLimits, invoiceEmailAvailability, invoiceEmailRoute } from './invoice-email';
-import { cardPaymentsRoute, quickbooksAvailability, squareAvailability } from './connections';
+import { cardPaymentsRoute, printersAvailability, quickbooksAvailability, squareAvailability } from './connections';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -578,6 +578,19 @@ export const featureGroups: readonly FeatureGroup[] = [
 		items: [
 			{ lead: 'Not included today.', detail: 'QuickBooks Online is built and being tested. Until it lands, nothing here reads from or writes to your books, and no date is promised.' }
 		]
+	},
+	{
+		/* Added 2026-10-12 (owner: "Coming, worded as planned"). Planned, not
+		   built: see src/lib/connections.ts. Labels print through the browser
+		   today (the labels group, RC-35). */
+		id: 'printers',
+		section: 'Team, and what it connects to',
+		kicker: 'Label printers',
+		title: 'Label printers, connected directly.',
+		status: printersAvailability.isComing ? 'in-development' : 'available',
+		items: [
+			{ lead: 'Planned, not built.', detail: 'Labels print today through your browser’s print dialog. A direct connection to a label printer is planned, with no date.' }
+		]
 	}
 ] as const;
 
@@ -802,6 +815,14 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				featureId: 'quickbooks',
 				icon: 'books',
 				...(quickbooksAvailability.isComing ? { coming: true as const } : {})
+			},
+			// Added 2026-10-12. Planned, not built; labels print from the browser today.
+			{
+				label: 'Label printers',
+				description: 'Send labels straight to a label printer, without the print dialog.',
+				featureId: 'printers',
+				icon: 'labels',
+				...(printersAvailability.isComing ? { coming: true as const } : {})
 			}
 		]
 	}
@@ -838,7 +859,8 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['team', '/features/team-and-access'],
 	['payments', cardPaymentsRoute],
 	['square', squareAvailability.route],
-	['quickbooks', quickbooksAvailability.route]
+	['quickbooks', quickbooksAvailability.route],
+	['printers', printersAvailability.route]
 ]);
 
 export const featureMenuHref = (featureId: string, coming = false) => {

@@ -1,5 +1,9 @@
 # Story Tracker — Features navigation
 
+## Revision — Label printers as planned (2026-10-12)
+
+Owner request: printing as Coming. A direct connection to a label printer is planned and not built (only the browser and a simulator exist in kitchen-brain develop), so it is worded as planned, never as built or being tested, with no brand and no guide. It is the column's fifth item and the page's last section before the questions, and its tour stop shows the browser print that works today. Labels & printing in Build and price is unchanged.
+
 ## Revision — Connect your tools, a third column (2026-10-12)
 
 All eleven steps remain complete. Owner request: a column next to Run the event

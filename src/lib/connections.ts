@@ -47,6 +47,18 @@ import type { Verdict } from './comparison';
 
 export const SQUARE_STATUS = 'coming' as Verdict;
 export const QUICKBOOKS_STATUS = 'coming' as Verdict;
+/**
+ * Label printers: a direct connection to a label printer, no print dialog.
+ * Added 2026-10-12 at the owner's request ("Coming, worded as planned").
+ * UNLIKE Square and QuickBooks this is NOT built: kitchen-brain develop
+ * 3e933bcc1 has only the seam (src/lib/printing/contract.ts,
+ * PRINT_TRANSPORT_IDS = ['browser', 'simulator']) and a simulator that proves
+ * a job was composed, not that paper moved (docs/printing/label-print-simulator.md).
+ * So every surface says "planned", never "built" or "being tested", names no
+ * printer brand, and has no guide. Labels print today through the browser's
+ * print dialog (src/lib/labels.ts, RC-35); that stays the claim.
+ */
+export const PRINTERS_STATUS = 'coming' as Verdict;
 
 export const integrationsRoute = '/features/integrations';
 
@@ -59,6 +71,7 @@ const availability = (status: Verdict, anchor: string) => ({
 
 export const squareAvailability = availability(SQUARE_STATUS, 'square');
 export const quickbooksAvailability = availability(QUICKBOOKS_STATUS, 'quickbooks');
+export const printersAvailability = availability(PRINTERS_STATUS, 'printers');
 
 /** The card-payment anchor; Stripe is shipped (src/lib/event-payments.ts). */
 export const cardPaymentsRoute = `${integrationsRoute}#card-payments`;
@@ -132,6 +145,13 @@ export const square = {
 		'It doesn’t turn a sale into an order or a purchase.',
 		'It isn’t a payout or profit report. The cost is today’s recipe cost, not what you paid back then.'
 	]
+} as const;
+
+/** Label printers, as planned. Nothing here describes a built screen. */
+export const printers = {
+	today: 'Labels print today from the prep and pack lists through your browser’s print dialog, onto sticker sheets or thermal rolls you set up once in Settings.',
+	planned: 'A direct connection to a label printer, so a label goes straight to it without the print dialog, is planned. It is not built yet, and there is no date.',
+	boundary: 'For now, every label prints through the browser’s print dialog.'
 } as const;
 
 /**
