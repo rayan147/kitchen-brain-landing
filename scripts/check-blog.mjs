@@ -53,13 +53,16 @@ const expectedPosts = [
 	'catering-deposit-without-chasing',
 	'should-staff-see-food-costs',
 	'catering-food-labels',
+	// RC-79: the import guide, read off kitchen-brain main ed6ff5f01 and develop
+	// 6450d7c54 on 2026-10-12.
+	'import-invoices-recipes-ingredient-lists',
 	// RC-78: the Square and QuickBooks guides publish with their connector
 	// (src/lib/connections.ts), each on its own day.
 	...liveGuideSlugs
 ];
 // The menu spells the published count (BlogMenuContents, spellCapital), so the
 // pin follows the list above instead of a typed word.
-const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-one'];
+const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-one', 'Twenty-two', 'Twenty-three'];
 requireText(indexHtml, `${countWords[expectedPosts.length - 10]} worked guides. The assumptions stay beside the arithmetic.`, 'Blog menu evidence boundary');
 // While invoice email is Coming, its setup guide must not be built or linked.
 if (!invoiceEmailLive) {
