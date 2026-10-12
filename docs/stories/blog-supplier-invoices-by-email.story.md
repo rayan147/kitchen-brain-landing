@@ -100,3 +100,9 @@ emailed, the code entered, the test in the inbox).
   existing invoice review guide for what to check once it arrives.
 
 **Revision 2026-10-08: chef voice pass.** Light pass only: one line ("The page says plainly what the address can and can't do"). The post already read in a chef's voice and quotes the app's own labels, which stay verbatim; RC-73 wording guard still passes. Why: owner asked that the site read like a working chef wrote it, not AI.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The setup guide now explains inbox status and review rather than claiming every email enters review; the address code no longer carries an absolute secrecy claim.

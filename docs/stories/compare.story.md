@@ -183,3 +183,9 @@ Content: `src/pages/compare.astro` and its shared data/response states.
 ## Revision 2026-10-11: owner-approved 2026-10-11 changes
 - H1 "Compare CostCook, Parsley, meez and a spreadsheet, job by job." (title tag unchanged; no script pinned the old H1).
 - The product-tour link now sits after the dated source line, so the legend and its evidence stay together.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The two shared group headings now describe their contents without implying all event work happens on service day. The competitor capability matrix retains its August 30 verification date until every row is rechecked.

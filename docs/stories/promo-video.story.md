@@ -3,7 +3,7 @@
 ## My story
 
 - **Piece:** promotional motion video, ~90 s, 16:9, silent-first (burned-in captions + music bed)
-- **Title (working):** "Know what the job makes before you cook it." (the homepage hero line, carried into the film)
+- **Title (revised 2026-10-12):** "Know the food cost before you quote the job." (the homepage hero line, carried into the film)
 - **My hero's name:** Dana, owner-caterer of a six-person operation (same reader as `homepage-caterer-walkthrough.story.md`), watching on a phone between services, sound off
 - **Content file(s):** `video/src/film.ts` (every caption), `video/src/scenes/*.tsx` (where each caption lands)
 - **Spec:** `docs/superpowers/specs/2026-10-05-promo-video-design.md`
@@ -85,7 +85,7 @@ Snap line: unchanged. Point of view: unchanged ("you", the client named as "the 
 | Beat | In this piece |
 |------|---------------|
 | 1 Opening Image | Phone rings. Priya Nair, a wedding, about 150, no date yet. |
-| 2 Theme Stated | Title card: "Know what the job makes before you cook it." |
+| 2 Theme Stated | Title card: "Know the food cost before you quote the job." |
 | 3 Set-Up | The inquiry goes in rough: "Rough answers are fine." |
 | 4 Catalyst | Chapter card: "What do I charge a head?" |
 | 5 Debate | $95 a guest feels right. Is it? The food-cost check answers before she quotes. |
@@ -128,7 +128,7 @@ Snap line: unchanged. Point of view: unchanged ("you", the client named as "the 
 
 - **Intention:** quote a price she can stand behind.
 - **Obstacle:** the food cost arrives after the event.
-- **Title:** "Know what the job makes before you cook it."
+- **Title (revised 2026-10-12):** "Know the food cost before you quote the job."
 
 ### Step 8 — Cool Talk: the one snap line
 
@@ -150,3 +150,9 @@ POV locked to second person ("you") for captions; Priya is named, never addresse
 - Capture source: kitchen-brain develop after the offer-walk-fixes merge (owner ruling 2026-10-05); RC-65 is updated in the ledger in the same lane.
 - Claims withheld (ledger): no signing frame (RC-64); "booked" before Confirm order (RC-61); any no-typing promise (RC-58); invoice email as available (never-claim list).
 - Re-run this step after the capture fills the tokens: cut every caption that a frame does not show at the moment it is on screen.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: Title now names food cost. The booking caption says "Signed and paid. Now book the event." The example still shows a signed and paid booking; the caption no longer says those facts alone perform the booking or rule out Book anyway.

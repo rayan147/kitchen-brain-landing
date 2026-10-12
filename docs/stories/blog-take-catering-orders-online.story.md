@@ -93,3 +93,9 @@ Second person throughout; hands off to the website guide and the shopping list g
 ### Step 11: Revise
 Cut "72 hours" as an app string (the email gives the deadline). Kept the film's
 figures, named as the film's kitchen.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The two default booking rules and three available fixed-menu outcomes are named separately. The example limits the decline window to before payment.

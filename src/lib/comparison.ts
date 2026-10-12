@@ -258,7 +258,7 @@ export const comparison: RowGroup[] = [
 		]
 	},
 	{
-		title: 'The day itself',
+		title: 'Events and kitchen work',
 		rows: [
 			/* FRONT OF HOUSE, added 2026-09-27 (gap report S11; RC-61, RC-63 to
 			   RC-67). The CostCook cells are production rows of
@@ -476,7 +476,7 @@ export const comparison: RowGroup[] = [
 		]
 	},
 	{
-		title: 'Team, and what it connects to',
+		title: 'Team and connections',
 		rows: [
 			{
 				label: 'Unlimited teammates',

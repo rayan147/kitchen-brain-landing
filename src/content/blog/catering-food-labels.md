@@ -26,7 +26,7 @@ A label is the note you leave the next cook, from the person who made it.
 5. **What it contains.** The allergens, in capitals, where nobody can miss them.
 6. **What it's for**, and **who made it**, so there's someone to ask.
 
-The allergen line is the one that keeps someone out of the hospital, and it has to come from the recipe, not from memory. Printing one in CostCook, with the Wild Mushroom Polenta for a 29-guest fundraiser on Tuesday:
+The allergen line helps the crew catch a dangerous mistake. Check it against the recipe and each ingredient's source instead of relying on memory. Printing one in CostCook, with the Wild Mushroom Polenta for a 29-guest fundraiser on Tuesday:
 
 ## Step 1: Open the order's Pack page
 

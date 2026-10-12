@@ -91,7 +91,7 @@ describe("FILM follows develop's event workflow", () => {
     );
     expect(frames[book + 1]).toBe("events-booked-desktop.png");
     expect(FILM.agreement.beats[book].caption).toBe(
-      "A yes is not a booking. Signed and paid is.",
+      "Signed and paid. Now book the event.",
     );
     const all = SCENE_ORDER.flatMap((id) => captionsFor(id, manifest)).join(
       "\n",
@@ -222,7 +222,7 @@ describe("review fixes (motion designer + caterer, 2026-10-05)", () => {
     }
   });
   it("carries the title card's words in the table", () => {
-    expect(TITLE).toBe("Know what the job makes before you cook it.");
+    expect(TITLE).toBe("Know the food cost before you quote the job.");
   });
 });
 
@@ -398,7 +398,7 @@ describe("the client, not she (2026-10-07)", () => {
   });
   it("keeps the snap line, without the pronoun", () => {
     expect(captionsFor("agreement", manifest)).toContain(
-      "A yes is not a booking. Signed and paid is.",
+      "Signed and paid. Now book the event.",
     );
   });
 });

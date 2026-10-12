@@ -133,7 +133,7 @@ for (const [slug, text, label] of [
 	['expected-vs-actual-food-cost', 'Attributed food cost =', 'event attribution boundary'],
 	['supplier-price-changes', 'The risk starts when a draft quote still carries the old cost.', 'draft quote risk'],
 	// Book the event and Confirm order are two steps at app 7a7e407d9.
-	['catering-event-first-call-to-closeout', 'Their yes books nothing. The signed agreement and the deposit do', 'acceptance boundary'],
+	['catering-event-first-call-to-closeout', 'Their yes alone does not book the event.', 'acceptance boundary'],
 	['catering-event-first-call-to-closeout', 'Book the event</strong> is its own step', 'booking before Confirm order'],
 	...(invoiceEmailLive
 		? [['supplier-credit-memo-by-email', 'It adds no purchases and changes no prices.', 'credit never moves a price']]

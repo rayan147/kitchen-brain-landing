@@ -61,3 +61,9 @@ Ordering site (read 2026-10-08).
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Hero: the card link is for when "you take cards through CostCook". You collect it: "Your own invoice, a check, cash or ACH."
 - Test order: "press Go live", then "cancel it in Orders" (the app's own instruction).
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The payment exception now names the Setup choice and explains that approval emails the client without a pay link.

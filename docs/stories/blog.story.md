@@ -101,3 +101,9 @@ The index turns “another software blog” into “the answer to the kitchen qu
 - **Final image:** You close the article with the number worked through and the next kitchen decision named.
 
 **Revision 2026-10-08: chef voice pass.** Index lede and the featured guide's Decide line rewritten in a cook's voice ("with the arithmetic left in so you can run it again when the count or a case price moves"); the article handoff line under the pinned "See the working inside the product." now reads "The same question, shown in CostCook." All eleven posts got the same pass (see each tracker). Pinned headings, the evidence-boundary menu line, figures and readMinutes unchanged (readMinutes rechecked at 200 wpm). Why: owner asked that the site read like a working chef wrote it, not AI.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The opening worked example now shows 39.6% food cost against the 30% target, so the target cannot be mistaken for the achieved rate.

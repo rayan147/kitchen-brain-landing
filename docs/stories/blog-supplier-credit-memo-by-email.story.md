@@ -106,3 +106,9 @@ to the setup guide, the review guide and the delivery guide.
 Cut QuickBooks supplier credits (Coming here). Cut the inference that a
 total-only memo is blocked. Kept the button label and explained it, because
 the reader will see "update costs" and worry.
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: The opening says where the credit appears and what costs it does not alter before the reader reaches the example.

@@ -271,7 +271,7 @@ try {
 		primary: Boolean(document.querySelector('main .btn-primary')),
 		sections: [...document.querySelectorAll('main > section')].map(section => section.id).filter(Boolean)
 	}))()`);
-	assert(noScript.heading?.startsWith('Know what the job makes before you cook it.'), 'no JavaScript: homepage identity is missing');
+	assert(noScript.heading?.startsWith('Know the food cost before you quote the job.'), 'no JavaScript: homepage identity is missing');
 	assert(noScript.primary, 'no JavaScript: primary action is missing');
 	assert(await evaluate(`document.querySelector('[data-hero-media] video').controls`), 'no JavaScript: the hero film must keep its native controls');
 	// Assert visitor destinations rather than an obsolete minimum section count.

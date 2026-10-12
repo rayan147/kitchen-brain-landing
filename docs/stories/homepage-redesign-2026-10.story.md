@@ -1,4 +1,4 @@
-# Story Tracker: know what the job makes before you cook it (2026-10-06)
+# Story Tracker: know the food cost before you quote the job (2026-10-06; revised 2026-10-12)
 
 ## My story
 
@@ -48,7 +48,7 @@
 | Beat | In this piece |
 |------|---------------|
 | 1 Opening Image | Hero: the price per guest panel, $95.00 a guest at 26.2% food cost. |
-| 2 Theme Stated | "Know what the job makes before you cook it." |
+| 2 Theme Stated | "Know the food cost before you quote the job." |
 | 3 Set-Up | The flow strip: online order and custom event both end in one costed order. |
 | 4 Catalyst | The call comes in: Inquiry tab, rough answers are fine. |
 | 5 Debate | Proposal tab: the client decides on her phone, no login. |
@@ -86,7 +86,7 @@ asserted.
 ### Step 7: Sorkin
 - **Intention:** quote a price she can stand behind.
 - **Obstacle:** the food cost arrives after the event.
-- **Headline:** Know what the job makes before you cook it.
+- **Headline (revised 2026-10-12):** Know the food cost before you quote the job.
 
 ### Step 8: Cool Talk (the one snap line)
 > A missing price is named, never counted as zero.
@@ -366,3 +366,9 @@ for what survives the knife." Steps 6, 10 and 11 re-checked.
 
 ## Revision 2026-10-11: settled facts from the owner-call check
 - Import band: "It remembers the names you confirm." (was "It learns your names for things."). Sage band: "until an owner or manager approves".
+
+## Communication review · 2026-10-12
+
+- [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
+- [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
+- [x] Step 11: Hero now names food cost instead of suggesting net profit; deposit payment is conditional and the kitchen order has its own confirmation. The film title follows the same narrower claim.
