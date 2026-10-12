@@ -791,7 +791,7 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 			},
 			{
 				label: 'Square',
-				description: 'Publish dishes to your register and see what sold, at today’s cost.',
+				description: 'Publish dishes to your register and see what sold, costed at today’s prices.',
 				featureId: 'square',
 				icon: 'register',
 				...(squareAvailability.isComing ? { coming: true as const } : {})

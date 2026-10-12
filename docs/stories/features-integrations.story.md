@@ -91,6 +91,10 @@ Second person throughout, founder "I" only in the FAQ, as on every feature page.
 
 Cut: logos, a roadmap, every name of an unbuilt connector, the develop-only customer-invoice sync. The close is the final image: start the trial on what works today.
 
+## Revision — English review (2026-10-12)
+
+All 22 findings applied. The connector warning no longer reuses the /compare note ("does not import its sales" sat above "Sales come back"); it now reads "You can't connect … today, and there is no date. Here is what it does in testing." The lede and status line merged so the first screen says Coming once. The link from /features/team-and-connections says "where Square and QuickBooks stand", not "will do". The tour's Square callout quotes the app verbatim. In the QuickBooks guide the reader, not CostCook, is the subject who sends; the paid read-back replaces "works one way"; the short case is handled once, as a vendor credit (re-check against the app before publishing).
+
 ## Gate before a connector flips to 'yes'
 
 - A real account connects on kitchen-brain origin/main, with the flag on in production.

@@ -692,7 +692,7 @@ export const tourStops: readonly TourStop[] = [
 		appArea: 'Analytics / Counter sales',
 		title: 'What sold at the counter, and what it cost to make.',
 		intro: 'For a counter, a market stall or a pickup window. Publish the dishes you pick to Square, and the register’s sales come back with today’s recipe cost beside them.',
-		callout: 'If you only book catering events, you can skip this one.',
+		callout: 'If you only book catering events, you can skip this integration.',
 		featureHref: featureMenuHref('square', squareAvailability.isComing),
 		metrics: [
 			{ label: 'Availability', value: squareAvailability.word, tone: squareAvailability.isComing ? 'attention' : 'good' },

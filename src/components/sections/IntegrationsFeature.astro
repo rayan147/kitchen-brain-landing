@@ -24,7 +24,6 @@
  */
 import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
-import { comparison } from '../../lib/comparison';
 import { invoiceEmailAvailability } from '../../lib/invoice-email';
 import {
 	quickbooks,
@@ -34,19 +33,17 @@ import {
 	workingConnections
 } from '../../lib/connections';
 
-// The /compare rows, so this page and the table cannot disagree (RC-45).
-const compareRow = (label: string) =>
-	comparison.flatMap((group) => group.rows).find((row) => row.label === label);
-const squareRow = compareRow('Point of sale');
-const quickbooksRow = compareRow('Accounting');
-
+// The Coming line per connector. Not the /compare note: that one says what
+// is unavailable ("does not import its sales"), which read as a contradiction
+// directly above the cards that show what the test build does (English
+// review, 2026-10-12). /compare keeps its own wording.
 const connectors = [
 	{
 		id: 'square',
 		name: 'Square',
 		heading: 'Square, for the counter.',
 		availability: squareAvailability,
-		compareNote: squareRow?.note,
+		comingNote: 'You can’t connect a Square account today, and there is no date. Here is what it does in testing.',
 		forWho: square.forWho,
 		steps: square.steps,
 		boundary: square.stays,
@@ -58,7 +55,7 @@ const connectors = [
 		name: 'QuickBooks Online',
 		heading: 'QuickBooks Online, for the books.',
 		availability: quickbooksAvailability,
-		compareNote: quickbooksRow?.note,
+		comingNote: 'You can’t connect a QuickBooks company today, and there is no date. Here is what it does in testing.',
 		forWho: quickbooks.forWho,
 		steps: quickbooks.steps,
 		boundary: quickbooks.never,
@@ -102,7 +99,7 @@ const faqs = [
 	},
 	{
 		q: 'Does CostCook hold the card money?',
-		a: 'No. The client pays on Stripe’s page and the money goes into your own Stripe account. CostCook doesn’t save cards or refund on its own.'
+		a: 'No. The client pays on Stripe’s page and the money goes into your own Stripe account. Refunds go out from Stripe too.'
 	},
 	{
 		q: 'I use something that isn’t here.',
@@ -126,11 +123,11 @@ const faqs = [
 				</h1>
 				<p class="hero-lede">
 					Card payments run through your own Stripe account, and suppliers can email their
-					invoices straight in. Square and QuickBooks Online are built and being tested.
+					invoices straight in.
 				</p>
 				{anyComing && (
 					<p class="status-line" data-integrations-status="coming">
-						<span class="status-word">Coming</span> Square and QuickBooks can’t connect a real account yet. They aren’t in the trial, and there is no date.
+						<span class="status-word">Coming</span> Square and QuickBooks Online are built and being tested, but can’t connect a real account yet. They aren’t in the trial, and there is no date.
 					</p>
 				)}
 				<div class="hero-actions">
@@ -150,7 +147,7 @@ const faqs = [
 						</li>
 					))}
 				</ul>
-				<p class="ticket-foot">Nothing here needs your supplier to be plugged in.</p>
+				<p class="ticket-foot">None of this needs your suppliers to connect to anything.</p>
 			</figure>
 		</div>
 	</section>
@@ -163,7 +160,7 @@ const faqs = [
 		<div class="container-page">
 			<div class="section-head" data-reveal>
 				<h2 id="working-heading">Working today, in the trial.</h2>
-				<p>Each one is set up once, in Settings, and does one job.</p>
+				<p>Each one does one job.</p>
 			</div>
 			<ul role="list" class="working-cards">
 				{workingConnections.map((connection, index) => (
@@ -189,9 +186,7 @@ const faqs = [
 						{connector.availability.isComing && <span class="chip">Coming</span>}
 					</div>
 					<p>{connector.forWho}</p>
-					{connector.availability.isComing && connector.compareNote && (
-						<p class="setup-warning">{connector.compareNote} Below is what the test build does.</p>
-					)}
+					{connector.availability.isComing && <p class="setup-warning">{connector.comingNote}</p>}
 				</div>
 				<ol role="list" class="setup-cards">
 					{connector.steps.map((step, stepIndex) => (

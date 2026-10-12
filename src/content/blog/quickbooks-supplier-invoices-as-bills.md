@@ -25,9 +25,9 @@ This guide connects CostCook to QuickBooks Online so a checked supplier invoice 
 
 ## What it does, in one line
 
-CostCook sends the supplier invoices you have already checked to QuickBooks as bills, and supplier credits as credits. Then it reads back whether each bill has been paid.
+You send the supplier invoices you have already checked to QuickBooks as bills, and supplier credits as credits. CostCook then reads back whether each bill has been paid.
 
-It works one way. QuickBooks never rewrites an invoice in CostCook.
+QuickBooks can tell CostCook a bill was paid. It never rewrites an invoice in CostCook.
 
 ## Step 1: Connect your QuickBooks company
 
@@ -56,7 +56,7 @@ If your bookkeeper keeps something apart, like drinks or paper goods, you can se
 
 Each CostCook supplier is matched to one QuickBooks vendor. Harbor Foods in CostCook is "Harbor Foods Inc." in QuickBooks, and the match keeps them together. CostCook suggests matches, and you confirm them.
 
-One QuickBooks vendor can be matched to only one CostCook supplier. If a supplier isn't in QuickBooks yet, CostCook creates the vendor only when you ask it to for that supplier, and shows you the details first.
+One QuickBooks vendor can be matched to only one CostCook supplier. If a supplier isn't in QuickBooks yet, CostCook creates a vendor (not an account) only when you ask it to for that supplier, and shows you the details first.
 
 <!-- capture needed: supplier matches, one suggestion and one created vendor -->
 
@@ -97,6 +97,6 @@ If the QuickBooks sign-in expires, the settings page asks you to **Reconnect Qui
 ## Sunday night, after
 
 - Tuesday's Harbor Foods invoice is in QuickBooks as a bill, to Harbor Foods Inc., in the food account, exactly as you checked it.
-- The short case of chicken is already off it, because you caught it at the dock.
-- The credit for it went across as a credit.
+- The bill matches the invoice Harbor Foods sent, and you checked it against the truck.
+- The credit for the short case went across as a vendor credit.
 - Your bookkeeper pays from QuickBooks, and CostCook shows it paid. Nobody typed the invoice a second time.

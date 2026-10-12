@@ -76,7 +76,7 @@ export const workingConnections = [
 		id: 'card-payments',
 		name: 'Card payments, through Stripe',
 		forWhat: 'Getting paid for the event without chasing it.',
-		how: 'Connect Stripe in Settings. The client pays the deposit and the balance from a link in an email, on Stripe’s page, into your own Stripe account. An online order pays the same way when your booking rules ask for money.',
+		how: 'Connect Stripe in Settings. The client gets a pay link by email for the deposit and the balance, pays on Stripe’s page, and the money goes into your own Stripe account. An online order pays the same way when your booking rules ask for money.',
 		limit: 'CostCook doesn’t save cards or refund on its own. Refunds go out from Stripe.',
 		href: '/features/events-and-proposals',
 		linkLabel: 'Events & proposals'
@@ -93,7 +93,7 @@ export const workingConnections = [
 	{
 		id: 'e-signature',
 		name: 'E-signature for the agreement',
-		forWhat: 'A signed contract before the date is held.',
+		forWhat: 'A signed contract before the event is booked.',
 		how: 'The agreement starts from your saved contract template, with the accepted proposal attached as Schedule A, and goes out for e-signature. Or keep a copy signed on paper.',
 		limit: 'The event books once everyone has signed, or when you book anyway and write down why.',
 		href: '/features/events-and-proposals',
@@ -104,7 +104,7 @@ export const workingConnections = [
 		name: 'Spreadsheets, PDFs and photos',
 		forWhat: 'Prices in, with no connection to your supplier at all.',
 		how: 'An order guide, a price sheet, an invoice or a photo of a delivery slip goes through one queue: JPEG, PNG, WebP, PDF, CSV, XLSX or DOCX, or paste it.',
-		limit: 'Each one is staged until you confirm it.',
+		limit: 'Each one waits in review until you confirm it.',
 		href: '/features/invoices-and-price-list-import',
 		linkLabel: 'Invoices & price-list import'
 	}
@@ -141,19 +141,19 @@ export const square = {
  * docs/integrations/quickbooks.md (Sandbox-proven 2026-09-12).
  */
 export const quickbooks = {
-	forWho: 'Whoever keeps the books, so the supplier invoices you already checked don’t get typed in a second time.',
+	forWho: 'For whoever keeps the books: the supplier invoices you already checked don’t get typed in a second time.',
 	// QuickBooksSetupSteps.svelte:29-58, the app's four step titles.
 	steps: [
 		{ title: 'Connect your QuickBooks company', detail: 'The owner signs in to QuickBooks Online from Settings > Integrations.' },
 		{ title: 'Pick where purchases go', detail: 'Choose the QuickBooks account for food and ingredients, and the one for fees on invoices. CostCook never creates an account.' },
 		{ title: 'Match your suppliers', detail: 'Each CostCook supplier is matched to one QuickBooks vendor.' },
-		{ title: 'Send each invoice you have checked', detail: 'Send to QuickBooks as a bill, one at a time or several at once. Supplier credits go the same way.' }
+		{ title: 'Send each invoice you have checked', detail: 'Press “Send to QuickBooks as a bill” on one invoice, or send several at once. Supplier credits go the same way.' }
 	],
 	// The "What stays where" card, settings/integrations/quickbooks/+page.svelte.
 	never: 'CostCook never pays a bill, or sends the same invoice twice.',
 	doesNot: [
 		'Nothing goes to QuickBooks until someone presses Send. There is no automatic send.',
-		'It reads back whether a bill is paid. It never changes your invoice in CostCook.',
-		'Only the workspace owner connects QuickBooks and sends bills.'
+		'It never changes your invoice in CostCook. It only reads back whether a bill is paid.',
+		'It doesn’t let a manager or staff send bills. Only the workspace owner can.'
 	]
 } as const;

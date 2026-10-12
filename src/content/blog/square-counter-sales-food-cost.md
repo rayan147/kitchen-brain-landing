@@ -16,7 +16,7 @@ featureLabel: See Square in CostCook
      it publishes, re-read every step against the live build and shoot the captures
      listed in the story tracker; check-blog requires them once it is built. -->
 
-Saturday at the market stall goes fine. The register says you sold 42 chicken bowls, 65 slices of focaccia and 18 short rib plates. Monday morning you know what came in. You don't know what any of it cost you to make, because the register has never seen a recipe and your recipes have never seen the register.
+Saturday at the market stall goes fine. The register says you sold 42 chicken bowls, 65 slices of focaccia and 18 short rib plates. Monday morning you know what you took in. You don't know what any of it cost you to make, because the register has never seen a recipe and your recipes have never seen the register.
 
 That's the gap this connection closes. Square keeps ringing the sales. CostCook knows the recipes and today's ingredient prices. Put the two together and Monday's question has an answer.
 
@@ -63,7 +63,7 @@ It happens. Somebody bumps the focaccia to $4.50 on the register on a busy Satur
 
 <!-- capture needed: the "Some Square items changed" conflict, both prices shown -->
 
-On a dish linked to Square, CostCook tells you where it stands: **In sync with Square**, **Not published yet**, or **Changed in Square**. That reading comes from what CostCook last saw, not a fresh call to Square, so it prints when it last looked.
+On a dish linked to Square, CostCook tells you where it stands: **In sync with Square**, **Not published yet**, or **Changed in Square**. That reading comes from what CostCook last saw, not a fresh call to Square, so it shows when it last checked.
 
 ## Step 5: The sales come back
 
@@ -92,7 +92,7 @@ Here's Harbor & Hearth's Saturday, worked through:
 
 The three matched dishes took in $588 + $260 + $432 = $1,280. They cost $133.56 + $26.65 + $131.04 = $291.25 to make at today's prices. So $291.25 ÷ $1,280 ≈ 22.8% food cost, and the iced tea stays out of the number until it's matched, rather than being counted as free.
 
-That "at today's prices" matters. The cost comes from your current recipes and current ingredient prices. If chicken went up on Thursday, Saturday's bowls are costed at Thursday's chicken. It tells you what selling the same food costs you now. It isn't an accounting of what you paid back then.
+That "at today's prices" matters. The cost comes from your current recipes and current ingredient prices. If chicken goes up on Tuesday, Saturday's bowls are costed at Tuesday's chicken from then on. It tells you what selling the same food costs you now. It isn't an accounting of what you paid back then.
 
 ## Step 7: Cook it again
 
@@ -106,7 +106,7 @@ Choosing a price never writes to Square by itself. It opens the publication revi
 
 ## What it doesn't do
 
-- **It doesn't take stock off your shelf.** Counter sales don't deplete inventory. Your counts stay yours.
+- **It doesn't take stock off your shelf.** Your counts stay yours.
 - **It doesn't turn sales into orders.** The register's sales sit beside your events, not inside them.
 - **It isn't a payout or profit report.** It doesn't know Square's fees or what landed in your bank. For that, Square's own reports are the place.
 - **It doesn't send recipes or allergens to Square.** Only the name, description, price and locations.
