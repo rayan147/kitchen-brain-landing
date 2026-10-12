@@ -26,7 +26,7 @@ const published = new Intl.DateTimeFormat('en-US', {
 	</div>
 	<div>
 		<Heading class:list={['font-display font-semibold text-ink text-balance', compact ? 'text-xl' : 'text-2xl']}>
-			<a href={`/blog/${post.id}`} class="underline decoration-transparent underline-offset-4 transition-colors duration-150 hover:text-green-deep hover:decoration-hairline-strong">
+			<a href={`/blog/${post.id}`} class="inline-block min-h-11 underline decoration-transparent underline-offset-4 transition-colors duration-150 hover:text-green-deep hover:decoration-hairline-strong">
 				{post.data.title}
 			</a>
 		</Heading>

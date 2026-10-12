@@ -61,6 +61,13 @@ const writtenPosts = [
 	// scheduled until its publishedDate, then required (scripts/lib/blog-schedule.mjs).
 	// RC-80: the inventory guide, read off kitchen-brain develop 9b84420f4.
 	'count-inventory-first-time',
+	// RC-81 to RC-88 (85 and 87 held), read off develop 9b84420f4 on 2026-10-12.
+	'send-catering-proposal',
+	'close-month-food-cost',
+	'one-sauce-many-dishes',
+	'nutrition-facts-catering-dish',
+	'build-catering-menu-quote',
+	'print-recipe-sheet',
 	// RC-78: the Square and QuickBooks guides publish with their connector
 	// (src/lib/connections.ts), each on its own day.
 	...liveGuideSlugs
@@ -174,7 +181,7 @@ for (const [slug, text, label] of [
 // How-to guides carry their app captures as sized figures
 // (integrations/blog-figures.mjs): a step with no screenshot, or an image
 // without width and height, is a guide that stopped showing the app.
-for (const [slug, figures] of [['food-cost-per-guest', 1], ['catering-food-labels', 7], ['guest-allergy-menu-check', 8], ['catering-deposit-without-chasing', 10], ['should-staff-see-food-costs', 8], ['import-invoices-recipes-ingredient-lists', 37], ['count-inventory-first-time', 17]].filter(([slug]) => isDue(slug))) {
+for (const [slug, figures] of [['food-cost-per-guest', 1], ['catering-food-labels', 7], ['guest-allergy-menu-check', 8], ['catering-deposit-without-chasing', 10], ['should-staff-see-food-costs', 8], ['import-invoices-recipes-ingredient-lists', 37], ['count-inventory-first-time', 17], ['send-catering-proposal', 21], ['close-month-food-cost', 17], ['one-sauce-many-dishes', 20], ['nutrition-facts-catering-dish', 12], ['build-catering-menu-quote', 19], ['print-recipe-sheet', 18]].filter(([slug]) => isDue(slug))) {
 	const html = readFileSync(join(blogRoot, slug, 'index.html'), 'utf8');
 	const shots = [...html.matchAll(/<figure class="blog-shot">[\s\S]*?<\/figure>/g)].map((m) => m[0]);
 	if (shots.length !== figures) failures.push(`${slug} has ${shots.length} app captures; expected ${figures}`);

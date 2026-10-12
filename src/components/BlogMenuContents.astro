@@ -13,9 +13,8 @@ const posts = await getPublishedPosts();
 // TOPICS, SHORT NAMES, ONE SCREEN (owner, 2026-10-12: "organize the Blog
 // dropdown better"). It listed every post with its full title and description
 // in two loose groups, two screens tall and growing by one a week. Now it uses
-// the blog index's four topics, each post's short menuTitle, and three columns
-// sized for the post counts (the two smaller topics share one). The newest
-// post leads, because a post goes out every Thursday.
+// the blog index's four topics, one column each, and each post's short
+// menuTitle. The newest post leads, because a post goes out every Thursday.
 //
 // Considered Composite; not used because this is one fixed level of topic
 // headings over article links. The column layout is data in blogMenu.columns.
@@ -39,7 +38,7 @@ const slug = (topic: string) => topic.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-
 	</a>
 </div>
 
-<div class="grid lg:grid-cols-3">
+<div class="grid lg:grid-cols-4">
 	{blogMenu.columns.map((topics, columnIndex) => (
 		<div class:list={['p-3 sm:p-4', columnIndex > 0 && 'border-t border-ticket-rule lg:border-t-0 lg:border-l']}>
 			{topics.map((topic) => (
