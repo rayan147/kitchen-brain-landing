@@ -4,11 +4,16 @@ import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 import { tourStopCount } from './lib/tour-stops.mjs';
+import { heldGuideSlugs } from './lib/connections.mjs';
+import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
 import { resourceCount, mobileMenuLinkCount } from './lib/resource-nav.mjs';
 
 // The Blog menu lists every article, so the count is the content folder's,
 // not a number to bump by hand (it read 10 after an 11th article shipped).
-const blogArticleCount = (await readdir(new URL('../src/content/blog/', import.meta.url))).filter((name) => name.endsWith('.md')).length;
+// Held guides (src/lib/blog.ts) are not in the menu, so they are not counted.
+const heldSlugs = new Set([...heldGuideSlugs, ...(invoiceEmailLive ? [] : [setupGuideSlug])]);
+const blogArticleCount = (await readdir(new URL('../src/content/blog/', import.meta.url)))
+	.filter((name) => name.endsWith('.md') && !heldSlugs.has(name.replace(/\.md$/, ''))).length;
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const previewHost = new URL(baseUrl).hostname;
@@ -159,8 +164,11 @@ try {
 	assert(desktop.minTarget >= 44, `desktop: smallest link target is ${desktop.minTarget}px`);
 	assert(desktop.left >= 0 && desktop.right <= desktop.innerWidth, 'desktop: panel leaves the viewport');
 	assert(desktop.scrollWidth === desktop.innerWidth, 'desktop: horizontal overflow');
-	assert(desktop.sectionTops[0] === desktop.sectionTops[1], 'desktop: menu groups are not aligned');
-	assert(desktop.sectionLefts[0] < desktop.sectionLefts[1], 'desktop: menu groups did not form two columns');
+	// Three columns since 2026-10-12 (Connect your tools, RC-78). Every pair is
+	// checked, so a third column that wraps under the first two fails here.
+	assert(desktop.sectionTops.length === 3, `desktop: expected 3 menu groups, received ${desktop.sectionTops.length}`);
+	assert(desktop.sectionTops.every((top) => top === desktop.sectionTops[0]), 'desktop: menu groups are not aligned');
+	assert(desktop.sectionLefts[0] < desktop.sectionLefts[1] && desktop.sectionLefts[1] < desktop.sectionLefts[2], 'desktop: menu groups did not form three columns');
 	await capture('desktop-open');
 	const blog = await evaluate(`(() => new Promise((resolve) => {
 		const features = document.querySelector('[data-features-menu]');
@@ -245,8 +253,8 @@ try {
 		})()`);
 		assert(responsive.left >= 0 && responsive.right <= responsive.innerWidth, `${width}x${height}: panel leaves the viewport`);
 		assert(responsive.scrollWidth === responsive.innerWidth, `${width}x${height}: horizontal overflow`);
-		assert(responsive.sectionTops[0] === responsive.sectionTops[1], `${width}x${height}: menu groups are not aligned`);
-		assert(responsive.sectionLefts[0] < responsive.sectionLefts[1], `${width}x${height}: menu groups did not form two columns`);
+		assert(responsive.sectionTops.every((top) => top === responsive.sectionTops[0]), `${width}x${height}: menu groups are not aligned`);
+		assert(responsive.sectionLefts[0] < responsive.sectionLefts[1] && responsive.sectionLefts[1] < responsive.sectionLefts[2], `${width}x${height}: menu groups did not form three columns`);
 	}
 
 	await evaluate(`(() => {
@@ -346,7 +354,7 @@ try {
 	assert(mobile.scrollWidth === mobile.innerWidth, 'mobile: horizontal overflow');
 	assert(mobile.bottom <= 844, `mobile: panel bottom is ${mobile.bottom}px below the viewport`);
 	assert(mobile.panelScrollHeight > mobile.clientHeight, 'mobile: long destinations are not contained in a scroll region');
-	assert(mobile.sectionTops[1] > mobile.sectionTops[0], 'mobile: menu groups did not stack');
+	assert(mobile.sectionTops[1] > mobile.sectionTops[0] && mobile.sectionTops[2] > mobile.sectionTops[1], 'mobile: menu groups did not stack');
 	await capture('mobile-open');
 	const finalItemVisible = await evaluate(`(() => {
 		document.documentElement.style.scrollBehavior = 'auto';

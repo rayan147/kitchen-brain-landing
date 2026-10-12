@@ -13,9 +13,12 @@ const { path, idPrefix } = Astro.props;
 // Considered Composite; not used because this is one fixed two-level feature
 // tree rendered by a shared Astro component. Recursive node objects would add
 // indirection without introducing another kind of branch or leaf.
+//
+// Three columns at lg since 2026-10-12 (Connect your tools); they stack below
+// lg, each later column ruled off from the one before it.
 ---
 
-<div class="grid lg:grid-cols-2">
+<div class="grid lg:grid-cols-3">
 	{
 		featureMenuSections.map((section, sectionIndex) => (
 			<section

@@ -1,0 +1,341 @@
+---
+/**
+ * /features/integrations
+ * story: docs/stories/features-integrations.story.md
+ * ledger: RC-45 (Square, QuickBooks), RC-78 (this page and its menu column)
+ *
+ * The straight answer to "does it work with what I already pay for?". What
+ * works today leads; Square and QuickBooks follow with what the test build
+ * does, why a caterer cannot connect them yet, and what neither one does.
+ * Every fact is data in src/lib/connections.ts with its kitchen-brain source;
+ * the status words, the chips and the guide links read the two statuses there.
+ *
+ * WHY NO CAPTURES. Both connectors are Sandbox-only on kitchen-brain main
+ * (ed6ff5f01); a screenshot would show a test company and a test register as
+ * if a reader could have them. The app's own step titles are set as text.
+ *
+ * THE GUIDES. Each connector has a guide (src/content/blog) that is held, not
+ * built, while its word is Coming (src/lib/blog.ts). The link below appears
+ * only when the guide is published.
+ *
+ * Considered Template Method (a shared FeatureGuide shell); not used because
+ * the feature family shares semantic roles, not an algorithm. Same refusal as
+ * InvoiceEmailFeature.astro.
+ */
+import FeatureTrialTerms from '../FeatureTrialTerms.astro';
+import { cta, demoCta } from '../../lib/site';
+import { comparison } from '../../lib/comparison';
+import { invoiceEmailAvailability } from '../../lib/invoice-email';
+import {
+	quickbooks,
+	quickbooksAvailability,
+	square,
+	squareAvailability,
+	workingConnections
+} from '../../lib/connections';
+
+// The /compare rows, so this page and the table cannot disagree (RC-45).
+const compareRow = (label: string) =>
+	comparison.flatMap((group) => group.rows).find((row) => row.label === label);
+const squareRow = compareRow('Point of sale');
+const quickbooksRow = compareRow('Accounting');
+
+const connectors = [
+	{
+		id: 'square',
+		name: 'Square',
+		heading: 'Square, for the counter.',
+		availability: squareAvailability,
+		compareNote: squareRow?.note,
+		forWho: square.forWho,
+		steps: square.steps,
+		boundary: square.stays,
+		doesNot: square.doesNot,
+		guide: { href: '/blog/square-counter-sales-food-cost', label: 'Read the Square guide' }
+	},
+	{
+		id: 'quickbooks',
+		name: 'QuickBooks Online',
+		heading: 'QuickBooks Online, for the books.',
+		availability: quickbooksAvailability,
+		compareNote: quickbooksRow?.note,
+		forWho: quickbooks.forWho,
+		steps: quickbooks.steps,
+		boundary: quickbooks.never,
+		doesNot: quickbooks.doesNot,
+		guide: { href: '/blog/quickbooks-supplier-invoices-as-bills', label: 'Read the QuickBooks guide' }
+	}
+] as const;
+
+const anyComing = connectors.some((connector) => connector.availability.isComing);
+
+// The hero ticket: one line per connection, each with the word it has today.
+const ticketLines = [
+	{ name: 'Card payments, through Stripe', word: 'In the app today', coming: false },
+	{ name: 'Invoice email', word: invoiceEmailAvailability.word, coming: invoiceEmailAvailability.isComing },
+	{ name: 'E-signature for the agreement', word: 'In the app today', coming: false },
+	{ name: 'Square', word: squareAvailability.word, coming: squareAvailability.isComing },
+	{ name: 'QuickBooks Online', word: quickbooksAvailability.word, coming: quickbooksAvailability.isComing }
+];
+
+const chapters = [
+	{ href: '#working-today', label: 'Working today' },
+	{ href: '#square', label: 'Square' },
+	{ href: '#quickbooks', label: 'QuickBooks Online' },
+	{ href: '#integrations-faq', label: 'Questions' }
+] as const;
+
+const faqs = [
+	{
+		q: 'Can I connect Square or QuickBooks during the trial?',
+		a: anyComing
+			? 'Not yet. Both are built and being tested against Square’s and Intuit’s test accounts. Neither can connect a real account today, and I am not promising a date. When one can, this page and its guide will say so.'
+			: 'Yes. Connect it from Settings > Integrations.'
+	},
+	{
+		q: 'Do I need a connection to get supplier prices in?',
+		a: 'No. A price sheet, an invoice or a photo of a delivery slip goes through the same review, and invoice email takes what your suppliers already send.'
+	},
+	{
+		q: 'Who can connect Stripe, Square or QuickBooks?',
+		a: 'Only the workspace owner. The app says so on the Stripe button, and the Square and QuickBooks test builds work the same way. An owner or manager can set up invoice email.'
+	},
+	{
+		q: 'Does CostCook hold the card money?',
+		a: 'No. The client pays on Stripe’s page and the money goes into your own Stripe account. CostCook doesn’t save cards or refund on its own.'
+	},
+	{
+		q: 'I use something that isn’t here.',
+		a: 'Tell me on the 15-minute call. I would rather hear what you run than guess.'
+	}
+] as const;
+---
+
+<!-- story: docs/stories/features-integrations.story.md -->
+<article id="features-integrations" class="connect-page">
+	<section class="hero" aria-labelledby="connect-heading">
+		<div class="container-page hero-grid">
+			<div class="hero-copy anim-enter">
+				<nav aria-label="Breadcrumb" class="feature-breadcrumb">
+					<a href="/features">Every feature</a>
+					<span aria-hidden="true">/</span>
+					<span>Connect your tools</span>
+				</nav>
+				<h1 id="connect-heading" class="feature-display">
+					What CostCook plugs into today, and what it doesn’t yet.
+				</h1>
+				<p class="hero-lede">
+					Card payments run through your own Stripe account, and suppliers can email their
+					invoices straight in. Square and QuickBooks Online are built and being tested.
+				</p>
+				{anyComing && (
+					<p class="status-line" data-integrations-status="coming">
+						<span class="status-word">Coming</span> Square and QuickBooks can’t connect a real account yet. They aren’t in the trial, and there is no date.
+					</p>
+				)}
+				<div class="hero-actions">
+					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+					<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+				</div>
+				<FeatureTrialTerms />
+			</div>
+
+			<figure class="ticket anim-enter" style="--enter-delay: 120ms" data-integrations-ticket>
+				<figcaption>Connections · as of today</figcaption>
+				<ul role="list">
+					{ticketLines.map((line) => (
+						<li data-connection={line.name}>
+							<span>{line.name}</span>
+							<span class:list={['word', line.coming && 'coming']}>{line.word}</span>
+						</li>
+					))}
+				</ul>
+				<p class="ticket-foot">Nothing here needs your supplier to be plugged in.</p>
+			</figure>
+		</div>
+	</section>
+
+	<nav class="container-page chapters" aria-label="On this page">
+		{chapters.map((chapter) => <a href={chapter.href}>{chapter.label}</a>)}
+	</nav>
+
+	<section id="working-today" class="product-section" aria-labelledby="working-heading">
+		<div class="container-page">
+			<div class="section-head" data-reveal>
+				<h2 id="working-heading">Working today, in the trial.</h2>
+				<p>Each one is set up once, in Settings, and does one job.</p>
+			</div>
+			<ul role="list" class="working-cards">
+				{workingConnections.map((connection, index) => (
+					<li id={connection.id} data-reveal style={`--reveal-delay: ${index * 60}ms`} data-working-connection={connection.id}>
+						<p class="ticket-label">{connection.forWhat}</p>
+						<h3>{connection.name}</h3>
+						<p>{connection.how}</p>
+						<p class="limit">{connection.limit}</p>
+						<a href={connection.href}>{connection.linkLabel}</a>
+					</li>
+				))}
+			</ul>
+			<p class="handoff">Next: the two that aren’t ready.</p>
+		</div>
+	</section>
+
+	{connectors.map((connector, index) => (
+		<section id={connector.id} class:list={['product-section', index === 0 && 'soft']} aria-labelledby={`${connector.id}-heading`} data-connector={connector.id} data-connector-status={connector.availability.verdict}>
+			<div class="container-page">
+				<div class="section-head" data-reveal>
+					<div class="connector-title">
+						<h2 id={`${connector.id}-heading`}>{connector.heading}</h2>
+						{connector.availability.isComing && <span class="chip">Coming</span>}
+					</div>
+					<p>{connector.forWho}</p>
+					{connector.availability.isComing && connector.compareNote && (
+						<p class="setup-warning">{connector.compareNote} Below is what the test build does.</p>
+					)}
+				</div>
+				<ol role="list" class="setup-cards">
+					{connector.steps.map((step, stepIndex) => (
+						<li data-reveal style={`--reveal-delay: ${stepIndex * 60}ms`}>
+							<p class="ticket-label">{String(stepIndex + 1).padStart(2, '0')}</p>
+							<h3>{step.title}</h3>
+							<p>{step.detail}</p>
+						</li>
+					))}
+				</ol>
+				<div class="split boundary" data-reveal>
+					<div>
+						<p class="boundary-line">{connector.boundary}</p>
+						{connector.id === 'square' && <p class="snap" data-integrations-snap>{square.skipLine}</p>}
+					</div>
+					<div class="does-not">
+						<p class="ticket-label">What it doesn’t do</p>
+						<ul role="list">
+							{connector.doesNot.map((line) => <li>{line}</li>)}
+						</ul>
+					</div>
+				</div>
+				{!connector.availability.isComing && (
+					<p class="guide-link"><a href={connector.guide.href} data-connector-guide={connector.id}>{connector.guide.label}</a></p>
+				)}
+				<p class="handoff">{index === 0 ? 'Next: QuickBooks Online.' : 'Next: questions.'}</p>
+			</div>
+		</section>
+	))}
+
+	<section id="integrations-faq" class="product-section" aria-labelledby="faq-heading">
+		<div class="container-page">
+			<div class="section-head" data-reveal>
+				<h2 id="faq-heading">Questions about connecting your tools.</h2>
+			</div>
+			<div class="faq-list">
+				{faqs.map((item) => (
+					<details class="faq">
+						<summary>{item.q}</summary>
+						<p>{item.a}</p>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="container-page closing-grid" data-reveal>
+			<div>
+				<h2 id="closing-heading">Start on what works today.</h2>
+				<p>Connect Stripe and send your reps the invoice address on the first day of the trial. Your costs don’t wait on Square or QuickBooks.</p>
+			</div>
+			<div class="closing-actions">
+				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
+				<a href={demoCta.href} target={demoCta.target} rel={demoCta.rel} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
+			</div>
+		</div>
+		<nav class="container-page onward feature-onward" aria-label="Related feature guides">
+			<a href="/features/events-and-proposals">Events &amp; proposals</a>
+			<a href="/features/invoice-email">Invoice email</a>
+			<a href="/features">Every CostCook feature</a>
+		</nav>
+	</section>
+</article>
+
+<style>
+	.connect-page { background: var(--color-cream); }
+	.hero-grid, .split, .closing-grid { display: grid; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+	.hero-grid > *, .split > *, .closing-grid > * { min-width: 0; }
+	.hero-grid { padding-block: clamp(3rem, 6vw, 5rem) var(--spacing-section-tight); }
+	.closing-grid { padding-block: var(--spacing-section-tight); }
+	.product-section { border-top: 1px solid var(--color-hairline); padding-block: var(--spacing-section); scroll-margin-top: 1rem; }
+	.product-section.soft { background: var(--color-paper); }
+	.feature-breadcrumb { margin-bottom: 1.6rem; }
+	.hero-lede { margin-top: 1.5rem; max-width: 56ch; font-size: var(--text-lede); line-height: var(--text-lede--line-height); color: var(--color-ink-soft); }
+	.status-line { margin-top: 1.25rem; max-width: 56ch; padding: .75rem 1rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); font-size: var(--text-body-sm); }
+	.status-word { font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-amber-deep); margin-right: .4rem; }
+	.hero-actions, .closing-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+	.hero-actions .btn-primary, .closing-actions .btn-primary { min-height: 48px; align-items: center; justify-content: center; padding-inline: 1.7rem; text-align: center; }
+	/* Scoped per feature page across this family, the same four declarations
+	   as InvoiceEmailFeature.astro (hoisting is its own pass). */
+	h2 { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 600; line-height: 1.12; text-wrap: balance; }
+	h3 { font-weight: 650; font-size: var(--text-h3); line-height: 1.25; text-wrap: balance; }
+	.section-head { max-width: 62ch; }
+	.section-head p, .split p { margin-top: 1.25rem; max-width: 60ch; color: var(--color-ink-soft); }
+	.handoff { padding-top: 2rem; font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-amber-deep); }
+	.ticket-label { font-family: var(--font-mono); font-size: var(--text-eyebrow); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-amber-deep); }
+
+	/* The connections ticket, tilted like every ticket on the site and flat
+	   under reduced motion. */
+	.ticket { border-block: 1px solid var(--color-ticket-rule); background: var(--color-paper); box-shadow: var(--shadow-ticket); transform: rotate(-1.5deg); }
+	@media (prefers-reduced-motion: reduce) {
+		.ticket { transform: none; }
+	}
+	.ticket figcaption { padding: .75rem 1rem; border-bottom: 1px dashed var(--color-ticket-rule); color: var(--color-amber-deep); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+	.ticket ul { padding: .25rem 1rem; }
+	.ticket li { display: grid; gap: .25rem; padding-block: .8rem; border-bottom: 1px dashed var(--color-ticket-rule); font-weight: 600; }
+	.ticket li:last-child { border-bottom: 0; }
+	.ticket .word { font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-green-deep); }
+	.ticket .word.coming { color: var(--color-amber-deep); }
+	.ticket-foot { padding: .75rem 1rem 1rem; border-top: 1px dashed var(--color-ticket-rule); font-size: var(--text-body-sm); color: var(--color-ink-soft); }
+
+	.chapters { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; padding-block: 1rem; border-top: 1px solid var(--color-hairline); }
+	.chapters a { display: inline-flex; min-height: 44px; align-items: center; font-weight: 600; color: var(--color-green-deep); text-decoration: underline; text-decoration-color: var(--color-ticket-rule); text-underline-offset: 4px; }
+
+	/* minmax(0, 1fr) and clamped padding, so 200% text on 320 stays inside
+	   the screen (the invoice email page's fix, 2026-10-07). */
+	.working-cards, .setup-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+	.working-cards > li, .setup-cards > li { overflow-wrap: anywhere; padding: 1.25rem clamp(1rem, 4vw, 1.5rem); border-top: 2px solid var(--color-hairline-strong); background: var(--color-paper); scroll-margin-top: 1rem; }
+	.soft .setup-cards > li { background: var(--color-cream); }
+	.working-cards h3, .setup-cards h3 { margin-top: .4rem; }
+	.working-cards p:not(.ticket-label), .setup-cards p:not(.ticket-label) { margin-top: .75rem; color: var(--color-ink-soft); }
+	.working-cards .limit { font-size: var(--text-body-sm); }
+	.working-cards a, .guide-link a { display: inline-flex; min-height: 44px; align-items: center; margin-top: .5rem; font-weight: 600; color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 4px; }
+
+	.connector-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; }
+	.chip { display: inline-flex; align-items: center; border: 1px solid var(--color-ticket-rule); border-radius: 999px; background: var(--color-softamber); padding: .15rem .65rem; font-family: var(--font-mono); font-size: var(--text-micro); font-weight: 700; letter-spacing: .06em; color: var(--color-amber-deep); }
+	.section-head .setup-warning { padding: .75rem 1rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); color: var(--color-ink); font-weight: 600; }
+
+	.boundary { margin-top: 2.5rem; align-items: start; }
+	.split .boundary-line { margin-top: 0; font-weight: 600; color: var(--color-ink); }
+	.split .snap { margin-top: 1.5rem; padding: 1.1rem 1.25rem; border: 1px dashed var(--color-ticket-rule); background: var(--color-softamber); font-family: var(--font-display); font-size: var(--text-h3); font-weight: 600; line-height: 1.25; color: var(--color-ink); }
+	.does-not { padding: 1.25rem 1.5rem; border-block: 1px solid var(--color-ticket-rule); background: var(--color-paper); }
+	.soft .does-not { background: var(--color-cream); }
+	.does-not ul { margin-top: .5rem; }
+	.does-not li { padding-block: .6rem; border-top: 1px dashed var(--color-ticket-rule); font-size: var(--text-body-sm); color: var(--color-ink-soft); }
+	.does-not li:first-child { border-top: 0; }
+
+	.faq-list { margin-top: 2rem; max-width: 70ch; }
+	.faq { border-top: 1px solid var(--color-hairline-strong); }
+	.faq:last-child { border-bottom: 1px solid var(--color-hairline-strong); }
+	.faq summary { display: flex; min-height: 44px; align-items: center; padding-block: .75rem; font-weight: 650; cursor: pointer; }
+	.faq p { padding-bottom: 1rem; max-width: 62ch; color: var(--color-ink-soft); }
+
+	.closing { border-top: 1px solid var(--color-hairline); background: var(--color-paper); }
+	.closing-grid p { margin-top: 1rem; max-width: 56ch; color: var(--color-ink-soft); }
+	.onward { display: flex; flex-wrap: wrap; gap: 1.5rem; padding-bottom: var(--spacing-section-tight); }
+	.onward a { display: inline-flex; min-height: 44px; align-items: center; font-weight: 600; color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 4px; }
+
+	@media (min-width: 60rem) {
+		.hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+		.split { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+		.closing-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+		.working-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.setup-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+	}
+</style>

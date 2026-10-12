@@ -1,12 +1,15 @@
 ---
 import { comparison } from '../../lib/comparison';
+import { integrationsRoute } from '../../lib/connections';
 
 // What CostCook connects to, on /features rather than on a page of its own.
 //
-// WHY NOT A DEDICATED PAGE. Two Coming rows and one shipped argument is not a
-// page; a page of nothing but Coming reads as a roadmap and costs trust with
-// the exact reader this site is built for. It becomes its own route when there
-// are four shipped connections to put on it, not before.
+// THE DEDICATED PAGE. Until 2026-10-12 this said two Coming rows and one
+// shipped argument were not a page. The owner asked for one that day
+// (/features/integrations, RC-78), and it now leads with four connections that
+// work today (Stripe card payments, invoice email, e-signature, files) before
+// the two Coming ones, so it does not read as a roadmap. This section stays as
+// the area page's summary and links there; both read the /compare rows.
 //
 // THE ORDER IS THE ARGUMENT. Competitors lead an integrations page with logos.
 // The honest thing CostCook has and they do not is that prices arrive without
@@ -74,6 +77,9 @@ const comingRows = comparison
 					))
 				}
 			</ul>
+			<p class="mt-6">
+				<a href={integrationsRoute} class="inline-flex min-h-11 items-center font-semibold text-green-deep underline decoration-ticket-rule underline-offset-4 hover:decoration-green">Connect your tools: what works today, and what Square and QuickBooks will do</a>
+			</p>
 		</div>
 	</div>
 </section>

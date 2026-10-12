@@ -12,7 +12,8 @@ import { readFileSync } from 'node:fs';
  *    dropdown destinations match one for one, so a stop cannot vanish alone;
  *  - MIN_TOUR_STOPS below is the floor. The tour only grows as a capability
  *    ships with its page (13 on 2026-09-09, RC-60; 14 on 2026-09-27, RC-61;
- *    16 on 2026-10-08, online ordering joined the Features menu, RC-59).
+ *    16 on 2026-10-08, online ordering joined the Features menu, RC-59;
+ *    19 on 2026-10-12, the Connect your tools column, RC-78).
  *    Lowering the floor is a decision, recorded here with its ledger row.
  *
  * Read by regex, not imported: tour.ts imports './features' without an
@@ -22,7 +23,7 @@ import { readFileSync } from 'node:fs';
  * its own process and reads the file once; a module-level constant is the
  * whole job.
  */
-export const MIN_TOUR_STOPS = 16;
+export const MIN_TOUR_STOPS = 19;
 
 const source = readFileSync(new URL('../../src/lib/tour.ts', import.meta.url), 'utf8');
 const start = source.indexOf('export const tourStops');

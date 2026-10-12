@@ -15,6 +15,7 @@ const routes = [
 	'/features/getting-prices-in',
 	'/features/guest-restrictions-and-dietary-guards',
 	'/features/ingredients-and-supplier-prices',
+	'/features/integrations',
 	'/features/inventory',
 	'/features/invoices-and-price-list-import',
 	'/features/labels-and-printing',
@@ -43,6 +44,7 @@ const detailedFeatureRoutes = new Set([
 ]);
 const specialistFeatureRoutes = new Set([
 	...detailedFeatureRoutes,
+	'/features/integrations',
 	'/features/nutrition-facts-and-allergens',
 	'/features/order-shop-prep-pack',
 	'/features/purchasing-and-receiving',

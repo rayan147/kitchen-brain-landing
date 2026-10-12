@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import IntegrationsFeature from '../../components/sections/IntegrationsFeature.astro';
+import { quickbooksAvailability, squareAvailability } from '../../lib/connections';
+
+// Considered Strategy; not used because this route is one deliberate editorial
+// composition selected at build time, not a runtime-swappable layout family.
+const directionContract = [
+	'THESIS: Say plainly what plugs in today and what does not yet; the caterer who pays for Square and QuickBooks deserves the straight answer before the trial, not after.',
+	'OWN-WORLD: CostCook Kitchen Ticket paper, a connections ticket with a status word per line, Coming chips in amber, the app’s own step titles on dashed rules.',
+	'STORY: The owner checks whether their tools fit, finds card payments and invoice email working today, reads what Square and QuickBooks do in the test build and why they cannot connect them yet, then starts the trial on what works (RC-45, RC-78).',
+	'FIRST VIEWPORT: Headline, the honest lede, the Coming status line, actions, and the connections ticket.',
+	'FORM: Utility composition matching the feature family; no captures of Square or QuickBooks while they are Sandbox-only.',
+	'FINISH: Status pinned per connector by src/lib/connections.ts and scripts/check-integrations-page.mjs.'
+].join(' ');
+
+// The description follows the two words in src/lib/connections.ts, so a
+// search result cannot keep saying Coming after a connector ships.
+const description = squareAvailability.isComing && quickbooksAvailability.isComing
+	? 'Card payments through your own Stripe account and supplier invoices by email work today. Square and QuickBooks Online are built and being tested, and you cannot connect them yet.'
+	: 'Card payments through your own Stripe account, supplier invoices by email, and what Square and QuickBooks Online do with CostCook, step by step.';
+---
+
+<Base
+	title="Square, QuickBooks and Stripe connections for caterers | CostCook"
+	description={description}
+	path="/features/integrations"
+	directionContract={directionContract}
+>
+	<IntegrationsFeature />
+</Base>

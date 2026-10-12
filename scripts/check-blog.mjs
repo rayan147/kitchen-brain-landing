@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
+import { heldGuideSlugs, liveGuideSlugs } from './lib/connections.mjs';
 
 const dist = new URL('../dist', import.meta.url).pathname;
 const content = new URL('../src/content/blog', import.meta.url).pathname;
@@ -51,11 +52,14 @@ const expectedPosts = [
 	'guest-allergy-menu-check',
 	'catering-deposit-without-chasing',
 	'should-staff-see-food-costs',
-	'catering-food-labels'
+	'catering-food-labels',
+	// RC-78: the Square and QuickBooks guides publish with their connector
+	// (src/lib/connections.ts), each on its own day.
+	...liveGuideSlugs
 ];
 // The menu spells the published count (BlogMenuContents, spellCapital), so the
 // pin follows the list above instead of a typed word.
-const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-one'];
 requireText(indexHtml, `${countWords[expectedPosts.length - 10]} worked guides. The assumptions stay beside the arithmetic.`, 'Blog menu evidence boundary');
 // While invoice email is Coming, its setup guide must not be built or linked.
 if (!invoiceEmailLive) {
@@ -65,6 +69,11 @@ if (!invoiceEmailLive) {
 	if (indexHtml.includes(`href="/blog/${setupGuideSlug}"`)) {
 		failures.push('RC-73: the blog links the invoice email setup guide while the feature is Coming');
 	}
+}
+// While a connector is Coming, its guide must not be built or linked (RC-78).
+for (const slug of heldGuideSlugs) {
+	if (existsSync(join(blogRoot, slug))) failures.push(`RC-78: /blog/${slug} was built while its connector is Coming`);
+	if (indexHtml.includes(`href="/blog/${slug}"`)) failures.push(`RC-78: the blog links /blog/${slug} while its connector is Coming`);
 }
 const builtPosts = readdirSync(blogRoot, { withFileTypes: true })
 	.filter((entry) => entry.isDirectory())

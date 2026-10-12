@@ -3,6 +3,7 @@ import { featureMenuHref, featureMenuSections } from './features';
 import { labelsAvailability } from './labels';
 import { inboxLimits, invoiceEmailAvailability } from './invoice-email';
 import { acceptanceBoundary, depositMethodsCapital, eventStep } from './events';
+import { quickbooksAvailability, squareAvailability } from './connections';
 
 export const tourSeedKey = 'product-tour-connected-event';
 
@@ -642,6 +643,120 @@ export const tourStops: readonly TourStop[] = [
 				{ label: 'Custom screen rules', value: 'Not available', tone: 'attention' }
 			],
 			footnote: 'You cannot hide individual screens from selected teammates or create custom roles.'
+		}
+	},
+	{
+		/* RC-78, 2026-10-12, with the Connect your tools column. The wedding and
+		   its schedule are the deposit guide's (Nair & Castellano, $14,250:
+		   $3,500 deposit, $10,750 balance due Wed Dec 9; the reminder goes three
+		   days before, src/lib/event-payments.ts). */
+		id: 'card-payments',
+		featureId: 'payments',
+		label: 'Card payments with Stripe',
+		appArea: 'Orders / Nair & Castellano wedding / Money',
+		title: 'The deposit came in by card. The balance has a date.',
+		intro: 'Connect Stripe once in Settings. The client pays the deposit and the balance from a link in an email, into your own Stripe account.',
+		callout: 'You stop texting about the check. The schedule they accepted is the one the reminder follows.',
+		featureHref: featureMenuHref('payments'),
+		metrics: [
+			{ label: 'Agreed total', value: '$14,250.00' },
+			{ label: 'Paid', value: '$3,500.00', tone: 'good' },
+			{ label: 'Still owed', value: '$10,750.00', tone: 'attention' },
+			{ label: 'Stripe', value: 'Connected', tone: 'good' }
+		],
+		columns: ['Payment', 'Amount', 'Due', 'Status'],
+		rows: [
+			['Deposit', '$3,500.00', 'Confirms the date', 'Paid by card'],
+			['Balance', '$10,750.00', 'Wed, Dec 9', 'Requested'],
+			['Reminder with a pay link', '$10,750.00', 'Sun, Dec 6', 'Only if still owed']
+		],
+		aside: {
+			title: 'Stripe',
+			status: 'Your own account',
+			lines: [
+				{ label: 'Where the money goes', value: 'Your Stripe account' },
+				{ label: 'Saved cards', value: 'None' },
+				{ label: 'Automatic refunds', value: 'None' },
+				{ label: 'Online orders', value: 'Pay link on approval' }
+			],
+			footnote: 'Illustrative wedding. $3,500 deposit + $10,750 balance = $14,250 agreed. Refunds go out from Stripe.'
+		}
+	},
+	{
+		/* RC-45. Coming: an illustrative Counter sales screen, labelled as
+		   such, the way the invoice email stop was while it was Coming. The
+		   arithmetic is shown; nothing here claims stock depletion. */
+		id: 'square',
+		featureId: 'square',
+		label: 'Square',
+		appArea: 'Analytics / Counter sales',
+		title: 'What sold at the counter, and what it cost to make.',
+		intro: 'For a counter, a market stall or a pickup window. Publish the dishes you pick to Square, and the register’s sales come back with today’s recipe cost beside them.',
+		callout: 'If you only book catering events, you can skip this one.',
+		featureHref: featureMenuHref('square', squareAvailability.isComing),
+		metrics: [
+			{ label: 'Availability', value: squareAvailability.word, tone: squareAvailability.isComing ? 'attention' : 'good' },
+			{ label: 'Dishes sold', value: '125' },
+			{ label: 'Expected food cost', value: '$291.25' },
+			{ label: 'Needs a dish match', value: '1 item', tone: 'attention' }
+		],
+		columns: ['Dish', 'Sold', 'Food cost each', 'Expected cost'],
+		rows: [
+			['Herb roast chicken bowl', '42', '$3.18', '$133.56'],
+			['Lemon focaccia slice', '65', '$0.41', '$26.65'],
+			['Braised short rib plate', '18', '$7.28', '$131.04'],
+			['Iced tea', '30', 'No dish match', 'Not counted']
+		],
+		aside: {
+			title: 'Square',
+			status: squareAvailability.word,
+			lines: [
+				{ label: 'Sent to the register', value: 'Name, description, price' },
+				{ label: 'Stays in CostCook', value: 'Recipes, allergens, stock' },
+				{ label: 'Stock taken off the shelf', value: 'None' },
+				{ label: 'Sales turned into orders', value: 'None' }
+			],
+			footnote: squareAvailability.isComing
+				? 'Illustrative. Square is marked Coming: it is built and being tested, and you cannot connect a Square account yet.'
+				: 'Illustrative. $133.56 + $26.65 + $131.04 = $291.25 at today’s recipe prices.'
+		}
+	},
+	{
+		/* RC-45. Coming, labelled the same way. Sending is a press, every time
+		   (kitchen-brain docs/integrations/quickbooks.md: "no auto-send setting"). */
+		id: 'quickbooks',
+		featureId: 'quickbooks',
+		label: 'QuickBooks Online',
+		appArea: 'Purchases / Invoices',
+		title: 'Checked once in CostCook. Not typed again in QuickBooks.',
+		intro: 'Pick the accounts, match your suppliers to vendors, then send each invoice you have checked to QuickBooks as a bill.',
+		callout: 'CostCook never pays a bill, or sends the same invoice twice.',
+		featureHref: featureMenuHref('quickbooks', quickbooksAvailability.isComing),
+		metrics: [
+			{ label: 'Availability', value: quickbooksAvailability.word, tone: quickbooksAvailability.isComing ? 'attention' : 'good' },
+			{ label: 'Checked invoices', value: '4' },
+			{ label: 'In QuickBooks', value: '3', tone: 'good' },
+			{ label: 'Needs a vendor match', value: '1', tone: 'attention' }
+		],
+		columns: ['Supplier invoice', 'Checked', 'QuickBooks vendor', 'In QuickBooks'],
+		rows: [
+			['Harbor Foods #44817', 'Yes', 'Harbor Foods Inc.', 'Bill, paid'],
+			['Valley Dairy #2291', 'Yes', 'Valley Dairy', 'Bill, unpaid'],
+			['Harbor Foods credit #C-118', 'Yes', 'Harbor Foods Inc.', 'Credit'],
+			['Green Leaf Produce #881', 'Yes', 'Match needed', 'Not sent']
+		],
+		aside: {
+			title: 'QuickBooks Online',
+			status: quickbooksAvailability.word,
+			lines: [
+				{ label: 'Sent without a press', value: 'Never', tone: 'good' },
+				{ label: 'Bills CostCook pays', value: 'None' },
+				{ label: 'Accounts it creates', value: 'None' },
+				{ label: 'Who sends', value: 'The owner' }
+			],
+			footnote: quickbooksAvailability.isComing
+				? 'Illustrative. QuickBooks Online is marked Coming: it is built and being tested, and you cannot connect a company yet.'
+				: 'Illustrative. Paid or unpaid is read back from QuickBooks.'
 		}
 	},
 	{

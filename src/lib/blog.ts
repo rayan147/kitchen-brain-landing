@@ -11,15 +11,20 @@
  * Considered Proxy (a guarded collection wrapper); not used because there are
  * two rules and three callers, and a function holds them. The rules are data:
  * the set below, read from each feature's own status module (invoice email,
- * and online ordering since its two guides, 2026-10-08).
+ * online ordering since its two guides, 2026-10-08, and Square and QuickBooks
+ * since their guides, 2026-10-12: each guide's featureHref is its own anchor,
+ * so one connector going live publishes only its own guide).
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { invoiceEmailAvailability, invoiceEmailRoute } from './invoice-email';
 import { orderingAvailability, orderingRoute } from './ordering';
+import { quickbooksAvailability, squareAvailability } from './connections';
 
 const comingFeatureRoutes = new Set<string>([
 	...(invoiceEmailAvailability.isComing ? [invoiceEmailRoute] : []),
-	...(orderingAvailability.isComing ? [orderingRoute] : [])
+	...(orderingAvailability.isComing ? [orderingRoute] : []),
+	...(squareAvailability.isComing ? [squareAvailability.route] : []),
+	...(quickbooksAvailability.isComing ? [quickbooksAvailability.route] : [])
 ]);
 
 export const isPublished = (post: CollectionEntry<'blog'>) => !comingFeatureRoutes.has(post.data.featureHref);

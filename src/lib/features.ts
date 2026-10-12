@@ -7,6 +7,7 @@ import { orderingAvailability, orderingRoute } from './ordering';
 import { allergenCount } from './dietary';
 import { depositMethods } from './events';
 import { inboxLimits, invoiceEmailAvailability, invoiceEmailRoute } from './invoice-email';
+import { cardPaymentsRoute, quickbooksAvailability, squareAvailability } from './connections';
 /**
  * The complete shipped-feature list, written from the code audit
  * (kitchen-brain docs/marketing-audit/PHASE-1-REGISTER.md, Phase 1).
@@ -540,13 +541,42 @@ export const featureGroups: readonly FeatureGroup[] = [
 		]
 	},
 	{
-		id: 'accounting',
+		/* RC-78, 2026-10-12, with the Connect your tools column. Shipped: the
+		   wording is src/lib/event-payments.ts and src/lib/ordering.ts, already
+		   claimed on the events and online ordering pages; this group is where the
+		   connection itself is listed. */
+		id: 'payments',
 		section: 'Team, and what it connects to',
-		kicker: 'Accounting & point of sale',
-		title: 'Square and QuickBooks.',
-		status: 'in-development',
+		kicker: 'Card payments',
+		title: 'Card payments, through your own Stripe account.',
 		items: [
-			{ lead: 'Not included at launch.', detail: 'Square and QuickBooks connections are being built. Until they land, nothing here reads from or writes to your books.' }
+			{ lead: 'Connect Stripe in Settings.', detail: 'The client pays on Stripe’s page, and the money goes into your own Stripe account.' },
+			{ lead: 'Deposits and balances by card.', detail: 'The client pays from a link in an email. Three days before a card balance is due, if it is still owed, they get a reminder with a pay link.' },
+			{ lead: 'Online orders too.', detail: 'When your booking rules ask for money, approving an online order emails the client a pay link.' },
+			{ lead: 'No saved cards.', detail: 'CostCook does not save cards or refund on its own. Refunds go out from Stripe.' }
+		]
+	},
+	{
+		/* RC-45. Split out of the old 'accounting' group on 2026-10-12 so the menu
+		   can point the two Coming items at two places, and so each can ship on
+		   its own day. Status reads src/lib/connections.ts. */
+		id: 'square',
+		section: 'Team, and what it connects to',
+		kicker: 'Square',
+		title: 'Square, for the counter.',
+		status: squareAvailability.isComing ? 'in-development' : 'available',
+		items: [
+			{ lead: 'Not included today.', detail: 'Square is built and being tested. You cannot connect a Square account yet, and no date is promised.' }
+		]
+	},
+	{
+		id: 'quickbooks',
+		section: 'Team, and what it connects to',
+		kicker: 'QuickBooks Online',
+		title: 'QuickBooks Online, for the books.',
+		status: quickbooksAvailability.isComing ? 'in-development' : 'available',
+		items: [
+			{ lead: 'Not included today.', detail: 'QuickBooks Online is built and being tested. Until it lands, nothing here reads from or writes to your books, and no date is promised.' }
 		]
 	}
 ] as const;
@@ -594,7 +624,10 @@ export type FeatureMenuIcon =
 	| 'purchasing'
 	| 'inventory'
 	| 'ledger'
-	| 'team';
+	| 'team'
+	| 'card'
+	| 'register'
+	| 'books';
 
 export type FeatureMenuItem = {
 	label: string;
@@ -644,16 +677,6 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				description: 'Bring in paper or spreadsheets, then confirm what changes.',
 				featureId: 'import',
 				icon: 'import'
-			},
-			// Added 2026-09-28 (RC-73). It sits after import because it is import's
-			// front door. The chip and the destination both read the one word in
-			// src/lib/invoice-email.ts.
-			{
-				label: 'Invoice email',
-				description: 'Give suppliers an address; every invoice waits in review.',
-				featureId: 'inbox',
-				icon: 'import',
-				...(invoiceEmailAvailability.isComing ? { coming: true as const } : {})
 			},
 			// Added 2026-08-29 at the owner's request. Shipped group, so no chip.
 			{
@@ -743,6 +766,44 @@ export const featureMenuSections: readonly FeatureMenuSection[] = [
 				icon: 'team'
 			}
 		]
+	},
+	{
+		/* Added 2026-10-12 at the owner's request (RC-78): a third column next
+		   to Run the event. What works today leads, so the column is not only
+		   promises; Square and QuickBooks follow with their chips, each read
+		   from src/lib/connections.ts. Other tools are not named (owner: "No
+		   names"). Invoice email moved here from Build and price: it is how a
+		   supplier's own email reaches CostCook, and it still leads into import. */
+		label: 'Connect your tools',
+		items: [
+			{
+				label: 'Card payments with Stripe',
+				description: 'Deposits and balances paid by card, into your own Stripe account.',
+				featureId: 'payments',
+				icon: 'card'
+			},
+			{
+				label: 'Invoice email',
+				description: 'Give suppliers an address; every invoice waits in review.',
+				featureId: 'inbox',
+				icon: 'import',
+				...(invoiceEmailAvailability.isComing ? { coming: true as const } : {})
+			},
+			{
+				label: 'Square',
+				description: 'Publish dishes to your register and see what sold, at today’s cost.',
+				featureId: 'square',
+				icon: 'register',
+				...(squareAvailability.isComing ? { coming: true as const } : {})
+			},
+			{
+				label: 'QuickBooks Online',
+				description: 'Send the supplier invoices you checked as bills, without retyping.',
+				featureId: 'quickbooks',
+				icon: 'books',
+				...(quickbooksAvailability.isComing ? { coming: true as const } : {})
+			}
+		]
 	}
 ];
 
@@ -774,7 +835,10 @@ const dedicatedFeatureRoutes = new Map<string, string>([
 	['labels', '/features/labels-and-printing'],
 	['inventory', '/features/inventory'],
 	['assistant', '/features/sage'],
-	['team', '/features/team-and-access']
+	['team', '/features/team-and-access'],
+	['payments', cardPaymentsRoute],
+	['square', squareAvailability.route],
+	['quickbooks', quickbooksAvailability.route]
 ]);
 
 export const featureMenuHref = (featureId: string, coming = false) => {

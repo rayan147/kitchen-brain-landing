@@ -1,5 +1,18 @@
 # Story Tracker — Features navigation
 
+## Revision — Connect your tools, a third column (2026-10-12)
+
+All eleven steps remain complete. Owner request: a column next to Run the event
+for what CostCook connects to. The reader's wall is "does it fit what I already
+pay for?", so the column answers it in order of truth: Card payments with Stripe
+(shipped), Invoice email (moved from Build and price; it is how a supplier's own
+email reaches CostCook, and it still leads into import), then Square and
+QuickBooks Online with their Coming chips, read from `src/lib/connections.ts`.
+No other tool is named. Each item has its tour stop; the two Coming stops say
+Coming on the screen and in the footnote, the way the invoice email stop did.
+The panel widens to 68rem for three columns at lg and stacks below it. The
+destination is `/features/integrations` (story: `features-integrations.story.md`).
+
 ## Revision — Blog as a working-guide menu (2026-09-03)
 
 All eleven steps remain complete. The visitor is still the chef-owner with one

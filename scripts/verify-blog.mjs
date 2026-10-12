@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
+import { heldGuideSlugs } from './lib/connections.mjs';
 
 const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
 const reviewDir = new URL('../.impeccable/review', import.meta.url).pathname;
@@ -18,6 +19,8 @@ const articleSlugs = (await readdir(new URL('../src/content/blog', import.meta.u
 // The invoice email setup guide publishes only with the feature (RC-73,
 // src/lib/blog.ts), so while it is Coming it has no route to walk.
 if (!invoiceEmailLive) articleSlugs.splice(articleSlugs.indexOf(setupGuideSlug), 1);
+// RC-78: a Coming connector's guide is held, so it is not in the menu or the index.
+for (const slug of heldGuideSlugs) articleSlugs.splice(articleSlugs.indexOf(slug), 1);
 const postCount = articleSlugs.length;
 
 const profile = await mkdtemp(join(tmpdir(), 'costcook-blog-'));
