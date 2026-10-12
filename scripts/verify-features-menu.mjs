@@ -5,13 +5,15 @@ import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 import { tourStopCount } from './lib/tour-stops.mjs';
 import { heldGuideSlugs } from './lib/connections.mjs';
+import { scheduledSlugs } from './lib/blog-schedule.mjs';
 import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
 import { resourceCount, mobileMenuLinkCount } from './lib/resource-nav.mjs';
 
 // The Blog menu lists every article, so the count is the content folder's,
 // not a number to bump by hand (it read 10 after an 11th article shipped).
 // Held guides (src/lib/blog.ts) are not in the menu, so they are not counted.
-const heldSlugs = new Set([...heldGuideSlugs, ...(invoiceEmailLive ? [] : [setupGuideSlug])]);
+// So are posts still waiting for their Thursday (scripts/lib/blog-schedule.mjs).
+const heldSlugs = new Set([...heldGuideSlugs, ...scheduledSlugs, ...(invoiceEmailLive ? [] : [setupGuideSlug])]);
 const blogArticleCount = (await readdir(new URL('../src/content/blog/', import.meta.url)))
 	.filter((name) => name.endsWith('.md') && !heldSlugs.has(name.replace(/\.md$/, ''))).length;
 

@@ -1,7 +1,7 @@
 ---
 title: "Running a catering event in CostCook, from the first call to closeout"
 description: "One wedding followed through every step: the inquiry, the costed menu, the proposal they accept on their phone, the agreement, the deposit, booking, buying, prep, pack, receiving and the food-cost closeout."
-publishedDate: 2026-09-17
+publishedDate: 2026-08-13
 category: Running the event
 menuGroup: Plan and buy
 menuIcon: calendar

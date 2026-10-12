@@ -14,6 +14,13 @@
  * online ordering since its two guides, 2026-10-08, and Square and QuickBooks
  * since their guides, 2026-10-12: each guide's featureHref is its own anchor,
  * so one connector going live publishes only its own guide).
+ *
+ * ONE A WEEK (owner, 2026-10-12): posts go out on Thursdays. A post whose
+ * publishedDate is still ahead of the build is not built, listed or linked
+ * either; the scheduled weekly rebuild (.github/workflows/weekly-blog.yml)
+ * publishes it on its day. BLOG_NOW (an ISO date) stands in for the build's
+ * clock so the schedule can be checked before the day; scripts/lib/blog-schedule.mjs
+ * reads the same variable.
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { invoiceEmailAvailability, invoiceEmailRoute } from './invoice-email';
@@ -27,7 +34,10 @@ const comingFeatureRoutes = new Set<string>([
 	...(quickbooksAvailability.isComing ? [quickbooksAvailability.route] : [])
 ]);
 
-export const isPublished = (post: CollectionEntry<'blog'>) => !comingFeatureRoutes.has(post.data.featureHref);
+const buildNow = process.env.BLOG_NOW ? new Date(process.env.BLOG_NOW) : new Date();
+
+export const isPublished = (post: CollectionEntry<'blog'>) =>
+	!comingFeatureRoutes.has(post.data.featureHref) && post.data.publishedDate <= buildNow;
 
 /** Published posts in reading order. */
 export const getPublishedPosts = async () =>

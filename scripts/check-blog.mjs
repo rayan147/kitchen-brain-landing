@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
 import { heldGuideSlugs, liveGuideSlugs } from './lib/connections.mjs';
+import { isDue, scheduledSlugs } from './lib/blog-schedule.mjs';
 
 const dist = new URL('../dist', import.meta.url).pathname;
 const content = new URL('../src/content/blog', import.meta.url).pathname;
@@ -30,7 +31,7 @@ for (const [text, label] of [
 requireText(indexHtml, 'data-blog-menu', 'Blog navigation disclosure');
 requirePattern(indexHtml, /<h4[^>]*><a href="\/blog\/food-cost-per-guest"/, 'post title nested beneath its topic heading');
 
-const expectedPosts = [
+const writtenPosts = [
 	'food-cost-per-guest',
 	'catering-menu-pricing',
 	'case-price-to-portion-cost',
@@ -60,6 +61,8 @@ const expectedPosts = [
 	// (src/lib/connections.ts), each on its own day.
 	...liveGuideSlugs
 ];
+// One a week (src/lib/blog.ts): a written post counts only from its Thursday.
+const expectedPosts = writtenPosts.filter(isDue);
 // The menu spells the published count (BlogMenuContents, spellCapital), so the
 // pin follows the list above instead of a typed word.
 const countWords = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-one', 'Twenty-two', 'Twenty-three'];
@@ -72,6 +75,11 @@ if (!invoiceEmailLive) {
 	if (indexHtml.includes(`href="/blog/${setupGuideSlug}"`)) {
 		failures.push('RC-73: the blog links the invoice email setup guide while the feature is Coming');
 	}
+}
+// Before its Thursday, a scheduled post must not be built or linked.
+for (const slug of scheduledSlugs) {
+	if (existsSync(join(blogRoot, slug))) failures.push(`/blog/${slug} was built before its publishedDate`);
+	if (indexHtml.includes(`href="/blog/${slug}"`)) failures.push(`the blog links /blog/${slug} before its publishedDate`);
 }
 // While a connector is Coming, its guide must not be built or linked (RC-78).
 for (const slug of heldGuideSlugs) {
@@ -162,7 +170,7 @@ for (const [slug, text, label] of [
 // How-to guides carry their app captures as sized figures
 // (integrations/blog-figures.mjs): a step with no screenshot, or an image
 // without width and height, is a guide that stopped showing the app.
-for (const [slug, figures] of [['food-cost-per-guest', 1], ['catering-food-labels', 7], ['guest-allergy-menu-check', 8], ['catering-deposit-without-chasing', 10], ['should-staff-see-food-costs', 8], ['import-invoices-recipes-ingredient-lists', 37]]) {
+for (const [slug, figures] of [['food-cost-per-guest', 1], ['catering-food-labels', 7], ['guest-allergy-menu-check', 8], ['catering-deposit-without-chasing', 10], ['should-staff-see-food-costs', 8], ['import-invoices-recipes-ingredient-lists', 37]].filter(([slug]) => isDue(slug))) {
 	const html = readFileSync(join(blogRoot, slug, 'index.html'), 'utf8');
 	const shots = [...html.matchAll(/<figure class="blog-shot">[\s\S]*?<\/figure>/g)].map((m) => m[0]);
 	if (shots.length !== figures) failures.push(`${slug} has ${shots.length} app captures; expected ${figures}`);

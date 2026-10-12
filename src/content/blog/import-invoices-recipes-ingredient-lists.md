@@ -1,7 +1,7 @@
 ---
 title: "How to import your ingredients, invoices and recipes into CostCook"
 description: "A step-by-step guide with a screenshot at every step: import your ingredient list, then your supplier invoices, then your recipes. What you need before you start, and what to do when something goes wrong."
-publishedDate: 2026-10-12
+publishedDate: 2026-10-08
 category: Buying & suppliers
 menuGroup: Plan and buy
 menuIcon: invoice

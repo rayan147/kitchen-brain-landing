@@ -1,7 +1,7 @@
 ---
 title: "How to put a catering order form on your own website"
 description: "Add your site to the list, send your web person two lines and a note, go live, and check the form showed up. Plus what to do when it doesn't."
-publishedDate: 2026-10-08
+publishedDate: 2026-09-03
 category: Running the event
 menuGroup: Plan and buy
 menuIcon: web
