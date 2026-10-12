@@ -3,7 +3,7 @@
 ## My story
 
 - **Piece:** Blog guide (how-to)
-- **Title / headline:** Import your invoices, recipes and ingredient list: what CostCook needs, and what happens
+- **Title / headline:** Import invoices, recipes and ingredient lists into CostCook: what each needs, and in what order
 - **My hero's name:** The owner of Harbor & Hearth Catering, in their first week on CostCook
 - **Content file(s):** `src/content/blog/import-invoices-recipes-ingredient-lists.md`
 - **Evidence:** RC-79 in `docs/release-claim-ledger.md` (kitchen-brain main ed6ff5f01 and develop 6450d7c54, read 2026-10-12)
@@ -98,3 +98,10 @@ Second person throughout. Before you start → order → three imports in that o
 - **Removed claims:** reading accuracy, "nothing missed", "no typing" (RC-58); unreadable text quoted "verbatim" (recipes list a title or short description); the develop-only late-invoice price hold; the semicolon CSV refusal (column mapper only).
 - **Kept on purpose:** the template door adds rows with no review step, said plainly.
 - **Final Image:** Nothing went in that you didn't look at first.
+
+## Revision 2026-10-12: the English editor's review (27 findings, all applied)
+
+- "Nothing is saved" now names **Import and review**, so it no longer contradicts the template door, which now warns it skips review before its instructions.
+- The spreadsheet-invoice trap moved to the top of the invoice section; the order heading now states the order ("Ingredients first, recipes last") with the list first.
+- Pronouns fixed ("CostCook" for the reader), limits split into photos and other files, title and description tightened, US spelling.
+- Kept "Save changes keeps one row's edits for later" (the app's wording) and described the bulk-answer button rather than quoting it, since its label carries a count.
