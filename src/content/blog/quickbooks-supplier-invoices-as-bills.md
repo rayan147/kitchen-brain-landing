@@ -7,7 +7,7 @@ menuGroup: Plan and buy
 menuIcon: invoice
 featured: false
 order: 21
-readMinutes: 5
+readMinutes: 6
 featureHref: /features/integrations#quickbooks
 featureLabel: See QuickBooks in CostCook
 ---
@@ -70,7 +70,9 @@ There are three ways to send, and every one is a press. Nothing goes to QuickBoo
 
 <!-- capture needed: an invoice's QuickBooks section before and after sending -->
 
-A supplier credit goes the same way, with **Send credit to QuickBooks**. It lands in QuickBooks as a vendor credit against that supplier.
+A short or damaged delivery is handled as a supplier credit. When Harbor Foods sends you a credit for the short case, open the invoice it belongs to, use **Record a supplier credit** with their credit number, the date and the lines, then press **Send credit to QuickBooks**. The app says it plainly: "Short or damaged delivery? Record the credit your supplier gave you. It goes to QuickBooks as a credit against this supplier, linked to this invoice."
+
+Two things to know. The credit is the one your supplier gave you; catching the short case at receiving doesn't make one by itself. And the invoice's bill has to be in QuickBooks first, because the credit is linked to it.
 
 Only an invoice you have checked can be sent. That's the point: the version that reaches your books is the one you already compared with what came off the truck.
 
@@ -98,5 +100,5 @@ If the QuickBooks sign-in expires, the settings page asks you to **Reconnect Qui
 
 - Tuesday's Harbor Foods invoice is in QuickBooks as a bill, to Harbor Foods Inc., in the food account, exactly as you checked it.
 - The bill matches the invoice Harbor Foods sent, and you checked it against the truck.
-- The credit for the short case went across as a vendor credit.
+- Harbor Foods' credit for the short case is recorded on that invoice and went across as a credit against them.
 - Your bookkeeper pays from QuickBooks, and CostCook shows it paid. Nobody typed the invoice a second time.

@@ -86,6 +86,10 @@ Second person, one supplier (Harbor Foods, invoice #44817) from the dock to the 
 
 Cut: the develop-only customer-invoice sync (receivables go to QuickBooks automatically on develop, the opposite of the bills path; it belongs in its own guide once it is on main), exact account labels (they differ between main and develop), any date, any other accounting product.
 
+## Checked 2026-10-12: a short delivery is a supplier credit
+
+Confirmed on kitchen-brain main ed6ff5f01 and develop 3e933bcc1. `SupplierCreditsSection.svelte:35` on the invoice page: "Short or damaged delivery? Record the credit your supplier gave you. It goes to QuickBooks as a credit against this supplier, linked to this invoice." The owner records it (Record a supplier credit: credit number, date, reviewed lines) and presses Send credit to QuickBooks. `src/lib/server/accounting/supplier-credits.ts` refuses a credit whose invoice has no bill in QuickBooks yet ("A supplier credit must link to an exported invoice in this company."). Nothing in receiving creates a credit. The guide now says all three.
+
 ## Gate before this guide publishes
 
 - [ ] `QUICKBOOKS_STATUS` is 'yes' (see `src/lib/connections.ts`).
