@@ -9,6 +9,10 @@ if (!ledgerGroup) throw new Error('Missing public feature group: ledger');
 // Labels are the app's (MonthFoodCostHeader on kitchen-brain main):
 // "Should have cost (recipe estimate)", "Did cost", "Unaccounted gap"
 // (chef review 2026-10-07).
+// The bridge follows the app's Reconcile food cost page (kitchen-brain develop
+// 9b84420f4): purchases plus opening inventory, minus ending inventory, usage,
+// logged waste and byproduct credit. So the shelf change is its own part of
+// the difference, not folded into waste or the gap (2026-10-12).
 const purchaseSources = [
 	{ source: 'Invoice import', record: 'Northline Foods · INV-8831', amount: '$2,184.30' },
 	// The whole delivery: 9 × $46.80 chicken, 4 × $18 spinach, 2 × $75 oil.
@@ -80,7 +84,7 @@ const faqItems = [
 					<div><small>Did cost</small><strong>$19,135</strong></div>
 					<div class="difference"><small>Difference</small><strong>+$715</strong></div>
 				</div>
-				<div class="gap-split"><span><small>Logged waste</small><strong>$286</strong></span><span><small>Unaccounted gap</small><strong>$429</strong></span></div>
+				<div class="gap-split"><span><small>More on the shelf</small><strong>$130</strong></span><span><small>Logged waste</small><strong>$286</strong></span><span><small>Unaccounted gap</small><strong>$299</strong></span></div>
 				<figcaption>Illustrative amounts. The difference stays open until the supporting records explain it.</figcaption>
 			</figure>
 		</div>
@@ -88,11 +92,11 @@ const faqItems = [
 
 	<section class="problem" aria-labelledby="problem-heading">
 		<div class="container-page problem-grid">
-			<div><h2 id="problem-heading">A $715 gap is not automatically $715 of waste.</h2><p>Waste explains the part you logged. Late purchases, corrections and shaky counts can explain more of it, or limit what you can say. Whatever is left stays on the page, named, with nobody blamed.</p></div>
-			<div class="gap-scene" role="img" aria-label="An illustrative 715 dollar gap separates into 286 dollars of logged waste and 429 dollars still unaccounted">
+			<div><h2 id="problem-heading">A $715 gap is not automatically $715 of waste.</h2><p>Food you bought but haven’t used yet is still on the shelf, and your counts take it out. Waste explains the part you logged. Late purchases, corrections and shaky counts can explain more of it, or limit what you can say. Whatever is left stays on the page, named, with nobody blamed.</p></div>
+			<div class="gap-scene" role="img" aria-label="An illustrative 715 dollar gap separates into 130 dollars more on the shelf, 286 dollars of logged waste and 299 dollars still unaccounted">
 				<div><small>Month difference</small><strong>$715</strong><span>Still to explain</span></div>
 				<div class="gap-mark" aria-hidden="true">=</div>
-				<div><small>Known + open</small><strong>$286 + $429</strong><span>Waste + unaccounted</span></div>
+				<div><small>Known + open</small><strong>$130 + $286 + $299</strong><span>Shelf + waste + unaccounted</span></div>
 			</div>
 		</div>
 	</section>
@@ -117,13 +121,13 @@ const faqItems = [
 
 	<section id="month-close" class="product-section close-section" aria-labelledby="month-close-heading">
 		<div class="container-page">
-			<div class="section-intro"><h2 id="month-close-heading">Make the month show its math.</h2><p>“Should have cost” is the recipe estimate from your orders. “Did cost” is what you paid. Logged waste is valued at the cost saved with each waste record, and whatever is left shows as the “Unaccounted gap”.</p></div>
+			<div class="section-intro"><h2 id="month-close-heading">Make the month show its math.</h2><p>“Should have cost” is the recipe estimate from your orders. “Did cost” is what you paid. Your shelf counts take out what’s still on the shelf at the end of the month. Logged waste is valued at the cost saved with each waste record, and whatever is left shows as the “Unaccounted gap”.</p></div>
 			<figure class="reconciliation">
 				<div class="recon-head"><span>August food-cost bridge</span><span>Illustrative amounts</span></div>
 				<div class="recon-line"><span>Should have cost (recipe estimate)</span><strong>$18,420</strong></div>
 				<div class="recon-line actual"><span>Did cost (what you paid)</span><strong>$19,135</strong></div>
 				<div class="recon-line variance"><span>Difference to explain</span><strong>+$715</strong></div>
-				<div class="recon-breakdown"><div><small>Explained by logged waste</small><strong>$286</strong><span>Cost saved with the waste record</span></div><div><small>Unaccounted gap</small><strong>$429</strong><span>Kept open for review</span></div></div>
+				<div class="recon-breakdown"><div><small>More on the shelf</small><strong>$130</strong><span>Ending inventory $3,210, less opening $3,080, from your counts</span></div><div><small>Explained by logged waste</small><strong>$286</strong><span>Cost saved with the waste record</span></div><div><small>Unaccounted gap</small><strong>$299</strong><span>Kept open for review</span></div></div>
 				<figcaption>Illustrative reconciliation. The unaccounted gap is named without being auto-classified as waste.</figcaption>
 			</figure>
 		</div>
@@ -186,7 +190,7 @@ const faqItems = [
 	.month-working small, .gap-split small, .recon-breakdown small { display: block; color: var(--color-ink-soft); font-size: var(--text-micro); }
 	.month-working strong { display: block; margin-top: .2rem; font-size: var(--text-record); font-variant-numeric: tabular-nums; }
 	.month-working .difference strong { color: var(--color-amber-deep); }
-	.gap-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 1px; background: var(--color-ticket-rule); }
+	.gap-split { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 1px; background: var(--color-ticket-rule); }
 	.gap-split span { display: flex; justify-content: space-between; gap: .75rem; padding: .75rem .85rem; background: var(--color-paper); }
 	.gap-split strong { font-variant-numeric: tabular-nums; }
 	.month-sheet figcaption, .ledger-sheet figcaption, .reconciliation figcaption, .history-sheet figcaption { margin-top: .8rem; font-size: var(--text-label-sm); line-height: 1.45; color: var(--color-ink-soft); }
@@ -224,7 +228,7 @@ const faqItems = [
 	.recon-line strong { font-variant-numeric: tabular-nums; }
 	.recon-line.actual { background: var(--color-cream); }
 	.recon-line.variance { border-top: 2px solid var(--color-amber-deep); background: var(--color-softamber); color: var(--color-amber-deep); font-weight: 700; }
-	.recon-breakdown { display: grid; grid-template-columns: 1fr 1fr; }
+	.recon-breakdown { display: grid; grid-template-columns: repeat(3, 1fr); }
 	.recon-breakdown > div { padding: 1.2rem clamp(1rem, 3vw, 1.75rem); border-right: 1px solid var(--color-ticket-rule); }
 	.recon-breakdown > div:last-child { border-right: 0; }
 	.recon-breakdown strong { display: block; margin-block: .35rem; font-size: var(--text-record); font-variant-numeric: tabular-nums; }
@@ -335,5 +339,6 @@ const faqItems = [
 		.ledger-enter .month-working > :nth-child(4) { animation-delay: 540ms; }
 		.ledger-enter .gap-split > :nth-child(1) { animation-delay: 660ms; }
 		.ledger-enter .gap-split > :nth-child(2) { animation-delay: 780ms; }
+		.ledger-enter .gap-split > :nth-child(3) { animation-delay: 900ms; }
 	}
 </style>

@@ -40,7 +40,7 @@ For a how-to, only Steps 1, 2 and 11 shape the page.
 
 ### Step 8 — Cool Talk (the one snap line)
 
-> "Seven dashes: seven lines nobody has a number for yet." (the label preview caption)
+> "Four dashes: four lines nobody has a number for yet." (the label preview caption; was seven before the 2026-10-13 re-shoot)
 
 ### Step 11 — Revise and Finish
 
@@ -48,3 +48,12 @@ For a how-to, only Steps 1, 2 and 11 shape the page.
 - **Removed claims:** any compliance or certification; per-batch panels (not seen on screen); that USDA search works out of the box.
 - **Found while shooting:** the matching dialog's "how recipes weigh it" step needs USDA search, which this local build couldn't run, so that step is not a numbered step. Print label is greyed out, not hidden, while lines are blank.
 - **Final image:** a label with honest dashes, and the packages that fill them.
+
+### Revision 2026-10-13 (re-shot on local develop f38ea126e, live USDA key)
+
+- The old flow is gone: a USDA source with no weigh answer no longer offers a Confirm that changed nothing. It offers "Answer how recipes weigh it", which opens the ingredient's Match nutrition window (step 1: the food in use is preselected; step 2: Raw, as bought or Cooked, the values per 100 g, Use this source) and brings the cook back to the recipe with "Nutrition matched for <ingredient>." The guide's steps 3 to 9 walk that window; "Is this the same food and preparation you use?", "Yes, confirm" and "Pick another" are no longer quoted.
+- Shot with a real USDA key in one run on a fresh copy, so nothing was written into the sample database by hand. For the cremini the app searches USDA's "crimini" itself ("Try “crimini” for “cremini”. Check the food and form before saving."); the fuller "Mushrooms, brown, italian, or crimini, raw" (14 of 15 values) was picked, as the app's warning on the food in use steers ("Labels would be mostly blank."), with "No added sugars (0 g)" for raw mushrooms.
+- Before any weigh answer, each total reads "Blank until you answer how recipes weigh 4 ingredients".
+- The panel now reads 530 kcal, 19 g fat, 18 g protein, 78 g carbs with "Draft · 4 label lines blank" (was 77 g carbs and seven blank lines). The snap line changes with it.
+- New fix entry: "Nutrition search could not be loaded. Try again." (text only).
+- 18 crops (was 12). Dialog crops were taken with the dialog's sticky footer unstuck.

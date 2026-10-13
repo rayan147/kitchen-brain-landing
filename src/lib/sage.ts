@@ -95,8 +95,8 @@ export const sage = {
 		{ ask: 'Which prices went up?', does: 'Reads the purchase ledger for price moves and says how many purchases the move rests on.' },
 		{ ask: 'What came up short in receiving?', does: 'Lists the open receiving follow-ups, without the supplier’s contact details.' },
 		{ ask: 'What is left in setup?', does: 'Reads setup progress and points to the unfinished stage.' },
-		{ ask: 'Prepare the shopping list', does: 'Drafts the kitchen’s list, or one order’s. You see what it creates and what it does not touch, then you approve or discard it.' },
-		{ ask: 'Change Saturday’s draft order to 32 guests', does: 'Drafts the guest-count change on a draft order. The price per guest holds and the total follows once you approve.' }
+		{ ask: 'Prepare the shopping list', does: 'Drafts the kitchen’s list, or one order’s. You see what it creates and what it does not touch, then you press Create the shopping list or Discard this draft.' },
+		{ ask: 'Change Saturday’s draft order to 32 guests', does: 'Drafts the guest-count change on a draft order. The price per guest holds, and the total follows once you press Change the guest count.' }
 	],
 	/** The homepage introduces the breadth without repeating the full diligence list. */
 	homepageGroups: [

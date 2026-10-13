@@ -48,3 +48,5 @@ For a how-to, only Steps 1, 2 and 11 shape the page. The beats are not used.
 - **Removed claims:** who may count; a par topping up the list; how long a count takes; "produce and dairy are perishable" (the flag is per item, so the tip names the window's label instead).
 - **Found while shooting:** Build shopping list on Inventory opens a confirmation, not the list page. The list then appears as its own Shopping list button. The steps follow that. The count unit defaults to the ingredient's base unit (kg) even in a US kitchen, so the step says to pick the unit.
 - **Final image:** the next shelf to count is the one whose line still says "No recent count".
+
+- 2026-10-13 revision note: kitchen-brain local develop fcc651477 opens Update count in the kitchen's own unit (Pound in a US kitchen) instead of the last count's kilograms. Step 7 ("pick the unit you counted in") stays true, and its shot shows Pound selected, so the post is unchanged. The kg note above describes 9b84420f4 only.

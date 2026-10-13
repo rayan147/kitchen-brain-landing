@@ -252,3 +252,5 @@ credits each paid month, 300 during the free trial"; the daily guard stays off.
   line gets its setup sentence, and the chapter nav uses the section headings
   (kept: the feature family requires it). Cross-page: /compare and the tour no
   longer imply staff use Sage.
+
+- 2026-10-12 revision (RC-89): the draft step quotes the app's buttons, "Create the shopping list" or "Discard this draft", and "Change the guest count" for a guest-count draft. The approval path's last box reads "Go ahead or discard", so it no longer looks like a button label. Approval stays the idea; it is no longer quoted as a label.

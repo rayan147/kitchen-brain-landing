@@ -193,3 +193,5 @@ names only what the frame shows.
 - [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
 - [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
 - [x] Step 11: The reopen answer now says the frozen snapshot is discarded and current menu prices and quantities return, matching the app action; it warns the reader to check before confirming again.
+
+- 2026-10-12 revision (RC-91): the price section and the quote FAQ now say what happens over target: Confirm order waits on "Fix the price". The owner's confirm-anyway override stays off the page (RC-86 MAY NOT).

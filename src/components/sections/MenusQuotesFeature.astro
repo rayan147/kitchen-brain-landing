@@ -45,7 +45,7 @@ const faqItems = [
 	{
 		question: 'How does CostCook calculate a catering quote?',
 		answer:
-			'A draft combines a menu, date, guest count, and price. CostCook computes the food cost per guest and food-cost percentage, then shows the price that would meet the target you set before you confirm.'
+			'A draft combines a menu, date, guest count, and price. CostCook computes the food cost per guest and food-cost percentage, then shows the price that would meet the target you set. While the price is over target, the check before Confirm order reads Fix the price.'
 	},
 	{
 		question: 'How does the client see the price?',
@@ -277,6 +277,7 @@ const priceRings = {
 					<ul role="list">
 						<li>The order price can override the menu default.</li>
 						<li>Guest-count changes update the draft estimate.</li>
+						<li>Over target, Confirm order waits on Fix the price.</li>
 					</ul>
 				</div>
 				<figure class="screenshot-frame" data-reveal>

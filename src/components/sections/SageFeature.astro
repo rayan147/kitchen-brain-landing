@@ -62,7 +62,7 @@ const faqItems = [
 					<div><strong>Sage</strong><p class="availability"><span aria-hidden="true"></span>{sageStatusWord}</p></div>
 				</div>
 				<h1 id="sage-feature-heading" class="feature-display">Ask Sage about your kitchen.</h1>
-				<p class="hero-lede">Ask about your recipes, your stock and what things cost, even before setup is done. You can check the records behind every answer. If it drafts a shopping list, you approve it.</p>
+				<p class="hero-lede">Ask about your recipes, your stock and what things cost, even before setup is done. You can check the records behind every answer. If it drafts a shopping list, you create it or discard it.</p>
 				<div class="hero-actions">
 					<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
 					<a href="#sage-allowance" class="btn-quiet">What it costs to run</a>
@@ -199,7 +199,7 @@ const faqItems = [
 				<i aria-hidden="true"></i>
 				<div><span>{sageDraftKinds.length} kinds of draft</span><strong>Wait for approval</strong></div>
 				<i aria-hidden="true"></i>
-				<div class="person"><span>You</span><strong>Approve or discard</strong></div>
+				<div class="person"><span>You</span><strong>Go ahead or discard</strong></div>
 			</div>
 			<ul class="guardrail-list" role="list">
 				{sage.guardrails.map((rule) => (
