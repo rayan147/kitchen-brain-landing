@@ -50,9 +50,10 @@ For a how-to, only Steps 1, 2 and 11 shape the page. The beats are not used.
 - **Added after the shoot:** a fix entry for Analytics showing a bigger number than Purchases, because a reader will meet both.
 - **Final image:** whatever no record explains stays on the page, named.
 
-## Revision 2026-10-13 (re-shot off local develop fcc651477)
+## Revision 2026-10-13 (re-shot off local develop f38ea126e)
 
 - The app fixes landed: Reconcile now lists drafts under "Not counted yet" and the counted events under "Counted", with one naming style ("Ferraro fundraiser #3 · Sep 21"); "Review purchases and log waste" opens Log waste with its list closed; Ingredient contributions stacks into cards on a phone, Gap first.
-- Step 5 now says what the draft list is for: drafts don't count until confirmed. Step 6 presses "Open receiving"; "Review receiving" is the status beside it, not a button (the earlier text had it as the button).
+- Step 5 now says what the draft list is for: drafts don't count until confirmed. Step 6 presses "Open receiving", the one button per delivery; the status beside the event name is a badge, "Delivery not recorded" or "Delivery recorded" (the earlier text had a status as the button).
 - The Log waste shot moved up to step 8, where the button now opens it. The two 768 px table crops are now 390 px cards.
 - 17 figures, readMinutes 10.
+- Orders are named "<name> #<order id>" everywhere (Nakamura engagement party #751, Ferreira baby shower #755, Ferraro fundraiser #747).

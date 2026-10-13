@@ -50,10 +50,11 @@ For a how-to, only Steps 1, 2 and 11 shape the page. The beats are not used.
 - **Removed claims:** email delivery (no mail server in the shoot); "Send a test to me" (source only); card payment on the offer page; anything the header food-cost figure says (28.9% at the top vs 28.3% on the service line, see report).
 - **Final image:** the client's "Thank you. Proposal accepted" and your Send agreement button.
 
-## Revision 2026-10-13 (re-shot on local develop fcc651477)
+## Revision 2026-10-13 (re-shot on local develop f38ea126e)
 
 - Every image re-shot from the fixed app. 22 figures (was 21): a new p02b shows the event's Food cost strip and its note about whole batches.
 - Step 2 now names the service figure **Plate cost** (the app's new label) and gives 28.4% (the app now judges the percent on the exact cost per guest). The new paragraph explains why the event's Food cost, 28.9%, reads higher: whole batches add $76.32, in the app's own words.
 - Step 12: after acceptance the decision page reads **Client decision** / **Proposal accepted** above "Step 5 of 6: Agreement" (the old "Step 4 of 6" header is fixed).
 - Dates in alt text follow the re-shoot day (sent Tue Oct 13, link until Tue Oct 20).
 - Limits: food cost "only you see this", the proposal's own words.
+- Second pass the same day on local develop f38ea126e: all 22 images re-shot. Nothing on these screens changed (no order names appear; the plate cost stays 28.4%, the suggested price $90.00), so the text stands.

@@ -13,23 +13,21 @@ featureHref: /features/nutrition-facts-and-allergens
 featureLabel: See nutrition facts in CostCook
 ---
 <!-- story: docs/stories/blog-nutrition-facts-catering-dish.story.md -->
-<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-84),
+<!-- Read off kitchen-brain local develop f38ea126e on 2026-10-13 (RC-84),
      re-shot after the nutrition fixes merged: a USDA source with no weigh
-     answer now offers "Answer how recipes weigh it" instead of a Confirm that
-     did nothing, and a draft names its real reason ("Draft · 4 label lines
-     blank"). Labels are the app's own. Not claimed: any compliance,
-     certification or lab accuracy; per-batch panels (not seen); that the
-     ingredient page sends you back to the recipe (it doesn't).
-     CAPTURES: 18 crops at 390 px from a localhost build of develop fcc651477
+     answer offers "Answer how recipes weigh it" (no more Confirm that did
+     nothing), the window brings you back to the recipe, a cremini search
+     tries USDA's "crimini", and a draft names its real reason ("Draft · 4
+     label lines blank"). Labels are the app's own. Not claimed: any
+     compliance, certification or lab accuracy; per-batch panels (not seen).
+     CAPTURES: 18 crops at 390 px from a localhost build of develop f38ea126e
      with a live USDA FoodData Central key, demo seed renamed Harbor & Hearth
-     Catering, US units. The four polenta ingredients were matched through the
-     app's own dialog: the food already in use for Parmesan, polenta and
-     butter, and the fuller "Mushrooms, brown, italian, or crimini, raw" for
-     the cremini, each weighed raw, as bought; "No added sugars (0 g)" was
-     chosen for the raw mushrooms. To shoot the crimini warning, the cremini
-     was switched back to the seed's food once and then to the fuller one
-     again, with the same answers, so the panel is unchanged. Dialog crops
-     were taken with the dialog's sticky footer unstuck. -->
+     Catering, US units, all from one run on a fresh copy. The four polenta
+     ingredients were matched through the app's own window: the food already
+     in use for Parmesan, polenta and butter, and the fuller "Mushrooms,
+     brown, italian, or crimini, raw" for the cremini, each weighed raw, as
+     bought; "No added sugars (0 g)" was chosen for the raw mushrooms. Dialog
+     crops were taken with the dialog's sticky footer unstuck. -->
 
 By the end of this guide, a dish in CostCook has a nutrition panel per portion, worked out from its ingredients, and you'll know which lines are real numbers and which are still unknown.
 
@@ -49,7 +47,7 @@ Nutrition in CostCook lives on each ingredient, not on the dish. For each ingred
 
 2. Read the top of the panel. Until each ingredient's source is settled, the numbers stay blank, and a note says what's missing.
 
-![Nutrition, per portion. Worked out from each ingredient's source. A blank means unknown, never zero. Preview label. Nutrition needs a weight or source. Polenta needs an answer for how recipes weigh it. Answer how recipes weigh it. Calories, Fat, Protein and Carbs each blank: 4 ingredients don't report it.](/proof/blog/nutrition-facts-catering-dish/n-02-blank-mobile.png "Wild Mushroom Polenta, one 240 g portion, before anything is settled.")
+![Nutrition, per portion. Worked out from each ingredient's source. A blank means unknown, never zero. Preview label. Nutrition needs a weight or source. Polenta needs an answer for how recipes weigh it. Answer how recipes weigh it. Calories, Fat, Protein and Carbs each blank: Blank until you answer how recipes weigh 4 ingredients.](/proof/blog/nutrition-facts-catering-dish/n-02-blank-mobile.png "Wild Mushroom Polenta, one 240 g portion, before anything is settled.")
 
 3. Scroll to **Ingredient sources, most gaps first**. Each ingredient shows its USDA food and how many label lines it leaves blank. Press **Answer how recipes weigh it** on one.
 
@@ -57,7 +55,7 @@ Nutrition in CostCook lives on each ingredient, not on the dish. For each ingred
 
 4. CostCook opens the ingredient's **Match nutrition** window and searches USDA. The food already in use is picked for you. If it's the food you cook with, press **Next: how recipes weigh it**.
 
-![Currently using: Cheese, parmesan, hard, Form unknown. It stays in use until you save a replacement. Search USDA foods: Parmesan, block. 8 results. No close food match yet. Try block, or review the other results carefully. Hide other foods (8). Cheese, parmesan, grated, 14 of 15. Cheese, parmesan, hard, selected and ringed: 392 kcal, 35.8 g protein, 13 of 15.](/proof/blog/nutrition-facts-catering-dish/n-04-find-mobile.png "The food in use is already selected.")
+![Currently using: Cheese, parmesan, hard. It stays in use until you save a replacement. Search USDA foods: Parmesan, block. 8 results. No close food match yet. Try block, or review the other results carefully. Hide other foods (8). Cheese, parmesan, grated, 14 of 15. Cheese, parmesan, hard, selected and ringed: 392 kcal, 35.8 g protein, 13 of 15.](/proof/blog/nutrition-facts-catering-dish/n-04-find-mobile.png "The food in use is already selected.")
 
 ![Next: how recipes weigh it, ringed.](/proof/blog/nutrition-facts-catering-dish/n-04b-next-mobile.png "Step 1 of 2 done.")
 
@@ -71,13 +69,13 @@ Nutrition in CostCook lives on each ingredient, not on the dish. For each ingred
 
 ![Use this source, ringed.](/proof/blog/nutrition-facts-catering-dish/n-06b-use-mobile.png "Saves the food and the answer together.")
 
-7. CostCook says "Nutrition matched." and leaves you on the ingredient's page. Go back to the recipe's **Nutrition** tab. The ingredient now reads **Confirmed**.
+7. CostCook brings you back to the recipe's **Nutrition** tab and says "Nutrition matched for Parmesan, block." The ingredient now reads **Confirmed**.
 
 ![The Parmesan, block row: Confirmed, Cheese, parmesan, hard, 2 lines missing, and Change.](/proof/blog/nutrition-facts-catering-dish/n-07-confirmed-row-mobile.png "One ingredient settled.")
 
-8. Do the same for every ingredient in the list. If the food in use reports few values, search for a fuller one. Here the cremini's food reported only 10 of 15 values, and CostCook warns: "Labels would be mostly blank." Searching **crimini**, USDA's spelling, finds a raw one with 14 of 15.
+8. Do the same for every ingredient in the list. If the food in use reports few values, pick a fuller one. Here the cremini's food reported only 10 of 15 values, and CostCook warns: "Labels would be mostly blank." It also searched USDA's spelling, crimini, for you, and found a raw one with 14 of 15.
 
-![Search USDA foods: crimini. 8 results. Best matches, same food, different forms. Mushrooms, brown, italian, or crimini, raw: Raw, 22 kcal, 2.5 g protein, 14 of 15, ringed. The same, exposed to ultraviolet light, 13 of 15. Mushroom, crimini, the food in use, selected: 24 kcal, 3.1 g protein, 10 of 15. Only 10 of 15 label values. Labels would be mostly blank.](/proof/blog/nutrition-facts-catering-dish/n-08-fuller-mobile.png "More values, fewer blanks on the label.")
+![Try “crimini” for “cremini”. Check the food and form before saving. Best matches, same food, different forms. Mushrooms, brown, italian, or crimini, raw: Raw, 22 kcal, 2.5 g protein, 14 of 15, ringed. The same, exposed to ultraviolet light, 13 of 15. Mushroom, crimini, the food in use, selected: 24 kcal, 3.1 g protein, 10 of 15. Only 10 of 15 label values. Labels would be mostly blank.](/proof/blog/nutrition-facts-catering-dish/n-08-fuller-mobile.png "More values, fewer blanks on the label.")
 
 9. Some foods don't report added sugars, and CostCook asks. Pick **No added sugars (0 g)** only if you know none were added, like raw mushrooms. Otherwise pick **Leave unknown**.
 

@@ -13,12 +13,12 @@ featureHref: /features/recipes-and-costing
 featureLabel: See recipes and costing in CostCook
 ---
 <!-- story: docs/stories/blog-print-recipe-sheet.story.md -->
-<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-88).
+<!-- Read off kitchen-brain local develop f38ea126e on 2026-10-13 (RC-88).
      Labels are the app's own. Not claimed: who may publish beyond the app's
      own sentence ("the owner can review and publish a version"); that times
      scale with portions (they don't).
      CAPTURES: 17 crops at 390 px and one print render at Letter width (816 px),
-     from a localhost build of develop fcc651477, demo seed renamed Harbor &
+     from a localhost build of develop f38ea126e, demo seed renamed Harbor &
      Hearth Catering, US units. Re-shot 2026-10-13 after the app fixes: the
      kitchen sheet now reads US units (lb, gal), says "published" with the date
      on both sheets, prints a critical note as "Check:", and leaves the screen's
@@ -57,7 +57,7 @@ Don't type the amounts into the step. The app says why: "Quantities stay on the 
 
 5. Press **Publish version 1**. Before you publish, read **What this reaches**: the menus that use the dish, the draft orders that will recost, and the confirmed orders that won't change.
 
-![What this reaches: Menus (2), Holiday Party Buffet and Wedding Plated Dinner. Draft orders that will recost (5). 91 confirmed orders will not change. A confirmed order keeps the costs and quantities it was confirmed with.](/proof/blog/print-recipe-sheet/s06-reaches-mobile.png "Confirmed orders keep the version they were confirmed with.")
+![What this reaches: Menus (2), Holiday Party Buffet and Wedding Plated Dinner. Draft orders that will recost (5): Rodriguez product launch #750, Kowalski wedding #752, Alvarez baby shower #757, Salazar memorial luncheon #773, Delacroix company offsite #777. 91 confirmed orders will not change. A confirmed order keeps the costs and quantities it was confirmed with.](/proof/blog/print-recipe-sheet/s06-reaches-mobile.png "Confirmed orders keep the version they were confirmed with.")
 
 6. Under **What changed, in a few words**, write a short note, then press **Publish version 1**. That note is what the version history shows.
 
@@ -67,7 +67,7 @@ Don't type the amounts into the step. The app says why: "Quantities stay on the 
 
 7. Back on the recipe, it reads **Version 1 · Live**: "The kitchen cooks from this version." Press **Kitchen view**.
 
-![The recipe header: Braised Short Rib, Version 1 · Live. The kitchen cooks from this version. Kitchen view is ringed, beside Edit recipe.](/proof/blog/print-recipe-sheet/s07-live-mobile.png "Kitchen view is the cook's sheet.")
+![The recipe header: Braised Short Rib, Version 1 · Live. The kitchen cooks from this version. Used in 2 menus and 5 draft orders. Kitchen view is ringed, beside Edit recipe.](/proof/blog/print-recipe-sheet/s07-live-mobile.png "Kitchen view is the cook's sheet.")
 
 8. Set how many you're cooking for. Press **Other…**, type the number, and press **Cook for**.
 
@@ -79,7 +79,7 @@ Don't type the amounts into the step. The app says why: "Quantities stay on the 
 
 Here's what comes out. The top line says which version it is and the day it was published. Under it are the mise en place for your count, in your kitchen's units, then each step with its amounts and temperature. Steps done ahead get a "The night before" box. A critical note prints after **Check:**. There are no prices on it, and none of the screen's tap-to-finish or timer text.
 
-![The printed sheet: Braised Short Rib. Version 1 · published Oct 13, 2026 · 35 min hands-on, then 180 min braise. Mise en place for 150 with tick boxes: Beef short rib, boneless 69.5 lb, Mirepoix Base 19.9 lb and House Beef Stock 4.8 gal, the last two marked Sub-recipe. Allergens not confirmed. The night before: cool the short rib in its liquid overnight. Method: Prep 1 with Beef short rib 69.5 lb and Mirepoix Base 19.9 lb; step 2 at 300°F with House Beef Stock 4.8 gal, then 3 h braise; step 3 with Check: Cool it uncovered in shallow pans before it goes in the walk-in.](/proof/blog/print-recipe-sheet/s10-printed-sheet-mobile.png "Version 1, published Oct 13. The sheet says how old it is.")
+![The printed sheet: Braised Short Rib. Version 1 · published Oct 13, 2026 · 35 min hands-on, then 180 min braise. Mise en place for 150 with tick boxes: Beef short rib, boneless 69.5 lb, Mirepoix Base 19.9 lb and House Beef Stock 4.8 gal, the last two marked Sub-recipe. Allergens not confirmed. The night before: cool the short rib in its liquid overnight. Method: step 1 with Beef short rib 69.5 lb and Mirepoix Base 19.9 lb; step 2 at 300°F with House Beef Stock 4.8 gal, then 3 h braise; step 3 with Check: Cool it uncovered in shallow pans before it goes in the walk-in.](/proof/blog/print-recipe-sheet/s10-printed-sheet-mobile.png "Version 1, published Oct 13. The sheet says how old it is.")
 
 **Tip:** need a sheet with the costs on it, for the office? Open **More actions** on the recipe and choose **Print recipe**. That one has a cost column and the plate cost. Both sheets name the version and the day it was published.
 

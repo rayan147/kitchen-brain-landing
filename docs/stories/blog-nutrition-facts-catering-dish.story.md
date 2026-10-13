@@ -49,10 +49,11 @@ For a how-to, only Steps 1, 2 and 11 shape the page.
 - **Found while shooting:** the matching dialog's "how recipes weigh it" step needs USDA search, which this local build couldn't run, so that step is not a numbered step. Print label is greyed out, not hidden, while lines are blank.
 - **Final image:** a label with honest dashes, and the packages that fill them.
 
-### Revision 2026-10-13 (re-shot on local develop fcc651477, live USDA key)
+### Revision 2026-10-13 (re-shot on local develop f38ea126e, live USDA key)
 
-- The old flow is gone: a USDA source with no weigh answer no longer offers a Confirm that changed nothing. It offers "Answer how recipes weigh it", which opens the ingredient's Match nutrition window (step 1: the food in use is preselected; step 2: Raw, as bought or Cooked, the values per 100 g, Use this source). The guide's steps 3 to 9 now walk that window; "Is this the same food and preparation you use?", "Yes, confirm" and "Pick another" are no longer quoted.
-- Shot with a real USDA key, so nothing was written into the sample database by hand. The cremini was matched to the fuller "Mushrooms, brown, italian, or crimini, raw" (14 of 15 values), which the app's own warning steers to ("Labels would be mostly blank."), and "No added sugars (0 g)" was chosen for the raw mushrooms.
-- The panel now reads 530 kcal, 19 g fat, 18 g protein, 78 g carbs with "Draft · 4 label lines blank" (the fixed draft wording; was 77 g carbs and seven blank lines). The snap line changes with it.
-- New fix entry: "Nutrition search could not be loaded. Try again." (seen twice while shooting; text only, no screenshot).
+- The old flow is gone: a USDA source with no weigh answer no longer offers a Confirm that changed nothing. It offers "Answer how recipes weigh it", which opens the ingredient's Match nutrition window (step 1: the food in use is preselected; step 2: Raw, as bought or Cooked, the values per 100 g, Use this source) and brings the cook back to the recipe with "Nutrition matched for <ingredient>." The guide's steps 3 to 9 walk that window; "Is this the same food and preparation you use?", "Yes, confirm" and "Pick another" are no longer quoted.
+- Shot with a real USDA key in one run on a fresh copy, so nothing was written into the sample database by hand. For the cremini the app searches USDA's "crimini" itself ("Try “crimini” for “cremini”. Check the food and form before saving."); the fuller "Mushrooms, brown, italian, or crimini, raw" (14 of 15 values) was picked, as the app's warning on the food in use steers ("Labels would be mostly blank."), with "No added sugars (0 g)" for raw mushrooms.
+- Before any weigh answer, each total reads "Blank until you answer how recipes weigh 4 ingredients".
+- The panel now reads 530 kcal, 19 g fat, 18 g protein, 78 g carbs with "Draft · 4 label lines blank" (was 77 g carbs and seven blank lines). The snap line changes with it.
+- New fix entry: "Nutrition search could not be loaded. Try again." (text only).
 - 18 crops (was 12). Dialog crops were taken with the dialog's sticky footer unstuck.

@@ -49,8 +49,9 @@ For a how-to, only Steps 1, 2 and 11 shape the page. The beats are not used.
 - **Found while shooting:** the kitchen view needs a published version before it shows anything; the costed sheet is a separate "Print recipe" in More actions; a critical note always prints as "Food-safety check", so the tip says to keep it for the real check.
 - **Final image:** the old sheet comes off the wall because the new one says which version it is.
 
-## Revision 2026-10-13 (re-shot off local develop fcc651477)
+## Revision 2026-10-13 (re-shot off local develop f38ea126e)
 
 - The app fixes landed: the kitchen sheet reads US units in a US kitchen (69.5 lb, 19.9 lb, 4.8 gal for 150), both sheets say "Version N · published <date>", a critical note prints after "Check:" (it said "Food-safety check" for quality notes too), print leaves out "tap a step", "NOW" and timers, and the sub-recipe link prints as "Sub-recipe" without overlapping the name.
 - Removed from the page and the ledger: the units caveat (fixed). Changed "live since" to "published" throughout.
 - Every shot re-taken from one run, so the versions are dated Oct 13, 2026 (the shoot day). 18 figures, readMinutes 10.
+- Second pass on f38ea126e: printed steps all look alike ("1 PREP", "2 PREP", "3 PREP"); the recipe header reads "Used in 2 menus and 5 draft orders"; the publish page names draft orders "<name> #<order id>".

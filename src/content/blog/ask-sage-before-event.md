@@ -13,8 +13,8 @@ featureHref: /features/sage
 featureLabel: See Sage in CostCook
 ---
 <!-- story: docs/stories/blog-ask-sage-before-event.story.md -->
-<!-- Read off kitchen-brain develop fcc651477 on 2026-10-13 (RC-85).
-     HOW THE CAPTURES WERE MADE: localhost build of fcc651477 with a real model
+<!-- Read off kitchen-brain develop 916f3ffbd on 2026-10-13 (RC-85).
+     HOW THE CAPTURES WERE MADE: localhost build of 916f3ffbd with a real model
      key (owner's Google AI key), so SAGE_AI_PROVIDER=google and the run model
      is google:gemini-3.5-flash (sageModelConfig in
      src/lib/server/sage/config.ts). Production defaults to Anthropic. Answers
@@ -26,10 +26,15 @@ featureLabel: See Sage in CostCook
      Every figure in the shown answers was checked against order #765's own
      page: food cost 30.7% against 30% (frozen at confirmation), shop 16 lines,
      prep 0 of 19, pack 0 of 5, and Shop $1,011.00 across 6 suppliers with
-     every supplier subtotal and every line price matching the Shop list.
+     every supplier subtotal matching the Shop list. The price that meets
+     30%, $43.41, is $377.60 food / 29 guests / 0.30 = $43.402 rounded up
+     to the next cent (the app's rounding).
      Below par: 2 (Dill, Tofu, firm), 12 with a par and no trusted count. The
      draft card is rendered from the tool's records: 11 items, $381.34, the
      same as Inventory's To order and Cost to buy.
+     Sage names orders "Ishikawa fundraiser #765" in questions, answers and
+     sources on 916f3ffbd. The "Overall ingredient shortages" line was checked:
+     Italian sausage and Olive oil are on the week's draft and on #765's Shop.
      The "couldn't check" screen is real: one run of "What do I still need to
      buy for it?" was withheld by Sage's own check (code UNVERIFIED,
      src/lib/sage/transcript.ts UNVERIFIED_ANSWER); the next run answered.
@@ -58,19 +63,19 @@ Sage reads your CostCook records and answers with a link to each record it used.
 
 ![The Sage panel: Ishikawa #765 is tomorrow. Ask anything about your orders, prep, stock or costs. COMING UP: What's left to do for Ishikawa #765? (ringed), What do I still need to buy for it? THIS WEEK: Draft this week's shopping list, What's below par?, Which orders are over 30%?, Why did Olive oil, extra virgin cost more?](/proof/blog/ask-sage-before-event/sage-02-start-mobile.png "Sage opens on tomorrow's event.")
 
-3. Read the answer. Sage asks about the order by its full name, then lists what needs you, one numbered line each, with a link to the order on every line. Here it found three things: the food cost is over target, nothing on the shop, prep or pack lists is ticked off, and some ingredients still need an allergen review.
+3. Read the answer. Sage asks about the order by name and number, then lists what needs you, one numbered line each, with a link to the order on every line. Here it found three things: the food cost is over target, with the price that would meet it, some ingredients still need an allergen review, and nothing on the shop, prep or pack lists is ticked off.
 
-![What needs my attention for Ishikawa fundraiser · October 2026 (1)? The answer: The Ishikawa fundraiser on October 14, 2026 needs attention for its food cost margin and incomplete task lists. 1, Food cost is over target: The frozen food cost is 30.7%, which exceeds your 30% target. 2, Lists are not checked off: None of the 16 shopping items, 19 prep tasks, or 5 packing items have been ticked off yet. 3, 16 unreviewed ingredients: The order's dietary guards show 16 ingredients still require allergen review. Overall, 0 out of 40 tasks on the shop, prep, and pack lists are complete. Suggested next step: Review the order details. Open Orders. You review it first.](/proof/blog/ask-sage-before-event/sage-03-left-mobile.png "Three things, each one a link to the order.")
+![What needs my attention for Ishikawa fundraiser #765? The answer: Ishikawa fundraiser #765 has 1 risk flag for high food cost, plus 16 unreviewed ingredients in dietary guards. 1, Food cost is over target: At 30.7%, food cost exceeds your 30% kitchen target. A price of $43.41 per guest would meet the target. 2, Unreviewed dietary ingredients: 16 ingredients in this order have not had their allergen reviews checked yet. 3, List progress is at zero: None of the 16 shop items, 19 prep tasks, or 5 pack items have been checked off yet for tomorrow's event. Each line links to Ishikawa fundraiser #765 · 2026-10-14. Overall ingredient shortages across confirmed events include Italian sausage and olive oil, which are both needed for this order. Suggested next step: Open this order to check lists and dietary details. Open Orders. You review it first.](/proof/blog/ask-sage-before-event/sage-03-left-mobile.png "Three things, each one a link to the order.")
 
 4. Open the order from any line before you act on it. The order page shows the same numbers. Sage only points; beside **Open Orders** it says so plainly: "You review it first."
 
-5. Start a new conversation with **+** and tap **What do I still need to buy for it?** Sage answers from the order's Shop list: the total, then one line per supplier, with what to buy and what each costs.
+5. Start a new conversation with **+** and tap **What do I still need to buy for it?** Sage answers from the order's Shop list: the total, then one line per supplier, with what to buy from each and its subtotal. The suggested next step opens the order itself.
 
-![What do I need to buy for Ishikawa fundraiser · October 2026 (1)? The shopping list totals $1,011.00 across 6 suppliers. 1, Baldor ($80.78): 2 × 3 lb clamshell Arugula ($41.16) and 1 × 10 lb case Cremini mushroom ($39.62). 2, Green Valley Produce ($124.45): Carrot, Orange, Sweet potato and Yellow onion. 3, Highland Meats ($182.43): 3 × 5 kg case Italian sausage. 4, Restaurant Depot ($166.49): All-purpose flour, Granulated sugar, Maple syrup, Olive oil and Polenta. 5, Stone Mill Dairy ($390.36): Unsalted butter ($202.63), Goat cheese ($62.74) and Parmesan block ($124.99). 6, Sysco ($66.49): 1 × case 180 ct Large eggs. Suggested next step: View order details. Open Orders. You review it first. Based on 25 records.](/proof/blog/ask-sage-before-event/sage-04-buy-mobile.png "The same $1,011.00 as the order's Shop tab.")
+![What do I need to buy for Ishikawa fundraiser #765? You need to buy $1,011.00 worth of ingredients across six suppliers for Ishikawa fundraiser #765. 1, Baldor ($80.78): 2 × 3 lb clamshell Arugula and 1 × 10 lb case Cremini Mushroom. 2, Green Valley Produce ($124.45): Carrot, Orange, Sweet potato and Yellow onion. 3, Highland Meats ($182.43): 3 × 5 kg case Italian sausage. 4, Restaurant Depot ($166.49): All-purpose flour, Granulated sugar, Maple syrup, Olive oil and Polenta. 5, Stone Mill Dairy ($390.36): Unsalted butter, Goat cheese and Parmesan block. 6, Sysco ($66.49): 1 × case 180 ct Large egg. Suggested next step: Review shopping list on Orders. Open Ishikawa fundraiser #765 · 2026-10-14. You review it first. Based on 1 record.](/proof/blog/ask-sage-before-event/sage-04-buy-mobile.png "The same $1,011.00 as the order's Shop tab.")
 
 6. Check the shelf: start a new conversation and tap **What's below par?** Sage names each item below par, and says how many it couldn't judge because they have no recent count.
 
-![Which ingredients are below par? There are 2 ingredients below par today: Dill and Tofu, firm. 1, Dill is below par: Trusted on-hand count is below the declared par level. 2, Tofu, firm is below par. There are also 12 ingredients with set pars that cannot be judged because they lack a trusted count. Suggested next step: Check inventory counts and pars. Open Inventory. You review it first.](/proof/blog/ask-sage-before-event/sage-05-par-mobile.png "Below par, and what it couldn't judge.")
+![Which ingredients are below par? There are 2 ingredients currently below par. 1, Dill: On-hand count is below the set par level. 2, Tofu, firm: On-hand count is below the set par level. There are also 12 ingredients with a par level that cannot be evaluated because they lack a trusted count. Suggested next step: Check inventory counts. Open Inventory. You review it first.](/proof/blog/ask-sage-before-event/sage-05-par-mobile.png "Below par, and what it couldn't judge.")
 
 7. Tap **Based on … records** under the answer. Each line is a record Sage read. Tap one to open it.
 
@@ -100,9 +105,9 @@ Sage reads your CostCook records and answers with a link to each record it used.
 
 ### "Sage's answer used numbers it couldn't check against your records, so it wasn't shown."
 
-Sage checks every number it writes against the records it read. When one doesn't match, you get this instead of the answer. It lists the records it was looking at under **Where this came from**. Press **Retry**, or ask it another way. For "what do I need to buy", the order's own **Shop** tab has the answer.
+Sage checks every number it writes against the records it read. When one doesn't match, you get this instead of the answer. It lists the record it was looking at under **Where this came from**. Press **Retry**, or ask it another way. For "what do I need to buy", the order's own **Shop** tab has the answer.
 
-![What do I need to buy for Ishikawa fundraiser · October 2026 (1)? Sage's answer used numbers it couldn't check against your records, so it wasn't shown. Retry, or ask it another way. Where this came from: three Ishikawa orders. Retry.](/proof/blog/ask-sage-before-event/err-unverified-mobile.png "No answer is better than a wrong one.")
+![What do I need to buy for Ishikawa fundraiser #765? Sage's answer used numbers it couldn't check against your records, so it wasn't shown. Retry, or ask it another way. Where this came from: Order, Ishikawa fundraiser #765 · 2026-10-14, shop list. Retry.](/proof/blog/ask-sage-before-event/err-unverified-mobile.png "No answer is better than a wrong one.")
 
 ### "Sage couldn't answer just now."
 

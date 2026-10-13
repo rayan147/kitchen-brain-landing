@@ -6,7 +6,7 @@
 - **Title / headline:** How to set up your kitchen in CostCook, from an empty account to a costed first order
 - **My hero's name:** A new owner of Harbor & Hearth Catering, on their first day in CostCook
 - **Content file(s):** `src/content/blog/set-up-your-kitchen.md`
-- **Evidence:** RC-87 in `docs/release-claim-ledger.md` (kitchen-brain develop 9b84420f4, walked end to end 2026-10-12; re-walked on local develop fcc651477, 2026-10-13)
+- **Evidence:** RC-87 in `docs/release-claim-ledger.md` (kitchen-brain develop 9b84420f4, walked end to end 2026-10-12; re-walked on local develop f38ea126e, 2026-10-13)
 - **Schedule:** publishedDate 2026-12-10 (Thursday), order 31 (the Sage guide took Dec 3). Hidden until then (src/lib/blog.ts).
 - **Overlap:** /onboarding pitches the same five stages as five scenes. This post is the numbered version and links back via featureHref. It keeps that page's claim boundary: upload then confirm; never complete, correct or "no typing".
 
@@ -49,10 +49,11 @@ For a how-to, only Steps 1, 2 and 11 shape the page. The beats are not used.
 - **Removed claims:** any duration ("first hour"), reading accuracy for imports or Sage, "no typing".
 - **Final image:** the order's shopping list, sorted by supplier, in whole packs.
 
-### Revision 2026-10-13 (re-walked on develop fcc651477; hold lifted)
+### Revision 2026-10-13 (re-walked on develop f38ea126e; hold lifted)
 
-- **Hold lifted:** the stage 4 dish screen now shows each line and the draft plate cost as you add them. The guide gains two shots: the lines (Chicken thigh $1.20, Lemon $0.08, Lines total $1.28) and the Draft plate cost ($1.31 = $1.28 + misc 2% $0.03, 29.1% at $4.50).
+- **Hold lifted:** the stage 4 dish screen now shows each line and the draft plate cost as you add them. The guide gains two shots: the lines (Chicken thigh $1.20, Lemon $0.08, Lines total $1.28) and the Draft plate cost ($1.31 = $1.28 + misc 2% $0.03).
 - **Label changes followed:** the dish button is now **Save dish and continue** (was "Check dish and continue"); Add line now says "Line added. Its exact used amount is now included in the plate cost."
+- **US units in setup:** the ingredient rows read "$3.20 / lb usable" and "$0.33 / each usable" (a metric "$/kg usable" on fcc651477 is gone).
+- **One percent everywhere:** at $4.50 the dish screen, the live quote and "Your kitchen is ready" all read 29.2% food cost, 0.8 points under target (fcc651477 showed 29.1% on the dish screen).
 - **New tip:** the dish screen's nutrition note, "Nutrition and allergens follow this dish as you build it. Save dish and continue to use them in the kitchen."
-- **Known app inconsistency, not hidden:** the dish screen reads 29.1% at $4.50 while the live quote and the ready screen read 29.2% for the same dish and price (order food cost $78.76 for 60 guests, $1.3127 a guest, against the dish's $1.31). Reported to the app, not explained on the page.
-- 27 figures, readMinutes 12. Every shot re-taken.
+- 27 figures, readMinutes 12. Every shot re-taken on f38ea126e.

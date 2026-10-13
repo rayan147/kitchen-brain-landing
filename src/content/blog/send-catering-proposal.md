@@ -13,13 +13,13 @@ featureHref: /features/events-and-proposals
 featureLabel: See events and proposals in CostCook
 ---
 <!-- story: docs/stories/blog-send-catering-proposal.story.md -->
-<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-81;
+<!-- Read off kitchen-brain local develop f38ea126e on 2026-10-13 (RC-81;
      first shot on 9b84420f4 on 2026-10-12, re-shot after the app's fixes). Labels are
      the app's own. Not claimed: email delivery (the shoot had no mail server,
      so Delivered read "Not confirmed yet"), "Send a test to me" (in the source,
      not seen on screen), anything about card payment on the offer page (the
      deposit guide owns that).
-     CAPTURES: 22 crops at 390 px from a localhost build of develop fcc651477,
+     CAPTURES: 22 crops at 390 px from a localhost build of develop f38ea126e,
      demo seed renamed Harbor & Hearth Catering (settings.business_name), US
      units, recipes given version 1 with the app's own db:backfill:revisions
      (the seed has none, so saved menus refuse with "Publish every dish"). The

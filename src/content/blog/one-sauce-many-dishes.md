@@ -13,16 +13,17 @@ featureHref: /features/recipes-and-costing
 featureLabel: See recipes and costing in CostCook
 ---
 <!-- story: docs/stories/blog-one-sauce-many-dishes.story.md -->
-<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-83),
+<!-- Read off kitchen-brain local develop f38ea126e on 2026-10-13 (RC-83),
      re-shot after the fixes from the first shoot merged: Sub-recipes chip
      then New recipe now opens "New sub-recipe" (shown as a tip), a first
-     publish is worded as a first version. Labels are the app's own. The main
+     publish is worded as a first version, and a volume unit on a
+     weight-measured ingredient is refused as soon as it is picked. Labels are the app's own. The main
      path starts inside a dish because "Save recipe and return to" brings the
      cook straight back to it. Not claimed: how a supplier price change shows
      on each dish (only that the batch cost carries it, as the Sub-recipes
      list shows); anything about allergens or nutrition beyond the publish
      page's own sentences.
-     CAPTURES: 21 crops at 390 px from a localhost build of develop fcc651477,
+     CAPTURES: 22 crops at 390 px from a localhost build of develop f38ea126e,
      demo seed renamed Harbor & Hearth Catering, US units, no revision
      backfill (so each dish's first publish is its version 1). Garlic Aioli,
      its lines, and the three dishes it was added to were entered for the
@@ -111,7 +112,7 @@ The example here is a garlic aioli going onto three dishes: Smashburger Sliders,
 
 17. Before you publish, the sauce says what publishing will move: every dish, menu and draft order that uses it.
 
-![Publishing moves 3 dishes, 1 menu and 1 draft order. They keep version 1 until you publish. Draft orders (1): Kowalski birthday dinner. Menus (1): Backyard Cookout. Dishes (3): Garlic Shrimp Skewers, Pulled Pork Sliders, Smashburger Sliders.](/proof/blog/one-sauce-many-dishes/sr-15b-moves-mobile.png "You see the reach before you decide.")
+![Publishing moves 3 dishes, 1 menu and 1 draft order. They keep version 1 until you publish. Draft orders (1): Kowalski birthday dinner #759. Menus (1): Backyard Cookout. Dishes (3): Garlic Shrimp Skewers, Pulled Pork Sliders, Smashburger Sliders.](/proof/blog/one-sauce-many-dishes/sr-15b-moves-mobile.png "You see the reach before you decide.")
 
 18. Press **Publish version 2**. The review lists what changed and every dish it reaches. Write your note and press **Publish version 2**.
 
@@ -125,7 +126,7 @@ The example here is a garlic aioli going onto three dishes: Smashburger Sliders,
 
 **Tip:** you can also start the sauce from **Recipes**. Tap **Sub-recipes**, then **New recipe**, and it opens **New sub-recipe**. Then add it to each dish as in steps 9 to 12.
 
-![New sub-recipe, with Start blank: Name your recipe and add ingredients. You can add prices later.](/proof/blog/one-sauce-many-dishes/sr-tip-new-sub-mobile.png "From the Sub-recipes list, New recipe starts a sub-recipe.")
+![New sub-recipe. How do you want to start? Start blank: Name your recipe and add ingredients. You can add prices later.](/proof/blog/one-sauce-many-dishes/sr-tip-new-sub-mobile.png "From the Sub-recipes list, New recipe starts a sub-recipe.")
 
 **Tip:** new ingredient prices reach your dishes through the sauce too. On the **Sub-recipes** list, each row shows its biggest price move and what it did to the batch cost, like "Egg, large −9% … −2.4% on this batch cost".
 
@@ -135,9 +136,11 @@ The example here is a garlic aioli going onto three dishes: Smashburger Sliders,
 
 ### "This unit measures volume, but the ingredient is measured by weight"
 
-You picked teaspoons or cups for something CostCook measures by weight, like salt. Pick a weight unit, like ounces. If you really cook it by volume, add its density on the ingredient card, as the message says.
+You picked teaspoons or cups for something CostCook measures by weight, like pepper. CostCook says so as soon as you pick the unit, and **Add line** stays off. Pick a weight unit, like ounces. If you really cook it by volume, add its density on the ingredient card, as the message says.
 
 ![Unit Teaspoon (tsp), in red: This unit measures volume, but the ingredient is measured by weight: pick a weight unit to match. If this is one of those, add its density (g per ml) instead.](/proof/blog/one-sauce-many-dishes/fix-unit-mobile.png "Match the unit to how the ingredient is measured.")
+
+![Add line, greyed out and ringed.](/proof/blog/one-sauce-many-dishes/fix-unit-add-mobile.png "Nothing is added until the unit fits.")
 
 ### "This sub-recipe does not say how much it makes"
 

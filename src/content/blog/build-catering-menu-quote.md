@@ -13,13 +13,13 @@ featureHref: /features/menus-and-quotes
 featureLabel: See menus and quotes in CostCook
 ---
 <!-- story: docs/stories/blog-build-catering-menu-quote.story.md -->
-<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-86;
+<!-- Read off kitchen-brain local develop f38ea126e on 2026-10-13 (RC-86;
      first shot on 9b84420f4 on 2026-10-12, re-shot after the app's fixes). Labels are
      the app's own. Path shown: Menus > New menu, then Orders > New order (the
      direct order path). Events and proposals are a separate guide.
      Not claimed: what Reopen does to prices or when it is refused (not
      exercised); that the order screen itself sends anything to a client.
-     CAPTURES: 19 crops at 390 px from a localhost build of develop fcc651477,
+     CAPTURES: 19 crops at 390 px from a localhost build of develop f38ea126e,
      demo seed renamed Harbor & Hearth Catering, US units. The menu "Harvest
      wedding supper" and the draft order "Okafor & Lind wedding" (120 guests,
      Oct 31) were made for the shoot. Confirming that draft needs every

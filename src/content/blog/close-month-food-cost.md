@@ -13,19 +13,20 @@ featureHref: /features/purchases-and-month-cost
 featureLabel: See purchases and month cost in CostCook
 ---
 <!-- story: docs/stories/blog-close-month-food-cost.story.md -->
-<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-82). Labels and
+<!-- Read off kitchen-brain local develop f38ea126e on 2026-10-13 (RC-82). Labels and
      figures are the app's own, from the Harbor & Hearth sample kitchen's closed
      September 2026: Purchases > Food-cost gap, Show the work, Reconcile food
      cost (/purchases/reconcile), Log waste (More menu), Analytics > Month close.
      Not claimed: what a "normal" gap is; that the gap is waste; how long a close
      takes; corrections (not shot for this guide).
-     CAPTURES: 17 crops at 390 px from a localhost build of develop fcc651477,
+     CAPTURES: 17 crops at 390 px from a localhost build of develop f38ea126e,
      demo seed renamed Harbor & Hearth Catering, US units, nothing entered for
      the shoot. Re-shot 2026-10-13 after the app fixes: Reconcile now separates
      draft events ("Not counted yet") from confirmed ones ("Counted"), "Review
      purchases and log waste" opens Log waste, and Ingredient contributions
-     stacks into cards on a phone with Gap in view. "Review receiving" on a
-     delivery is a status; the button is "Open receiving". -->
+     stacks into cards on a phone with Gap in view. Each delivery carries a
+     status badge ("Delivery not recorded" / "Delivery recorded"); "Open
+     receiving" is its one button. Orders are named "<name> #<order id>". -->
 
 By the end of this guide, last month has a food-cost number you can explain. You'll see what your events should have cost, what you paid, and what part of the difference is still a question.
 
@@ -67,11 +68,11 @@ In September the kitchen bought $7,151.16 more food than its events used. $96.48
 
 5. Under **1. Review orders**, look at **Not counted yet**. These are the month's draft events, and they don't count toward Should have cost. If one really happened, press **Review order** and confirm it once it's ready. Confirming an event freezes its costs.
 
-![1. Review orders: 9 confirmed events contribute usage. Confirm only events that are ready; confirmation freezes their costs. Not counted yet: 9 draft events. Nakamura engagement party #7, Sep 2, with Review order ringed.](/proof/blog/close-month-food-cost/m-06-orders-mobile.png "Drafts don't count until they're confirmed.")
+![1. Review orders: 9 confirmed events contribute usage. Confirm only events that are ready; confirmation freezes their costs. Not counted yet: 9 draft events. Nakamura engagement party #751, Sep 2, with Review order ringed.](/proof/blog/close-month-food-cost/m-06-orders-mobile.png "Drafts don't count until they're confirmed.")
 
-6. Under **2. Review deliveries**, the events that count are listed under **Counted**. Where one says **Review receiving**, press **Open receiving** and check it against what arrived. A delivery you never recorded makes the month look cheaper than it was. A delivery recorded twice makes it look dearer.
+6. Under **2. Review deliveries**, the events that count are listed under **Counted**. Where one says **Delivery not recorded**, press **Open receiving** and check it against what arrived. A delivery you never recorded makes the month look cheaper than it was. A delivery recorded twice makes it look dearer.
 
-![2. Review deliveries: Check actual deliveries against the order. A sent purchase order does not mean food has been received. Review existing purchases before recording a delivery again. Counted: 9 confirmed events. Ferreira baby shower #11, Sep 10: Review receiving, and Open receiving, ringed.](/proof/blog/close-month-food-cost/m-07-deliveries-mobile.png "Sent is not received.")
+![2. Review deliveries: Check actual deliveries against the order. A sent purchase order does not mean food has been received. Review existing purchases before recording a delivery again. Counted: 9 confirmed events. Ferreira baby shower #755, Sep 10: Delivery not recorded, and Open receiving, ringed.](/proof/blog/close-month-food-cost/m-07-deliveries-mobile.png "Sent is not received.")
 
 7. Under **3. Check shelf counts**, press **Count or re-count shelf** if your counts are thin. Ending inventory comes from counts near the end of the month.
 
@@ -95,7 +96,7 @@ Each line is a question you can answer. A missing invoice, a delivery booked to 
 
 **Tip:** to see which events were priced too tight, open **Analytics**, then **Month close**. It lists the month's events, the ones furthest over your food-cost target first.
 
-![Events this month: 6 of 9 were planned over target. Together they cost $898.06 more than 30% would have. Ferraro fundraiser #3, Mon, Sep 21: Guests 182, Sales $13,458.90, Planned food $4,574.11, Food cost 34.0%, Vs target +$536.44.](/proof/blog/close-month-food-cost/tip-events-mobile.png "Planned over target is a pricing question, not a kitchen one.")
+![Events this month: 6 of 9 were planned over target. Together they cost $898.06 more than 30% would have. Ferraro fundraiser #747, Mon, Sep 21: Guests 182, Sales $13,458.90, Planned food $4,574.11, Food cost 34.0%, Vs target +$536.44.](/proof/blog/close-month-food-cost/tip-events-mobile.png "Planned over target is a pricing question, not a kitchen one.")
 
 ## If something goes wrong
 

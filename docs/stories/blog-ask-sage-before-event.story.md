@@ -52,12 +52,15 @@ For a how-to, only Steps 1, 2 and 11 shape the page.
 - **Staged, and captioned as staged:** the two allowance notices (a test run's credits set in the sample database), kept from the first shoot; they don't depend on the model.
 - **Final image:** the list created and opened, yours to change before you shop.
 
-### Revision 2026-10-13 (re-shot on develop fcc651477)
+### Revision 2026-10-13 (re-shot on develop 916f3ffbd)
 
 - **Why:** the app fixes reached local develop: the panel header names the order ("Looking at: Ishikawa fundraiser #765"), and a withheld answer has its own sentence ("Sage's answer used numbers it couldn't check against your records, so it wasn't shown.") instead of "Sage couldn't answer just now."
-- **Every shot re-taken** on fcc651477 with the real model. The sample order #765 was moved to Oct 14 in the shoot's database copy so it is tomorrow on the shoot day.
-- **"What do I still need to buy for it?" now answers.** It is step 5. Every figure was checked against the order's Shop tab: $1,011.00 across 6 suppliers, each supplier subtotal and each line price.
-- **Fix section, real not staged:** one run of the same question was withheld by Sage's check, so the fix entry shows the new sentence with Retry. "Sage couldn't answer just now." stays as a text-only entry for an outage.
+- **Every shot re-taken** on 916f3ffbd with the real model. The sample order #765 was moved to Oct 14 in the shoot's database copy so it is tomorrow on the shoot day.
+- **"What do I still need to buy for it?" now answers.** It is step 5. Every figure was checked against the order's Shop tab: $1,011.00 across 6 suppliers and each supplier subtotal.
+- **The "what's left" answer now adds the price that meets 30%, $43.41.** Checked: $377.60 food / 29 guests / 0.30 = $43.402, rounded up to the next cent as the app rounds.
+- **Fix section, real not staged:** one run of the buy question (of two) was withheld by Sage's check, so the fix entry shows the new sentence with Retry. "Sage couldn't answer just now." stays as a text-only entry for an outage.
 - **New tip shot:** Sage opened from the order, naming it in the header.
 - **Staged, and captioned as staged:** the two allowance notices, re-shot by setting a test run's credits in the sample database.
+- **Order names:** on 916f3ffbd Sage names the order "Ishikawa fundraiser #765" in the question it sends, every answer line, the sources and the next-step button ("Open Ishikawa fundraiser #765 · 2026-10-14").
+- **New answer line checked:** "Overall ingredient shortages across confirmed events include Italian sausage and olive oil, which are both needed for this order." Both are on the week's draft list and on #765's Shop list.
 - 13 figures, readMinutes 10.

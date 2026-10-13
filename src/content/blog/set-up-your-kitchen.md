@@ -14,15 +14,15 @@ featureLabel: See the setup stages in CostCook
 ---
 <!-- story: docs/stories/blog-set-up-your-kitchen.story.md -->
 <!-- Read off kitchen-brain develop 9b84420f4 on 2026-10-12, re-shot on local
-     develop fcc651477 on 2026-10-13 (RC-87). Labels are
+     develop f38ea126e on 2026-10-13 (RC-87). Labels are
      the app's own, walked end to end on an empty kitchen. This is the
      step-by-step version of /onboarding, not a second pitch, so it keeps that
      page's claim boundary: upload then confirm, never "complete" or "no typing".
      Walked by hand only: the import and Sage routes are named, not shown,
      because this build's reader is the test stub.
      The stage 4 dish screen now shows each line and the draft plate cost as
-     you add them (fixed on fcc651477), so the plate-cost step is back.
-     CAPTURES: 27 crops at 390 px, localhost develop fcc651477, an empty kitchen
+     you add them (fixed on f38ea126e), so the plate-cost step is back.
+     CAPTURES: 27 crops at 390 px, localhost develop f38ea126e, an empty kitchen
      from e2e/provision-owner.ts renamed Harbor & Hearth Catering. Harbor
      Provisions, Chicken thigh ($32.00 a 10 lb case), Lemon ($38.00 a case of
      115), Lemon roast chicken and the Okafor retirement lunch (60 guests,
@@ -81,7 +81,7 @@ You can stop after any stage. The app says so on the first screen: "Stop after a
 
 8. Press **Add another** for each ingredient in the dish. When the list looks right, press **Review food facts**.
 
-![Ingredients added, 2 in this kitchen: Lemon, case 115 ct, $38.00, 100% yield. Chicken thigh, 10 lb case, $32.00, 100% yield. Review food facts is ringed.](/proof/blog/set-up-your-kitchen/s08-added-mobile.png "Each ingredient shows its pack and price.")
+![Ingredients added, 2 in this kitchen: Lemon, case 115 ct, $38.00, 100% yield, $0.33 / each usable. Chicken thigh, 10 lb case, $32.00, 100% yield, $3.20 / lb usable. Review food facts is ringed.](/proof/blog/set-up-your-kitchen/s08-added-mobile.png "Each ingredient shows its pack and price.")
 
 ## Stage 3: Food facts
 
@@ -115,11 +115,11 @@ You can stop after any stage. The app says so on the first screen: "Stop after a
 
 ![Preparation note, and Add line, ringed.](/proof/blog/set-up-your-kitchen/s13b-add-line-mobile.png "One line per ingredient.")
 
-![Ingredients per portion: Chicken thigh $1.20, 6 oz, 94% of cost. Lemon $0.08, 0.25 each, 6% of cost. Lines total $1.28.](/proof/blog/set-up-your-kitchen/s14-lines-mobile.png "Each line shows its cost as you add it.")
+![Ingredients per portion. Line added. Its exact used amount is now included in the plate cost. Chicken thigh $1.20, 6 oz, 94% of cost. Lemon $0.08, 0.25 each, 6% of cost. Lines total $1.28.](/proof/blog/set-up-your-kitchen/s14-lines-mobile.png "Each line shows its cost as you add it.")
 
 16. Check the **Draft plate cost** at the top of the dish. It adds up the lines plus your miscellaneous percentage. Type what the dish **Sells for ($)**, and CostCook shows its food cost against your target.
 
-![DRAFT PLATE COST $1.31. Lines total $1.28 + misc 2% $0.03. View plate-cost calculation. Sells for ($): 4.50. Food-cost target (%): 30. 29.1% food cost, Within target, 0.9 percentage points under target.](/proof/blog/set-up-your-kitchen/s15-plate-mobile.png "The plate cost updates with every line.")
+![DRAFT PLATE COST $1.31. Lines total $1.28 + misc 2% $0.03. View plate-cost calculation. Sells for ($): 4.50. Food-cost target (%): 30. 29.2% food cost, Within target, 0.8 percentage points under target.](/proof/blog/set-up-your-kitchen/s15-plate-mobile.png "The plate cost updates with every line.")
 
 17. Press **Save dish and continue**. If CostCook asks you to describe one portion, type it in **Packing description** (for example, "6 oz thigh, lemon wedge") and press **Save dish and continue** again.
 
