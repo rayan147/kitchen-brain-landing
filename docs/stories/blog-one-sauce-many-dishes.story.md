@@ -48,3 +48,10 @@ For a how-to, only Steps 1, 2 and 11 shape the page. The beats are not used.
 - **Path chosen on evidence:** the sauce starts from inside the dish (New sub-recipe under "A sauce or stock made in batches?"). The Recipes page's New recipe window follows the filter the page loaded with, not the Sub-recipes chip just tapped, so that route can open a dish builder.
 - **Removed claims:** how a supplier price change displays on each dish (kept to the Sub-recipes list's "on this batch cost"); anything on allergens or nutrition beyond the publish page's sentence; "five dishes" as an example (the shoot used three, and the title keeps the feature page's line).
 - **Final image:** three plate costs moved by the same 7 cents from one edit.
+
+### Revision 2026-10-13 (re-shot on local develop fcc651477)
+
+- Every image re-shot from one run on develop fcc651477 (21 crops; was 20). The figures came out the same: aioli $5.36 a qt then $10.07; sliders $2.70, $2.78, $2.85; pulled pork $3.62; shrimp $6.55.
+- The Sub-recipes chip then New recipe now opens "New sub-recipe" without a reload, so the Recipes route is offered as a tip with its own screenshot. The dish-first path stays the main path because "Save recipe and return to" brings the cook back to the dish.
+- Step 12 no longer assumes version 1: it says "Publish version …" with the dish's next number, and quotes the first-publish wording the app now uses ("This publishes version 1, the first version of this recipe.").
+- The sticky working-copy action bar is hidden in the crops, so Add line, Save amounts and the moves panel's dish names are no longer covered.

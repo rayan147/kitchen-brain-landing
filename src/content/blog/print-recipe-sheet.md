@@ -8,21 +8,23 @@ menuGroup: Cost the work
 menuIcon: prep
 featured: false
 order: 29
-readMinutes: 9
+readMinutes: 10
 featureHref: /features/recipes-and-costing
 featureLabel: See recipes and costing in CostCook
 ---
 <!-- story: docs/stories/blog-print-recipe-sheet.story.md -->
-<!-- Read off kitchen-brain develop 9b84420f4 on 2026-10-12 (RC-88). Labels are
-     the app's own. Not claimed: who may publish beyond the app's own sentence
-     ("the owner can review and publish a version"); that times scale with
-     portions (they don't); the sheet's units (it showed metric with US units
-     set, reported as an app bug).
-     CAPTURES: 18 crops at 390 px and one print render at Letter width (816 px),
-     from a localhost build of develop 9b84420f4, demo seed renamed Harbor &
-     Hearth Catering (organization and settings.business_name). The method
-     steps, the version notes and the 150-portion count were entered for the
-     shoot. -->
+<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-88).
+     Labels are the app's own. Not claimed: who may publish beyond the app's
+     own sentence ("the owner can review and publish a version"); that times
+     scale with portions (they don't).
+     CAPTURES: 17 crops at 390 px and one print render at Letter width (816 px),
+     from a localhost build of develop fcc651477, demo seed renamed Harbor &
+     Hearth Catering, US units. Re-shot 2026-10-13 after the app fixes: the
+     kitchen sheet now reads US units (lb, gal), says "published" with the date
+     on both sheets, prints a critical note as "Check:", and leaves the screen's
+     progress and timer text off paper. The method steps, the version notes and
+     the 150-portion count were entered for the shoot, so both versions are
+     dated Oct 13, 2026. -->
 
 By the end of this guide, one recipe has its method written in steps, a published version your kitchen cooks from, and a printed sheet that says which version it is and when it went live.
 
@@ -51,7 +53,7 @@ Don't type the amounts into the step. The app says why: "Quantities stay on the 
 
 4. Add the rest of the steps the same way. For anything done ahead, tick **Prepare this step the night before**.
 
-![The method: 3 steps, 35 min hands-on, 180 min walk-away, about 3 h 35 min start to finish. Step 1 sear the short rib, with Beef short rib and Mirepoix Base. Step 2 braise, 300°F, 5 min hands-on then 180 min walk-away, with House Beef Stock. Step 3 cool overnight.](/proof/blog/print-recipe-sheet/s04-method-mobile.png "CostCook adds up the hands-on and walk-away time.")
+![The method: 3 steps, 35 min hands-on, 180 min walk-away, about 3 h 35 min start to finish, and Cook from kitchen view. Step 1 sear the short rib, 20 min hands-on, with Beef short rib, boneless and Mirepoix Base. Step 2 braise, 300°F, 5 min hands-on then 180 min walk-away, with House Beef Stock. Step 3 cool overnight, 10 min hands-on.](/proof/blog/print-recipe-sheet/s04-method-mobile.png "CostCook adds up the hands-on and walk-away time.")
 
 5. Press **Publish version 1**. Before you publish, read **What this reaches**: the menus that use the dish, the draft orders that will recost, and the confirmed orders that won't change.
 
@@ -73,15 +75,15 @@ Don't type the amounts into the step. The app says why: "Quantities stay on the 
 
 9. Press the printer button at the top of the kitchen view. Your browser's print window opens.
 
-![The kitchen view for 150: Braised Short Rib, Version 1 · live since Oct 12 · 35 min hands-on, then 180 min braise. The printer button is ringed. Mise en place for 150: Beef short rib, boneless 31.50 kg, Mirepoix Base 9.00 kg, House Beef Stock 18.00 L.](/proof/blog/print-recipe-sheet/s09-print-button-mobile.png "Set the portions, then print.")
+![The kitchen view for 150: Braised Short Rib, Version 1 · published Oct 13, 2026 · 35 min hands-on, then 180 min braise. The printer button is ringed. Mise en place for 150: Beef short rib, boneless 69.5 lb, Mirepoix Base 19.9 lb, House Beef Stock 4.8 gal.](/proof/blog/print-recipe-sheet/s09-print-button-mobile.png "Set the portions, then print.")
 
-Here's what comes out. The top line says which version it is and when it went live. Under it are the mise en place for your count, then each step with its amounts and temperature. Steps done ahead get a "The night before" box. A critical note prints as a **Food-safety check**. There are no prices on it.
+Here's what comes out. The top line says which version it is and the day it was published. Under it are the mise en place for your count, in your kitchen's units, then each step with its amounts and temperature. Steps done ahead get a "The night before" box. A critical note prints after **Check:**. There are no prices on it, and none of the screen's tap-to-finish or timer text.
 
-![The printed sheet: Braised Short Rib. Version 1 · live since Oct 12 · 35 min hands-on, then 180 min braise. Mise en place for 150 with tick boxes. Allergens not confirmed. The night before: cool the short rib in its liquid overnight. Method: step 1 with Beef short rib 31.50 kg and Mirepoix Base 9.00 kg; step 2 at 300°F with House Beef Stock 18.00 L, then 3 h braise; step 3 with Food-safety check: Cool it uncovered in shallow pans before it goes in the walk-in.](/proof/blog/print-recipe-sheet/s10-printed-sheet-mobile.png "Version 1, live since Oct 12. The sheet says how old it is.")
+![The printed sheet: Braised Short Rib. Version 1 · published Oct 13, 2026 · 35 min hands-on, then 180 min braise. Mise en place for 150 with tick boxes: Beef short rib, boneless 69.5 lb, Mirepoix Base 19.9 lb and House Beef Stock 4.8 gal, the last two marked Sub-recipe. Allergens not confirmed. The night before: cool the short rib in its liquid overnight. Method: Prep 1 with Beef short rib 69.5 lb and Mirepoix Base 19.9 lb; step 2 at 300°F with House Beef Stock 4.8 gal, then 3 h braise; step 3 with Check: Cool it uncovered in shallow pans before it goes in the walk-in.](/proof/blog/print-recipe-sheet/s10-printed-sheet-mobile.png "Version 1, published Oct 13. The sheet says how old it is.")
 
-**Tip:** need a sheet with the costs on it, for the office? Open **More actions** on the recipe and choose **Print recipe**. That one has a cost column and the plate cost, and it says "published" with the date.
+**Tip:** need a sheet with the costs on it, for the office? Open **More actions** on the recipe and choose **Print recipe**. That one has a cost column and the plate cost. Both sheets name the version and the day it was published.
 
-![The Print recipe page: Harbor & Hearth Catering. Braised Short Rib. Dish · Quantities are per portion. Version 1 · published Oct 12, 2026.](/proof/blog/print-recipe-sheet/tip-costed-print-mobile.png "The costed sheet, for whoever prices the job.")
+![The Print recipe page: Harbor & Hearth Catering. Braised Short Rib. Dish · Quantities are per portion. Version 1 · published Oct 13, 2026.](/proof/blog/print-recipe-sheet/tip-costed-print-mobile.png "The costed sheet, for whoever prices the job.")
 
 ## Part 3: Change it without confusing the kitchen
 
@@ -99,9 +101,9 @@ Here's what comes out. The top line says which version it is and when it went li
 
 13. To see every version, open **More actions**, then **Versions**. Each version keeps its note and date. **Restore version 1 as draft** opens the old one as draft changes for you to review. It never rewrites history.
 
-![Braised Short Rib versions: Every published version is kept as it was. Version 2, Live now, Oct 12, 2026: Added the reheat step. Version 1, Oct 12, 2026: Wrote the method. Read version 2, Read version 1, Restore version 1 as draft.](/proof/blog/print-recipe-sheet/s14-history-mobile.png "Every published version is kept as it was.")
+![Braised Short Rib versions: Every published version is kept as it was. Version 2, Live now, Oct 13, 2026: Added the reheat step. Version 1, Oct 13, 2026: Wrote the method. Read version 2, Read version 1, Restore version 1 as draft.](/proof/blog/print-recipe-sheet/s14-history-mobile.png "Every published version is kept as it was.")
 
-**Tip:** keep the critical note for the check that matters, like cooling or holding. Whatever you type there prints as a **Food-safety check**.
+**Tip:** keep the critical note for the check that matters, like cooling or holding. Whatever you type there prints after **Check:**.
 
 ## If something goes wrong
 
@@ -115,7 +117,7 @@ The recipe has never been published, so there's no kitchen sheet yet. Publish a 
 
 Someone opened an old version. Press **Go to version 2** (or whichever is live) and print from there.
 
-![Version 1 · older version, not live. This is not what the kitchen is cooking. Version 2 is live. Go to version 2.](/proof/blog/print-recipe-sheet/fix-old-version-mobile.png "An old sheet says it's old.")
+![Braised Short Rib, Version 1 · published Oct 13, 2026 · older version, not live. This is not what the kitchen is cooking. Version 2 is live. Go to version 2.](/proof/blog/print-recipe-sheet/fix-old-version-mobile.png "An old sheet says it's old.")
 
 ### "Allergens not confirmed"
 

@@ -51,3 +51,13 @@ For a how-to, only Steps 1, 2 and 11 shape the page.
 - **Fix section, real not staged:** "What do I still need to buy for it?" failed twice on this model (the answer used numbers its records didn't back, sage_runs.unverified_tokens), so the app showed "Sage couldn't answer just now." with Retry and the linked order.
 - **Staged, and captioned as staged:** the two allowance notices (a test run's credits set in the sample database), kept from the first shoot; they don't depend on the model.
 - **Final image:** the list created and opened, yours to change before you shop.
+
+### Revision 2026-10-13 (re-shot on develop fcc651477)
+
+- **Why:** the app fixes reached local develop: the panel header names the order ("Looking at: Ishikawa fundraiser #765"), and a withheld answer has its own sentence ("Sage's answer used numbers it couldn't check against your records, so it wasn't shown.") instead of "Sage couldn't answer just now."
+- **Every shot re-taken** on fcc651477 with the real model. The sample order #765 was moved to Oct 14 in the shoot's database copy so it is tomorrow on the shoot day.
+- **"What do I still need to buy for it?" now answers.** It is step 5. Every figure was checked against the order's Shop tab: $1,011.00 across 6 suppliers, each supplier subtotal and each line price.
+- **Fix section, real not staged:** one run of the same question was withheld by Sage's check, so the fix entry shows the new sentence with Retry. "Sage couldn't answer just now." stays as a text-only entry for an outage.
+- **New tip shot:** Sage opened from the order, naming it in the header.
+- **Staged, and captioned as staged:** the two allowance notices, re-shot by setting a test run's credits in the sample database.
+- 13 figures, readMinutes 10.

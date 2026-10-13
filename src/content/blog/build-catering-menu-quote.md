@@ -13,12 +13,13 @@ featureHref: /features/menus-and-quotes
 featureLabel: See menus and quotes in CostCook
 ---
 <!-- story: docs/stories/blog-build-catering-menu-quote.story.md -->
-<!-- Read off kitchen-brain develop 9b84420f4 on 2026-10-12 (RC-86). Labels are
+<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-86;
+     first shot on 9b84420f4 on 2026-10-12, re-shot after the app's fixes). Labels are
      the app's own. Path shown: Menus > New menu, then Orders > New order (the
      direct order path). Events and proposals are a separate guide.
      Not claimed: what Reopen does to prices or when it is refused (not
      exercised); that the order screen itself sends anything to a client.
-     CAPTURES: 19 crops at 390 px from a localhost build of develop 9b84420f4,
+     CAPTURES: 19 crops at 390 px from a localhost build of develop fcc651477,
      demo seed renamed Harbor & Hearth Catering, US units. The menu "Harvest
      wedding supper" and the draft order "Okafor & Lind wedding" (120 guests,
      Oct 31) were made for the shoot. Confirming that draft needs every
@@ -45,7 +46,7 @@ This guide is the clicks. For the math behind a food-cost target, see [Catering 
 
 1. Open **Kitchen records**, then **Menus**, and press **New menu**.
 
-![The top of Menus: 18 menus, Search menus, Orders: Any dates, and New menu, ringed.](/proof/blog/build-catering-menu-quote/m-01-menus-mobile.png "Start a new menu.")
+![The top of Menus: 17 menus, Search menus, Orders: Any dates, and New menu, ringed.](/proof/blog/build-catering-menu-quote/m-01-menus-mobile.png "Start a new menu.")
 
 2. Type the menu's name and press **Done**. The name is what you pick when you start an order.
 
@@ -61,9 +62,9 @@ This guide is the clicks. For the math behind a food-cost target, see [Catering 
 
 5. Add the rest of the dishes the same way. This menu has five: the chicken, roast potatoes, charred green beans, an arugula and pear salad, and focaccia with whipped goat cheese.
 
-6. Look at **Cost per guest**. CostCook adds up the dishes and suggests a price that meets your target. Here it's $9.20 a guest, and $30.67 at 30%.
+6. Look at **Cost per guest**. CostCook adds up the dishes and suggests a price that meets your target. Here it's $9.20 a guest, and $30.67 at 30%. Under it, CostCook warns you that an order can come out a little higher, because some of this menu's bases are made in whole batches. Part 2 shows how much.
 
-![Cost per guest: Dish cost $9.20, Miscellaneous cost (0%) $0.00, Total cost per guest $9.20. Selling price per guest, empty. Suggested price for your 30% target: $30.67 per guest. $9.2006 theoretical cost ÷ 0.30 = $30.67. CostCook rounds up to the next cent so the target is met. Use $30.67 is ringed.](/proof/blog/build-catering-menu-quote/m-06-cost-mobile.png "Press Use $30.67, or type your own price.")
+![Cost per guest: Dish cost $9.20, Miscellaneous cost (0%) $0.00, Total cost per guest $9.20. Selling price per guest, empty. Suggested price for your 30% target: $30.67 per guest. $9.2006 theoretical cost ÷ 0.30 = $30.67. CostCook rounds up to the next cent so the target is met. Use $30.67 is ringed. Below: An order counts whole batches of this menu's bases, so its cost per guest can come out higher.](/proof/blog/build-catering-menu-quote/m-06-cost-mobile.png "Press Use $30.67, or type your own price.")
 
 7. Type your **Selling price per guest**, or press **Use** to take the suggestion. CostCook shows the food cost at that price against your target.
 
@@ -93,7 +94,7 @@ This guide is the clicks. For the math behind a food-cost target, see [Catering 
 
 ![Live quote: Revenue $3,840.00, Food cost $1,140.11. Whole-batch prep: Balsamic Vinaigrette: make 2 batches for 1.2 needed. Whipped Goat Cheese Spread: make 2 batches for 1.8 needed. Food cost includes whole-batch prep. Food cost per guest $9.50. 29.7% food cost, Within target, 0.3 percentage points under target. Charge at least, per guest $31.67.](/proof/blog/build-catering-menu-quote/q-03-live-quote-mobile.png "$9.20 a guest on the menu, $9.50 on the order: the vinaigrette is made in whole batches.")
 
-The menu said $9.20 a guest. The order says $9.50, because you can't make 1.2 batches of vinaigrette. You make 2, and the food cost counts them. That's why the quote's "Charge at least" is $31.67, not the menu's $30.67.
+The menu said $9.20 a guest. The order says $9.50, because you can't make 1.2 batches of vinaigrette. You make 2, and the food cost counts them. That's the difference the menu warned about, and why the quote's "Charge at least" is $31.67, not the menu's $30.67.
 
 4. Change the price if you need to. If it's under what your target needs, CostCook says so and tells you the least to charge.
 
@@ -105,7 +106,7 @@ The menu said $9.20 a guest. The order says $9.50, because you can't make 1.2 ba
 
 ![Before you confirm, 2 of 5 done. Confirming locks quantities and prices, and starts shopping, prep and pack. Date set, Ready for shopping and prep. Price within target, 29.7% food cost, target 30%. Review allergens, None reviewed on 5 dishes. Add the customer, Optional, for invoices. Guest restrictions, Not declared, add or mark none. Confirm order, greyed out.](/proof/blog/build-catering-menu-quote/q-05-before-confirm-mobile.png "Confirm order waits for Review allergens.")
 
-![The draft order's price panel: Same as the menu price. Food cost 29.7%, target 30%. Sales $3,840.00, Food ($9.50 a guest) $1,140.11. Balsamic Vinaigrette and Whipped Goat Cheese Spread are made in whole batches. Adds $36.04. Food margin $2,699.89. Within target, with 0.3 points to spare.](/proof/blog/build-catering-menu-quote/q-06-draft-price-mobile.png "A draft still moves with today's prices.")
+![The draft order's price panel: Same as the menu price. Food cost 29.7%, target 30%. Sales $3,840.00, Food ($9.50 a guest) $1,140.11. Balsamic Vinaigrette and Whipped Goat Cheese Spread are made in whole batches: Balsamic Vinaigrette 2 for 1.2 needed, Whipped Goat Cheese Spread 2 for 1.8 needed. Adds $36.04. Food margin $2,699.89. Within target, with 0.3 points to spare.](/proof/blog/build-catering-menu-quote/q-06-draft-price-mobile.png "A draft still moves with today's prices.")
 
 7. Press **Review allergens** to open the first dish that needs it, and review its ingredients. Do the same for each dish. If any guest has an allergy or a diet, add it under **Guest restrictions**, or press **Mark guest restrictions: None declared**. See [How to check a catering menu for a guest's allergy](/blog/guest-allergy-menu-check).
 

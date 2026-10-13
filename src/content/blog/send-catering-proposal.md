@@ -13,12 +13,13 @@ featureHref: /features/events-and-proposals
 featureLabel: See events and proposals in CostCook
 ---
 <!-- story: docs/stories/blog-send-catering-proposal.story.md -->
-<!-- Read off kitchen-brain develop 9b84420f4 on 2026-10-12 (RC-81). Labels are
+<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-81;
+     first shot on 9b84420f4 on 2026-10-12, re-shot after the app's fixes). Labels are
      the app's own. Not claimed: email delivery (the shoot had no mail server,
      so Delivered read "Not confirmed yet"), "Send a test to me" (in the source,
      not seen on screen), anything about card payment on the offer page (the
      deposit guide owns that).
-     CAPTURES: 21 crops at 390 px from a localhost build of develop 9b84420f4,
+     CAPTURES: 22 crops at 390 px from a localhost build of develop fcc651477,
      demo seed renamed Harbor & Hearth Catering (settings.business_name), US
      units, recipes given version 1 with the app's own db:backfill:revisions
      (the seed has none, so saved menus refuse with "Publish every dish"). The
@@ -43,9 +44,13 @@ This guide picks up after the inquiry is saved. For the whole event, from the fi
 
 ![A saved menu card: Wedding Plated Dinner, 6 dishes: Braised Short Rib, Wild Mushroom Polenta, Roasted Beet and Citrus, Creamed Spinach, Focaccia and Whipped Goat Cheese, Lemon Posset. Use menu is ringed.](/proof/blog/send-catering-proposal/p01-use-menu-mobile.png "Start from a menu you already priced.")
 
-2. Type the **Price per guest**. CostCook suggests one from what the food costs you, and shows the food cost per guest as you type.
+2. Type the **Price per guest**. CostCook suggests one from what the food costs you, and shows the **Plate cost** per guest as you type: what the dishes on each plate cost.
 
-![Servings 150, All guests. Price per guest $95.00, ringed, with Suggested $90.00 at 30% below it. Food cost $26.93 / guest · 28.3% · total $14,250.00.](/proof/blog/send-catering-proposal/p02-price-mobile.png "$26.93 of food per guest, sold at $95.")
+![Servings 150, All guests. Price per guest $95.00, ringed, with Suggested $90.00 at 30% below it. Plate cost $26.93 / guest · 28.4% · total $14,250.00.](/proof/blog/send-catering-proposal/p02-price-mobile.png "$26.93 on each plate, sold at $95.")
+
+The **Food cost** at the top of the screen can read a little higher than the plate cost. Some bases, like the whipped goat cheese, are made in whole batches, and the event pays for the whole batch. CostCook says how much that adds.
+
+![Subtotal $14,250.00, Per guest $95.00, Food cost 28.9%. Food cost counts $76.32 of whole batches the plates do not eat, so it reads higher than a service's plate cost.](/proof/blog/send-catering-proposal/p02b-food-cost-mobile.png "28.4% on the plate, 28.9% for the event.")
 
 3. Press **Continue to proposal**.
 
@@ -75,11 +80,11 @@ This guide picks up after the inquiry is saved. For the whole event, from the fi
 
 10. Choose how long the link works under **Offer link valid for**, then press **Send offer**.
 
-![Offer link valid for 7 days, Until Mon, Oct 19. Send offer is ringed. Below it: The event isn't booked until the customer accepts.](/proof/blog/send-catering-proposal/p09-send-mobile.png "Pick how long they have to decide.")
+![Offer link valid for 7 days, Until Tue, Oct 20. Send offer is ringed. Below it: The event isn't booked until the customer accepts.](/proof/blog/send-catering-proposal/p09-send-mobile.png "Pick how long they have to decide.")
 
 11. You land on the client decision page. It shows when the offer was sent, delivered and viewed, and waits for the decision.
 
-![Waiting on Priya Nair. Offer sent Mon, Oct 12 · the link works for 7 more days, until Mon, Oct 19. Step 4 of 6: Client decision. $14,250.00, Waiting for response. Sent Oct 12, Delivered Not confirmed yet, Viewed Not opened yet, Decision Accept or decline.](/proof/blog/send-catering-proposal/p10-waiting-mobile.png "Sent, delivered, viewed, decided.")
+![Waiting on Priya Nair. Offer sent Tue, Oct 13 · the link works for 7 more days, until Tue, Oct 20. Step 4 of 6: Client decision. $14,250.00, Waiting for response. Sent Oct 13, Delivered Not confirmed yet, Viewed Not opened yet, Decision Accept or decline.](/proof/blog/send-catering-proposal/p10-waiting-mobile.png "Sent, delivered, viewed, decided.")
 
 Want to send the link yourself, by text? Press **Copy offer link**.
 
@@ -89,7 +94,7 @@ Want to send the link yourself, by text? Press **Copy offer link**.
 
 The client opens the link on their phone. There's no account and no login.
 
-![Proposal for Priya Nair. Nair & Castellano wedding. Please respond by Mon, Oct 19 · 7 days left. Total for your event $14,250.00, 150 guests · $95.00 per guest. Your event: Date December 19, 2026, Guests 150, Venue To be confirmed, Service time To be confirmed.](/proof/blog/send-catering-proposal/c01-top-mobile.png "The deadline is at the top.")
+![Proposal for Priya Nair. Nair & Castellano wedding. Please respond by Tue, Oct 20 · 7 days left. Total for your event $14,250.00, 150 guests · $95.00 per guest. Your event: Date December 19, 2026, Guests 150, Venue To be confirmed, Service time To be confirmed.](/proof/blog/send-catering-proposal/c01-top-mobile.png "The deadline is at the top.")
 
 They see the menu, the total and the payment schedule, in the same words you checked in step 7.
 
@@ -109,13 +114,13 @@ They see what happens next.
 
 ## After they accept
 
-12. On your side, the event moves to the agreement. Press **Send agreement**. The deposit and the booking come after that: see [How to get a catering deposit in without chasing it](/blog/catering-deposit-without-chasing).
+12. On your side, the client decision page now reads **Proposal accepted**, and the event moves to step 5, the agreement. Press **Send agreement**. The deposit and the booking come after that: see [How to get a catering deposit in without chasing it](/blog/catering-deposit-without-chasing).
 
-![Step 5 of 6: Agreement. Client accepted this offer. The next step is the agreement. Send agreement is ringed.](/proof/blog/send-catering-proposal/p12-accepted-mobile.png "Accepted is not booked. The agreement is next.")
+![Client decision. Proposal accepted. Step 5 of 6: Agreement. Client accepted this offer. The next step is the agreement. Send agreement is ringed.](/proof/blog/send-catering-proposal/p12-accepted-mobile.png "Accepted is not booked. The agreement is next.")
 
 **Tip:** if the client presses **Ask for changes**, they write what they'd like changed and it comes straight to you. To change the menu, price or terms after sending, use **Update the offer** on the client decision page. "The current link keeps working until you send the update."
 
-![Ask for changes. Your response goes directly to the caterer. Your full name · optional. What would you like to change? Send to Harbor & Hearth Catering.](/proof/blog/send-catering-proposal/c-tip-changes-mobile.png "Their changes come to you, not to a form somewhere.")
+![Ask for changes. Your response goes directly to the caterer. Your full name · optional: Priya Nair. What would you like to change? Send to Harbor & Hearth Catering.](/proof/blog/send-catering-proposal/c-tip-changes-mobile.png "Their changes come to you, not to a form somewhere.")
 
 **Tip:** if they said yes or no on the phone, record it under **Heard back another way?** with **They accepted** or **They declined**. CostCook notes who recorded it.
 
@@ -139,11 +144,11 @@ The **Before you send** list marks it **1 must fix**, and **Send offer** stays g
 
 The event is closer than the number of days you gave for the balance. Open **Terms** and shorten the days before the event, or check the event date.
 
-![The balance due date has already passed. Balance and final guest count say Fri Oct 9, but the event is Mon Oct 19 and today is Mon Oct 12.](/proof/blog/send-catering-proposal/err-balance-passed-mobile.png "A balance date in the past blocks the send.")
+![The balance due date has already passed. Balance and final guest count say Sat Oct 10, but the event is Tue Oct 20 and today is Tue Oct 13.](/proof/blog/send-catering-proposal/err-balance-passed-mobile.png "A balance date in the past blocks the send.")
 
 ## Limits
 
 - Accepting isn't booking. The client's page says "Nothing is charged today", and the agreement comes next.
 - The link stops working when the time you chose under **Offer link valid for** runs out, or straight away if you press **Withdraw offer**.
 - The client sees "To be confirmed" for anything you didn't fill in, like the venue and the service time.
-- Food cost stays on your side. The client never sees it.
+- Food cost stays on your side. The proposal marks it "only you see this", and the client never sees it.

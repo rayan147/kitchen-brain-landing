@@ -8,22 +8,24 @@ menuGroup: Cost the work
 menuIcon: variance
 featured: false
 order: 25
-readMinutes: 9
+readMinutes: 10
 featureHref: /features/purchases-and-month-cost
 featureLabel: See purchases and month cost in CostCook
 ---
 <!-- story: docs/stories/blog-close-month-food-cost.story.md -->
-<!-- Read off kitchen-brain develop 9b84420f4 on 2026-10-12 (RC-82). Labels and
+<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-82). Labels and
      figures are the app's own, from the Harbor & Hearth sample kitchen's closed
      September 2026: Purchases > Food-cost gap, Show the work, Reconcile food
      cost (/purchases/reconcile), Log waste (More menu), Analytics > Month close.
      Not claimed: what a "normal" gap is; that the gap is waste; how long a close
      takes; corrections (not shot for this guide).
-     CAPTURES: 17 crops from a localhost build of develop 9b84420f4, demo seed
-     renamed Harbor & Hearth Catering, US units, nothing entered for the shoot.
-     Two crops of the Ingredient contributions table (m-10, err-negative) are
-     shot at 768 px, because at 390 px the table scrolls sideways and the Gap
-     column is off screen. -->
+     CAPTURES: 17 crops at 390 px from a localhost build of develop fcc651477,
+     demo seed renamed Harbor & Hearth Catering, US units, nothing entered for
+     the shoot. Re-shot 2026-10-13 after the app fixes: Reconcile now separates
+     draft events ("Not counted yet") from confirmed ones ("Counted"), "Review
+     purchases and log waste" opens Log waste, and Ingredient contributions
+     stacks into cards on a phone with Gap in view. "Review receiving" on a
+     delivery is a status; the button is "Open receiving". -->
 
 By the end of this guide, last month has a food-cost number you can explain. You'll see what your events should have cost, what you paid, and what part of the difference is still a question.
 
@@ -61,35 +63,35 @@ In September the kitchen bought $7,151.16 more food than its events used. $96.48
 
 4. Press **Review food-cost gap**. **Reconcile food cost** opens with the remaining gap and the six numbers behind it.
 
-![Remaining gap $4,426.71. A gap is a question, not a waste entry. Missing records, purchase timing and stock carried between months can affect this difference. Actual spend $19,750.41, Opening inventory $2,553.14, Confirmed usage $12,599.25, Ending inventory $5,181.11, Logged waste, Byproduct credit.](/proof/blog/close-month-food-cost/m-05-remaining-mobile.png "“A gap is a question, not a waste entry.”")
+![Remaining gap $4,426.71. A gap is a question, not a waste entry. Missing records, purchase timing and stock carried between months can affect this difference. Actual spend $19,750.41, Opening inventory $2,553.14, Confirmed usage $12,599.25, Ending inventory $5,181.11, Logged waste $96.48, Byproduct credit $0.00.](/proof/blog/close-month-food-cost/m-05-remaining-mobile.png "“A gap is a question, not a waste entry.”")
 
-5. Under **1. Review orders**, press **Review order** on each event. Make sure each one is really ready. Confirming an event freezes its costs.
+5. Under **1. Review orders**, look at **Not counted yet**. These are the month's draft events, and they don't count toward Should have cost. If one really happened, press **Review order** and confirm it once it's ready. Confirming an event freezes its costs.
 
-![1. Review orders: 9 confirmed events contribute usage. Confirm only events that are ready; confirmation freezes their costs. The first order, with Review order ringed.](/proof/blog/close-month-food-cost/m-06-orders-mobile.png "Usage comes only from confirmed events.")
+![1. Review orders: 9 confirmed events contribute usage. Confirm only events that are ready; confirmation freezes their costs. Not counted yet: 9 draft events. Nakamura engagement party #7, Sep 2, with Review order ringed.](/proof/blog/close-month-food-cost/m-06-orders-mobile.png "Drafts don't count until they're confirmed.")
 
-6. Under **2. Review deliveries**, press **Review receiving** for each order. A delivery you never recorded makes the month look cheaper than it was. A delivery recorded twice makes it look dearer.
+6. Under **2. Review deliveries**, the events that count are listed under **Counted**. Where one says **Review receiving**, press **Open receiving** and check it against what arrived. A delivery you never recorded makes the month look cheaper than it was. A delivery recorded twice makes it look dearer.
 
-![2. Review deliveries: Check actual deliveries against the order. A sent purchase order does not mean food has been received. Review existing purchases before recording a delivery again. Ferreira baby shower, with Review receiving ringed.](/proof/blog/close-month-food-cost/m-07-deliveries-mobile.png "Sent is not received.")
+![2. Review deliveries: Check actual deliveries against the order. A sent purchase order does not mean food has been received. Review existing purchases before recording a delivery again. Counted: 9 confirmed events. Ferreira baby shower #11, Sep 10: Review receiving, and Open receiving, ringed.](/proof/blog/close-month-food-cost/m-07-deliveries-mobile.png "Sent is not received.")
 
 7. Under **3. Check shelf counts**, press **Count or re-count shelf** if your counts are thin. Ending inventory comes from counts near the end of the month.
 
 ![3. Check shelf counts: Ending inventory uses counts near the end of the selected month, valued at their recorded prices. A zero count can be correct. Today's count does not replace a historical count. Count or re-count shelf is ringed.](/proof/blog/close-month-food-cost/m-08-counts-mobile.png "A count today won't fix last month.")
 
-8. Under **4. Review known waste**, check what was logged. New waste you log now is dated today, so it lands in this month, not the one you're closing.
+8. Under **4. Review known waste**, check what was logged. New waste you log now is dated today, so it lands in this month, not the one you're closing. **Review purchases and log waste** opens **Log waste** for waste you see today.
 
 ![4. Review known waste: $96.48 logged. Record only waste you observed today. New waste entries use today's date and do not change a past month. No waste is a valid outcome. Review purchases and log waste is ringed.](/proof/blog/close-month-food-cost/m-09-waste-mobile.png "No waste is a valid outcome.")
 
-9. Read **Ingredient contributions**, one line per ingredient. Start with the biggest numbers, positive or negative. Here, the brisket shows $2,718.24 more used than bought and stocked. The lamb shows $1,747.52 bought and not used by any event.
+![Log waste: Something you threw out. It counts as waste in this month's food cost, valued at what you paid and dated today. Ingredient, Type to search, How much, Unit.](/proof/blog/close-month-food-cost/tip-waste-mobile.png "It opens ready: ingredient, how much, and an optional note.")
 
-![Ingredient contributions: Spend + opening stock − usage − inventory − waste. Positive and negative differences both need context; neither proves loss. Beef brisket: Spend $4,606.06, Opening stock $195.54, Usage $6,128.01, Inventory $1,348.98, Waste $42.85, Gap −$2,718.24. Lamb leg, boneless: Spend $2,237.99, Opening stock $159.54, Usage $0.00, Inventory $650.01, Waste $0.00, Gap $1,747.52.](/proof/blog/close-month-food-cost/m-10-ingredients-mobile.png "“Neither proves loss.” Each line is a question for one ingredient.")
+9. Read **Ingredient contributions**, one card per ingredient, with its **Gap** on the first line. Start with the biggest numbers, positive or negative. Here, the brisket shows $2,718.24 more used than bought and stocked. The lamb shows $1,747.52 bought and not used by any event.
+
+![Ingredient contributions: Spend + opening stock − usage − inventory − waste. Positive and negative differences both need context; neither proves loss. Beef brisket, Gap −$2,718.24: Spend $4,606.06, Opening stock $195.54, Usage $6,128.01, Inventory $1,348.98, Waste $42.85. Lamb leg, boneless, Gap $1,747.52: Spend $2,237.99, Opening stock $159.54, Usage $0.00, Inventory $650.01, Waste $0.00.](/proof/blog/close-month-food-cost/m-10-ingredients-mobile.png "“Neither proves loss.” Each line is a question for one ingredient.")
 
 Each line is a question you can answer. A missing invoice, a delivery booked to the wrong month, a count that missed a shelf. When you've answered what you can, whatever is left stays on the page as the unaccounted gap.
 
-**Tip:** log waste on the day it happens, not at month end. Open **More**, then **Log waste**. It's valued at what you paid, and dated that day.
+**Tip:** log waste on the day it happens, not at month end. On **Purchases**, open **More**, then **Log waste**. It's valued at what you paid, and dated that day.
 
-![The More menu on Purchases: Import invoice, Log one item, Log waste (ringed), Stock turnover, Shelf check, Sent purchase orders, Receiving follow-up, Supplier invoices, Invoice inbox.](/proof/blog/close-month-food-cost/tip-menu-mobile.png "Log waste lives under More.")
-
-![Log waste: Something you threw out. It counts as waste in this month's food cost, valued at what you paid and dated today. Ingredient, How much, Unit.](/proof/blog/close-month-food-cost/tip-waste-mobile.png "Ingredient, how much, and an optional note.")
+![The More menu on Purchases: Import invoice, Log one item, Log waste (ringed), Stock turnover, Shelf check, Sent purchase orders (0), Receiving follow-up, Supplier invoices, Invoice inbox.](/proof/blog/close-month-food-cost/tip-menu-mobile.png "Log waste lives under More.")
 
 **Tip:** to see which events were priced too tight, open **Analytics**, then **Month close**. It lists the month's events, the ones furthest over your food-cost target first.
 
@@ -113,7 +115,7 @@ An event without a price still counts in usage, so the dollar figures are right.
 
 The events used more than you bought plus what you had. Look for a purchase that isn't recorded, stock that was there but never counted, or a recipe amount that's off. The app says neither a positive nor a negative gap proves loss.
 
-![The Ingredient contributions header and the Beef brisket line: Spend $4,606.06, Opening stock $195.54, Usage $6,128.01, Inventory $1,348.98, Waste $42.85, Gap −$2,718.24, ringed.](/proof/blog/close-month-food-cost/err-negative-mobile.png "More used than bought: find the missing record.")
+![The Beef brisket card: Gap −$2,718.24, ringed. Spend $4,606.06, Opening stock $195.54, Usage $6,128.01, Inventory $1,348.98, Waste $42.85.](/proof/blog/close-month-food-cost/err-negative-mobile.png "More used than bought: find the missing record.")
 
 ### Month close in Analytics shows a bigger number
 

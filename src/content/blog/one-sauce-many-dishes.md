@@ -8,23 +8,26 @@ menuGroup: Cost the work
 menuIcon: yield
 featured: false
 order: 26
-readMinutes: 9
+readMinutes: 10
 featureHref: /features/recipes-and-costing
 featureLabel: See recipes and costing in CostCook
 ---
 <!-- story: docs/stories/blog-one-sauce-many-dishes.story.md -->
-<!-- Read off kitchen-brain develop 9b84420f4 on 2026-10-12 (RC-83). Labels are
-     the app's own. The path starts inside a dish on purpose: on develop the
-     Recipes page's New recipe window follows the filter the page was loaded
-     with, not the Sub-recipes chip just tapped, so "tap Sub-recipes, then New
-     recipe" can open a dish. Not claimed: how a supplier price change shows on
-     each dish (only that the batch cost carries it, as the Sub-recipes list
-     shows); anything about allergens or nutrition beyond the publish page's
-     own sentence.
-     CAPTURES: 20 crops at 390 px from a localhost build of develop 9b84420f4,
-     demo seed renamed Harbor & Hearth Catering, US units. Garlic Aioli, its
-     lines, and the three dishes it was added to were entered for the shoot;
-     every cost shown is the app's own arithmetic on the seed's prices. -->
+<!-- Read off kitchen-brain local develop fcc651477 on 2026-10-13 (RC-83),
+     re-shot after the fixes from the first shoot merged: Sub-recipes chip
+     then New recipe now opens "New sub-recipe" (shown as a tip), a first
+     publish is worded as a first version. Labels are the app's own. The main
+     path starts inside a dish because "Save recipe and return to" brings the
+     cook straight back to it. Not claimed: how a supplier price change shows
+     on each dish (only that the batch cost carries it, as the Sub-recipes
+     list shows); anything about allergens or nutrition beyond the publish
+     page's own sentences.
+     CAPTURES: 21 crops at 390 px from a localhost build of develop fcc651477,
+     demo seed renamed Harbor & Hearth Catering, US units, no revision
+     backfill (so each dish's first publish is its version 1). Garlic Aioli,
+     its lines, and the three dishes it was added to were entered for the
+     shoot; every cost shown is the app's own arithmetic on the seed's
+     prices. The sticky action bar was hidden for the crops. -->
 
 By the end of this guide, your sauce is one recipe in CostCook, it sits inside every dish that uses it, and when you change it, every one of those dishes is re-costed in one go.
 
@@ -80,7 +83,7 @@ The example here is a garlic aioli going onto three dishes: Smashburger Sliders,
 
 10. Type how much goes on one portion, pick the unit, and press **Add line**.
 
-![Ingredient or sub-recipe Garlic Aioli, Quantity 1, For one portion, Unit Tablespoon (tbsp). A note: Linked batch. Cost and scaling use this exact amount. Shop and Prep can still round up to whole batches.](/proof/blog/one-sauce-many-dishes/sr-10-amount-mobile.png "1 tbsp a portion, costed exactly.")
+![Ingredient or sub-recipe Garlic Aioli, Quantity 1, For one portion, Unit Tablespoon (tbsp). A note: Linked batch. Cost and scaling use this exact amount. Shop and Prep can still round up to whole batches. Add line is ringed.](/proof/blog/one-sauce-many-dishes/sr-10-amount-mobile.png "1 tbsp a portion, costed exactly.")
 
 11. The sauce is now one line on the dish, with its share of the batch cost. On the sliders, 1 tbsp of aioli is $0.08, and the plate cost went from $2.70 to $2.78.
 
@@ -88,7 +91,7 @@ The example here is a garlic aioli going onto three dishes: Smashburger Sliders,
 
 ![Draft plate cost $2.78, View plate-cost calculation.](/proof/blog/one-sauce-many-dishes/sr-12-plate-mobile.png "Up 8 cents from $2.70.")
 
-12. Press **Publish version 1**. Write a few words under **What changed, in a few words**, and press **Publish version 1**.
+12. Press **Publish version …**, with your dish's next version number. Write a few words under **What changed, in a few words**, and press it again. In the sample kitchen the dishes had never been published, so it's version 1, and the review says "This publishes version 1, the first version of this recipe."
 
 ![What changed, in a few words: Garlic aioli on the side. This is what history will show beside version 1. Publish version 1, ringed, and Keep editing.](/proof/blog/one-sauce-many-dishes/sr-13-publish-mobile.png "The note goes into the dish's history.")
 
@@ -116,9 +119,13 @@ The example here is a garlic aioli going onto three dishes: Smashburger Sliders,
 
 19. Open any of the dishes. The new batch cost ($10.07 a quart) is already in it. The sliders went from $2.78 to $2.85, the pulled pork sliders from $3.55 to $3.62, and the shrimp skewers from $6.48 to $6.55. You didn't open a single dish to do it.
 
-![Pricing, per portion: Plate cost $2.85. Sells for Not set. Price for a 30% target $9.50.](/proof/blog/one-sauce-many-dishes/sr-17-after-mobile.png "Changed once, re-costed everywhere.")
+![Pricing, per portion: Plate cost $2.85. Sells for Not set. Price for a 30% target $9.50. Target source Workspace default.](/proof/blog/one-sauce-many-dishes/sr-17-after-mobile.png "Changed once, re-costed everywhere.")
 
 **Tip:** check the **Sub-recipes** list before you build. If the sauce is already there, pick it in the dish instead of making a second one.
+
+**Tip:** you can also start the sauce from **Recipes**. Tap **Sub-recipes**, then **New recipe**, and it opens **New sub-recipe**. Then add it to each dish as in steps 9 to 12.
+
+![New sub-recipe, with Start blank: Name your recipe and add ingredients. You can add prices later.](/proof/blog/one-sauce-many-dishes/sr-tip-new-sub-mobile.png "From the Sub-recipes list, New recipe starts a sub-recipe.")
 
 **Tip:** new ingredient prices reach your dishes through the sauce too. On the **Sub-recipes** list, each row shows its biggest price move and what it did to the batch cost, like "Egg, large −9% … −2.4% on this batch cost".
 
