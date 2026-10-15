@@ -15,9 +15,9 @@ featureLabel: See Sage in CostCook
 <!-- story: docs/stories/blog-ask-sage-before-event.story.md -->
 <!-- Read off kitchen-brain develop 916f3ffbd on 2026-10-13 (RC-85).
      HOW THE CAPTURES WERE MADE: localhost build of 916f3ffbd with a real model
-     key (owner's Google AI key), so SAGE_AI_PROVIDER=google and the run model
-     is google:gemini-3.5-flash (sageModelConfig in
-     src/lib/server/sage/config.ts). Production defaults to Anthropic. Answers
+     key (the owner's own key), so the run used the provider and model that
+     key selects (sageModelConfig in src/lib/server/sage/config.ts), not the
+     production default. Model and provider stay out of public files (RC-49). Answers
      are written by the model and vary from run to run, so the steps say what
      Sage did and only the alt text quotes words, exactly as the shot shows.
      The sample order #765 was moved from Oct 13 to Oct 14 in the shoot's copy

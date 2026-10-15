@@ -236,7 +236,10 @@ requireText(navSource, '<BlogMenuContents {path} />', 'blog menu renderer');
 // The menu reads the published list (src/lib/blog.ts), which is the collection
 // minus guides whose feature is still Coming (RC-73).
 requireText(blogMenuContentsSource, 'getPublishedPosts()', 'blog menu article source');
-requireText(blogMenuContentsSource, 'post.data.description', 'blog menu article descriptions');
+// The menu lists each guide by its short menuTitle since 81dd983 (2026-10-12,
+// "the Blog menu by topic, short names, one screen"); the descriptions it
+// carried before that live on the blog index.
+requireText(blogMenuContentsSource, 'post.data.menuTitle', 'blog menu article titles');
 requireText(navSource, 'data-mobile-menu', 'contained mobile navigation');
 requireText(navSource, 'demoCta.href', 'header demo action');
 // The header renders the demo link's one label (design review 2026-10-07:
