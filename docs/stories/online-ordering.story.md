@@ -67,3 +67,30 @@ Ordering site (read 2026-10-08).
 - [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
 - [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
 - [x] Step 11: The payment exception now names the Setup choice and explains that approval emails the client without a pay link.
+
+## Revision 2026-10-15: the client's walk, shot on the catalog storefront
+
+App truth: kitchen-brain develop 5e01c9fc7 with the embed ready fix 61740a018
+(branch fix/catalog-storefront-embed-ready), captured by
+`scripts/capture-ordering-flow-proof.mjs`.
+
+- [x] **1–3.** Same reader, want and wall. The Catalyst ("a client orders lunch
+  for 40 on your site") is now shown, not told: one real order walks through
+  the widget.
+- [x] **4. Scenes.** Scene 2 (Two ways in) gains "What your client sees": Pick
+  (a package with its photo, the head count, the price), Check (the cart),
+  Send (the receipt with what they were quoted), Or ask (Ask for a quote, no
+  price until you reply), then the same order in Orders. Scene 4 re-shot its
+  two Setup cards: Payments now shows the saved acceptance and payment rules,
+  and a world with no Stripe keys, so You collect it is selected.
+- [x] **6. Turn.** Doubt ("will my client manage it?") to trust: four frames a
+  client would recognise from any shop, then the kitchen's side, costed.
+- [x] **8. Snap.** "25.9% food cost against your 30% target", on an order
+  nobody retyped.
+- [x] **10. Hand-offs.** The walk ends in Orders, which is where scene 5
+  ("After they send it") picks up.
+- [x] **11. Proof and honesty.** Every figure is read off a frame. The order
+  was approved automatically because the day was clear and the menu priced;
+  the caption says so and keeps "if your booking rules say so". The package
+  photos are CC0 stand-ins, and the page says that under the frames. A
+  request is still never called booked.

@@ -141,3 +141,58 @@ export const bookingRuleOutcomes = [
 		detail: 'The pay link takes the deposit and confirms the order. The balance gets its own link before the event.'
 	}
 ] as const;
+
+/**
+ * "What your client sees": one order through the website widget, then the same
+ * order in the caterer's Orders. Captured 2026-10-15 by
+ * scripts/capture-ordering-flow-proof.mjs from kitchen-brain develop 5e01c9fc7
+ * with the embed ready fix (61740a018). Every figure is read off its frame:
+ * Coastal Dinner at $93.00 a guest, 50 guests, $4,650.00 food, $25.00
+ * delivery, $4,675.00 before tax, food cost 25.9% against a 30% target.
+ * The package photos are CC0 stand-ins (docs/proof/ordering-flow.md), which
+ * the page says under the frames.
+ *
+ * Considered Composite; not used because this is one flat list of frames.
+ */
+export const clientWalk = [
+	{
+		src: '/proof/ordering-flow/package.png',
+		width: 350,
+		height: 1134,
+		step: 'Pick',
+		caption: 'They open a package, set the head count, and the price follows: 50 guests, $4,650.00.',
+		alt: 'The Coastal Dinner package opened on a phone: a photo of the dish, a short description (cedar salmon and seared scallops with corn, lemon orzo, charred green beans and an arugula and pear salad, lemon posset to finish), Guests for this package set to 50, the six included dishes ticked, an optional box for preparation instructions, and $4,650.00 for 50 guests with Cancel and Add to cart.'
+	},
+	{
+		src: '/proof/ordering-flow/cart.png',
+		width: 350,
+		height: 543,
+		step: 'Check',
+		caption: 'The cart keeps the estimate in front of them before they give any details.',
+		alt: 'The cart on a phone: Coastal Dinner for 50 guests at $4,650.00 with its six dishes, Edit and Remove, Food $4,650.00, Estimated total $4,650.00, and Continue.'
+	},
+	{
+		src: '/proof/ordering-flow/received.png',
+		width: 318,
+		height: 1117,
+		step: 'Send',
+		caption: 'Sent. They keep a reference and what they were quoted, delivery included, before tax.',
+		alt: 'The client’s confirmation on a phone: order saved, a request reference, the event on Nov 5 for 50 guests delivered to 40 Fore Street, Portland, and what they were quoted: Coastal Dinner 50 × $93.00 $4,650.00, delivery $25.00, sales tax added by the kitchen, $4,675.00 before tax; the kitchen will arrange payment.'
+	},
+	{
+		src: '/proof/ordering-flow/quote.png',
+		width: 350,
+		height: 1282,
+		step: 'Or ask',
+		caption: 'Something off the menu? Ask for a quote takes the event, the guest range and what they need. No price until you reply.',
+		alt: 'Ask for a quote on a phone: Nothing is booked yet, Tell us about the event, filled in as a family-style rehearsal dinner in early June 2027 for 80 to 100 guests at a barn venue outside Portland, with staff on site and rentals ticked.'
+	}
+] as const;
+
+export const caterersView = {
+	src: '/proof/ordering-flow/arrived.png',
+	width: 1036,
+	height: 783,
+	caption: 'The same order in your Orders, already costed off your recipes: 25.9% food cost against your 30% target. A clear day and a priced menu let it approve on its own if your booking rules say so; you can still decline before anything is paid.',
+	alt: 'The order in Orders: Company anniversary dinner, Thu Nov 5, Dana Okafor, 50 guests, Coastal Dinner, a draft. Price $93.00 a guest; food cost 25.9% against a 30% target, sales $4,650.00, food $1,204.66, food margin $3,445.34. Approved, waiting on the payment: approved automatically because the day was clear and the menu had a price; the client pays the whole $4,675.00 up front, and you collect it yourself.'
+} as const;
