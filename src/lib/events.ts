@@ -73,4 +73,9 @@ export const agreementLine = 'You send the agreement for e-signature from your o
 // Reworded 2026-10-07 for app 7a7e407d9 (local develop, the owner's chosen
 // source): booking is its own step, Book the event, which waits on the signed
 // agreement and the deposit; Confirm order only locks the kitchen's numbers.
-export const acceptanceBoundary = 'Their yes is not a booking. Book the event checks the agreement and deposit, or records why you proceeded without them.';
+// Two halves since 2026-10-15 (benchmark review): the homepage step heading
+// is the claim alone, and the rule moves into the step's body. Every other
+// surface still reads the joined sentence, so the two cannot drift.
+export const acceptanceBoundaryClaim = 'Their yes is not a booking.';
+export const acceptanceBoundaryRule = 'Book the event checks the agreement and deposit, or records why you proceeded without them.';
+export const acceptanceBoundary = `${acceptanceBoundaryClaim} ${acceptanceBoundaryRule}`;

@@ -18,18 +18,17 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 
 <!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 <!-- story: docs/stories/features-navigation.story.md -->
-<!-- The header spans the page, not the 72rem content column: the mark sits
-     at the left gutter, where readers look for it first (owner, 2026-10-07).
-     Capped at 96rem so on a very wide screen the mark and the trial button
-     do not drift apart. Same side padding as container-page, so up to 72rem
-     the mark sits on the content's left edge; wider than that the header
-     keeps to the left gutter by design, and the footer mark follows it
-     (design review 2026-10-07: they were 3vw against 4vw, 6-10px apart).
+<!-- The header sits in the 72rem content column (owner, 2026-10-15, after
+     the benchmark review): at 1440 the 96rem header put the mark 32px in and
+     the hero 192px in, two left edges on one screen. Same width and side
+     padding as container-page, so the mark, the h1 and the footer mark share
+     one edge at every width. Supersedes the 2026-10-07 full-width call. The
+     footer frame matches (design review 2026-10-07: 6-10px apart once).
      z-40 makes the bar its own layer above #main. Without it the full-bleed
      cream of a [data-opening] intro (/pricing, /compare) painted over the
      Menu summary on phones: only the bar's links were raised (mobile review
      2026-10-09). The gutters take the notch inset in landscape. -->
-<header class="site-header relative z-40 mx-auto w-full max-w-[96rem] pl-(--gutter-left) pr-(--gutter-right) flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
+<header class="site-header relative z-40 mx-auto w-full max-w-[72rem] pl-(--gutter-left) pr-(--gutter-right) flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-5 pb-4 sm:pt-8">
 	<!-- One sprite keeps every destination icon on the same 20px grid and
 	     stroke weight. Visible titles and descriptions carry their meaning. -->
 	<svg width="0" height="0" class="absolute overflow-hidden" aria-hidden="true">
@@ -261,7 +260,11 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 					</details>
 				</li>
 
-				<li class="relative hidden xl:block">
+				<!-- Anchored to the header, not this item (2026-10-15): in the 72rem
+				     header the item sits further left, and a 54rem panel right-aligned
+				     to it ran 34px off the left edge at 1280. Its right edge is now the
+				     content's right edge. -->
+				<li class="hidden xl:block">
 					<details data-nav-disclosure data-resources-menu>
 						<summary
 							aria-label={resourcesMenu.ariaLabel}
@@ -275,7 +278,7 @@ const resourcesActive = resourcesMenu.items.some((item) => item.href === path ||
 								<path d="M1 1 5 5 9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
 						</summary>
-						<div class="absolute top-full right-0 z-40 mt-2 w-[min(54rem,calc(100vw-2.5rem))] overflow-hidden rounded-lg border border-ticket-rule bg-paper shadow-lift">
+						<div class="absolute top-full right-(--gutter-right) z-40 -mt-2 w-[min(54rem,calc(100vw-2.5rem))] overflow-hidden rounded-lg border border-ticket-rule bg-paper shadow-lift">
 							<ResourcesMenuContents {path} />
 						</div>
 					</details>

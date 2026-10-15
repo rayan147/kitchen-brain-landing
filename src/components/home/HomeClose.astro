@@ -67,7 +67,8 @@ const [priceAmount, pricePer] = launchPlan.displayPrice.split('/');
 	   where 2rem a side left the card 112px of text. */
 	.plan { padding: clamp(1rem, 6vw, 2rem); overflow-wrap: break-word; background: var(--color-paper); border-radius: 8px; box-shadow: var(--shadow-lift); }
 	.plan-per { font-family: var(--font-body); font-size: var(--text-body-lg); font-weight: 500; }
-	.plan-price { margin-top: .5rem; font-family: var(--font-display); font-size: var(--text-display); line-height: 1; font-weight: 600; }
+	/* The hero's size (2026-10-15), so the homepage keeps one display size. */
+	.plan-price { margin-top: .5rem; font-family: var(--font-display); font-size: var(--text-display-hero); line-height: 1; font-weight: 600; }
 	.plan-terms { margin-block: 1.5rem; }
 	.plan-terms div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; padding-block: .6rem; border-top: 1px solid var(--color-hairline); font-size: var(--text-body-lg); }
 	.plan-terms dt { color: var(--color-ink-soft); }

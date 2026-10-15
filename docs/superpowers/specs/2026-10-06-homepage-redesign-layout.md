@@ -56,3 +56,23 @@ is now the workflow rail (`docs/superpowers/specs/2026-10-06-workflow-rail.md`):
 every stage visible, a carry line between stages, amber rings over the carried
 figures. Bands re-alternate: hero cream, event walk amber, kitchen cream, front
 of house amber, Sage cream, close amber.
+
+## Revision (2026-10-15, owner): benchmark review
+
+After a comparison with nine homepages (story tracker:
+`docs/stories/homepage-redesign-2026-10.story.md`, revision 2026-10-15).
+
+- **Rule 2:** the hero h1 and the plan price take `--text-display-hero`
+  (72px ceiling at 1440, 34px at 390). The guides keep `--text-display`; at
+  72px their long, quoted H1s pushed the lede under the fold.
+- **Rule 5:** the accent is one word, "cost" (it had drifted to "food cost").
+- **Rule 6:** the Confirm order step shows the dialog's margin-free crop at
+  every width; the wide capture carried the app's dark modal backdrop.
+- **Rule 3:** step 03's heading is the claim alone ("Their yes is not a
+  booking."); kitchen rows open on their heading, the reader's line after it.
+- **Hero:** the film's poster is its own food-cost frame; the lede is one
+  sentence; the founder's credential sits under the trial terms.
+- **Header and footer:** 72rem, the content column, on every page (reverses
+  the 2026-10-07 full-width call). The Resources panel anchors to the header's
+  right gutter so it stays on screen at 1280.
+- **Also in CostCook:** a ruled index with arrows, not underlined links.

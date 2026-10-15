@@ -13,7 +13,7 @@
  */
 
 import { eventPayments } from './event-payments';
-import { acceptanceBoundary, agreementLine } from './events';
+import { acceptanceBoundaryClaim, acceptanceBoundaryRule } from './events';
 import { orderingRoute } from './ordering';
 
 export type Shot = {
@@ -80,7 +80,8 @@ export const heroFilm = {
 	// The width at which the full-size film is served (the hero goes two
 	// columns here and the player passes 560px).
 	fullFrom: '(min-width: 64rem)',
-	poster: '/film/costcook-promo-poster.jpg',
+	// The film's food-cost frame at 0:18, cropped above its caption (2026-10-15).
+	poster: '/film/costcook-promo-poster-cost.jpg',
 	width: 1920,
 	height: 1080,
 	label: 'CostCook film, 1 minute 55 seconds: one sample wedding from inquiry to the day after',
@@ -200,11 +201,12 @@ export const eventStages = [
 		// The boundary sits on the step where the signature and the deposit
 		// happen (English edit 2026-10-11): on the Confirm order step a phone
 		// reader took confirming to be the booking, which it never is.
-		heading: acceptanceBoundary,
-		// The signature lives here, not in the client's yes (RC-64: claimable,
-		// not capturable, so it is a sentence without a frame). Agreement first,
-		// in the heading's own order.
-		body: `${agreementLine} ${eventPayments.homepage}`,
+		// The heading is the claim alone (benchmark review 2026-10-15): the
+		// joined sentence ran four lines at 1440, against two for every other
+		// step. The rule opens the body; the agreement template line stays on
+		// the events guide, where Schedule A is explained.
+		heading: acceptanceBoundaryClaim,
+		body: `${acceptanceBoundaryRule} ${eventPayments.homepage}`,
 		shot: shot(
 			'payment-schedule-phone',
 			'Deposit on the Nair & Castellano wedding: $3,500.00 asked for and $3,500.00 received, paid in full by card from an email link; balance $10,750.00 owed, due Wed, Dec 9, not requested yet, with Request payment.',
@@ -215,8 +217,10 @@ export const eventStages = [
 	{
 		id: 'confirm',
 		carries: 'The same menu, quantities and prices locked',
-		// small: the same sentence in the phone crop (72, 84, 836x312 of the PNG).
-		focus: [{ x: 8.1, y: 31.9, w: 83.9, h: 21.8, small: { x: 1, y: 21.8, w: 99, h: 33.3 } }] as Focus[],
+		// The dialog's own content at every width (benchmark review 2026-10-15):
+		// the wide capture kept the app's dark modal backdrop, the one frame on
+		// the page that broke rule 6. Ring measured on this crop.
+		focus: [{ x: 1, y: 21.8, w: 99, h: 33.3 }] as Focus[],
 		guide: { href: '/features/events-and-proposals', label: 'How events and proposals work' },
 		tab: 'Confirm order',
 		// When, as advice, not a rule the app enforces (third chef review: "am I
@@ -227,12 +231,9 @@ export const eventStages = [
 		// (mobile review 2026-10-09: the full dialog put its sentence at about
 		// 8px on a 390 phone). It is a crop, not a phone capture, and keeps
 		// every word the alt names: title, sentence and both buttons.
-		shot: withPhone(
-			shot(
-				'confirm-dialog',
-				'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
-				[992, 476]
-			),
+		shot: shot(
+			'confirm-dialog-phone',
+			'Confirm order dialog: confirming locks quantities and prices for Nair & Castellano wedding; shopping, prep and pack lists become checklists. Keep editing or Confirm.',
 			[836, 312]
 		)
 	},
