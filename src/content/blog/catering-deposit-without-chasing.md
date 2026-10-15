@@ -1,7 +1,8 @@
 ---
 title: "How to get a catering deposit in without chasing it"
+menuTitle: "Get the deposit without chasing"
 description: "Put the deposit and the balance date on the proposal, so the client agrees to them with the food. Then ask for the deposit, record it when it lands, and book. One wedding for 150, step by step in CostCook."
-publishedDate: 2026-10-10
+publishedDate: 2026-09-17
 category: Running the event
 menuGroup: Cost the work
 menuIcon: deposit

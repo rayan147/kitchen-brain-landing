@@ -238,3 +238,13 @@ area lede and the homepage.
 - [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
 - [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
 - [x] Step 11: The shared area headings now read "Events and kitchen work" and "Team and connections" on feature pages and comparison tables. Existing URLs stay stable.
+
+## Revision 2026-10-12: the Blog menu by topic
+
+Owner: "organize the Blog dropdown better." It listed all 20 posts with their full title and description in two loose groups ("Cost the work", "Plan and buy"). It was about two screens tall at 1440×900 and scrolled, and a new post arrives every Thursday.
+- **Grouped by topic:** the menu uses the blog index's four topics (Costing & pricing, Recipes & yield, Running the event, Buying & suppliers), so the menu and the page sort the same way.
+- **Three columns:** the two smaller topics share the first.
+- **Short names:** each post has a `menuTitle` of 42 characters or fewer; the full title stays on the page and in search. Descriptions and icons are gone from the menu.
+- **New post first:** the newest post leads with its date ("New · Oct 8"), since one ships every week.
+- **Checks:** verify-blog and verify-features-menu now require the four topics, the New line, and a panel that fits one screen at 1280×800 and 1440×900. Before, they required it to scroll.
+- **Same day, four columns:** at 27 posts (the weekly series through Nov 26) the shared first column ran 11 deep and the menu stopped fitting 1280×800. Each topic now has its own column and the panel widened to 64rem. A one-line post title on /blog got a 44 px tap target (BlogPostRow).

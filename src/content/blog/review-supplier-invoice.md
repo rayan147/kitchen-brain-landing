@@ -1,7 +1,8 @@
 ---
 title: "How to check a supplier invoice before it changes your recipe costs"
+menuTitle: "Check a supplier invoice"
 description: "Check the ingredient, the pack, the unit math and the price change before an imported invoice line becomes what your recipes cost."
-publishedDate: 2026-09-03
+publishedDate: 2026-07-30
 category: Buying & suppliers
 menuGroup: Plan and buy
 menuIcon: invoice

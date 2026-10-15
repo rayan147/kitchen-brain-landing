@@ -1,7 +1,8 @@
 ---
 title: "The event is over. What should the food have cost, and what did you actually spend?"
+menuTitle: "Expected vs actual food cost"
 description: "Before you judge how an event did, set what the menu should have cost against what you bought for it, what came off the shelf and what is left over."
-publishedDate: 2026-08-20
+publishedDate: 2026-07-16
 category: Costing & pricing
 menuGroup: Cost the work
 menuIcon: variance

@@ -9,6 +9,9 @@ const blog = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
 	schema: z.object({
 		title: z.string(),
+		// The Blog menu's short name (BlogMenuContents.astro). The full title is a
+		// sentence for search and the page; the menu needs a label to scan.
+		menuTitle: z.string().max(42),
 		description: z.string(),
 		publishedDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),

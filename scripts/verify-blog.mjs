@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { scheduledSlugs } from './lib/blog-schedule.mjs';
 import { invoiceEmailLive, setupGuideSlug } from './lib/invoice-email.mjs';
 import { heldGuideSlugs } from './lib/connections.mjs';
 
@@ -21,6 +22,8 @@ const articleSlugs = (await readdir(new URL('../src/content/blog', import.meta.u
 if (!invoiceEmailLive) articleSlugs.splice(articleSlugs.indexOf(setupGuideSlug), 1);
 // RC-78: a Coming connector's guide is held, so it is not in the menu or the index.
 for (const slug of heldGuideSlugs) articleSlugs.splice(articleSlugs.indexOf(slug), 1);
+// One a week (src/lib/blog.ts): a post waiting for its Thursday has no route yet.
+for (const slug of scheduledSlugs) if (articleSlugs.includes(slug)) articleSlugs.splice(articleSlugs.indexOf(slug), 1);
 const postCount = articleSlugs.length;
 
 const profile = await mkdtemp(join(tmpdir(), 'costcook-blog-'));
@@ -126,9 +129,9 @@ try {
 			overflow: document.documentElement.scrollWidth - innerWidth,
 			minTarget: Math.min(...links.map((link) => link.getBoundingClientRect().height)),
 			posts: document.querySelectorAll('article.blog-row').length,
-			menuLinks: blog.querySelectorAll('a[href^="/blog/"]').length,
-			menuIcons: blog.querySelectorAll('a[href^="/blog/"] svg').length,
-			menuDescriptions: blog.querySelectorAll('a[href^="/blog/"] span span + span').length,
+			menuLinks: blog.querySelectorAll('section a[href^="/blog/"]').length,
+			menuTopics: blog.querySelectorAll('section[aria-labelledby^="blog-menu-"]').length,
+			menuNewest: Boolean(blog.querySelector('[data-blog-menu-newest]')),
 			blogOverview: blog.querySelector('a[href="/blog"]')?.textContent.trim(),
 			activeBlog: blog.querySelector('summary')?.classList.contains('text-ink'),
 			contract: document.documentElement.innerHTML.includes('blog-working-through-the-number')
@@ -139,8 +142,8 @@ try {
 	assert(desktop.minTarget >= 44, `desktop index: smallest action is ${desktop.minTarget}px`);
 	assert(desktop.posts === postCount, `desktop index: expected ${postCount} article rows, received ${desktop.posts}`);
 	assert(desktop.menuLinks === postCount, `desktop index: expected ${postCount} Blog menu articles, received ${desktop.menuLinks}`);
-	assert(desktop.menuIcons === postCount, `desktop index: expected ${postCount} Blog menu icons, received ${desktop.menuIcons}`);
-	assert(desktop.menuDescriptions === postCount, `desktop index: expected ${postCount} Blog menu descriptions, received ${desktop.menuDescriptions}`);
+	assert(desktop.menuTopics === 4, `desktop index: expected 4 Blog menu topics, received ${desktop.menuTopics}`);
+	assert(desktop.menuNewest, 'desktop index: the Blog menu does not call out the newest post');
 	assert(desktop.blogOverview === 'Read every guide', 'desktop index: Blog overview action is missing');
 	assert(desktop.activeBlog, 'desktop index: Blog is not active');
 	assert(desktop.contract, 'desktop index: direction contract did not survive the build');
@@ -200,7 +203,9 @@ try {
 		assert(responsive.compactMenuVisible === (width < 1280), `${width}x${height}: compact Menu breakpoint is wrong`);
 		if (width >= 1280) {
 			assert(responsive.panelBottom <= height, `${width}x${height}: Blog menu extends below the viewport`);
-			assert(responsive.panelScrollHeight > responsive.panelClientHeight, `${width}x${height}: long Blog menu is not independently scrollable`);
+			// Topics and short names keep it to one screen (2026-10-12). It still
+			// scrolls on its own if it outgrows one, but at this size it must not.
+			assert(responsive.panelScrollHeight <= responsive.panelClientHeight, `${width}x${height}: the Blog menu no longer fits one screen`);
 		}
 	}
 

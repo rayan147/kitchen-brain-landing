@@ -1,7 +1,8 @@
 ---
 title: "How to get supplier invoices emailed straight into CostCook"
+menuTitle: "Supplier invoices by email"
 description: "Give your sales reps one address, forward the rest from Gmail, and check that the first invoice arrived and waits in review."
-publishedDate: 2026-09-10
+publishedDate: 2026-08-06
 category: Buying & suppliers
 menuGroup: Plan and buy
 menuIcon: invoice
