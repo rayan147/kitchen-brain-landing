@@ -372,3 +372,46 @@ for what survives the knife." Steps 6, 10 and 11 re-checked.
 - [x] Steps 1–4: The same reader, job, obstacle, beat order and section roles still govern this piece.
 - [x] Steps 5–10: The established kitchen voice, one point of view, evidence, scene and handoffs remain in place.
 - [x] Step 11: Hero now names food cost instead of suggesting net profit; deposit payment is conditional and the kitchen order has its own confirmation. The film title follows the same narrower claim.
+
+## Revision 2026-10-15: benchmark review (owner: "add all these recommendations")
+
+Compared against nine type-led and SaaS homepages (Granola, Basecamp, Notion,
+Squarespace as peers; Stripe, Linear, Ramp, Attio, Mercury as contrast).
+
+- [x] Steps 1–3: Same reader (owner-caterer on a phone, mid-shift), same want
+  (know the food cost before the quote), same beats. Nothing reordered.
+- [x] Step 4 (scenes): the hero is beats 1 and 2 only. The five-step lede
+  ("Price the job… deposit… Confirm the kitchen order…") was beat 8 told in
+  advance; the rail below shows it with screens. The lede is now one sentence:
+  "Price the job from your recipes, and the client accepts your proposal on
+  their phone." The audience clause stays (RC-01, RC-44).
+- [x] Step 7 (headline as intention): step 03's heading is the claim alone,
+  "Their yes is not a booking."; the rule ("Book the event checks…") opens
+  the body. The joined sentence still serves the tour, the compare row and
+  the events guide (events.ts `acceptanceBoundary`). The agreement-template
+  line left the homepage step; it stays on the events guide.
+- [x] Step 8 (snap): unchanged, "Buy for what survives the knife."
+- [x] Step 9 (scene): the film's poster is now its own food-cost frame
+  ($95.00 a guest, 29.2%), so the first picture is the hero's promise kept.
+- [x] Step 10 (hand-offs): kitchen rows open on their heading; the reader's
+  inner line (owner's device) follows it, so each row opens once.
+- [x] Step 11 (cut and proof): the founder's credential moved up to the hero
+  ("Rayan Ramirez, chef and founder, cooked professionally for twelve
+  years."; not "Built by…", which the eyebrow already says), the one honest
+  proof available before a customer quote exists.
+  The film caption lost its capture date (the transcript and manifest keep the
+  provenance). Above-the-fold words on desktop fell from about 120 to about 95 (estimated by eye from screenshots, not counted).
+- Not done, needs the owner: a real photograph from a working kitchen (no
+  stock), and a real customer quote once one exists.
+
+## Revision 2026-10-15: online ordering re-shot on the catalog storefront
+
+- [x] Steps 1–4, 6–10: unchanged; the front-of-house band still turns "orders
+  reach me by phone and email" into "they come to me, priced".
+- [x] Step 11 (proof): the app sells a menu on the ordering site as a package
+  priced per guest, beside Ask for a quote (kitchen-brain 045f6ee91). The
+  ordering card now says "picks a package (say, the $93 Coastal Dinner) or
+  asks for a quote" where it said "picks a set menu", and the frame and its
+  alt show the catalog storefront in the widget. Re-shot only after the embed
+  ready fix (kitchen-brain 61740a018); on develop without it the widget never
+  appears, so the claim "the order form sits right on it" waits on that merge.

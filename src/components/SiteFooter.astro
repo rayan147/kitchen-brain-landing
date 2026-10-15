@@ -8,8 +8,8 @@ import BrandLockup from './BrandLockup.astro';
 // disagree; "Talk to us" adds the two actions (demo, Sign in) here.
 // Design review 2026-10-07: headings take the eyebrow token (they were an
 // untokened font-mono that fell back to the system Courier), Contact moved in
-// with the email and phone, and the frame matches the header's (96rem, same
-// gutter) so the top and bottom marks line up at every width.
+// with the email and phone, and the frame matches the header's (72rem since 2026-10-15, the content
+// column; same gutter) so the top and bottom marks line up at every width.
 // Considered Composite; not used because this is one level of headings over
 // links, rendered by one loop.
 
@@ -20,7 +20,7 @@ const linkClass = 'inline-flex min-h-11 min-w-11 items-center text-sm [overflow-
 ---
 
 <footer class="border-t border-hairline">
-	<div class="mx-auto w-full max-w-[96rem] pl-(--gutter-left) pr-(--gutter-right) py-12">
+	<div class="mx-auto w-full max-w-[72rem] pl-(--gutter-left) pr-(--gutter-right) py-12">
 		<div class="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-[1.2fr_repeat(4,minmax(0,1fr))] lg:gap-x-8">
 			<div class="col-span-2 lg:col-span-1">
 				<BrandLockup />

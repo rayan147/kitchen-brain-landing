@@ -2,8 +2,9 @@
 /**
  * The kitchen half (canvas S3 rows 02 to 04 and S4 row 07). Each row has the
  * band's shape at a smaller scale (rule 3): eyebrow, heading, one sentence, one
- * frame. The reader's own line sits above the heading in quotes-free italic,
- * the inner voice, as the owner chose.
+ * frame. The reader's own line, in quotes-free italic, the inner voice the
+ * owner chose, sits under the heading since 2026-10-15 (benchmark review,
+ * owner's call): above it, each row opened twice before its claim.
  *
  * Canvas row 06 (should have cost against did cost, with "[$ from orders]" and
  * "[$ from purchases]") is not here: no captured record backs those figures.
@@ -30,9 +31,9 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 			<li class="row" data-kitchen-row={row.id} data-reveal>
 				<div class="row-copy">
 					<p class="home-eyebrow">{row.eyebrow}</p>
-					<p class="home-body pain">{row.pain}</p>
 					<h3 class="home-h3">{row.heading}</h3>
-					<p class="home-body mt-4">{row.body}</p>
+					<p class="home-body pain">{row.pain}</p>
+					<p class="home-body mt-3">{row.body}</p>
 					<a href={row.guide.href} class="home-guide">{row.guide.label}</a>
 				</div>
 				<figure class="row-figure">
@@ -44,7 +45,7 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 	<nav class="more" aria-labelledby="more-heading" data-home-more>
 		<p id="more-heading" class="home-eyebrow">Also in CostCook</p>
 		<ul role="list" class="more-list">
-			{moreGuides.map((guide) => <li><a href={guide.href} class="home-guide">{guide.label}</a></li>)}
+			{moreGuides.map((guide) => <li><a href={guide.href} class="more-link">{guide.label}<span aria-hidden="true">→</span></a></li>)}
 		</ul>
 	</nav>
 	<SectionHandoff from="kitchen" class="home-handoff" />
@@ -53,7 +54,7 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 <style>
 	.rows { display: grid; gap: var(--spacing-section-tight); margin-top: 3rem; }
 	.row { display: grid; gap: 2rem; align-items: center; }
-	.pain { margin-top: .75rem; font-style: italic; }
+	.pain { margin-top: 1rem; font-style: italic; }
 	.row-figure { margin: 0; }
 	/* Never past the capture's CSS size: the yield row's tomato card (362px)
 	   drew at 1.5x to 1.95x in the wide track, softer than the row's h3
@@ -63,7 +64,19 @@ import { kitchenRows, moreGuides } from '../../lib/home';
 	   (lines ran to 99 characters at 920-1000, mobile review 2026-10-09). */
 	.row-copy { max-width: 40rem; }
 	.more { margin-top: var(--spacing-section-tight); }
-	.more-list { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin-top: .5rem; }
+	/* A ruled index, not a run of underlined links (benchmark review
+	   2026-10-15): eight underlines in two ragged lines read as a sitemap.
+	   Each link keeps its colour, weight and arrow as the interactive cue, and
+	   a 44px row. */
+	.more-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); column-gap: 2rem; margin-top: .75rem; }
+	.more-list li { border-top: 1px solid var(--color-hairline); }
+	.more-link { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.75rem; color: var(--color-green-deep); font-size: var(--text-body); font-weight: 700; text-decoration: none; }
+	.more-link span { transition: transform 150ms; }
+	@media (hover: hover) {
+		.more-link:hover { color: var(--color-ink); text-decoration: underline; text-underline-offset: 4px; }
+		.more-link:hover span { transform: translateX(3px); }
+	}
+	@media (prefers-reduced-motion: reduce) { .more-link span { transition: none; } }
 	@media (min-width: 64rem) {
 		.row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 4rem; }
 		.row:nth-child(even) .row-copy { order: 2; }

@@ -48,6 +48,13 @@
 	   Previously the hero hand-rolled this clamp inline while /contact used the
 	   token and /pricing used text-h2 — three treatments for one role. */
 	--text-display: clamp(2.125rem, 1.35rem + 2.9vw, 3.75rem);
+	/* The homepage masthead only (benchmark review 2026-10-15): at 1440 the
+	   hero h1 was 60px in a 465px column, against 86 to 96px on the editorial
+	   peers (Granola, Notion). The guides keep --text-display: their H1s are
+	   quoted questions of up to 50 characters, and at 72px the events guide's
+	   ran four lines and pushed its lede under the fold. Same floor, so a
+	   390px phone still renders 34px. */
+	--text-display-hero: clamp(2.125rem, 1rem + 4vw, 4.5rem);
 	--text-display--line-height: 1.05;
 	--text-display--letter-spacing: -0.01em;
 	--text-h2: clamp(1.75rem, 1.35rem + 1.8vw, 2.625rem);

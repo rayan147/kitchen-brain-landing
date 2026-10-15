@@ -281,8 +281,8 @@
 	"home/inquiry-mobile.png": "8a93119681663babfcd1c90da18246337884ffa1a015bf625a640c6186ef9a3b",
 	"home/invoice-inbox-phone.png": "6c7b7309d05d43d9a6bbf06b69d43f073b7116caa5dc6db22b58219c4298af3a",
 	"home/invoice-inbox.png": "569255973740d912941b4562594ec106086a265727188b5f835ff08602295cac",
-	"home/ordering-site-phone.png": "1a326b022e9f35fbcff1227e91c3ba714ec6b2401141b17a2fe4eadd4c8eaa4b",
-	"home/ordering-site.png": "ecca6ed8d84a10ad03b3a6b225a691d5a9f6d5c6b8bc0483b22efbf703ac5a29",
+	"home/ordering-site-phone.png": "cc1b32ff6551c9cf02862acca2e7f6825a43654b0337e37ba310cc2b5b8fd49b",
+	"home/ordering-site.png": "b9688fade852bede054f70717c78e1dcb5f1443f50355dcdbc352a44c9a656ef",
 	"home/payment-schedule-phone.png": "91d25b3d98739ca537a06bc2eb1c9af05175dfe529da41435bb265baea3104ca",
 	"home/payment-schedule.png": "16cbd70d4663e11dc5165b00365ed494d4b5757c2b87b3dfaeb4ef5e939b4481",
 	"home/proposal-mobile.png": "2ce17d7928c103b865fbd5927db4ff8632198dd637a07acf7e3c56828273ffbb",
@@ -304,8 +304,8 @@
 	"nutrition/nutrition-summary-wide.png": "c33907bba0affc504bdc80b295ac9b0416a1bdf2fcbef546b292b32701e4c7fe",
 	"order-price-today-mobile.png": "1bb662ad01ab55e874dee6077136821a1c221a458cef485ab615cdb9d8813597",
 	"order-price-today.png": "6c9b8f7b7bdbf61dcad92d0647cd8fb5f267788284904cc8c72d37c5da6415e8",
-	"ordering-setup-delivery.png": "b5f2b6f6e0d2e5b6c75164560e838ff6206929f71c198ed90789bd9c50ff094c",
-	"ordering-setup-payments.png": "50a089b934b5373b3b91b2a05266c19cfc285cfea8731a84f6317ce883f86f7b",
+	"ordering-setup-delivery.png": "18d8456a645f27ec851845368804425e67e027eb1d59aa2ec82e2adb5cba1cca",
+	"ordering-setup-payments.png": "6be63bea6c908b2d7bbc54aa347a530e5b25021b0b9cef81ee031cc114ff74fc",
 	"outcome-po.png": "14878d7b7a07918f7d979f901f3c20c0db237d2e25919c60c532dfaa72232bb4",
 	"outcome-prep.png": "3f191ab7fd68c932c06f81c6f3d30fbeecd28f54138f9e9510003b882ffd4a9f",
 	"outcome-price.png": "cb8811a8afe5b5a3b3130f15422d61f78538ea370ba088f3b930bdc6e89e6785",
@@ -339,5 +339,10 @@
 	"setup/09-team-mobile.png": "8a058df6ed0ee005619096bca9d062de7adddc562661e173e48d0d7c1c657807",
 	"setup/09-team.png": "3f5e18222709f3f12bd62c7557bcdd3ef557ccc32197f6259cef6bc1881edaf6",
 	"yield-lines-mobile.png": "714c46871720e68cc1e1a8b3b45c829628293e42f315ddc522ac79d7ad1f28bb",
-	"yield-lines.png": "c5ad8e84b154a70ad29e621b3c658906f2a9b2280a5c007946eeba417caf3864"
+	"yield-lines.png": "c5ad8e84b154a70ad29e621b3c658906f2a9b2280a5c007946eeba417caf3864",
+	"ordering-flow/arrived.png": "079637ee4f48a47a013abeb7ffae46dd193878bfcdc7068cc15977bd523e094f",
+	"ordering-flow/cart.png": "122eded30337c5991a97df8995b5b6f72631eb7c163bd5cb76b1392efb9eca00",
+	"ordering-flow/package.png": "a1a5e612b7e3a30cacb98cd8921b58161e5ef795da76906f71b464c83ef7ed81",
+	"ordering-flow/quote.png": "0f44ca94af1aa722441985365c52c2e2eb287e4436942c571321761cfc6a4e17",
+	"ordering-flow/received.png": "ba501c2a5b3c8b57d7ccf70a944752e2e0e66d948aa62250d945c1eac86a0df9"
 }
