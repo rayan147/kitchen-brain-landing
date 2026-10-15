@@ -22,7 +22,7 @@
 import FeatureTrialTerms from '../FeatureTrialTerms.astro';
 import { cta, demoCta } from '../../lib/site';
 import { ordering, orderingAvailability as availability } from '../../lib/ordering';
-import { bookingRuleOutcomes, orderingFilm, orderingLimits, orderingTabs, goLiveNeeds, paymentChoices } from '../../lib/ordering-guide';
+import { bookingRuleOutcomes, caterersView, clientWalk, orderingFilm, orderingLimits, orderingTabs, goLiveNeeds, paymentChoices } from '../../lib/ordering-guide';
 
 // The shape the app's "Snippet for your web person" box prints
 // (website/+page.svelte), with the two values the app fills in left as words.
@@ -94,6 +94,30 @@ const snippet = [
 					<p>The order form sits right on your own page, under your own heading. One small script loads it in a sealed frame, so it can’t touch the rest of your site.</p>
 				</div>
 			</div>
+			<!-- One order through the widget, then the same order in Orders
+			     (2026-10-15, scripts/capture-ordering-flow-proof.mjs). -->
+			<div class="client-walk" data-ordering-client-walk>
+				<h3>What your client sees</h3>
+				<ol role="list" class="walk-frames">
+					{clientWalk.map((frame, index) => (
+						<li data-reveal style={`--reveal-delay: ${index * 60}ms`}>
+							<figure>
+								<p class="ticket-label">{frame.step}</p>
+								<img src={frame.src} width={frame.width} height={frame.height} loading="lazy" decoding="async" alt={frame.alt} />
+								<figcaption>{frame.caption}</figcaption>
+							</figure>
+						</li>
+					))}
+				</ol>
+				<figure class="walk-arrived" data-reveal>
+					<p class="ticket-label">Then, in your Orders</p>
+					<div class="shot-pan" tabindex="0" role="region" aria-label="The order in Orders screenshot">
+						<img src={caterersView.src} style={`--shot-w: ${caterersView.width}px`} width={caterersView.width} height={caterersView.height} loading="lazy" decoding="async" alt={caterersView.alt} />
+					</div>
+					<figcaption>{caterersView.caption}</figcaption>
+				</figure>
+				<p class="walk-note">Sample kitchen and sample client. The package photos are free-licensed stand-ins; on your site they are photos of your own food.</p>
+			</div>
 			<p class="handoff">Next: Putting it on your website.</p>
 		</div>
 	</section>
@@ -158,14 +182,14 @@ const snippet = [
 			<div class="captures">
 				<figure data-reveal>
 					<div class="shot-pan" tabindex="0" role="region" aria-label="Pickup and delivery screenshot">
-					<img src="/proof/ordering-setup-delivery.png" style="--shot-w: 790px" width="790" height="391" loading="lazy" decoding="async" alt="The Setup tab’s Pickup and delivery card: Pickup switched on with Place, Address and an optional Note for customers; Delivery switched on with a $25.00 delivery fee, added only when the customer picks delivery, and a box to charge sales tax on the delivery fee." />
+					<img src="/proof/ordering-setup-delivery.png" style="--shot-w: 790px" width="790" height="392" loading="lazy" decoding="async" alt="The Setup tab’s Pickup and delivery card: Pickup switched on with Place, Address and an optional Note for customers; Delivery switched on with a $25.00 delivery fee, added only when the customer picks delivery, and a box to charge sales tax on the delivery fee." />
 					</div>
 					<a class="full-size" href="/proof/ordering-setup-delivery.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
 					<figcaption>Setup: how the food gets to them. Pickup needs a place and an address; delivery can carry a fee.</figcaption>
 				</figure>
 				<figure data-reveal style="--reveal-delay: 60ms">
 					<div class="shot-pan" tabindex="0" role="region" aria-label="Payments and tax screenshot">
-					<img src="/proof/ordering-setup-payments.png" style="--shot-w: 790px" width="790" height="795" loading="lazy" decoding="async" alt="The Setup tab’s Payments and tax card: three choices, Card, through CostCook (Stripe connected), A partner collects it, and You collect it (invoice, check, cash or ACH after you confirm); the deposit from booking rules; an estimated tax percentage; and an example estimate for 50 guests at $32.00 plus $25.00 delivery, $1,625.00 before tax." />
+					<img src="/proof/ordering-setup-payments.png" style="--shot-w: 790px" width="790" height="1332" loading="lazy" decoding="async" alt="The Setup tab’s Payments and tax card: three choices, Card, through CostCook (with a Connect Stripe button), A partner collects it, and You collect it (invoice, check, cash or ACH after you confirm), selected; the saved acceptance and payment rules, with priced food orders accepted automatically when the date is clear; an estimated tax percentage; and an example estimate for the Coastal Dinner, 50 guests at $93.00 plus $25.00 delivery, $4,675.00 before tax." />
 					</div>
 					<a class="full-size" href="/proof/ordering-setup-payments.png" target="_blank" rel="noopener noreferrer">Open full-size (new tab)</a>
 					<figcaption>Setup: how they pay. Pick one of three; only card needs Stripe.</figcaption>
@@ -297,6 +321,20 @@ const snippet = [
 	   its own row at no more than its real size. Under 48rem the image keeps a
 	   readable floor and scrolls inside its own frame (.shot-pan, global.css);
 	   the page itself never scrolls sideways. */
+	/* The client's walk: two phone frames side by side from 40rem, one column
+	   on a phone; each frame keeps its own height so no figure is cropped, and
+	   is never drawn wider than its 350px capture. Four across drew the app's
+	   text at about 7px at 1440. The caterer's view is full width under them. */
+	.client-walk { margin-top: 4rem; }
+	.walk-frames { display: grid; gap: 3rem 2rem; max-width: 46rem; margin-top: 1.5rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+	.walk-frames figure, .walk-arrived { margin: 0; min-width: 0; }
+	.walk-frames img { display: block; width: 100%; max-width: 22rem; height: auto; margin-top: .5rem; border: 1px solid var(--color-hairline-strong); border-radius: .5rem; background: var(--color-paper); }
+	.walk-frames figcaption, .walk-arrived figcaption { margin-top: .75rem; font-size: var(--text-body-sm); color: var(--color-ink-soft); max-width: 60ch; }
+	.walk-arrived { margin-top: 3rem; max-width: 1036px; }
+	.walk-arrived .shot-pan { margin-top: .5rem; border-radius: .5rem; }
+	.walk-arrived img { display: block; width: 100%; height: auto; border: 1px solid var(--color-hairline-strong); border-radius: .5rem; background: var(--color-paper); }
+	.walk-note { margin-top: 1.5rem; font-size: var(--text-body-sm); color: var(--color-ink-soft); max-width: 60ch; }
+	@media (min-width: 40rem) { .walk-frames { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 	.captures { display: grid; gap: 3rem; margin-top: 3rem; grid-template-columns: minmax(0, 1fr); max-width: 790px; }
 	.captures figure { min-width: 0; }
 	.captures .shot-pan { border-radius: .5rem; }

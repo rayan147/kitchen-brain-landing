@@ -1,6 +1,8 @@
-// Captures the Ordering site Setup tab from LOCAL DEVELOP, kitchen-brain
-// 7a7e407d9 (owner, 2026-10-07: "local develop latest"), for "Set it up in the
-// app" on /features/online-ordering.
+// Captures the Ordering site Setup tab from LOCAL DEVELOP (owner, 2026-10-07:
+// "local develop latest"), for "Set it up in the app" on
+// /features/online-ordering. Last shot 2026-10-15 on kitchen-brain 5e01c9fc7,
+// a world with no Stripe keys, so Payments shows You collect it selected and
+// Connect Stripe offered; card payment needs the owner's keyed world.
 //
 //   APP=http://localhost:4193 node scripts/capture-ordering-setup-proof.mjs
 //

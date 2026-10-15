@@ -338,16 +338,19 @@ export const frontOfHouse = [
 		// "Confirm" is the event walk's word for booking, so this row says
 		// "approve" and "pay" (third chef review 2026-10-07).
 		// The widget is Settings > Integrations > Ordering site > Put on your
-		// website: one script tag, a sandboxed frame (develop 7a7e407d9). The
-		// frame is that widget in a sample page for the sample kitchen.
-		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a set menu (say, a $93 Coastal Dinner), a date, and pickup or delivery. You approve the request. Your booking rules decide whether they pay by card up front, and which requests come to you as an inquiry to price.',
+		// website: one script tag, a sandboxed frame. The frame is that widget in
+		// a sample page for the sample kitchen. Re-shot 2026-10-15 from develop
+		// 5e01c9fc7 with the embed ready fix (kitchen-brain 61740a018): the widget
+		// now frames the catalog storefront, where the menu is sold as a package
+		// priced per guest beside Ask for a quote.
+		body: 'Use your own ordering page, or paste one snippet into the website you already have and the order form sits right on it. A client picks a package (say, the $93 Coastal Dinner) or asks for a quote, then a date and pickup or delivery. You approve the request. Your booking rules decide whether they pay by card up front, and which requests come to you as an inquiry to price.',
 		shot: withPhone(
 			shot(
 				'ordering-site',
-				'The ordering widget on a caterer’s own website: under the kitchen’s Order catering heading, CostCook’s order form for Harbor & Hearth Catering with a 20 guest minimum, 72 hours notice, pickup or delivery, the steps Menu to Review, and the Coastal Dinner at $93.00 a guest.',
-				[1200, 1926]
+				'The ordering widget on a caterer’s own website: under the kitchen’s Order catering heading, CostCook’s catering menu for Harbor & Hearth Catering, with Check your date and handoff, an Ask for a quote button, and the first package, the Coastal Dinner at $93.00 a guest, with a photo of the dish and the start of its description.',
+				[1200, 1862]
 			),
-			[780, 2866]
+			[780, 1990]
 		)
 	},
 	{

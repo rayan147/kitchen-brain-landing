@@ -403,3 +403,15 @@ Squarespace as peers; Stripe, Linear, Ramp, Attio, Mercury as contrast).
   provenance). Above-the-fold words on desktop fell from about 120 to about 95 (estimated by eye from screenshots, not counted).
 - Not done, needs the owner: a real photograph from a working kitchen (no
   stock), and a real customer quote once one exists.
+
+## Revision 2026-10-15: online ordering re-shot on the catalog storefront
+
+- [x] Steps 1–4, 6–10: unchanged; the front-of-house band still turns "orders
+  reach me by phone and email" into "they come to me, priced".
+- [x] Step 11 (proof): the app sells a menu on the ordering site as a package
+  priced per guest, beside Ask for a quote (kitchen-brain 045f6ee91). The
+  ordering card now says "picks a package (say, the $93 Coastal Dinner) or
+  asks for a quote" where it said "picks a set menu", and the frame and its
+  alt show the catalog storefront in the widget. Re-shot only after the embed
+  ready fix (kitchen-brain 61740a018); on develop without it the widget never
+  appears, so the claim "the order form sits right on it" waits on that merge.
