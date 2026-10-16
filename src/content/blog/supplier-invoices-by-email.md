@@ -111,3 +111,5 @@ If the junk is the problem, **Stop the old address now** turns it off at once. M
 Check **Purchases > Invoice inbox** the way you check the walk-in: once a day, before you price anything. Filter to **Invoices and credits** to see only what waits in review, or **Held or needs a look** for what needs you.
 
 For what to check on each line once it is in review, read [how to check a supplier invoice before it changes your recipe costs](/blog/review-supplier-invoice).
+
+When a confirmed invoice raises a price, see [what that price rise does to your booked events](/blog/supplier-price-change-by-email).
