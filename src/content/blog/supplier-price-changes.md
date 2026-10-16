@@ -53,4 +53,6 @@ After a price change that matters, check:
 4. Confirmed events where current cost has moved away from quoted cost.
 5. Buying choices where another approved supplier pack is now the better buy.
 
+For every price change, CostCook lists the recipes, menus, draft quotes and confirmed events it reaches, in **Purchases** > **Price changes**. [Here's how to read one and close it](/blog/supplier-price-change-by-email).
+
 One price, with its source, should run through the whole costing chain. Not six hand edits that nobody can date or trace a month from now.

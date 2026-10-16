@@ -574,4 +574,79 @@ if (GUIDE === 'should-staff-see-food-costs') {
 	await context.close();
 }
 
+if (GUIDE === 'supplier-price-change-by-email') {
+	// One emailed invoice, from the Invoice inbox to a closed price change.
+	// THE WORLD (2026-10-16): app-5e01c, kitchen-brain develop 5e01c9fc7, whose
+	// purchases, inbox, import and price-change code is identical to local
+	// develop a340f35c1, served on 4197 against a copy of the Harbor & Hearth
+	// capture database. Sample event names lost their seed suffixes
+	// (" · October 2026 (14)"). Before the walk, a sample Highland Meats invoice
+	// email (HM-20417: boneless short rib $212.24 to $248.50 a 7 kg case, pork
+	// shoulder unchanged) is delivered with `npm run inbox:fixture`, which does
+	// SES's part on localhost and runs the inbox's own code from there.
+	//
+	// WRITES: the import commits the invoice and the review is closed as "The
+	// price really rose", so a second run needs a fresh world.
+	const { context, page } = await signedIn(390);
+	const INGREDIENT = 'Beef short rib, boneless';
+
+	// STAGE=after REVIEW=/purchases/price-impact/<id> reshoots only the closed
+	// review and the list, for a world whose invoice is already in and closed.
+	let reviewPath = process.env.REVIEW ?? null;
+	if (process.env.STAGE !== 'after') {
+		// 1. The email in the Invoice inbox, waiting in review. The address line
+		// above the list is local (in.costcook.test), so the frame is the card.
+		await page.goto(`${APP}/purchases/inbox`, { waitUntil: 'networkidle' });
+		const card = page.getByText('Invoice HM-20417 from Highland Meats').locator('xpath=ancestor::article[1]');
+		await shoot(page, '01-inbox-mobile', [card]);
+
+		// 2. The review: what the invoice will change, before anything does.
+		await card.getByRole('link', { name: /^Review/ }).first().click();
+		await page.getByRole('heading', { name: 'Review extracted records' }).waitFor();
+		await page.waitForLoadState('networkidle');
+		await shoot(page, '02-price-rise-mobile', [page.getByText('What this import changes', { exact: true }), page.getByText(/^May change 1 recipe cost/)], { top: 16, bottom: 28 });
+		await shoot(page, '03-plates-mobile', [page.getByText('What it does to your plates', { exact: true }), page.getByRole('button', { name: 'Import invoice and update costs' })], { top: 16 });
+
+		// 3. Import: the receipt names the changed cost and the way to its events.
+		await page.getByRole('button', { name: 'Import invoice and update costs' }).click();
+		await page.getByRole('link', { name: 'Review affected events' }).waitFor({ timeout: 60_000 });
+		await shoot(page, '04-imported-mobile', [page.getByText('Invoice imported', { exact: true }), page.getByRole('link', { name: 'Review affected events' })], { top: 16, bottom: 4 });
+
+		// 4. The price change: the move, then what it does to events and menus.
+		await page.getByRole('link', { name: 'Review affected events' }).click();
+		await page.getByRole('heading', { name: INGREDIENT, level: 1 }).waitFor();
+		await page.waitForLoadState('networkidle');
+		await shoot(page, '05-price-change-mobile', [page.getByRole('heading', { name: INGREDIENT, level: 1 }), page.getByText('Recipes and menus', { exact: true }).locator('xpath=ancestor::dl[1]')], { top: 16 });
+		await shoot(page, '07-menus-mobile', [page.getByText('Braised Short Rib').last().locator('xpath=ancestor::section[1]'), page.getByText('Wedding Plated Dinner').last().locator('xpath=ancestor::section[1]')], { top: 16 });
+
+		// 5. The decision: what happened to the price, with a note.
+		const decision = page.getByRole('heading', { name: 'What happened?' });
+		await page.getByText('The price really rose', { exact: true }).click();
+		await page.getByLabel(/Note/).fill('Highland confirmed short rib is up through November.');
+		await shoot(page, '08-decision-mobile', [decision, page.getByRole('button', { name: 'Close review' })], { top: 16 });
+		reviewPath = new URL(page.url()).pathname;
+		await page.getByRole('button', { name: 'Close review' }).click();
+		await page.waitForLoadState('networkidle');
+		await page.waitForTimeout(1500);
+		console.log('after close', (await page.locator('main').innerText()).replace(/\n+/g, ' | ').slice(0, 900));
+	}
+
+	// The closed review: who answered, when, the note, and the undo window.
+	await page.goto(`${APP}${reviewPath}`, { waitUntil: 'networkidle' });
+	await shoot(page, '09-closed-mobile', [page.getByText(/^Closed · /).last(), page.getByText(/^You can undo this/).first()], { top: 16 });
+
+	// The events card at 414: at 390 its table is 19px wider than the card,
+	// which hides the overflow and cuts the right-hand amounts (app bug, seen
+	// 2026-10-16). Decided or not, the card reads the same.
+	const wide = await signedIn(414);
+	await wide.page.goto(`${APP}${reviewPath}`, { waitUntil: 'networkidle' });
+	await shoot(wide.page, '06-events-mobile', [wide.page.getByRole('heading', { name: 'Upcoming events' }), wide.page.getByText('Salazar memorial luncheon').locator('xpath=ancestor::tr[1]')], { top: 16 });
+	await wide.context.close();
+
+	// 6. The list, where every open change waits, biggest effect first.
+	await page.goto(`${APP}/purchases/price-impact`, { waitUntil: 'networkidle' });
+	await shoot(page, '10-list-mobile', [page.getByRole('heading', { name: 'Price changes', level: 1 }), page.getByRole('link', { name: /^Review/ }).first().locator('xpath=ancestor::tr[1]')], { top: 16 });
+	await context.close();
+}
+
 await browser.close();

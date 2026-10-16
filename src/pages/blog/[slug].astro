@@ -161,6 +161,44 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		text-underline-offset: 4px;
 	}
 
+	/* A markdown table (a guide's fix table, a worked sales table): the ticket
+	   rules and amber micro-label header of the pre block, no zebra fill. It
+	   scrolls inside itself if a wide one outgrows a phone, never the page. */
+	.article-body :global(table) {
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+		margin-block: 1.5rem 2rem;
+		border-collapse: collapse;
+		border-block: 1px solid var(--color-ticket-rule);
+		font-size: var(--text-body-sm);
+		line-height: 1.55;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.article-body :global(th) {
+		padding: 0.75rem 1rem 0.6rem 0;
+		border-bottom: 1px dashed var(--color-ticket-rule);
+		font-size: 0.75rem;
+		font-weight: 650;
+		letter-spacing: 0.06em;
+		text-align: left;
+		text-transform: uppercase;
+		color: var(--color-amber-deep);
+		white-space: nowrap;
+	}
+
+	.article-body :global(td) {
+		padding: 0.85rem 1rem 0.85rem 0;
+		vertical-align: top;
+		color: var(--color-ink-soft);
+	}
+
+	.article-body :global(tr + tr td) { border-top: 1px solid var(--color-hairline); }
+	.article-body :global(td:first-child) { min-width: 10rem; color: var(--color-ink); font-weight: 600; }
+	.article-body :global(th:last-child),
+	.article-body :global(td:last-child) { padding-right: 0; }
+
 	/* A guide step's app capture (integrations/blog-figures.mjs). Stored at
 	   device scale 2 and never drawn above half its pixel width; the frame is
 	   the homepage capture frame (8px radius, lift), not a phone mockup. */
