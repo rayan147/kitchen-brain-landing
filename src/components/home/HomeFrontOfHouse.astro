@@ -4,7 +4,8 @@
  * only (CLAUDE.md, anti-reference: dark pages), so it takes its turn in the
  * cream and soft-amber alternation (rule 1).
  *
- * Considered Composite; not used because it is two fixed cards.
+ * Considered Template Method; not used because both cards have the same fixed
+ * reading order and differ only in their content, not an algorithm step.
  */
 import HomeBand from './HomeBand.astro';
 import SectionHandoff from '../SectionHandoff.astro';
@@ -21,9 +22,9 @@ import { frontOfHouse } from '../../lib/home';
 	<div class="cards">
 		{frontOfHouse.map((card) => (
 			<article class="card" data-front={card.id} data-reveal>
-				<HomeFrame shot={card.shot} class="card-shot" />
 				<h3 class="home-h3">{card.heading}</h3>
 				<p class="home-body mt-3">{card.body}</p>
+					<HomeFrame shot={card.shot} class="card-shot" />
 				{'guide' in card && <a href={card.guide.href} class="home-guide">{card.guide.label}</a>}
 			</article>
 		))}
@@ -39,14 +40,12 @@ import { frontOfHouse } from '../../lib/home';
 	   that frame runs taller than 6:5 to reach its Coastal Dinner row. The
 	   invoice inbox is shot at 600 too: it stands about two thirds of the
 	   ordering card's height, where at 780 it stood half. */
-	.card :global(.card-shot) { margin-bottom: 1.5rem; }
-	/* Side by side, each card's rows (frame, heading, line, link) share one
-	   grid, so the two headings line up under frames of different heights. */
+	.card :global(.card-shot) { margin-top: 1.5rem; }
+	/* Keep each guide beside its own frame; the two captures have different
+	   heights, so shared rows would leave a long empty gap under the shorter one. */
 	/* Two up from 48rem, not 64: one card across a 750px tablet column ran
 	   its lines to 99 characters (mobile review 2026-10-09). */
 	@media (min-width: 48rem) {
 		.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3rem; row-gap: 0; }
-		.card { display: grid; grid-row: span 4; grid-template-rows: subgrid; align-content: start; }
-		.card > :global(*) { align-self: start; }
 	}
 </style>

@@ -25,7 +25,7 @@
  * Considered Strategy (still vs video media); not used because there is one
  * medium at a time, not a runtime choice.
  */
-import { cta, demoCta, launchPlan, site } from '../../lib/site';
+import { cta, demoCta, featuresMenu, launchPlan, site } from '../../lib/site';
 import { heroFilm } from '../../lib/home';
 ---
 <!-- story: docs/stories/homepage-redesign-2026-10.story.md -->
@@ -64,6 +64,7 @@ import { heroFilm } from '../../lib/home';
 				<a href={heroFilm.mp4}>Download the film (MP4)</a>
 			</video>
 			<figcaption class="home-small mt-3">One sample wedding, inquiry to food cost. 1 min 55 s, music only, every word on screen.</figcaption>
+			<p class="mt-1"><a href={featuresMenu.tourHref} class="home-guide">{featuresMenu.tourLabel}</a></p>
 			<details class="hero-transcript home-small mt-2">
 				<summary>Read what the film shows</summary>
 				<p class="mt-2">{heroFilm.opening}</p>

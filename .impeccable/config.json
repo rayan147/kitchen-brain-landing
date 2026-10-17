@@ -1,3 +1,28 @@
 {
-  "buildPath": "comp"
+  "buildPath": "comp",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-radius",
+        "value": "8px",
+        "files": [
+          "src/components/home/HomeEventWalk.astro",
+          "src/components/home/HomeHero.astro"
+        ],
+        "createdAt": "2026-10-17T12:53:27.565Z",
+        "reason": "Existing 8px film frame and event focus rings match the owner-approved homepage screenshot framing in docs/superpowers/specs/2026-10-06-homepage-redesign-layout.md."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgb(185 118 42 / .18)",
+        "files": [
+          "src/components/home/HomeEventWalk.astro"
+        ],
+        "createdAt": "2026-10-17T12:53:27.577Z",
+        "reason": "Existing translucent amber focus halo is limited to the homepage screenshot annotations and was present before this review."
+      }
+    ]
+  }
 }

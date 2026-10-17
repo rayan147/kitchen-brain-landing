@@ -415,3 +415,17 @@ Squarespace as peers; Stripe, Linear, Ramp, Attio, Mercury as contrast).
   alt show the catalog storefront in the widget. Re-shot only after the embed
   ready fix (kitchen-brain 61740a018); on develop without it the widget never
   appears, so the claim "the order form sits right on it" waits on that merge.
+
+## Revision 2026-10-17: faster proof path and clearer screenshots
+
+- [x] **1 · Idea:** The owner-caterer still wants to check a price before quoting; the long page makes the shortest route to hands-on proof easy to miss.
+- [x] **2 · Character:** Dana is still reading on a phone between services. She wants to judge the product without starting a trial first.
+- [x] **3 · Plot:** The twelve beats remain in order. The tour link gives the curious reader an optional path from the opening proof to the existing click-through scene.
+- [x] **4 · Scenes:** The same six bands remain. The front-of-house cards introduce each task before showing its screen.
+- [x] **5 · Voices:** Reuse the established “Take the product tour” label. “Product screenshot” is a factual media label, not a new feature claim.
+- [x] **6 · Dialogue:** The hero turns doubt into a concrete way to inspect the product; the event images turn ambiguous controls into clearly identified evidence.
+- [x] **7 · Headline:** “Know the food cost before you quote the job” remains the intention; the shorter proof path answers the doubt that follows it.
+- [x] **8 · Snap:** Keep the page’s existing line, “Buy for what survives the knife.” No second snap is added.
+- [x] **9 · Scene:** Dana can open the tour on her phone while the next event quote is still on her mind.
+- [x] **10 · Connection:** The hero’s film leads directly to the existing tour; each front-of-house heading and explanation lead into its screenshot.
+- [x] **11 · Revision:** Add one existing tour label near the film and a short screenshot label at each event frame. Move existing front-of-house words ahead of their proof. Trial terms, claims, and the final CTA stay as written.

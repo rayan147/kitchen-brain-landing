@@ -40,6 +40,7 @@ import { eventStages } from '../../lib/home';
 					<a href={stage.guide.href} class="home-guide">{stage.guide.label}</a>
 				</div>
 				<figure class:list={['stage-figure', { 'stage-figure--phone': stage.shot.phone }]}>
+						<figcaption class="home-small stage-caption">Product screenshot</figcaption>
 					<div class="frame">
 						<HomeFrame shot={stage.shot} />
 						{'focus' in stage && stage.focus.map((box) => (
@@ -121,6 +122,7 @@ import { eventStages } from '../../lib/home';
 	}
 	.is-tracking .stage:not(.is-reached) .node { background: var(--color-paper); color: var(--color-green-deep); }
 	.stage-figure { margin: 0; }
+	.stage-caption { margin-bottom: .5rem; }
 	.frame { position: relative; }
 	.frame :global(picture) { display: block; }
 	.stage-figure--phone .frame { max-width: 20rem; margin-inline: auto; }
