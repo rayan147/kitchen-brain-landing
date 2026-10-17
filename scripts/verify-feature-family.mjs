@@ -12,15 +12,18 @@ const routes = [
 	'/faq',
 	'/features',
 	'/features/compliance-and-labels',
+	'/features/events-and-proposals',
 	'/features/getting-prices-in',
 	'/features/guest-restrictions-and-dietary-guards',
 	'/features/ingredients-and-supplier-prices',
 	'/features/integrations',
 	'/features/inventory',
+	'/features/invoice-email',
 	'/features/invoices-and-price-list-import',
 	'/features/labels-and-printing',
 	'/features/menus-and-quotes',
 	'/features/nutrition-facts-and-allergens',
+	'/features/online-ordering',
 	'/features/order-shop-prep-pack',
 	'/features/purchases-and-month-cost',
 	'/features/purchasing-and-receiving',
@@ -44,8 +47,11 @@ const detailedFeatureRoutes = new Set([
 ]);
 const specialistFeatureRoutes = new Set([
 	...detailedFeatureRoutes,
+	'/features/events-and-proposals',
 	'/features/integrations',
+	'/features/invoice-email',
 	'/features/nutrition-facts-and-allergens',
+	'/features/online-ordering',
 	'/features/order-shop-prep-pack',
 	'/features/purchasing-and-receiving',
 	'/features/team-and-access'
@@ -198,6 +204,9 @@ try {
 				assert(state.faqMin >= 44, `${label}: FAQ target is ${state.faqMin}px`);
 				assert(state.heroActionsFit, `${label}: hero action ends at ${state.heroBottom}px, below the ${height}px first viewport`);
 			}
+			if (route === '/features/events-and-proposals') {
+				assert(state.heroActionsFit, `${label}: event trial action ends at ${state.heroBottom}px, below the ${height}px first viewport`);
+			}
 			if (specialistFeatureRoutes.has(route)) {
 				const compactMobileHero = width === 390 && compactMobileHeroRoutes.has(route);
 				assert(state.breadcrumbMin >= 44, `${label}: breadcrumb target is ${state.breadcrumbMin}px`);
@@ -247,4 +256,4 @@ if (failures.length > 0) {
 	console.error(`Feature-family browser verification failed:\n- ${failures.join('\n- ')}`);
 	process.exit(1);
 }
-console.log('Site spacing verification passed: 25 routes, five viewports, specialist hero rhythm, and 200% text at 320px with nothing clipped.');
+console.log(`Site spacing verification passed: ${routes.length} routes, five viewports, specialist hero rhythm, and 200% text at 320px with nothing clipped.`);

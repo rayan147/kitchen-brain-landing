@@ -267,7 +267,8 @@ const payments = eventPayments;
 	.events-page { background: var(--color-cream); }
 	.hero-grid, .split, .closing-grid { display: grid; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
 	.hero-grid > *, .split > *, .closing-grid > * { min-width: 0; }
-	.hero-grid { padding-block: clamp(3rem, 6vw, 5rem) var(--spacing-section-tight); }
+	/* Keep the trial decision beside the first capture in the desktop frame. */
+	.hero-grid { align-items: start; padding-block: clamp(3rem, 6vw, 5rem) var(--spacing-section-tight); }
 	.closing-grid { padding-block: var(--spacing-section-tight); }
 	.product-section { border-top: 1px solid var(--color-hairline); padding-block: var(--spacing-section); }
 	.product-section.soft { background: var(--color-paper); }
@@ -288,6 +289,7 @@ const payments = eventPayments;
 	   4+2 at 768 and 5+1 at 1024, with "Booked" alone (mobile review
 	   2026-10-09). */
 	.step-bar ol { display: grid; gap: .5rem; margin-top: .9rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	@media (max-width: 359px) { .step-bar ol { grid-template-columns: minmax(0, 1fr); } }
 	@media (min-width: 40rem) { .step-bar ol { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 	@media (min-width: 64rem) { .step-bar ol { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 	.step-bar a { display: flex; align-items: center; gap: .6rem; min-height: 44px; padding: .5rem .8rem; border-top: 2px solid var(--color-hairline-strong); font-weight: 600; color: var(--color-ink); text-decoration: none; }
