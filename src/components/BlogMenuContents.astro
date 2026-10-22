@@ -30,11 +30,16 @@ const slug = (topic: string) => topic.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-
 	<a
 		href={`/blog/${newest.id}`}
 		aria-current={path === `/blog/${newest.id}` ? 'page' : undefined}
-		class="group inline-flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1"
+		class="group inline-grid min-h-11 grid-cols-[1.25rem_minmax(0,1fr)] items-center gap-3"
 		data-blog-menu-newest
 	>
-		<span class="font-mono text-xs font-semibold tracking-wide text-amber-deep uppercase">New · {newestDate}</span>
-		<span class="text-sm font-semibold text-ink underline decoration-ticket-rule underline-offset-4 group-hover:decoration-green">{newest.data.title}</span>
+		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-amber-deep" aria-hidden="true">
+			<use href={`#blog-menu-${newest.data.menuIcon}`} />
+		</svg>
+		<span class="min-w-0">
+			<span class="font-mono text-xs font-semibold tracking-wide text-amber-deep uppercase">New · {newestDate}</span>
+			<span class="ml-2 text-sm font-semibold text-ink underline decoration-ticket-rule underline-offset-4 group-hover:decoration-green">{newest.data.title}</span>
+		</span>
 	</a>
 </div>
 
@@ -50,9 +55,12 @@ const slug = (topic: string) => topic.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-
 								<a
 									href={`/blog/${post.id}`}
 									aria-current={path === `/blog/${post.id}` ? 'page' : undefined}
-									class="flex min-h-11 items-center rounded-md px-3 py-1.5 text-sm leading-snug text-ink-soft transition-colors duration-150 hover:bg-cream hover:text-ink aria-[current=page]:font-semibold aria-[current=page]:text-ink"
+									class="grid min-h-11 grid-cols-[1.25rem_minmax(0,1fr)] items-center gap-2 rounded-md px-3 py-1.5 text-sm leading-snug text-ink-soft transition-colors duration-150 hover:bg-cream hover:text-ink aria-[current=page]:font-semibold aria-[current=page]:text-ink"
 								>
-									{post.data.menuTitle}
+									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-amber-deep" aria-hidden="true">
+										<use href={`#blog-menu-${post.data.menuIcon}`} />
+									</svg>
+									<span class="min-w-0">{post.data.menuTitle}</span>
 								</a>
 							</li>
 						))}
