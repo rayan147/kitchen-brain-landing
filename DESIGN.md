@@ -44,6 +44,7 @@ typography:
     record: "1.5rem"
 rounded:
   pill: "999px"
+  proof: "8px"
 spacing:
   page-gutter: "clamp(1.25rem, 4vw, 3rem)"
   section: "clamp(5rem, 3.5rem + 7vw, 9rem)"

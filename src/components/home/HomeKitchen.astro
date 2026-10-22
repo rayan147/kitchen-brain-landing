@@ -1,88 +1,120 @@
 ---
-/**
- * The kitchen half (canvas S3 rows 02 to 04 and S4 row 07). Each row has the
- * band's shape at a smaller scale (rule 3): eyebrow, heading, one sentence, one
- * frame. The reader's own line, in quotes-free italic, the inner voice the
- * owner chose, sits under the heading since 2026-10-15 (benchmark review,
- * owner's call): above it, each row opened twice before its claim.
- *
- * Canvas row 06 (should have cost against did cost, with "[$ from orders]" and
- * "[$ from purchases]") is not here: no captured record backs those figures.
- *
- * The rows carry no numbers: only the rail's steps are numbered, so a number
- * on this page always means a step of the one wedding (review 2026-10-07).
- *
- * Considered Composite; not used because the rows are one flat list.
- */
 import HomeBand from './HomeBand.astro';
-import SectionHandoff from '../SectionHandoff.astro';
-import HomeFrame from './HomeFrame.astro';
-import { kitchenRows, moreGuides } from '../../lib/home';
+import HomeStepIcon from './HomeStepIcon.astro';
+
+// Considered Template Method; not used because this fixed sample has no
+// interchangeable rendering steps or behavior.
 ---
-<HomeBand
-	id="kitchen"
-	tone="cream"
-	eyebrow="Costs, buys and labels"
-	heading="The numbers come off your own recipes."
-	lede="The recipes behind your proposal also cost each plate and tell you how much to buy. The allergens ride along to the labels."
->
-	<ol role="list" class="rows">
-		{kitchenRows.map((row) => (
-			<li class="row" data-kitchen-row={row.id} data-reveal>
-				<div class="row-copy">
-					<p class="home-eyebrow">{row.eyebrow}</p>
-					<h3 class="home-h3">{row.heading}</h3>
-					<p class="home-body pain">{row.pain}</p>
-					<p class="home-body mt-3">{row.body}</p>
-					<a href={row.guide.href} class="home-guide">{row.guide.label}</a>
-				</div>
-				<figure class="row-figure">
-					<HomeFrame shot={row.shot} class="row-shot" />
-				</figure>
-			</li>
-		))}
-	</ol>
-	<nav class="more" aria-labelledby="more-heading" data-home-more>
-		<p id="more-heading" class="home-eyebrow">Also in CostCook</p>
-		<ul role="list" class="more-list">
-			{moreGuides.map((guide) => <li><a href={guide.href} class="more-link">{guide.label}<span aria-hidden="true">→</span></a></li>)}
-		</ul>
-	</nav>
-	<SectionHandoff from="kitchen" class="home-handoff" />
+<!-- story: docs/stories/homepage-mockup-2026-10.story.md -->
+<HomeBand id="kitchen" tone="cream" labelledBy="kitchen-heading">
+  <div class="cost-grid">
+    <div class="cost-copy">
+      <p class="home-eyebrow">Food cost</p>
+      <h2 id="kitchen-heading" class="home-h2">See the food cost <span>before you quote.</span></h2>
+      <p class="home-body">You quote $95 a guest. Before sending the proposal, see what each dish costs and how much of your price goes toward food.</p>
+      <p class="home-body">Missing an ingredient price? CostCook flags it so it never slips in as zero.</p>
+      <a href="/features/menus-and-quotes" class="home-guide">How menus and quotes are priced <span aria-hidden="true">→</span></a>
+    </div>
+
+    <figure class="cost-figure">
+      <div class="cost-panel" aria-label="Illustrative four-dish food cost breakdown">
+        <header class="cost-panel-head">
+          <div><h3>Dishes, per guest</h3><p>Each bar shows the dish’s share of the food cost per guest.</p></div>
+          <span class="cost-panel-label">Sample portions</span>
+        </header>
+        <div class="dish-list">
+          <div class="dish-row">
+            <span class="dish-photo dish-photo--rib" aria-hidden="true"></span>
+            <div class="dish-main"><strong>Braised Short Rib</strong><span>2 portions per guest</span><div class="dish-meter"><span style="width: 63.4%"></span></div></div>
+            <div class="dish-cost"><strong>$14.56</strong><span>63.4%</span></div>
+          </div>
+          <div class="dish-row">
+            <span class="dish-photo dish-photo--polenta" aria-hidden="true"></span>
+            <div class="dish-main"><strong>Wild Mushroom Polenta</strong><span>1 portion per guest</span><div class="dish-meter"><span style="width: 12.8%"></span></div></div>
+            <div class="dish-cost"><strong>$2.93</strong><span>12.8%</span></div>
+          </div>
+          <div class="dish-row">
+            <span class="dish-photo dish-photo--spinach" aria-hidden="true"></span>
+            <div class="dish-main"><strong>Creamed Spinach</strong><span>0.5 portion per guest</span><div class="dish-meter"><span style="width: 12.7%"></span></div></div>
+            <div class="dish-cost"><strong>$2.91</strong><span>12.7%</span></div>
+          </div>
+          <div class="dish-row">
+            <span class="dish-photo dish-photo--focaccia" aria-hidden="true"></span>
+            <div class="dish-main"><strong>Focaccia and Whipped Goat Cheese</strong><span>1 portion per guest</span><div class="dish-meter"><span style="width: 11.1%"></span></div></div>
+            <div class="dish-cost"><strong>$2.56</strong><span>11.1%</span></div>
+          </div>
+        </div>
+        <div class="cost-total">
+          <div><strong>Total food cost per guest</strong><span>From the four dishes shown</span></div>
+          <strong class="cost-total-price">$22.96</strong>
+          <div class="cost-total-share"><span>At $95.00 per guest</span><strong>24.2% food cost</strong></div>
+        </div>
+      </div>
+      <figcaption>Illustrative sample menu in CostCook. Costs change as portions change.</figcaption>
+      <details class="cost-proof">
+        <summary>See the current product screen</summary>
+        <picture>
+          <source type="image/webp" srcset="/proof/home/food-cost-breakdown.webp">
+          <img src="/proof/home/food-cost-breakdown.png" alt="Current CostCook dish cost screen showing Braised Short Rib at $14.56, Wild Mushroom Polenta at $2.93, Creamed Spinach at $2.91, and Focaccia with Goat Cheese at $2.56 per guest." width="600" height="661" loading="lazy" decoding="async" class="home-shot" />
+        </picture>
+      </details>
+    </figure>
+  </div>
+  <ul class="outcomes" role="list">
+    <li><span class="outcome-mark" aria-hidden="true">01</span><span class="outcome-icon"><HomeStepIcon name="quote" /></span><div><h3>Quote with confidence</h3><p>Use your recipes and current ingredient prices before you send the proposal.</p></div></li>
+    <li><span class="outcome-mark" aria-hidden="true">02</span><span class="outcome-icon"><HomeStepIcon name="purchasing" /></span><div><h3>Turn bookings into action</h3><p>Generate purchasing, prep, and packing lists from the confirmed event.</p></div></li>
+    <li><span class="outcome-mark" aria-hidden="true">03</span><span class="outcome-icon"><HomeStepIcon name="closeout" /></span><div><h3>Know what food really cost</h3><p>Compare estimated food costs with the prices you actually paid.</p></div></li>
+  </ul>
 </HomeBand>
 
 <style>
-	.rows { display: grid; gap: var(--spacing-section-tight); margin-top: 3rem; }
-	.row { display: grid; gap: 2rem; align-items: center; }
-	.pain { margin-top: 1rem; font-style: italic; }
-	.row-figure { margin: 0; }
-	/* Never past the capture's CSS size: the yield row's tomato card (362px)
-	   drew at 1.5x to 1.95x in the wide track, softer than the row's h3
-	   (design review 2026-10-09). HomeFrame sets --shot-max. */
-	.row-figure :global(.row-shot) { max-width: var(--shot-max, none); margin-inline: auto; }
-	/* One column until 64rem: keep the copy to a readable measure there
-	   (lines ran to 99 characters at 920-1000, mobile review 2026-10-09). */
-	.row-copy { max-width: 40rem; }
-	.more { margin-top: var(--spacing-section-tight); }
-	/* A ruled index, not a run of underlined links (benchmark review
-	   2026-10-15): eight underlines in two ragged lines read as a sitemap.
-	   Each link keeps its colour, weight and arrow as the interactive cue, and
-	   a 44px row. */
-	.more-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); column-gap: 2rem; margin-top: .75rem; }
-	.more-list li { border-top: 1px solid var(--color-hairline); }
-	.more-link { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.75rem; color: var(--color-green-deep); font-size: var(--text-body); font-weight: 700; text-decoration: none; }
-	.more-link span { transition: transform 150ms; }
-	@media (hover: hover) {
-		.more-link:hover { color: var(--color-ink); text-decoration: underline; text-underline-offset: 4px; }
-		.more-link:hover span { transform: translateX(3px); }
-	}
-	@media (prefers-reduced-motion: reduce) { .more-link span { transition: none; } }
-	@media (min-width: 64rem) {
-		.row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 4rem; }
-		.row:nth-child(even) .row-copy { order: 2; }
-		/* The frame keeps the wider track when it swaps sides: in the 1fr track
-		   the yield and allergen frames sat at 441px (readability review
-		   2026-10-09). */
-		.row:nth-child(even) { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
-	}
+  :global(#kitchen) { padding-block: var(--spacing-section-tight); }
+  :global(#kitchen > .container-page) { max-width: 92rem; }
+  .cost-grid { display: grid; gap: 2.5rem; align-items: center; }
+  .cost-copy { max-width: 34rem; }
+  .cost-copy .home-h2 { font-size: var(--text-display-hero); line-height: 1.05; }
+  .cost-copy .home-h2 span { color: var(--color-green-deep); }
+  .cost-copy .home-body { margin-top: 1.35rem; }
+  .cost-copy .home-guide { margin-top: 1.5rem; }
+  .cost-figure { margin: 0; min-width: 0; width: 100%; }
+  .cost-panel { overflow: hidden; border: 1px solid var(--color-ticket-rule); border-radius: 8px; background: var(--color-paper); box-shadow: var(--shadow-lift); }
+  .cost-panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.5rem; }
+  .cost-panel-head h3 { font-family: var(--font-display); font-size: var(--text-record); font-weight: 600; line-height: 1.2; }
+  .cost-panel-head p { margin-top: .25rem; color: var(--color-ink-soft); line-height: 1.4; }
+  .cost-panel-label { flex: none; padding: .45rem .75rem; border: 1px solid var(--color-hairline); border-radius: 999px; background: var(--color-softgreen); color: var(--color-green-deep); font-size: var(--text-body-sm); font-weight: 700; }
+  .dish-row { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr) 4.25rem; gap: 1rem; align-items: center; padding: .75rem 1.5rem; border-top: 1px solid var(--color-ticket-rule); }
+  .dish-row:first-child { background: var(--color-cream); }
+  .dish-photo { display: block; width: 4.5rem; aspect-ratio: 1; border-radius: 8px; background-image: url('/images/sample-dishes-grid.webp'); background-size: 200% 200%; }
+  .dish-photo--rib { background-position: left top; }
+  .dish-photo--polenta { background-position: right top; }
+  .dish-photo--spinach { background-position: left bottom; }
+  .dish-photo--focaccia { background-position: right bottom; }
+  .dish-main { min-width: 0; display: grid; gap: .2rem; }
+  .dish-main strong { color: var(--color-green-deep); font-size: var(--text-body); line-height: 1.2; }
+  .dish-main > span { color: var(--color-ink-soft); font-size: var(--text-body-sm); }
+  .dish-meter { height: .45rem; margin-top: .3rem; overflow: hidden; border-radius: 999px; background: var(--color-softamber); }
+  .dish-meter > span { display: block; height: 100%; border-radius: inherit; background: var(--color-green-deep); }
+  .dish-cost { display: grid; justify-items: end; gap: .5rem; white-space: nowrap; }
+  .dish-cost strong { font-size: var(--text-body); }
+  .dish-cost span { color: var(--color-ink-soft); font-size: var(--text-body-sm); }
+  .cost-total { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 1.25rem; align-items: center; margin: .75rem; padding: 1rem 1.25rem; background: var(--color-softgreen); border-radius: 8px; }
+  .cost-total > div { display: grid; gap: .2rem; }
+  .cost-total > div:first-child > strong { font-family: var(--font-display); font-size: var(--text-body-lg); line-height: 1.2; }
+  .cost-total span { color: var(--color-ink-soft); font-size: var(--text-body-sm); }
+  .cost-total-price { padding-inline: 1.25rem; border-inline: 1px solid var(--color-hairline-strong); color: var(--color-green-deep); font-size: var(--text-record); white-space: nowrap; }
+  .cost-total-share strong { color: var(--color-green-deep); font-size: var(--text-body); white-space: nowrap; }
+  .cost-figure figcaption { margin-top: .75rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); }
+  .cost-proof { margin-top: .35rem; }
+  .cost-proof summary { width: fit-content; min-height: 2.75rem; display: list-item; padding-block: .6rem; color: var(--color-green-deep); font-size: var(--text-body-sm); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .cost-proof .home-shot { width: min(100%, 38rem); margin-top: .75rem; }
+  .outcomes { display: grid; gap: 1.5rem; margin-top: var(--spacing-section-tight); padding: 2rem 0 0; border-top: 1px solid var(--color-ticket-rule); }
+  .outcomes li { display: flex; align-items: flex-start; gap: .8rem; min-width: 0; }
+  .outcome-mark, .outcome-icon { display: grid; place-items: center; flex: none; border-radius: 999px; }
+  .outcome-mark { width: 2.8rem; height: 2.8rem; background: var(--color-softamber); color: var(--color-amber-deep); font-weight: 700; }
+  .outcome-icon { width: 2.8rem; height: 2.8rem; background: var(--color-paper); color: var(--color-ink-soft); border: 1px solid var(--color-ticket-rule); }
+  .outcome-icon :global(svg) { width: 1.65rem; height: 1.65rem; }
+  .outcomes h3 { font-family: var(--font-display); font-size: var(--text-record-sm); font-weight: 600; line-height: 1.25; }
+  .outcomes p { margin-top: .3rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.45; }
+  @media (min-width: 64rem) { .cost-grid { grid-template-columns: minmax(0, .85fr) minmax(0, 1.25fr); gap: clamp(2.5rem, 5vw, 5rem); } .outcomes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; } .outcomes li + li { border-left: 1px solid var(--color-ticket-rule); padding-left: 1.5rem; } }
+  @media (max-width: 42rem) { .cost-panel-head { padding: 1rem; } .cost-panel-label { display: none; } .dish-row { grid-template-columns: 3.5rem minmax(0, 1fr) 3.5rem; gap: .65rem; padding: .65rem .75rem; } .dish-photo { width: 3.5rem; } .dish-main strong { font-size: var(--text-body-sm); } .dish-main > span, .dish-cost span { font-size: var(--text-label-sm); } .dish-cost strong { font-size: var(--text-body-sm); } .cost-total { grid-template-columns: minmax(0, 1fr) auto; gap: .6rem; } .cost-total-price { padding: 0; border: 0; } .cost-total-share { grid-column: 1 / -1; padding-top: .65rem; border-top: 1px solid var(--color-hairline-strong); } .outcomes li { gap: .65rem; } }
 </style>

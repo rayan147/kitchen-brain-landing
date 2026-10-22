@@ -41,14 +41,10 @@ if ((html.match(/<dt[^>]*>Can open<\/dt>/g) ?? []).length !== 3
 	|| (html.match(/<dt[^>]*>Cannot<\/dt>/g) ?? []).length !== 3) {
 	throw new Error('Team & Access must compare every role with the same three semantic facts.');
 }
-// The homepage stopped being a stop called #access on 2026-09-09 and became a
-// block inside #more; see src/components/sections/WhatElse.astro. What this
-// contract is for is unchanged: the homepage introduces team and access, and it
-// points at the page that carries it in full.
-// Since 2026-10-06 the introduction is a named link in the homepage's
-// "Also in CostCook" list (data-home-more).
-if (!homeHtml.includes('data-home-more') || !homeHtml.includes('href="/features/team-and-access"')) {
-	throw new Error('Homepage is missing the Team & Access introduction or destination.');
+// The compact homepage keeps Team & Access reachable through the Features
+// disclosure; the feature hub continues to describe it in full.
+if (!homeHtml.includes('href="/features/team-and-access"')) {
+	throw new Error('Homepage Features menu is missing the Team & Access destination.');
 }
 if (!featureHubHtml.includes('href="/features/team-and-connections"')) {
 	throw new Error('Feature hub lost the owning Team and connections area.');

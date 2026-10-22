@@ -155,8 +155,7 @@ const surfaceFiles = [
 	'src/components/home/HomeHero.astro',
 	'src/components/home/HomeEventWalk.astro',
 	'src/components/home/HomeKitchen.astro',
-	'src/components/home/HomeFrontOfHouse.astro',
-	'src/components/home/HomeSage.astro',
+	'src/components/home/HomeConnections.astro',
 	'src/components/home/HomeClose.astro',
 ];
 
@@ -198,7 +197,7 @@ const requireText = (source, value, label) => {
 
 // The canvas rebuild of 2026-10-06: the hero and six bands
 // (scripts/lib/homepage-stops.mjs owns their order).
-for (const component of ['HomeHero', 'HomeEventWalk', 'HomeKitchen', 'HomeFrontOfHouse', 'HomeSage', 'HomeClose']) {
+for (const component of ['HomeHero', 'HomeEventWalk', 'HomeKitchen', 'HomeConnections', 'HomeClose']) {
 	requireText(index, `<${component} />`, 'landing composition');
 }
 
@@ -720,11 +719,9 @@ const stickySource = surfaces[surfaceFiles.indexOf('src/components/StickyCta.ast
 if (!/class="btn-primary[^"]*"[\s\S]{0,80}\{cta\.label\}/.test(stickySource)) {
 	failures.push('sticky bar primary CTA no longer renders cta.label');
 }
-for (const id of expectedStopIds.slice(0, -1)) {
-	if (!publicCopy.includes(`<SectionHandoff from="${id}"`)) {
-		failures.push(`hand-offs: section #${id} has no <SectionHandoff from="${id}" /> at its foot`);
-	}
-}
+requireText(surfaces[surfaceFiles.indexOf('src/components/home/HomeEventWalk.astro')], 'href="/tour/main"', 'event path links to tour');
+requireText(surfaces[surfaceFiles.indexOf('src/components/home/HomeKitchen.astro')], 'href="/features/menus-and-quotes"', 'cost proof links to quote guide');
+requireText(surfaces[surfaceFiles.indexOf('src/components/home/HomeConnections.astro')], 'integrationsRoute', 'connections link to detailed availability');
 
 // H1: the FAQ. Every answer lists the ledger rows it rests on, and every one
 // of those rows must exist. An answer that cites nothing, or cites a row that
@@ -810,7 +807,7 @@ for (const [label, source] of [
 		failures.push(`${label} primary CTA no longer renders cta.label`);
 	}
 }
-if (/class="btn-primary[^"]*"[\s\S]{0,200}demoCta\.label/.test(startHereSource)) {
+if (/<a[^>]*class="btn-primary[^"]*"[^>]*>\s*\{demoCta\.label\}/.test(startHereSource)) {
 	failures.push('close section renders the demo CTA as a second primary action');
 }
 
@@ -818,7 +815,6 @@ if (/class="btn-primary[^"]*"[\s\S]{0,200}demoCta\.label/.test(startHereSource))
 // homepage section, the compare row and the feature group may not carry their
 // own word, and the section must print the word rather than imply it.
 const sageSource = surfaces[surfaceFiles.indexOf('src/lib/sage.ts')];
-const sageSection = surfaces[surfaceFiles.indexOf('src/components/home/HomeSage.astro')];
 requireText(sageSource, 'export const SAGE_STATUS', 'sage status lives in sage.ts');
 // RC-49's counts, one place. Every sentence that counts Sage's tools or drafts
 // spells these, so the number is pinned here and a hand-typed copy is refused.
@@ -831,11 +827,7 @@ if (/twenty-two|\b22 read/i.test(publicCopy.replace(sageSource, ''))) {
 }
 requireText(comparisonSource, 'costcook: SAGE_STATUS', 'compare reads the sage status');
 requireText(featuresSource, "status: SAGE_STATUS === 'yes'", 'features reads the sage status');
-requireText(sageSection, '{sageStatusWord}', 'sage section prints its status');
-if (/SAGE_STATUS = 'coming'/.test(sageSource) && !/not in the app you would start today/.test(sageSection)) {
-	failures.push('sage: status is coming but the section no longer says it is not in the app you would start today');
-}
-if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start today|not in the launch price/.test(`${sageSection}\n${comparisonSource}\n${featuresSource}`)) {
+if (/SAGE_STATUS = 'yes'/.test(sageSource) && /not in the app you would start today|not in the launch price/.test(`${comparisonSource}\n${featuresSource}`)) {
 	failures.push('sage: status is available but a shared product surface still describes it as unavailable');
 }
 
@@ -1075,15 +1067,13 @@ for (const [pattern, label] of [
 ]) {
 	if (pattern.test(publicCopy)) failures.push(`public copy contains ${label}`);
 }
-requireText(heroSource, '{launchPlan.unit}, {launchPlan.crew}', 'hero price line names the unit and the crew');
+requireText(heroSource, 'launchPlan.unit', 'hero price line names the billing unit');
+requireText(heroSource, 'launchPlan.crew', 'hero price line names the crew allowance');
 requireText(siteSource, "crew: 'unlimited crew'", 'billing unit answers the per-user question');
-// 3. The cost of trying it, said before the close's button. A spreadsheet
-//    person knows "one real order" means every dish and price on it; silence
-//    there reads as evasion. Pinned by hook, not by sentence, so the words can
-//    be revised, but the paragraph has to exist and name the first-dish time.
-requireText(startHereSource, 'data-real-order-setup', 'close states what one order requires first');
-requireText(startHereSource, 'about fifteen minutes', 'close states the owner-confirmed first-dish time (RC-10)');
-requireText(startHereSource, 'type any line it could not', 'close keeps the typed-line boundary (RC-58)');
+// The condensed page repeats the card requirement where each trial action is
+// offered. The longer setup explanation lives on the onboarding guide.
+requireText(heroSource, 'Card required to start', 'hero discloses card requirement');
+requireText(startHereSource, 'Card required to start', 'close discloses card requirement');
 // 4. The panel is a check, not an instruction, and the number is food only.
 //    Both used to live only in pixels and alt text.
 // UPDATED 2026-10-07 (chef review, RC-74): the caption still names the panel as
@@ -1098,7 +1088,8 @@ requireText(startHereSource, 'type any line it could not', 'close keeps the type
 // is food only, 150 at $95.00, so the film claims no staff or rentals lines
 // and RC-74 rides on the decision step's own words. The transcript carries
 // the menu's figures as its frame prints them.
-requireText(heroSource, 'One sample wedding', 'hero names the film as a sample');
+requireText(heroSource, 'Illustrative summary from a CostCook sample kitchen', 'hero labels illustrative figures');
+requireText(heroSource, 'Food cost excludes staff, rentals, delivery and tax', 'hero bounds food cost');
 requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], 'plus any staff, rentals or service fee', 'the client-decision step says where staff, rentals and the fee go (RC-74)');
 requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], '$95.00 a guest. Food cost 29.2%.', 'hero film transcript carries the price-per-guest check');
 requireText(surfaces[surfaceFiles.indexOf('src/lib/home.ts')], 'Signed on paper? Upload the copy. It stays with the event.', 'hero film transcript names the paper route the walk took, not online signing');

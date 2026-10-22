@@ -63,17 +63,15 @@ if (steps.join('|') !== expected.join('|')) {
 }
 
 // The Payments note, in src/lib/event-payments.ts's own words (live since
-// 2026-10-06), on this page and on the homepage.
+// 2026-10-06), stays on this detailed page. The compact homepage names the
+// Stripe connection and links to the full event and integrations guides.
 if (!html.includes('data-events-payments')) fail('the Payments note is gone');
 const paymentsSentence = eventPaymentsSource.match(/homepage:\s*'([^']+)'/)?.[1];
 if (!paymentsSentence) {
 	fail('could not read eventPayments.homepage from src/lib/event-payments.ts');
 } else {
 	if (!decode(html).includes(paymentsSentence)) fail('the Payments note does not render eventPayments.homepage');
-	const bookingPayments = homeHtml.match(/<p[^>]*data-booking-payments="event-payments"[^>]*>([\s\S]*?)<\/p>/)?.[1];
-	if (!bookingPayments || !decode(bookingPayments).includes(paymentsSentence)) {
-		fail('the homepage payments line does not render eventPayments.homepage');
-	}
+	if (!homeHtml.includes('stripe') || !homeHtml.includes('href="/features/integrations"')) fail('homepage payment summary does not link to details');
 }
 
 // The invoice (owner ruling 2026-10-08), in src/lib/event-payments.ts's own
@@ -123,10 +121,10 @@ if (!mainOf(dayItself).includes('From the first call to Confirm order, on one ev
 	fail('/features/the-day-itself no longer carries the events group');
 }
 
-// The homepage's "Also in the app" line deep-links two sections here.
+// The detailed page keeps both sections even though the compact homepage
+// links to the guide as a whole instead of repeating section-level links.
 for (const id of ['clients', 'booked']) {
-	if (!html.includes(`id="${id}"`)) fail(`#${id} is gone, and the homepage links to it`);
-	if (!homeHtml.includes(`href="/features/events-and-proposals#${id}"`)) fail(`the homepage no longer links #${id}`);
+	if (!html.includes(`id="${id}"`)) fail(`#${id} is gone from the events guide`);
 }
 
 // /compare agrees the capability ships, and that card payment does not yet.

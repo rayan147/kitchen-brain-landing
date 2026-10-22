@@ -1,301 +1,97 @@
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { spawn } from 'node:child_process';
-import { setTimeout as delay } from 'node:timers/promises';
+import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
+import { chromium } from 'playwright-core';
 import { homepageStopIds } from './lib/homepage-stops.mjs';
 
-const baseUrl = process.env.COSTCOOK_QA_URL || 'http://127.0.0.1:4321';
-const route = `${baseUrl}/`;
-const previewHost = new URL(baseUrl).hostname;
-const localPreview = previewHost === '127.0.0.1' || previewHost === 'localhost';
-const localAnalyticsUrl = new URL('/_vercel/insights/script.js', baseUrl).href;
-// Considered Strategy; not used because this is one exact local-preview
-// exception, not a family of interchangeable request-classification rules.
-const isExpectedLocalAnalytics404 = (response) =>
-	localPreview && response.status === 404 && response.url === localAnalyticsUrl;
-const profile = await mkdtemp(join(tmpdir(), 'costcook-homepage-'));
-const port = 10000 + (process.pid % 40000);
-const browser = spawn('chromium', [
-	'--headless', '--no-sandbox', '--disable-gpu', '--hide-scrollbars',
-	`--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, 'about:blank'
-], { stdio: 'ignore' });
+// Considered Strategy; not used because the same static assertions run at
+// every fixed viewport. No behavior is swapped at runtime.
+// Considered Map; not used because these three viewports are read once in
+// order. A plain array has bounded size and a single linear pass.
+const viewports = [
+  { name: 'desktop', width: 1440, height: 900 },
+  { name: 'tablet', width: 768, height: 1024 },
+  { name: 'phone', width: 390, height: 844 },
+  { name: 'small-phone', width: 320, height: 568 }
+];
 
-const failures = [];
-const assert = (condition, message) => { if (!condition) failures.push(message); };
-let socket;
+const url = process.env.COSTCOOK_QA_URL ?? 'http://127.0.0.1:4321/';
+const chromePath = process.env.CHROME_PATH ?? (existsSync('/opt/google/chrome/google-chrome') ? '/opt/google/chrome/google-chrome' : undefined);
+const browser = await chromium.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
 
 try {
-	let target;
-	for (let attempt = 0; attempt < 50; attempt += 1) {
-		try {
-			const targets = await fetch(`http://127.0.0.1:${port}/json/list`).then((response) => response.json());
-			target = targets.find((entry) => entry.type === 'page');
-			if (target) break;
-		} catch { /* Chromium is still starting. */ }
-		await delay(100);
-	}
-	if (!target) throw new Error('Chromium DevTools target did not become ready');
+  for (const viewport of viewports) {
+    const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto(url, { waitUntil: 'networkidle', timeout: 60_000 });
 
-	socket = new WebSocket(target.webSocketDebuggerUrl);
-	await new Promise((resolve, reject) => {
-		socket.addEventListener('open', resolve, { once: true });
-		socket.addEventListener('error', reject, { once: true });
-	});
+    assert.match(await page.locator('#hero-heading').innerText(), /Know the food cost before you quote the job/);
+    assert.equal(await page.locator('main h1').count(), 1);
+    assert.deepEqual(await page.locator('main > section[id]').evaluateAll((sections) => sections.map((section) => section.id)), homepageStopIds);
+    assert.equal(await page.locator('.journey li').count(), 5);
+    assert.equal(await page.locator('.journey svg').count(), 5);
+    assert.equal(await page.locator('.entry-path').count(), 3);
+    assert.equal(await page.locator('.entry-path .route-steps').count(), 3);
+    assert.equal(await page.locator('.entry-path > p:first-of-type').count(), 3);
+    assert.equal(await page.locator('.route-connector').isVisible(), viewport.width >= 640);
+    assert.match(await page.locator('.entry-path').first().innerText(), /Update and resend a revision/);
+    assert.match(await page.locator('.entry-path').first().innerText(), /agreement for signature/);
+    assert.match(await page.locator('.entry-path').first().innerText(), /Request the deposit/);
+    assert.match(await page.locator('#event-walk .payment-thread').innerText(), /remaining balance/);
+    assert.match(await page.locator('#event-walk').innerText(), /Compare food cost/);
+    assert.match(await page.locator('#event-walk').innerText(), /After confirmation, each route joins the same kitchen work/);
+    assert.match(await page.locator('[data-hero-media]').innerText(), /29\.2%/);
+    assert.match(await page.locator('[data-hero-media]').innerText(), /Illustrative summary/);
+    assert.match(await page.locator('[data-hero-media]').innerText(), /Within 30% target/);
+    assert.match(await page.locator('[data-hero-media]').innerText(), /Quoted event price/);
+    assert.match(await page.locator('[data-hero-media]').innerText(), /Estimated food cost/);
+    assert.match(await page.locator('.hero-demo').innerText(), /Book 15 minutes with the founder/);
+    assert.match(await page.locator('#connections').innerText(), /stripe/);
+    assert.match(await page.locator('#connections').innerText(), /QuickBooks Online/);
+    assert.match(await page.locator('#connections').innerText(), /Coming/);
+    assert.equal(await page.locator('#connections .connection').count(), 5);
+    const promo = page.locator('[data-promo-video]');
+    await promo.locator('summary').first().click();
+    assert.equal(await promo.locator('video').isVisible(), true);
+    assert.equal(await promo.locator('video source').count(), 4);
+    await promo.locator('.hero-transcript summary').click();
+    assert.match(await promo.innerText(), /A client calls about a wedding/);
+    await promo.locator('summary').first().click();
 
-	let messageId = 0;
-	const pending = new Map();
-	const pageErrors = [];
-	const failedRequests = [];
-	socket.addEventListener('message', (event) => {
-		const message = JSON.parse(event.data);
-		if (message.id) {
-			const request = pending.get(message.id);
-			if (!request) return;
-			pending.delete(message.id);
-			if (message.error) request.reject(new Error(message.error.message));
-			else request.resolve(message.result);
-			return;
-		}
-		if (message.method === 'Runtime.exceptionThrown') pageErrors.push(message.params.exceptionDetails.text);
-		if (message.method === 'Network.responseReceived') {
-			const { response } = message.params;
-			if (response.status >= 400 && !isExpectedLocalAnalytics404(response)) {
-				failedRequests.push(`${response.status} ${response.url}`);
-			}
-		}
-	});
+    const primary = page.locator('[data-hero-cta]');
+    assert.match(await primary.innerText(), /Start free trial/);
+    if (viewport.width >= 768) {
+      const trialTop = await primary.evaluate((element) => element.getBoundingClientRect().top);
+      const videoTop = await promo.locator('summary').first().evaluate((element) => element.getBoundingClientRect().top);
+      assert.equal(trialTop, videoTop, `${viewport.name}: trial and film actions share a row`);
+    }
+    await primary.focus();
+    assert.equal(await primary.evaluate((element) => element === document.activeElement), true);
+    assert.equal(await page.locator('#kitchen .dish-row').count(), 4);
+    assert.match(await page.locator('#kitchen .cost-total').innerText(), /\$22\.96/);
+    assert.match(await page.locator('#kitchen .cost-total').innerText(), /24\.2% food cost/);
+    await page.locator('#kitchen .cost-proof summary').click();
+    assert.equal(await page.locator('#kitchen img').getAttribute('alt')?.then((alt) => alt.length > 40), true);
+    await page.locator('#kitchen img').scrollIntoViewIfNeeded();
+    assert.equal(await page.locator('#kitchen img').evaluate(async (image) => { await image.decode(); return image.naturalWidth > 0; }), true);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${viewport.name}: page overflows horizontally`);
+    if (viewport.name === 'small-phone') {
+      await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'small-phone: page overflows at 200% text');
+    }
+    assert.deepEqual(errors, [], `${viewport.name}: page errors`);
+    await page.close();
+  }
 
-	const send = (method, params = {}) => new Promise((resolve, reject) => {
-		messageId += 1;
-		pending.set(messageId, { resolve, reject });
-		socket.send(JSON.stringify({ id: messageId, method, params }));
-	});
-	const evaluate = async (expression) => {
-		const result = await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
-		return result.result.value;
-	};
-	const viewport = (width, height, mobile = false) => send('Emulation.setDeviceMetricsOverride', {
-		width, height, deviceScaleFactor: 1, mobile
-	});
-	const navigate = async () => {
-		await send('Page.navigate', { url: route });
-		for (let attempt = 0; attempt < 50; attempt += 1) {
-			if (await evaluate(`document.readyState === 'complete' && location.href === ${JSON.stringify(route)}`)) break;
-			await delay(100);
-		}
-		await evaluate(`document.fonts.ready.then(() => {
-			document.querySelectorAll('[data-reveal]').forEach((element) => {
-				element.classList.remove('reveal-pending');
-				element.classList.add('revealed');
-			});
-			document.getAnimations().forEach((animation) => animation.finish());
-		})`);
-		await delay(50);
-	};
-	const capture = async (name, fullPage = true) => {
-		await evaluate(`new Promise((resolve) => {
-			document.documentElement.style.scrollBehavior = 'auto';
-			scrollTo(0, 0);
-			requestAnimationFrame(() => requestAnimationFrame(resolve));
-		})`);
-		const viewportShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true });
-		await writeFile(join(tmpdir(), `costcook-homepage-${name}-fold.png`), Buffer.from(viewportShot.data, 'base64'));
-		if (fullPage) {
-			const metrics = await send('Page.getLayoutMetrics');
-			const { width, height } = metrics.cssContentSize;
-			const shot = await send('Page.captureScreenshot', {
-				format: 'png', fromSurface: true, captureBeyondViewport: true,
-				clip: { x: 0, y: 0, width, height, scale: 1 }
-			});
-			await writeFile(join(tmpdir(), `costcook-homepage-${name}.png`), Buffer.from(shot.data, 'base64'));
-		}
-	};
-
-	await Promise.all([send('Page.enable'), send('Runtime.enable'), send('Network.enable')]);
-
-	// Considered Strategy; not used because viewport adaptation is declarative
-	// layout with one content order, not interchangeable runtime behavior.
-	for (const [width, height, mobile] of [[1440, 900, false], [1024, 768, false], [768, 1024, true], [844, 390, true], [390, 844, true], [320, 844, true]]) {
-		await viewport(width, height, mobile);
-		await navigate();
-		const state = await evaluate(`(() => {
-			const visibleActions = [...document.querySelectorAll('a, button, summary')].filter((element) => {
-				const style = getComputedStyle(element);
-				const rect = element.getBoundingClientRect();
-				return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 4 && rect.height > 4;
-			});
-			const heroFigure = document.querySelector('main > section:first-child figure');
-			return {
-				overflow: document.documentElement.scrollWidth - innerWidth,
-				minTarget: Math.min(...visibleActions.map((action) => action.getBoundingClientRect().height)),
-				headerHeight: document.querySelector('header').getBoundingClientRect().height,
-				heroProofTop: heroFigure.getBoundingClientRect().top,
-				hasPrimary: Boolean(document.querySelector('main > section:first-child .btn-primary')),
-				hasViewportFit: document.querySelector('meta[name="viewport"]')?.content.includes('viewport-fit=cover')
-			};
-		})()`);
-		assert(state.overflow === 0, `${width}x${height}: horizontal overflow is ${state.overflow}px`);
-		assert(state.minTarget >= 44, `${width}x${height}: smallest visible action is ${state.minTarget}px`);
-		assert(state.headerHeight < 150, `${width}x${height}: shared header is ${state.headerHeight}px tall`);
-		assert(state.hasPrimary, `${width}x${height}: hero primary action is missing`);
-		if (width <= 390) assert(state.heroProofTop < height, `${width}x${height}: product proof begins below the first viewport at ${state.heroProofTop}px`);
-		assert(state.hasViewportFit, `${width}x${height}: viewport-fit=cover is missing`);
-		if (width === 390) await capture('mobile');
-		if (width === 320) await capture('narrow', false);
-	}
-
-	// The Features panel is offered from 640px; below that it lives in Menu
-	// (one-row phone header, 2026-10-07).
-	await viewport(640, 844, true);
-	await navigate();
-	const menu = await evaluate(`(() => {
-		const details = document.querySelector('[data-features-menu]');
-		details.open = true;
-		const panel = details.querySelector('summary + div');
-		const rect = panel.getBoundingClientRect();
-		const pageTop = scrollY;
-		panel.scrollTop = panel.scrollHeight;
-		const links = panel.querySelectorAll('a');
-		const last = links[links.length - 1].getBoundingClientRect();
-		return {
-			bottom: rect.bottom,
-			clientHeight: panel.clientHeight,
-			scrollHeight: panel.scrollHeight,
-			pageStayedPut: scrollY === pageTop,
-			lastVisible: last.top >= rect.top && last.bottom <= rect.bottom
-		};
-	})()`);
-	assert(menu.bottom <= 844, `mobile menu: panel bottom is ${menu.bottom}px below the viewport`);
-	assert(menu.scrollHeight > menu.clientHeight, 'mobile menu: long destinations are not contained in a scroll region');
-	assert(menu.pageStayedPut, 'mobile menu: reaching the final destination scrolls the page');
-	assert(menu.lastVisible, 'mobile menu: final destination cannot be brought into the panel viewport');
-	await evaluate(`document.querySelector('[data-features-menu] > div').scrollTop = 0`);
-	const menuShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true });
-	await writeFile(join(tmpdir(), 'costcook-homepage-mobile-menu.png'), Buffer.from(menuShot.data, 'base64'));
-
-	await navigate();
-	const sticky = await evaluate(`(() => new Promise((resolve) => {
-		// Partway into the rail (its second stage), not after it: the bar must
-		// carry the primary through the event walk, where the page has none.
-		const stage = document.querySelectorAll('#event-walk [data-rail-stage]')[1];
-		document.documentElement.style.scrollBehavior = 'auto';
-		scrollTo(0, stage.getBoundingClientRect().top + scrollY);
-		requestAnimationFrame(() => requestAnimationFrame(() => {
-			const bar = document.querySelector('[data-sticky-cta]');
-			const action = bar.querySelector('a');
-			resolve({ hidden: bar.hidden, actionHeight: action.getBoundingClientRect().height });
-		}));
-	}))()`);
-	assert(!sticky.hidden, 'mobile sticky action does not appear inside the event walk');
-	assert(sticky.actionHeight >= 44, `mobile sticky action is ${sticky.actionHeight}px tall`);
-
-	await viewport(320, 844, true);
-	await navigate();
-	const zoom = await evaluate(`(() => new Promise((resolve) => {
-		document.querySelector('[data-features-menu]').open = false;
-		document.documentElement.style.fontSize = '200%';
-		requestAnimationFrame(() => {
-			const escaped = [...document.body.querySelectorAll('*')].filter((element) => {
-				if (element.closest('details:not([open])')) return false;
-				const rect = element.getBoundingClientRect();
-				return rect.width > 0 && (rect.left < -1 || rect.right > innerWidth + 1);
-			});
-			resolve({
-				overflow: document.documentElement.scrollWidth - innerWidth,
-				escaped: escaped.map((element) => element.tagName.toLowerCase() + '.' + (element.className || ''))
-			});
-		});
-	}))()`);
-	assert(zoom.overflow === 0, `320px at 200% text: horizontal overflow is ${zoom.overflow}px`);
-	assert(zoom.escaped.length === 0, `320px at 200% text: escaped elements: ${zoom.escaped.join(', ')}`);
-
-	// 390 AT 200% TEXT, ADDED 2026-09-05. 320 was the only width this check ran
-	// at, and 390 is the modal phone for the reader this site is written for: a
-	// caterer on a handset mid-shift. The two are not the same test. Several
-	// sections change grid between them, so a layout can hold at 320 and break
-	// at 390 with nothing in the build able to see it.
-	//
-	// MEASURE AGAINST innerWidth, NEVER documentElement.clientWidth. Under CDP
-	// device emulation Chromium reports innerWidth larger than clientWidth (411
-	// against 390 here), so a clientWidth reference reports a constant ~21px of
-	// phantom overflow on every page and stays constant against a baseline,
-	// which makes it look exactly like a real pre-existing defect. It cost a
-	// wrong bug report on 2026-09-05.
-	await viewport(390, 844, true);
-	await navigate();
-	const zoom390 = await evaluate(`(() => new Promise((resolve) => {
-		document.querySelector('[data-features-menu]').open = false;
-		document.documentElement.style.fontSize = '200%';
-		requestAnimationFrame(() => {
-			const escaped = [...document.body.querySelectorAll('*')].filter((element) => {
-				if (element.closest('details:not([open])')) return false;
-				const rect = element.getBoundingClientRect();
-				return rect.width > 0 && (rect.left < -1 || rect.right > innerWidth + 1);
-			});
-			resolve({
-				overflow: document.documentElement.scrollWidth - innerWidth,
-				escaped: escaped.map((element) => element.tagName.toLowerCase() + '.' + (element.className || ''))
-			});
-		});
-	}))()`);
-	assert(zoom390.overflow === 0, `390px at 200% text: horizontal overflow is ${zoom390.overflow}px`);
-	assert(zoom390.escaped.length === 0, `390px at 200% text: escaped elements: ${zoom390.escaped.join(', ')}`);
-
-	// The hero film is the browser's own player: a click on it starts the
-	// film (owner, 2026-10-07: "the video is not playable" with a scripted
-	// play button).
-	await viewport(1440, 900, false);
-	await navigate();
-	await evaluate(`scrollTo(0, 0)`);
-	const film = await evaluate(`(() => { const v = document.querySelector('[data-hero-media] video'); const r = v.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2, controls: v.controls, hit: document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2) === v, hitName: String(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)?.outerHTML).slice(0, 80) + ' at ' + Math.round(r.y) }; })()`);
-	assert(film.controls, 'hero film: the native controls are missing');
-	assert(film.hit, `hero film: something covers the player (${film.hitName})`);
-	for (const type of ['mousePressed', 'mouseReleased']) {
-		await send('Input.dispatchMouseEvent', { type, x: film.x, y: film.y, button: 'left', clickCount: 1 });
-	}
-	await new Promise((resolve) => setTimeout(resolve, 1500));
-	const started = await evaluate(`!document.querySelector('[data-hero-media] video').paused`);
-	assert(started, 'hero film: a click on the player did not start the film');
-
-	await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
-	await viewport(390, 844, true);
-	await navigate();
-	const reduced = await evaluate(`getComputedStyle(document.querySelector('.anim-enter')).animationName`);
-	assert(reduced === 'none', `reduced motion: hero animation is ${reduced}`);
-
-	await send('Emulation.setScriptExecutionDisabled', { value: true });
-	await navigate();
-	const noScript = await evaluate(`(() => ({
-		heading: document.querySelector('h1')?.textContent.trim(),
-		primary: Boolean(document.querySelector('main .btn-primary')),
-		sections: [...document.querySelectorAll('main > section')].map(section => section.id).filter(Boolean)
-	}))()`);
-	assert(noScript.heading?.startsWith('Know the food cost before you quote the job.'), 'no JavaScript: homepage identity is missing');
-	assert(noScript.primary, 'no JavaScript: primary action is missing');
-	assert(await evaluate(`document.querySelector('[data-hero-media] video').controls`), 'no JavaScript: the hero film must keep its native controls');
-	// Assert visitor destinations rather than an obsolete minimum section count.
-	// The one explicit stop order, shared with check-landing-claims and check-dist.
-	assert(noScript.sections.join(',') === homepageStopIds.join(','), `no JavaScript: homepage sections read [${noScript.sections.join(', ')}]; expected [${homepageStopIds.join(', ')}]`);
-
-	assert(pageErrors.length === 0, `browser: ${pageErrors.length} page exception(s): ${pageErrors.join(', ')}`);
-	assert(failedRequests.length === 0, `browser: failed requests: ${failedRequests.join(', ')}`);
+  const noScript = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  await noScript.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+  assert.equal(await noScript.locator('.journey li').count(), 5);
+  await noScript.locator('[data-promo-video] > summary').click();
+  assert.equal(await noScript.locator('[data-promo-video] video').isVisible(), true);
+  assert.equal(await noScript.locator('#connections a[href="/features/integrations"]').count(), 1);
+  assert.equal(await noScript.locator('[data-hero-cta]').count(), 1);
+  await noScript.close();
+  console.log('verify-homepage: four viewports, product proof, navigation, keyboard focus, no-JS content and no overflow passed');
 } finally {
-	if (socket?.readyState === WebSocket.OPEN) socket.close();
-	browser.kill('SIGTERM');
-	// Chromium can still be flushing its profile when we get here, and an
-	// ENOTEMPTY thrown from the finally block replaces the assertion results
-	// with a teardown stack trace, which is how a failing run reads as a crash.
-	try {
-		await rm(profile, { recursive: true, force: true });
-	} catch {
-		// A leftover temp profile is not a verification result.
-	}
+  await browser.close();
 }
-
-if (failures.length > 0) {
-	console.error(`Homepage browser verification failed:\n- ${failures.join('\n- ')}`);
-	process.exit(1);
-}
-
-console.log('Homepage browser verification passed: six viewports, phone-first fold, touch targets, contained mobile navigation, sticky action, 200% text at 320 and 390, reduced motion, a hero film that plays from a click, and no JavaScript.');

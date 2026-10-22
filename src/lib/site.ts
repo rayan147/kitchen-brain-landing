@@ -265,20 +265,19 @@ export const siteMap: readonly { heading: string; links: readonly SiteLink[] }[]
 		heading: 'Product',
 		links: [
 			{ label: 'Every feature', href: '/features', phoneOnly: true },
+			{ label: 'Integrations', href: '/features/integrations' },
 			...nav.filter((item) => item.header !== 'resources')
 		]
 	},
 	...resourcesMenu.groups.map((group) => ({
 		heading: group,
-		links: [
-			...resourceNav.filter((item) => item.group === group),
-			...(group === 'Talk to us'
-				? [
-						{ label: site.phone, href: site.phoneHref },
-						{ label: site.email, href: `mailto:${site.email}` }
-					]
-				: [])
-		]
+		links: group === 'Talk to us'
+			? [
+				{ label: site.email, href: `mailto:${site.email}` },
+				{ label: site.phone, href: site.phoneHref },
+				...resourceNav.filter((item) => item.group === group)
+			]
+			: resourceNav.filter((item) => item.group === group)
 	}))
 ];
 

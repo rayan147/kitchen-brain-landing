@@ -1,121 +1,122 @@
 ---
-/**
- * The hero (canvas S1). Story: docs/stories/homepage-redesign-2026-10.story.md
- * Rule 5: one accent word, in kitchen green, matching the primary button and
- * nothing else. Rule 6: the frame is flat, no tilt.
- *
- * The media slot holds the promo film (owner, 2026-10-07): the browser's own
- * player, no autoplay, so nothing moves on its own. preload="metadata", not
- * "none": with "none" Chrome's native player ignored clicks on the poster and
- * on its play button (owner: "the video is not playable"); "metadata" is what
- * the Sage film already plays with, and the MP4 is faststart, so it is a small
- * read at the head of the file. A scripted play button was tried first and
- * hit the same dead click. The poster is the film's own "What do I charge a
- * head?" card: nothing on it sits where the control bar does.
- * Poster replaced 2026-10-15 (benchmark review): the quote card was the
- * emptiest frame on the page. The poster is now the Service card from the
- * film's own food-cost frame at 0:18 ($95.00 a guest, 29.2%, the hero's claim
- * on screen), above the burned-in caption, on the film's background with the
- * bottom quarter left empty for the control bar (docs/proof/home-manifest.json).
- * Still the native player: a scripted play button left it dead to clicks.
- * The film is music only and its words are burned in, so there is no
- * caption track to double them; the transcript below the player carries the
- * same words for anyone who cannot watch.
- *
- * Considered Strategy (still vs video media); not used because there is one
- * medium at a time, not a runtime choice.
- */
-import { cta, demoCta, featuresMenu, launchPlan, site } from '../../lib/site';
+import { cta, demoCta, launchPlan, site } from '../../lib/site';
 import { heroFilm } from '../../lib/home';
+
+// Considered Composite; not used because the hero is one fixed editorial
+// example, not a tree of interchangeable product panels.
 ---
-<!-- story: docs/stories/homepage-redesign-2026-10.story.md -->
+<!-- story: docs/stories/homepage-mockup-2026-10.story.md -->
 <section class="home-band home-band--cream hero" aria-labelledby="hero-heading">
-	<div class="container-page hero-grid">
-		<div>
-			<p class="home-eyebrow">Catering software, built by a chef</p>
-			<h1 id="hero-heading" class="anim-enter hero-h1">Know the food <span class="accent">cost</span> before you quote the job.</h1>
-			<!-- One sentence, not the whole walk (benchmark review 2026-10-15): the
-			     five-step lede ran seven lines on a 390px phone and pushed the film
-			     off the first screen, and the rail below walks the same steps with
-			     their screens. -->
-			<p class="home-body mt-5 max-w-[44ch]">For caterers and restaurants that cater. Price the job from your recipes, and the client accepts your proposal on their phone.</p>
-			<div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
-				<a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary" data-hero-cta>{cta.label}</a>
-				<a href={demoCta.href} aria-label={demoCta.ariaLabel} class="btn-quiet">{demoCta.label}</a>
-			</div>
-			<p class="home-small mt-3"><strong>{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} {launchPlan.unit}, {launchPlan.crew}. The card starts the subscription; you pay $0 until day {launchPlan.trialDays + 1}.</p>
-			<!-- The founder's credential, moved up from the close (benchmark review
-			     2026-10-15): with no customer quote yet, a named chef is the one
-			     honest proof a cold visitor can check in the first screen. The
-			     close keeps the full line beside the plan. -->
-			<p class="hero-founder home-small mt-5" data-founder-hero>
-				<img src="/founder.jpg" alt="" width="384" height="384" decoding="async" class="hero-founder-photo" />
-				<span>{site.founderName}, chef and founder, cooked professionally for twelve years.</span>
-			</p>
-		</div>
-		<figure class="hero-media" data-hero-media>
-			<video class="hero-film" controls playsinline preload="metadata" poster={heroFilm.poster} width={heroFilm.width} height={heroFilm.height} aria-label={heroFilm.label}>
-				<!-- MP4 first, as the owner's Chrome played it (2026-10-07); below 64rem
-				     the 720p pair (6MB) instead of the 1080p one (15.7MB). -->
-				<source src={heroFilm.mp4} type="video/mp4" media={heroFilm.fullFrom} />
-				<source src={heroFilm.mp4720} type="video/mp4" />
-				<source src={heroFilm.webm} type="video/webm" media={heroFilm.fullFrom} />
-				<source src={heroFilm.webm720} type="video/webm" />
-				<a href={heroFilm.mp4}>Download the film (MP4)</a>
-			</video>
-			<figcaption class="home-small mt-3">One sample wedding, inquiry to food cost. 1 min 55 s, music only, every word on screen.</figcaption>
-			<p class="mt-1"><a href={featuresMenu.tourHref} class="home-guide">{featuresMenu.tourLabel}</a></p>
-			<details class="hero-transcript home-small mt-2">
-				<summary>Read what the film shows</summary>
-				<p class="mt-2">{heroFilm.opening}</p>
-				{heroFilm.chapters.map((chapter) => (
-					<div class="mt-2">
-						{chapter.question && <p class="hero-transcript-q">{chapter.question}</p>}
-						{chapter.lines.map((line) => <p>{line}</p>)}
-					</div>
-				))}
-				<p class="mt-2">{heroFilm.end}</p>
-			</details>
-		</figure>
-	</div>
+  <div class="container-page hero-grid">
+    <div class="hero-copy">
+      <p class="home-eyebrow">Catering software, built by a chef</p>
+      <h1 id="hero-heading">Know the food <span>cost</span> before you quote the job.</h1>
+      <p class="home-body hero-lede">For caterers and restaurants that cater. Price the job from your recipes, and the client accepts your proposal on their phone.</p>
+      <div class="hero-actions">
+        <a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary" data-hero-cta>{cta.label}</a>
+        <details class="hero-video" data-promo-video>
+          <summary><span class="play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m10 7 6 5-6 5z" fill="var(--color-paper)"/></svg></span> Watch 2-min video</summary>
+          <div class="hero-video-content">
+            <video controls playsinline preload="metadata" poster={heroFilm.poster} width={heroFilm.width} height={heroFilm.height} aria-label={heroFilm.label}>
+              <source src={heroFilm.mp4} type="video/mp4" media={heroFilm.fullFrom} />
+              <source src={heroFilm.mp4720} type="video/mp4" />
+              <source src={heroFilm.webm} type="video/webm" media={heroFilm.fullFrom} />
+              <source src={heroFilm.webm720} type="video/webm" />
+              <a href={heroFilm.mp4}>Download the film (MP4)</a>
+            </video>
+            <p class="home-small">One sample wedding, inquiry to food cost. 1 min 55 s, music only, every word on screen.</p>
+            <details class="hero-transcript home-small">
+              <summary>Read what the film shows</summary>
+              <p>{heroFilm.opening}</p>
+              {heroFilm.chapters.map((chapter) => <div>{chapter.question && <p><strong>{chapter.question}</strong></p>}{chapter.lines.map((line) => <p>{line}</p>)}</div>)}
+              <p>{heroFilm.end}</p>
+            </details>
+          </div>
+        </details>
+      </div>
+      <a href={demoCta.href} aria-label={demoCta.ariaLabel} class="hero-demo">{demoCta.label} with the founder <span aria-hidden="true">→</span></a>
+      <p class="home-small hero-terms"><strong>{launchPlan.trialDays} days free</strong> · Then {launchPlan.displayPrice} {launchPlan.unit} · {launchPlan.crew}<br />Card required to start · $0 charged today</p>
+      <p class="home-small founder" data-founder-hero data-founder-trust>
+        <img src="/founder.jpg" alt="" width="384" height="384" decoding="async" />
+        <span><strong>{site.founderName}</strong>, chef and founder, cooked professionally for twelve years.</span>
+      </p>
+    </div>
+    <figure class="hero-proof" data-hero-media>
+      <div class="proof-topline"><span>Sample event · 150 guests</span><span class="proof-status">Menu &amp; service</span></div>
+      <div class="proof-title">
+        <p class="proof-label">Nair &amp; Castellano wedding</p>
+        <h2>Wedding Plated Dinner</h2>
+        <p>Price and food cost before the proposal goes out.</p>
+      </div>
+      <dl class="proof-metrics">
+        <div><dt>Price per guest</dt><dd>$95.00</dd></div>
+        <div><dt>Food cost per guest</dt><dd>$27.77</dd></div>
+        <div><dt>Food cost</dt><dd class="proof-green">29.2%</dd><span class="proof-target"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="m5.5 10 3 3 6-6" stroke="var(--color-paper)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Within 30% target</span></div>
+      </dl>
+      <div class="proof-progress"><div class="proof-rule" aria-hidden="true"><span></span></div><span>30% target</span></div>
+      <dl class="proof-totals">
+        <div><dt>Quoted event price</dt><dd>$14,250.00</dd></div>
+        <div><dt>Estimated food cost</dt><dd>$4,165.50</dd></div>
+      </dl>
+      <figcaption><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M10 9v5M10 6v.1" stroke-linecap="round"/></svg><span>Illustrative summary from a CostCook sample kitchen.<br />Food cost excludes staff, rentals, delivery and tax.</span></figcaption>
+    </figure>
+    <div class="hero-note" aria-hidden="true">
+      <svg viewBox="0 0 70 50" width="70" height="50" fill="none"><path d="M69 3C38 6 16 19 3 45m0 0 1-15m-1 15 14-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p>See the price and food cost before you send the proposal.</p>
+    </div>
+  </div>
 </section>
 
 <style>
-	/* The header shares the hero's cream (owner 2026-10-07), so the band's
-	   full top padding read as a 160px gap under it at 1440 (design review).
-	   The hero opens on the tight step instead. */
-	.hero { padding-top: var(--spacing-section-tight); }
-	/* Short screens (a 320x568 phone, any phone on its side): the trial button
-	   ended at 588px on a 568px screen (mobile review 2026-10-09). The
-	   opening tightens so the button lands on the first screen; the header's
-	   Free trial covers the landscape case, where four lines of lede cannot
-	   fit 390px anyway. */
-	@media (max-height: 40rem) {
-		.hero { padding-top: 1.25rem; }
-		.hero-h1 { margin-top: .5rem; }
-	}
-	.hero-grid { display: grid; gap: 3rem; align-items: center; }
-	.hero-h1 {
-		margin-top: 1rem;
-		font-family: var(--font-display);
-		font-size: var(--text-display-hero);
-		line-height: var(--text-display--line-height);
-		letter-spacing: -0.015em;
-		font-weight: 600;
-		text-wrap: balance;
-	}
-	.accent { color: var(--color-green-deep); }
-	.hero-media { margin: 0; width: 100%; min-width: 0; }
-	/* 16:9 before the poster loads, so nothing below shifts. Same frame as
-	   every other app capture: 8px radius, one lift shadow. */
-	.hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 8px; box-shadow: var(--shadow-lift); background: var(--color-paper); }
-	.hero-transcript summary { cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; width: fit-content; min-height: 2.75rem; display: flex; align-items: center; gap: 0.5rem; }
-	.hero-transcript summary::before { content: '▸'; text-decoration: none; }
-	.hero-transcript[open] summary::before { content: '▾'; }
-	.hero-transcript-q { font-weight: 600; }
-	.hero-founder { display: flex; align-items: center; gap: .75rem; }
-	.hero-founder-photo { width: 2.75rem; height: 2.75rem; flex: none; border-radius: 999px; object-fit: cover; }
-	/* The film needs width to stay legible, so the media column is the wider
-	   one on desktop (a 24rem still column left it 216px tall). */
-	@media (min-width: 64rem) { .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 3.5rem; } }
+  .hero { padding-block: clamp(2.5rem, 5vw, 5rem); }
+  .hero-grid { position: relative; display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+  h1 { margin-top: .9rem; max-width: 13ch; font-family: var(--font-display); font-size: var(--text-display-hero); line-height: var(--text-display--line-height); letter-spacing: -.015em; font-weight: 600; text-wrap: balance; }
+  h1 span { color: var(--color-green-deep); }
+  .hero-lede { margin-top: 1.25rem; max-width: 45ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; margin-top: 1.75rem; }
+  .hero-actions .btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 3.5rem; padding-inline: 1.8rem; }
+  .hero-video { min-width: 0; }
+  .hero-video > summary { display: flex; align-items: center; gap: .6rem; min-height: 3.5rem; padding: .65rem 1.25rem; border: 1px solid var(--color-green-deep); border-radius: 999px; color: var(--color-green-deep); font-weight: 700; cursor: pointer; }
+  .hero-video > summary::marker { content: ''; }
+  .hero-video > summary:hover { background: var(--color-softgreen); }
+  .play-icon { display: grid; place-items: center; }
+  .hero-video[open] { flex-basis: 100%; }
+  .hero-video-content { max-width: 35rem; padding-block: .75rem; }
+  .hero-video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--color-paper); }
+  .hero-video-content > p { margin-top: .5rem; }
+  .hero-transcript { margin-top: .6rem; }
+  .hero-transcript summary { min-height: 2.75rem; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+  .hero-transcript div { margin-top: .7rem; }
+  .hero-demo { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; margin-top: .6rem; color: var(--color-green-deep); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+  .hero-terms { margin-top: .55rem; max-width: 48ch; }
+  .founder { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: 1.5rem; max-width: 31rem; }
+  .founder img { width: 2.75rem; height: 2.75rem; flex: none; border-radius: 999px; object-fit: cover; }
+  .founder span { flex: 1 1 12rem; min-width: 0; }
+  .hero-proof { min-width: 0; margin: 0; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--color-ticket-rule); border-radius: 8px; background: var(--color-paper); box-shadow: var(--shadow-lift); }
+  .proof-topline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; color: var(--color-ink-soft); font-size: var(--text-caption); }
+  .proof-status { border-radius: 999px; background: var(--color-softgreen); padding: .25rem .65rem; color: var(--color-green-deep); font-weight: 700; }
+  .proof-title { padding-block: 1.4rem; border-bottom: 1px solid var(--color-hairline); }
+  .proof-label { color: var(--color-amber-deep); font-size: var(--text-label-sm); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .proof-title h2 { margin-top: .35rem; font-family: var(--font-display); font-size: var(--text-h3-step); line-height: 1.15; font-weight: 600; }
+  .proof-title > p:last-child { margin-top: .35rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); }
+  .proof-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; padding-block: 1.4rem; }
+  .proof-metrics div { min-width: 0; }
+  .proof-metrics dt, .proof-totals dt { color: var(--color-ink-soft); font-size: var(--text-body-sm); }
+  .proof-metrics dd { margin-top: .25rem; font-size: var(--text-record); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .proof-green { color: var(--color-green-deep); }
+  .proof-target { display: inline-flex; align-items: center; gap: .3rem; max-width: 100%; margin-top: .35rem; padding: .25rem .45rem; border-radius: 999px; background: var(--color-softgreen); color: var(--color-green-deep); font-size: var(--text-label-sm); font-weight: 700; }
+  .proof-target svg { flex: none; }
+  .proof-progress { display: flex; align-items: center; gap: .75rem; }
+  .proof-progress > span { flex: none; color: var(--color-ink); font-size: var(--text-label-sm); font-weight: 700; }
+  .proof-rule { flex: 1; height: .45rem; border-radius: 999px; background: var(--color-hairline); }
+  .proof-rule span { display: block; width: 29.2%; height: 100%; border-radius: inherit; background: var(--color-green-deep); }
+  .proof-totals { margin-top: 1.15rem; }
+  .proof-totals div { display: flex; justify-content: space-between; gap: 1rem; padding-block: .55rem; border-top: 1px solid var(--color-hairline); }
+  .proof-totals dd { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+  figcaption { display: flex; align-items: flex-start; gap: .5rem; margin-top: 1rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.45; }
+  figcaption svg { flex: none; margin-top: .1rem; }
+  .hero-note { display: none; }
+  @media (min-width: 64rem) { .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); } }
+  @media (min-width: 90rem) { .hero-note { position: absolute; top: 2rem; left: calc(100% + 1rem); display: block; width: 7.5rem; color: var(--color-amber-deep); transform: rotate(-6deg); } .hero-note p { font-family: var(--font-display); font-size: var(--text-body); font-style: italic; line-height: 1.3; } }
+  @media (max-width: 25rem) { .proof-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } .proof-metrics div:last-child { grid-column: 1 / -1; } }
 </style>

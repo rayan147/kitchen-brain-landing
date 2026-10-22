@@ -18,13 +18,12 @@
  * Considered Iterator; not used because this is a flat, fixed list read by
  * plain array methods.
  */
-// 2026-10-06: the canvas rebuild (docs/stories/homepage-redesign-2026-10.story.md),
-// seven bands alternating cream and soft amber after the hero.
+// 2026-10-22: the compact mockup sequence. An ordered array fits four fixed
+// sections; no key lookup or recursive structure is needed.
 export const homepageStops = [
 	{ id: 'event-walk', component: 'HomeEventWalk' },
 	{ id: 'kitchen', component: 'HomeKitchen' },
-	{ id: 'front', component: 'HomeFrontOfHouse' },
-	{ id: 'sage', component: 'HomeSage' },
+	{ id: 'connections', component: 'HomeConnections' },
 	{ id: 'start', component: 'HomeClose' }
 ];
 

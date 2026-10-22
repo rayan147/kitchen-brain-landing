@@ -1,177 +1,114 @@
 ---
-/**
- * The event walk as the workflow rail
- * (docs/superpowers/specs/2026-10-06-workflow-rail.md). It replaced the stage
- * tabs (rule 4) and the "How it fits together" tickets on 2026-10-06, by owner
- * decision: tabs showed one stage at a time and hid the very connection the
- * band exists to show.
- *
- * Every stage renders in order with or without JavaScript. Between two stages
- * a carry line names what passes forward; amber rings sit over the real frame
- * where that stage's figure is (src/lib/home.ts, measured from the PNG). The
- * rail and rings are decoration (aria-hidden); the figures are in the alt text
- * and the carry lines.
- *
- * The one script marks stages as reached while scrolling (colour only);
- * without it, or with reduced motion, every node is filled.
- *
- * Considered Composite; not used because the rail is one flat ordered list.
- */
 import HomeBand from './HomeBand.astro';
-import SectionHandoff from '../SectionHandoff.astro';
-import HomeFrame from './HomeFrame.astro';
-import { eventStages } from '../../lib/home';
+import HomeStepIcon from './HomeStepIcon.astro';
+
+// Considered Composite; not used because these fixed confirmation routes join
+// one fixed kitchen sequence. Their decision points need explicit copy, not a
+// recursive workflow renderer.
 ---
+<!-- story: docs/stories/homepage-mockup-2026-10.story.md -->
 <HomeBand
-	id="event-walk"
-	tone="amber"
-	eyebrow="One wedding, 150 guests"
-	heading="From the first call to the shopping list."
-	lede="You chase the deposit by text, and the balance slips your mind until the week of the party. Here, each step picks up where the last one left off."
+  id="event-walk"
+  tone="amber"
+  eyebrow="Three ways in, one kitchen workflow"
+  heading="From the first call to the shopping list."
+  lede="A custom inquiry can move through proposal revisions, signature and a deposit before booking. Priced orders take a shorter route into the same kitchen work."
 >
-	<ol role="list" class="rail" data-event-walk>
-		{eventStages.map((stage, index) => (
-			<li class="stage" data-event-stage={stage.id} data-rail-stage>
-				<span class="node" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-				<div class="stage-copy">
-					<p class="home-eyebrow">{String(index + 1).padStart(2, '0')} · {stage.tab}</p>
-					<h3 class="home-h3">{stage.heading}</h3>
-					<p class="home-body mt-4" data-booking-payments={stage.id === 'deposit' ? 'event-payments' : undefined}>{stage.body}</p>
-					<a href={stage.guide.href} class="home-guide">{stage.guide.label}</a>
-				</div>
-				<figure class:list={['stage-figure', { 'stage-figure--phone': stage.shot.phone }]}>
-						<figcaption class="home-small stage-caption">Product screenshot</figcaption>
-					<div class="frame">
-						<HomeFrame shot={stage.shot} />
-						{'focus' in stage && stage.focus.map((box) => (
-							<span
-								class="ring"
-								aria-hidden="true"
-								style={`--x:${box.x}%;--y:${box.y}%;--w:${box.w}%;--h:${box.h}%` + (box.small ? `;--xs:${box.small.x}%;--ys:${box.small.y}%;--ws:${box.small.w}%;--hs:${box.small.h}%` : '')}
-							></span>
-						))}
-					</div>
-				</figure>
-				{'carries' in stage && (
-					<p class="carry" data-carry>
-						<span class="sr-only">Carries forward to the next step: </span>
-						<span aria-hidden="true">Carries forward · </span>{stage.carries}
-					</p>
-				)}
-			</li>
-		))}
-	</ol>
-	<p class="home-small mt-10">Rather click through it yourself? <a href="/tour/main" class="home-guide">Take the product tour</a></p>
-	<SectionHandoff from="event-walk" class="home-handoff" />
+  <div class="entry-paths" aria-label="Ways a job reaches a confirmed kitchen order">
+    <div class="entry-path">
+      <h3>Custom inquiry</h3>
+      <p>A client needs a tailored price.</p>
+      <ol class="route-steps">
+        <li><span class="route-icon"><HomeStepIcon name="quote" /></span><span>Price the menu and send a proposal</span></li>
+        <li><span class="route-icon"><HomeStepIcon name="approval" /></span><span>Client accepts or asks for changes<small>Update and resend a revision.</small></span></li>
+        <li><span class="route-icon"><HomeStepIcon name="agreement" /></span><span>Send the agreement for signature</span></li>
+        <li><span class="route-icon"><HomeStepIcon name="payment" /></span><span>Request the deposit<small>Client pays by email link, or you record it.</small></span></li>
+        <li><span class="route-icon"><HomeStepIcon name="booking" /></span><span>Book the event, then confirm the kitchen order</span></li>
+      </ol>
+      <a class="route-guide" href="/features/events-and-proposals">See proposal to booking <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="entry-path">
+      <h3>CostCook online ordering</h3>
+      <p>On your CostCook page or a widget on your website.</p>
+      <ol class="route-steps">
+        <li><span class="route-icon"><HomeStepIcon name="order" /></span><span>Priced request arrives</span></li>
+        <li><span class="route-icon"><HomeStepIcon name="approval" /></span><span>Kitchen approves or declines</span></li>
+        <li><span class="route-icon"><HomeStepIcon name="payment" /></span><span>Pay link if your booking rule asks for one</span></li>
+        <li><span class="route-icon"><HomeStepIcon name="booking" /></span><span>Payment or approval confirms the order</span></li>
+      </ol>
+      <p class="route-note">A custom request comes to you as an inquiry instead. A deposit rule sends the balance its own pay link and one email reminder.</p>
+    </div>
+    <div class="entry-path">
+      <h3>Saved priced menu</h3>
+      <p>For a direct phone job without a proposal.</p>
+      <ol class="route-steps">
+        <li><span class="route-icon"><HomeStepIcon name="menu" /></span><span>Use the saved menu price</span></li>
+        <li><span class="route-icon"><HomeStepIcon name="approval" /></span><span>Confirm the guest count and details</span></li>
+        <li><span class="route-icon"><HomeStepIcon name="booking" /></span><span>Confirm the kitchen order</span></li>
+      </ol>
+      <p class="route-note">If the client needs an offer to accept, use the proposal route.</p>
+    </div>
+  </div>
+  <svg class="route-connector" viewBox="0 0 1200 72" preserveAspectRatio="none" width="1200" height="72" aria-hidden="true">
+    <path d="M200 0v5c0 31 26 38 64 38h311c17 0 25 11 25 23M600 0v66M1000 0v5c0 31-26 38-64 38H625c-17 0-25 11-25 23" />
+    <circle cx="600" cy="66" r="4" />
+  </svg>
+  <p class="paths-join">After confirmation, each route joins the same kitchen work</p>
+  <ol class="journey" aria-label="Kitchen work after confirmation">
+    <li><span class="step-visual"><span class="step-number">01</span><HomeStepIcon name="purchasing" /></span><strong>Purchasing</strong><span>Create supplier orders</span></li>
+    <li><span class="step-visual"><span class="step-number">02</span><HomeStepIcon name="receiving" /></span><strong>Receiving</strong><span>Check what arrived</span></li>
+    <li><span class="step-visual"><span class="step-number">03</span><HomeStepIcon name="prep" /></span><strong>Prep</strong><span>Prep lists for your team</span></li>
+    <li><span class="step-visual"><span class="step-number">04</span><HomeStepIcon name="packing" /></span><strong>Packing</strong><span>Labels and checklists</span></li>
+    <li><span class="step-visual"><span class="step-number">05</span><HomeStepIcon name="closeout" /></span><strong>Closeout</strong><span>Compare food cost</span></li>
+  </ol>
+  <aside class="payment-thread" aria-label="Payments alongside kitchen work">
+    <span class="payment-thread-icon"><HomeStepIcon name="payment" /></span>
+    <div><strong>Payments continue alongside kitchen work.</strong><p>For a booked custom event, request the remaining balance whenever you choose. CostCook emails the pay link and, if it is still owed, sends a reminder three days before the due date. A split online order gets its own balance link and one email reminder.</p></div>
+  </aside>
+  <p class="journey-proof">The menu, guest count, recipes and costs stay with the kitchen order.</p>
+  <p class="journey-more"><a href="/tour/main" class="home-guide">Follow the sample wedding in the product tour <span aria-hidden="true">→</span></a></p>
 </HomeBand>
 
-<script>
-	// Fill each node once its stage has been reached. Reduced motion, or no
-	// IntersectionObserver: leave the CSS default (every node filled).
-	const rail = document.querySelector<HTMLElement>('[data-event-walk]');
-	if (rail && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-		rail.classList.add('is-tracking');
-		const observer = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries) {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('is-reached');
-						observer.unobserve(entry.target);
-					}
-				}
-			},
-			{ rootMargin: '0px 0px -40% 0px' }
-		);
-		rail.querySelectorAll('[data-rail-stage]').forEach((stage) => observer.observe(stage));
-	}
-</script>
-
 <style>
-	/* The rail: one line down the left edge, a node per stage. */
-	.rail { position: relative; margin-top: 3rem; padding-left: 3.25rem; }
-	.rail::before {
-		content: '';
-		position: absolute;
-		left: 1.125rem;
-		top: .5rem;
-		bottom: .5rem;
-		border-left: 2px solid var(--color-hairline-strong);
-	}
-	/* minmax(0, 1fr): the implicit auto track grew past 320px at 200% text. */
-	.stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
-	.stage + .stage { margin-top: var(--spacing-section-tight); }
-	/* At 320px and 200% text the rail leaves the copy about 136px: words break
-	   rather than push the page sideways. */
-	.stage-copy, .carry { overflow-wrap: anywhere; }
-	.node {
-		position: absolute;
-		left: -3.25rem;
-		top: 0;
-		display: grid;
-		place-items: center;
-		width: 2.25rem;
-		height: 2.25rem;
-		border: 2px solid var(--color-green-deep);
-		border-radius: 999px;
-		background: var(--color-green-deep);
-		color: var(--color-paper);
-		font-size: var(--text-eyebrow);
-		font-weight: 700;
-		font-variant-numeric: tabular-nums;
-		transition: background-color .3s ease, color .3s ease;
-	}
-	.is-tracking .stage:not(.is-reached) .node { background: var(--color-paper); color: var(--color-green-deep); }
-	.stage-figure { margin: 0; }
-	.stage-caption { margin-bottom: .5rem; }
-	.frame { position: relative; }
-	.frame :global(picture) { display: block; }
-	.stage-figure--phone .frame { max-width: 20rem; margin-inline: auto; }
-	/* Phone first: a ring with a `small` box uses it below 48rem, where
-	   HomeFrame serves the phone source; the wide box from 48rem up. */
-	.ring {
-		left: var(--xs, var(--x));
-		top: var(--ys, var(--y));
-		width: var(--ws, var(--w));
-		height: var(--hs, var(--h));
-		position: absolute;
-		border: 2px solid var(--color-amber);
-		border-radius: 8px;
-		box-shadow: 0 0 0 4px rgb(185 118 42 / .18);
-		pointer-events: none;
-	}
-	@media (min-width: 48rem) {
-		.ring { left: var(--x); top: var(--y); width: var(--w); height: var(--h); }
-	}
-	/* The carry line sits on the rail, between this stage and the next. */
-	.carry {
-		position: relative;
-		color: var(--color-amber-deep);
-		font-size: var(--text-eyebrow);
-		font-weight: 700;
-		letter-spacing: .04em;
-	}
-	.carry::before {
-		content: '';
-		position: absolute;
-		left: calc(-3.25rem + 1.125rem - 5px);
-		top: .35em;
-		width: 12px;
-		height: 12px;
-		border-radius: 999px;
-		background: var(--color-amber);
-	}
-	/* Tablet: a phone capture is 20rem at most, so from 48rem it sits beside
-	   its copy instead of alone in a 750px column with 200px of cream either
-	   side (mobile review 2026-10-09). Desktop captures wait for 64rem. */
-	@media (min-width: 48rem) {
-		.stage:has(.stage-figure--phone) { grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); column-gap: 2.5rem; align-items: start; }
-		.stage:has(.stage-figure--phone) .carry { grid-column: 1 / -1; }
-		.stage-copy { max-width: 40rem; }
-	}
-	@media (min-width: 64rem) {
-		.stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); column-gap: 4rem; align-items: start; }
-		.stage:has(.stage-figure--phone) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); column-gap: 4rem; }
-		.carry { grid-column: 1 / -1; }
-	}
-	@media (prefers-reduced-motion: reduce) { .node { transition: none; } }
+  :global(#event-walk) { padding-block: 1.5rem 2rem; background: color-mix(in srgb, var(--color-cream) 88%, var(--color-paper)); }
+  :global(#event-walk .container-page) { max-width: 87rem; }
+  :global(#event-walk .band-head) { max-width: 100%; text-align: center; margin-inline: auto; }
+  :global(#event-walk .band-head .home-h2) { margin-top: .5rem; }
+  :global(#event-walk .band-lede) { max-width: 46rem; margin-inline: auto; }
+  :global(#event-walk .band-lede) { margin-top: .65rem; }
+  .entry-paths { display: grid; gap: 1.75rem; margin-top: 1rem; }
+  .entry-path { display: flex; flex-direction: column; min-width: 0; padding: 1.2rem 1.8rem 1rem; border: 1px solid var(--color-ticket-rule); border-radius: .4rem; background: color-mix(in srgb, var(--color-paper) 60%, var(--color-cream)); }
+  .entry-path h3 { color: var(--color-green-deep); font-family: var(--font-display); font-size: var(--text-record); line-height: 1.2; text-align: center; }
+  .entry-path > p:first-of-type { max-width: 31ch; margin: .45rem auto 0; color: var(--color-ink-soft); font-size: var(--text-body); line-height: 1.4; text-align: center; }
+  .route-steps { display: grid; align-content: start; margin: .7rem 0 0; padding: 0; list-style: none; }
+  .route-steps li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: .75rem; align-items: center; min-height: 3.4rem; padding-block: .3rem; border-bottom: 1px solid var(--color-ticket-rule); color: var(--color-ink); font-size: var(--text-body); line-height: 1.3; }
+  .route-steps li:last-child { border-bottom: 0; }
+  .route-steps li > span:last-child { display: block; font-weight: 500; }
+  .route-steps small { display: block; margin-top: .25rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); font-weight: 400; line-height: 1.3; }
+  .route-icon, .payment-thread-icon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border: 1px solid var(--color-ticket-rule); border-radius: 999px; background: var(--color-softamber); color: var(--color-ink); }
+  .route-icon :global(svg), .payment-thread-icon :global(svg) { width: 1.5rem; height: 1.5rem; }
+  .route-note { margin-top: auto; padding-top: .7rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.4; }
+  .route-guide { display: inline-flex; align-items: center; min-height: 2.75rem; align-self: flex-start; margin-top: auto; color: var(--color-green-deep); font-size: var(--text-body-sm); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .route-connector { display: none; width: 100%; height: 3.25rem; overflow: visible; fill: none; stroke: var(--color-ticket-rule); stroke-width: 1.5; }
+  .route-connector path { vector-effect: non-scaling-stroke; }
+  .route-connector circle { fill: var(--color-amber-deep); stroke: none; }
+  .paths-join { margin: 1.1rem auto 0; color: var(--color-green-deep); font-size: var(--text-body); font-weight: 700; text-align: center; }
+  .journey { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem .75rem; margin-top: 1.5rem; padding: 0; list-style: none; }
+  .journey li { position: relative; display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
+  .journey li::before { content: ''; position: absolute; top: 2.25rem; left: 0; width: 100%; border-top: 1px solid var(--color-ticket-rule); }
+  .journey li:not(:last-child)::after { content: '→'; position: absolute; top: 1.55rem; right: -.6rem; padding-inline: .35rem; background: color-mix(in srgb, var(--color-cream) 88%, var(--color-paper)); color: var(--color-amber-deep); font-size: var(--text-body-lg); line-height: 1; }
+  .journey li:nth-child(even)::after { display: none; }
+  .step-visual { position: relative; display: grid; place-items: center; width: 4.5rem; height: 4.5rem; border: 1px solid var(--color-hairline-strong); border-radius: 999px; background: var(--color-softgreen); color: var(--color-green-deep); }
+  .step-number { position: absolute; top: -.65rem; left: -.3rem; display: grid; place-items: center; width: 1.85rem; height: 1.85rem; border-radius: 999px; background: var(--color-green-deep); color: white; font-size: var(--text-label-sm); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .journey strong { margin-top: .65rem; max-width: 100%; overflow-wrap: anywhere; font-family: var(--font-display); font-size: var(--text-record-sm); line-height: 1.2; }
+  .journey li > span:last-child { margin-top: .3rem; max-width: 15ch; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.4; }
+  .payment-thread { display: flex; align-items: flex-start; gap: 1.25rem; max-width: 72rem; margin: 1.5rem auto 0; padding: 1rem 1.5rem; border: 1px solid var(--color-ticket-rule); border-radius: .4rem; background: color-mix(in srgb, var(--color-softamber) 42%, var(--color-cream)); }
+  .payment-thread-icon { flex: none; width: 3.25rem; height: 3.25rem; }
+  .payment-thread > div { min-width: 0; border-left: 1px solid var(--color-ticket-rule); padding-left: 1.25rem; }
+  .payment-thread strong { font-family: var(--font-display); font-size: var(--text-record-sm); line-height: 1.25; }
+  .payment-thread p { margin-top: .35rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.5; }
+  .journey-proof { margin-top: 1.5rem; color: var(--color-ink-soft); font-size: var(--text-body); text-align: center; }
+  .journey-more { margin-top: .75rem; text-align: center; }
+  @media (min-width: 40rem) { .entry-paths { grid-template-columns: repeat(3, minmax(0, 1fr)); } .route-connector { display: block; } .paths-join { margin-top: .3rem; } .journey { grid-template-columns: repeat(3, minmax(0, 1fr)); } .journey li:nth-child(even)::after { display: block; } .journey li:nth-child(3n)::after { display: none; } .payment-thread { align-items: center; } }
+  @media (min-width: 70rem) { .journey { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .5rem; } .journey li:nth-child(3n)::after { display: block; } }
 </style>

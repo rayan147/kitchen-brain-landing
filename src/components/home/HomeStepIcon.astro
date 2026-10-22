@@ -1,0 +1,22 @@
+---
+type Name = 'inquiry' | 'quote' | 'order' | 'approval' | 'menu' | 'agreement' | 'payment' | 'booking' | 'purchasing' | 'receiving' | 'prep' | 'packing' | 'closeout';
+const { name } = Astro.props as { name: Name };
+
+// Considered Strategy; not used because these fixed icons vary only in SVG
+// geometry. There is no behavior to exchange at runtime.
+---
+<svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {name === 'inquiry' && <><path d="M5 7.5h22v15H15l-6 5v-5H5z"/><path d="M10 13h12M10 17h8"/></>}
+  {name === 'quote' && <><path d="M8 3.5h12l5 5v20H8z"/><path d="M20 3.5v5h5M12 14h9M12 18h9M12 22h6"/></>}
+  {name === 'order' && <><path d="M4 5h24v22H4zM4 11h24M9 8h1M14 8h1M10 16h12M10 21h8"/></>}
+  {name === 'approval' && <><circle cx="16" cy="16" r="12"/><path d="m10 16 4 4 8-9"/></>}
+  {name === 'menu' && <><path d="M7 3h18v26H7zM11 10h10M11 15h10M11 20h6"/><path d="m19 22 2 2 4-5"/></>}
+  {name === 'agreement' && <><path d="M7 3h15l4 4v22H7zM22 3v5h4M11 13h11M11 17h9M11 24c2-4 3 0 5-2 2-2 3 1 6-1"/></>}
+  {name === 'payment' && <><rect x="3" y="7" width="26" height="18" rx="2"/><path d="M3 13h26M8 20h7"/></>}
+  {name === 'booking' && <><rect x="5" y="7" width="22" height="21" rx="2"/><path d="M5 13h22M10 4v6M22 4v6M10 18h3M17 18h3M10 23h3M17 23h3"/></>}
+  {name === 'purchasing' && <><path d="M3 6h4l3 16h15l3-12H8M12 26a1 1 0 1 0 0 .1M23 26a1 1 0 1 0 0 .1"/></>}
+  {name === 'receiving' && <><path d="M3 8h16v16H3zM19 13h5l5 5v6H19z"/><circle cx="9" cy="25" r="2"/><circle cx="24" cy="25" r="2"/></>}
+  {name === 'prep' && <><path d="M9 13a5 5 0 0 1 1-9 5 5 0 0 1 6 2 5 5 0 0 1 9 4 5 5 0 0 1-2 9v8H9V13zM9 19h14"/></>}
+  {name === 'packing' && <><path d="m4 9 12-6 12 6v16l-12 5-12-5zM4 9l12 6 12-6M16 15v15M10 6l12 6"/></>}
+  {name === 'closeout' && <><path d="M5 27V16h4v11M14 27V10h4v17M23 27V4h4v23"/></>}
+</svg>

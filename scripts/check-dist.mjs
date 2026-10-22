@@ -133,185 +133,77 @@ if (!homeHtml.includes('data-features-menu')) {
 	failed = true;
 }
 
-// THE HOMEPAGE CONTRACT, rebuilt with the page on 2026-10-06 (canvas
-// Home-A-story; docs/stories/homepage-redesign-2026-10.story.md; layout rules in
-// docs/superpowers/specs/2026-10-06-homepage-redesign-layout.md). The old
-// section-by-section pins went with the sections they pinned.
-
-// Section order, at the rendered level (scripts/lib/homepage-stops.mjs).
-const homeSectionIds = [...homeHtml.matchAll(/<section[^>]*\sid="([a-z-]+)"/g)].map((m) => m[1]);
+// THE HOMEPAGE CONTRACT, revised with the compact mockup on 2026-10-22.
+// Considered Composite; not used because these are four fixed, flat sections.
+const homeSectionIds = [...homeHtml.matchAll(/<section[^>]*\sid="([a-z-]+)"/g)].map((match) => match[1]);
 const renderedStops = homeSectionIds.filter((id) => homepageStopIds.includes(id));
 if (renderedStops.join(',') !== homepageStopIds.join(',')) {
-	console.error(`check-dist: homepage renders bands [${renderedStops.join(', ')}]; expected [${homepageStopIds.join(', ')}]`);
-	failed = true;
+  console.error(`check-dist: homepage renders [${renderedStops.join(', ')}]; expected [${homepageStopIds.join(', ')}]`);
+  failed = true;
 }
-
-// Rule 1: the bands alternate cream and soft amber, hero first in cream.
-const bandTones = [...homeHtml.matchAll(/class="[^"]*\bhome-band--(cream|amber)\b/g)].map((m) => m[1]);
-if (bandTones.length !== homepageStopIds.length + 1 || bandTones.some((tone, i) => tone !== (i % 2 ? 'amber' : 'cream'))) {
-	console.error(`check-dist: homepage bands must alternate cream and amber from the hero; got [${bandTones.join(', ')}]`);
-	failed = true;
+const bandTones = [...homeHtml.matchAll(/class="[^"]*\bhome-band--(cream|amber)\b/g)].map((match) => match[1]);
+if (bandTones.join(',') !== 'cream,amber,cream,amber,cream') {
+  console.error(`check-dist: homepage band tones are [${bandTones.join(', ')}]`);
+  failed = true;
 }
-
-// The hero: one h1, the accent word, the promo film in the media slot
-// (owner, 2026-10-07). It waits for a tap (no autoplay, preload metadata), keeps
-// its 16:9 box before the poster loads, offers MP4 (H.264 plays everywhere,
-// and is the file the owner's Chrome played) then WebM, every file shipped, and carries the transcript beside it (principle 4).
 if ((homeHtml.match(/<h1\b/g) ?? []).length !== 1) {
-	console.error('check-dist: homepage must have exactly one h1');
-	failed = true;
+  console.error('check-dist: homepage must have exactly one h1');
+  failed = true;
 }
-const heroMedia = homeHtml.match(/<figure[^>]*data-hero-media[^>]*>([\s\S]*?)<\/figure>/)?.[1] ?? '';
-const heroVideo = heroMedia.match(/<video\b[^>]*>/)?.[0] ?? '';
-const heroFilmRules = [
-	[/\scontrols\b/, 'controls'],
-	[/\splaysinline\b/, 'playsinline'],
-	// "none" left Chrome's native player dead to clicks (2026-10-07).
-	[/\spreload="metadata"/, 'preload="metadata"'],
-	[/\sposter="\/film\/costcook-promo-poster-cost\.jpg"/, 'the film poster'],
-	[/\swidth="1920"[^>]*\sheight="1080"|\sheight="1080"[^>]*\swidth="1920"/, 'width and height']
-];
-if (!heroVideo) {
-	console.error('check-dist: the hero media slot must hold the promo film');
-	failed = true;
-} else {
-	for (const [rule, name] of heroFilmRules) {
-		if (!rule.test(heroVideo)) {
-			console.error(`check-dist: the hero film needs ${name}`);
-			failed = true;
-		}
-	}
-	if (/data-hero-play|hero-play/.test(heroMedia)) {
-		console.error('check-dist: the hero film uses the native player; a scripted play button left it dead to clicks (2026-10-07)');
-		failed = true;
-	}
-	if (/\s(autoplay|muted|loop)\b/.test(heroVideo)) {
-		console.error('check-dist: the hero film must wait for a tap (no autoplay, muted or loop)');
-		failed = true;
-	}
+for (const claim of [
+  'Know the food', '29.2%', '$95.00', '$14,250.00', '$4,165.50',
+  'Illustrative summary', 'Card required to start', 'Cost your first dish'
+]) {
+  if (!homeHtml.includes(claim)) {
+    console.error(`check-dist: homepage is missing ${claim}`);
+    failed = true;
+  }
 }
-const heroSources = [...heroMedia.matchAll(/<source\b[^>]*src="([^"]+)"[^>]*type="([^"]+)"/g)].map((m) => `${m[2]} ${m[1]}`);
-// MP4 before WebM (the owner's Chrome played the MP4, 2026-10-07); each
-// format as 1080p from 64rem and 720p below it (mobile review 2026-10-09).
-const expectedHeroSources = [
-	'video/mp4 /film/costcook-promo.mp4',
-	'video/mp4 /film/costcook-promo-720.mp4',
-	'video/webm /film/costcook-promo.webm',
-	'video/webm /film/costcook-promo-720.webm'
-];
-if (heroSources.join(',') !== expectedHeroSources.join(',')) {
-	console.error(`check-dist: the hero film sources are [${heroSources.join(', ')}]; expected MP4 then WebM, 1080p then 720p`);
-	failed = true;
+if (/estimated profit/i.test(homeHtml)) {
+  console.error('check-dist: food margin must not be called estimated profit');
+  failed = true;
 }
-for (const file of ['film/costcook-promo.webm', 'film/costcook-promo.mp4', 'film/costcook-promo-720.webm', 'film/costcook-promo-720.mp4', 'film/costcook-promo-poster-cost.jpg']) {
-	if (!existsSync(join(dist, file))) {
-		console.error(`check-dist: ${file} did not ship`);
-		failed = true;
-	}
+const journey = homeHtml.match(/<ol class="journey"[\s\S]*?<\/ol>/)?.[0] ?? '';
+const steps = [...journey.matchAll(/<strong[^>]*>([^<]+)<\/strong>/g)].map((match) => match[1]);
+if (steps.join(',') !== 'Purchasing,Receiving,Prep,Packing,Closeout') {
+  console.error(`check-dist: confirmed kitchen journey renders [${steps.join(', ')}]`);
+  failed = true;
 }
-if (!/<details\b[^>]*hero-transcript[\s\S]*Signed and paid\. Now book the event\.[\s\S]*<\/details>/.test(heroMedia)) {
-	console.error('check-dist: the hero film needs its transcript beside it');
-	failed = true;
+const costFrame = homeHtml.match(/<img[^>]*src="\/proof\/home\/food-cost-breakdown\.png"[^>]*>/)?.[0] ?? '';
+if (!/alt="[^"]{20,}"/.test(costFrame) || !/width="600"/.test(costFrame) || !/height="661"/.test(costFrame) || !/loading="lazy"/.test(costFrame)) {
+  console.error('check-dist: dish-cost proof needs meaningful alt, measured dimensions and lazy loading');
+  failed = true;
 }
-
-// Every homepage frame: real capture, measured box, lazy below the hero.
-const homeImgs = [...homeHtml.matchAll(/<img\b[^>]*src="\/proof\/home\/([a-z-]+)\.png"[^>]*>/g)];
-const expectedFrames = ['inquiry-mobile', 'proposal-mobile', 'payment-schedule-phone', 'confirm-dialog-phone', 'shop-list', 'food-cost-breakdown', 'yield-lines-phone', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox', 'sage-answer'];
-const renderedFrames = homeImgs.map((m) => m[1]);
-if (renderedFrames.join(',') !== expectedFrames.join(',')) {
-	console.error(`check-dist: homepage frames render [${renderedFrames.join(', ')}]; expected [${expectedFrames.join(', ')}]`);
-	failed = true;
+if (!/<source type="image\/webp" srcset="\/proof\/home\/food-cost-breakdown\.webp">/.test(homeHtml)) {
+  console.error('check-dist: dish-cost proof has no WebP source');
+  failed = true;
 }
-for (const [tag, name] of homeImgs) {
-	if (!/\swidth="\d+"/.test(tag) || !/\sheight="\d+"/.test(tag)) {
-		console.error(`check-dist: homepage frame ${name} has no width and height`);
-		failed = true;
-	}
-	if (!/\salt="[^"]{20,}"/.test(tag)) {
-		console.error(`check-dist: homepage frame ${name} needs alt text that says what it shows`);
-		failed = true;
-	}
-	if (!/loading="lazy"/.test(tag)) {
-		console.error(`check-dist: homepage frame ${name} must load lazily`);
-		failed = true;
-	}
+for (const phrase of ['stripe', 'Supplier invoice email', 'Square', 'QuickBooks Online', 'Direct label printers', 'CostCook online ordering', 'Saved priced menu', 'Watch 2-min video']) {
+  if (!homeHtml.includes(phrase)) {
+    console.error(`check-dist: connections summary is missing ${phrase}`);
+    failed = true;
+  }
 }
-
-// Phone captures (design review 2026-10-07): the wide tables are served in the
-// app's own phone layout below 48rem. Each <source> carries its box so the
-// swap does not shift the page, and points at a file that shipped.
-// The deposit frame joined them after the second design review (6px labels at
-// 390), then left the swap on 2026-10-09: it shows the phone capture at every
-// width, since the wide one drew 9px labels in the rail's desktop column;
-// the yield row's tomato card did the same.
-// confirm-dialog joined on 2026-10-09 (mobile review) and left on 2026-10-15
-// (benchmark review): its margin-free crop now serves every width, since the
-// wide capture's dark modal backdrop was the one frame off rule 6.
-const expectedPhone = ['food-cost-breakdown', 'import-review', 'allergens-labels', 'ordering-site', 'invoice-inbox'];
-const phoneSources = [...homeHtml.matchAll(/<source\b[^>]*srcset="\/proof\/home\/([a-z-]+)-phone\.png"[^>]*>/g)];
-if (phoneSources.map((m) => m[1]).join(',') !== expectedPhone.join(',')) {
-	console.error(`check-dist: homepage phone captures are [${phoneSources.map((m) => m[1]).join(', ')}]; expected [${expectedPhone.join(', ')}]`);
-	failed = true;
+if (!homeHtml.includes('data-founder-trust') || !homeHtml.includes('data-real-order-trial')) {
+  console.error('check-dist: founder and trial terms must remain visible');
+  failed = true;
 }
-for (const [tag, name] of phoneSources) {
-	if (!/\swidth="\d+"/.test(tag) || !/\sheight="\d+"/.test(tag) || !/media="\(max-width: 47\.99rem\)"/.test(tag)) {
-		console.error(`check-dist: phone capture ${name} needs width, height and the 47.99rem media query`);
-		failed = true;
-	}
-	if (!existsSync(join(dist, 'proof', 'home', `${name}-phone.png`))) {
-		console.error(`check-dist: phone capture ${name}-phone.png is not in dist`);
-		failed = true;
-	}
-}
-
-// The event walk as the workflow rail (docs/superpowers/specs/2026-10-06-workflow-rail.md):
-// five stages in the app's order, all in the HTML with nothing hidden, a carry
-// line between each pair, and the amber rings over the frames.
-const walkStages = [...homeHtml.matchAll(/data-event-stage="([a-z]+)"/g)].map((m) => m[1]);
-if (walkStages.join(',') !== 'inquiry,proposal,deposit,confirm,prep') {
-	console.error(`check-dist: the event walk renders stages [${walkStages.join(', ')}]; expected inquiry, proposal, deposit, confirm, prep`);
-	failed = true;
-}
-if ((homeHtml.match(/data-carry\b/g) ?? []).length !== 4) {
-	console.error('check-dist: the workflow rail needs a carry line between each of its five stages (four)');
-	failed = true;
-}
-if (/data-rail-stage[^>]*\shidden\b|role="tablist"/.test(homeHtml)) {
-	console.error('check-dist: the workflow rail shows every stage; no hidden stage and no tabs');
-	failed = true;
-}
-if (!/class="ring"[^>]*aria-hidden="true"/.test(homeHtml)) {
-	console.error('check-dist: the workflow rail lost its decorative focus rings');
-	failed = true;
-}
-
-// The close: the trial card and the founder.
-for (const hook of ['data-real-order-trial', 'data-founder-trust', 'data-home-sage']) {
-	if (!homeHtml.includes(hook)) {
-		console.error(`check-dist: homepage is missing ${hook}`);
-		failed = true;
-	}
-}
-
-// Sage owns one distinctive mark wherever a reader encounters it as a named
-// product feature. The shared component carries a context hook so a future
-// visual refactor cannot leave the homepage and supporting decision routes
-// speaking different icon languages.
+// Sage stays available in navigation and its guide; the homepage no longer
+// spends a full band on it. Check the shared icon in those remaining contexts.
 const sageIconSurfaces = [
-	['index.html', 'homepage'],
-	['index.html', 'navigation'],
-	['features/sage/index.html', 'specialist'],
-	['features/team-and-connections/index.html', 'feature-area'],
-	['compare/index.html', 'comparison'],
-	['faq/index.html', 'faq'],
-	['tour/main/index.html', 'tour']
+  ['index.html', 'navigation'],
+  ['features/sage/index.html', 'specialist'],
+  ['features/team-and-connections/index.html', 'feature-area'],
+  ['compare/index.html', 'comparison'],
+  ['faq/index.html', 'faq'],
+  ['tour/main/index.html', 'tour']
 ];
 for (const [page, context] of sageIconSurfaces) {
-	const html = readFileSync(join(dist, page), 'utf8');
-	if (!html.includes(`data-sage-icon="${context}"`)) {
-		console.error(`check-dist: ${page} is missing the shared Sage icon in ${context}`);
-		failed = true;
-	}
+  const html = readFileSync(join(dist, page), 'utf8');
+  if (!html.includes(`data-sage-icon="${context}"`)) {
+    console.error(`check-dist: ${page} is missing the shared Sage icon in ${context}`);
+    failed = true;
+  }
 }
 
 for (const target of menuTargets) {
@@ -354,6 +246,5 @@ console.log(`check-dist: ${svgCount} inline svg(s) across ${pages.length} page(s
 console.log(`check-dist: ${pages.length} built page(s) carry no CSP-blocked inline script or event handler`);
 console.log(`check-dist: ${menuTargets.length} Features menu deep links resolve across their built area pages`);
 console.log(`check-dist: /compare renders a spreadsheet column on ${compareRowCount} rows across 5 group tables`);
-console.log(`check-dist: homepage renders ${homepageStopIds.length + 1} alternating bands and ${expectedFrames.length} measured frames loaded lazily; the hero film waits for a tap`);
-console.log('check-dist: homepage workflow rail renders five stages and four carry lines, nothing hidden');
-console.log(`check-dist: shared Sage icon is present across ${sageIconSurfaces.length} homepage and decision-route contexts`);
+console.log(`check-dist: homepage renders ${homepageStopIds.length + 1} alternating bands, three confirmation routes, five shared kitchen steps, and a measured food-cost capture`);
+console.log(`check-dist: shared Sage icon is present across ${sageIconSurfaces.length} navigation and decision-route contexts`);

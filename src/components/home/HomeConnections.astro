@@ -1,0 +1,48 @@
+---
+import HomeBand from './HomeBand.astro';
+import { invoiceEmailAvailability } from '../../lib/invoice-email';
+import { squareAvailability, quickbooksAvailability, printersAvailability, integrationsRoute } from '../../lib/connections';
+
+// Considered Strategy; not used because availability is fixed release data,
+// not behavior selected at runtime. The shared status source owns each word.
+---
+<!-- story: docs/stories/homepage-mockup-2026-10.story.md -->
+<HomeBand id="connections" tone="amber" labelledBy="connections-heading">
+  <div class="connections-head">
+    <div>
+      <p class="home-eyebrow">Payments and connections</p>
+      <h2 id="connections-heading" class="home-h2">Integrations that fit your workflow.</h2>
+      <p class="home-body">See what connects today and what is still coming.</p>
+    </div>
+    <a href={integrationsRoute} class="home-guide">See every connection and its limits <span aria-hidden="true">→</span></a>
+  </div>
+  <ul class="connections-grid" aria-label="Integration availability">
+    <li class="connection"><span class="connection-mark stripe-mark" aria-hidden="true">stripe</span><strong>Payments</strong><span class="connection-purpose">Clients pay deposits and balances on Stripe</span><span class="status live"><i></i>Live</span></li>
+    <li class="connection"><span class="connection-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="7" width="24" height="18" rx="2"/><path d="m5 9 11 9L27 9"/></svg></span><strong>Supplier invoice email</strong><span class="connection-purpose">Suppliers email invoices; you review them</span><span class:list={['status', invoiceEmailAvailability.isComing ? 'coming' : 'live']}><i></i>{invoiceEmailAvailability.word === 'In the app today' ? 'Live' : invoiceEmailAvailability.word}</span></li>
+    <li class="connection"><span class="connection-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="24" height="24" rx="3"/><rect x="11" y="11" width="10" height="10" rx="1"/></svg></span><strong>Square</strong><span class="connection-purpose">Compare counter sales with today's recipe costs</span><span class:list={['status', squareAvailability.isComing ? 'coming' : 'live']}><i></i>{squareAvailability.word}</span></li>
+    <li class="connection"><span class="connection-mark qb-mark" aria-hidden="true">qb</span><strong>QuickBooks Online</strong><span class="connection-purpose">Send reviewed invoices as bills</span><span class:list={['status', quickbooksAvailability.isComing ? 'coming' : 'live']}><i></i>{quickbooksAvailability.word}</span></li>
+    <li class="connection"><span class="connection-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M8 4h16v8H8zM8 23H5V12h22v11h-3M8 19h16v9H8zM11 23h10M23 16h1"/></svg></span><strong>Direct label printers</strong><span class="connection-purpose">Print without the browser dialog</span><span class:list={['status', printersAvailability.isComing ? 'coming' : 'live']}><i></i>{printersAvailability.word}</span></li>
+  </ul>
+</HomeBand>
+
+<style>
+  :global(#connections) { padding-block: var(--spacing-section-tight); }
+  :global(#connections > .container-page) { max-width: 92rem; }
+  .connections-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 2rem; }
+  .connections-head > div { max-width: 43rem; }
+  .connections-head .home-h2 { font-size: var(--text-display-hero); line-height: 1.05; }
+  .connections-head .home-body { margin-top: 1rem; }
+  .connections-head .home-guide { margin-bottom: .25rem; }
+  .connections-grid { display: grid; grid-template-columns: 1fr; gap: .8rem; margin-top: 1.75rem; padding: 0; list-style: none; }
+  .connection { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; min-height: 10.5rem; gap: .35rem; padding: 1.15rem .75rem; border: 1px solid var(--color-ticket-rule); background: var(--color-cream); text-align: center; }
+  .connection-mark { display: grid; place-items: center; height: 2.5rem; color: var(--color-ink); }
+  .stripe-mark { color: var(--color-green-deep); font-size: var(--text-record); font-weight: 800; letter-spacing: -.06em; }
+  .qb-mark { width: 2.3rem; height: 2.3rem; border-radius: 999px; background: var(--color-green-deep); color: white; font-size: var(--text-body); font-weight: 700; }
+  .connection strong { max-width: 100%; overflow-wrap: anywhere; font-size: var(--text-body); line-height: 1.25; }
+  .connection-purpose { max-width: 15rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); line-height: 1.35; }
+  .status { display: flex; align-items: center; gap: .4rem; margin-top: auto; padding-top: .3rem; color: var(--color-ink-soft); font-size: var(--text-body-sm); }
+  .status i { width: .55rem; height: .55rem; border-radius: 999px; background: currentColor; }
+  .status.live { color: var(--color-green-deep); }
+  @media (min-width: 40rem) { .connections-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .connections-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+</style>
