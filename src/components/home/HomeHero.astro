@@ -6,6 +6,7 @@ import { heroFilm } from '../../lib/home';
 // example, not a tree of interchangeable product panels.
 ---
 <!-- story: docs/stories/homepage-mockup-2026-10.story.md -->
+<!-- story: docs/stories/founding-kitchens-offer.story.md -->
 <section class="home-band home-band--cream hero" aria-labelledby="hero-heading">
   <div class="container-page hero-grid">
     <div class="hero-copy">
@@ -35,7 +36,7 @@ import { heroFilm } from '../../lib/home';
         </details>
       </div>
       <a href={demoCta.href} aria-label={demoCta.ariaLabel} class="hero-demo">{demoCta.label} with the founder <span aria-hidden="true">→</span></a>
-      <p class="home-small hero-terms"><strong>{launchPlan.trialDays} days free</strong> · Then {launchPlan.displayPrice} {launchPlan.unit} · {launchPlan.crew}<br />Card required to start · $0 charged today</p>
+      <p class="home-small hero-terms"><strong>{launchPlan.trialDays} days free</strong> · Then {launchPlan.displayPrice} {launchPlan.unit} for the first {launchPlan.foundingKitchenLimit} kitchens<br />Locked in for life · Regular price {launchPlan.regularPrice} {launchPlan.unit} · {launchPlan.crew}<br />{launchPlan.taxNote} Card required to start · $0 charged today</p>
       <p class="home-small founder" data-founder-hero data-founder-trust>
         <img src="/founder.jpg" alt="" width="384" height="384" decoding="async" />
         <span><strong>{site.founderName}</strong>, chef and founder, cooked professionally for twelve years.</span>

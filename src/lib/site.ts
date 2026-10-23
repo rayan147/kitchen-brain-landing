@@ -129,12 +129,18 @@ export const contactCta = {
  */
 export const launchPlan = {
 	displayPrice: import.meta.env.PUBLIC_LAUNCH_PRICE_DISPLAY?.trim() || '$49/month',
+	regularPrice: '$99/month',
+	foundingKitchenLimit: 20,
+	taxNote: 'Prices plus tax.',
 	trialDays: 15,
 	unit: 'per kitchen',
 	crew: 'unlimited crew',
 	crewTerms: 'Teammates are unlimited.',
 	billingNote: 'per kitchen, unlimited crew, after a 15-day free trial.'
 } as const;
+// Considered Strategy; not used because the founding offer is one fixed set of
+// public terms, not behavior selected at runtime.
+// story: docs/stories/founding-kitchens-offer.story.md
 
 const productTourHref = '/tour/main';
 

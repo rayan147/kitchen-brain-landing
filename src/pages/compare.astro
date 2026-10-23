@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import FeatureTrialTerms from '../components/FeatureTrialTerms.astro';
 // story: docs/stories/compare.story.md
+// story: docs/stories/founding-kitchens-offer.story.md
 import { comparison, competitors, costcookNo, NOT_LISTED, sheetWork, VERIFIED_ON } from '../lib/comparison';
 import { spell } from '../lib/words';
 import CellMark from '../components/CellMark.astro';
@@ -123,7 +124,7 @@ const legend = [
 				<div>
 					<p class="text-sm font-semibold text-amber-deep">CostCook</p>
 					<p class="mt-2 text-h2 font-semibold">{launchPlan.displayPrice}</p>
-					<p class="mt-2 text-sm text-ink-soft">One plan. Billed monthly, {launchPlan.trialDays} days free.</p>
+					<p class="mt-2 text-sm text-ink-soft">Founding price for the first {launchPlan.foundingKitchenLimit} kitchens, locked in for life. Regular price {launchPlan.regularPrice} {launchPlan.unit}. {launchPlan.taxNote} {launchPlan.trialDays} days free.</p>
 				</div>
 				{competitors.map((rival) => (
 					<div>

@@ -1,4 +1,5 @@
 // story: docs/stories/homepage-caterer-fixes.story.md
+// story: docs/stories/founding-kitchens-offer.story.md
 /**
  * The FAQ, as data. story: docs/stories/faq.story.md
  *
@@ -59,7 +60,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'trial',
 				question: 'What does the trial actually cost?',
 				answer: [
-					`Nothing for ${days} days. Stripe takes a card when you start and charges $0 during the trial. On day 16, billing begins at ${price} per kitchen unless you have cancelled.`
+					`Nothing for ${days} days. Stripe takes a card when you start and charges $0 during the trial. For a founding kitchen, billing begins on day 16 at ${price} per kitchen unless you have cancelled. The regular price is ${launchPlan.regularPrice} per kitchen. ${launchPlan.taxNote}`
 				],
 				claims: ['RC-34']
 			},
@@ -83,7 +84,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'price',
 				question: `Is ${price} the price, or a promotion?`,
 				answer: [
-					`${price} is the launch price and it will not stay there. When it moves, it moves for kitchens that sign up after, never for yours. The price you start on is the price you keep.`
+					`${price} per kitchen is for the first ${launchPlan.foundingKitchenLimit} kitchens, locked in for life. The regular price is ${launchPlan.regularPrice} per kitchen. Teammates are unlimited. ${launchPlan.taxNote}`
 				],
 				claims: ['RC-34']
 			},

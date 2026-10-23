@@ -100,6 +100,17 @@ if (failed) process.exit(1);
 // links and target ids must ship together; source-level typing cannot catch a
 // template that stopped rendering one side of that contract.
 const homeHtml = readFileSync(join(dist, 'index.html'), 'utf8');
+// Considered Strategy; not used because these four fixed decision pages all
+// state the same founding offer, with no variant behavior to select.
+for (const page of ['index.html', 'pricing/index.html', 'faq/index.html', 'compare/index.html']) {
+	const html = readFileSync(join(dist, page), 'utf8');
+	for (const term of ['$49/month', '$99/month', 'first 20 kitchens', 'locked in for life']) {
+		if (!html.toLowerCase().includes(term.toLowerCase())) {
+			console.error(`check-dist: ${page} is missing founding offer term ${term}`);
+			failed = true;
+		}
+	}
+}
 const menuTargets = [
 	{ id: 'events', area: 'events-and-proposals', href: '/features/events-and-proposals' },
 	{ id: 'math', area: 'recipes-and-costing', href: '/features/recipes-and-costing' },

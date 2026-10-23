@@ -36,6 +36,7 @@ const included = [
 <!-- story: docs/stories/homepage-caterer-fixes.story.md -->
 
 <!-- story: docs/stories/features-navigation.story.md -->
+<!-- story: docs/stories/founding-kitchens-offer.story.md -->
 
 <Base
 	title="CostCook pricing for catering kitchens"
@@ -51,20 +52,10 @@ const included = [
 
 		<div id="launch-terms" class="mt-10 grid grid-cols-1 gap-8 border-y border-ticket-rule py-8 lg:grid-cols-[7fr_5fr]">
 			<div>
-				<p class="text-sm font-semibold text-amber-deep">CostCook Launch</p>
+				<p class="text-sm font-semibold text-amber-deep">Founding kitchen offer</p>
 				<p class="mt-2 text-h2 font-semibold">{launchPlan.displayPrice}</p>
-                <p class="mt-3 max-w-[54ch] text-ink-soft">{launchPlan.crewTerms}</p>
+				<p class="mt-3 max-w-[54ch] text-ink-soft">{launchPlan.unit}, for the first {launchPlan.foundingKitchenLimit} kitchens. Locked in for life. Regular price {launchPlan.regularPrice} {launchPlan.unit}. {launchPlan.crewTerms} {launchPlan.taxNote}</p>
 				<p class="mt-3 max-w-[54ch] text-ink-soft">The first {launchPlan.trialDays} days are free. Stripe takes your card, charges $0 today, and starts billing you monthly when the trial ends unless you cancel.</p>
-				<!-- The launch price is introductory and the page used to be silent about
-				     it, which left a reader unable to tell whether $49 was the price or a
-				     promotion. It says both halves now: it will rise, and it will not rise
-				     under anyone already on it. The second half is a commitment, not copy.
-				     If it ever stops being true, this paragraph comes off the page first. -->
-				<p class="mt-4 max-w-[54ch] text-ink-soft">
-					{launchPlan.displayPrice} is the launch price and it will not stay there. When it
-					moves it moves for kitchens that sign up after, never for yours. The price you
-					start on is the price you keep.
-				</p>
 				<a href={cta.href} aria-label={cta.ariaLabel} class="btn-primary mt-7">{cta.label}</a>
 			</div>
 			<div>
