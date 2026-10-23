@@ -87,11 +87,15 @@ Second-person point of view where prose addresses the owner. The price beside th
 
 The previous open-ended “launch price will rise later” wording is removed. The owner-provided first-20 limit and $99 regular price replace it. No availability counter or deadline is implied. The trial, card, cancellation and per-kitchen terms remain visible. “Prices plus tax” follows the app's billing plan, which adds sales tax on top.
 
+### Availability clarification, 2026-10-23
+
+The owner pointed out that “for the first 20 kitchens” leaves a visitor unsure whether those places are already taken. The opening beat and the price decision now say **“Founding offer open now”** before stating the cap. This answers the current-availability question without inventing a remaining-spots count. When the offer closes, the status and checkout price must change together; the static site cannot determine that from Stripe on its own.
+
 ## UX brief and check
 
 - **User:** Owner-caterer on a phone or desktop, deciding whether to start a trial.
 - **Job:** Understand the founding rate and what billing will cost.
-- **Success:** The $49 rate, first-20 limit, lifetime lock, $99 regular price, per-kitchen unit, unlimited crew, tax and trial terms are visible before action.
+- **Success:** Current availability, the $49 rate, first-20 limit, lifetime lock, $99 regular price, per-kitchen unit, unlimited crew, tax and trial terms are visible before action.
 - **Pattern:** Existing trial terms beside the CTA and one detailed pricing page; the same shared plan data feeds FAQ and comparison.
 - **States:** Static price copy. No loading, empty, partial or error state on these pages; checkout owns payment errors.
 - **Primary CTA:** Start free trial.

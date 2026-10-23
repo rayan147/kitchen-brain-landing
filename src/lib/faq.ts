@@ -84,7 +84,7 @@ export const faq: readonly FaqGroup[] = [
 				id: 'price',
 				question: `Is ${price} the price, or a promotion?`,
 				answer: [
-					`${price} per kitchen is for the first ${launchPlan.foundingKitchenLimit} kitchens, locked in for life. The regular price is ${launchPlan.regularPrice} per kitchen. Teammates are unlimited. ${launchPlan.taxNote}`
+					`${launchPlan.foundingStatus}. ${price} per kitchen is locked in for life. The offer is limited to the first ${launchPlan.foundingKitchenLimit} kitchens. The regular price is ${launchPlan.regularPrice} per kitchen. Teammates are unlimited. ${launchPlan.taxNote}`
 				],
 				claims: ['RC-34']
 			},

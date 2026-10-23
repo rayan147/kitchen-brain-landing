@@ -16,7 +16,7 @@ import { cta, demoCta, launchPlan } from '../../lib/site';
     <div class="close-actions">
       <a href={cta.href} target={cta.target} rel={cta.rel} aria-label={cta.ariaLabel} class="btn-primary">{cta.label}</a>
       <a href={demoCta.href} aria-label={demoCta.ariaLabel} class="home-guide">{demoCta.label}</a>
-      <p class="home-small close-terms"><strong>{launchPlan.trialDays} days free</strong>, then {launchPlan.displayPrice} {launchPlan.unit} for the first {launchPlan.foundingKitchenLimit} kitchens, locked in for life. Regular price {launchPlan.regularPrice} {launchPlan.unit}. Unlimited crew. {launchPlan.taxNote} Card required to start; $0 charged today. Cancel in Settings.</p>
+      <p class="home-small close-terms"><strong>{launchPlan.foundingStatus}:</strong> {launchPlan.trialDays} days free, then {launchPlan.displayPrice} {launchPlan.unit}, locked in for life. Limited to the first {launchPlan.foundingKitchenLimit} kitchens. Regular price {launchPlan.regularPrice} {launchPlan.unit}. Unlimited crew. {launchPlan.taxNote} Card required to start; $0 charged today. Cancel in Settings.</p>
     </div>
     <div class="close-links">
       <a href="/faq">Questions about the trial?</a>

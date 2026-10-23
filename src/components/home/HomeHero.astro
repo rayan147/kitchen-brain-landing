@@ -36,7 +36,7 @@ import { heroFilm } from '../../lib/home';
         </details>
       </div>
       <a href={demoCta.href} aria-label={demoCta.ariaLabel} class="hero-demo">{demoCta.label} with the founder <span aria-hidden="true">→</span></a>
-      <p class="home-small hero-terms"><strong>{launchPlan.trialDays} days free</strong> · Then {launchPlan.displayPrice} {launchPlan.unit} for the first {launchPlan.foundingKitchenLimit} kitchens<br />Locked in for life · Regular price {launchPlan.regularPrice} {launchPlan.unit} · {launchPlan.crew}<br />{launchPlan.taxNote} Card required to start · $0 charged today</p>
+      <p class="home-small hero-terms"><strong>{launchPlan.foundingStatus}:</strong> {launchPlan.displayPrice} {launchPlan.unit}, locked in for life<br />Limited to the first {launchPlan.foundingKitchenLimit} kitchens · Regular price {launchPlan.regularPrice} {launchPlan.unit} · {launchPlan.crew}<br />{launchPlan.trialDays} days free · {launchPlan.taxNote} Card required to start · $0 charged today</p>
       <p class="home-small founder" data-founder-hero data-founder-trust>
         <img src="/founder.jpg" alt="" width="384" height="384" decoding="async" />
         <span><strong>{site.founderName}</strong>, chef and founder, cooked professionally for twelve years.</span>

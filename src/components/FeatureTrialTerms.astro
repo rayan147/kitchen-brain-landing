@@ -6,7 +6,7 @@ import { launchPlan } from '../lib/site';
 <!-- story: docs/stories/features-navigation.story.md -->
 <!-- story: docs/stories/founding-kitchens-offer.story.md -->
 <p class="feature-trial-terms" data-feature-trial-terms>
-  {launchPlan.trialDays} days free, then {launchPlan.displayPrice} {launchPlan.unit} for the first {launchPlan.foundingKitchenLimit} kitchens, locked in for life. Regular price {launchPlan.regularPrice} {launchPlan.unit}; unlimited crew. {launchPlan.taxNote} Card required; $0 today.
+  {launchPlan.foundingStatus}: {launchPlan.trialDays} days free, then {launchPlan.displayPrice} {launchPlan.unit}, locked in for life. Limited to the first {launchPlan.foundingKitchenLimit} kitchens. Regular price {launchPlan.regularPrice} {launchPlan.unit}; unlimited crew. {launchPlan.taxNote} Card required; $0 today.
   Cancel before day {launchPlan.trialDays + 1} in Settings → Billing, no call required.{' '}
   <a href="/onboarding">What to prepare</a> · <a href="/pricing#launch-terms">Plan and team limits</a>
 </p>

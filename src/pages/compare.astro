@@ -124,7 +124,7 @@ const legend = [
 				<div>
 					<p class="text-sm font-semibold text-amber-deep">CostCook</p>
 					<p class="mt-2 text-h2 font-semibold">{launchPlan.displayPrice}</p>
-					<p class="mt-2 text-sm text-ink-soft">Founding price for the first {launchPlan.foundingKitchenLimit} kitchens, locked in for life. Regular price {launchPlan.regularPrice} {launchPlan.unit}. {launchPlan.taxNote} {launchPlan.trialDays} days free.</p>
+					<p class="mt-2 text-sm text-ink-soft">{launchPlan.foundingStatus}. Limited to the first {launchPlan.foundingKitchenLimit} kitchens, locked in for life. Regular price {launchPlan.regularPrice} {launchPlan.unit}. {launchPlan.taxNote} {launchPlan.trialDays} days free.</p>
 				</div>
 				{competitors.map((rival) => (
 					<div>

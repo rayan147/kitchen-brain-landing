@@ -52,9 +52,9 @@ const included = [
 
 		<div id="launch-terms" class="mt-10 grid grid-cols-1 gap-8 border-y border-ticket-rule py-8 lg:grid-cols-[7fr_5fr]">
 			<div>
-				<p class="text-sm font-semibold text-amber-deep">Founding kitchen offer</p>
+				<p class="text-sm font-semibold text-amber-deep">{launchPlan.foundingStatus}</p>
 				<p class="mt-2 text-h2 font-semibold">{launchPlan.displayPrice}</p>
-				<p class="mt-3 max-w-[54ch] text-ink-soft">{launchPlan.unit}, for the first {launchPlan.foundingKitchenLimit} kitchens. Locked in for life. Regular price {launchPlan.regularPrice} {launchPlan.unit}. {launchPlan.crewTerms} {launchPlan.taxNote}</p>
+				<p class="mt-3 max-w-[54ch] text-ink-soft">{launchPlan.unit}, locked in for life. Limited to the first {launchPlan.foundingKitchenLimit} kitchens. Regular price {launchPlan.regularPrice} {launchPlan.unit}. {launchPlan.crewTerms} {launchPlan.taxNote}</p>
 				<p class="mt-3 max-w-[54ch] text-ink-soft">The first {launchPlan.trialDays} days are free. Stripe takes your card, charges $0 today, and starts billing you monthly when the trial ends unless you cancel.</p>
 				<a href={cta.href} aria-label={cta.ariaLabel} class="btn-primary mt-7">{cta.label}</a>
 			</div>

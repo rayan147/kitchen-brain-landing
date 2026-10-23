@@ -131,6 +131,8 @@ export const launchPlan = {
 	displayPrice: import.meta.env.PUBLIC_LAUNCH_PRICE_DISPLAY?.trim() || '$49/month',
 	regularPrice: '$99/month',
 	foundingKitchenLimit: 20,
+	// Update this status with checkout when the founding allocation fills.
+	foundingStatus: 'Founding offer open now',
 	taxNote: 'Prices plus tax.',
 	trialDays: 15,
 	unit: 'per kitchen',
